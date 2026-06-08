@@ -54,3 +54,20 @@
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_2_short">H.Laser Bat.II</text>
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_2_desc">Heavy Laser Battery Mk II: A cooridinated laser barrage that provides greater accuracy and concentrated volume of fire with each charge.</text>
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_2_tooltip">2 damage, 1 shots.? second cooldown. (-60%)-(10%) accuracy. (10%)-(40%) breach chance.</text>
+
+<text name="drone_TERRAN_DEFENSE_1_NAME">Terran Defense Matrix Mk I</text>
+<text name="drone_TERRAN_DEFENSE_1_SHORT">Matrix.I</text>
+<text name="drone_TERRAN_DEFENSE_1_DESC">[[Terran Defense 1 DESC]]</text>
+
+<text name="drone_TERRAN_DEFENSE_2_NAME">Terran Defense Matrix Mk II</text>
+<text name="drone_TERRAN_DEFENSE_2_SHORT">Matrix.II</text>
+<text name="drone_TERRAN_DEFENSE_2_DESC">[[Terran Defense 2 DESC]]</text>
+
+<text name="drone_TERRAN_DEFENSE_3_NAME">Terran Defense Matrix Mk III</text>
+<text name="drone_TERRAN_DEFENSE_3_SHORT">Matrix.III</text>
+<text name="drone_TERRAN_DEFENSE_3_DESC">[[Terran Defense 3 DESC]]</text>
+
+<text name="TNE_TEXT_DRONE_ACTIVE_OVERCHARGER_NAME">Active Shield Overcharger</text>
+<text name="TNE_TEXT_DRONE_ACTIVE_OVERCHARGER_SHORT">Active Over.</text>
+<text name="TNE_TEXT_DRONE_ACTIVE_OVERCHARGER_DESC">An active Defense Drone which can charge Energy Shields when it detects hostile shots.
+	Reload: 1500 MS</text>

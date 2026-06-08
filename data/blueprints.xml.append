@@ -1084,92 +1084,124 @@
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
 
-    <weaponBlueprint name="IRRADIATE_BEAM">
-        <type>BEAM</type>
-        <tip>tip_lily_syringe_a</tip>
-        <title>'Syringe' Beam [Acid]</title>
-        <short>'Syringe' [A]</short>
-        <desc>This weapon is less of traditional beam and more of an oversized medical device. Automatic chemical synthesis lab included. Current mode: Acid.</desc>
-        <tooltip>Applies an erosion effect for every tile hit. Also does 5 hp/s damage for 3 seconds for any crew hit and doubles damage taken by them for 10 seconds.</tooltip>
-        <damage>0</damage>
-        <persDamage>0</persDamage>
-        <sp>3</sp>
-        <fireChance>0</fireChance>
-        <breachChance>0</breachChance>
-        <cooldown>15</cooldown>
-        <hullBust>0</hullBust>
-        <power>1</power>
-        <cost>90</cost>
-        <bp>8</bp>
-        <rarity>0</rarity>
-        <image>beam_contact</image>
-        <length>50</length>
-        <speed>10</speed>
-        <color>
-            <r>200</r>
-            <g>255</g>
-            <b>200</b>
-        </color>
-        <mv-aiCrewTarget>MOST_CREW</mv-aiCrewTarget>
-        <mv-tileDamage method="2"/>
-        <erosion>
-            <speed>0.5</speed>
-            <maxSpeed>2</maxSpeed>
-            <time>5.0</time>
-            <maxTime>10.0</maxTime>
-            <systemRepairMultiplier>1</systemRepairMultiplier>
-            <erodeShields>false</erodeShields>
-            <roomAnim renderLayer="1">
-                <anim animType="default" animBorder="2">lily_invisible</anim>
-                <wallAnim>lily_acid_wall_1</wallAnim>
-            </roomAnim>
-        </erosion>
-        <statBoosts>
-			<statBoost name="trueHealAmount">
-				<boostType>FLAT</boostType>
-				<amount>-6</amount>
-				<shipTarget>CURRENT_ROOM</shipTarget>
-				<crewTarget>ALL</crewTarget>
-				<droneTarget>CREW</droneTarget>
-				<affectsSelf>true</affectsSelf>
-				<priority>-100</priority>
-				<duration>25.2</duration>
-				<!--<blackList load="BP_LIST">  Robots -->
-				<blackList>
-					<blueprintList load="TERRAN_SCV"/>
-				</blackList>
-				<boostAnim>sc_irradiate</boostAnim>
-				<maxStacks>3</maxStacks>
-			</statBoost>
-			<statBoost name="healSpeed">
-				<boostType>MULT</boostType>
-				<amount>0.3</amount>
-				<shipTarget>CURRENT_ROOM</shipTarget>
-				<crewTarget>ALL</crewTarget>
-				<droneTarget>CREW</droneTarget>
-				<affectsSelf>true</affectsSelf>
-				<priority>-100</priority>
-				<duration>25.2</duration>
-				<!--<boostAnim>sc_irradiate</boostAnim>-->
-			</statBoost>
-            <!--<statBoost name="allDamageTakenMultiplier">
-                <boostType>MULT</boostType>
-                <amount>2</amount>
-                <shipTarget>ALL</shipTarget>
-                <crewTarget>ALL</crewTarget>
-                <droneTarget>ALL</droneTarget>
-                <affectsSelf>true</affectsSelf>
-                <duration>10</duration>
-                <boostAnim>sc_irradiate</boostAnim>
-            </statBoost>-->
-        </statBoosts>
-        <launchSounds>
-            <sound>beam1</sound>
-            <sound>beam1_2</sound>
-        </launchSounds>
-        <weaponArt>lily_beam_toggle_syringe_a</weaponArt>
-        <iconImage>beam</iconImage>
-    </weaponBlueprint>
+<weaponBlueprint name="TNE_FOCUS_CAPACITOR">
+	<type>BEAM</type>
+	<flavorType>Pinpoint</flavorType>
+	<tip>tip_focus</tip>
+	<title id="TNE_TEXT_WEAPON_FOCUS_CAPACITOR_NAME"></title>
+	<short id="TNE_TEXT_WEAPON_FOCUS_CAPACITOR_SHORT"></short>
+	<desc>...</desc>
+	<descriptionOverride id="TNE_TEXT_WEAPON_FOCUS_CAPACITOR_DESC"></descriptionOverride>
+	<tooltipOverride id="TNE_TEXT_WEAPON_FOCUS_CAPACITOR_TOOLTIP"></tooltipOverride>
+	<tooltip>...</tooltip>
+	<damage>2</damage>
+	<sp>0</sp>
+	<fireChance>0</fireChance>
+	<breachChance>2</breachChance>
+	<cooldown>28</cooldown>
+	<speed>1</speed>
+	<power>4</power>
+	<cost>100</cost>
+	<bp>2</bp>
+	<rarity>5</rarity>
+	<image>beam_contact</image>
+	<boost>
+		<type>damage</type>
+		<amount>1</amount>
+		<count>6</count>
+	</boost>
+	<length>1</length>
+	<launchSounds> <sound>focus_strong</sound> </launchSounds>
+	<weaponArt>tne_focus_capacitor</weaponArt>
+	<iconImage>beam</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="IRRADIATE_BEAM">
+	<type>BEAM</type>
+	<tip>tip_lily_syringe_a</tip>
+	<title>'Syringe' Beam [Acid]</title>
+	<short>'Syringe' [A]</short>
+	<desc>This weapon is less of traditional beam and more of an oversized medical device. Automatic chemical synthesis lab included. Current mode: Acid.</desc>
+	<tooltip>Applies an erosion effect for every tile hit. Also does 5 hp/s damage for 3 seconds for any crew hit and doubles damage taken by them for 10 seconds.</tooltip>
+	<damage>0</damage>
+	<persDamage>0</persDamage>
+	<sp>3</sp>
+	<fireChance>0</fireChance>
+	<breachChance>0</breachChance>
+	<cooldown>15</cooldown>
+	<hullBust>0</hullBust>
+	<power>1</power>
+	<cost>90</cost>
+	<bp>8</bp>
+	<rarity>0</rarity>
+	<image>beam_contact</image>
+	<length>50</length>
+	<speed>10</speed>
+	<color>
+		<r>200</r>
+		<g>255</g>
+		<b>200</b>
+	</color>
+	<mv-aiCrewTarget>MOST_CREW</mv-aiCrewTarget>
+	<mv-tileDamage method="2"/>
+	<erosion>
+		<speed>0.5</speed>
+		<maxSpeed>2</maxSpeed>
+		<time>5.0</time>
+		<maxTime>10.0</maxTime>
+		<systemRepairMultiplier>1</systemRepairMultiplier>
+		<erodeShields>false</erodeShields>
+		<roomAnim renderLayer="1">
+			<anim animType="default" animBorder="2">lily_invisible</anim>
+			<wallAnim>lily_acid_wall_1</wallAnim>
+		</roomAnim>
+	</erosion>
+	<statBoosts>
+		<statBoost name="trueHealAmount">
+			<boostType>FLAT</boostType>
+			<amount>-6</amount>
+			<shipTarget>CURRENT_ROOM</shipTarget>
+			<crewTarget>ALL</crewTarget>
+			<droneTarget>CREW</droneTarget>
+			<affectsSelf>true</affectsSelf>
+			<priority>-100</priority>
+			<duration>25.2</duration>
+			<!--<blackList load="BP_LIST">  Robots -->
+			<blackList>
+				<blueprintList load="TERRAN_SCV"/>
+			</blackList>
+			<boostAnim>sc_irradiate</boostAnim>
+			<maxStacks>3</maxStacks>
+		</statBoost>
+		<statBoost name="healSpeed">
+			<boostType>MULT</boostType>
+			<amount>0.3</amount>
+			<shipTarget>CURRENT_ROOM</shipTarget>
+			<crewTarget>ALL</crewTarget>
+			<droneTarget>CREW</droneTarget>
+			<affectsSelf>true</affectsSelf>
+			<priority>-100</priority>
+			<duration>25.2</duration>
+			<!--<boostAnim>sc_irradiate</boostAnim>-->
+		</statBoost>
+		<!--<statBoost name="allDamageTakenMultiplier">
+			<boostType>MULT</boostType>
+			<amount>2</amount>
+			<shipTarget>ALL</shipTarget>
+			<crewTarget>ALL</crewTarget>
+			<droneTarget>ALL</droneTarget>
+			<affectsSelf>true</affectsSelf>
+			<duration>10</duration>
+			<boostAnim>sc_irradiate</boostAnim>
+		</statBoost>-->
+	</statBoosts>
+	<launchSounds>
+		<sound>beam1</sound>
+		<sound>beam1_2</sound>
+	</launchSounds>
+	<weaponArt>lily_beam_toggle_syringe_a</weaponArt>
+	<iconImage>beam</iconImage>
+</weaponBlueprint>
 <!-- 
 *********************************************************************************************************
   TERRAN MARINE
@@ -1623,7 +1655,92 @@
 	</cooldowns>
 </droneBlueprint>
 
+<!-- 
+**********************************************************************************************************************
+           TERRAN_DEFENSE
+**********************************************************************************************************************
+-->
 
+<weaponBlueprint name="TERRAN_DEFENSE_1">
+	<type>LASER</type>
+	<title>[[YOU SHOULD NOT SEE THIS - TERRAN_DEFENSE_1]]</title>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>shieldDroneActivate</sound>
+	</launchSounds>
+</weaponBlueprint>						
+<droneBlueprint name="TERRAN_DEFENSE_1">						
+	<type>DEFENSE</type>					
+	<target>LASERS</target>					
+	<tip>tip_defense</tip>					
+	<title id="drone_TERRAN_DEFENSE_1_NAME"></title>					
+	<short id="drone_TERRAN_DEFENSE_1_SHORT"></short>					
+	<desc id="drone_TERRAN_DEFENSE_1_DESC"></desc>					
+	<power>2</power>					
+	<cooldown>3000</cooldown><!-- was 1500-->					
+	<dodge>0</dodge>					
+	<speed>20</speed>					
+	<cost>60</cost>					
+	<bp>2</bp>					
+	<droneImage>terran_defense_1</droneImage>					
+	<weaponBlueprint>TERRAN_DEFENSE_1</weaponBlueprint>					
+	<iconImage>defense</iconImage>					 
+	<rarity>3</rarity>					
+</droneBlueprint>						
+						
+<weaponBlueprint name="TERRAN_DEFENSE_2">		
+	<type>LASER</type>
+	<title>[[YOU SHOULD NOT SEE THIS - TERRAN_DEFENSE_2]]</title>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>shieldDroneActivate</sound>
+	</launchSounds>				
+</weaponBlueprint>					
+<droneBlueprint name="TERRAN_DEFENSE_2">						
+	<type>DEFENSE</type>					
+	<target>LASERS</target>					
+	<tip>tip_defense</tip>					
+	<title id="drone_TERRAN_DEFENSE_2_NAME"></title>					
+	<short id="drone_TERRAN_DEFENSE_2_SHORT"></short>					
+	<desc id="drone_TERRAN_DEFENSE_2_DESC"></desc>					
+	<power>3</power>					
+	<cooldown>2000</cooldown>					
+	<dodge>0</dodge>					
+	<speed>20</speed>					
+	<cost>80</cost>					
+	<bp>2</bp>					
+	<droneImage>terran_defense_2</droneImage>					
+	<weaponBlueprint>TERRAN_DEFENSE_2</weaponBlueprint>					
+	<iconImage>defense</iconImage>					
+	<rarity>4</rarity>					
+</droneBlueprint>			
+
+<weaponBlueprint name="TERRAN_DEFENSE_3">
+	<type>LASER</type>				
+	<title>[[YOU SHOULD NOT SEE THIS - TERRAN_DEFENSE_3]]</title>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>shieldDroneActivate</sound>
+	</launchSounds>				
+</weaponBlueprint>						
+<droneBlueprint name="TERRAN_DEFENSE_3">						
+	<type>DEFENSE</type>					
+	<target>LASERS</target>					
+	<tip>tip_defense</tip>					
+	<title id="drone_TERRAN_DEFENSE_3_NAME"></title>					
+	<short id="drone_TERRAN_DEFENSE_3_SHORT"></short>					
+	<desc id="drone_TERRAN_DEFENSE_3_DESC"></desc>					
+	<power>3</power>					
+	<cooldown>1000</cooldown>					
+	<dodge>0</dodge>					
+	<speed>20</speed>					
+	<cost>140</cost>					
+	<bp>2</bp>					
+	<droneImage>terran_defense_3</droneImage>					
+	<weaponBlueprint>TERRAN_DEFENSE_3</weaponBlueprint>					
+	<iconImage>defense</iconImage>					
+	<rarity>5</rarity>					
+</droneBlueprint>	
 <!-- 
 *********************************************************************************************************
 						SHIPS
@@ -1851,7 +1968,10 @@
 		<weapon name="EMP_MISSILE" />
 	</weaponList>
 	<droneList drones="10" count="3">
-		<drone name="TERRAN_MATRIX_1" />
+		<!--<drone name="TERRAN_MATRIX_1" />-->
+		<drone name="TERRAN_DEFENSE_1" />		
+		<drone name="TERRAN_DEFENSE_2" />
+		<drone name="TERRAN_DEFENSE_3" />
 	</droneList>
 	<health amount="30" />
 	<maxPower amount="6" />

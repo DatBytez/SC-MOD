@@ -1139,6 +1139,7 @@
 	<mod-append:script>data/sc_scripts/sc_scv.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_copy.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/TNE_LUA_ACTIVE_DRONE.lua</mod-append:script>
 
 	<!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>	-->
 </mod:findLike>
