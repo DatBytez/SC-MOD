@@ -1,0 +1,1806 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<FTL>
+
+<!-- Weapon Mounts -->
+	
+	<animSheet name="terran_laser_battery_1_charge" w="56" h="160" fw="28" fh="160">weapon/terran_laser_battery_1_charge.png</animSheet>
+	<anim name="terran_laser_battery_1_charge">
+		<sheet>terran_laser_battery_1_charge</sheet>
+		<desc length="2" x="0" y="0"/>
+		<time>1.0</time>
+	</anim>
+	
+		<animSheet name="terran_laser_battery_1" w="280" h="160" fw="28" fh="160">weapon/terran_laser_battery_1.png</animSheet>
+	<weaponAnim name="terran_laser_battery_1">
+		<sheet>terran_laser_battery_1</sheet>
+		<desc length="10" x="0" y="0"/>
+		<chargedFrame>4</chargedFrame>
+		<fireFrame>5</fireFrame>
+		<firePoint x="18" y="77" charge="0"/>
+		<mountPoint x="4" y="84"/>
+		<boost>terran_laser_battery_1_charge</boost>
+	</weaponAnim>
+	
+	<animSheet name="terran_laser_battery_2_charge" w="105" h="180" fw="35" fh="180">weapon/terran_laser_battery_2_charge.png</animSheet>
+	<anim name="terran_laser_battery_2_charge">
+		<sheet>terran_laser_battery_2_charge</sheet>
+		<desc length="3" x="0" y="0"/>
+		<time>1.0</time>
+	</anim>
+	
+	<animSheet name="terran_laser_battery_2" w="385" h="180" fw="35" fh="180">weapon/terran_laser_battery_2.png</animSheet>
+	<weaponAnim name="terran_laser_battery_2">
+		<sheet>terran_laser_battery_2</sheet>
+		<desc length="11" x="0" y="0"/>
+		<chargedFrame>4</chargedFrame>
+		<fireFrame>5</fireFrame>
+		<firePoint x="18" y="77" charge="0"/>
+		<mountPoint x="4" y="94"/>
+		<boost>terran_laser_battery_2_charge</boost>
+	</weaponAnim>
+	
+	<animSheet name="terran_laser_battery_3_charge" w="140" h="190" fw="35" fh="190">weapon/terran_laser_battery_3_charge.png</animSheet>
+	<anim name="terran_laser_battery_3_charge">
+		<sheet>terran_laser_battery_3_charge</sheet>
+		<desc length="4" x="0" y="0"/>
+		<time>1.0</time>
+	</anim>
+	
+	<animSheet name="terran_laser_battery_3" w="455" h="190" fw="35" fh="190">weapon/terran_laser_battery_3.png</animSheet>
+	<weaponAnim name="terran_laser_battery_3">
+		<sheet>terran_laser_battery_3</sheet>
+		<desc length="13" x="0" y="0"/>
+		<chargedFrame>4</chargedFrame>
+		<fireFrame>5</fireFrame>
+		<firePoint x="18" y="77" charge="0"/>
+		<mountPoint x="4" y="99"/>
+		<boost>terran_laser_battery_3_charge</boost>
+	</weaponAnim>
+	
+	<animSheet name="terran_laser_battery_heavy_1_charge" w="93" h="182" fw="31" fh="182">weapon/terran_laser_battery_heavy_1_charge.png</animSheet>
+	<anim name="terran_laser_battery_heavy_1_charge">
+		<sheet>terran_laser_battery_heavy_1_charge</sheet>
+		<desc length="3" x="0" y="0"/>
+		<time>1.0</time>
+	</anim>
+
+	<animSheet name="terran_laser_battery_heavy_1" w="341" h="182" fw="31" fh="182">weapon/terran_laser_battery_heavy_1.png</animSheet>
+	<weaponAnim name="terran_laser_battery_heavy_1">
+		<sheet>terran_laser_battery_heavy_1</sheet>
+		<desc length="11" x="0" y="0"/>
+		<chargedFrame>4</chargedFrame>
+		<fireFrame>5</fireFrame>
+		<firePoint x="18" y="77"/>
+		<mountPoint x="4" y="109"/>
+		<boost>terran_laser_battery_heavy_1_charge</boost>
+	</weaponAnim>
+	
+	<animSheet name="terran_laser_battery_heavy_2_charge" w="105" h="184" fw="35" fh="184">weapon/terran_laser_battery_heavy_2_charge.png</animSheet>
+	<anim name="terran_laser_battery_heavy_2_charge">
+		<sheet>terran_laser_battery_heavy_2_charge</sheet>
+		<desc length="3" x="0" y="0"/>
+		<time>1.0</time>
+	</anim>
+	
+	<animSheet name="terran_laser_battery_heavy_2" w="385" h="184" fw="35" fh="184">weapon/terran_laser_battery_heavy_2.png</animSheet>
+	<weaponAnim name="terran_laser_battery_heavy_2">
+		<sheet>terran_laser_battery_heavy_2</sheet>
+		<desc length="11" x="0" y="0"/>
+		<chargedFrame>4</chargedFrame>
+		<fireFrame>5</fireFrame>
+		<firePoint x="18" y="77"/>
+		<mountPoint x="4" y="109"/>
+		<boost>terran_laser_battery_heavy_2_charge</boost>
+	</weaponAnim>
+	
+	<animSheet name="terran_burst_laser_1_charge" w="140" h="152" fw="28" fh="152">weapon/terran_burst_laser_1_charge.png</animSheet>
+	<anim name="terran_burst_laser_1_charge">
+		<sheet>terran_burst_laser_1_charge</sheet>
+		<desc length="5" x="0" y="0"/>
+		<time>1.0</time>
+	</anim>
+
+	<animSheet name="terran_burst_laser_1" w="308" h="152" fw="28" fh="152">weapon/terran_burst_laser_1.png</animSheet>
+	<weaponAnim name="terran_burst_laser_1">
+		<sheet>terran_burst_laser_1</sheet>
+		<desc length="11" x="0" y="0"/>
+		<chargedFrame>3</chargedFrame>
+		<fireFrame>4</fireFrame>
+		<firePoint x="18" y="77"/>
+		<mountPoint x="4" y="80"/>
+		<boost>terran_burst_laser_1_charge</boost>
+	</weaponAnim>	
+	
+	<animSheet name="terran_burst_laser_2_charge" w="140" h="174" fw="28" fh="174">weapon/terran_burst_laser_2_charge.png</animSheet>
+	<anim name="terran_burst_laser_2_charge">
+		<sheet>terran_burst_laser_2_charge</sheet>
+		<desc length="5" x="0" y="0"/>
+		<time>1.0</time>
+	</anim>
+
+	<animSheet name="terran_burst_laser_2" w="308" h="174" fw="28" fh="174">weapon/terran_burst_laser_2.png</animSheet>
+	<weaponAnim name="terran_burst_laser_2">
+		<sheet>terran_burst_laser_2</sheet>
+		<desc length="11" x="0" y="0"/>
+		<chargedFrame>3</chargedFrame>
+		<fireFrame>4</fireFrame>
+		<firePoint x="18" y="77"/>
+		<mountPoint x="4" y="100"/>
+		<boost>terran_burst_laser_2_charge</boost>
+	</weaponAnim>
+
+	<animSheet name="terran_burst_laser_3_charge" w="140" h="174" fw="28" fh="174">weapon/terran_burst_laser_3_charge.png</animSheet>
+	<anim name="terran_burst_laser_3_charge">
+		<sheet>terran_burst_laser_3_charge</sheet>
+		<desc length="5" x="0" y="0"/>
+		<time>1.0</time>
+	</anim>
+	
+	<animSheet name="terran_burst_laser_3" w="308" h="174" fw="28" fh="174">weapon/terran_burst_laser_3.png</animSheet>
+	<weaponAnim name="terran_burst_laser_3">
+		<sheet>terran_burst_laser_3</sheet>
+		<desc length="11" x="0" y="0"/>
+		<chargedFrame>3</chargedFrame>
+		<fireFrame>4</fireFrame>
+		<firePoint x="18" y="77"/>
+		<mountPoint x="4" y="100"/>
+		<boost>terran_burst_laser_3_charge</boost>
+	</weaponAnim>
+	
+	<animSheet name="terran_burst_laser_heavy_1_charge" w="140" h="182" fw="28" fh="182">weapon/terran_burst_laser_heavy_1_charge.png</animSheet>
+	<anim name="terran_burst_laser_heavy_1_charge">
+		<sheet>terran_burst_laser_heavy_1_charge</sheet>
+		<desc length="5" x="0" y="0"/>
+		<time>1.0</time>
+	</anim>
+
+	<animSheet name="terran_burst_laser_heavy_1" w="364" h="182" fw="28" fh="182">weapon/terran_burst_laser_heavy_1.png</animSheet>
+	<weaponAnim name="terran_burst_laser_heavy_1">
+		<sheet>terran_burst_laser_heavy_1</sheet>
+		<desc length="13" x="0" y="0"/>
+		<chargedFrame>4</chargedFrame>
+		<fireFrame>5</fireFrame>
+		<firePoint x="18" y="77"/>
+		<mountPoint x="4" y="108"/>
+		<boost>terran_burst_laser_heavy_1_charge</boost>
+	</weaponAnim>	
+	
+	<animSheet name="terran_burst_laser_heavy_2_charge" w="140" h="212" fw="28" fh="212">weapon/terran_burst_laser_heavy_2_charge.png</animSheet>
+	<anim name="terran_burst_laser_heavy_2_charge">
+		<sheet>terran_burst_laser_heavy_2_charge</sheet>
+		<desc length="5" x="0" y="0"/>
+		<time>1.0</time>
+	</anim>
+
+	<animSheet name="terran_burst_laser_heavy_2" w="392" h="212" fw="28" fh="212">weapon/terran_burst_laser_heavy_2.png</animSheet>
+	<weaponAnim name="terran_burst_laser_heavy_2">
+		<sheet>terran_burst_laser_heavy_2</sheet>
+		<desc length="14" x="0" y="0"/>
+		<chargedFrame>5</chargedFrame>
+		<fireFrame>6</fireFrame>
+		<firePoint x="18" y="77"/>
+		<mountPoint x="4" y="135"/>
+		<boost>terran_burst_laser_heavy_2_charge</boost>
+	</weaponAnim>
+	
+	<animSheet name="terran_missile_1" w="75" h="43" fw="25" fh="43">weapon/terran_missile_1.png</animSheet>
+	<weaponAnim name="terran_missile_1">
+		<sheet>terran_missile_1</sheet>
+		<desc length="3" x="0" y="0" />
+		<chargedFrame>1</chargedFrame>
+		<fireFrame>2</fireFrame>
+		<firePoint x="15" y="20" />
+		<mountPoint x="7" y="30" />
+		<chargeImage>weapon/terran_missile_1_glow.png</chargeImage>
+	</weaponAnim>
+
+	<animSheet name="terran_missile_2" w="75" h="58" fw="26" fh="48">weapon/terran_missile_2.png</animSheet>
+	<weaponAnim name="terran_missile_2">
+		<sheet>terran_missile_2</sheet>
+		<desc length="3" x="0" y="0" />
+		<chargedFrame>1</chargedFrame>
+		<fireFrame>2</fireFrame>
+		<firePoint x="16" y="15" />
+		<mountPoint x="3" y="40" />
+		<chargeImage>weapon/terran_missile_2_glow.png</chargeImage>
+	</weaponAnim>
+
+	<animSheet name="terran_missile_3" w="78" h="62" fw="26" fh="62">weapon/terran_missile_3.png</animSheet>
+	<weaponAnim name="terran_missile_3">
+		<sheet>terran_missile_3</sheet>
+		<desc length="3" x="0" y="0" />
+		<chargedFrame>1</chargedFrame>
+		<fireFrame>2</fireFrame>
+		<firePoint x="16" y="15" />
+		<mountPoint x="3" y="40" />
+		<chargeImage>weapon/terran_missile_3_glow.png</chargeImage>
+	</weaponAnim>
+	
+	<animSheet name="terran_missile_emp" w="78" h="62" fw="26" fh="62">weapon/terran_missile_emp.png</animSheet>
+	<weaponAnim name="terran_missile_emp">
+		<sheet>terran_missile_emp</sheet>
+		<desc length="3" x="0" y="0" />
+		<chargedFrame>1</chargedFrame>
+		<fireFrame>2</fireFrame>
+		<firePoint x="16" y="15" />
+		<mountPoint x="3" y="40" />
+		<chargeImage>weapon/terran_missile_emp_glow.png</chargeImage>
+	</weaponAnim>
+	
+<!-- Projectiles -->
+	
+<animSheet name="terran_yamato" w="101" h="29" fw="101" fh="29">weapon/terran_yamato_projectile.png</animSheet>
+<anim name="terran_yamato">
+	<sheet>terran_yamato</sheet>
+	<desc length="1" x="0" y="0"/>
+	<time>0.3</time>
+</anim>
+
+<animSheet name="terran_laser_battery_projectile" w="158" h="24" fw="79" fh="24">weapon/terran_laser_battery_projectile.png</animSheet>
+<anim name="terran_laser_battery_projectile">
+	<sheet>terran_laser_battery_projectile</sheet>
+	<desc length="2" x="0" y="0"/>
+	<time>0.3</time>
+</anim>
+
+<animSheet name="terran_laser_battery_heavy_projectile" w="236" h="35" fw="118" fh="35">weapon/terran_laser_battery_heavy_projectile.png</animSheet>
+<anim name="terran_laser_battery_heavy_projectile">
+	<sheet>terran_laser_battery_heavy_projectile</sheet>
+	<desc length="2" x="0" y="0"/>
+	<time>0.3</time>
+</anim>
+
+<animSheet name="terran_burst_laser_projectile" w="136" h="19" fw="68" fh="19">weapon/terran_burst_laser_projectile.png</animSheet>
+<anim name="terran_burst_laser_projectile">
+	<sheet>terran_burst_laser_projectile</sheet>
+	<desc length="2" x="0" y="0"/>
+	<time>0.3</time>
+</anim>
+
+<animSheet name="terran_burst_laser_heavy_projectile" w="146" h="46" fw="73" fh="46">weapon/terran_burst_laser_heavy_projectile.png</animSheet>
+<anim name="terran_burst_laser_heavy_projectile">
+	<sheet>terran_burst_laser_heavy_projectile</sheet>
+	<desc length="2" x="0" y="0"/>
+	<time>0.3</time>
+</anim>
+<!-- Explosions -->
+
+<animSheet name="terran_yamato_explosion" w="2016" h="144" fw="144" fh="144">weapon/terran_yamato_hit.png</animSheet>
+<anim name="terran_yamato_explosion">
+	<sheet>terran_yamato_explosion</sheet>
+	<desc length="14" x="0" y="0"/>
+	<time>1.0</time>
+</anim>
+
+<animSheet name="terran_laser_battery_hit" w="400" h="40" fw="40" fh="40">weapon/terran_laser_battery_hit.png</animSheet>
+<anim name="terran_laser_battery_hit">
+	<sheet>terran_laser_battery_hit</sheet>
+	<desc length="10" x="0" y="0"/>
+	<time>1.0</time>
+</anim>
+
+<animSheet name="terran_laser_battery_heavy_hit" w="500" h="50" fw="50" fh="50">weapon/terran_laser_battery_heavy_hit.png</animSheet>
+<anim name="terran_laser_battery_heavy_hit">
+	<sheet>terran_laser_battery_heavy_hit</sheet>
+	<desc length="10" x="0" y="0"/>
+	<time>1.0</time>
+</anim>
+
+<animSheet name="terran_burst_laser_hit" w="585" h="58" fw="58" fh="58">weapon/terran_burst_laser_hit.png</animSheet>
+<anim name="terran_burst_laser_hit">
+	<sheet>terran_burst_laser_hit</sheet>
+	<desc length="10" x="0" y="0"/>
+	<time>1.0</time>
+</anim>
+
+<animSheet name="terran_burst_laser_heavy_hit" w="1170" h="116" fw="117" fh="116">weapon/terran_burst_laser_heavy_hit.png</animSheet>
+<anim name="terran_burst_laser_heavy_hit">
+	<sheet>terran_burst_laser_heavy_hit</sheet>
+	<desc length="10" x="0" y="0"/>
+	<time>1.0</time>
+</anim>
+
+<animSheet name="terran_gemini_hit" w="1010" h="100" fw="101" fh="100">weapon/terran_gemini_hit.png</animSheet>
+<anim name="terran_gemini_hit">
+	<sheet>terran_gemini_hit</sheet>
+	<desc length="10" x="0" y="0"/>
+	<time>1.0</time>
+</anim>
+
+<!-- Status Effects -->
+<animSheet name="lily_invisible" w="35" h="35" fw="35" fh="35">effects_lily/invisible.png</animSheet>
+<anim name="lily_invisible">
+	<sheet>lily_invisible</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>0.1</time>
+</anim>
+
+<animSheet name="lily_acid_wall_1" w="175" h="35" fw="35" fh="35">effects_lily/acid_wall_1.png</animSheet>
+<anim name="lily_acid_wall_1">
+	<sheet>lily_acid_wall_1</sheet>
+	<desc length="5" x="0" y="0"/>
+	<time>0.2</time>
+</anim>
+
+<animSheet name="lily_poison_effect" w="352" h="32" fw="32" fh="32">people_lily/poison_effect.png</animSheet>
+<anim name="lily_poison_effect">
+	<sheet>lily_poison_effect</sheet>
+	<desc length="11" x="0" y="0"/>
+	<time>1.0</time>
+</anim>
+
+<animSheet name="lily_acid_effect" w="352" h="32" fw="32" fh="32">people_lily/acid_effect.png</animSheet>
+<anim name="lily_acid_effect">
+	<sheet>lily_acid_effect</sheet>
+	<desc length="11" x="0" y="0"/>
+	<time>1.0</time>
+</anim>
+
+	<animSheet name="bio_poison" w="352" h="32" fw="32" fh="32">people/healing_hurt_strip11.png</animSheet>
+<anim name="bio_poison">
+	<sheet>bio_poison</sheet>
+	<desc length="11" x="0" y="0"/>
+	<time>1.0</time>
+</anim>
+
+<!--
+****************
+	WEAPON EFFECTS
+****************
+-->
+<animSheet name="sc_irradiate" w="384" h="64" fw="64" fh="64">effects/status_irradiate.png</animSheet>
+<anim name="sc_irradiate">
+	<sheet>sc_irradiate</sheet>
+	<desc length="6" x="0" y="0"/>
+	<time>1.0</time>
+</anim>
+
+<animSheet name="sc_repair" w="520" h="42" fw="52" fh="42">effects/effect_repair.png</animSheet>
+<anim name="sc_repair">
+	<sheet>sc_repair</sheet>
+	<desc length="10" x="0" y="0"/>
+	<time>0.5</time>
+</anim>
+
+<!-- 
+*********************************************************************************************************
+     TERRAN MEDIC
+*********************************************************************************************************
+-->
+<animSheet name="terran_medic" w="315" h="455" fw="35" fh="35">people/terran_medic_base.png</animSheet>
+<anim name="terran_medic_clone">
+	<sheet>terran_medic</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_medic_death_right">
+	<sheet>terran_medic</sheet>
+	<desc length="9" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_medic_death_left">
+	<sheet>terran_medic</sheet>
+	<desc length="9" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_medic_walk_down">
+	<sheet>terran_medic</sheet>
+	<desc length="8" x="0" y="3" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_walk_right">
+	<sheet>terran_medic</sheet>
+	<desc length="8" x="0" y="4" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_walk_up">
+	<sheet>terran_medic</sheet>
+	<desc length="8" x="0" y="5" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_walk_left">
+	<sheet>terran_medic</sheet>
+	<desc length="8" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_shoot_down">
+	<sheet>terran_medic</sheet>
+	<desc length="3" x="0" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_shoot_right">
+	<sheet>terran_medic</sheet>
+	<desc length="3" x="3" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_shoot_up">
+	<sheet>terran_medic</sheet>
+	<desc length="3" x="0" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_shoot_left">
+	<sheet>terran_medic</sheet>
+	<desc length="3" x="3" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_fire_down">
+	<sheet>terran_medic</sheet>
+	<desc length="4" x="0" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_fire_right">
+	<sheet>terran_medic</sheet>
+	<desc length="4" x="4" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_fire_up">
+	<sheet>terran_medic</sheet>
+	<desc length="4" x="0" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_fire_left">
+	<sheet>terran_medic</sheet>
+	<desc length="4" x="4" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_repair">
+	<sheet>terran_medic</sheet>
+	<desc length="4" x="0" y="6" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_punch_up">
+	<sheet>terran_medic</sheet>
+	<desc length="4" x="0" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_punch_down">
+	<sheet>terran_medic</sheet>
+	<desc length="4" x="4" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_medic_teleport">
+	<sheet>terran_medic</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_medic_type_right">
+	<sheet>terran_medic</sheet>
+	<desc length="2" x="4" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_medic_type_left">
+	<sheet>terran_medic</sheet>
+	<desc length="2" x="6" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_medic_type_up">
+	<sheet>terran_medic</sheet>
+	<desc length="2" x="0" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_medic_type_down">
+	<sheet>terran_medic</sheet>
+	<desc length="2" x="2" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_medic_portrait">
+	<sheet>terran_medic</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
+<!-- 
+*********************************************************************************************************
+     TERRAN MARINE
+*********************************************************************************************************
+-->
+<animSheet name="terran_marine" w="315" h="455" fw="35" fh="35">people/terran_marine_base.png</animSheet>
+<anim name="terran_marine_clone">
+	<sheet>terran_marine</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_marine_death_right">
+	<sheet>terran_marine</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_marine_death_left">
+	<sheet>terran_marine</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_marine_walk_down">
+	<sheet>terran_marine</sheet>
+	<desc length="8" x="0" y="3" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_walk_right">
+	<sheet>terran_marine</sheet>
+	<desc length="8" x="0" y="4" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_walk_up">
+	<sheet>terran_marine</sheet>
+	<desc length="8" x="0" y="5" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_walk_left">
+	<sheet>terran_marine</sheet>
+	<desc length="8" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_shoot_down">
+	<sheet>terran_marine</sheet>
+	<desc length="3" x="0" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_shoot_right">
+	<sheet>terran_marine</sheet>
+	<desc length="3" x="3" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_shoot_up">
+	<sheet>terran_marine</sheet>
+	<desc length="3" x="0" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_shoot_left">
+	<sheet>terran_marine</sheet>
+	<desc length="3" x="3" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_fire_down">
+	<sheet>terran_marine</sheet>
+	<desc length="4" x="0" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_fire_right">
+	<sheet>terran_marine</sheet>
+	<desc length="4" x="4" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_fire_up">
+	<sheet>terran_marine</sheet>
+	<desc length="4" x="0" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_fire_left">
+	<sheet>terran_marine</sheet>
+	<desc length="4" x="4" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_repair">
+	<sheet>terran_marine</sheet>
+	<desc length="3" x="0" y="6" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_punch_up">
+	<sheet>terran_marine</sheet>
+	<desc length="4" x="0" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_punch_down">
+	<sheet>terran_marine</sheet>
+	<desc length="4" x="4" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_marine_teleport">
+	<sheet>terran_marine</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_marine_type_right">
+	<sheet>terran_marine</sheet>
+	<desc length="2" x="4" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_marine_type_left">
+	<sheet>terran_marine</sheet>
+	<desc length="2" x="6" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_marine_type_up">
+	<sheet>terran_marine</sheet>
+	<desc length="2" x="0" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_marine_type_down">
+	<sheet>terran_marine</sheet>
+	<desc length="2" x="2" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_marine_portrait">
+	<sheet>terran_marine</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
+<!-- 
+*********************************************************************************************************
+     TERRAN FIREBAT
+*********************************************************************************************************
+-->
+<animSheet name="terran_firebat" w="315" h="455" fw="35" fh="35">people/terran_firebat_base.png</animSheet>
+<anim name="terran_firebat_clone">
+	<sheet>terran_firebat</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.75</time>
+</anim>
+<animSheet name="explosion_firebat_death" w="640" h="64" fw="64" fh="64">effects/explosion_firebat_death.png</animSheet>
+<anim name="terran_firebat_death_right">
+	<sheet>explosion_firebat_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_firebat_death_left">
+	<sheet>explosion_firebat_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_firebat_walk_down">
+	<sheet>terran_firebat</sheet>
+	<desc length="8" x="0" y="3" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_walk_right">
+	<sheet>terran_firebat</sheet>
+	<desc length="8" x="0" y="4" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_walk_up">
+	<sheet>terran_firebat</sheet>
+	<desc length="8" x="0" y="5" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_walk_left">
+	<sheet>terran_firebat</sheet>
+	<desc length="8" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_shoot_down">
+	<sheet>terran_firebat</sheet>
+	<desc length="3" x="0" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_shoot_right">
+	<sheet>terran_firebat</sheet>
+	<desc length="3" x="3" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_shoot_up">
+	<sheet>terran_firebat</sheet>
+	<desc length="3" x="0" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_shoot_left">
+	<sheet>terran_firebat</sheet>
+	<desc length="3" x="3" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_fire_down">
+	<sheet>terran_firebat</sheet>
+	<desc length="4" x="0" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_fire_right">
+	<sheet>terran_firebat</sheet>
+	<desc length="4" x="4" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_fire_up">
+	<sheet>terran_firebat</sheet>
+	<desc length="4" x="0" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_fire_left">
+	<sheet>terran_firebat</sheet>
+	<desc length="4" x="4" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_repair">
+	<sheet>terran_firebat</sheet>
+	<desc length="3" x="0" y="6" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_punch_up">
+	<sheet>terran_firebat</sheet>
+	<desc length="4" x="0" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_punch_down">
+	<sheet>terran_firebat</sheet>
+	<desc length="4" x="4" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_firebat_teleport">
+	<sheet>terran_firebat</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_firebat_type_right">
+	<sheet>terran_firebat</sheet>
+	<desc length="2" x="4" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_firebat_type_left">
+	<sheet>terran_firebat</sheet>
+	<desc length="2" x="6" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_firebat_type_up">
+	<sheet>terran_firebat</sheet>
+	<desc length="2" x="0" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_firebat_type_down">
+	<sheet>terran_firebat</sheet>
+	<desc length="2" x="2" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_firebat_portrait">
+	<sheet>terran_firebat</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
+<!-- 
+*********************************************************************************************************
+     TERRAN GHOST
+*********************************************************************************************************
+-->
+<animSheet name="terran_ghost" w="315" h="455" fw="35" fh="35">people/terran_ghost_base.png</animSheet>
+<anim name="terran_ghost_clone">
+	<sheet>terran_ghost</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_ghost_death_right">
+	<sheet>terran_ghost</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_ghost_death_left">
+	<sheet>terran_ghost</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_ghost_walk_down">
+	<sheet>terran_ghost</sheet>
+	<desc length="8" x="0" y="3" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_walk_right">
+	<sheet>terran_ghost</sheet>
+	<desc length="8" x="0" y="4" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_walk_up">
+	<sheet>terran_ghost</sheet>
+	<desc length="8" x="0" y="5" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_walk_left">
+	<sheet>terran_ghost</sheet>
+	<desc length="8" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_shoot_down">
+	<sheet>terran_ghost</sheet>
+	<desc length="3" x="0" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_shoot_right">
+	<sheet>terran_ghost</sheet>
+	<desc length="3" x="3" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_shoot_up">
+	<sheet>terran_ghost</sheet>
+	<desc length="3" x="0" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_shoot_left">
+	<sheet>terran_ghost</sheet>
+	<desc length="3" x="3" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_fire_down">
+	<sheet>terran_ghost</sheet>
+	<desc length="4" x="0" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_fire_right">
+	<sheet>terran_ghost</sheet>
+	<desc length="4" x="4" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_fire_up">
+	<sheet>terran_ghost</sheet>
+	<desc length="4" x="0" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_fire_left">
+	<sheet>terran_ghost</sheet>
+	<desc length="4" x="4" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_repair">
+	<sheet>terran_ghost</sheet>
+	<desc length="3" x="0" y="6" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_punch_up">
+	<sheet>terran_ghost</sheet>
+	<desc length="4" x="0" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_punch_down">
+	<sheet>terran_ghost</sheet>
+	<desc length="4" x="4" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_teleport">
+	<sheet>terran_ghost</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_ghost_type_right">
+	<sheet>terran_ghost</sheet>
+	<desc length="2" x="4" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_ghost_type_left">
+	<sheet>terran_ghost</sheet>
+	<desc length="2" x="6" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_ghost_type_up">
+	<sheet>terran_ghost</sheet>
+	<desc length="2" x="0" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_ghost_type_down">
+	<sheet>terran_ghost</sheet>
+	<desc length="2" x="2" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_ghost_portrait">
+	<sheet>terran_ghost</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
+<!--
+*********************************************************************************************************
+      TERRAN_GHOST_CLOAKED
+*********************************************************************************************************
+-->
+<animSheet name="terran_ghost_cloaked" w="315" h="455" fw="35" fh="35">people/terran_ghost_cloaked_base.png</animSheet>
+<anim name="terran_ghost_cloaked_clone">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_ghost_cloaked_death_right">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_ghost_cloaked_death_left">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_ghost_cloaked_walk_down">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="8" x="0" y="3" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_walk_right">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="8" x="0" y="4" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_walk_up">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="8" x="0" y="5" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_walk_left">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="8" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_shoot_down">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="3" x="0" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_shoot_right">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="3" x="3" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_shoot_up">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="3" x="0" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_shoot_left">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="3" x="3" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_fire_down">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="4" x="0" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_fire_right">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="4" x="4" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_fire_up">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="4" x="0" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_fire_left">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="4" x="4" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_repair">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="3" x="0" y="6" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_punch_up">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="4" x="0" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_punch_down">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="4" x="4" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_ghost_cloaked_teleport">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_ghost_cloaked_type_right">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="2" x="4" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_ghost_cloaked_type_left">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="2" x="6" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_ghost_cloaked_type_up">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="2" x="0" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_ghost_cloaked_type_down">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="2" x="2" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_ghost_cloaked_portrait">
+	<sheet>terran_ghost_cloaked</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
+<!--
+*********************************************************************************************************
+            TERRAN_CIVILIAN
+*********************************************************************************************************
+-->
+<animSheet name="terran_civilian" w="315" h="455" fw="35" fh="35">people/terran_civilian_base.png</animSheet>
+<anim name="terran_civilian_clone">
+	<sheet>terran_civilian</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_civilian_death_right">
+	<sheet>terran_civilian</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_civilian_death_left">
+	<sheet>terran_civilian</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_civilian_walk_down">
+	<sheet>terran_civilian</sheet>
+	<desc length="8" x="0" y="3" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_walk_right">
+	<sheet>terran_civilian</sheet>
+	<desc length="8" x="0" y="4" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_walk_up">
+	<sheet>terran_civilian</sheet>
+	<desc length="8" x="0" y="5" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_walk_left">
+	<sheet>terran_civilian</sheet>
+	<desc length="8" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_shoot_down">
+	<sheet>terran_civilian</sheet>
+	<desc length="3" x="0" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_shoot_right">
+	<sheet>terran_civilian</sheet>
+	<desc length="3" x="3" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_shoot_up">
+	<sheet>terran_civilian</sheet>
+	<desc length="3" x="0" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_shoot_left">
+	<sheet>terran_civilian</sheet>
+	<desc length="3" x="3" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_fire_down">
+	<sheet>terran_civilian</sheet>
+	<desc length="4" x="0" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_fire_right">
+	<sheet>terran_civilian</sheet>
+	<desc length="4" x="4" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_fire_up">
+	<sheet>terran_civilian</sheet>
+	<desc length="4" x="0" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_fire_left">
+	<sheet>terran_civilian</sheet>
+	<desc length="4" x="4" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_repair">
+	<sheet>terran_civilian</sheet>
+	<desc length="3" x="0" y="6" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_punch_up">
+	<sheet>terran_civilian</sheet>
+	<desc length="4" x="0" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_punch_down">
+	<sheet>terran_civilian</sheet>
+	<desc length="4" x="4" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_civilian_teleport">
+	<sheet>terran_civilian</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_civilian_type_right">
+	<sheet>terran_civilian</sheet>
+	<desc length="2" x="4" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_civilian_type_left">
+	<sheet>terran_civilian</sheet>
+	<desc length="2" x="6" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_civilian_type_up">
+	<sheet>terran_civilian</sheet>
+	<desc length="2" x="0" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_civilian_type_down">
+	<sheet>terran_civilian</sheet>
+	<desc length="2" x="2" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_civilian_portrait">
+	<sheet>terran_civilian</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
+<!--
+*********************************************************************************************************
+      terran_scv
+*********************************************************************************************************
+-->
+<animSheet name="terran_scv" w="315" h="455" fw="35" fh="35">people/terran_scv_base.png</animSheet>
+<anim name="terran_scv_clone">
+	<sheet>terran_scv</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.75</time>
+</anim>
+<animSheet name="explosion_terran_scv_death" w="640" h="64" fw="64" fh="64">effects/explosion_firebat_death.png</animSheet>
+<anim name="terran_scv_death_right">
+	<sheet>explosion_terran_scv_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_death_right">
+	<sheet>explosion_terran_scv_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_death_left">
+	<sheet>terran_scv</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_power_down">
+	<sheet>terran_scv</sheet>
+	<desc length="2" x="0" y="6"/>
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_power_up">
+	<sheet>terran_scv</sheet>
+	<desc length="3" x="1" y="6"/>
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_walk_down">
+	<sheet>terran_scv</sheet>
+	<desc length="8" x="0" y="3" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_walk_right">
+	<sheet>terran_scv</sheet>
+	<desc length="8" x="0" y="4" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_walk_up">
+	<sheet>terran_scv</sheet>
+	<desc length="8" x="0" y="5" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_walk_left">
+	<sheet>terran_scv</sheet>
+	<desc length="8" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_shoot_down">
+	<sheet>terran_scv</sheet>
+	<desc length="3" x="0" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_shoot_right">
+	<sheet>terran_scv</sheet>
+	<desc length="3" x="3" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_shoot_up">
+	<sheet>terran_scv</sheet>
+	<desc length="3" x="0" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_shoot_left">
+	<sheet>terran_scv</sheet>
+	<desc length="3" x="3" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_fire_down">
+	<sheet>terran_scv</sheet>
+	<desc length="4" x="0" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_fire_right">
+	<sheet>terran_scv</sheet>
+	<desc length="4" x="4" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_fire_up">
+	<sheet>terran_scv</sheet>
+	<desc length="4" x="0" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_fire_left">
+	<sheet>terran_scv</sheet>
+	<desc length="4" x="4" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_repair">
+	<sheet>terran_scv</sheet>
+	<desc length="3" x="0" y="6" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_punch_up">
+	<sheet>terran_scv</sheet>
+	<desc length="4" x="0" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_punch_down">
+	<sheet>terran_scv</sheet>
+	<desc length="4" x="4" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_teleport">
+	<sheet>terran_scv</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_scv_type_right">
+	<sheet>terran_scv</sheet>
+	<desc length="2" x="4" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_type_left">
+	<sheet>terran_scv</sheet>
+	<desc length="2" x="6" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_type_up">
+	<sheet>terran_scv</sheet>
+	<desc length="2" x="0" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_type_down">
+	<sheet>terran_scv</sheet>
+	<desc length="2" x="2" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_portrait">
+	<sheet>terran_scv</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
+<!--
+*********************************************************************************************************
+      TERRAN_SCV_HULL (This code is probably not necessary)
+*********************************************************************************************************
+-->
+<animSheet name="terran_scv_hull" w="315" h="455" fw="35" fh="35">people/terran_scv_hull_base.png</animSheet>
+<anim name="terran_scv_hull_clone">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_hull_death_right">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_hull_death_left">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_hull_walk_down">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="8" x="0" y="3" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_walk_right">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="8" x="0" y="4" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_walk_up">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="8" x="0" y="5" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_walk_left">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="8" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_shoot_down">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="3" x="0" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_shoot_right">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="3" x="3" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_shoot_up">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="3" x="0" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_shoot_left">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="3" x="3" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_fire_down">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="4" x="0" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_fire_right">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="4" x="4" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_fire_up">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="4" x="0" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_fire_left">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="4" x="4" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_repair">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="3" x="0" y="6" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_punch_up">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="4" x="0" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_punch_down">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="4" x="4" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_teleport">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_scv_hull_type_right">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="2" x="4" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_hull_type_left">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="2" x="6" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_hull_type_up">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="2" x="0" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_hull_type_down">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="2" x="2" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_hull_portrait">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
+<!--
+*********************************************************************************************************
+            TERRAN_SPIDER
+*********************************************************************************************************
+-->
+<animSheet name="terran_spider" w="315" h="70" fw="35" fh="35">people/terran_spider_base.png</animSheet>
+<anim name="terran_spider_clone">
+	<sheet>terran_spider</sheet>
+	<desc length="4" x="3" y="1" />
+	<time>0.75</time>
+</anim>
+<animSheet name="explosion_terran_spider_death" w="640" h="64" fw="64" fh="64">effects/explosion_clear_death.png</animSheet>
+<anim name="terran_spider_death_right">
+	<sheet>explosion_terran_spider_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_death_left">
+	<sheet>explosion_terran_spider_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_power_down">
+	<sheet>terran_spider</sheet>
+	<desc length="4" x="0" y="1"/>
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_power_up">
+	<sheet>terran_spider</sheet>
+	<desc length="4" x="3" y="1"/>
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_walk_down">
+	<sheet>terran_spider</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_walk_right">
+	<sheet>terran_spider</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_walk_up">
+	<sheet>terran_spider</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_walk_left">
+	<sheet>terran_spider</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_shoot_down">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_shoot_right">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_shoot_up">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_shoot_left">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_fire_down">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_fire_right">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_fire_up">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_fire_left">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_repair">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_punch_up">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_punch_down">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_teleport">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_spider_type_right">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_type_left">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_type_up">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_type_down">
+	<sheet>terran_spider</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_portrait">
+	<sheet>terran_spider</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
+
+<!--
+*********************************************************************************************************
+            TERRAN_SPIDER_SET
+*********************************************************************************************************
+-->
+<animSheet name="terran_spider_set" w="315" h="70" fw="35" fh="35">people/terran_spider_set_base.png</animSheet>
+<anim name="terran_spider_set_clone">
+	<sheet>terran_spider_set</sheet>
+	<desc length="4" x="3" y="1" />
+	<time>0.75</time>
+</anim>
+<animSheet name="explosion_terran_spider_set_death" w="640" h="64" fw="64" fh="64">effects/explosion_clear_death.png</animSheet>
+<anim name="terran_spider_death_right">
+	<sheet>explosion_terran_spider_set_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_set_death_left">
+	<sheet>explosion_terran_spider_set_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_set_power_down">
+	<sheet>terran_spider_set</sheet>
+	<desc length="4" x="0" y="1"/>
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_set_power_up">
+	<sheet>terran_spider_set</sheet>
+	<desc length="4" x="3" y="1"/>
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_set_walk_down">
+	<sheet>terran_spider_set</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_set_walk_right">
+	<sheet>terran_spider_set</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_set_walk_up">
+	<sheet>terran_spider_set</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_set_walk_left">
+	<sheet>terran_spider_set</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_set_shoot_down">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_set_shoot_right">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_set_shoot_up">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_set_shoot_left">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_set_fire_down">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_set_fire_right">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_set_fire_up">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_set_fire_left">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_set_repair">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_set_punch_up">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_set_punch_down">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_set_teleport">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_spider_set_type_right">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_set_type_left">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_set_type_up">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_set_type_down">
+	<sheet>terran_spider_set</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_set_portrait">
+	<sheet>terran_spider_set</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
+
+	<!--
+*********************************************************************************************************
+            TERRAN_SPIDER_MINE
+*********************************************************************************************************
+-->
+<animSheet name="terran_spider_mine" w="315" h="70" fw="35" fh="35">people/terran_spider_mine_base.png</animSheet>
+<anim name="terran_spider_mine_clone">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="4" x="3" y="1" />
+	<time>0.75</time>
+</anim>
+<animSheet name="explosion_terran_spider_mine_death" w="800" h="80" fw="80" fh="80">people/terran_spider_death.png</animSheet>
+<anim name="terran_spider_mine_death_right">
+	<sheet>explosion_terran_spider_mine_death</sheet>
+	<desc length="10" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_mine_death_left">
+	<sheet>explosion_terran_spider_mine_death</sheet>
+	<desc length="10" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_mine_power_down">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="4" x="0" y="1"/>
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_mine_power_up">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="4" x="3" y="1"/>
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_mine_walk_down">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_mine_walk_right">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_mine_walk_up">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_mine_walk_left">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_mine_shoot_down">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_mine_shoot_right">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_mine_shoot_up">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_mine_shoot_left">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_mine_fire_down">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_mine_fire_right">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_mine_fire_up">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_mine_fire_left">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_mine_repair">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_mine_punch_up">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_mine_punch_down">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_mine_teleport">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_spider_mine_type_right">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_mine_type_left">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_mine_type_up">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_mine_type_down">
+	<sheet>terran_spider_mine</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_mine_portrait">
+	<sheet>terran_spider_mine</sheet>
+	<!--<desc length="1" x="3" y="1" />-->
+	<desc length="1" x="4" y="2" />
+	<time>1</time>
+</anim>
+
+</FTL>

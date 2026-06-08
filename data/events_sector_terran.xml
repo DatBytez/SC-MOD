@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<eventList name="SC_LIST_BOARDERS">
+	<event/>
+<event load="SC_BOARDER_MARINE"/>
+<event load="SC_BOARDER_MARINE"/>
+<event load="SC_BOARDER_MARINE"/>
+<event load="SC_BOARDER_FIRE"/>
+<event load="SC_BOARDER_GHOST"/>
+</eventList>
+
+<textList name="SC_TXT_LIST_GHOST">
+	<text>Not a problem.</text>
+	<text>Consider it done.</text>
+	<text>You call the shots.</text>
+</textList>
+
+<event name="SC_BOARDER_MARINE">
+	<text>Enemy assault team approaching!</text>
+	<boarders min="3" max="5" class="terran_marine"/>
+	<boarders min="1" max="2" class="terran_medic"/>
+	<ship load="PIRATE"/>
+</event>
+
+<event name="SC_BOARDER_FIRE">
+	<text>Need a light?</text>
+	<boarders min="0" max="1" class="terran_medic"/>
+	<boarders min="1" max="2" class="terran_firebat"/>
+	<ship load="PIRATE"/>
+</event>
+
+<event name="SC_BOARDER_GHOST">
+	<text>A team of specialists has been sent to collect the bounty on your head.</text>
+	<boarders min="1" max="3" class="terran_ghost"/>
+	<ship load="PIRATE"/>
+</event>
+
+<event name="SC_TEST">
+	<text>Oh no enemies!</text>
+	<choice>
+		<text>Run and hide!</text>
+		<event/>
+	</choice>
+	
+	<choice>
+		<text>Fight them off!</text>
+		<event load="SC_LIST_BOARDERS"/>
+	</choice>
+</event>
+
+
+<event name="SC_TEST2">
+	<text>Oh no enemies!</text>
+	<choice>
+		<text>Fight them off!</text>
+		<event load="SC_LIST_BOARDERS"/>
+	</choice>
+	
+	<choice>
+		<text>Run and hide!</text>
+		<event/>
+	</choice>
+	
+	<choice req="terran_ghost">
+		<text>Send in a specialist to handle it.</text>
+		<text load="SC_TXT_LIST_GHOST"/>
+		<event/>
+	</choice>
+</event>

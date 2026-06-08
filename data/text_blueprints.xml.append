@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_class">Battlecruiser</text>
+<text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_name">Battlecruiser</text>
+<text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_desc">The Terran Battlecruiser stands as the pinnacle of Dominion naval engineering, an orbital fortress bristling with weapons and armored to The Terran Battlecruiser is the pinnacle of Dominion naval power, an orbital fortress built for long campaigns, combining overwhelming firepower with near-impenetrable defenses.</text>
+
+<text name="text_PLAYER_SHIP_TERRAN_WRAITH_class">Stealth Fighter</text>
+<text name="text_PLAYER_SHIP_TERRAN_WRAITH_name">Terran Wraith</text>
+<text name="text_PLAYER_SHIP_TERRAN_WRAITH_desc">The Wraith is a Terran space superiority fighter known for it's maneuverability and cloaking technology.</text>
+
+<text name="text_SHIP_TERRAN_VESSEL_class">Science Vessel</text>
+<text name="text_PLAYER_SHIP_HARD_name">Terran Science Vessel</text>
+<text name="text_SHIP_TERRAN_VESSEL_desc">[NEED SCIENCE VESSEL DESCRIPTION]</text>
+
+				
+				
+<text name="weapon_TERRAN_BURST_LASER_1_title">Burst Laser Mk I</text>
+<text name="weapon_TERRAN_BURST_LASER_1_short">Burst Laser I</text>
+<text name="weapon_TERRAN_BURST_LASER_1_desc">25mm Burst Laser Mk I: Designed for strafing ground targets, this weapon trades accuracy for increasing rates of fire.</text>
+<text name="weapon_TERRAN_BURST_LASER_1_tooltip">1 damage, 1-2 shots. 8.5-2.5 second cooldown. 0-(-25) accuracy</text>
+<text name="weapon_TERRAN_BURST_LASER_2_title">Burst Laser Mk II</text>
+<text name="weapon_TERRAN_BURST_LASER_2_short">Burst Laser II</text>
+<text name="weapon_TERRAN_BURST_LASER_2_desc">25mm Burst Laser Mk II: Designed for strafing ground targets, this weapon trades accuracy for increasing rates of fire.</text>
+<text name="weapon_TERRAN_BURST_LASER_2_tooltip">1 damage, 1-3 shots. 12-4 second cooldown. 0-(-25) accuracy</text>
+<text name="weapon_TERRAN_BURST_LASER_3_title">Burst Laser Mk II</text>
+<text name="weapon_TERRAN_BURST_LASER_3_short">Burst Laser III</text>
+<text name="weapon_TERRAN_BURST_LASER_3_desc">25mm Burst Laser Mk III: Designed for strafing ground targets, this weapon trades accuracy for increasing rates of fire.</text>
+<text name="weapon_TERRAN_BURST_LASER_3_tooltip">1 damage, 2-4 shots. 13-6 second cooldown. (-5)-(-30) accuracy</text>
+<text name="weapon_TERRAN_BURST_LASER_HEAVY_1_title">Heavy Burst Laser Mk I</text>
+<text name="weapon_TERRAN_BURST_LASER_HEAVY_1_short">Heavy Burst I</text>
+<text name="weapon_TERRAN_BURST_LASER_HEAVY_1_desc">40mm Burst Laser Mk I: Broad laser fire designed to have greater impact on the target at the loss of accuracy and slower increasing rates of fire.</text>
+<text name="weapon_TERRAN_BURST_LASER_HEAVY_1_tooltip">1 damage, 2 shots. 13-10 second cooldown. (-5)-(-20) accuracy. Deals additional damage to systems, crew, and rooms without systems.</text>
+<text name="weapon_TERRAN_BURST_LASER_HEAVY_2_title">Heavy Burst Laser Mk II</text>
+<text name="weapon_TERRAN_BURST_LASER_HEAVY_2_short">Heavy Burst II</text>
+<text name="weapon_TERRAN_BURST_LASER_HEAVY_2_desc">40mm Burst Laser Mk II: Broad laser fire designed to have greater impact on the target at the loss of accuracy and slower increasing rates of fire.</text>
+<text name="weapon_TERRAN_BURST_LASER_HEAVY_2_tooltip">1 damage, 3 shots. 14-10.1 second cooldown. (-5)-(-20) accuracy. Deals additional damage to systems, crew, and rooms without systems.</text>
+<text name="weapon_TERRAN_LASER_BATTERY_1_title">Laser Battery Mk I</text>
+<text name="weapon_TERRAN_LASER_BATTERY_1_short">Laser Bat.I</text>
+<text name="weapon_TERRAN_LASER_BATTERY_1_desc">Laser Battery Mk I: A cooridinated laser barrage that provides greater accuracy and concentrated volume of fire with each charge.</text>
+<text name="weapon_TERRAN_LASER_BATTERY_1_tooltip">1 damage, 2 shots.? second cooldown. (-30%)-(0%) accuracy. (10%)-(10%) breach chance.</text>
+<text name="weapon_TERRAN_LASER_BATTERY_2_title">Laser Battery Mk II</text>
+<text name="weapon_TERRAN_LASER_BATTERY_2_short">Laser Bat.II</text>
+<text name="weapon_TERRAN_LASER_BATTERY_2_desc">Laser Battery Mk II: A cooridinated laser barrage that provides greater accuracy and concentrated volume of fire with each charge.</text>
+<text name="weapon_TERRAN_LASER_BATTERY_2_tooltip">1 damage, 3 shots.? second cooldown. (-40%)-(0%) accuracy. (10%)-(20%) breach chance.</text>
+<text name="weapon_TERRAN_LASER_BATTERY_3_title">Laser Battery Mk III</text>
+<text name="weapon_TERRAN_LASER_BATTERY_3_short">Laser Bat.III</text>
+<text name="weapon_TERRAN_LASER_BATTERY_3_desc">Laser Battery Mk III: A cooridinated laser barrage that provides greater accuracy and concentrated volume of fire with each charge.</text>
+<text name="weapon_TERRAN_LASER_BATTERY_3_tooltip">1 damage, 2 shots.? second cooldown. (-30%)-(0%) accuracy. (10%)-(10%) breach chance.</text>
+<text name="weapon_TERRAN_LASER_BATTERY_HEAVY_1_title">Heavy Laser Battery Mk I</text>
+<text name="weapon_TERRAN_LASER_BATTERY_HEAVY_1_short">H.Laser Bat.I</text>
+<text name="weapon_TERRAN_LASER_BATTERY_HEAVY_1_desc">Heavy Laser Battery Mk I: A cooridinated laser barrage that provides greater accuracy and concentrated volume of fire with each charge.</text>
+<text name="weapon_TERRAN_LASER_BATTERY_HEAVY_1_tooltip">2 damage, 1 shots.? second cooldown. (-40%)-(10%) accuracy. (10%)-(30%) breach chance.</text>
+<text name="weapon_TERRAN_LASER_BATTERY_HEAVY_2_title">Heavy Laser Battery Mk II</text>
+<text name="weapon_TERRAN_LASER_BATTERY_HEAVY_2_short">H.Laser Bat.II</text>
+<text name="weapon_TERRAN_LASER_BATTERY_HEAVY_2_desc">Heavy Laser Battery Mk II: A cooridinated laser barrage that provides greater accuracy and concentrated volume of fire with each charge.</text>
+<text name="weapon_TERRAN_LASER_BATTERY_HEAVY_2_tooltip">2 damage, 1 shots.? second cooldown. (-60%)-(10%) accuracy. (10%)-(40%) breach chance.</text>

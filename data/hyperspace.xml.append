@@ -1,0 +1,1144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<advancedCrewTooltips enabled="true" ally="false" enemy="false" rounding="2"/>
+<eventTooltips enabled="true"/>
+<showNumericalWeaponCooldown enabled="true"/>
+<redesignedWeaponTooltips enabled="true"/>
+<redesignedDroneTooltips enabled="true"/>
+<redesignedAugmentTooltips enabled="true"/>
+<showReactor enabled="true"/>
+<extraShipInfo missileCount="true" droneCount="true" crewLimit="true"/>
+<alternateCrewMovement enabled="true"/>
+<rightClickDoorOpening enabled="true"/>
+<showShipAchievements enabled="true" toggle="true" hideIfMissing="true" id="hangar_achievements_title_default"/>
+<droneSelectHotkeys enabled="true"/>
+<droneSaveStations enabled="true"/>
+<showDummyEquipmentSlots enabled="true" opacity="0.3"/>
+<cloakRenderFix enabled="true"/>
+<enhancedCloneUI enabled="true"/>
+<insertNewlineForMultipleCrewTooltips enabled="true"/>
+<multipleOverCapacity enabled="true"/>
+<oxygenWithoutSystem enabled="true"/>
+<playerHpColorFix enabled="true"/>
+<preIgniteChargers enabled="true"/>
+<showDummyEquipmentSlots enabled="true" opacity="0.2"/>
+<showScrapCollectorScrap enabled="true"/>
+<rightClickDoorOpening enabled="true"/>
+
+<alternateOxygenRendering enabled="false">
+    <gradient>
+        <color r="255" g="176" b="169" oxygen="0.0"/>
+        <color r="230" g="226" b="219" oxygen="100.0"/>
+    </gradient>
+</alternateOxygenRendering>
+
+<shieldWithoutSystem enabled="true"/>
+<dualMedical enabled="true"/>
+<scaleSlugGel enabled="true"/>
+
+<titleScreen logo_x="0" logo_y="533" enabled="true"> <!--when not enabled gives the bad install screen-->
+    <splashImages>
+		<splashImage x="475" y="690" center="true">cheats_01</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_02</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_03</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_04</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_05</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_06</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_07</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_08</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_09</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_10</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_11</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_12</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_13</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_14</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_15</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_16</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_17</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_18</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_01</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_02</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_03</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_04</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_05</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_06</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_07</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_08</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_09</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_10</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_11</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_12</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_13</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_14</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_15</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_16</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_17</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_18</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_01</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_02</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_03</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_04</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_05</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_06</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_07</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_08</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_09</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_10</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_11</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_12</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_13</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_14</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_15</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_16</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_17</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_18</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_01</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_02</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_03</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_04</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_05</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_06</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_07</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_08</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_09</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_10</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_11</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_12</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_13</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_14</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_15</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_16</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_17</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_18</splashImage>
+		<splashImage x="640" y="360" center="true">terran_01</splashImage>
+		<splashImage x="640" y="360" center="true">terran_02</splashImage>
+		<splashImage x="640" y="360" center="true">terran_03</splashImage>
+		<splashImage x="640" y="360" center="true">terran_04</splashImage>
+		<splashImage x="640" y="360" center="true">terran_05</splashImage>
+		<splashImage x="640" y="360" center="true">terran_06</splashImage>
+		<splashImage x="640" y="360" center="true">terran_10</splashImage>
+		<splashImage x="640" y="360" center="true">terran_11</splashImage>
+		<splashImage x="640" y="360" center="true">terran_12</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_01</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_02</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_03</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_04</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_05</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_06</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_07</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_08</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_09</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_10</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_11</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_12</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_13</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_14</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_15</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_16</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_17</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_18</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_01</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_02</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_03</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_04</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_05</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_06</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_07</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_08</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_09</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_10</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_11</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_12</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_13</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_14</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_15</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_16</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_17</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_18</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_01</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_02</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_03</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_04</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_05</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_06</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_07</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_08</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_09</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_10</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_11</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_12</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_13</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_14</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_15</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_16</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_17</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_18</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_01</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_02</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_03</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_04</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_05</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_06</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_07</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_08</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_09</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_10</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_11</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_12</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_13</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_14</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_15</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_16</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_17</splashImage>
+		<splashImage x="475" y="690" center="true">cheats_18</splashImage>
+		<splashImage x="640" y="360" center="true">terran_01</splashImage>
+		<splashImage x="640" y="360" center="true">terran_02</splashImage>
+		<splashImage x="640" y="360" center="true">terran_03</splashImage>
+		<splashImage x="640" y="360" center="true">terran_04</splashImage>
+		<splashImage x="640" y="360" center="true">terran_05</splashImage>
+		<splashImage x="640" y="360" center="true">terran_06</splashImage>
+		<splashImage x="640" y="360" center="true">terran_10</splashImage>
+		<splashImage x="640" y="360" center="true">terran_11</splashImage>
+		<splashImage x="640" y="360" center="true">terran_12</splashImage>
+		<splashImage x="640" y="360" center="true">terran_secret_01</splashImage>
+		<!--<splashImage x="50" y="50" center="true" chance="1">img_secret</splashImage> If the chance attribute is set to 1 or above, every time the main menu is loaded there is a x/10000 chance that it loads that splash image-->
+    </splashImages>
+</titleScreen>
+
+<events>
+<eventFile>sector_terran</eventFile>
+</events>
+
+
+	<!-- 
+*********************************************************************************************************
+  TERRAN AUGMENTS
+*********************************************************************************************************
+-->
+
+<augments>
+    <aug name="TERRAN_SHIP_ARMOR_LIGHT">
+        <statBoosts>
+            <statBoost name="repairSpeed">
+                <boostType>MULT</boostType>
+                <shipTarget>ORIGINAL_SHIP</shipTarget>
+                <crewTarget>ALLIES</crewTarget>
+                <droneTarget>ALL</droneTarget>
+                <amount>2</amount>
+                <priority>0</priority>
+                <systemRoomTarget>ALL</systemRoomTarget>
+                <systemList>
+                    <lily_system_bracers/>
+                </systemList>
+            </statBoost>
+        </statBoosts>
+    </aug>
+	
+    <aug name="TERRAN_SHIP_ARMOR_MEDIUM">
+        <statBoosts>
+            <statBoost name="repairSpeed">
+                <boostType>MULT</boostType>
+                <shipTarget>ORIGINAL_SHIP</shipTarget>
+                <crewTarget>ALLIES</crewTarget>
+                <droneTarget>ALL</droneTarget>
+                <amount>2</amount>
+                <priority>0</priority>
+                <systemRoomTarget>ALL</systemRoomTarget>
+                <systemList>
+                    <lily_system_bracers/>
+                </systemList>
+            </statBoost>
+        </statBoosts>
+    </aug>
+	
+    <aug name="TERRAN_SHIP_ARMOR_HEAVY">
+        <statBoosts>
+            <statBoost name="repairSpeed">
+                <boostType>MULT</boostType>
+                <shipTarget>ORIGINAL_SHIP</shipTarget>
+                <crewTarget>ALLIES</crewTarget>
+                <droneTarget>ALL</droneTarget>
+                <amount>2</amount>
+                <priority>0</priority>
+                <systemRoomTarget>ALL</systemRoomTarget>
+                <systemList>
+                    <lily_system_bracers/>
+                </systemList>
+            </statBoost>
+        </statBoosts>
+    </aug>
+	
+	<!-- TERRAN_WRAITH_BATTERY HIDDEN AUGS -->
+	
+	<aug name="TERRAN_HIDDEN_FIRE_EXTINGUISHERS">
+		<function name="FIRE_EXTINGUISHERS" value="1" useForReqs="true" warning="false"/>
+		<locked/>
+	</aug>
+	<aug name="TERRAN_HIDDEN_FIRE_EXTINGUISHERS_1">
+		<function name="FIRE_EXTINGUISHERS" value="1" useForReqs="true" warning="false"/>
+		<locked/>
+	</aug>
+	<aug name="TERRAN_HIDDEN_FIRE_EXTINGUISHERS_2">
+		<function name="FIRE_EXTINGUISHERS" value="2" useForReqs="true" warning="false"/>
+		<locked/>
+	</aug>
+	<aug name="TERRAN_HIDDEN_FIRE_EXTINGUISHERS_3">
+		<function name="FIRE_EXTINGUISHERS" value="10" useForReqs="true" warning="false"/>
+		<locked/>
+	</aug>
+	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_1">
+    	<function name="FTL_BOOSTER" value="0.10" useForReqs="true" warning="false"/>
+		<locked/>
+    </aug>
+	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_2">
+    	<function name="FTL_BOOSTER" value="0.20" useForReqs="true" warning="false"/>
+		<locked/>
+    </aug>
+	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_3">
+    	<function name="FTL_BOOSTER" value="0.30" useForReqs="true" warning="false"/>
+		<locked/>
+    </aug>
+	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_4">
+    	<function name="FTL_BOOSTER" value="0.40" useForReqs="true" warning="false"/>
+		<locked/>
+    </aug>
+	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_5">
+    	<function name="FTL_BOOSTER" value="0.50" useForReqs="true" warning="false"/>
+		<locked/>
+    </aug>
+	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_6">
+    	<function name="FTL_BOOSTER" value="0.60" useForReqs="true" warning="false"/>
+		<locked/>
+    </aug>
+	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_7">
+    	<function name="FTL_BOOSTER" value="0.70" useForReqs="true" warning="false"/>
+		<locked/>
+    </aug>
+	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_8">
+    	<function name="FTL_BOOSTER" value="0.80" useForReqs="true" warning="false"/>
+		<locked/>
+    </aug>
+		<aug name="TERRAN_HIDDEN_FTL_BOOSTER_9">
+    	<function name="FTL_BOOSTER" value="0.90" useForReqs="true" warning="false"/>
+		<locked/>
+    </aug>
+</augments>
+
+<!--
+*********************************************************************************************************
+  TERRAN CIVILIAN
+*********************************************************************************************************
+-->
+<crew>
+	<race name="terran_civilian">
+		<animBase>human</animBase>
+		<maxHealth>80</maxHealth>
+		<canFight>false</canFight>
+		<canSabotage>false</canSabotage>
+		<canShoot>false</canShoot>
+		<deathSounds>
+			<deathSound>terran_civilian_death</deathSound>
+		</deathSounds>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+         	<skills>
+         		<piloting req="12"/>
+         		<engines req="12"/>
+         		<shields req="65"/>
+         		<weapons req="60"/>
+         		<repair req="14"/>
+         		<combat req="20"/>
+         	</skills>
+		<damageTakenMultiplier>1.4</damageTakenMultiplier>
+		<!-- STATIC ABILITIES -->
+		<repairSpeed>1.4</repairSpeed>
+		<fireRepairMultiplier>1.4</fireRepairMultiplier>
+		
+		<powerEffect name="Repair">
+			<req type="player">
+				<extraConditions type="or">
+					<repairingBreach>true</repairingBreach>
+					<repairingSystem>true</repairingSystem>
+				</extraConditions>
+			</req>
+			<req type="enemy">
+				<extraConditions type="and">
+					<repairingSystem>true</repairingSystem>
+				</extraConditions>
+			</req>
+			<cooldown>1.5</cooldown>
+			<jumpCooldown>full</jumpCooldown>
+			<hideCooldown>true</hideCooldown>   
+			<hideButton>true</hideButton>
+			<onHotkey>never</onHotkey>
+			<sortOrder>999</sortOrder>
+			<animFrame followCrew="true">-1</animFrame>
+			<effectAnim>sc_repair</effectAnim>
+			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
+		</powerEffect>
+		
+		<!--
+		<powerEffect name="Repair_Breach">
+			<req type="player">
+				<extraConditions type="and">
+					<repairingBreach>true</repairingBreach>
+				</extraConditions>
+			</req>
+			<req type="enemy">
+				<extraConditions type="and">
+					<repairingBreach>true</repairingBreach>
+				</extraConditions>
+			</req>
+			<cooldown>1.5</cooldown>
+			<jumpCooldown>full</jumpCooldown>
+			<hideCooldown>true</hideCooldown>   
+			<hideButton>true</hideButton>
+			<onHotkey>never</onHotkey>
+			<sortOrder>999</sortOrder>
+			<animFrame followCrew="true">-1</animFrame>
+			<effectAnim>sc_repair</effectAnim>
+			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
+		</powerEffect>
+		-->
+	</race>
+
+	<!-- 
+*********************************************************************************************************
+  TERRAN MARINE
+*********************************************************************************************************
+-->
+	<race name="terran_marine">
+		<animBase>human</animBase>
+		<maxHealth>80</maxHealth>
+		<rangedDamageMultiplier>1.5</rangedDamageMultiplier>
+		<canPunch>false</canPunch>
+		<deathSounds>
+			<deathSound>terran_marine_death</deathSound>
+			<deathSound>terran_marine_death2</deathSound>
+		</deathSounds>
+		<shootingSounds>
+			<shootingSound>terran_marine_attack</shootingSound>
+		</shootingSounds>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+		<skills>
+			<piloting req="15" />
+			<engines req="15" />
+			<shields req="55" />
+			<weapons req="65" />
+			<repair req="18" />
+			<combat req="8" />
+		</skills>
+		<!-- POWERED ARMOR -->
+		<suffocationModifier>0.2</suffocationModifier>
+		<fireDamageMultiplier>0.8</fireDamageMultiplier>
+		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
+		<damageTakenMultiplier>0.8</damageTakenMultiplier>
+		<!-- STATIC ABILITIES -->
+		<fireRepairMultiplier>1.4</fireRepairMultiplier>
+		<!-- ACTIVATED ABILITIES -->
+		<powerEffect name="Stimpack">
+			<cooldown>0</cooldown>
+			<jumpCooldown>full</jumpCooldown>
+			<powerSounds>
+				<powerSound>ability_stimpack1</powerSound>
+				<powerSound>ability_stimpack2</powerSound>
+			</powerSounds>
+			<req type="enemy">
+				<minHealth>16</minHealth>
+				<enemyInRoom />
+				<enemyShip />
+			</req>
+			<req type="player">
+				<minHealth>16</minHealth>
+			</req>
+			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
+			<buttonText>STIMPACK</buttonText>
+			<tooltip>[DURATION:10s -15HP]&#xD;&#xD;
+				Increased damage and movement speed.</tooltip>
+			<cooldownColor r="171" g="223" b="195" />
+			<selfHealth>-15</selfHealth>
+			<temporaryEffect>
+				<duration>10</duration>
+				<cooldownColor r="215" g="126" b="195" />
+				<moveSpeedMultiplier>1.6</moveSpeedMultiplier>
+				<damageMultiplier>1.8</damageMultiplier>
+				<shootTimer min="250" max="325" />
+				<punchTimer min="250" max="325" />
+			</temporaryEffect>
+		</powerEffect>
+		<powerEffect load="Repair"/>
+	</race>
+	<!-- 
+*********************************************************************************************************
+  TERRAN MEDIC
+*********************************************************************************************************
+-->
+	<race name="terran_medic">
+		<animBase>human</animBase>
+		<maxHealth>120</maxHealth>
+		<canFight>false</canFight>
+		<canSabotage>false</canSabotage>
+		<deathSounds>
+			<deathSound>terran_medic_death</deathSound>
+		</deathSounds>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+		<skills>
+			<piloting req="15" />
+			<engines req="15" />
+			<shields req="55" />
+			<weapons req="65" />
+			<repair req="18" />
+			<combat req="8" />
+		</skills>
+		<!-- POWERED ARMOR -->
+		<suffocationModifier>0.2</suffocationModifier>
+		<fireDamageMultiplier>0.8</fireDamageMultiplier>
+		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
+		<damageTakenMultiplier>0.8</damageTakenMultiplier>
+		<!-- STATIC ABILITIES -->
+		<healCrewAmount>2</healCrewAmount>
+		<fireRepairMultiplier>1.4</fireRepairMultiplier>
+		<!-- ACTIVATED ABILITIES -->
+		<powerEffect name="Flashbang">
+			<cooldown>30</cooldown>
+			<jumpCooldown>full</jumpCooldown>
+			<powerSounds>
+				<powerSound>ability_flashbang</powerSound>
+			</powerSounds>
+			<req type="enemy">
+				<enemyInRoom />
+			</req>
+			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
+			<friendlyFire>false</friendlyFire>
+			<buttonText>FLASHBANG</buttonText>
+			<tooltip>[COOLDOWN:30s]&#xD;&#xD;
+				Fire A-13 grenade launcher to stun enemies.</tooltip>
+			<cooldownColor r="255" g="78" b="69" />
+			<effectAnim>explosion_big1_heal</effectAnim>
+			<stun>10</stun>
+		</powerEffect>
+		<powerEffect load="Repair"/>
+	</race>
+	<!-- 
+*********************************************************************************************************
+  TERRAN FIREBAT
+*********************************************************************************************************
+-->
+	<race name="terran_firebat">
+		<animBase>human</animBase>
+		<maxHealth>100</maxHealth>
+		<rangedDamageMultiplier>1.5</rangedDamageMultiplier>
+		<canPunch>false</canPunch>
+		<shootingSounds>
+			<shootingSound>terran_firebat_attack1</shootingSound>
+			<shootingSound>terran_firebat_attack2</shootingSound>
+		</shootingSounds>
+		<deathSounds>
+			<deathSound>terran_firebat_death</deathSound>
+			<deathSound>terran_firebat_death2</deathSound>
+			<deathSound>terran_firebat_death3</deathSound>
+		</deathSounds>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+		<skills>
+			<piloting req="15" />
+			<engines req="15" />
+			<shields req="55" />
+			<weapons req="65" />
+			<repair req="18" />
+			<combat req="8" />
+		</skills>
+		<!-- POWERED ARMOR -->
+		<suffocationModifier>0.2</suffocationModifier>
+		<fireDamageMultiplier>0.8</fireDamageMultiplier>
+		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
+		<damageTakenMultiplier>0.8</damageTakenMultiplier>
+		<!-- STATIC ABILITIES -->
+		<canBurn>false</canBurn>
+		<hasDeathExplosion>true</hasDeathExplosion>
+		<hasCustomDeathAnimation>true</hasCustomDeathAnimation>
+		<fireRepairMultiplier>2.2</fireRepairMultiplier>
+		<deathEffect>
+			<fireChance>100</fireChance>
+			<persDamage>1</persDamage>
+			<friendlyFire>true</friendlyFire>
+		</deathEffect>
+		<powerEffect name="Flamethrower">
+			<cooldown>4</cooldown>
+			<hideCooldown>true</hideCooldown>
+			<hideButton>true</hideButton>
+			<chargeReq>
+				<extraConditions>
+					<shooting>true</shooting>
+				</extraConditions>
+			</chargeReq>
+			<req type="enemy">
+				<extraConditions>
+					<shooting>true</shooting>
+				</extraConditions>
+			</req>
+			<req type="player">
+				<extraConditions>
+					<shooting>true</shooting>
+				</extraConditions>
+			</req>
+			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
+			<friendlyFire>true</friendlyFire>
+			<fireChance>100</fireChance>
+		</powerEffect>
+		<powerEffect load="Repair"/>
+		<powerEffect load="Stimpack"/>
+	</race>
+	<!-- 
+*********************************************************************************************************
+  TERRAN GHOST
+*********************************************************************************************************
+-->
+	<race name="terran_ghost">
+		<animBase>human</animBase>
+		<maxHealth>90</maxHealth>
+		<canPunch>false</canPunch>
+		<deathSounds>
+			<deathSound>terran_ghost_death</deathSound>
+		</deathSounds>
+		<shootingSounds>
+			<shootingSound>terran_ghost_attack</shootingSound>
+		</shootingSounds>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+		<skills>
+			<piloting req="10" />
+			<engines req="10" />
+			<shields req="36" />
+			<weapons req="43" />
+			<repair req="12" />
+			<combat req="5" />
+		</skills>
+		<!-- POWERED ARMOR -->
+		<suffocationModifier>0.2</suffocationModifier>
+		<fireDamageMultiplier>0.9</fireDamageMultiplier>
+		<moveSpeedMultiplier>1.2</moveSpeedMultiplier>
+		<!-- STATIC ABILITIES -->
+		<detectsLifeforms>true</detectsLifeforms>
+		<isTelepathic>true</isTelepathic>
+		<resistsMindControl>true</resistsMindControl>
+		<repairSpeed>1.5</repairSpeed>
+		<fireRepairMultiplier>1.6</fireRepairMultiplier>
+		<sabotageSpeedMultiplier>1.5</sabotageSpeedMultiplier>
+		<rangedDamageMultiplier>3.5</rangedDamageMultiplier>
+		<shootTimer min="1500" max="1800" />
+		<powerEffect load="Repair"/>
+		<powerEffect name="Cloak">
+			<cooldown>30</cooldown>
+			<powerSounds>
+				<powerSound>cloak</powerSound>
+			</powerSounds>
+			<req type="enemy">
+				<enemyInRoom />
+			</req>
+			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
+			<jumpCooldown>full</jumpCooldown>
+			<onHotkey>always</onHotkey>
+			<buttonText>CLOAK</buttonText>
+			<tooltip>[COOLDOWN:30s DURATION:15s]&#xD;&#xD;
+				Cannot be targeted by enemies.</tooltip>
+			<cooldownColor r="38" g="130" b="152" />
+			<temporaryEffect>
+				<duration>15</duration>
+				<cooldownColor r="198" g="198" b="198" />
+				<finishSounds>
+					<finishSound>decloak</finishSound>
+				</finishSounds>
+				<animSheet baseVisible="false">terran_ghost_cloaked</animSheet>
+				<validTarget>false</validTarget>
+			</temporaryEffect>
+		</powerEffect>
+	</race>
+	<!--
+*********************************************************************************************************
+  TERRAN SCV
+*********************************************************************************************************
+-->
+	<race name="terran_scv">
+		<crewSlots>0</crewSlots>
+		<noSlot>true</noSlot>
+		<noClone>true</noClone>
+		<selectable>true</selectable>
+		<controllable>true</controllable>
+		<canFight>true</canFight>
+		<canRepair>true</canRepair>
+		<canSabotage>true</canSabotage>
+		<canSuffocate>true</canSuffocate>
+		<canMan>false</canMan>
+		<maxHealth>50</maxHealth>
+		<stunMultiplier>0.25</stunMultiplier>
+		<droneAI>
+			<repairAI />
+			<returnToDroneRoom />
+			<manAI/>
+			<fightAI/>
+		</droneAI>
+		<repairSpeed>2.5</repairSpeed>
+		<animBase>human</animBase>
+		<hasCustomDeathAnimation>true</hasCustomDeathAnimation>
+		<suffocationModifier>0.1</suffocationModifier>
+		<fireDamageMultiplier>0.4</fireDamageMultiplier>
+		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
+		<fireRepairMultiplier>1.8</fireRepairMultiplier>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+		<deathSounds>
+			<deathSound>terran_scv_death</deathSound>
+		</deathSounds>
+		<powerEffect name="LAUNCH_REPAIR">
+			<cooldown>0.5</cooldown>
+			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
+			<buttonText>REPAIR HULL</buttonText>
+			<tooltip>[READY]&#xD;&#xD;
+				Repair a portion of the ships hull at the cost of an SCV.</tooltip>
+			<cooldownColor r="255" g="78" b="69" />
+			<effectAnim>explosion_big1_heal</effectAnim>
+			<transformRace health="0" deathSound="false">terran_scv_hull</transformRace>
+			<selfHealth>-999.0</selfHealth>
+		</powerEffect>
+		<powerEffect load="Repair"/>
+	</race>
+	<!-- *************
+	TERRAN_SCV_HULL
+	****************** -->
+	<race name="terran_scv_hull" drone="REPAIR_HULL">
+		<crewSlots>0</crewSlots>
+		<noSlot>true</noSlot>
+		<noClone>true</noClone>
+		
+		<deathSounds>
+			<deathSound>terran_scv_launch</deathSound>
+		</deathSounds>
+		<powerEffect name="Swap">
+			<cooldown>0</cooldown>
+			<req type="enemy">
+				<minHealth>100</minHealth>
+			</req>
+			<req type="player">
+				<minHealth>100</minHealth>
+			</req>
+			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
+			<transformRace>terran_scv</transformRace>
+		</powerEffect>
+		<powerEffect name="Die">
+			<cooldown>0</cooldown>
+			<req type="enemy">
+				<maxHealth>50</maxHealth>
+			</req>
+			<req type="player">
+				<maxHealth>50</maxHealth>
+			</req>
+			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
+			<selfHealth>-999.0</selfHealth>
+		</powerEffect>
+
+	</race>
+	
+		<!-- 
+*********************************************************************************************************
+  TERRAN SPIDER
+*********************************************************************************************************
+-->
+	<race name="terran_spider" drone="BATTLE">
+		<resistsMindControl>true</resistsMindControl>
+		<noClone>true</noClone>
+		<noWarning>true</noWarning>	
+		<crewSlots>0</crewSlots>
+		<noSlot>true</noSlot>
+		<selectable>true</selectable>
+		<controllable>true</controllable>
+		<canFight>false</canFight>
+		<canRepair>false</canRepair>
+		<canSabotage>false</canSabotage>
+		<canSuffocate>false</canSuffocate>
+		<canMan>false</canMan>
+		<maxHealth>25</maxHealth>
+		<stunMultiplier>0.10</stunMultiplier>
+		<moveSpeedMultiplier>2.0</moveSpeedMultiplier>
+		<droneMoveFromManningSlot>true</droneMoveFromManningSlot>
+		<animBase>human</animBase>
+
+		
+		
+		<powerEffect name="Set-Mine">
+			<hideCooldown>true</hideCooldown>
+			<hideButton>true</hideButton> 
+			
+			<cooldown>0.1</cooldown>
+			<onHotkey>never</onHotkey>
+			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
+			<selfHealth>-999.0</selfHealth>
+			
+			<spawnCrew>
+				<race>terran_spider_set</race>
+				<name>Spider Mine</name>
+				<number>3</number>
+				<noSlot>true</noSlot>
+				<hasCustomDeathAnimation>false</hasCustomDeathAnimation>
+			</spawnCrew>
+			
+			<powerSounds enemy="false"> <!--Sound effects to use when activating the power. enemy="false" mutes the sound for enemy crew. -->
+				<powerSound>terran_spider_run</powerSound>
+			</powerSounds>
+
+		</powerEffect>
+	</race>
+	<!-- *************
+	TERRAN_SPIDER_SET
+	****************** -->
+		<race name="terran_spider_set" drone="BATTLE">
+		<resistsMindControl>true</resistsMindControl>
+		<noClone>true</noClone>
+		<noWarning>true</noWarning>	
+		<crewSlots>0</crewSlots>
+		<noSlot>true</noSlot>
+		<selectable>true</selectable>
+		<controllable>true</controllable>
+		<canFight>false</canFight>
+		<canRepair>false</canRepair>
+		<canSabotage>false</canSabotage>
+		<canSuffocate>false</canSuffocate>
+		<canMan>false</canMan>
+		<maxHealth>25</maxHealth>
+		<stunMultiplier>0.10</stunMultiplier>
+		<moveSpeedMultiplier>2.0</moveSpeedMultiplier>
+		<droneMoveFromManningSlot>true</droneMoveFromManningSlot>
+		<animBase>human</animBase>
+
+		<!--<hasCustomDeathAnimation>true</hasCustomDeathAnimation>-->
+		
+		<powerEffect name="Set-Mine">
+			<buttonText>SET-MINE</buttonText>
+			<tooltip>[READY]&#xD;&#xD;
+			Click to arm Spider Mine</tooltip>
+			<hideCooldown>true</hideCooldown>
+			<cooldown>0.1</cooldown>
+
+			<!--<req type="enemy"> 
+				<requiredSystem functional="true">drone</requiredSystem>
+			</req>
+			<req type="player"> 
+				<requiredSystem functional="true">drone</requiredSystem>
+			</req>-->
+
+			<transformRace>terran_spider_mine</transformRace>
+			
+			<powerSounds enemy="true"> <!--Sound effects to use when activating the power. enemy="false" mutes the sound for enemy crew. -->
+				<powerSound>terran_spider_set</powerSound>
+			</powerSounds>
+
+		</powerEffect>
+	</race>
+	<!-- *************
+	TERRAN_SPIDER_MINE
+	****************** -->
+	<race name="terran_spider_mine" drone="BATTLE">
+		<resistsMindControl>true</resistsMindControl>
+		<noClone>true</noClone>
+		<noWarning>true</noWarning>	
+		<crewSlots>0</crewSlots>
+		<noSlot>true</noSlot>		
+		<selectable>true</selectable>
+		<controllable>true</controllable>
+		<canFight>true</canFight>
+		<canRepair>false</canRepair>
+		<canSabotage>false</canSabotage>
+		<canSuffocate>false</canSuffocate>
+		<canMan>false</canMan>
+		<maxHealth>25</maxHealth>
+		<stunMultiplier>0.10</stunMultiplier>
+		<moveSpeedMultiplier>2.0</moveSpeedMultiplier>
+		
+		<!-- Trying to not block crew or show up on crew list but it isn't working -->
+		<snapToSlot>true</snapToSlot>
+		<canMove>false</canMove>
+
+		<droneAI>
+			<fightAI/>
+		</droneAI>
+
+		<droneMoveFromManningSlot>true</droneMoveFromManningSlot>
+		<animBase>human</animBase>
+		<hasCustomDeathAnimation>true</hasCustomDeathAnimation>
+		<deathSounds>
+			<deathSound>terran_spider_death</deathSound>
+		</deathSounds>
+		
+		<powerEffect name="Redeploy-Mine">
+			<buttonText>REDEPLOY-MINE</buttonText>
+			<tooltip>[READY]&#xD;&#xD;
+			Click to redeploy Spider Mines</tooltip>
+			<hideCooldown>true</hideCooldown>
+			<cooldown>0.1</cooldown>
+			<onHotkey>always</onHotkey>
+
+			<req type="enemy"> 
+				<requiredSystem functional="true">drone</requiredSystem>
+			</req>
+			<req type="player"> 
+				<requiredSystem functional="true">drone</requiredSystem>
+			</req>
+			
+			<powerSounds>
+				<powerSound>terran_spider_run</powerSound>
+			</powerSounds>
+
+			<transformRace>terran_spider_set</transformRace>
+
+		</powerEffect>
+	
+		<powerEffect name="Armed">
+
+			<hideCooldown>true</hideCooldown>
+			<hideButton>true</hideButton>
+			<cooldown>0.5</cooldown>
+			<onHotkey>never</onHotkey>
+			
+			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
+ 
+			<chargeReq>
+				<requiredSystem functional="true">drone</requiredSystem>
+			</chargeReq>
+
+			<req type="enemy"> 
+				<requiredSystem functional="true">drone</requiredSystem>
+				<inCombat/>
+			</req>
+			<req type="player"> 
+				<requiredSystem functional="true">drone</requiredSystem>
+				<inCombat/>
+			</req>
+			
+			<temporaryEffect>
+				<canMove>true</canMove>
+				<controllable>false</controllable>
+				<duration>2</duration>
+				<powerSounds>
+					<powerSound>terran_spider_run</powerSound>
+				</powerSounds>
+			</temporaryEffect>
+
+		</powerEffect>
+		
+		<powerEffect name="Self-Destruct">
+			<hideCooldown>true</hideCooldown>
+			<hideButton>true</hideButton> 
+			
+			<cooldown>1</cooldown>
+			<onHotkey>never</onHotkey>
+			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
+ 
+			<chargeReq>
+				<enemyInRoom/>
+				<requiredSystem functional="true">drone</requiredSystem>
+			</chargeReq>
+
+			<req type="enemy"> 
+				<enemyInRoom/>
+				<requiredSystem functional="true">drone</requiredSystem>
+			</req>
+			<req type="player"> 
+				<enemyInRoom/>
+				<requiredSystem functional="true">drone</requiredSystem>
+			</req>
+
+			<persDamage>5</persDamage>
+			<selfHealth>-999.0</selfHealth>
+			<powerEffectSounds enemy="true"> <!-- Sound effects to use when the power effect goes off.-->
+				<powerSound>terran_spider_death</powerSound>
+			</powerEffectSounds>
+		</powerEffect>
+	</race>
+</crew>
+
+
+<drones>
+	<drone name="TERRAN_SCV">
+		<crewBlueprint>terran_scv</crewBlueprint>
+		<tooltipName>Terran SCV</tooltipName>
+	</drone>
+	<drone name="TERRAN_SCV_HULL">
+		<crewBlueprint>terran_scv_hull</crewBlueprint>
+		<tooltipName>Terran SCV Hull Repair</tooltipName>
+	</drone>
+	<drone name="TERRAN_SPIDER">
+		<crewBlueprint>terran_spider</crewBlueprint>
+		<tooltipName>Terran Spider Mine</tooltipName>
+	</drone>
+	<drone name="TERRAN_SPIDER_MINE">
+		<crewBlueprint>terran_spider_mine</crewBlueprint>
+		<tooltipName>Terran Spider Mine (Armed)</tooltipName>
+	</drone>
+</drones>
+
+<eventFile>sc_terran</eventFile>
+
+<ships hideFirstShipPage="true">
+	<hangarAnims>
+		<anim x="100" y="100">custom_anim</anim>
+	</hangarAnims>
+
+	<shipOrder>
+		<ship>PLAYER_SHIP_TERRAN_BATTLECRUISER</ship>
+		<ship>PLAYER_SHIP_TERRAN_WRAITH</ship>
+		<ship>PLAYER_SHIP_TERRAN_VESSEL</ship>
+		<empty/>
+		<empty/>
+		<empty/>
+		<empty/>
+		<empty/>
+		<empty/>
+		<empty/>
+	</shipOrder>
+	</ships>
+
+<FTL>
+	<mod:findLike type="ships">
+		<mod-append:ship name="PLAYER_SHIP_TERRAN_BATTLECRUISER" b="false" c="false" />
+		<mod-append:customShip name="PLAYER_SHIP_TERRAN_BATTLECRUISER">
+		    <hiddenAug>ARTILLERY_ORDER</hiddenAug>
+			<crewLimit>10</crewLimit>
+			<systemLimit>8</systemLimit>
+			<subsystemLimit>5</subsystemLimit>
+			<exclusivityOverride>
+				<exclusivityGroup>
+					<clonebay/>
+					<medbay/>
+				</exclusivityGroup>
+
+				<exclusivityGroup>
+					<drones/>
+					<hacking/>
+				</exclusivityGroup>
+				
+				<exclusivityGroup>
+					<shields/>
+					<cloaking/>
+				</exclusivityGroup>
+		</exclusivityOverride>
+		</mod-append:customShip>
+	</mod:findLike>	
+</FTL>
+
+<FTL>
+	<mod:findLike type="ships">
+		<mod-append:ship name="PLAYER_SHIP_TERRAN_WRAITH" b="false" c="false" />
+		<mod-append:customShip name="PLAYER_SHIP_TERRAN_WRAITH">
+			<hiddenAug>O2_MASKS</hiddenAug>
+			<hiddenAug>CLOAK_FIRE</hiddenAug>
+			<hiddenAug>TERRAN_HIDDEN_WRAITH_PILOT</hiddenAug>
+			<crewLimit>2</crewLimit>
+			<systemLimit>10</systemLimit>
+			<subsystemLimit>5</subsystemLimit>
+			<exclusivityOverride>
+				<exclusivityGroup>
+					<clonebay/>
+					<medbay/>
+				</exclusivityGroup>
+
+				<exclusivityGroup>
+					<drones/>
+					<hacking/>
+				</exclusivityGroup>
+				
+				<exclusivityGroup>
+					<shields/>
+					<cloaking/>
+				</exclusivityGroup>
+		</exclusivityOverride>
+		</mod-append:customShip>
+	</mod:findLike>
+</FTL>
+
+<FTL>
+	<mod:findLike type="ships">
+		<mod-append:ship name="PLAYER_SHIP_TERRAN_VESSEL" b="false" c="false" />
+		<mod-append:customShip name="PLAYER_SHIP_TERRAN_VESSEL">
+			<crewLimit>6</crewLimit>
+			<systemLimit>10</systemLimit>
+			<subsystemLimit>5</subsystemLimit>
+		</mod-append:customShip>
+	</mod:findLike>
+</FTL>
+
+<!--				
+			<exclusivityOverride>
+				<exclusivityGroup>
+					<shields/>
+					<engines/>
+        			<medbay/>
+        			<clonebay/>
+        			<oxygen/>
+        			<teleporter/>
+        			<cloaking/>
+        			<artillery/>
+        			<mind/>
+        			<hacking/>
+        			<temporal/>
+        			<weapons/>
+        			<drones/>
+        			<pilot/>
+        			<sensors/>
+        			<doors/>
+        			<battery/>
+				</exclusivityGroup>
+			</exclusivityOverride>				-->
+
+<mod:findLike type="scripts" limit="1">
+    <mod-append:script>data/mv_scripts/tags/tag-data-init.lua</mod-append:script>
+    <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_tag.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_radius_core.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_pilot_ui.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_pilot.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_chain.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_charge.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_paired.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_yamato.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_augment_battery.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_augment_armor.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_scv.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_copy.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
+
+	<!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>	-->
+</mod:findLike>
