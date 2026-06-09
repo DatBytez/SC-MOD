@@ -34,7 +34,7 @@ local destinationSpaceByShip = {
 }
 
 local USE_RIGHT_SLOT_TARGET = true
-local TARGET_SUFFIX = "_TARGET"
+local TARGET_SUFFIX = "_PAIRED"
 local function run_has_started()
     return Hyperspace.App
         and Hyperspace.App.world

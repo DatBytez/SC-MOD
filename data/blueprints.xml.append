@@ -1,5 +1,4 @@
- 
-<?xml version="1.0" encoding="UTF-8"?>
+ <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,8 +21,8 @@
 -->
 <systemBlueprint name="lily_system_bracers">
     <type>doors</type>
-    <title>System Bracers</title>
-    <desc>Passively protects your systems from damage, redirecting system damage towards itself instead (As long as it isn't destroyed itself).</desc>
+    <title id="system_lily_system_bracers_NAME"></title>
+    <desc id="system_lily_system_bracers_DESC"></desc>
     <startPower>1</startPower>
     <maxPower>4</maxPower>
     <rarity>2</rarity>
@@ -43,18 +42,9 @@
 -->
 
 <augBlueprint name="TERRAN_WRAITH_BATTERY">
-	<title>Apollo Reactor</title>
-	<desc>High yield uranium reactors designed by the Terran Confederacy. 
-	
-	UPGRADE: Battery System +2
-	Systems powered by the reactor recover more quickly from ion damage and have increased performance.
-			- Cloak: Reduced Downtime.
-			- Engines: Increased evasion. [[wip: increased ftl charge.]]
-			- Oxygen: Automated fire supression. Increased refill speed.
-			- Clone: Increased clone speed. [[wip: Reduced Skill Drain.]]
-			- Drone: Drone speed. [[wip: Drone Rebuild Speed.]]
-			</desc>
-	<cost>120</cost>
+	<title id="aug_TERRAN_WRAITH_BATTERY_NAME"></title>
+	<desc id="aug_TERRAN_WRAITH_BATTERY_DESC"></desc>
+							<cost>120</cost>
 	<bp>8</bp>
 	<rarity>4</rarity>
 	<stackable>false</stackable>
@@ -62,14 +52,8 @@
 </augBlueprint>
 
 <augBlueprint name="TERRAN_SHIP_ARMOR_LIGHT">
-	<title>Light Armor Plating</title>
-	<desc>Light neosteel hulls and reinforced structural bracers provide better maneuverability at a cost of durability. 
-	
-	REDUCE: System Bracers -1
-	System Bracers have a chance to block incoming damage (System Bracer Health * 20%)
-	BONUS: Evasion +2% per engine level
-	Pilot can perform straif runs (Increase Accuracy and Projectile Speed at the cost of Evasion)
-	</desc>
+	<title id="aug_TERRAN_SHIP_ARMOR_LIGHT_NAME"></title>
+	<desc id="aug_TERRAN_SHIP_ARMOR_LIGHT_DESC"></desc>
 	<cost>120</cost>
 	<bp>8</bp>
 	<rarity>3</rarity>
@@ -80,13 +64,8 @@
 </augBlueprint>
 
 <augBlueprint name="TERRAN_SHIP_ARMOR_MEDIUM">
-	<title>Medium Armor Plating</title>
-	<desc>Layered neosteel hulls and reinforced structural plating make this ship more durable, at a slight cost to maneuverability. 
-	
-	UPGRADE: System Bracers +1
-	System Bracers have a chance to block incoming damage (System Bracer Health * 20%)
-	PENALTY: Evasion -1% per engine level
-	</desc>
+	<title id="aug_TERRAN_SHIP_ARMOR_MEDIUM_NAME"></title>
+	<desc id="aug_TERRAN_SHIP_ARMOR_MEDIUM_DESC"></desc>
 	<cost>140</cost>
 	<bp>8</bp>
 	<rarity>3</rarity>
@@ -97,13 +76,8 @@
 </augBlueprint>
 
 <augBlueprint name="TERRAN_SHIP_ARMOR_HEAVY">
-	<title>Heavy Armor Plating</title>
-	<desc>Layered neosteel hulls and reinforced structural plating make this ship more durable, at a significan cost to maneuverability 
-	
-	UPGRADE: System Bracers +2
-	System Bracers have a chance to block incoming damage (System Bracer Health * 20%)
-	PENALTY: Evasion -2% per engine level
-	</desc>
+	<title id="aug_TERRAN_SHIP_ARMOR_HEAVY_NAME"></title>
+	<desc id="aug_TERRAN_SHIP_ARMOR_HEAVY_DESC"></desc>
 	<cost>160</cost>
 	<bp>8</bp>
 	<rarity>4</rarity>
@@ -268,8 +242,8 @@
 	<missSounds>
 		<sound>miss</sound>
 	</missSounds>
-	<image>terran_burst_laser_projectile</image> <!-- TODO -->
-	<explosion>terran_burst_laser_hit</explosion> <!-- TODO -->
+	<image>terran_burst_laser_projectile</image>
+	<explosion>terran_burst_laser_hit</explosion>
 	<weaponArt>terran_burst_laser_3</weaponArt> 
 	<iconImage>laser_charge2</iconImage>
 </weaponBlueprint>
@@ -321,8 +295,8 @@
 	<missSounds>
 		<sound>miss</sound>
 	</missSounds>
-	<image>terran_burst_laser_heavy_projectile</image> <!-- TODO -->
-	<explosion>terran_burst_laser_heavy_hit</explosion> <!-- TODO -->
+	<image>terran_burst_laser_heavy_projectile</image>
+	<explosion>terran_burst_laser_heavy_hit</explosion>
 	<weaponArt>terran_burst_laser_heavy_1</weaponArt> 
 	<iconImage>laser_charge2</iconImage>
 </weaponBlueprint>
@@ -377,8 +351,8 @@
 	<weaponArt>laser_burst_3</weaponArt> 
 	<iconImage>laser</iconImage>
 	<image>laser_light2</image>
-	<image>terran_burst_laser_heavy_projectile</image> <!-- TODO -->
-	<explosion>terran_burst_laser_heavy_hit</explosion> <!-- TODO -->
+	<image>terran_burst_laser_heavy_projectile</image>
+	<explosion>terran_burst_laser_heavy_hit</explosion>
 	<weaponArt>terran_burst_laser_heavy_2</weaponArt> 
 	<iconImage>laser_charge2</iconImage>
 </weaponBlueprint>
@@ -565,9 +539,9 @@
 
 <weaponBlueprint name="TERRAN_LASER_BATTERY_HEAVY_2">
 	<type>LASER</type>
+	<tip>tip_laser</tip>
 	<title id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_title"/>
 	<short id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_short"/>
-	<tip>tip_laser</tip>
 	<desc id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_desc"/>
 	<tooltip id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_tooltip"/>
 	<damage>2</damage>
@@ -611,170 +585,13 @@
 <!-- ===============
      GEMINI MISSILES
      =============== -->
-<weaponBlueprint name="GEMINI_MISSILES_HULL">
-	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
-	<title>Terran Gemini Missiles - Anti-Hull</title>
-	<short>Gemini Anti-Hull</short>
-	<desc>A light missile system that excels when its versatility is utilized properly.</desc>
-	<tooltip>Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gamini Missiles</tooltip>
-	<sc_paired group="gemini_lv1"/>
-	<damage>1</damage>
-	<hullBust>1</hullBust>
-	<missiles>1</missiles>
-	<speed>50</speed>
-	<shots>1</shots>
-	<sp>10</sp>
-	<fireChance>0.5</fireChance>
-	<breachChance>0.5</breachChance>
-	<stunChance>0.5</stunChance>
-	<cooldown>9.5</cooldown>
-	<power>1</power>
-	<cost>40</cost>
-	<bp>2</bp>
-	<rarity>1</rarity>
-	<launchSounds>
-		<sound>weapon_gemini_fire</sound>
-	</launchSounds>
-	<hitShipSounds>
-		<sound>smallExplosion</sound>
-	</hitShipSounds>
-	<hitShieldSounds>
-		<sound>hitShield1</sound>
-		<sound>hitShield2</sound>
-		<sound>hitShield3</sound>
-	</hitShieldSounds>
-	<missSounds>
-		<sound>miss</sound>
-	</missSounds>
-	<image>missile_1</image>
-	<explosion>terran_gemini_hit</explosion>
-	<weaponArt>terran_missile_1</weaponArt> 
-	<iconImage>missile</iconImage>
-</weaponBlueprint>
-
-<weaponBlueprint name="GEMINI_MISSILES_HULL_TARGET">
-	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
-	<title>Terran Gemini Missiles - Paired</title>
-	<short>Gemini [Paired] (Hull)</short>
-	<desc>[Paired] A light missile system that excels when its versatility is utilized properly.</desc>
-	<tooltip>Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gamini Missiles</tooltip>
-	<sc_paired group="gemini_lv1"/>
-	<accuracyMod>-400</accuracyMod>
-	<damage>0</damage>
-	<missiles>0</missiles>
-	<speed>1</speed>
-	<shots>1</shots>
-	<sp>10</sp>
-	<cooldown>0.01</cooldown>
-	<power>0</power>
-	<cost>40</cost>
-	<bp>2</bp>
-	<rarity>0</rarity>
-	<launchSounds>
-		<sound>weapon_gemini_target</sound>
-	</launchSounds>
-	<hitShipSounds>
-		<sound>none</sound>
-	</hitShipSounds>
-	<hitShieldSounds>
-		<sound>none</sound>
-	</hitShieldSounds>
-	<missSounds>
-		<sound>none</sound>
-	</missSounds>
-	<image>missile_1</image>
-	<explosion>terran_gemini_hit</explosion>
-	<weaponArt>terran_missile_1</weaponArt> 
-	<iconImage>missile</iconImage>
-</weaponBlueprint>
-
-<weaponBlueprint name="GEMINI_MISSILES_SYS">
-	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
-	<title>Terran Gemini Missiles - Anti-System</title>
-	<short>Gemini Anti-Sys</short>
-	<desc>A light missile system that excels when its versatility is utilized properly.</desc>
-	<tooltip>Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gamini Missiles</tooltip>
-	<sc_paired group="gemini_lv1"/>
-	<damage>1</damage>
-	<sysDamage>1</sysDamage>
-	<missiles>1</missiles>
-	<speed>50</speed>
-	<shots>1</shots>
-	<sp>10</sp>
-	<fireChance>0.5</fireChance>
-	<breachChance>0.5</breachChance>
-	<stunChance>0.5</stunChance>
-	<cooldown>9.5</cooldown>
-	<power>1</power>
-	<cost>40</cost>
-	<bp>2</bp>
-	<rarity>1</rarity>
-	<launchSounds>
-		<sound>weapon_gemini_fire</sound>
-	</launchSounds>
-	<hitShipSounds>
-		<sound>smallExplosion</sound>
-	</hitShipSounds>
-	<hitShieldSounds>
-		<sound>hitShield1</sound>
-		<sound>hitShield2</sound>
-		<sound>hitShield3</sound>
-	</hitShieldSounds>
-	<missSounds>
-		<sound>miss</sound>
-	</missSounds>
-	<image>missile_1</image>
-	<weaponArt>terran_missile_1</weaponArt>
-	<iconImage>missile</iconImage>
-</weaponBlueprint>
-
-<weaponBlueprint name="GEMINI_MISSILES_SYS_TARGET">
-	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
-	<title>Terran Gemini Missiles - Paired</title>
-	<short>Gemini [Paired] (System)</short>
-	<desc>[Paired] A light missile system that excels when its versatility is utilized properly.</desc>
-	<tooltip>Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gamini Missiles</tooltip>
-	<sc_paired group="gemini_lv1"/>
-	<accuracyMod>-400</accuracyMod>
-	<damage>0</damage>
-	<missiles>0</missiles>
-	<speed>1</speed>
-	<shots>1</shots>
-	<sp>10</sp>
-	<cooldown>0.01</cooldown>
-	<power>0</power>
-	<cost>40</cost>
-	<bp>2</bp>
-	<rarity>0</rarity>
-	<launchSounds>
-		<sound>weapon_gemini_target</sound>
-	</launchSounds>
-	<hitShipSounds>
-		<sound>none</sound>
-	</hitShipSounds>
-	<hitShieldSounds>
-		<sound>none</sound>
-	</hitShieldSounds>
-	<missSounds>
-		<sound>none</sound>
-	</missSounds>
-	<image>missile_1</image>
-	<explosion>terran_gemini_hit</explosion>
-	<weaponArt>terran_missile_1</weaponArt> 
-	<iconImage>missile</iconImage>
-</weaponBlueprint>
-
 <weaponBlueprint name="GEMINI_MISSILES_BREACH">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
-	<title>Terran Gemini Missiles - Breach</title>
-	<short>Gemini Breach</short>
-	<desc>A light missile system that excels when its versatility is utilized properly.</desc>
-	<tooltip>Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gamini Missiles</tooltip>
+	<title id="weapon_GEMINI_MISSILES_BREACH_title"/>
+	<short id="weapon_GEMINI_MISSILES_BREACH_short"/>
+	<desc id="weapon_GEMINI_MISSILES_BREACH_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_BREACH_tooltip"/>
 	<sc_paired group="gemini_lv1"/>
 	<damage>1</damage>
 	<missiles>1</missiles>
@@ -786,7 +603,6 @@
 	<cooldown>9.5</cooldown>
 	<power>1</power>
 	<cost>40</cost>
-	<bp>2</bp>
 	<rarity>1</rarity>
 	<launchSounds>
 		<sound>weapon_gemini_fire</sound>
@@ -808,50 +624,32 @@
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
 
-<weaponBlueprint name="GEMINI_MISSILES_BREACH_TARGET">
+<weaponBlueprint name="GEMINI_MISSILES_BREACH_PAIRED">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
-	<title>Terran Gemini Missiles - Paired</title>
-	<short>Gemini [Paired] (Breach)</short>
-	<desc>[Paired] A light missile system that excels when its versatility is utilized properly.</desc>
-	<tooltip>Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gamini Missiles</tooltip>
+	<title id="weapon_GEMINI_MISSILES_BREACH_PAIRED_title"/>
+	<short id="weapon_GEMINI_MISSILES_BREACH_PAIRED_short"/>
+	<desc id="weapon_GEMINI_MISSILES_BREACH_PAIRED_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_BREACH_PAIRED_tooltip"/>
 	<sc_paired group="gemini_lv1"/>
-	<accuracyMod>-400</accuracyMod>
-	<damage>0</damage>
-	<missiles>0</missiles>
-	<speed>1</speed>
 	<shots>1</shots>
-	<sp>10</sp>
 	<cooldown>0.01</cooldown>
 	<power>0</power>
 	<cost>40</cost>
-	<bp>2</bp>
 	<rarity>0</rarity>
 	<launchSounds>
 		<sound>weapon_gemini_target</sound>
 	</launchSounds>
-	<hitShipSounds>
-		<sound>none</sound>
-	</hitShipSounds>
-	<hitShieldSounds>
-		<sound>none</sound>
-	</hitShieldSounds>
-	<missSounds>
-		<sound>none</sound>
-	</missSounds>
-	<image>missile_1</image>
-	<explosion>terran_gemini_hit</explosion>
 	<weaponArt>terran_missile_1</weaponArt> 
-	<iconImage>missile</iconImage>
 </weaponBlueprint>
 
 <weaponBlueprint name="GEMINI_MISSILES_FIRE">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
-	<title>Gemini Missiles - Hellfire</title>
-	<short>Gemini Fire</short>
-	<desc>A light missile system that excels when its versatility is utilized properly.</desc>
-	<tooltip>Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gamini Missiles</tooltip>
+	<title id="weapon_GEMINI_MISSILES_FIRE_title"/>
+	<short id="weapon_GEMINI_MISSILES_FIRE_short"/>
+	<desc id="weapon_GEMINI_MISSILES_FIRE_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_FIRE_tooltip"/>
 	<sc_paired group="gemini_lv1"/>
 	<damage>1</damage>
 	<missiles>1</missiles>
@@ -863,7 +661,6 @@
 	<cooldown>9.5</cooldown>
 	<power>1</power>
 	<cost>40</cost>
-	<bp>2</bp>
 	<rarity>1</rarity>
 	<launchSounds>
 		<sound>weapon_gemini_fire</sound>
@@ -885,58 +682,42 @@
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
 
-
-<weaponBlueprint name="GEMINI_MISSILES_FIRE_TARGET">
+<weaponBlueprint name="GEMINI_MISSILES_FIRE_PAIRED">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
-	<title>Terran Gemini Missiles - Paired</title>
-	<short>Gemini (Fire) [Paired]</short>
-	<desc>[Paired] A light missile system that excels when its versatility is utilized properly.</desc>
-	<tooltip>Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gamini Missiles</tooltip>
+	<title id="weapon_GEMINI_MISSILES_FIRE_PAIRED_title"/>
+	<short id="weapon_GEMINI_MISSILES_FIRE_PAIRED_short"/>
+	<desc id="weapon_GEMINI_MISSILES_FIRE_PAIRED_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_FIRE_PAIRED_tooltip"/>
 	<sc_paired group="gemini_lv1"/>
-	<missiles>0</missiles>
 	<shots>1</shots>
 	<cooldown>0.01</cooldown>
 	<power>0</power>
 	<cost>40</cost>
-	<bp>2</bp>
 	<rarity>0</rarity>
 	<launchSounds>
 		<sound>weapon_gemini_target</sound>
 	</launchSounds>
-	<hitShipSounds>
-		<sound>none</sound>
-	</hitShipSounds>
-	<hitShieldSounds>
-		<sound>none</sound>
-	</hitShieldSounds>
-	<missSounds>
-		<sound>none</sound>
-	</missSounds>
-	<image>missile_1</image>
-	<explosion>terran_gemini_hit</explosion>
 	<weaponArt>terran_missile_1</weaponArt> 
 </weaponBlueprint>
 
-<weaponBlueprint name="GEMINI_MISSILES_ION">
+<weaponBlueprint name="GEMINI_MISSILES_HULL">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
-	<title>Terran Gemini Missiles - Ion</title>
-	<short>Gemini Ion</short>
-	<desc>A light missile system that excels when its versatility is utilized properly.</desc>
-	<tooltip>Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gamini Missiles</tooltip>
+	<title id="weapon_GEMINI_MISSILES_HULL_title"/>
+	<short id="weapon_GEMINI_MISSILES_HULL_short"/>
+	<desc id="weapon_GEMINI_MISSILES_HULL_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_HULL_tooltip"/>
 	<sc_paired group="gemini_lv1"/>
 	<damage>1</damage>
+	<hullBust>1</hullBust>
 	<missiles>1</missiles>
 	<speed>50</speed>
 	<shots>1</shots>
-	<ion>1</ion>
 	<sp>10</sp>
-	<stunChance>2</stunChance>
 	<cooldown>9.5</cooldown>
 	<power>1</power>
 	<cost>40</cost>
-	<bp>2</bp>
 	<rarity>1</rarity>
 	<launchSounds>
 		<sound>weapon_gemini_fire</sound>
@@ -958,30 +739,57 @@
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
 
-<weaponBlueprint name="GEMINI_MISSILES_ION_TARGET">
+<weaponBlueprint name="GEMINI_MISSILES_HULL_PAIRED">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
-	<title>Terran Gemini Missiles - Paired</title>
-	<short>Gemini (Ion) [Paired]</short>
-	<desc>[Paired] A light missile system that excels when its versatility is utilized properly.</desc>
-	<tooltip>Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gamini Missiles</tooltip>
+	<title id="weapon_GEMINI_MISSILES_HULL_PAIRED_title"/>
+	<short id="weapon_GEMINI_MISSILES_HULL_PAIRED_short"/>
+	<desc id="weapon_GEMINI_MISSILES_HULL_PAIRED_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_HULL_PAIRED_tooltip"/>
 	<sc_paired group="gemini_lv1"/>
-	<accuracyMod>-400</accuracyMod>
-	<damage>0</damage>
-	<missiles>0</missiles>
-	<speed>1</speed>
 	<shots>1</shots>
-	<sp>10</sp>
 	<cooldown>0.01</cooldown>
 	<power>0</power>
 	<cost>40</cost>
-	<bp>2</bp>
 	<rarity>0</rarity>
 	<launchSounds>
 		<sound>weapon_gemini_target</sound>
 	</launchSounds>
+	<weaponArt>terran_missile_1</weaponArt> 
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_MISSILES_ION">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_ION_title"/>
+	<short id="weapon_GEMINI_MISSILES_ION_short"/>
+	<desc id="weapon_GEMINI_MISSILES_ION_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_ION_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<damage>1</damage>
+	<missiles>1</missiles>
+	<speed>50</speed>
+	<shots>1</shots>
+	<ion>1</ion>
+	<sp>10</sp>
+	<stunChance>2</stunChance>
+	<cooldown>9.5</cooldown>
+	<power>1</power>
+	<cost>40</cost>
+	<rarity>1</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_fire</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>smallExplosion</sound>
+	</hitShipSounds>
+	<hitShieldSounds>
+		<sound>hitShield1</sound>
+		<sound>hitShield2</sound>
+		<sound>hitShield3</sound>
+	</hitShieldSounds>
 	<missSounds>
-		<sound>none</sound>
+		<sound>miss</sound>
 	</missSounds>
 	<image>missile_1</image>
 	<explosion>terran_gemini_hit</explosion>
@@ -989,15 +797,34 @@
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
 
+<weaponBlueprint name="GEMINI_MISSILES_ION_PAIRED">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_ION_PAIRED_title"/>
+	<short id="weapon_GEMINI_MISSILES_ION_PAIRED_short"/>
+	<desc id="weapon_GEMINI_MISSILES_ION_PAIRED_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_ION_PAIRED_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<shots>1</shots>
+	<cooldown>0.01</cooldown>
+	<power>0</power>
+	<cost>40</cost>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_target</sound>
+	</launchSounds>
+	<weaponArt>terran_missile_1</weaponArt> 
+</weaponBlueprint>
+
 <!-- ===============
      YAMATO GUN
      =============== -->
 <weaponBlueprint name="ARTILLERY_YAMATO_LASER" NOLOC="1">
 	<type>LASER</type>
-	<title>Terran Yamato Cannon</title>
-	<short>Yamato Cannon</short>
-	<desc>A powerful weapon that focuses a nuclear explosion into a beam using magnetic fields.</desc>
-	<tooltip>Terran Yamato Cannon</tooltip>
+	<title id="weapon_ARTILLERY_YAMATO_LASER_title"/>
+	<short id="weapon_ARTILLERY_YAMATO_LASER_short"/>
+	<desc id="weapon_ARTILLERY_YAMATO_LASER_desc"/>
+	<tooltip id="weapon_ARTILLERY_YAMATO_LASER_tooltip"/>
     <mv-aoe>
 		<fireChance>0.5</fireChance>
 		<sysDamage>1</sysDamage>
@@ -1045,10 +872,10 @@
 <weaponBlueprint name="EMP_MISSILE">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
-	<title>Terran EMP Missile</title>
-	<short>EMP</short>
-	<desc>[need emp description].</desc>
-	<tooltip>Fires 1 missile; does 2 ion damage; pierces all shields.</tooltip>
+	<title id="weapon_EMP_MISSILE_title"/>
+	<short id="weapon_EMP_MISSILE_short"/>
+	<desc id="weapon_EMP_MISSILE_desc"/>
+	<tooltip id="weapon_EMP_MISSILE_tooltip"/>
 	<mv-aoe>
 		<stunChance>1</stunChance>
 		<ion>1</ion>
@@ -1118,11 +945,43 @@
 
 <weaponBlueprint name="IRRADIATE_BEAM">
 	<type>BEAM</type>
+	<flavorType>Pinpoint</flavorType>
+	<tip>tip_focus</tip>
+	<title id="weapon_IRRADIATE_BEAM_title"></title>
+	<short id="weapon_IRRADIATE_BEAM_short"></short>
+	<desc>...</desc>
+	<descriptionOverride id="weapon_IRRADIATE_BEAM_desc"></descriptionOverride>
+	<tooltipOverride id="weapon_IRRADIATE_BEAM_tooltip"></tooltipOverride>
+	<tooltip>...</tooltip>
+	<damage>1</damage>
+	<sp>0</sp>
+	<fireChance>0</fireChance>
+	<breachChance>2</breachChance>
+	<cooldown>28</cooldown>
+	<speed>1</speed>
+	<power>4</power>
+	<cost>100</cost>
+	<bp>2</bp>
+	<rarity>5</rarity>
+	<image>beam_contact</image>
+	<boost>
+		<type>damage</type>
+		<amount>1</amount>
+		<count>6</count>
+	</boost>
+	<length>1</length>
+	<launchSounds> <sound>focus_strong</sound> </launchSounds>
+	<weaponArt>tne_focus_capacitor</weaponArt>
+	<iconImage>beam</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="IRRADIATE_BEAM">
+	<type>BEAM</type>
 	<tip>tip_lily_syringe_a</tip>
-	<title>'Syringe' Beam [Acid]</title>
-	<short>'Syringe' [A]</short>
-	<desc>This weapon is less of traditional beam and more of an oversized medical device. Automatic chemical synthesis lab included. Current mode: Acid.</desc>
-	<tooltip>Applies an erosion effect for every tile hit. Also does 5 hp/s damage for 3 seconds for any crew hit and doubles damage taken by them for 10 seconds.</tooltip>
+	<title id="weapon_IRRADIATE_BEAM_title"/>
+	<short id="weapon_IRRADIATE_BEAM_short"/>
+	<desc id="weapon_IRRADIATE_BEAM_desc"/>
+	<tooltip id="weapon_IRRADIATE_BEAM_tooltip"/>
 	<damage>0</damage>
 	<persDamage>0</persDamage>
 	<sp>3</sp>
@@ -1208,15 +1067,10 @@
 *********************************************************************************************************
 -->
 <crewBlueprint name="terran_marine">
-	<desc>Basic Terran soldier equipped with powered armor and a rapid-fire C-14 rifle.&#xD;&#xD;
-&#xD;&#xD;
-	Powered Armor Stats:&#xD;&#xD;
-	 -Minor fire and damage resistance&#xD;&#xD;
-	 -Resistant to suffocation&#xD;&#xD;
-	 -Reduced movement speed.</desc>
+	<desc id="crew_TERRAN_MARINE_DESC"></desc>
 	<cost>65</cost>
-	<title>Terran Marine</title>
-	<short>Marine</short>
+	<title id="crew_TERRAN_MARINE_NAME"></title>
+	<short id="crew_TERRAN_MARINE_SHORT"></short>
 	<rarity>1</rarity>
 	<powerList>
 		<power>Active Ability: Stimpack&#xD;&#xD;
@@ -1249,15 +1103,10 @@
 *********************************************************************************************************
 -->
 <crewBlueprint name="terran_medic">
-	<desc>Terran field medic trained to supress enemy forces and keep infantry alive in combat zones.&#xD;&#xD;
-&#xD;&#xD;
-	Powered Armor Stats:&#xD;&#xD;
-	 -Minor fire and damage resistance&#xD;&#xD;
-	 -Resistant to suffocation&#xD;&#xD;
-	 -Reduced movement speed.</desc>
+	<desc id="crew_TERRAN_MEDIC_DESC"></desc>
 	<cost>65</cost>
-	<title>Terran Medic</title>
-	<short>Medic</short>
+	<title id="crew_TERRAN_MEDIC_NAME"></title>
+	<short id="crew_TERRAN_MEDIC_SHORT"></short>
 	<rarity>2</rarity>
 	<powerList>
 		<power>Active Ability: Flashbang&#xD;&#xD;
@@ -1292,16 +1141,10 @@
 *********************************************************************************************************
 -->
 <crewBlueprint name="terran_firebat">
-	<desc>Flame-wielding shock trooper built for close combat and clearing out enemy infantry.&#xD;&#xD;
-&#xD;&#xD;
-	Powered Armor Stats:&#xD;&#xD;
-	 -Immune to fire damage&#xD;&#xD;
-	 -Minor damage resistance&#xD;&#xD;
-	 -Resistant to suffocation&#xD;&#xD;
-	 -Reduced movement speed.</desc>
+	<desc id="crew_TERRAN_FIREBAT_DESC"></desc>
 	<cost>65</cost>
-	<title>Terran Firebat</title>
-	<short>Firebat</short>
+	<title id="crew_TERRAN_FIREBAT_NAME"></title>
+	<short id="crew_TERRAN_FIREBAT_SHORT"></short>
 	<rarity>4</rarity>
 	<powerList>
 		<power>Active Ability: Stimpack&#xD;&#xD;
@@ -1334,14 +1177,10 @@
 *********************************************************************************************************
 -->
 <crewBlueprint name="terran_ghost">
-	<desc>Cloaked specialist skilled in sabotage, psionics, and high-value target elimination.&#xD;&#xD;
-&#xD;&#xD;
-	Hostile Environment Suit Stats:&#xD;&#xD;
-	 -Resistant to suffocation&#xD;&#xD;
-	 -Increased movement speed.</desc>
+	<desc id="crew_TERRAN_GHOST_DESC"></desc>
 	<cost>65</cost>
-	<title>Terran Ghost</title>
-	<short>Ghost</short>
+	<title id="crew_TERRAN_GHOST_NAME"></title>
+	<short id="crew_TERRAN_GHOST_SHORT"></short>
 	<rarity>5</rarity>
 	<powerList>
 		<power>Active Ability: Cloak&#xD;&#xD;
@@ -1375,10 +1214,10 @@
 *********************************************************************************************************
 -->
 <crewBlueprint name="terran_civilian">
-	<desc>[[NEEDS DESCRIPTION]]</desc>
+	<desc id="crew_TERRAN_CIVILIAN_DESC"></desc>
 	<cost>35</cost>
-	<title>Terran Civilian</title>
-	<short>Civilian</short>
+	<title id="crew_TERRAN_CIVILIAN_NAME"></title>
+	<short id="crew_TERRAN_CIVILIAN_SHORT"></short>
 	<rarity>1</rarity>
 	<powerList>
 		<power></power>
@@ -1410,9 +1249,9 @@
 **********************************************************************************************************************
 -->
 <crewBlueprint name="terran_scv">
-	<title>Terran SCV(crewBlueprint)</title>
-	<short>SCV(crew)</short>
-	<desc>YOU SHOULD NEVER SEE THIS.</desc>
+	<title id="crew_TERRAN_SCV_NAME"></title>
+	<short id="crew_TERRAN_SCV_SHORT"></short>
+	<desc id="crew_TERRAN_SCV_DESC"></desc>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -1442,9 +1281,9 @@
 <droneBlueprint name="TERRAN_SCV">
 	<type>REPAIR</type>
 	<tip>tip_crew</tip>
-	<title>Terran SCV</title>
-	<short>SCV</short>
-	<desc>-= TODO:NEED SCV DESCRIPTION HERE =-</desc>
+	<title id="drone_TERRAN_SCV_NAME"></title>
+	<short id="drone_TERRAN_SCV_SHORT"></short>
+	<desc id="drone_TERRAN_SCV_DESC"></desc>
 	<power>1</power>
 	<cost>50</cost>
 	<bp>3</bp>
@@ -1452,9 +1291,9 @@
 	<iconImage>battle</iconImage>
 </droneBlueprint>
 <crewBlueprint name="terran_scv_hull">
-	<title>Terran SCV Hull(crewBlueprint)</title>
-	<short>SCV Hull(blueprint)</short>
-	<desc>YOU SHOULD NEVER SEE THIS.</desc>
+	<title id="crew_TERRAN_SCV_HULL_NAME"></title>
+	<short id="crew_TERRAN_SCV_HULL_SHORT"></short>
+	<desc id="crew_TERRAN_SCV_HULL_DESC"></desc>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -1464,9 +1303,9 @@
 <droneBlueprint name="TERRAN_SCV_HULL">
 	<type>SHIP_REPAIR</type>
 	<tip>tip_crew</tip>
-	<title>Terran SCV Hull(crewBlueprint)</title>
-	<short>SCV Hull(blueprint)</short>
-	<desc>Automatically repairs 3-5 damage to your hull. SCV is consumed once it finishes.</desc>
+	<title id="drone_TERRAN_SCV_HULL_NAME"></title>
+	<short id="drone_TERRAN_SCV_HULL_SHORT"></short>
+	<desc id="drone_TERRAN_SCV_HULL_DESC"></desc>
 	<power>1</power>
 	<cooldown>1000</cooldown>
 	<!-- Doesn't effect repair drone -->
@@ -1486,9 +1325,9 @@
 **********************************************************************************************************************
 -->
 <crewBlueprint name="terran_spider">
-	<title>Terran Spider Mine</title>
-	<short>Spider Mine</short>
-	<desc>YOU SHOULD NEVER SEE THIS.</desc>
+	<title id="crew_TERRAN_SPIDER_NAME"></title>
+	<short id="crew_TERRAN_SPIDER_SHORT"></short>
+	<desc id="crew_TERRAN_SPIDER_DESC"></desc>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -1498,9 +1337,9 @@
 <droneBlueprint name="TERRAN_SPIDER">
 	<type>BATTLE</type>
 	<tip>tip_crew</tip>
-	<title>Terran Spider Mine</title>
-	<short>Spider Mine</short>
-	<desc>-= TODO:NEED SPIDER MINE DESCRIPTION HERE =-</desc>
+	<title id="drone_TERRAN_SPIDER_NAME"></title>
+	<short id="drone_TERRAN_SPIDER_SHORT"></short>
+	<desc id="drone_TERRAN_SPIDER_DESC"></desc>
 	<power>1</power>
 	<cost>55</cost>
 	<bp>3</bp>
@@ -1512,9 +1351,9 @@
 	TERRAN_SPIDER_SET
 	****************** -->
 <crewBlueprint name="terran_spider_set">
-	<title>Terran Spider Mine</title>
-	<short>Spider Mine</short>
-	<desc>[[Need terran_spider_set Description]]</desc>
+	<title id="crew_TERRAN_SPIDER_SET_NAME"></title>
+	<short id="crew_TERRAN_SPIDER_SET_SHORT"></short>
+	<desc id="crew_TERRAN_SPIDER_SET_DESC"></desc>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -1524,9 +1363,9 @@
 <droneBlueprint name="TERRAN_SPIDER_SET">
 	<type>BATTLE</type>
 	<tip>tip_crew</tip>
-	<title>Terran Spider Mine</title>
-	<short>Spider Mine</short>
-	<desc>-= TODO:NEED SPIDER MINE DESCRIPTION HERE =-</desc>
+	<title id="drone_TERRAN_SPIDER_SET_NAME"></title>
+	<short id="drone_TERRAN_SPIDER_SET_SHORT"></short>
+	<desc id="drone_TERRAN_SPIDER_SET_DESC"></desc>
 	<power>1</power>
 	<cost>55</cost>
 	<bp>3</bp>
@@ -1538,9 +1377,9 @@
 	TERRAN_SPIDER_MINE
 	****************** -->
 <crewBlueprint name="terran_spider_mine">
-	<title>Terran Spider Mine</title>
-	<short>Spider Mine</short>
-	<desc>YOU SHOULD NEVER SEE THIS.</desc>
+	<title id="crew_TERRAN_SPIDER_MINE_NAME"></title>
+	<short id="crew_TERRAN_SPIDER_MINE_SHORT"></short>
+	<desc id="crew_TERRAN_SPIDER_MINE_DESC"></desc>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -1550,9 +1389,9 @@
 <droneBlueprint name="TERRAN_SPIDER_MINE">
 	<type>BATTLE</type>
 	<tip>tip_crew</tip>
-	<title>Terran Spider Mine</title>
-	<short>Spider Mine</short>
-	<desc>-= TODO:NEED SPIDER MINE ARMED DESCRIPTION HERE =-</desc>
+	<title id="drone_TERRAN_SPIDER_MINE_NAME"></title>
+	<short id="drone_TERRAN_SPIDER_MINE_SHORT"></short>
+	<desc id="drone_TERRAN_SPIDER_MINE_DESC"></desc>
 	<power>1</power>
 	<cost>0</cost>
 	<bp>3</bp>
@@ -1565,6 +1404,7 @@
            TERRAN_MATRIX
 **********************************************************************************************************************
 -->
+<!--
 <droneBlueprint name="TERRAN_MATRIX_1">
 	<type>SHIELD</type>
 	<level>1</level>
@@ -1581,12 +1421,12 @@
 	<droneImage>terran_matrix</droneImage>
 	<rarity>2</rarity>
 	<iconImage>shield</iconImage>
-	<chargeSound>shieldDroneCharge</chargeSound> <!--The sound to play as the drone slows down.-->
-	<activateSound>shieldDroneActivate</activateSound> <!--The sound to play as the drone activates.-->
-	<slowDuration>0.01</slowDuration> <!--The time it takes for the drone to slow to a stop.-->
-	<pulseDuration>0.01</pulseDuration> <!--The time it takes for the drone to activate once it has stopped.-->
-	<layers>1</layers> <!--The number of super shield points added per pulse by the drone.-->
-	<cooldowns> <!--The amount of time between super shield additions. Varies based on the number of super shield layers active.-->
+	<chargeSound>shieldDroneCharge</chargeSound>
+	<activateSound>shieldDroneActivate</activateSound>
+	<slowDuration>0.01</slowDuration>
+	<pulseDuration>0.01</pulseDuration>
+	<layers>1</layers>
+	<cooldowns>
 		<noLayers>0.1</noLayers>
 		<oneLayer>0.1</oneLayer>
 		<twoLayer>8.0</twoLayer>
@@ -1611,18 +1451,36 @@
 	<droneImage>terran_matrix</droneImage>
 	<rarity>3</rarity>
 	<iconImage>shield</iconImage>
-	<chargeSound>shieldDroneCharge</chargeSound> <!--The sound to play as the drone slows down.-->
-	<activateSound>shieldDroneActivate</activateSound> <!--The sound to play as the drone activates.-->
-	<slowDuration>0.01</slowDuration> <!--The time it takes for the drone to slow to a stop.-->
-	<pulseDuration>0.01</pulseDuration> <!--The time it takes for the drone to activate once it has stopped.-->
-	<layers>1</layers> <!--The number of super shield points added per pulse by the drone.-->
-	<cooldowns> <!--The amount of time between super shield additions. Varies based on the number of super shield layers active.-->
-		<noLayers>0.1</noLayers> <!--The names of the nodes are unimportant, and each node is the time for the next integer amount of layers.-->
+</droneBlueprint>
+<droneBlueprint name="TERRAN_MATRIX_2">
+	<type>SHIELD</type>
+	<level>2</level>
+	<tip>tip_defense</tip>
+	<title>Terran Defense Matrix Lv2</title>
+	<short>Defense Matrix 2</short>
+	<desc>The defensive matrix is a deflection field that provides strong defenses up front but recovers slowly.</desc>
+	<power>3</power>
+	<cooldown>1</cooldown>
+	<dodge>1</dodge>
+	<speed>30</speed>
+	<cost>70</cost>
+	<bp>2</bp>
+	<droneImage>terran_matrix</droneImage>
+	<rarity>3</rarity>
+	<iconImage>shield</iconImage>
+	<chargeSound>shieldDroneCharge</chargeSound>
+	<activateSound>shieldDroneActivate</activateSound>
+	<slowDuration>0.01</slowDuration>
+	<pulseDuration>0.01</pulseDuration>
+	<layers>1</layers>
+	<cooldowns>
+		<noLayers>0.1</noLayers>
 		<oneLayer>0.1</oneLayer>
 		<twoLayer>0.1</twoLayer>
 		<threeLayer>8.0</threeLayer>
 		<moreLayer>16.0</moreLayer>
 	</cooldowns>
+</droneBlueprint>
 </droneBlueprint>
 
 <droneBlueprint name="TERRAN_MATRIX_3">
@@ -1641,19 +1499,38 @@
 	<droneImage>terran_matrix</droneImage>
 	<rarity>4</rarity>
 	<iconImage>shield</iconImage>
-	<chargeSound>shieldDroneCharge</chargeSound> <!--The sound to play as the drone slows down.-->
-	<activateSound>shieldDroneActivate</activateSound> <!--The sound to play as the drone activates.-->
-	<slowDuration>0.01</slowDuration> <!--The time it takes for the drone to slow to a stop.-->
-	<pulseDuration>0.01</pulseDuration> <!--The time it takes for the drone to activate once it has stopped.-->
-	<layers>1</layers> <!--The number of super shield points added per pulse by the drone.-->
-	<cooldowns> <!--The amount of time between super shield additions. Varies based on the number of super shield layers active.-->
-		<noLayers>0.1</noLayers> <!--The names of the nodes are unimportant, and each node is the time for the next integer amount of layers.-->
+</droneBlueprint>
+<droneBlueprint name="TERRAN_MATRIX_3">
+	<type>SHIELD</type>
+	<level>3</level>
+	<tip>tip_defense</tip>
+	<title>Terran Defense Matrix Lv3</title>
+	<short>Defense Matrix 3</short>
+	<desc>The defensive matrix is a deflection field that provides strong defenses up front but recovers slowly.</desc>
+	<power>4</power>
+	<cooldown>1</cooldown>
+	<dodge>1</dodge>
+	<speed>30</speed>
+	<cost>120</cost>
+	<bp>2</bp>
+	<droneImage>terran_matrix</droneImage>
+	<rarity>4</rarity>
+	<iconImage>shield</iconImage>
+	<chargeSound>shieldDroneCharge</chargeSound>
+	<activateSound>shieldDroneActivate</activateSound>
+	<slowDuration>0.01</slowDuration>
+	<pulseDuration>0.01</pulseDuration>
+	<layers>1</layers>
+	<cooldowns>
+		<noLayers>0.1</noLayers>
 		<oneLayer>0.1</oneLayer>
 		<twoLayer>0.1</twoLayer>
 		<threeLayer>0.1</threeLayer>
 		<moreLayer>16.0</moreLayer>
 	</cooldowns>
 </droneBlueprint>
+</droneBlueprint>
+-->
 
 <!-- 
 **********************************************************************************************************************
@@ -1663,7 +1540,7 @@
 
 <weaponBlueprint name="TERRAN_DEFENSE_1">
 	<type>LASER</type>
-	<title>[[YOU SHOULD NOT SEE THIS - TERRAN_DEFENSE_1]]</title>
+	<title id="weapon_TERRAN_DEFENSE_1_title"></title>
 	<rarity>0</rarity>
 	<launchSounds>
 		<sound>shieldDroneActivate</sound>
@@ -1690,7 +1567,7 @@
 						
 <weaponBlueprint name="TERRAN_DEFENSE_2">		
 	<type>LASER</type>
-	<title>[[YOU SHOULD NOT SEE THIS - TERRAN_DEFENSE_2]]</title>
+	<title id="weapon_TERRAN_DEFENSE_2_title"></title>
 	<rarity>0</rarity>
 	<launchSounds>
 		<sound>shieldDroneActivate</sound>
@@ -1716,8 +1593,8 @@
 </droneBlueprint>			
 
 <weaponBlueprint name="TERRAN_DEFENSE_3">
-	<type>LASER</type>				
-	<title>[[YOU SHOULD NOT SEE THIS - TERRAN_DEFENSE_3]]</title>
+	<type>LASER</type>		
+	<title id="weapon_TERRAN_DEFENSE_3_title"></title>
 	<rarity>0</rarity>
 	<launchSounds>
 		<sound>shieldDroneActivate</sound>
@@ -1751,9 +1628,9 @@
      TERRAN_BATTLECRUISER
      ====================-->
 <shipBlueprint name="PLAYER_SHIP_TERRAN_BATTLECRUISER" layout="SHIP_TERRAN_BATTLECRUISER" img="terran_battlecruiser">
-	<class>Battlecruiser</class>
-	<name>Battlecruiser</name>
-	<desc>The Terran Battlecruiser stands as the pinnacle of Dominion naval engineering, an orbital fortress bristling with weapons and armored to The Terran Battlecruiser is the pinnacle of Dominion naval power, an orbital fortress built for long campaigns, combining overwhelming firepower with near-impenetrable defenses.</desc>
+	<class id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_class"></class>
+	<name id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_name"></name>
+	<desc id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_desc"></desc>
 	<systemList>
 		<artillery max="4" power="1" room="0" start="true" weapon="ARTILLERY_YAMATO_LASER" img="sc_room_artillery_1" />
 		<lily_system_bracers max="3" power="1" room="18" start="true" />
@@ -1828,9 +1705,9 @@
      TERRAN_WRAITH
      ====================-->
 <shipBlueprint name="PLAYER_SHIP_TERRAN_WRAITH" layout="SHIP_TERRAN_WRAITH" img="terran_wraith">
-	<class>Stealth Fighter</class>
-	<name>Terran Wraith</name>
-	<desc>The Wraith is a Terran space superiority fighter known for it's maneuverability and cloaking technology.</desc>
+	<class id="text_PLAYER_SHIP_TERRAN_WRAITH_class"></class>
+	<name id="text_PLAYER_SHIP_TERRAN_WRAITH_name"></name>
+	<desc id="text_PLAYER_SHIP_TERRAN_WRAITH_desc"></desc>
 	<systemList>
 		<battery power="1" room="5" start="true" img="terran_computer_d" />
 		<cloaking power="1" room="9" start="true" img="terran_computer_t" />
@@ -1886,7 +1763,7 @@
 	<weaponList missiles="10" count="3">
 		<weapon name="TERRAN_BURST_LASER_1" />
 		<weapon name="GEMINI_MISSILES_FIRE" />
-		<weapon name="GEMINI_MISSILES_ION" />
+		<weapon name="GEMINI_MISSILES_HULL" />
 	</weaponList>
 	<droneList drones="5" count="1">
 		<drone name="TERRAN_SPIDER" />
@@ -1903,9 +1780,9 @@
      TERRAN_VESSEL
      ====================-->
 <shipBlueprint name="PLAYER_SHIP_TERRAN_VESSEL" layout="SHIP_TERRAN_VESSEL" img="terran_vessel">
-	<class>Science Vessel</class>
-	<name>Terran Science Vessel</name>
-	<desc>[NEED SCIENCE VESSEL DESCRIPTION]</desc>
+	<class id="text_SHIP_TERRAN_VESSEL_class"></class>
+	<name id="text_PLAYER_SHIP_HARD_name"></name>
+	<desc id="text_SHIP_TERRAN_VESSEL_desc"></desc>
 	<systemList>
 		<battery power="1" room="5" start="false" img="room_battery" />
 		<clonebay power="1" room="8" start="false">
@@ -1968,7 +1845,6 @@
 		<weapon name="EMP_MISSILE" />
 	</weaponList>
 	<droneList drones="10" count="3">
-		<!--<drone name="TERRAN_MATRIX_1" />-->
 		<drone name="TERRAN_DEFENSE_1" />		
 		<drone name="TERRAN_DEFENSE_2" />
 		<drone name="TERRAN_DEFENSE_3" />

@@ -13,47 +13,127 @@
 <text name="text_SHIP_TERRAN_VESSEL_desc">[NEED SCIENCE VESSEL DESCRIPTION]</text>
 
 				
-				
+<!-- TERRAN BURST LASER -->
 <text name="weapon_TERRAN_BURST_LASER_1_title">Burst Laser Mk I</text>
 <text name="weapon_TERRAN_BURST_LASER_1_short">Burst Laser I</text>
 <text name="weapon_TERRAN_BURST_LASER_1_desc">25mm Burst Laser Mk I: Designed for strafing ground targets, this weapon trades accuracy for increasing rates of fire.</text>
 <text name="weapon_TERRAN_BURST_LASER_1_tooltip">1 damage, 1-2 shots. 8.5-2.5 second cooldown. 0-(-25) accuracy</text>
+
 <text name="weapon_TERRAN_BURST_LASER_2_title">Burst Laser Mk II</text>
 <text name="weapon_TERRAN_BURST_LASER_2_short">Burst Laser II</text>
 <text name="weapon_TERRAN_BURST_LASER_2_desc">25mm Burst Laser Mk II: Designed for strafing ground targets, this weapon trades accuracy for increasing rates of fire.</text>
 <text name="weapon_TERRAN_BURST_LASER_2_tooltip">1 damage, 1-3 shots. 12-4 second cooldown. 0-(-25) accuracy</text>
+
 <text name="weapon_TERRAN_BURST_LASER_3_title">Burst Laser Mk II</text>
 <text name="weapon_TERRAN_BURST_LASER_3_short">Burst Laser III</text>
 <text name="weapon_TERRAN_BURST_LASER_3_desc">25mm Burst Laser Mk III: Designed for strafing ground targets, this weapon trades accuracy for increasing rates of fire.</text>
 <text name="weapon_TERRAN_BURST_LASER_3_tooltip">1 damage, 2-4 shots. 13-6 second cooldown. (-5)-(-30) accuracy</text>
+
 <text name="weapon_TERRAN_BURST_LASER_HEAVY_1_title">Heavy Burst Laser Mk I</text>
 <text name="weapon_TERRAN_BURST_LASER_HEAVY_1_short">Heavy Burst I</text>
 <text name="weapon_TERRAN_BURST_LASER_HEAVY_1_desc">40mm Burst Laser Mk I: Broad laser fire designed to have greater impact on the target at the loss of accuracy and slower increasing rates of fire.</text>
 <text name="weapon_TERRAN_BURST_LASER_HEAVY_1_tooltip">1 damage, 2 shots. 13-10 second cooldown. (-5)-(-20) accuracy. Deals additional damage to systems, crew, and rooms without systems.</text>
+
 <text name="weapon_TERRAN_BURST_LASER_HEAVY_2_title">Heavy Burst Laser Mk II</text>
 <text name="weapon_TERRAN_BURST_LASER_HEAVY_2_short">Heavy Burst II</text>
 <text name="weapon_TERRAN_BURST_LASER_HEAVY_2_desc">40mm Burst Laser Mk II: Broad laser fire designed to have greater impact on the target at the loss of accuracy and slower increasing rates of fire.</text>
 <text name="weapon_TERRAN_BURST_LASER_HEAVY_2_tooltip">1 damage, 3 shots. 14-10.1 second cooldown. (-5)-(-20) accuracy. Deals additional damage to systems, crew, and rooms without systems.</text>
+
+<!-- TERRAN LASER BATTERIES -->
 <text name="weapon_TERRAN_LASER_BATTERY_1_title">Laser Battery Mk I</text>
 <text name="weapon_TERRAN_LASER_BATTERY_1_short">Laser Bat.I</text>
 <text name="weapon_TERRAN_LASER_BATTERY_1_desc">Laser Battery Mk I: A cooridinated laser barrage that provides greater accuracy and concentrated volume of fire with each charge.</text>
 <text name="weapon_TERRAN_LASER_BATTERY_1_tooltip">1 damage, 2 shots.? second cooldown. (-30%)-(0%) accuracy. (10%)-(10%) breach chance.</text>
+
 <text name="weapon_TERRAN_LASER_BATTERY_2_title">Laser Battery Mk II</text>
 <text name="weapon_TERRAN_LASER_BATTERY_2_short">Laser Bat.II</text>
 <text name="weapon_TERRAN_LASER_BATTERY_2_desc">Laser Battery Mk II: A cooridinated laser barrage that provides greater accuracy and concentrated volume of fire with each charge.</text>
 <text name="weapon_TERRAN_LASER_BATTERY_2_tooltip">1 damage, 3 shots.? second cooldown. (-40%)-(0%) accuracy. (10%)-(20%) breach chance.</text>
+
 <text name="weapon_TERRAN_LASER_BATTERY_3_title">Laser Battery Mk III</text>
 <text name="weapon_TERRAN_LASER_BATTERY_3_short">Laser Bat.III</text>
 <text name="weapon_TERRAN_LASER_BATTERY_3_desc">Laser Battery Mk III: A cooridinated laser barrage that provides greater accuracy and concentrated volume of fire with each charge.</text>
 <text name="weapon_TERRAN_LASER_BATTERY_3_tooltip">1 damage, 2 shots.? second cooldown. (-30%)-(0%) accuracy. (10%)-(10%) breach chance.</text>
+
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_1_title">Heavy Laser Battery Mk I</text>
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_1_short">H.Laser Bat.I</text>
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_1_desc">Heavy Laser Battery Mk I: A cooridinated laser barrage that provides greater accuracy and concentrated volume of fire with each charge.</text>
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_1_tooltip">2 damage, 1 shots.? second cooldown. (-40%)-(10%) accuracy. (10%)-(30%) breach chance.</text>
+
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_2_title">Heavy Laser Battery Mk II</text>
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_2_short">H.Laser Bat.II</text>
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_2_desc">Heavy Laser Battery Mk II: A cooridinated laser barrage that provides greater accuracy and concentrated volume of fire with each charge.</text>
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_2_tooltip">2 damage, 1 shots.? second cooldown. (-60%)-(10%) accuracy. (10%)-(40%) breach chance.</text>
+
+<!-- GEMINI MISSILES -->
+<text name="weapon_GEMINI_MISSILES_BREACH_title">Terran Gemini Missiles - Breach</text>
+<text name="weapon_GEMINI_MISSILES_BREACH_short">Gemini Breach</text>
+<text name="weapon_GEMINI_MISSILES_BREACH_desc">A light missile system that excels when its versatility is utilized properly.</text>
+<text name="weapon_GEMINI_MISSILES_BREACH_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
+
+<text name="weapon_GEMINI_MISSILES_BREACH_PAIRED_title">Terran Gemini Missiles - Paired</text>
+<text name="weapon_GEMINI_MISSILES_BREACH_PAIRED_short">Gemini [Paired] (Breach)</text>
+<text name="weapon_GEMINI_MISSILES_BREACH_PAIRED_desc">[Paired] A light missile system that excels when its versatility is utilized properly.</text>
+<text name="weapon_GEMINI_MISSILES_BREACH_PAIRED_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
+
+<text name="weapon_GEMINI_MISSILES_FIRE_title">Gemini Missiles - Hellfire</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_short">Gemini Fire</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_desc">A light missile system that excels when its versatility is utilized properly.</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
+
+<text name="weapon_GEMINI_MISSILES_FIRE_PAIRED_title">Terran Gemini Missiles - Paired</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_PAIRED_short">Gemini (Fire) [Paired]</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_PAIRED_desc">[Paired] A light missile system that excels when its versatility is utilized properly.</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_PAIRED_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
+
+<text name="weapon_GEMINI_MISSILES_HULL_title">Gemini Missiles - Anti-Hull</text>
+<text name="weapon_GEMINI_MISSILES_HULL_short">Gemini Anti-Hull</text>
+<text name="weapon_GEMINI_MISSILES_HULL_desc">A light missile system that excels when its versatility is utilized properly.</text>
+<text name="weapon_GEMINI_MISSILES_HULL_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
+
+<text name="weapon_GEMINI_MISSILES_HULL_PAIRED_title">Gemini Missiles - Paired</text>
+<text name="weapon_GEMINI_MISSILES_HULL_PAIRED_short">Gemini [Paired] (Hull)</text>
+<text name="weapon_GEMINI_MISSILES_HULL_PAIRED_desc">[Paired] A light missile system that excels when its versatility is utilized properly.</text>
+<text name="weapon_GEMINI_MISSILES_HULL_PAIRED_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
+
+<text name="weapon_GEMINI_MISSILES_ION_title">Terran Gemini Missiles - Ion</text>
+<text name="weapon_GEMINI_MISSILES_ION_short">Gemini Ion</text>
+<text name="weapon_GEMINI_MISSILES_ION_desc">A light missile system that excels when its versatility is utilized properly.</text>
+<text name="weapon_GEMINI_MISSILES_ION_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
+
+<text name="weapon_GEMINI_MISSILES_ION_PAIRED_title">Terran Gemini Missiles - Paired</text>
+<text name="weapon_GEMINI_MISSILES_ION_PAIRED_short">Gemini (Ion) [Paired]</text>
+<text name="weapon_GEMINI_MISSILES_ION_PAIRED_desc">[Paired] A light missile system that excels when its versatility is utilized properly.</text>
+<text name="weapon_GEMINI_MISSILES_ION_PAIRED_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
+
+<text name="weapon_GEMINI_MISSILES_SYS_title">Terran Gemini Missiles - Anti-System</text>
+<text name="weapon_GEMINI_MISSILES_SYS_short">Gemini Anti-Sys</text>
+<text name="weapon_GEMINI_MISSILES_SYS_desc">A light missile system that excels when its versatility is utilized properly.</text>
+<text name="weapon_GEMINI_MISSILES_SYS_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
+
+<text name="weapon_GEMINI_MISSILES_SYS_PAIRED_title">Terran Gemini Missiles - Paired</text>
+<text name="weapon_GEMINI_MISSILES_SYS_PAIRED_short">Gemini [Paired] (System)</text>
+<text name="weapon_GEMINI_MISSILES_SYS_PAIRED_desc">[Paired] A light missile system that excels when its versatility is utilized properly.</text>
+<text name="weapon_GEMINI_MISSILES_SYS_PAIRED_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
+
+<text name="weapon_ARTILLERY_YAMATO_LASER_title">Terran Yamato Cannon</text>
+<text name="weapon_ARTILLERY_YAMATO_LASER_short">Yamato Cannon</text>
+<text name="weapon_ARTILLERY_YAMATO_LASER_desc">A powerful weapon that focuses a nuclear explosion into a beam using magnetic fields.</text>
+<text name="weapon_ARTILLERY_YAMATO_LASER_tooltip">Terran Yamato Cannon</text>
+
+<text name="weapon_EMP_MISSILE_title">Terran EMP Missile</text>
+<text name="weapon_EMP_MISSILE_short">EMP</text>
+<text name="weapon_EMP_MISSILE_desc">[need emp description].</text>
+<text name="weapon_EMP_MISSILE_tooltip">Fires 1 missile; does 2 ion damage; pierces all shields.</text>
+
+<text name="weapon_TERRAN_DEFENSE_1_title">Terran Defense Matrix I</text>
+<text name="weapon_TERRAN_DEFENSE_2_title">Terran Defense Matrix II</text>
+<text name="weapon_TERRAN_DEFENSE_3_title">Terran Defense Matrix III</text>
+
+<text name="weapon_IRRADIATE_BEAM_title">'Syringe' Beam [Acid]</text>
+<text name="weapon_IRRADIATE_BEAM_short">'Syringe' [A]</text>
+<text name="weapon_IRRADIATE_BEAM_desc">This weapon is less of traditional beam and more of an oversized medical device. Automatic chemical synthesis lab included. Current mode: Acid.</text>
+<text name="weapon_IRRADIATE_BEAM_tooltip">Applies an erosion effect for every tile hit. Also does 5 hp/s damage for 3 seconds for any crew hit and doubles damage taken by them for 10 seconds.</text>
 
 <text name="drone_TERRAN_DEFENSE_1_NAME">Terran Defense Matrix Mk I</text>
 <text name="drone_TERRAN_DEFENSE_1_SHORT">Matrix.I</text>
@@ -66,6 +146,81 @@
 <text name="drone_TERRAN_DEFENSE_3_NAME">Terran Defense Matrix Mk III</text>
 <text name="drone_TERRAN_DEFENSE_3_SHORT">Matrix.III</text>
 <text name="drone_TERRAN_DEFENSE_3_DESC">[[Terran Defense 3 DESC]]</text>
+
+<text name="drone_TERRAN_SCV_NAME">Terran SCV</text>
+<text name="drone_TERRAN_SCV_SHORT">SCV</text>
+<text name="drone_TERRAN_SCV_DESC">-= TODO:NEED SCV DESCRIPTION HERE =-</text>
+
+<text name="drone_TERRAN_SCV_HULL_NAME">Terran SCV Hull</text>
+<text name="drone_TERRAN_SCV_HULL_SHORT">SCV Hull</text>
+<text name="drone_TERRAN_SCV_HULL_DESC">Automatically repairs 3-5 damage to your hull. SCV is consumed once it finishes.</text>
+
+<text name="drone_TERRAN_SPIDER_NAME">Terran Spider Mine</text>
+<text name="drone_TERRAN_SPIDER_SHORT">Spider Mine</text>
+<text name="drone_TERRAN_SPIDER_DESC">-= TODO:NEED SPIDER MINE DESCRIPTION HERE =-</text>
+
+<text name="drone_TERRAN_SPIDER_SET_NAME">Terran Spider Mine</text>
+<text name="drone_TERRAN_SPIDER_SET_SHORT">Spider Mine</text>
+<text name="drone_TERRAN_SPIDER_SET_DESC">-= TODO:NEED SPIDER MINE DESCRIPTION HERE =-</text>
+
+<text name="drone_TERRAN_SPIDER_MINE_NAME">Terran Spider Mine</text>
+<text name="drone_TERRAN_SPIDER_MINE_SHORT">Spider Mine</text>
+<text name="drone_TERRAN_SPIDER_MINE_DESC">-= TODO:NEED SPIDER MINE ARMED DESCRIPTION HERE =-</text>
+
+<text name="crew_TERRAN_MARINE_NAME">Terran Marine</text>
+<text name="crew_TERRAN_MARINE_SHORT">Marine</text>
+<text name="crew_TERRAN_MARINE_DESC">Basic Terran soldier equipped with powered armor and a rapid-fire C-14 rifle.  Powered Armor Stats: -Minor fire and damage resistance -Resistant to suffocation -Reduced movement speed.</text>
+
+<text name="crew_TERRAN_MEDIC_NAME">Terran Medic</text>
+<text name="crew_TERRAN_MEDIC_SHORT">Medic</text>
+<text name="crew_TERRAN_MEDIC_DESC">Terran field medic trained to supress enemy forces and keep infantry alive in combat zones.  Powered Armor Stats: -Minor fire and damage resistance -Resistant to suffocation -Reduced movement speed.</text>
+
+<text name="crew_TERRAN_FIREBAT_NAME">Terran Firebat</text>
+<text name="crew_TERRAN_FIREBAT_SHORT">Firebat</text>
+<text name="crew_TERRAN_FIREBAT_DESC">Flame-wielding shock trooper built for close combat and clearing out enemy infantry.  Powered Armor Stats: -Immune to fire damage -Minor damage resistance -Resistant to suffocation -Reduced movement speed.</text>
+
+<text name="crew_TERRAN_GHOST_NAME">Terran Ghost</text>
+<text name="crew_TERRAN_GHOST_SHORT">Ghost</text>
+<text name="crew_TERRAN_GHOST_DESC">Cloaked specialist skilled in sabotage, psionics, and high-value target elimination.  Hostile Environment Suit Stats: -Resistant to suffocation -Increased movement speed.</text>
+
+<text name="crew_TERRAN_CIVILIAN_NAME">Terran Civilian</text>
+<text name="crew_TERRAN_CIVILIAN_SHORT">Civilian</text>
+<text name="crew_TERRAN_CIVILIAN_DESC">[[NEEDS DESCRIPTION]]</text>
+
+<text name="crew_TERRAN_SCV_NAME">Terran SCV</text>
+<text name="crew_TERRAN_SCV_SHORT">SCV</text>
+<text name="crew_TERRAN_SCV_DESC">YOU SHOULD NEVER SEE THIS.</text>
+
+<text name="crew_TERRAN_SCV_HULL_NAME">Terran SCV Hull</text>
+<text name="crew_TERRAN_SCV_HULL_SHORT">SCV Hull</text>
+<text name="crew_TERRAN_SCV_HULL_DESC">YOU SHOULD NEVER SEE THIS.</text>
+
+<text name="crew_TERRAN_SPIDER_NAME">Terran Spider Mine</text>
+<text name="crew_TERRAN_SPIDER_SHORT">Spider Mine</text>
+<text name="crew_TERRAN_SPIDER_DESC">YOU SHOULD NEVER SEE THIS.</text>
+
+<text name="crew_TERRAN_SPIDER_SET_NAME">Terran Spider Mine</text>
+<text name="crew_TERRAN_SPIDER_SET_SHORT">Spider Mine</text>
+<text name="crew_TERRAN_SPIDER_SET_DESC">[[Need terran_spider_set Description]]</text>
+
+<text name="crew_TERRAN_SPIDER_MINE_NAME">Terran Spider Mine</text>
+<text name="crew_TERRAN_SPIDER_MINE_SHORT">Spider Mine</text>
+<text name="crew_TERRAN_SPIDER_MINE_DESC">YOU SHOULD NEVER SEE THIS.</text>
+
+<text name="system_lily_system_bracers_NAME">System Bracers</text>
+<text name="system_lily_system_bracers_DESC">Passively protects your systems from damage, redirecting system damage towards itself instead (As long as it isn't destroyed itself).</text>
+
+<text name="aug_TERRAN_WRAITH_BATTERY_NAME">Apollo Reactor</text>
+<text name="aug_TERRAN_WRAITH_BATTERY_DESC">High yield uranium reactors designed by the Terran Confederacy.  UPGRADE: Battery System +2 Systems powered by the reactor recover more quickly from ion damage and have increased performance. - Cloak: Reduced Downtime. - Engines: Increased evasion. [[wip: increased ftl charge.]] - Oxygen: Automated fire supression. Increased refill speed. - Clone: Increased clone speed. [[wip: Reduced Skill Drain.]] - Drone: Drone speed. [[wip: Drone Rebuild Speed.]]</text>
+
+<text name="aug_TERRAN_SHIP_ARMOR_LIGHT_NAME">Light Armor Plating</text>
+<text name="aug_TERRAN_SHIP_ARMOR_LIGHT_DESC">Light neosteel hulls and reinforced structural bracers provide better maneuverability at a cost of durability.  REDUCE: System Bracers -1 System Bracers have a chance to block incoming damage (System Bracer Health * 20%) BONUS: Evasion +2% per engine level Pilot can perform straif runs (Increase Accuracy and Projectile Speed at the cost of Evasion)</text>
+
+<text name="aug_TERRAN_SHIP_ARMOR_MEDIUM_NAME">Medium Armor Plating</text>
+<text name="aug_TERRAN_SHIP_ARMOR_MEDIUM_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a slight cost to maneuverability.  UPGRADE: System Bracers +1 System Bracers have a chance to block incoming damage (System Bracer Health * 20%) PENALTY: Evasion -1% per engine level</text>
+
+<text name="aug_TERRAN_SHIP_ARMOR_HEAVY_NAME">Heavy Armor Plating</text>
+<text name="aug_TERRAN_SHIP_ARMOR_HEAVY_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a significan cost to maneuverability  UPGRADE: System Bracers +2 System Bracers have a chance to block incoming damage (System Bracer Health * 20%) PENALTY: Evasion -2% per engine level</text>
 
 <text name="TNE_TEXT_DRONE_ACTIVE_OVERCHARGER_NAME">Active Shield Overcharger</text>
 <text name="TNE_TEXT_DRONE_ACTIVE_OVERCHARGER_SHORT">Active Over.</text>
