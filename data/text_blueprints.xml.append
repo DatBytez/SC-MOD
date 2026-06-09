@@ -130,10 +130,10 @@
 <text name="weapon_TERRAN_DEFENSE_2_title">Terran Defense Matrix II</text>
 <text name="weapon_TERRAN_DEFENSE_3_title">Terran Defense Matrix III</text>
 
-<text name="weapon_IRRADIATE_BEAM_title">'Syringe' Beam [Acid]</text>
-<text name="weapon_IRRADIATE_BEAM_short">'Syringe' [A]</text>
-<text name="weapon_IRRADIATE_BEAM_desc">This weapon is less of traditional beam and more of an oversized medical device. Automatic chemical synthesis lab included. Current mode: Acid.</text>
-<text name="weapon_IRRADIATE_BEAM_tooltip">Applies an erosion effect for every tile hit. Also does 5 hp/s damage for 3 seconds for any crew hit and doubles damage taken by them for 10 seconds.</text>
+<text name="weapon_IRRADIATE_BEAM_title">Terran Irradiate</text>
+<text name="weapon_IRRADIATE_BEAM_short">Irradiate</text>
+<text name="weapon_IRRADIATE_BEAM_desc">[[Need Irradiate Description]]</text>
+<text name="weapon_IRRADIATE_BEAM_tooltip">Applies an erosion effect for every tile hit. Also does 5 hp/s damage for 25 seconds to any crew hit.</text>
 
 <text name="drone_TERRAN_DEFENSE_1_NAME">Terran Defense Matrix Mk I</text>
 <text name="drone_TERRAN_DEFENSE_1_SHORT">Matrix.I</text>

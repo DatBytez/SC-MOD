@@ -225,7 +225,7 @@
 		<fireFrame>2</fireFrame>
 		<firePoint x="16" y="15" />
 		<mountPoint x="3" y="40" />
-		<chargeImage>weapon/terran_missile_emp_glow.png</chargeImage>
+		<chargeImage>weapon/terran_missile_3_glow.png</chargeImage>
 	</weaponAnim>
 	
 <!-- Projectiles -->
@@ -287,7 +287,7 @@
 	<time>1.0</time>
 </anim>
 
-<animSheet name="terran_burst_laser_hit" w="585" h="58" fw="58" fh="58">weapon/terran_burst_laser_hit.png</animSheet>
+<animSheet name="terran_burst_laser_hit" w="580" h="58" fw="58" fh="58">weapon/terran_burst_laser_hit.png</animSheet>
 <anim name="terran_burst_laser_hit">
 	<sheet>terran_burst_laser_hit</sheet>
 	<desc length="10" x="0" y="0"/>
@@ -309,40 +309,20 @@
 </anim>
 
 <!-- Status Effects -->
-<animSheet name="lily_invisible" w="35" h="35" fw="35" fh="35">effects_lily/invisible.png</animSheet>
-<anim name="lily_invisible">
-	<sheet>lily_invisible</sheet>
+<animSheet name="invisible" w="35" h="35" fw="35" fh="35">effects/invisible.png</animSheet>
+<anim name="invisible">
+	<sheet>invisible</sheet>
 	<desc length="1" x="0" y="0" />
 	<time>0.1</time>
 </anim>
 
-<animSheet name="lily_acid_wall_1" w="175" h="35" fw="35" fh="35">effects_lily/acid_wall_1.png</animSheet>
-<anim name="lily_acid_wall_1">
-	<sheet>lily_acid_wall_1</sheet>
-	<desc length="5" x="0" y="0"/>
-	<time>0.2</time>
-</anim>
-
-<animSheet name="lily_poison_effect" w="352" h="32" fw="32" fh="32">people_lily/poison_effect.png</animSheet>
-<anim name="lily_poison_effect">
-	<sheet>lily_poison_effect</sheet>
-	<desc length="11" x="0" y="0"/>
+<animSheet name="irradiate_wall" w="350" h="35" fw="35" fh="35">effects/irradiate_wall.png</animSheet>
+<anim name="irradiate_wall">
+	<sheet>irradiate_wall</sheet>
+	<desc length="10" x="0" y="0"/>
 	<time>1.0</time>
 </anim>
 
-<animSheet name="lily_acid_effect" w="352" h="32" fw="32" fh="32">people_lily/acid_effect.png</animSheet>
-<anim name="lily_acid_effect">
-	<sheet>lily_acid_effect</sheet>
-	<desc length="11" x="0" y="0"/>
-	<time>1.0</time>
-</anim>
-
-	<animSheet name="bio_poison" w="352" h="32" fw="32" fh="32">people/healing_hurt_strip11.png</animSheet>
-<anim name="bio_poison">
-	<sheet>bio_poison</sheet>
-	<desc length="11" x="0" y="0"/>
-	<time>1.0</time>
-</anim>
 
 <!--
 ****************
@@ -362,6 +342,7 @@
 	<desc length="10" x="0" y="0"/>
 	<time>0.5</time>
 </anim>
+
 
 <!-- 
 *********************************************************************************************************
