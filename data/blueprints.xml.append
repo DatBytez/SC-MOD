@@ -958,6 +958,7 @@
 	<sysDamage>0</sysDamage>
 	<breachChance>2</breachChance>
 	<cooldown>28</cooldown>
+	<sc-chainstep fireThreshold="7" chainStep="3.5"/>
 	<speed>1</speed> <!--<speed>10</speed>-->
 	<length>1</length> <!--<length>50</length>-->
 	<mv-aiCrewTarget>MOST_CREW</mv-aiCrewTarget>
@@ -1597,7 +1598,8 @@
 	<dodge>100</dodge>					
 	<speed>20</speed>					
 	<cost>60</cost>					
-	<bp>2</bp>					
+	<bp>2</bp>	
+	<sc-active-shield/>				
 	<droneImage>terran_defense_1</droneImage>					
 	<weaponBlueprint>TERRAN_DEFENSE_1</weaponBlueprint>					
 	<iconImage>defense</iconImage>					 
@@ -1624,7 +1626,8 @@
 	<dodge>100</dodge>					
 	<speed>20</speed>					
 	<cost>80</cost>					
-	<bp>2</bp>					
+	<bp>2</bp>	
+	<sc-active-shield/>				
 	<droneImage>terran_defense_2</droneImage>					
 	<weaponBlueprint>TERRAN_DEFENSE_2</weaponBlueprint>					
 	<iconImage>defense</iconImage>					
@@ -1651,7 +1654,8 @@
 	<dodge>100</dodge>					
 	<speed>20</speed>					
 	<cost>140</cost>					
-	<bp>2</bp>					
+	<bp>2</bp>		
+	<sc-active-shield/>			
 	<droneImage>terran_defense_3</droneImage>					
 	<weaponBlueprint>TERRAN_DEFENSE_3</weaponBlueprint>					
 	<iconImage>defense</iconImage>					

@@ -1140,9 +1140,8 @@
     <mod-append:script>data/sc_scripts/sc_weapon_copy.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
 	
-	<mod-append:script>data/sc_scripts/TNE_LUA_UTILITY.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/TNE_LUA_ACTIVE_DRONE.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/TNE_LUA_CHAINSTEP.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_active.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
 
 	<!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>	-->
 </mod:findLike>
