@@ -906,41 +906,9 @@
 	<missSounds>
 		<sound>miss</sound>
 	</missSounds>
-	<image>missile_heavy_1</image>
+	<image>missile_1</image>
 	<weaponArt>terran_missile_emp</weaponArt>
 	<iconImage>missile</iconImage>
-</weaponBlueprint>
-
-<weaponBlueprint name="TNE_FOCUS_CAPACITOR">
-	<type>BEAM</type>
-	<flavorType>Pinpoint</flavorType>
-	<tip>tip_focus</tip>
-	<title id="TNE_TEXT_WEAPON_FOCUS_CAPACITOR_NAME"></title>
-	<short id="TNE_TEXT_WEAPON_FOCUS_CAPACITOR_SHORT"></short>
-	<desc>...</desc>
-	<descriptionOverride id="TNE_TEXT_WEAPON_FOCUS_CAPACITOR_DESC"></descriptionOverride>
-	<tooltipOverride id="TNE_TEXT_WEAPON_FOCUS_CAPACITOR_TOOLTIP"></tooltipOverride>
-	<tooltip>...</tooltip>
-	<damage>2</damage>
-	<sp>0</sp>
-	<fireChance>0</fireChance>
-	<breachChance>2</breachChance>
-	<cooldown>28</cooldown>
-	<speed>1</speed>
-	<power>4</power>
-	<cost>100</cost>
-	<bp>2</bp>
-	<rarity>5</rarity>
-	<image>beam_contact</image>
-	<boost>
-		<type>damage</type>
-		<amount>1</amount>
-		<count>6</count>
-	</boost>
-	<length>1</length>
-	<launchSounds> <sound>focus_strong</sound> </launchSounds>
-	<weaponArt>tne_focus_capacitor</weaponArt>
-	<iconImage>beam</iconImage>
 </weaponBlueprint>
 
 <weaponBlueprint name="IRRADIATE_BEAM">
@@ -1020,7 +988,6 @@
 			<affectsSelf>true</affectsSelf>
 			<priority>-100</priority>
 			<duration>25</duration>
-			<!--<boostAnim>sc_irradiate</boostAnim>-->
 		</statBoost>
 	</statBoosts>
 </weaponBlueprint>
@@ -1100,6 +1067,99 @@
 	</launchSounds>
 	<weaponArt>lily_beam_toggle_syringe_a</weaponArt>
 	<iconImage>beam</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="BOMB_ION1">
+	<type>BOMB</type>
+	<tip>tip_bombs</tip>
+	<title id="weapon_BOMB_ION_title" />
+	<short id="weapon_BOMB_ION_short" />
+	<desc id="weapon_BOMB_ION_desc" />
+	<tooltip id="weapon_BOMB_ION_tooltip" />
+	<damage>0</damage>
+	<ion>1</ion>
+	<missiles>1</missiles>
+	<shots>1</shots>
+	<sp>0</sp>
+	<cooldown>2</cooldown> <!--was 21-->
+	<power>1</power>
+	<cost>55</cost> <!--was 65-->
+	<bp>4</bp>
+	<rarity>3</rarity>
+	<image>bomb_ion</image>
+	<explosion>explosion_big1_ion</explosion>
+	<launchSounds>
+		<sound>bombTeleport</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>ionHit1</sound>
+		<sound>ionHit2</sound>
+		<sound>ionHit3</sound>
+	</hitShipSounds>
+	<weaponArt>bomb_ion</weaponArt>
+	<iconImage>bomb</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="BOMB_ION2">
+	<type>BOMB</type>
+	<tip>tip_bombs</tip>
+	<title id="weapon_BOMB_ION_title" />
+	<short id="weapon_BOMB_ION_short" />
+	<desc id="weapon_BOMB_ION_desc" />
+	<tooltip id="weapon_BOMB_ION_tooltip" />
+	<damage>0</damage>
+	<ion>2</ion>
+	<missiles>1</missiles>
+	<shots>1</shots>
+	<sp>0</sp>
+	<cooldown>2</cooldown> <!--was 21-->
+	<power>1</power>
+	<cost>55</cost> <!--was 65-->
+	<bp>4</bp>
+	<rarity>3</rarity>
+	<image>bomb_ion</image>
+	<explosion>explosion_big1_ion</explosion>
+	<launchSounds>
+		<sound>bombTeleport</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>ionHit1</sound>
+		<sound>ionHit2</sound>
+		<sound>ionHit3</sound>
+	</hitShipSounds>
+	<weaponArt>bomb_ion</weaponArt>
+	<iconImage>bomb</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="BOMB_ION3">
+	<type>BOMB</type>
+	<tip>tip_bombs</tip>
+	<title id="weapon_BOMB_ION_title" />
+	<short id="weapon_BOMB_ION_short" />
+	<desc id="weapon_BOMB_ION_desc" />
+	<tooltip id="weapon_BOMB_ION_tooltip" />
+	<damage>0</damage>
+	<ion>3</ion>
+	<missiles>1</missiles>
+	<shots>1</shots>
+	<sp>0</sp>
+	<cooldown>2</cooldown> <!--was 21-->
+	<power>1</power>
+	<cost>55</cost> <!--was 65-->
+	<bp>4</bp>
+	<rarity>3</rarity>
+	<image>bomb_ion</image>
+	<explosion>explosion_big1_ion</explosion>
+	<launchSounds>
+		<sound>bombTeleport</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>ionHit1</sound>
+		<sound>ionHit2</sound>
+		<sound>ionHit3</sound>
+	</hitShipSounds>
+	<weaponArt>bomb_ion</weaponArt>
+	<iconImage>bomb</iconImage>
 </weaponBlueprint>
 <!-- 
 *********************************************************************************************************
@@ -1441,139 +1501,6 @@
 
 <!-- 
 **********************************************************************************************************************
-           TERRAN_MATRIX
-**********************************************************************************************************************
--->
-<!--
-<droneBlueprint name="TERRAN_MATRIX_1">
-	<type>SHIELD</type>
-	<level>1</level>
-	<tip>tip_defense</tip>
-	<title>Terran Defense Matrix Lv1</title>
-	<short>Defense Matrix 1</short>
-	<desc>The defensive matrix is a deflection field that provides strong defenses up front but recovers slowly.</desc>
-	<power>2</power>
-	<cooldown>1</cooldown>
-	<dodge>1</dodge>
-	<speed>30</speed>
-	<cost>55</cost>
-	<bp>2</bp>
-	<droneImage>terran_matrix</droneImage>
-	<rarity>2</rarity>
-	<iconImage>shield</iconImage>
-	<chargeSound>shieldDroneCharge</chargeSound>
-	<activateSound>shieldDroneActivate</activateSound>
-	<slowDuration>0.01</slowDuration>
-	<pulseDuration>0.01</pulseDuration>
-	<layers>1</layers>
-	<cooldowns>
-		<noLayers>0.1</noLayers>
-		<oneLayer>0.1</oneLayer>
-		<twoLayer>8.0</twoLayer>
-		<threeLayer>16.0</threeLayer>
-		<moreLayer>32.0</moreLayer>
-	</cooldowns>
-</droneBlueprint>
-
-<droneBlueprint name="TERRAN_MATRIX_2">
-	<type>SHIELD</type>
-	<level>2</level>
-	<tip>tip_defense</tip>
-	<title>Terran Defense Matrix Lv2</title>
-	<short>Defense Matrix 2</short>
-	<desc>The defensive matrix is a deflection field that provides strong defenses up front but recovers slowly.</desc>
-	<power>3</power>
-	<cooldown>1</cooldown>
-	<dodge>1</dodge>
-	<speed>30</speed>
-	<cost>70</cost>
-	<bp>2</bp>
-	<droneImage>terran_matrix</droneImage>
-	<rarity>3</rarity>
-	<iconImage>shield</iconImage>
-</droneBlueprint>
-<droneBlueprint name="TERRAN_MATRIX_2">
-	<type>SHIELD</type>
-	<level>2</level>
-	<tip>tip_defense</tip>
-	<title>Terran Defense Matrix Lv2</title>
-	<short>Defense Matrix 2</short>
-	<desc>The defensive matrix is a deflection field that provides strong defenses up front but recovers slowly.</desc>
-	<power>3</power>
-	<cooldown>1</cooldown>
-	<dodge>1</dodge>
-	<speed>30</speed>
-	<cost>70</cost>
-	<bp>2</bp>
-	<droneImage>terran_matrix</droneImage>
-	<rarity>3</rarity>
-	<iconImage>shield</iconImage>
-	<chargeSound>shieldDroneCharge</chargeSound>
-	<activateSound>shieldDroneActivate</activateSound>
-	<slowDuration>0.01</slowDuration>
-	<pulseDuration>0.01</pulseDuration>
-	<layers>1</layers>
-	<cooldowns>
-		<noLayers>0.1</noLayers>
-		<oneLayer>0.1</oneLayer>
-		<twoLayer>0.1</twoLayer>
-		<threeLayer>8.0</threeLayer>
-		<moreLayer>16.0</moreLayer>
-	</cooldowns>
-</droneBlueprint>
-</droneBlueprint>
-
-<droneBlueprint name="TERRAN_MATRIX_3">
-	<type>SHIELD</type>
-	<level>3</level>
-	<tip>tip_defense</tip>
-	<title>Terran Defense Matrix Lv3</title>
-	<short>Defense Matrix 3</short>
-	<desc>The defensive matrix is a deflection field that provides strong defenses up front but recovers slowly.</desc>
-	<power>4</power>
-	<cooldown>1</cooldown>
-	<dodge>1</dodge>
-	<speed>30</speed>
-	<cost>120</cost>
-	<bp>2</bp>
-	<droneImage>terran_matrix</droneImage>
-	<rarity>4</rarity>
-	<iconImage>shield</iconImage>
-</droneBlueprint>
-<droneBlueprint name="TERRAN_MATRIX_3">
-	<type>SHIELD</type>
-	<level>3</level>
-	<tip>tip_defense</tip>
-	<title>Terran Defense Matrix Lv3</title>
-	<short>Defense Matrix 3</short>
-	<desc>The defensive matrix is a deflection field that provides strong defenses up front but recovers slowly.</desc>
-	<power>4</power>
-	<cooldown>1</cooldown>
-	<dodge>1</dodge>
-	<speed>30</speed>
-	<cost>120</cost>
-	<bp>2</bp>
-	<droneImage>terran_matrix</droneImage>
-	<rarity>4</rarity>
-	<iconImage>shield</iconImage>
-	<chargeSound>shieldDroneCharge</chargeSound>
-	<activateSound>shieldDroneActivate</activateSound>
-	<slowDuration>0.01</slowDuration>
-	<pulseDuration>0.01</pulseDuration>
-	<layers>1</layers>
-	<cooldowns>
-		<noLayers>0.1</noLayers>
-		<oneLayer>0.1</oneLayer>
-		<twoLayer>0.1</twoLayer>
-		<threeLayer>0.1</threeLayer>
-		<moreLayer>16.0</moreLayer>
-	</cooldowns>
-</droneBlueprint>
-</droneBlueprint>
--->
-
-<!-- 
-**********************************************************************************************************************
            TERRAN_DEFENSE
 **********************************************************************************************************************
 -->
@@ -1597,8 +1524,7 @@
 	<cooldown>3000</cooldown><!-- was 1500-->					
 	<dodge>100</dodge>					
 	<speed>20</speed>					
-	<cost>60</cost>					
-	<bp>2</bp>	
+	<cost>60</cost>
 	<sc-active-shield/>				
 	<droneImage>terran_defense_1</droneImage>					
 	<weaponBlueprint>TERRAN_DEFENSE_1</weaponBlueprint>					
@@ -1622,11 +1548,10 @@
 	<short id="drone_TERRAN_DEFENSE_2_SHORT"></short>					
 	<desc id="drone_TERRAN_DEFENSE_2_DESC"></desc>					
 	<power>3</power>					
-	<cooldown>2000</cooldown>					
+	<cooldown>1500</cooldown>					
 	<dodge>100</dodge>					
 	<speed>20</speed>					
-	<cost>80</cost>					
-	<bp>2</bp>	
+	<cost>80</cost>
 	<sc-active-shield/>				
 	<droneImage>terran_defense_2</droneImage>					
 	<weaponBlueprint>TERRAN_DEFENSE_2</weaponBlueprint>					
@@ -1649,12 +1574,11 @@
 	<title id="drone_TERRAN_DEFENSE_3_NAME"></title>					
 	<short id="drone_TERRAN_DEFENSE_3_SHORT"></short>					
 	<desc id="drone_TERRAN_DEFENSE_3_DESC"></desc>					
-	<power>3</power>					
-	<cooldown>1000</cooldown>					
+	<power>4</power>					
+	<cooldown>500</cooldown>					
 	<dodge>100</dodge>					
 	<speed>20</speed>					
-	<cost>140</cost>					
-	<bp>2</bp>		
+	<cost>140</cost>
 	<sc-active-shield/>			
 	<droneImage>terran_defense_3</droneImage>					
 	<weaponBlueprint>TERRAN_DEFENSE_3</weaponBlueprint>					

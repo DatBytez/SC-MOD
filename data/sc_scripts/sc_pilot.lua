@@ -92,7 +92,7 @@ script.on_internal_event(Defines.InternalEvents.GET_DODGE_FACTOR, function(shipM
 
         local removedAmount = math.floor(effectiveDodge / 2)
         mods.sc_accuracy.dodgeToAccuracy[shipId] = removedAmount
-        dodge = dodge - removedAmount
+        --dodge = dodge - removedAmount
     else
         mods.sc_accuracy.dodgeToAccuracy[shipId] = 0
     end

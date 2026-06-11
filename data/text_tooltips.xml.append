@@ -1,0 +1,4 @@
+<FTL>
+	<text name="tooltip_sc_pilot_ready">Temporarily increase accuracy and projectile speed for \1 seconds.</text>
+	<text name="tooltip_sc_pilot_manned">Piloting must be manned to activate.</text>
+</FTL>

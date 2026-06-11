@@ -42,6 +42,16 @@ mods.sc_pilot_button.currentEffectDuration = currentEffectDuration
 mods.sc_pilot_button.ACTIVATION_TIME = ACTIVATION_TIME
 mods.sc_pilot_button.DURATION_BONUS_PER_LEVEL = DURATION_BONUS_PER_LEVEL
 
+
+local function get_text(textId)
+    return Hyperspace.Text:GetText(textId)
+end
+
+local function format_text(textId, value)
+    local text = get_text(textId)
+    return string.gsub(text, "\\1", tostring(value))
+end
+
 local function has_pilot_augment(ship)
     return ship
         and ship:HasAugmentation(PILOT_AUGMENT) > 0
@@ -334,15 +344,13 @@ local function piloting_render(systemBox, ignoreStatus)
             and pilotingSystem.bManned
             and not activated[shipId]
 
-        if activateButton.bHover then
+        if activateButton.bHover and not pilotingSystem:GetLocked() and not activated[shipId] then
             Hyperspace.Mouse.bForceTooltip = true
-            local effectDuration = currentEffectDuration[shipId] or ACTIVATION_TIME
-            if activated[shipId] then
-                Hyperspace.Mouse.tooltip = "Piloting ability recharging (" .. string.format("%.1f", effectDuration) .. "s)"
-            elseif not pilotingSystem.bManned then
-                Hyperspace.Mouse.tooltip = "Piloting must be manned"
+            local effectDuration = string.format("%.1f", currentEffectDuration[shipId] or ACTIVATION_TIME)
+            if not pilotingSystem.bManned then
+                Hyperspace.Mouse.tooltip = get_text("tooltip_sc_pilot_manned")
             else
-                Hyperspace.Mouse.tooltip = "Piloting ability ready (" .. string.format("%.1f", effectDuration) .. "s)"
+                Hyperspace.Mouse.tooltip = format_text("tooltip_sc_pilot_ready", effectDuration)
             end
         end
 

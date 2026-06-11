@@ -512,9 +512,35 @@
 		<fireDamageMultiplier>0.8</fireDamageMultiplier>
 		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
 		<damageTakenMultiplier>0.8</damageTakenMultiplier>
+
 		<!-- STATIC ABILITIES -->
-		<healCrewAmount>2</healCrewAmount>
-		<fireRepairMultiplier>1.4</fireRepairMultiplier>
+		 <fireRepairMultiplier>1.4</fireRepairMultiplier>
+
+		<passiveStatBoosts>
+			<statBoost name="trueHealAmount">
+				<boostType>FLAT</boostType>
+				<amount>2</amount>
+				<shipTarget>CURRENT_ROOM</shipTarget>
+				<crewTarget>ALLIES</crewTarget>
+				<droneTarget>CREW</droneTarget>
+				<affectsSelf>false</affectsSelf>
+				<priority>0</priority>
+			</statBoost>
+
+			<statBoost name="trueHealAmount">
+				<boostType>FLAT</boostType>
+				<amount>2</amount>
+				<shipTarget>CURRENT_ROOM</shipTarget>
+				<crewTarget>ALLIES</crewTarget>
+				<droneTarget>DRONES</droneTarget>
+				<affectsSelf>false</affectsSelf>
+				<priority>0</priority>
+				<whiteList>
+					<terran_scv/>
+				</whiteList>
+			</statBoost>
+		</passiveStatBoosts>
+		
 		<!-- ACTIVATED ABILITIES -->
 		<powerEffect name="Flashbang">
 			<cooldown>30</cooldown>
@@ -1143,5 +1169,5 @@
 	<mod-append:script>data/sc_scripts/sc_drone_active.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
 
-	<!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>	-->
+	<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
 </mod:findLike>
