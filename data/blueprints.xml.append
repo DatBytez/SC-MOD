@@ -585,7 +585,7 @@
 <!-- ===============
      GEMINI MISSILES
      =============== -->
-<weaponBlueprint name="GEMINI_MISSILES_BREACH">
+	 <weaponBlueprint name="GEMINI_BREACH_1">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
 	<title id="weapon_GEMINI_MISSILES_BREACH_title"/>
@@ -598,9 +598,9 @@
 	<speed>50</speed>
 	<shots>1</shots>
 	<sp>10</sp>
-	<breachChance>10</breachChance>
+	<breachChance>4</breachChance>
 	<stunChance>0.5</stunChance>
-	<cooldown>9.5</cooldown>
+	<cooldown>10.5</cooldown>
 	<power>1</power>
 	<cost>40</cost>
 	<rarity>1</rarity>
@@ -624,7 +624,7 @@
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
 
-<weaponBlueprint name="GEMINI_MISSILES_BREACH_PAIRED">
+<weaponBlueprint name="GEMINI_BREACH_1_PAIRED">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
 	<title id="weapon_GEMINI_MISSILES_BREACH_PAIRED_title"/>
@@ -643,7 +643,67 @@
 	<weaponArt>terran_missile_1</weaponArt> 
 </weaponBlueprint>
 
-<weaponBlueprint name="GEMINI_MISSILES_FIRE">
+<weaponBlueprint name="GEMINI_BREACH_2">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_BREACH_title"/>
+	<short id="weapon_GEMINI_MISSILES_BREACH_short"/>
+	<desc id="weapon_GEMINI_MISSILES_BREACH_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_BREACH_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<sc_paired group="gemini_lv2"/>
+	<damage>1</damage>
+	<missiles>1</missiles>
+	<speed>50</speed>
+	<shots>1</shots>
+	<sp>10</sp>
+	<breachChance>8</breachChance>
+	<stunChance>0.5</stunChance>
+	<cooldown>12.5</cooldown>
+	<power>2</power>
+	<cost>60</cost>
+	<rarity>2</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_fire</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>smallExplosion</sound>
+	</hitShipSounds>
+	<hitShieldSounds>
+		<sound>hitShield1</sound>
+		<sound>hitShield2</sound>
+		<sound>hitShield3</sound>
+	</hitShieldSounds>
+	<missSounds>
+		<sound>miss</sound>
+	</missSounds>
+	<image>missile_1</image>
+	<explosion>terran_gemini_hit</explosion>
+	<weaponArt>terran_missile_1</weaponArt> 
+	<iconImage>missile</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_BREACH_2_PAIRED">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_BREACH_PAIRED_title"/>
+	<short id="weapon_GEMINI_MISSILES_BREACH_PAIRED_short"/>
+	<desc id="weapon_GEMINI_MISSILES_BREACH_PAIRED_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_BREACH_PAIRED_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<sc_paired group="gemini_lv2"/>
+	<shots>1</shots>
+	<cooldown>0.01</cooldown>
+	<power>0</power>
+	<cost>60</cost>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_target</sound>
+	</launchSounds>
+	<weaponArt>terran_missile_1</weaponArt> 
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_FIRE_1">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
 	<title id="weapon_GEMINI_MISSILES_FIRE_title"/>
@@ -656,9 +716,9 @@
 	<speed>50</speed>
 	<shots>1</shots>
 	<sp>10</sp>
-	<fireChance>10</fireChance>
-	<stunChance>0.5</stunChance>
-	<cooldown>9.5</cooldown>
+	<fireChance>4</fireChance>
+	<stunChance>0.1</stunChance>
+	<cooldown>10.5</cooldown>
 	<power>1</power>
 	<cost>40</cost>
 	<rarity>1</rarity>
@@ -682,7 +742,7 @@
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
 
-<weaponBlueprint name="GEMINI_MISSILES_FIRE_PAIRED">
+<weaponBlueprint name="GEMINI_FIRE_1_PAIRED">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
 	<title id="weapon_GEMINI_MISSILES_FIRE_PAIRED_title"/>
@@ -690,6 +750,66 @@
 	<desc id="weapon_GEMINI_MISSILES_FIRE_PAIRED_desc"/>
 	<tooltip id="weapon_GEMINI_MISSILES_FIRE_PAIRED_tooltip"/>
 	<sc_paired group="gemini_lv1"/>
+	<shots>1</shots>
+	<cooldown>0.01</cooldown>
+	<power>0</power>
+	<cost>40</cost>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_target</sound>
+	</launchSounds>
+	<weaponArt>terran_missile_1</weaponArt> 
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_FIRE_2">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_FIRE_title"/>
+	<short id="weapon_GEMINI_MISSILES_FIRE_short"/>
+	<desc id="weapon_GEMINI_MISSILES_FIRE_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_FIRE_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<sc_paired group="gemini_lv2"/>
+	<damage>2</damage>
+	<missiles>1</missiles>
+	<speed>50</speed>
+	<shots>1</shots>
+	<sp>10</sp>
+	<fireChance>100</fireChance>
+	<stunChance>0.1</stunChance>
+	<cooldown>12.5</cooldown>
+	<power>2</power>
+	<cost>60</cost>
+	<rarity>2</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_fire</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>smallExplosion</sound>
+	</hitShipSounds>
+	<hitShieldSounds>
+		<sound>hitShield1</sound>
+		<sound>hitShield2</sound>
+		<sound>hitShield3</sound>
+	</hitShieldSounds>
+	<missSounds>
+		<sound>miss</sound>
+	</missSounds>	
+	<image>missile_1</image>
+	<explosion>terran_gemini_hit</explosion>
+	<weaponArt>terran_missile_1</weaponArt> 
+	<iconImage>missile</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_FIRE_2_PAIRED">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_FIRE_PAIRED_title"/>
+	<short id="weapon_GEMINI_MISSILES_FIRE_PAIRED_short"/>
+	<desc id="weapon_GEMINI_MISSILES_FIRE_PAIRED_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_FIRE_PAIRED_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<sc_paired group="gemini_lv2"/>
 	<shots>1</shots>
 	<cooldown>0.01</cooldown>
 	<power>0</power>
@@ -1349,9 +1469,9 @@
 **********************************************************************************************************************
 -->
 <crewBlueprint name="terran_scv">
-	<title id="crew_TERRAN_SCV_NAME"></title>
-	<short id="crew_TERRAN_SCV_SHORT"></short>
-	<desc id="crew_TERRAN_SCV_DESC"></desc>
+	<title id="NOYB"></title>
+	<short id="NOYB"></short>
+	<desc id="NOYB"></desc>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -1391,9 +1511,9 @@
 	<iconImage>battle</iconImage>
 </droneBlueprint>
 <crewBlueprint name="terran_scv_hull">
-	<title id="crew_TERRAN_SCV_HULL_NAME"></title>
-	<short id="crew_TERRAN_SCV_HULL_SHORT"></short>
-	<desc id="crew_TERRAN_SCV_HULL_DESC"></desc>
+	<title id="NOYB"></title>
+	<short id="NOYB"></short>
+	<desc id="NOYB"></desc>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -1424,36 +1544,13 @@
            TERRAN_SPIDER
 **********************************************************************************************************************
 -->
-<crewBlueprint name="terran_spider">
-	<title id="crew_TERRAN_SPIDER_NAME"></title>
-	<short id="crew_TERRAN_SPIDER_SHORT"></short>
-	<desc id="crew_TERRAN_SPIDER_DESC"></desc>
-	<cost>0</cost>
-	<rarity>0</rarity>
-	<powerList>
-		<power>DRONE</power>
-	</powerList>
-</crewBlueprint>
-<droneBlueprint name="TERRAN_SPIDER">
-	<type>BATTLE</type>
-	<tip>tip_crew</tip>
-	<title id="drone_TERRAN_SPIDER_NAME"></title>
-	<short id="drone_TERRAN_SPIDER_SHORT"></short>
-	<desc id="drone_TERRAN_SPIDER_DESC"></desc>
-	<power>1</power>
-	<cost>55</cost>
-	<bp>3</bp>
-	<rarity>2</rarity>
-	<iconImage>battle</iconImage>
-</droneBlueprint>
-
 <!-- *****************
 	TERRAN_SPIDER_1
 	****************** -->
 <crewBlueprint name="terran_spider_1">
-	<title id="crew_TERRAN_SPIDER_NAME_1"></title>
-	<short id="crew_TERRAN_SPIDER_SHORT_1"></short>
-	<desc id="crew_TERRAN_SPIDER_DESC_1"></desc>
+	<title id="NOYB"></title> <!-- Probably could be NOYB-->
+	<short id="NOYB"></short>
+	<desc id="NOYB"></desc>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -1463,9 +1560,9 @@
 <droneBlueprint name="TERRAN_SPIDER_1">
 	<type>BATTLE</type>
 	<tip>tip_crew</tip>
-	<title id="drone_TERRAN_SPIDER_NAME_1"></title>
-	<short id="drone_TERRAN_SPIDER_SHORT_1"></short>
-	<desc id="drone_TERRAN_SPIDER_DESC_1"></desc>
+	<title id="drone_TERRAN_SPIDER_1_NAME"></title>
+	<short id="drone_TERRAN_SPIDER_1_SHORT"></short>
+	<desc id="drone_TERRAN_SPIDER_1_DESC"></desc>
 	<power>1</power>
 	<cost>35</cost>
 	<rarity>1</rarity>
@@ -1476,9 +1573,9 @@
 	TERRAN_SPIDER_2
 	****************** -->
 <crewBlueprint name="terran_spider_2">
-	<title id="crew_TERRAN_SPIDER_NAME_2"></title>
-	<short id="crew_TERRAN_SPIDER_SHORT_2"></short>
-	<desc id="crew_TERRAN_SPIDER_DESC_2"></desc>
+	<title id="NOYB"></title>
+	<short id="NOYB"></short>
+	<desc id="NOYB"></desc>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -1488,10 +1585,10 @@
 <droneBlueprint name="TERRAN_SPIDER_2">
 	<type>BATTLE</type>
 	<tip>tip_crew</tip>
-	<title id="drone_TERRAN_SPIDER_NAME_2"></title>
-	<short id="drone_TERRAN_SPIDER_SHORT_2"></short>
-	<desc id="drone_TERRAN_SPIDER_DESC_2"></desc>
-	<power>1</power>
+	<title id="drone_TERRAN_SPIDER_2_NAME"></title>
+	<short id="drone_TERRAN_SPIDER_2_SHORT"></short>
+	<desc id="drone_TERRAN_SPIDER_2_DESC"></desc>
+	<power>2</power>
 	<cost>45</cost>
 	<rarity>2</rarity>
 	<iconImage>battle</iconImage>
@@ -1501,9 +1598,9 @@
 	TERRAN_SPIDER_3
 	****************** -->
 <crewBlueprint name="terran_spider_3">
-	<title id="crew_TERRAN_SPIDER_NAME_3"></title>
-	<short id="crew_TERRAN_SPIDER_SHORT_3"></short>
-	<desc id="crew_TERRAN_SPIDER_DESC_3"></desc>
+	<title id="NOYB"></title>
+	<short id="NOYB"></short>
+	<desc id="NOYB"></desc>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -1513,10 +1610,10 @@
 <droneBlueprint name="TERRAN_SPIDER_3">
 	<type>BATTLE</type>
 	<tip>tip_crew</tip>
-	<title id="drone_TERRAN_SPIDER_NAME_3"></title>
-	<short id="drone_TERRAN_SPIDER_SHORT_3"></short>
-	<desc id="drone_TERRAN_SPIDER_DESC_3"></desc>
-	<power>1</power>
+	<title id="drone_TERRAN_SPIDER_3_NAME"></title>
+	<short id="drone_TERRAN_SPIDER_3_SHORT"></short>
+	<desc id="drone_TERRAN_SPIDER_3_DESC"></desc>
+	<power>3</power>
 	<cost>55</cost>
 	<rarity>3</rarity>
 	<iconImage>battle</iconImage>
@@ -1526,9 +1623,9 @@
 	TERRAN_SPIDER_SET
 	****************** -->
 <crewBlueprint name="terran_spider_set">
-	<title id="crew_TERRAN_SPIDER_SET_NAME"></title>
-	<short id="crew_TERRAN_SPIDER_SET_SHORT"></short>
-	<desc id="crew_TERRAN_SPIDER_SET_DESC"></desc>
+	<title id="NOYB"></title>
+	<short id="NOYB"></short>
+	<desc id="NOYB"></desc>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -1552,9 +1649,9 @@
 	TERRAN_SPIDER_MINE
 	****************** -->
 <crewBlueprint name="terran_spider_mine">
-	<title id="crew_TERRAN_SPIDER_MINE_NAME"></title>
-	<short id="crew_TERRAN_SPIDER_MINE_SHORT"></short>
-	<desc id="crew_TERRAN_SPIDER_MINE_DESC"></desc>
+	<title id="NOYB"></title>
+	<short id="NOYB"></short>
+	<desc id="NOYB"></desc>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -1808,7 +1905,7 @@
 		<weapon name="GEMINI_MISSILES_HULL" />
 	</weaponList>
 	<droneList drones="5" count="1">
-		<drone name="TERRAN_SPIDER" />
+		<drone name="TERRAN_SPIDER_2" />
 	</droneList>
 	<health amount="30" />
 	<maxPower amount="6" />

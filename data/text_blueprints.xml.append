@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<text name="NOYB">[[YOU SHOULD NEVER SEE THIS]]</text>
+
 <text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_class">Battlecruiser</text>
 <text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_name">Battlecruiser</text>
 <text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_desc">The Terran Battlecruiser stands as the pinnacle of Dominion naval engineering, an orbital fortress bristling with weapons and armored to The Terran Battlecruiser is the pinnacle of Dominion naval power, an orbital fortress built for long campaigns, combining overwhelming firepower with near-impenetrable defenses.</text>
@@ -116,24 +118,28 @@
 <text name="weapon_GEMINI_MISSILES_SYS_PAIRED_desc">[Paired] A light missile system that excels when its versatility is utilized properly.</text>
 <text name="weapon_GEMINI_MISSILES_SYS_PAIRED_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
 
+<!-- YAMATO CANNON -->
 <text name="weapon_ARTILLERY_YAMATO_LASER_title">Terran Yamato Cannon</text>
 <text name="weapon_ARTILLERY_YAMATO_LASER_short">Yamato Cannon</text>
 <text name="weapon_ARTILLERY_YAMATO_LASER_desc">A powerful weapon that focuses a nuclear explosion into a beam using magnetic fields.</text>
 <text name="weapon_ARTILLERY_YAMATO_LASER_tooltip">Terran Yamato Cannon</text>
 
+<!-- EMP MISSILES -->
 <text name="weapon_EMP_MISSILE_title">Terran EMP Missile</text>
 <text name="weapon_EMP_MISSILE_short">EMP</text>
 <text name="weapon_EMP_MISSILE_desc">[need emp description].</text>
 <text name="weapon_EMP_MISSILE_tooltip">Fires 1 missile; does 2 ion damage; pierces all shields.</text>
 
-<text name="weapon_TERRAN_DEFENSE_1_title">Terran Defense Matrix I</text>
-<text name="weapon_TERRAN_DEFENSE_2_title">Terran Defense Matrix II</text>
-<text name="weapon_TERRAN_DEFENSE_3_title">Terran Defense Matrix III</text>
-
+<!-- TERRAN IRRADIATE -->
 <text name="weapon_IRRADIATE_BEAM_title">Terran Irradiate</text>
 <text name="weapon_IRRADIATE_BEAM_short">Irradiate</text>
 <text name="weapon_IRRADIATE_BEAM_desc">[[Need Irradiate Description]]</text>
 <text name="weapon_IRRADIATE_BEAM_tooltip">Applies an erosion effect for every tile hit. Also does 5 hp/s damage for 25 seconds to any crew hit.</text>
+
+<!-- TERRAN DEFENSE MATRIX -->
+<text name="weapon_TERRAN_DEFENSE_1_title">Terran Defense Matrix I</text>
+<text name="weapon_TERRAN_DEFENSE_2_title">Terran Defense Matrix II</text>
+<text name="weapon_TERRAN_DEFENSE_3_title">Terran Defense Matrix III</text>
 
 <text name="drone_TERRAN_DEFENSE_1_NAME">Terran Defense Matrix Mk I</text>
 <text name="drone_TERRAN_DEFENSE_1_SHORT">Matrix.I</text>
@@ -147,6 +153,7 @@
 <text name="drone_TERRAN_DEFENSE_3_SHORT">Matrix.III</text>
 <text name="drone_TERRAN_DEFENSE_3_DESC">[[Terran Defense 3 DESC]]</text>
 
+<!-- TERRAN SCV -->
 <text name="drone_TERRAN_SCV_NAME">Terran SCV</text>
 <text name="drone_TERRAN_SCV_SHORT">SCV</text>
 <text name="drone_TERRAN_SCV_DESC">-= TODO:NEED SCV DESCRIPTION HERE =-</text>
@@ -155,22 +162,28 @@
 <text name="drone_TERRAN_SCV_HULL_SHORT">SCV Hull</text>
 <text name="drone_TERRAN_SCV_HULL_DESC">Automatically repairs 3-5 damage to your hull. SCV is consumed once it finishes.</text>
 
-<text name="drone_TERRAN_SPIDER_NAME">Terran Spider Mine</text>
-<text name="drone_TERRAN_SPIDER_SHORT">Spider Mine</text>
-<text name="drone_TERRAN_SPIDER_DESC">-= TODO:NEED SPIDER MINE DESCRIPTION HERE =-</text>
-
+<!-- TERRAN SPIDER MINE -->
 <text name="drone_TERRAN_SPIDER_1_NAME">Terran Spider Mine Qt.1</text>
 <text name="drone_TERRAN_SPIDER_1_SHORT">Spider Mine 1</text>
-<text name="drone_TERRAN_SPIDER_1_DESC">-= TODO:NEED SPIDER MINE DESCRIPTION HERE (Lv1) =-</text>
+<text name="drone_TERRAN_SPIDER_1_DESC">Deploys a Terran Spider Mine. Mines burrow when set and are not player-controllable unless redeployed.</text>
+
+<text name="drone_TERRAN_SPIDER_2_NAME">Terran Spider Mine Qt.2</text>
+<text name="drone_TERRAN_SPIDER_2_SHORT">Spider Mine 2</text>
+<text name="drone_TERRAN_SPIDER_2_DESC">Deploys a pair of Terran Spider Mines. Mines burrow when set and are not player-controllable unless redeployed.</text>
+
+<text name="drone_TERRAN_SPIDER_3_NAME">Terran Spider Mine Qt.3</text>
+<text name="drone_TERRAN_SPIDER_3_SHORT">Spider Mine 3</text>
+<text name="drone_TERRAN_SPIDER_3_DESC">Deploys a set of three Terran Spider Mines. Mines burrow when set and are not player-controllable unless redeployed.</text>
 
 <text name="drone_TERRAN_SPIDER_SET_NAME">Terran Spider Mine</text>
 <text name="drone_TERRAN_SPIDER_SET_SHORT">Spider Mine</text>
-<text name="drone_TERRAN_SPIDER_SET_DESC">-= TODO:NEED SPIDER MINE DESCRIPTION HERE =-</text>
+<text name="drone_TERRAN_SPIDER_SET_DESC">Mines burrow when set and are not player-controllable unless redeployed. Mines will automatically seek out targets and detonate when an enemy is nearby.</text>
 
 <text name="drone_TERRAN_SPIDER_MINE_NAME">Terran Spider Mine</text>
 <text name="drone_TERRAN_SPIDER_MINE_SHORT">Spider Mine</text>
-<text name="drone_TERRAN_SPIDER_MINE_DESC">-= TODO:NEED SPIDER MINE ARMED DESCRIPTION HERE =-</text>
+<text name="drone_TERRAN_SPIDER_MINE_DESC">Mines will automatically seek out targets and detonate when an enemy is nearby. Redeploying a mine will make it controllable again.</text>
 
+<!-- TERRAN CREW -->
 <text name="crew_TERRAN_MARINE_NAME">Terran Marine</text>
 <text name="crew_TERRAN_MARINE_SHORT">Marine</text>
 <text name="crew_TERRAN_MARINE_DESC">Basic Terran soldier equipped with powered armor and a rapid-fire C-14 rifle.  Powered Armor Stats: -Minor fire and damage resistance -Resistant to suffocation -Reduced movement speed.</text>
@@ -190,27 +203,34 @@
 <text name="crew_TERRAN_CIVILIAN_NAME">Terran Civilian</text>
 <text name="crew_TERRAN_CIVILIAN_SHORT">Civilian</text>
 <text name="crew_TERRAN_CIVILIAN_DESC">[[NEEDS DESCRIPTION]]</text>
-
+ <!--
 <text name="crew_TERRAN_SCV_NAME">Terran SCV</text>
 <text name="crew_TERRAN_SCV_SHORT">SCV</text>
-<text name="crew_TERRAN_SCV_DESC">YOU SHOULD NEVER SEE THIS.</text>
+<text name="crew_TERRAN_SCV_DESC">YOU SHOULD NEVER SEE THIS.[CREW]</text>
 
 <text name="crew_TERRAN_SCV_HULL_NAME">Terran SCV Hull</text>
 <text name="crew_TERRAN_SCV_HULL_SHORT">SCV Hull</text>
-<text name="crew_TERRAN_SCV_HULL_DESC">YOU SHOULD NEVER SEE THIS.</text>
+<text name="crew_TERRAN_SCV_HULL_DESC">YOU SHOULD NEVER SEE THIS.[CREW]</text>
 
 <text name="crew_TERRAN_SPIDER_NAME">Terran Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_SHORT">Spider Mine</text>
-<text name="crew_TERRAN_SPIDER_DESC">YOU SHOULD NEVER SEE THIS.</text>
+<text name="crew_TERRAN_SPIDER_DESC">YOU SHOULD NEVER SEE THIS.[CREW]</text>
+
+<text name="crew_TERRAN_SPIDER_1_NAME">Terran Spider Mine Qt.1</text>
+<text name="crew_TERRAN_SPIDER_1_SHORT">Spider Mine 1</text>
+<text name="crew_TERRAN_SPIDER_1_DESC">YOU SHOULD NEVER SEE THIS.(crew)</text>
 
 <text name="crew_TERRAN_SPIDER_SET_NAME">Terran Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_SET_SHORT">Spider Mine</text>
-<text name="crew_TERRAN_SPIDER_SET_DESC">[[Need terran_spider_set Description]]</text>
+<text name="crew_TERRAN_SPIDER_SET_DESC">[[Need terran_spider_set Description]][CREW]</text>
 
 <text name="crew_TERRAN_SPIDER_MINE_NAME">Terran Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_MINE_SHORT">Spider Mine</text>
-<text name="crew_TERRAN_SPIDER_MINE_DESC">YOU SHOULD NEVER SEE THIS.</text>
+<text name="crew_TERRAN_SPIDER_MINE_DESC">YOU SHOULD NEVER SEE THIS.[CREW]</text>
+-->
 
+
+<!-- TERRAN AUGMENTS -->
 <text name="system_lily_system_bracers_NAME">System Bracers</text>
 <text name="system_lily_system_bracers_DESC">Passively protects your systems from damage, redirecting system damage towards itself instead (As long as it isn't destroyed itself).</text>
 
@@ -225,8 +245,3 @@
 
 <text name="aug_TERRAN_SHIP_ARMOR_HEAVY_NAME">Heavy Armor Plating</text>
 <text name="aug_TERRAN_SHIP_ARMOR_HEAVY_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a significan cost to maneuverability  UPGRADE: System Bracers +2 System Bracers have a chance to block incoming damage (System Bracer Health * 20%) PENALTY: Evasion -2% per engine level</text>
-
-<text name="TNE_TEXT_DRONE_ACTIVE_OVERCHARGER_NAME">Active Shield Overcharger</text>
-<text name="TNE_TEXT_DRONE_ACTIVE_OVERCHARGER_SHORT">Active Over.</text>
-<text name="TNE_TEXT_DRONE_ACTIVE_OVERCHARGER_DESC">An active Defense Drone which can charge Energy Shields when it detects hostile shots.
-	Reload: 1500 MS</text>

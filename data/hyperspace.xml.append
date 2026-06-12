@@ -802,6 +802,7 @@
   TERRAN SPIDER
 *********************************************************************************************************
 -->
+<!--
 	<race name="terran_spider" drone="BATTLE">
 		<resistsMindControl>true</resistsMindControl>
 		<noClone>true</noClone>
@@ -838,12 +839,13 @@
 				<hasCustomDeathAnimation>false</hasCustomDeathAnimation>
 			</spawnCrew>
 			
-			<powerSounds enemy="false"> <!--Sound effects to use when activating the power. enemy="false" mutes the sound for enemy crew. -->
+			<powerSounds enemy="false">
 				<powerSound>terran_spider_run</powerSound>
 			</powerSounds>
 
 		</powerEffect>
 	</race>
+	-->
 
 	<!-- *************
 	TERRAN_SPIDER_1
@@ -1138,8 +1140,20 @@
 		<crewBlueprint>terran_scv_hull</crewBlueprint>
 		<tooltipName>Terran SCV Hull Repair</tooltipName>
 	</drone>
-	<drone name="TERRAN_SPIDER">
+	<!--<drone name="TERRAN_SPIDER">
 		<crewBlueprint>terran_spider</crewBlueprint>
+		<tooltipName>Terran Spider Mine</tooltipName>
+	</drone>-->
+	<drone name="TERRAN_SPIDER_1">
+		<crewBlueprint>terran_spider_1</crewBlueprint>
+		<tooltipName>Terran Spider Mine</tooltipName>
+	</drone>
+	<drone name="TERRAN_SPIDER_2">
+		<crewBlueprint>terran_spider_2</crewBlueprint>
+		<tooltipName>Terran Spider Mine</tooltipName>
+	</drone>
+	<drone name="TERRAN_SPIDER_3">
+		<crewBlueprint>terran_spider_3</crewBlueprint>
 		<tooltipName>Terran Spider Mine</tooltipName>
 	</drone>
 	<drone name="TERRAN_SPIDER_MINE">
