@@ -820,8 +820,6 @@
 		<moveSpeedMultiplier>2.0</moveSpeedMultiplier>
 		<droneMoveFromManningSlot>true</droneMoveFromManningSlot>
 		<animBase>human</animBase>
-
-		
 		
 		<powerEffect name="Set-Mine">
 			<hideCooldown>true</hideCooldown>
@@ -844,6 +842,129 @@
 				<powerSound>terran_spider_run</powerSound>
 			</powerSounds>
 
+		</powerEffect>
+	</race>
+
+	<!-- *************
+	TERRAN_SPIDER_1
+	****************** -->
+	<race name="terran_spider_1" drone="BATTLE">
+		<resistsMindControl>true</resistsMindControl>
+		<noClone>true</noClone>
+		<noWarning>true</noWarning>	
+		<crewSlots>0</crewSlots>
+		<noSlot>true</noSlot>
+		<selectable>true</selectable>
+		<controllable>true</controllable>
+		<canFight>false</canFight>
+		<canRepair>false</canRepair>
+		<canSabotage>false</canSabotage>
+		<canSuffocate>false</canSuffocate>
+		<canMan>false</canMan>
+		<maxHealth>25</maxHealth>
+		<stunMultiplier>0.10</stunMultiplier>
+		<moveSpeedMultiplier>2.0</moveSpeedMultiplier>
+		<droneMoveFromManningSlot>true</droneMoveFromManningSlot>
+		<animBase>human</animBase>
+		<powerEffect name="Set-Mine">
+			<hideCooldown>true</hideCooldown>
+			<hideButton>true</hideButton> 
+			<cooldown>0.1</cooldown>
+			<onHotkey>never</onHotkey>
+			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
+			<selfHealth>-999.0</selfHealth>
+			<spawnCrew>
+				<race>terran_spider_set</race>
+				<name>Spider Mine</name>
+				<number>1</number>
+				<noSlot>true</noSlot>
+				<hasCustomDeathAnimation>false</hasCustomDeathAnimation>
+			</spawnCrew>
+			<powerSounds enemy="false"> <!--Sound effects to use when activating the power. enemy="false" mutes the sound for enemy crew. -->
+				<powerSound>terran_spider_run</powerSound>
+			</powerSounds>
+		</powerEffect>
+	</race>
+
+	<!-- *************
+	TERRAN_SPIDER_2
+	****************** -->
+	<race name="terran_spider_2" drone="BATTLE">
+		<resistsMindControl>true</resistsMindControl>
+		<noClone>true</noClone>
+		<noWarning>true</noWarning>	
+		<crewSlots>0</crewSlots>
+		<noSlot>true</noSlot>
+		<selectable>true</selectable>
+		<controllable>true</controllable>
+		<canFight>false</canFight>
+		<canRepair>false</canRepair>
+		<canSabotage>false</canSabotage>
+		<canSuffocate>false</canSuffocate>
+		<canMan>false</canMan>
+		<maxHealth>25</maxHealth>
+		<stunMultiplier>0.10</stunMultiplier>
+		<moveSpeedMultiplier>2.0</moveSpeedMultiplier>
+		<droneMoveFromManningSlot>true</droneMoveFromManningSlot>
+		<animBase>human</animBase>
+		<powerEffect name="Set-Mine">
+			<hideCooldown>true</hideCooldown>
+			<hideButton>true</hideButton> 
+			<cooldown>0.1</cooldown>
+			<onHotkey>never</onHotkey>
+			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
+			<selfHealth>-999.0</selfHealth>
+			<spawnCrew>
+				<race>terran_spider_set</race>
+				<name>Spider Mine</name>
+				<number>2</number>
+				<noSlot>true</noSlot>
+				<hasCustomDeathAnimation>false</hasCustomDeathAnimation>
+			</spawnCrew>
+			<powerSounds enemy="false"> <!--Sound effects to use when activating the power. enemy="false" mutes the sound for enemy crew. -->
+				<powerSound>terran_spider_run</powerSound>
+			</powerSounds>
+		</powerEffect>
+	</race>
+
+	<!-- *************
+	TERRAN_SPIDER_3
+	****************** -->
+	<race name="terran_spider_3" drone="BATTLE">
+		<resistsMindControl>true</resistsMindControl>
+		<noClone>true</noClone>
+		<noWarning>true</noWarning>	
+		<crewSlots>0</crewSlots>
+		<noSlot>true</noSlot>
+		<selectable>true</selectable>
+		<controllable>true</controllable>
+		<canFight>false</canFight>
+		<canRepair>false</canRepair>
+		<canSabotage>false</canSabotage>
+		<canSuffocate>false</canSuffocate>
+		<canMan>false</canMan>
+		<maxHealth>25</maxHealth>
+		<stunMultiplier>0.10</stunMultiplier>
+		<moveSpeedMultiplier>2.0</moveSpeedMultiplier>
+		<droneMoveFromManningSlot>true</droneMoveFromManningSlot>
+		<animBase>human</animBase>
+		<powerEffect name="Set-Mine">
+			<hideCooldown>true</hideCooldown>
+			<hideButton>true</hideButton> 
+			<cooldown>0.1</cooldown>
+			<onHotkey>never</onHotkey>
+			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
+			<selfHealth>-999.0</selfHealth>
+			<spawnCrew>
+				<race>terran_spider_set</race>
+				<name>Spider Mine</name>
+				<number>3</number>
+				<noSlot>true</noSlot>
+				<hasCustomDeathAnimation>false</hasCustomDeathAnimation>
+			</spawnCrew>
+			<powerSounds enemy="false"> <!--Sound effects to use when activating the power. enemy="false" mutes the sound for enemy crew. -->
+				<powerSound>terran_spider_run</powerSound>
+			</powerSounds>
 		</powerEffect>
 	</race>
 	<!-- *************
@@ -876,13 +997,6 @@
 			Click to arm Spider Mine</tooltip>
 			<hideCooldown>true</hideCooldown>
 			<cooldown>0.1</cooldown>
-
-			<!--<req type="enemy"> 
-				<requiredSystem functional="true">drone</requiredSystem>
-			</req>
-			<req type="player"> 
-				<requiredSystem functional="true">drone</requiredSystem>
-			</req>-->
 
 			<transformRace>terran_spider_mine</transformRace>
 			
@@ -1090,8 +1204,8 @@
 			<hiddenAug>O2_MASKS</hiddenAug>
 			<hiddenAug>CLOAK_FIRE</hiddenAug>
 			<hiddenAug>TERRAN_HIDDEN_WRAITH_PILOT</hiddenAug>
-			<crewLimit>2</crewLimit>
-			<systemLimit>10</systemLimit>
+			<crewLimit>3</crewLimit>
+			<systemLimit>8</systemLimit>
 			<subsystemLimit>5</subsystemLimit>
 			<exclusivityOverride>
 				<exclusivityGroup>
@@ -1117,7 +1231,7 @@
 	<mod:findLike type="ships">
 		<mod-append:ship name="PLAYER_SHIP_TERRAN_VESSEL" b="false" c="false" />
 		<mod-append:customShip name="PLAYER_SHIP_TERRAN_VESSEL">
-			<crewLimit>6</crewLimit>
+			<crewLimit>8</crewLimit>
 			<systemLimit>10</systemLimit>
 			<subsystemLimit>5</subsystemLimit>
 		</mod-append:customShip>

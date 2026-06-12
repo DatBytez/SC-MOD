@@ -159,6 +159,10 @@
 <text name="drone_TERRAN_SPIDER_SHORT">Spider Mine</text>
 <text name="drone_TERRAN_SPIDER_DESC">-= TODO:NEED SPIDER MINE DESCRIPTION HERE =-</text>
 
+<text name="drone_TERRAN_SPIDER_1_NAME">Terran Spider Mine Qt.1</text>
+<text name="drone_TERRAN_SPIDER_1_SHORT">Spider Mine 1</text>
+<text name="drone_TERRAN_SPIDER_1_DESC">-= TODO:NEED SPIDER MINE DESCRIPTION HERE (Lv1) =-</text>
+
 <text name="drone_TERRAN_SPIDER_SET_NAME">Terran Spider Mine</text>
 <text name="drone_TERRAN_SPIDER_SET_SHORT">Spider Mine</text>
 <text name="drone_TERRAN_SPIDER_SET_DESC">-= TODO:NEED SPIDER MINE DESCRIPTION HERE =-</text>

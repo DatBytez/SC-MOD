@@ -1448,6 +1448,81 @@
 </droneBlueprint>
 
 <!-- *****************
+	TERRAN_SPIDER_1
+	****************** -->
+<crewBlueprint name="terran_spider_1">
+	<title id="crew_TERRAN_SPIDER_NAME_1"></title>
+	<short id="crew_TERRAN_SPIDER_SHORT_1"></short>
+	<desc id="crew_TERRAN_SPIDER_DESC_1"></desc>
+	<cost>0</cost>
+	<rarity>0</rarity>
+	<powerList>
+		<power>DRONE</power>
+	</powerList>
+</crewBlueprint>
+<droneBlueprint name="TERRAN_SPIDER_1">
+	<type>BATTLE</type>
+	<tip>tip_crew</tip>
+	<title id="drone_TERRAN_SPIDER_NAME_1"></title>
+	<short id="drone_TERRAN_SPIDER_SHORT_1"></short>
+	<desc id="drone_TERRAN_SPIDER_DESC_1"></desc>
+	<power>1</power>
+	<cost>35</cost>
+	<rarity>1</rarity>
+	<iconImage>battle</iconImage>
+</droneBlueprint>
+
+<!-- *****************
+	TERRAN_SPIDER_2
+	****************** -->
+<crewBlueprint name="terran_spider_2">
+	<title id="crew_TERRAN_SPIDER_NAME_2"></title>
+	<short id="crew_TERRAN_SPIDER_SHORT_2"></short>
+	<desc id="crew_TERRAN_SPIDER_DESC_2"></desc>
+	<cost>0</cost>
+	<rarity>0</rarity>
+	<powerList>
+		<power>DRONE</power>
+	</powerList>
+</crewBlueprint>
+<droneBlueprint name="TERRAN_SPIDER_2">
+	<type>BATTLE</type>
+	<tip>tip_crew</tip>
+	<title id="drone_TERRAN_SPIDER_NAME_2"></title>
+	<short id="drone_TERRAN_SPIDER_SHORT_2"></short>
+	<desc id="drone_TERRAN_SPIDER_DESC_2"></desc>
+	<power>1</power>
+	<cost>45</cost>
+	<rarity>2</rarity>
+	<iconImage>battle</iconImage>
+</droneBlueprint>
+
+<!-- *****************
+	TERRAN_SPIDER_3
+	****************** -->
+<crewBlueprint name="terran_spider_3">
+	<title id="crew_TERRAN_SPIDER_NAME_3"></title>
+	<short id="crew_TERRAN_SPIDER_SHORT_3"></short>
+	<desc id="crew_TERRAN_SPIDER_DESC_3"></desc>
+	<cost>0</cost>
+	<rarity>0</rarity>
+	<powerList>
+		<power>DRONE</power>
+	</powerList>
+</crewBlueprint>
+<droneBlueprint name="TERRAN_SPIDER_3">
+	<type>BATTLE</type>
+	<tip>tip_crew</tip>
+	<title id="drone_TERRAN_SPIDER_NAME_3"></title>
+	<short id="drone_TERRAN_SPIDER_SHORT_3"></short>
+	<desc id="drone_TERRAN_SPIDER_DESC_3"></desc>
+	<power>1</power>
+	<cost>55</cost>
+	<rarity>3</rarity>
+	<iconImage>battle</iconImage>
+</droneBlueprint>
+
+<!-- *****************
 	TERRAN_SPIDER_SET
 	****************** -->
 <crewBlueprint name="terran_spider_set">
@@ -1726,7 +1801,7 @@
 		</weapons>
 	</systemList>
 	<weaponSlots>3</weaponSlots>
-	<droneSlots>1</droneSlots>
+	<droneSlots>2</droneSlots>
 	<weaponList missiles="10" count="3">
 		<weapon name="TERRAN_BURST_LASER_1" />
 		<weapon name="GEMINI_MISSILES_FIRE" />
@@ -1805,7 +1880,7 @@
 			</slot>
 		</weapons>
 	</systemList>
-	<weaponSlots>2</weaponSlots>
+	<weaponSlots>3</weaponSlots>
 	<droneSlots>3</droneSlots>
 	<weaponList missiles="10" count="2">
 		<weapon name="IRRADIATE_BEAM" />

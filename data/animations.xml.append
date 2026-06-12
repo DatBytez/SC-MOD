@@ -1506,7 +1506,143 @@
 	<desc length="1" x="0" y="0" />
 	<time>1</time>
 </anim>
-
+<!--
+*********************************************************************************************************
+            TERRAN_SPIDER_1
+*********************************************************************************************************
+-->
+<animSheet name="terran_spider_1" w="315" h="70" fw="35" fh="35">people/terran_spider_base_1.png</animSheet>
+<anim name="terran_spider_1_clone">
+	<sheet>terran_spider_1</sheet>
+	<desc length="4" x="3" y="1" />
+	<time>0.75</time>
+</anim>
+<animSheet name="explosion_terran_spider_1_death" w="640" h="64" fw="64" fh="64">effects/explosion_clear_death.png</animSheet>
+<anim name="terran_spider_1_death_right">
+	<sheet>explosion_terran_spider_1_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_1_death_left">
+	<sheet>explosion_terran_spider_1_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_1_power_down">
+	<sheet>terran_spider_1</sheet>
+	<desc length="4" x="0" y="1"/>
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_1_power_up">
+	<sheet>terran_spider_1</sheet>
+	<desc length="4" x="3" y="1"/>
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_1_walk_down">
+	<sheet>terran_spider_1</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_1_walk_right">
+	<sheet>terran_spider_1</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_1_walk_up">
+	<sheet>terran_spider_1</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_1_walk_left">
+	<sheet>terran_spider_1</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_1_shoot_down">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_1_shoot_right">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_1_shoot_up">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_1_shoot_left">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_1_fire_down">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_1_fire_right">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_1_fire_up">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_1_fire_left">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_1_repair">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_1_punch_up">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_1_punch_down">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_spider_1_teleport">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_spider_1_type_right">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_1_type_left">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_1_type_up">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_1_type_down">
+	<sheet>terran_spider_1</sheet>
+	<desc length="3" x="4" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_spider_1_portrait">
+	<sheet>terran_spider_1</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
 <!--
 *********************************************************************************************************
             TERRAN_SPIDER_SET
