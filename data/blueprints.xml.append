@@ -679,7 +679,7 @@
 	</missSounds>
 	<image>missile_1</image>
 	<explosion>terran_gemini_hit</explosion>
-	<weaponArt>terran_missile_1</weaponArt> 
+	<weaponArt>terran_missile_2</weaponArt> 
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
 
@@ -700,7 +700,7 @@
 	<launchSounds>
 		<sound>weapon_gemini_target</sound>
 	</launchSounds>
-	<weaponArt>terran_missile_1</weaponArt> 
+	<weaponArt>terran_missile_2</weaponArt> 
 </weaponBlueprint>
 
 <weaponBlueprint name="GEMINI_FIRE_1">
@@ -797,7 +797,7 @@
 	</missSounds>	
 	<image>missile_1</image>
 	<explosion>terran_gemini_hit</explosion>
-	<weaponArt>terran_missile_1</weaponArt> 
+	<weaponArt>terran_missile_2</weaponArt> 
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
 
@@ -818,10 +818,10 @@
 	<launchSounds>
 		<sound>weapon_gemini_target</sound>
 	</launchSounds>
-	<weaponArt>terran_missile_1</weaponArt> 
+	<weaponArt>terran_missile_2</weaponArt> 
 </weaponBlueprint>
 
-<weaponBlueprint name="GEMINI_MISSILES_HULL">
+<weaponBlueprint name="GEMINI_HULL_1">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
 	<title id="weapon_GEMINI_MISSILES_HULL_title"/>
@@ -859,7 +859,7 @@
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
 
-<weaponBlueprint name="GEMINI_MISSILES_HULL_PAIRED">
+<weaponBlueprint name="GEMINI_HULL_1_PAIRED">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
 	<title id="weapon_GEMINI_MISSILES_HULL_PAIRED_title"/>
@@ -878,7 +878,125 @@
 	<weaponArt>terran_missile_1</weaponArt> 
 </weaponBlueprint>
 
-<weaponBlueprint name="GEMINI_MISSILES_ION">
+<weaponBlueprint name="GEMINI_HULL_2">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_HULL_title"/>
+	<short id="weapon_GEMINI_MISSILES_HULL_short"/>
+	<desc id="weapon_GEMINI_MISSILES_HULL_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_HULL_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<sc_paired group="gemini_lv2"/>
+	<damage>2</damage>
+	<hullBust>1</hullBust>
+	<missiles>1</missiles>
+	<speed>50</speed>
+	<shots>1</shots>
+	<sp>10</sp>
+	<cooldown>12.5</cooldown>
+	<power>2</power>
+	<cost>60</cost>
+	<rarity>1</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_fire</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>smallExplosion</sound>
+	</hitShipSounds>
+	<hitShieldSounds>
+		<sound>hitShield1</sound>
+		<sound>hitShield2</sound>
+		<sound>hitShield3</sound>
+	</hitShieldSounds>
+	<missSounds>
+		<sound>miss</sound>
+	</missSounds>
+	<image>missile_1</image>
+	<explosion>terran_gemini_hit</explosion>
+	<weaponArt>terran_missile_2</weaponArt> 
+	<iconImage>missile</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_HULL_2_PAIRED">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_HULL_PAIRED_title"/>
+	<short id="weapon_GEMINI_MISSILES_HULL_PAIRED_short"/>
+	<desc id="weapon_GEMINI_MISSILES_HULL_PAIRED_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_HULL_PAIRED_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<sc_paired group="gemini_lv2"/>
+	<shots>1</shots>
+	<cooldown>0.01</cooldown>
+	<power>0</power>
+	<cost>60</cost>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_target</sound>
+	</launchSounds>
+	<weaponArt>terran_missile_2</weaponArt> 
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_HULL_2T">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_HULL_title"/>
+	<short id="weapon_GEMINI_MISSILES_HULL_short"/>
+	<desc id="weapon_GEMINI_MISSILES_HULL_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_HULL_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<sc_paired group="gemini_lv2"/>
+	<damage>1</damage>
+	<hullBust>2</hullBust>
+	<missiles>1</missiles>
+	<speed>50</speed>
+	<shots>1</shots>
+	<sp>10</sp>
+	<cooldown>12.5</cooldown>
+	<power>2</power>
+	<cost>60</cost>
+	<rarity>1</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_fire</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>smallExplosion</sound>
+	</hitShipSounds>
+	<hitShieldSounds>
+		<sound>hitShield1</sound>
+		<sound>hitShield2</sound>
+		<sound>hitShield3</sound>
+	</hitShieldSounds>
+	<missSounds>
+		<sound>miss</sound>
+	</missSounds>
+	<image>missile_1</image>
+	<explosion>terran_gemini_hit</explosion>
+	<weaponArt>terran_missile_2</weaponArt> 
+	<iconImage>missile</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_HULL_2T_PAIRED">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_HULL_PAIRED_title"/>
+	<short id="weapon_GEMINI_MISSILES_HULL_PAIRED_short"/>
+	<desc id="weapon_GEMINI_MISSILES_HULL_PAIRED_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_HULL_PAIRED_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<sc_paired group="gemini_lv2"/>
+	<shots>1</shots>
+	<cooldown>0.01</cooldown>
+	<power>0</power>
+	<cost>60</cost>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_target</sound>
+	</launchSounds>
+	<weaponArt>terran_missile_2</weaponArt> 
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_ION_1">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
 	<title id="weapon_GEMINI_MISSILES_ION_title"/>
@@ -892,7 +1010,7 @@
 	<shots>1</shots>
 	<ion>1</ion>
 	<sp>10</sp>
-	<stunChance>2</stunChance>
+	<stunChance>1</stunChance>
 	<cooldown>9.5</cooldown>
 	<power>1</power>
 	<cost>40</cost>
@@ -917,7 +1035,7 @@
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
 
-<weaponBlueprint name="GEMINI_MISSILES_ION_PAIRED">
+<weaponBlueprint name="GEMINI_ION_1_PAIRED">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
 	<title id="weapon_GEMINI_MISSILES_ION_PAIRED_title"/>
@@ -936,6 +1054,183 @@
 	<weaponArt>terran_missile_1</weaponArt> 
 </weaponBlueprint>
 
+<weaponBlueprint name="GEMINI_ION_2">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_ION_title"/>
+	<short id="weapon_GEMINI_MISSILES_ION_short"/>
+	<desc id="weapon_GEMINI_MISSILES_ION_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_ION_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<sc_paired group="gemini_lv2"/>
+	<damage>2</damage>
+	<missiles>1</missiles>
+	<speed>50</speed>
+	<shots>1</shots>
+	<ion>2</ion>
+	<sp>10</sp>
+	<stunChance>2</stunChance>
+	<cooldown>12.5</cooldown>
+	<power>1</power>
+	<cost>60</cost>
+	<rarity>2</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_fire</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>smallExplosion</sound>
+	</hitShipSounds>
+	<hitShieldSounds>
+		<sound>hitShield1</sound>
+		<sound>hitShield2</sound>
+		<sound>hitShield3</sound>
+	</hitShieldSounds>
+	<missSounds>
+		<sound>miss</sound>
+	</missSounds>
+	<image>missile_1</image>
+	<explosion>terran_gemini_hit</explosion>
+	<weaponArt>terran_missile_2</weaponArt> 
+	<iconImage>missile</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_ION_2_PAIRED">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_ION_PAIRED_title"/>
+	<short id="weapon_GEMINI_MISSILES_ION_PAIRED_short"/>
+	<desc id="weapon_GEMINI_MISSILES_ION_PAIRED_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_ION_PAIRED_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<sc_paired group="gemini_lv2"/>
+	<shots>1</shots>
+	<cooldown>0.01</cooldown>
+	<power>0</power>
+	<cost>60</cost>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_target</sound>
+	</launchSounds>
+	<weaponArt>terran_missile_2</weaponArt> 
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_SYS_1">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_SYS_title"/>
+	<short id="weapon_GEMINI_MISSILES_SYS_short"/>
+	<desc id="weapon_GEMINI_MISSILES_SYS_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_SYS_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<damage>1</damage>
+	<sysDamage>1</sysDamage>
+	<missiles>1</missiles>
+	<speed>50</speed>
+	<shots>1</shots>
+	<sp>10</sp>
+	<stunChance>1</stunChance>
+	<cooldown>9.5</cooldown>
+	<power>1</power>
+	<cost>40</cost>
+	<rarity>1</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_fire</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>smallExplosion</sound>
+	</hitShipSounds>
+	<hitShieldSounds>
+		<sound>hitShield1</sound>
+		<sound>hitShield2</sound>
+		<sound>hitShield3</sound>
+	</hitShieldSounds>
+	<missSounds>
+		<sound>miss</sound>
+	</missSounds>
+	<image>missile_1</image>
+	<explosion>terran_gemini_hit</explosion>
+	<weaponArt>terran_missile_1</weaponArt> 
+	<iconImage>missile</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_SYS_1_PAIRED">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_SYS_PAIRED_title"/>
+	<short id="weapon_GEMINI_MISSILES_SYS_PAIRED_short"/>
+	<desc id="weapon_GEMINI_MISSILES_SYS_PAIRED_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_SYS_PAIRED_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<shots>1</shots>
+	<cooldown>0.01</cooldown>
+	<power>0</power>
+	<cost>40</cost>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_target</sound>
+	</launchSounds>
+	<weaponArt>terran_missile_1</weaponArt> 
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_SYS_2">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_SYS_title"/>
+	<short id="weapon_GEMINI_MISSILES_SYS_short"/>
+	<desc id="weapon_GEMINI_MISSILES_SYS_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_SYS_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<sc_paired group="gemini_lv2"/>
+	<damage>2</damage>
+	<sysDamage>2</sysDamage>
+	<missiles>1</missiles>
+	<speed>50</speed>
+	<shots>1</shots>
+	<sp>10</sp>
+	<stunChance>2</stunChance>
+	<cooldown>12.5</cooldown>
+	<power>2</power>
+	<cost>60</cost>
+	<rarity>2</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_fire</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>smallExplosion</sound>
+	</hitShipSounds>
+	<hitShieldSounds>
+		<sound>hitShield1</sound>
+		<sound>hitShield2</sound>
+		<sound>hitShield3</sound>
+	</hitShieldSounds>
+	<missSounds>
+		<sound>miss</sound>
+	</missSounds>
+	<image>missile_1</image>
+	<explosion>terran_gemini_hit</explosion>
+	<weaponArt>terran_missile_2</weaponArt> 
+	<iconImage>missile</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_SYS_2_PAIRED">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_SYS_PAIRED_title"/>
+	<short id="weapon_GEMINI_MISSILES_SYS_PAIRED_short"/>
+	<desc id="weapon_GEMINI_MISSILES_SYS_PAIRED_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_SYS_PAIRED_tooltip"/>
+	<sc_paired group="gemini_lv1"/>
+	<sc_paired group="gemini_lv2"/>
+	<shots>1</shots>
+	<cooldown>0.01</cooldown>
+	<power>0</power>
+	<cost>60</cost>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_target</sound>
+	</launchSounds>
+	<weaponArt>terran_missile_2</weaponArt> 
+</weaponBlueprint>
 <!-- ===============
      YAMATO GUN
      =============== -->
@@ -1901,8 +2196,8 @@
 	<droneSlots>2</droneSlots>
 	<weaponList missiles="10" count="3">
 		<weapon name="TERRAN_BURST_LASER_1" />
-		<weapon name="GEMINI_MISSILES_FIRE" />
-		<weapon name="GEMINI_MISSILES_HULL" />
+		<weapon name="GEMINI_FIRE_1" />
+		<weapon name="GEMINI_HULL_2" />
 	</weaponList>
 	<droneList drones="5" count="1">
 		<drone name="TERRAN_SPIDER_2" />
