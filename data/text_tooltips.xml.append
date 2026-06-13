@@ -1,4 +1,8 @@
 <FTL>
-	<text name="tooltip_sc_pilot_ready">Temporarily increase accuracy and projectile speed for \1 seconds.</text>
+	<text name="tooltip_sc_pilot_ready">Temporarily increase accuracy and projectile speed by half your evade.</text>
 	<text name="tooltip_sc_pilot_manned">Piloting must be manned to activate.</text>
+	<text name="tip_bio_weapon">TIP: Bio-Weapon:</text>
+
+	<text name="stat_bio_weapon">Bio-Weapon: Hull and system damage are negated unless the target ship is organic.</text>
+	<text name="stat_rust_weapon">Rust-Weapon: Hull and system damage are negated unless the target ship is automated.</text>
 </FTL>

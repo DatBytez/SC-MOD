@@ -750,7 +750,7 @@
 		</deathSounds>
 		<powerEffect name="LAUNCH_REPAIR">
 			<cooldown>0.5</cooldown>
-			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
+			<!--<activateWhenReady enemiesOnly="true">true</activateWhenReady>-->
 			<buttonText>REPAIR HULL</buttonText>
 			<tooltip>[READY]&#xD;&#xD;
 				Repair a portion of the ships hull at the cost of an SCV.</tooltip>
@@ -1282,6 +1282,9 @@
 	<mod-append:script>data/sc_scripts/sc_radius_core.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_pilot_ui.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_pilot.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_firefill.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_breachfill.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_filter.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_chain.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_charge.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_paired.lua</mod-append:script>
@@ -1290,10 +1293,9 @@
 	<mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_augment_armor.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_scv.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_crew_scv.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_copy.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
-	
 	<mod-append:script>data/sc_scripts/sc_drone_active.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
 

@@ -1446,8 +1446,10 @@
 	<desc>...</desc>
 	<descriptionOverride id="weapon_IRRADIATE_BEAM_desc"></descriptionOverride>
 	<tooltipOverride id="weapon_IRRADIATE_BEAM_tooltip"></tooltipOverride>
-	<tooltip>...</tooltip>
+	<tooltip>tip_bio_weapon</tooltip>
 	<damage>1</damage>
+	<bio-weapon/>
+	<rust-weapon/>
 	<persDamage>0</persDamage>
 	<sysDamage>0</sysDamage>
 	<breachChance>2</breachChance>
@@ -1456,7 +1458,6 @@
 	<speed>1</speed> <!--<speed>10</speed>-->
 	<length>1</length> <!--<length>50</length>-->
 	<mv-aiCrewTarget>MOST_CREW</mv-aiCrewTarget>
-	<!--<mv-tileDamage method="2"/>-->
 	<power>3</power>
 	<cost>90</cost>
 	<rarity>4</rarity>
