@@ -802,51 +802,6 @@
   TERRAN SPIDER
 *********************************************************************************************************
 -->
-<!--
-	<race name="terran_spider" drone="BATTLE">
-		<resistsMindControl>true</resistsMindControl>
-		<noClone>true</noClone>
-		<noWarning>true</noWarning>	
-		<crewSlots>0</crewSlots>
-		<noSlot>true</noSlot>
-		<selectable>true</selectable>
-		<controllable>true</controllable>
-		<canFight>false</canFight>
-		<canRepair>false</canRepair>
-		<canSabotage>false</canSabotage>
-		<canSuffocate>false</canSuffocate>
-		<canMan>false</canMan>
-		<maxHealth>25</maxHealth>
-		<stunMultiplier>0.10</stunMultiplier>
-		<moveSpeedMultiplier>2.0</moveSpeedMultiplier>
-		<droneMoveFromManningSlot>true</droneMoveFromManningSlot>
-		<animBase>human</animBase>
-		
-		<powerEffect name="Set-Mine">
-			<hideCooldown>true</hideCooldown>
-			<hideButton>true</hideButton> 
-			
-			<cooldown>0.1</cooldown>
-			<onHotkey>never</onHotkey>
-			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
-			<selfHealth>-999.0</selfHealth>
-			
-			<spawnCrew>
-				<race>terran_spider_set</race>
-				<name>Spider Mine</name>
-				<number>3</number>
-				<noSlot>true</noSlot>
-				<hasCustomDeathAnimation>false</hasCustomDeathAnimation>
-			</spawnCrew>
-			
-			<powerSounds enemy="false">
-				<powerSound>terran_spider_run</powerSound>
-			</powerSounds>
-
-		</powerEffect>
-	</race>
-	-->
-
 	<!-- *************
 	TERRAN_SPIDER_1
 	****************** -->
@@ -1278,6 +1233,9 @@
 <mod:findLike type="scripts" limit="1">
     <mod-append:script>data/mv_scripts/tags/tag-data-init.lua</mod-append:script>
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
+	<mod-append:script>data/aa_scripts/AA_core.lua</mod-append:script>
+	<mod-append:script>data/aa_scripts/weapons/smash.lua</mod-append:script>
+	<mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_tag.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_radius_core.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_pilot_ui.lua</mod-append:script>

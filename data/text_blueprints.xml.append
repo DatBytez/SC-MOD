@@ -164,15 +164,15 @@
 
 <!-- TERRAN SPIDER MINE -->
 <text name="drone_TERRAN_SPIDER_1_NAME">Terran Spider Mine Qt.1</text>
-<text name="drone_TERRAN_SPIDER_1_SHORT">Spider Mine 1</text>
+<text name="drone_TERRAN_SPIDER_1_SHORT">Spider Mine I</text>
 <text name="drone_TERRAN_SPIDER_1_DESC">Deploys a Terran Spider Mine. Mines burrow when set and are not player-controllable unless redeployed.</text>
 
 <text name="drone_TERRAN_SPIDER_2_NAME">Terran Spider Mine Qt.2</text>
-<text name="drone_TERRAN_SPIDER_2_SHORT">Spider Mine 2</text>
+<text name="drone_TERRAN_SPIDER_2_SHORT">Spider Mine II</text>
 <text name="drone_TERRAN_SPIDER_2_DESC">Deploys a pair of Terran Spider Mines. Mines burrow when set and are not player-controllable unless redeployed.</text>
 
 <text name="drone_TERRAN_SPIDER_3_NAME">Terran Spider Mine Qt.3</text>
-<text name="drone_TERRAN_SPIDER_3_SHORT">Spider Mine 3</text>
+<text name="drone_TERRAN_SPIDER_3_SHORT">Spider Mine III</text>
 <text name="drone_TERRAN_SPIDER_3_DESC">Deploys a set of three Terran Spider Mines. Mines burrow when set and are not player-controllable unless redeployed.</text>
 
 <text name="drone_TERRAN_SPIDER_SET_NAME">Terran Spider Mine</text>
@@ -219,7 +219,7 @@
 <text name="crew_TERRAN_SPIDER_1_NAME">Terran Spider Mine Qt.1</text>
 <text name="crew_TERRAN_SPIDER_1_SHORT">Spider Mine 1</text>
 <text name="crew_TERRAN_SPIDER_1_DESC">YOU SHOULD NEVER SEE THIS.(crew)</text>
-
+-->
 <text name="crew_TERRAN_SPIDER_SET_NAME">Terran Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_SET_SHORT">Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_SET_DESC">[[Need terran_spider_set Description]][CREW]</text>
@@ -227,7 +227,7 @@
 <text name="crew_TERRAN_SPIDER_MINE_NAME">Terran Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_MINE_SHORT">Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_MINE_DESC">YOU SHOULD NEVER SEE THIS.[CREW]</text>
--->
+
 
 
 <!-- TERRAN AUGMENTS -->

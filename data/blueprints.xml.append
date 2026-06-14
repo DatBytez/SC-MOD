@@ -676,7 +676,7 @@
 	<missSounds>
 		<sound>miss</sound>
 	</missSounds>
-	<image>missile_1</image>
+	<image>missile_2</image>
 	<explosion>terran_gemini_hit</explosion>
 	<weaponArt>terran_missile_2</weaponArt> 
 	<iconImage>missile</iconImage>
@@ -735,7 +735,7 @@
 	<missSounds>
 		<sound>miss</sound>
 	</missSounds>
-	<image>missile_1</image>
+	<image>missile_3</image>
 	<explosion>terran_gemini_hit</explosion>
 	<weaponArt>terran_missile_3</weaponArt>
 	<iconImage>missile</iconImage>
@@ -851,7 +851,7 @@
 	<missSounds>
 		<sound>miss</sound>
 	</missSounds>	
-	<image>missile_1</image>
+	<image>missile_2</image>
 	<explosion>terran_gemini_hit</explosion>
 	<weaponArt>terran_missile_2</weaponArt> 
 	<iconImage>missile</iconImage>
@@ -874,6 +874,65 @@
 		<sound>weapon_gemini_target</sound>
 	</launchSounds>
 	<weaponArt>terran_missile_2</weaponArt> 
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_FIRE_3">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_FIRE_3_title"/>
+	<short id="weapon_GEMINI_MISSILES_FIRE_3_short"/>
+	<desc id="weapon_GEMINI_MISSILES_FIRE_3_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_FIRE_3_tooltip"/>
+	<sc_paired group="gemini_lv3"/>
+	<damage>3</damage>
+	<sysDamage>3</sysDamage>
+	<sc-fireFill/>
+	<!--<fireChance>10</fireChance>-->
+	<missiles>1</missiles>
+	<speed>50</speed>
+	<shots>1</shots>
+	<sp>10</sp>
+	<cooldown>16.5</cooldown>
+	<power>4</power>
+	<cost>95</cost>
+	<rarity>4</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_fire</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>smallExplosion</sound>
+	</hitShipSounds>
+	<hitShieldSounds>
+		<sound>hitShield1</sound>
+		<sound>hitShield2</sound>
+		<sound>hitShield3</sound>
+	</hitShieldSounds>
+	<missSounds>
+		<sound>miss</sound>
+	</missSounds>
+	<image>missile_3</image>
+	<explosion>terran_gemini_hit</explosion>
+	<weaponArt>terran_missile_3</weaponArt>
+	<iconImage>missile</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_FIRE_3_PAIRED">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_FIRE_3_PAIRED_title"/>
+	<short id="weapon_GEMINI_MISSILES_FIRE_3_PAIRED_short"/>
+	<desc id="weapon_GEMINI_MISSILES_FIRE_3_PAIRED_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_FIRE_3_PAIRED_tooltip"/>
+	<sc_paired group="gemini_lv3"/>
+	<shots>1</shots>
+	<cooldown>0.01</cooldown>
+	<power>0</power>
+	<cost>95</cost>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_target</sound>
+	</launchSounds>
+	<weaponArt>terran_missile_3</weaponArt> 
 </weaponBlueprint>
 
 <weaponBlueprint name="GEMINI_HULL_1">
@@ -965,7 +1024,7 @@
 	<missSounds>
 		<sound>miss</sound>
 	</missSounds>
-	<image>missile_1</image>
+	<image>missile_2</image>
 	<explosion>terran_gemini_hit</explosion>
 	<weaponArt>terran_missile_2</weaponArt> 
 	<iconImage>missile</iconImage>
@@ -999,6 +1058,13 @@
 	<tooltip id="weapon_GEMINI_MISSILES_ION_tooltip"/>
 	<sc_paired group="gemini_lv1"/>
 	<damage>1</damage>
+	<aa-shieldSmash>
+		<count>1</count>
+		<countSuper>1</countSuper>
+		<crush>1</crush>
+		<reduction>3</reduction>
+		<onHit>true</onHit>
+	</aa-shieldSmash>
 	<missiles>1</missiles>
 	<speed>50</speed>
 	<shots>1</shots>
@@ -1057,6 +1123,13 @@
 	<tooltip id="weapon_GEMINI_MISSILES_ION_tooltip"/>
 	<sc_paired group="gemini_lv2"/>
 	<damage>2</damage>
+	<aa-shieldSmash>
+		<count>2</count>
+		<countSuper>2</countSuper>
+		<crush>2</crush>
+		<reduction>3</reduction>
+		<onHit>true</onHit>
+	</aa-shieldSmash>
 	<missiles>1</missiles>
 	<speed>50</speed>
 	<shots>1</shots>
@@ -1064,7 +1137,7 @@
 	<sp>10</sp>
 	<stunChance>2</stunChance>
 	<cooldown>12.5</cooldown>
-	<power>1</power>
+	<power>2</power>
 	<cost>70</cost>
 	<rarity>2</rarity>
 	<launchSounds>
@@ -1081,7 +1154,7 @@
 	<missSounds>
 		<sound>miss</sound>
 	</missSounds>
-	<image>missile_1</image>
+	<image>missile_2</image>
 	<explosion>terran_gemini_hit</explosion>
 	<weaponArt>terran_missile_2</weaponArt> 
 	<iconImage>missile</iconImage>
@@ -1104,6 +1177,71 @@
 		<sound>weapon_gemini_target</sound>
 	</launchSounds>
 	<weaponArt>terran_missile_2</weaponArt> 
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_ION_3">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_ION_3_title"/>
+	<short id="weapon_GEMINI_MISSILES_ION_3_short"/>
+	<desc id="weapon_GEMINI_MISSILES_ION_3_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_ION_3_tooltip"/>
+	<sc_paired group="gemini_lv3"/>
+	<damage>3</damage>
+	<aa-shieldSmash>
+		<count>4</count>
+		<countSuper>4</countSuper>
+		<crush>4</crush>
+		<reduction>3</reduction>
+		<onHit>true</onHit>
+	</aa-shieldSmash>
+	<missiles>1</missiles>
+	<speed>50</speed>
+	<shots>1</shots>
+	<ion>3</ion>
+	<sp>10</sp>
+	<stunChance>10</stunChance>
+	<cooldown>16.5</cooldown>
+	<power>4</power>
+	<cost>95</cost>
+	<rarity>4</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_fire</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>smallExplosion</sound>
+	</hitShipSounds>
+	<hitShieldSounds>
+		<sound>hitShield1</sound>
+		<sound>hitShield2</sound>
+		<sound>hitShield3</sound>
+	</hitShieldSounds>
+	<missSounds>
+		<sound>miss</sound>
+	</missSounds>
+	<image>missile_3</image>
+	<explosion>terran_gemini_hit</explosion>
+	<weaponArt>terran_missile_3</weaponArt>
+	<iconImage>missile</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_ION_3_PAIRED">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+	<title id="weapon_GEMINI_MISSILES_ION_3_PAIRED_title"/>
+	<short id="weapon_GEMINI_MISSILES_ION_3_PAIRED_short"/>
+	<desc id="weapon_GEMINI_MISSILES_ION_3_PAIRED_desc"/>
+	<tooltip id="weapon_GEMINI_MISSILES_ION_3_PAIRED_tooltip"/>
+	<sc_paired group="gemini_lv3"/>
+	<shots>1</shots>
+	<cooldown>0.01</cooldown>
+	<power>0</power>
+	<cost>95</cost>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_target</sound>
+	</launchSounds>
+	<weaponArt>terran_missile_3</weaponArt> 
 </weaponBlueprint>
 
 <weaponBlueprint name="GEMINI_SYS_1">
@@ -1197,7 +1335,7 @@
 	<missSounds>
 		<sound>miss</sound>
 	</missSounds>
-	<image>missile_1</image>
+	<image>missile_2</image>
 	<explosion>terran_gemini_hit</explosion>
 	<weaponArt>terran_missile_2</weaponArt> 
 	<iconImage>missile</iconImage>
@@ -1221,127 +1359,6 @@
 	</launchSounds>
 	<weaponArt>terran_missile_2</weaponArt> 
 </weaponBlueprint>
-
-<weaponBlueprint name="GEMINI_ION_3">
-	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
-	<title id="weapon_GEMINI_MISSILES_ION_3_title"/>
-	<short id="weapon_GEMINI_MISSILES_ION_3_short"/>
-	<desc id="weapon_GEMINI_MISSILES_ION_3_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_ION_3_tooltip"/>
-	<sc_paired group="gemini_lv3"/>
-	<damage>3</damage>
-	<mv-pop>
-    	<count>6</count>
-    	<countSuper>6</countSuper>
-	</mv-pop>
-	<missiles>1</missiles>
-	<speed>50</speed>
-	<shots>1</shots>
-	<ion>3</ion>
-	<sp>10</sp>
-	<stunChance>10</stunChance>
-	<cooldown>16.5</cooldown>
-	<power>4</power>
-	<cost>95</cost>
-	<rarity>4</rarity>
-	<launchSounds>
-		<sound>weapon_gemini_fire</sound>
-	</launchSounds>
-	<hitShipSounds>
-		<sound>smallExplosion</sound>
-	</hitShipSounds>
-	<hitShieldSounds>
-		<sound>hitShield1</sound>
-		<sound>hitShield2</sound>
-		<sound>hitShield3</sound>
-	</hitShieldSounds>
-	<missSounds>
-		<sound>miss</sound>
-	</missSounds>
-	<image>missile_1</image>
-	<explosion>terran_gemini_hit</explosion>
-	<weaponArt>terran_missile_3</weaponArt>
-	<iconImage>missile</iconImage>
-</weaponBlueprint>
-
-<weaponBlueprint name="GEMINI_ION_3_PAIRED">
-	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
-	<title id="weapon_GEMINI_MISSILES_ION_3_PAIRED_title"/>
-	<short id="weapon_GEMINI_MISSILES_ION_3_PAIRED_short"/>
-	<desc id="weapon_GEMINI_MISSILES_ION_3_PAIRED_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_ION_3_PAIRED_tooltip"/>
-	<sc_paired group="gemini_lv3"/>
-	<shots>1</shots>
-	<cooldown>0.01</cooldown>
-	<power>0</power>
-	<cost>95</cost>
-	<rarity>0</rarity>
-	<launchSounds>
-		<sound>weapon_gemini_target</sound>
-	</launchSounds>
-	<weaponArt>terran_missile_3</weaponArt> 
-</weaponBlueprint>
-
-<weaponBlueprint name="GEMINI_FIRE_3">
-	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
-	<title id="weapon_GEMINI_MISSILES_FIRE_3_title"/>
-	<short id="weapon_GEMINI_MISSILES_FIRE_3_short"/>
-	<desc id="weapon_GEMINI_MISSILES_FIRE_3_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_FIRE_3_tooltip"/>
-	<sc_paired group="gemini_lv3"/>
-	<damage>3</damage>
-	<sysDamage>3</sysDamage>
-	<sc-fireFill/>
-	<!--<fireChance>10</fireChance>-->
-	<missiles>1</missiles>
-	<speed>50</speed>
-	<shots>1</shots>
-	<sp>10</sp>
-	<cooldown>16.5</cooldown>
-	<power>4</power>
-	<cost>95</cost>
-	<rarity>4</rarity>
-	<launchSounds>
-		<sound>weapon_gemini_fire</sound>
-	</launchSounds>
-	<hitShipSounds>
-		<sound>smallExplosion</sound>
-	</hitShipSounds>
-	<hitShieldSounds>
-		<sound>hitShield1</sound>
-		<sound>hitShield2</sound>
-		<sound>hitShield3</sound>
-	</hitShieldSounds>
-	<missSounds>
-		<sound>miss</sound>
-	</missSounds>
-	<image>missile_1</image>
-	<explosion>terran_gemini_hit</explosion>
-	<weaponArt>terran_missile_3</weaponArt>
-	<iconImage>missile</iconImage>
-</weaponBlueprint>
-
-<weaponBlueprint name="GEMINI_FIRE_3_PAIRED">
-	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
-	<title id="weapon_GEMINI_MISSILES_FIRE_3_PAIRED_title"/>
-	<short id="weapon_GEMINI_MISSILES_FIRE_3_PAIRED_short"/>
-	<desc id="weapon_GEMINI_MISSILES_FIRE_3_PAIRED_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_FIRE_3_PAIRED_tooltip"/>
-	<sc_paired group="gemini_lv3"/>
-	<shots>1</shots>
-	<cooldown>0.01</cooldown>
-	<power>0</power>
-	<cost>95</cost>
-	<rarity>0</rarity>
-	<launchSounds>
-		<sound>weapon_gemini_target</sound>
-	</launchSounds>
-	<weaponArt>terran_missile_3</weaponArt> 
-</weaponBlueprint>
 <!-- ===============
      YAMATO GUN
      =============== -->
@@ -1359,7 +1376,7 @@
 	<damage>1</damage>
 	<ion>1</ion>
 	<fireChance>4</fireChance>
-	<explosion>terran_yamato_explosion</explosion>
+	<explosion>terran_yamato_hit</explosion>
 	<shots>5</shots>
 	<sc-chain-artillery stat="shots" amount="0" />
 	<accuracyMod>40</accuracyMod>
@@ -1432,7 +1449,8 @@
 	<missSounds>
 		<sound>miss</sound>
 	</missSounds>
-	<image>missile_1</image>
+	<image>missile_emp</image>
+	<explosion>terran_emp_hit</explosion>
 	<weaponArt>terran_missile_emp</weaponArt>
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
@@ -1479,7 +1497,7 @@
 	<iconImage>beam</iconImage>
 	<image>beam_contact</image>
 
-	<erosionChance>10</erosionChance> <!-- May not be necessary-->
+	<erosionChance>100</erosionChance> <!-- May not be necessary-->
 	<erosion>
 		<speed>0.5</speed>
 		<maxSpeed>2</maxSpeed>
@@ -1596,98 +1614,6 @@
 	<iconImage>beam</iconImage>
 </weaponBlueprint>
 
-<weaponBlueprint name="BOMB_ION1">
-	<type>BOMB</type>
-	<tip>tip_bombs</tip>
-	<title id="weapon_BOMB_ION_title" />
-	<short id="weapon_BOMB_ION_short" />
-	<desc id="weapon_BOMB_ION_desc" />
-	<tooltip id="weapon_BOMB_ION_tooltip" />
-	<damage>0</damage>
-	<ion>1</ion>
-	<missiles>1</missiles>
-	<shots>1</shots>
-	<sp>0</sp>
-	<cooldown>2</cooldown> <!--was 21-->
-	<power>1</power>
-	<cost>55</cost> <!--was 65-->
-	<bp>4</bp>
-	<rarity>3</rarity>
-	<image>bomb_ion</image>
-	<explosion>explosion_big1_ion</explosion>
-	<launchSounds>
-		<sound>bombTeleport</sound>
-	</launchSounds>
-	<hitShipSounds>
-		<sound>ionHit1</sound>
-		<sound>ionHit2</sound>
-		<sound>ionHit3</sound>
-	</hitShipSounds>
-	<weaponArt>bomb_ion</weaponArt>
-	<iconImage>bomb</iconImage>
-</weaponBlueprint>
-
-<weaponBlueprint name="BOMB_ION2">
-	<type>BOMB</type>
-	<tip>tip_bombs</tip>
-	<title id="weapon_BOMB_ION_title" />
-	<short id="weapon_BOMB_ION_short" />
-	<desc id="weapon_BOMB_ION_desc" />
-	<tooltip id="weapon_BOMB_ION_tooltip" />
-	<damage>0</damage>
-	<ion>2</ion>
-	<missiles>1</missiles>
-	<shots>1</shots>
-	<sp>0</sp>
-	<cooldown>2</cooldown> <!--was 21-->
-	<power>1</power>
-	<cost>55</cost> <!--was 65-->
-	<bp>4</bp>
-	<rarity>3</rarity>
-	<image>bomb_ion</image>
-	<explosion>explosion_big1_ion</explosion>
-	<launchSounds>
-		<sound>bombTeleport</sound>
-	</launchSounds>
-	<hitShipSounds>
-		<sound>ionHit1</sound>
-		<sound>ionHit2</sound>
-		<sound>ionHit3</sound>
-	</hitShipSounds>
-	<weaponArt>bomb_ion</weaponArt>
-	<iconImage>bomb</iconImage>
-</weaponBlueprint>
-
-<weaponBlueprint name="BOMB_ION3">
-	<type>BOMB</type>
-	<tip>tip_bombs</tip>
-	<title id="weapon_BOMB_ION_title" />
-	<short id="weapon_BOMB_ION_short" />
-	<desc id="weapon_BOMB_ION_desc" />
-	<tooltip id="weapon_BOMB_ION_tooltip" />
-	<damage>0</damage>
-	<ion>3</ion>
-	<missiles>1</missiles>
-	<shots>1</shots>
-	<sp>0</sp>
-	<cooldown>2</cooldown> <!--was 21-->
-	<power>1</power>
-	<cost>55</cost> <!--was 65-->
-	<bp>4</bp>
-	<rarity>3</rarity>
-	<image>bomb_ion</image>
-	<explosion>explosion_big1_ion</explosion>
-	<launchSounds>
-		<sound>bombTeleport</sound>
-	</launchSounds>
-	<hitShipSounds>
-		<sound>ionHit1</sound>
-		<sound>ionHit2</sound>
-		<sound>ionHit3</sound>
-	</hitShipSounds>
-	<weaponArt>bomb_ion</weaponArt>
-	<iconImage>bomb</iconImage>
-</weaponBlueprint>
 <!-- 
 *********************************************************************************************************
   TERRAN MARINE
@@ -1705,21 +1631,13 @@
 	</powerList>
 	<colorList>
 		<layer>
-			<!-- Red -->
 			<color r="244" g="4" b="4" a="1.0" />
-			<!-- Blue -->
 			<color r="12" g="72" b="204" a="1.0" />
-			<!-- Teal -->
 			<color r="44" g="180" b="148" a="1.0" />
-			<!-- Purple -->
 			<color r="136" g="64" b="156" a="1.0" />
-			<!-- Orange -->
 			<color r="248" g="140" b="20" a="1.0" />
-			<!-- Brown -->
 			<color r="112" g="48" b="20" a="1.0" />
-			<!-- white -->
 			<color r="204" g="224" b="208" a="1.0" />
-			<!-- Yellow -->
 			<color r="252" g="252" b="56" a="1.0" />
 		</layer>
 	</colorList>
@@ -1743,22 +1661,14 @@
 	</powerList>
 	<colorList>
 		<layer>
-			<!-- Red -->
-			<color r="244" g="4" b="4" a="1.0" /> 
-			<!-- Blue -->
+			<color r="244" g="4" b="4" a="1.0" />
 			<color r="12" g="72" b="204" a="1.0" />
-			<!-- Teal -->
 			<color r="44" g="180" b="148" a="1.0" />
-			<!-- Purple -->
 			<color r="136" g="64" b="156" a="1.0" />
-			<!-- Orange -->
-			<color r="248" g="140" b="20" a="1.0" /> 
-			<!-- Brown -->
+			<color r="248" g="140" b="20" a="1.0" />
 			<color r="112" g="48" b="20" a="1.0" />
-			<!-- white -->
 			<color r="204" g="224" b="208" a="1.0" />
-			<!-- Yellow -->
-			<color r="252" g="252" b="56" a="1.0" /> 
+			<color r="252" g="252" b="56" a="1.0" />
 		</layer>
 	</colorList>
 </crewBlueprint>
@@ -1779,22 +1689,14 @@
 	</powerList>
 	<colorList>
 		<layer>
-			<!-- Red -->
-			<color r="244" g="4" b="4" a="1.0" /> 
-			<!-- Blue -->
+			<color r="244" g="4" b="4" a="1.0" />
 			<color r="12" g="72" b="204" a="1.0" />
-			<!-- Teal -->
 			<color r="44" g="180" b="148" a="1.0" />
-			<!-- Purple -->
 			<color r="136" g="64" b="156" a="1.0" />
-			<!-- Orange -->
-			<color r="248" g="140" b="20" a="1.0" /> 
-			<!-- Brown -->
+			<color r="248" g="140" b="20" a="1.0" />
 			<color r="112" g="48" b="20" a="1.0" />
-			<!-- white -->
 			<color r="204" g="224" b="208" a="1.0" />
-			<!-- Yellow -->
-			<color r="252" g="252" b="56" a="1.0" /> 
+			<color r="252" g="252" b="56" a="1.0" />
 		</layer>
 	</colorList>
 </crewBlueprint>
@@ -1815,22 +1717,14 @@
 	</powerList>
 	<colorList>
 		<layer>
-			<!-- Red -->
-			<color r="244" g="4" b="4" a="1.0" /> 
-			<!-- Blue -->
+			<color r="244" g="4" b="4" a="1.0" />
 			<color r="12" g="72" b="204" a="1.0" />
-			<!-- Teal -->
 			<color r="44" g="180" b="148" a="1.0" />
-			<!-- Purple -->
 			<color r="136" g="64" b="156" a="1.0" />
-			<!-- Orange -->
-			<color r="248" g="140" b="20" a="1.0" /> 
-			<!-- Brown -->
+			<color r="248" g="140" b="20" a="1.0" />
 			<color r="112" g="48" b="20" a="1.0" />
-			<!-- white -->
 			<color r="204" g="224" b="208" a="1.0" />
-			<!-- Yellow -->
-			<color r="252" g="252" b="56" a="1.0" /> 
+			<color r="252" g="252" b="56" a="1.0" />
 		</layer>
 	</colorList>
 </crewBlueprint>
@@ -1851,22 +1745,14 @@
 	</powerList>
 	<colorList>
 		<layer>
-			<!-- Red -->
-			<color r="244" g="4" b="4" a="1.0" /> 
-			<!-- Blue -->
+			<color r="244" g="4" b="4" a="1.0" />
 			<color r="12" g="72" b="204" a="1.0" />
-			<!-- Teal -->
 			<color r="44" g="180" b="148" a="1.0" />
-			<!-- Purple -->
 			<color r="136" g="64" b="156" a="1.0" />
-			<!-- Orange -->
-			<color r="248" g="140" b="20" a="1.0" /> 
-			<!-- Brown -->
+			<color r="248" g="140" b="20" a="1.0" />
 			<color r="112" g="48" b="20" a="1.0" />
-			<!-- white -->
 			<color r="204" g="224" b="208" a="1.0" />
-			<!-- Yellow -->
-			<color r="252" g="252" b="56" a="1.0" /> 
+			<color r="252" g="252" b="56" a="1.0" />
 		</layer>
 	</colorList>
 </crewBlueprint>
@@ -1886,22 +1772,14 @@
 	</powerList>
 	<colorList>
 		<layer>
-			<!-- Red -->
-			<color r="244" g="4" b="4" a="1.0" /> 
-			<!-- Blue -->
+			<color r="244" g="4" b="4" a="1.0" />
 			<color r="12" g="72" b="204" a="1.0" />
-			<!-- Teal -->
 			<color r="44" g="180" b="148" a="1.0" />
-			<!-- Purple -->
 			<color r="136" g="64" b="156" a="1.0" />
-			<!-- Orange -->
-			<color r="248" g="140" b="20" a="1.0" /> 
-			<!-- Brown -->
+			<color r="248" g="140" b="20" a="1.0" />
 			<color r="112" g="48" b="20" a="1.0" />
-			<!-- white -->
 			<color r="204" g="224" b="208" a="1.0" />
-			<!-- Yellow -->
-			<color r="252" g="252" b="56" a="1.0" /> 
+			<color r="252" g="252" b="56" a="1.0" />
 		</layer>
 	</colorList>
 </crewBlueprint>
@@ -1955,7 +1833,7 @@
 	TERRAN_SPIDER_1
 	****************** -->
 <crewBlueprint name="terran_spider_1">
-	<title id="NOYB"></title> <!-- Probably could be NOYB-->
+	<title id="NOYB"></title>
 	<short id="NOYB"></short>
 	<desc id="NOYB"></desc>
 	<cost>0</cost>
@@ -1963,6 +1841,18 @@
 	<powerList>
 		<power>DRONE</power>
 	</powerList>
+	<colorList>
+		<layer>
+			<color r="244" g="4" b="4" a="1.0" />
+			<color r="12" g="72" b="204" a="1.0" />
+			<color r="44" g="180" b="148" a="1.0" />
+			<color r="136" g="64" b="156" a="1.0" />
+			<color r="248" g="140" b="20" a="1.0" />
+			<color r="112" g="48" b="20" a="1.0" />
+			<color r="204" g="224" b="208" a="1.0" />
+			<color r="252" g="252" b="56" a="1.0" />
+		</layer>
+	</colorList>
 </crewBlueprint>
 <droneBlueprint name="TERRAN_SPIDER_1">
 	<type>BATTLE</type>
@@ -1988,6 +1878,18 @@
 	<powerList>
 		<power>DRONE</power>
 	</powerList>
+	<colorList>
+		<layer>
+			<color r="244" g="4" b="4" a="1.0" />
+			<color r="12" g="72" b="204" a="1.0" />
+			<color r="44" g="180" b="148" a="1.0" />
+			<color r="136" g="64" b="156" a="1.0" />
+			<color r="248" g="140" b="20" a="1.0" />
+			<color r="112" g="48" b="20" a="1.0" />
+			<color r="204" g="224" b="208" a="1.0" />
+			<color r="252" g="252" b="56" a="1.0" />
+		</layer>
+	</colorList>
 </crewBlueprint>
 <droneBlueprint name="TERRAN_SPIDER_2">
 	<type>BATTLE</type>
@@ -2013,6 +1915,18 @@
 	<powerList>
 		<power>DRONE</power>
 	</powerList>
+	<colorList>
+		<layer>
+			<color r="244" g="4" b="4" a="1.0" />
+			<color r="12" g="72" b="204" a="1.0" />
+			<color r="44" g="180" b="148" a="1.0" />
+			<color r="136" g="64" b="156" a="1.0" />
+			<color r="248" g="140" b="20" a="1.0" />
+			<color r="112" g="48" b="20" a="1.0" />
+			<color r="204" g="224" b="208" a="1.0" />
+			<color r="252" g="252" b="56" a="1.0" />
+		</layer>
+	</colorList>
 </crewBlueprint>
 <droneBlueprint name="TERRAN_SPIDER_3">
 	<type>BATTLE</type>
@@ -2030,21 +1944,33 @@
 	TERRAN_SPIDER_SET
 	****************** -->
 <crewBlueprint name="terran_spider_set">
-	<title id="NOYB"></title>
-	<short id="NOYB"></short>
-	<desc id="NOYB"></desc>
+	<title id="crew_TERRAN_SPIDER_SET_NAME"></title>
+	<short id="crew_TERRAN_SPIDER_SET_SHORT"></short>
+	<desc id="crew_TERRAN_SPIDER_SET_DESC"></desc>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
 		<power>DRONE</power>
 	</powerList>
+	<colorList>
+		<layer>
+			<color r="244" g="4" b="4" a="1.0" />
+			<color r="12" g="72" b="204" a="1.0" />
+			<color r="44" g="180" b="148" a="1.0" />
+			<color r="136" g="64" b="156" a="1.0" />
+			<color r="248" g="140" b="20" a="1.0" />
+			<color r="112" g="48" b="20" a="1.0" />
+			<color r="204" g="224" b="208" a="1.0" />
+			<color r="252" g="252" b="56" a="1.0" />
+		</layer>
+	</colorList>
 </crewBlueprint>
 <droneBlueprint name="TERRAN_SPIDER_SET">
 	<type>BATTLE</type>
 	<tip>tip_crew</tip>
-	<title id="drone_TERRAN_SPIDER_SET_NAME"></title>
-	<short id="drone_TERRAN_SPIDER_SET_SHORT"></short>
-	<desc id="drone_TERRAN_SPIDER_SET_DESC"></desc>
+	<title id="NOYB"></title>
+	<short id="NOYB"></short>
+	<desc id="NOYB"></desc>
 	<power>1</power>
 	<cost>55</cost>
 	<bp>3</bp>
@@ -2056,21 +1982,33 @@
 	TERRAN_SPIDER_MINE
 	****************** -->
 <crewBlueprint name="terran_spider_mine">
-	<title id="NOYB"></title>
-	<short id="NOYB"></short>
-	<desc id="NOYB"></desc>
+	<title id="crew_TERRAN_SPIDER_MINE_NAME"></title>
+	<short id="crew_TERRAN_SPIDER_MINE_SHORT"></short>
+	<desc id="crew_TERRAN_SPIDER_MINE_DESC"></desc>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
 		<power>DRONE</power>
 	</powerList>
+	<colorList>
+		<layer>
+			<color r="244" g="4" b="4" a="1.0" />
+			<color r="12" g="72" b="204" a="1.0" />
+			<color r="44" g="180" b="148" a="1.0" />
+			<color r="136" g="64" b="156" a="1.0" />
+			<color r="248" g="140" b="20" a="1.0" />
+			<color r="112" g="48" b="20" a="1.0" />
+			<color r="204" g="224" b="208" a="1.0" />
+			<color r="252" g="252" b="56" a="1.0" />
+		</layer>
+	</colorList>
 </crewBlueprint>
 <droneBlueprint name="TERRAN_SPIDER_MINE">
 	<type>BATTLE</type>
 	<tip>tip_crew</tip>
-	<title id="drone_TERRAN_SPIDER_MINE_NAME"></title>
-	<short id="drone_TERRAN_SPIDER_MINE_SHORT"></short>
-	<desc id="drone_TERRAN_SPIDER_MINE_DESC"></desc>
+	<title id="NOYB"></title>
+	<short id="NOYB"></short>
+	<desc id="NOYB"></desc>
 	<power>1</power>
 	<cost>0</cost>
 	<bp>3</bp>
@@ -2309,11 +2247,12 @@
 	<droneSlots>2</droneSlots>
 	<weaponList missiles="10" count="3">
 		<weapon name="TERRAN_BURST_LASER_1" />
+		<weapon name="GEMINI_HULL_1" />
 		<weapon name="GEMINI_FIRE_1" />
-		<weapon name="GEMINI_HULL_2" />
 	</weaponList>
-	<droneList drones="5" count="1">
-		<drone name="TERRAN_SPIDER_2" />
+	<droneList drones="5" count="2">
+		<drone name="TERRAN_SPIDER_3" />
+		<drone name="TERRAN_SPIDER_1" />
 	</droneList>
 	<health amount="30" />
 	<maxPower amount="6" />
