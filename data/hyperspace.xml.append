@@ -1172,8 +1172,7 @@
 		<mod-append:customShip name="PLAYER_SHIP_TERRAN_WRAITH">
 			<hiddenAug>O2_MASKS</hiddenAug>
 			<hiddenAug>CLOAK_FIRE</hiddenAug>
-			<hiddenAug>TERRAN_HIDDEN_WRAITH_PILOT</hiddenAug>
-			<crewLimit>3</crewLimit>
+			<crewLimit>2</crewLimit>
 			<systemLimit>8</systemLimit>
 			<subsystemLimit>5</subsystemLimit>
 			<exclusivityOverride>
@@ -1201,7 +1200,7 @@
 		<mod-append:ship name="PLAYER_SHIP_TERRAN_VESSEL" b="false" c="false" />
 		<mod-append:customShip name="PLAYER_SHIP_TERRAN_VESSEL">
 			<crewLimit>8</crewLimit>
-			<systemLimit>10</systemLimit>
+			<systemLimit>8</systemLimit>
 			<subsystemLimit>5</subsystemLimit>
 		</mod-append:customShip>
 	</mod:findLike>

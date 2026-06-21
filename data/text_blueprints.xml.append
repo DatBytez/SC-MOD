@@ -202,7 +202,7 @@
 
 <text name="crew_TERRAN_CIVILIAN_NAME">Terran Civilian</text>
 <text name="crew_TERRAN_CIVILIAN_SHORT">Civilian</text>
-<text name="crew_TERRAN_CIVILIAN_DESC">[[NEEDS DESCRIPTION]]</text>
+<text name="crew_TERRAN_CIVILIAN_DESC">Civilians are quick learners, but ill equipped for combat.</text>
 
 <text name="crew_TERRAN_SPIDER_SET_NAME">Terran Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_SET_SHORT">Spider Mine</text>
@@ -210,23 +210,51 @@
 
 <text name="crew_TERRAN_SPIDER_MINE_NAME">Terran Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_MINE_SHORT">Spider Mine</text>
-<text name="crew_TERRAN_SPIDER_MINE_DESC">Civilians are quick learners, but ill equipped for combat.</text>
+<text name="crew_TERRAN_SPIDER_MINE_DESC">[[Need crew_TERRAN_SPIDER_MINE_DESC]]</text>
 
 <!-- TERRAN AUGMENTS -->
 <text name="system_lily_system_bracers_NAME">System Bracers</text>
 <text name="system_lily_system_bracers_DESC">Passively protects your systems from damage, redirecting system damage towards itself instead (As long as it isn't destroyed itself).</text>
 
 <text name="aug_TERRAN_WRAITH_BATTERY_NAME">Apollo Reactor</text>
-<text name="aug_TERRAN_WRAITH_BATTERY_DESC">High yield uranium reactors designed by the Terran Confederacy.  UPGRADE: Battery System +2 Systems powered by the reactor recover more quickly from ion damage and have increased performance. - Cloak: Reduced Downtime. - Engines: Increased evasion. [[wip: increased ftl charge.]] - Oxygen: Automated fire supression. Increased refill speed. - Clone: Increased clone speed. [[wip: Reduced Skill Drain.]] - Drone: Drone speed. [[wip: Drone Rebuild Speed.]]</text>
+<text name="aug_TERRAN_WRAITH_BATTERY_DESC">High yield uranium reactors designed by the Terran Confederacy.  
+
+OVERCHARGED: Systems powered by the reactor recover more quickly from ion damage and have increased performance.
+
+- Cloak: Reduced Downtime.
+- Engines: Increased evasion and ftl charge rate.
+- Oxygen: Automated fire supression. Increased refill speed.
+
+UPGRADE: Battery System +2</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_LIGHT_NAME">Light Armor Plating</text>
-<text name="aug_TERRAN_SHIP_ARMOR_LIGHT_DESC">Light neosteel hulls and reinforced structural bracers provide better maneuverability at a cost of durability.  REDUCE: System Bracers -1 System Bracers have a chance to block incoming damage (System Bracer Health * 20%) BONUS: Evasion +2% per engine level Pilot can perform straif runs (Increase Accuracy and Projectile Speed at the cost of Evasion)</text>
+<text name="aug_TERRAN_SHIP_ARMOR_LIGHT_DESC">Light neosteel hulls and reinforced structural bracers provide better maneuverability at a cost of durability.  
+
+ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 20%)
+    
+UPGRADE: System Bracers +0
+
+BONUS: Evasion +2% per engine level 
+    
+STRAIF: Increase Accuracy and Projectile Speed</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_MEDIUM_NAME">Medium Armor Plating</text>
-<text name="aug_TERRAN_SHIP_ARMOR_MEDIUM_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a slight cost to maneuverability.  UPGRADE: System Bracers +1 System Bracers have a chance to block incoming damage (System Bracer Health * 20%) PENALTY: Evasion -1% per engine level</text>
+<text name="aug_TERRAN_SHIP_ARMOR_MEDIUM_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a slight cost to maneuverability.  
+    
+ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 20%)
+
+UPGRADE: System Bracers +1
+
+PENALTY: Evasion -1% per engine level</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_HEAVY_NAME">Heavy Armor Plating</text>
-<text name="aug_TERRAN_SHIP_ARMOR_HEAVY_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a significan cost to maneuverability  UPGRADE: System Bracers +2 System Bracers have a chance to block incoming damage (System Bracer Health * 20%) PENALTY: Evasion -2% per engine level</text>
+<text name="aug_TERRAN_SHIP_ARMOR_HEAVY_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a significan cost to maneuverability.
+
+ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 20%)
+
+UPGRADE: System Bracers +2 System Bracers
+
+PENALTY: Evasion -2% per engine level</text>
 
 <text name="aug_SC_DETECTOR_NAME">SC Detector</text>
 <text name="aug_SC_DETECTOR_DESC">Advanced sensors allow this ship to track enemy targets more effectively. For each active level of sensors, weapons will charge while enemies are cloaked at a cumulative 25% speed.

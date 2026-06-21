@@ -56,7 +56,6 @@
 	<cost>120</cost>
 	<rarity>3</rarity>
 	<stackable>false</stackable>
-	<sc-upgrade system="lily_system_bracers" amount="-1"/>
 	<sc-armor/>
 	<sc-dodge amount="+2"/>
 </augBlueprint>
@@ -2202,7 +2201,7 @@
 	<systemList>
 		<battery power="1" room="5" start="true" img="terran_computer_d" />
 		<cloaking power="1" room="9" start="true" img="terran_computer_t" />
-		<lily_system_bracers max="3" power="2" room="8" start="true" img="terran_computer_t" />
+		<lily_system_bracers max="3" power="1" room="8" start="true" img="terran_computer_t" />
 		<clonebay power="3" room="3" start="true">
 			<slot>
 				<direction>left</direction>
@@ -2216,7 +2215,7 @@
 				<number>0</number>
 			</slot>
 		</doors>
-		<drones max="5" power="1" room="10" start="true" img="terran_computer_t" />
+		<drones power="1" room="10" start="true" img="terran_computer_t" />
 		<engines power="4" room="7" start="true" img="terran_computer_l">
 			<slot>
 				<direction>left</direction>
@@ -2257,8 +2256,7 @@
 		<weapon name="GEMINI_FIRE_1" />
 	</weaponList>
 	<droneList drones="5" count="2">
-		<drone name="TERRAN_SPIDER_3" />
-		<drone name="TERRAN_SPIDER_1" />
+		<drone name="TERRAN_SPIDER_2" />
 	</droneList>
 	<health amount="30" />
 	<maxPower amount="6" />
@@ -2301,7 +2299,7 @@
 				<number>1</number>
 			</slot>
 		</medbay>
-		<lily_system_bracers power="1" room="4" start="true" img="room_mind" />
+		<lily_system_bracers max="3"power="1" room="4" start="true" img="room_mind" />
 		<mind power="1" room="0" start="false" img="room_mind" />
 		<oxygen power="2" room="6" start="true" img="room_oxygen" />
 		<pilot power="1" room="2" start="true" img="room_pilot">

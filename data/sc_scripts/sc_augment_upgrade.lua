@@ -49,7 +49,7 @@ local SYSTEM_CAP_FALLBACKS = {
 }
 
 local temporarilyRemovedLevels = {}
-local tabbedWindowLevelRemoved = false
+local upgradeTabActive = false
 local updatingSystemLevels = false
 
 local function normalize_system_name(system)
@@ -142,22 +142,15 @@ local function get_augmented_limit(systemName, bonus)
     return naturalCap + bonus, naturalCap
 end
 
-local function system_is_at_augmented_limit(ship, systemName, bonus)
-    local allowedMax = get_augmented_limit(systemName, bonus)
-    if allowedMax <= 0 then return true end
-
-    return get_true_system_max_for_ui(ship, systemName) >= allowedMax
-end
-
-local function get_temp_levels_to_remove(currentMax, naturalCap, bonus)
+local function get_target_temp_levels_to_remove(trueMax, naturalCap, bonus)
     if naturalCap <= 0 or bonus <= 0 then return 0 end
 
     local allowedMax = naturalCap + bonus
 
-    if currentMax >= allowedMax then return 0 end
-    if currentMax < naturalCap then return 0 end
+    if trueMax >= allowedMax then return 0 end
+    if trueMax < naturalCap then return 0 end
 
-    return currentMax - naturalCap + 1
+    return trueMax - naturalCap + 1
 end
 
 local function get_remaining_bonus_boxes(ship, systemName, bonus)
@@ -202,58 +195,162 @@ local function get_green_purchased_boxes(ship, systemName)
     return greenBoxes, visibleGameBars
 end
 
-local function temporarily_remove_level_for_upgrade_screen(ship)
+local function restore_removed_levels_for_system(ship, systemName)
+    local removed = temporarilyRemovedLevels[systemName] or 0
+    if removed <= 0 then return end
+
+    local sys = get_system(ship, systemName)
+    if sys then
+        for i = 1, removed do
+            sys:UpgradeSystem(1)
+        end
+    end
+
+    temporarilyRemovedLevels[systemName] = nil
+end
+
+local function clamp_system_to_augmented_limit(ship, systemName, bonus)
+    local sys = get_system(ship, systemName)
+    if not sys then return end
+
+    local allowedMax = get_augmented_limit(systemName, bonus or 0)
+    if allowedMax <= 0 then return end
+
+    local actualMax = sys:GetMaxPower() or 0
+    local removed = temporarilyRemovedLevels[systemName] or 0
+    local trueMax = actualMax + removed
+    local excess = trueMax - allowedMax
+
+    if excess <= 0 then return end
+
+    if removed > 0 then
+        local removeFromStored = math.min(excess, removed)
+        removed = removed - removeFromStored
+        excess = excess - removeFromStored
+
+        if removed > 0 then
+            temporarilyRemovedLevels[systemName] = removed
+        else
+            temporarilyRemovedLevels[systemName] = nil
+        end
+    end
+
+    if excess > 0 then
+        for i = 1, excess do
+            sys:UpgradeSystem(-1)
+        end
+    end
+end
+
+local function enforce_augmented_limits(ship, desired)
+    if not ship or ship.iShipId ~= 0 then return end
+
+    desired = desired or get_desired_system_upgrades(ship)
+
+    local checkedSystems = {}
+
+    for systemName, fallback in pairs(SYSTEM_CAP_FALLBACKS) do
+        if systemName ~= "reactor" then
+            checkedSystems[systemName] = true
+            clamp_system_to_augmented_limit(ship, systemName, desired[systemName] or 0)
+        end
+    end
+
+    for systemName, bonus in pairs(desired) do
+        if not checkedSystems[systemName] then
+            checkedSystems[systemName] = true
+            clamp_system_to_augmented_limit(ship, systemName, bonus or 0)
+        end
+    end
+
+    for systemName, removed in pairs(temporarilyRemovedLevels) do
+        if not checkedSystems[systemName] then
+            clamp_system_to_augmented_limit(ship, systemName, desired[systemName] or 0)
+        end
+    end
+end
+
+local function update_temporary_levels_for_upgrade_screen(ship)
     if not ship or ship.iShipId ~= 0 then return end
     if updatingSystemLevels then return end
-    if tabbedWindowLevelRemoved then return end
 
     updatingSystemLevels = true
 
     local desired = get_desired_system_upgrades(ship)
+    enforce_augmented_limits(ship, desired)
+
+    local handledSystems = {}
 
     for systemName, bonus in pairs(desired) do
-        if bonus > 0 and not system_is_at_augmented_limit(ship, systemName, bonus) then
-            local sys = get_system(ship, systemName)
-            local naturalCap = mods.sc.system_caps.get_cap(systemName)
+        handledSystems[systemName] = true
 
-            if sys and naturalCap > 0 then
-                local currentMax = sys:GetMaxPower() or 0
-                local levelsToRemove = get_temp_levels_to_remove(currentMax, naturalCap, bonus)
+        local sys = get_system(ship, systemName)
+        local naturalCap = mods.sc.system_caps.get_cap(systemName)
 
-                if levelsToRemove > 0 then
-                    for i = 1, levelsToRemove do
-                        sys:UpgradeSystem(-1)
-                    end
-                    temporarilyRemovedLevels[systemName] = (temporarilyRemovedLevels[systemName] or 0) + levelsToRemove
+        if sys and naturalCap > 0 and bonus > 0 then
+            local trueMax = get_true_system_max_for_ui(ship, systemName)
+            local targetRemoved = get_target_temp_levels_to_remove(trueMax, naturalCap, bonus)
+            local currentRemoved = temporarilyRemovedLevels[systemName] or 0
+            local difference = targetRemoved - currentRemoved
+
+            if difference > 0 then
+                for i = 1, difference do
+                    sys:UpgradeSystem(-1)
+                end
+                temporarilyRemovedLevels[systemName] = currentRemoved + difference
+            elseif difference < 0 then
+                for i = 1, -difference do
+                    sys:UpgradeSystem(1)
+                end
+
+                local newRemoved = currentRemoved + difference
+                if newRemoved > 0 then
+                    temporarilyRemovedLevels[systemName] = newRemoved
+                else
+                    temporarilyRemovedLevels[systemName] = nil
                 end
             end
+        else
+            restore_removed_levels_for_system(ship, systemName)
         end
     end
 
-    tabbedWindowLevelRemoved = true
+    for systemName, removed in pairs(temporarilyRemovedLevels) do
+        if removed > 0 and not handledSystems[systemName] then
+            restore_removed_levels_for_system(ship, systemName)
+        end
+    end
+
+    enforce_augmented_limits(ship, desired)
+
+    upgradeTabActive = true
     updatingSystemLevels = false
 end
 
-local function restore_level_after_upgrade_screen(ship)
+local function restore_all_removed_levels(ship)
     if not ship or ship.iShipId ~= 0 then return end
     if updatingSystemLevels then return end
-    if not tabbedWindowLevelRemoved then return end
 
     updatingSystemLevels = true
 
     for systemName, removed in pairs(temporarilyRemovedLevels) do
-        local sys = get_system(ship, systemName)
+        if removed > 0 then
+            local sys = get_system(ship, systemName)
 
-        if sys and removed > 0 then
-            for i = 1, removed do
-                sys:UpgradeSystem(1)
+            if sys then
+                for i = 1, removed do
+                    sys:UpgradeSystem(1)
+                end
             end
         end
 
         temporarilyRemovedLevels[systemName] = nil
     end
 
-    tabbedWindowLevelRemoved = false
+    upgradeTabActive = false
+
+    enforce_augmented_limits(ship)
+
     updatingSystemLevels = false
 end
 
@@ -284,6 +381,19 @@ local function get_manual_subsystem_slot(ship, systemName)
     return nil
 end
 
+script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
+    if not ship or ship.iShipId ~= 0 then return end
+    if updatingSystemLevels then return end
+
+    if upgradeTabActive then
+        update_temporary_levels_for_upgrade_screen(ship)
+    else
+        updatingSystemLevels = true
+        enforce_augmented_limits(ship)
+        updatingSystemLevels = false
+    end
+end)
+
 script.on_render_event(
     Defines.RenderEvents.TABBED_WINDOW,
     function(currentTab)
@@ -291,9 +401,9 @@ script.on_render_event(
         if not ship then return end
 
         if tostring(currentTab) == "upgrades" then
-            temporarily_remove_level_for_upgrade_screen(ship)
+            update_temporary_levels_for_upgrade_screen(ship)
         else
-            restore_level_after_upgrade_screen(ship)
+            restore_all_removed_levels(ship)
         end
     end,
     function(currentTab)
@@ -301,6 +411,8 @@ script.on_render_event(
 
         local ship = Hyperspace.ships.player
         if not ship then return end
+
+        update_temporary_levels_for_upgrade_screen(ship)
 
         local entries = get_desired_system_upgrades(ship)
 
@@ -343,12 +455,12 @@ script.on_internal_event(Defines.InternalEvents.TABBED_WINDOW_CONFIRM, function(
     local ship = Hyperspace.ships.player
     if not ship then return end
 
-    restore_level_after_upgrade_screen(ship)
+    restore_all_removed_levels(ship)
 end)
 
 script.on_internal_event(Defines.InternalEvents.TABBED_WINDOW_UNDO, function(currentTabName)
     local ship = Hyperspace.ships.player
     if not ship then return end
 
-    restore_level_after_upgrade_screen(ship)
+    restore_all_removed_levels(ship)
 end)
