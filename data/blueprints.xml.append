@@ -24,7 +24,7 @@
     <title id="system_lily_system_bracers_NAME"></title>
     <desc id="system_lily_system_bracers_DESC"></desc>
     <startPower>1</startPower>
-    <maxPower>4</maxPower>
+    <maxPower>5</maxPower>
     <rarity>2</rarity>
     <upgradeCost>
         <level>30</level>
@@ -32,7 +32,7 @@
         <level>80</level>
         <level>100</level>
     </upgradeCost>
-    <cost>30</cost>
+    <cost>100</cost>
 </systemBlueprint>
 
 <!-- 
@@ -44,8 +44,7 @@
 <augBlueprint name="TERRAN_WRAITH_BATTERY">
 	<title id="aug_TERRAN_WRAITH_BATTERY_NAME"></title>
 	<desc id="aug_TERRAN_WRAITH_BATTERY_DESC"></desc>
-							<cost>120</cost>
-	<bp>8</bp>
+	<cost>120</cost>
 	<rarity>4</rarity>
 	<stackable>false</stackable>
 	<sc-upgrade system="battery" amount="2"/>
@@ -55,7 +54,6 @@
 	<title id="aug_TERRAN_SHIP_ARMOR_LIGHT_NAME"></title>
 	<desc id="aug_TERRAN_SHIP_ARMOR_LIGHT_DESC"></desc>
 	<cost>120</cost>
-	<bp>8</bp>
 	<rarity>3</rarity>
 	<stackable>false</stackable>
 	<sc-upgrade system="lily_system_bracers" amount="-1"/>
@@ -67,7 +65,6 @@
 	<title id="aug_TERRAN_SHIP_ARMOR_MEDIUM_NAME"></title>
 	<desc id="aug_TERRAN_SHIP_ARMOR_MEDIUM_DESC"></desc>
 	<cost>140</cost>
-	<bp>8</bp>
 	<rarity>3</rarity>
 	<stackable>false</stackable>
 	<sc-upgrade system="lily_system_bracers" amount="1"/>
@@ -79,12 +76,21 @@
 	<title id="aug_TERRAN_SHIP_ARMOR_HEAVY_NAME"></title>
 	<desc id="aug_TERRAN_SHIP_ARMOR_HEAVY_DESC"></desc>
 	<cost>160</cost>
-	<bp>8</bp>
 	<rarity>4</rarity>
 	<stackable>false</stackable>
 	<sc-upgrade system="lily_system_bracers" amount="2"/>
 	<sc-armor/>
 	<sc-dodge amount="-2"/>
+</augBlueprint>
+
+<augBlueprint name="SC_DETECTOR">
+	<title id="aug_SC_DETECTOR_NAME"></title>
+	<desc id="aug_SC_DETECTOR_DESC"></desc>
+	<cost>70</cost>
+	<rarity>4</rarity>
+	<stackable>false</stackable>
+	<sc-upgrade system="sensors" amount="2"/>
+	<sc-detector/>
 </augBlueprint>
 
 	<!-- 
@@ -2341,4 +2347,5 @@
 	<crewCount amount="1" class="terran_civilian" />
 	<crewCount amount="1" class="terran_civilian" />
 	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
+	<aug name="SC_DETECTOR" />
 </shipBlueprint>

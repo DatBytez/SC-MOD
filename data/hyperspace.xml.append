@@ -1235,7 +1235,6 @@
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
 	<mod-append:script>data/aa_scripts/AA_core.lua</mod-append:script>
 	<mod-append:script>data/aa_scripts/weapons/smash.lua</mod-append:script>
-	<mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_tag.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_radius_core.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_pilot_ui.lua</mod-append:script>
@@ -1248,14 +1247,15 @@
 	<mod-append:script>data/sc_scripts/sc_weapon_paired.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_yamato.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_augment_battery.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_augment_detector.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_augment_armor.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_crew_scv.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_copy.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_active.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
 
-	<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
+	<!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>-->
 </mod:findLike>

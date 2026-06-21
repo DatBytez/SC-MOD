@@ -91,19 +91,21 @@ script.on_render_event(
         local accHistory = mods.sc_debug.lastAccuracyMod[shipId] or {0, 0, 0}
         local radiusHistory = mods.sc_debug.lastRadius[shipId] or {0, 0, 0}
         local dodge = mods.sc_debug.lastDodge[shipId] or 0
+        local sensorsCap = Hyperspace.playerVariables.sensors_cap or 0
 
         local accText = table.concat(accHistory, " / ")
         local radiusText = table.concat(radiusHistory, " / ")
 
-        local hasAug1 = has_debug_augment(shipMgr, DEBUG_AUG_1)
-        local hasAug2 = has_debug_augment(shipMgr, DEBUG_AUG_2)
-        local hasAug3 = has_debug_augment(shipMgr, DEBUG_AUG_3)
+        --local hasAug1 = has_debug_augment(shipMgr, DEBUG_AUG_1)
+        --local hasAug2 = has_debug_augment(shipMgr, DEBUG_AUG_2)
+        --local hasAug3 = has_debug_augment(shipMgr, DEBUG_AUG_3)
 
         Graphics.freetype.easy_print(0, 10, 300, "AccuracyMod: " .. accText)
         Graphics.freetype.easy_print(0, 10, 325, "Radius: " .. radiusText)
+        Graphics.freetype.easy_print(0, 10, 350, "Sensors Cap: " .. tostring(sensorsCap))
         --Graphics.freetype.easy_print(0, 10, 350, "Dodge Bonus: " .. tostring(dodge))
-        Graphics.freetype.easy_print(0, 10, 375, DEBUG_AUG_1 .. ": " .. (hasAug1 and "YES" or "NO"))
-        Graphics.freetype.easy_print(0, 10, 400, DEBUG_AUG_2 .. ": " .. (hasAug2 and "YES" or "NO"))
-        Graphics.freetype.easy_print(0, 10, 425, DEBUG_AUG_3 .. ": " .. (hasAug3 and "YES" or "NO"))
+        --Graphics.freetype.easy_print(0, 10, 375, DEBUG_AUG_1 .. ": " .. (hasAug1 and "YES" or "NO"))
+        --Graphics.freetype.easy_print(0, 10, 400, DEBUG_AUG_2 .. ": " .. (hasAug2 and "YES" or "NO"))
+        --Graphics.freetype.easy_print(0, 10, 425, DEBUG_AUG_3 .. ": " .. (hasAug3 and "YES" or "NO"))
     end
 )

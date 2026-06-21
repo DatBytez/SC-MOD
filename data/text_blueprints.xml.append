@@ -203,32 +203,14 @@
 <text name="crew_TERRAN_CIVILIAN_NAME">Terran Civilian</text>
 <text name="crew_TERRAN_CIVILIAN_SHORT">Civilian</text>
 <text name="crew_TERRAN_CIVILIAN_DESC">[[NEEDS DESCRIPTION]]</text>
- <!--
-<text name="crew_TERRAN_SCV_NAME">Terran SCV</text>
-<text name="crew_TERRAN_SCV_SHORT">SCV</text>
-<text name="crew_TERRAN_SCV_DESC">YOU SHOULD NEVER SEE THIS.[CREW]</text>
 
-<text name="crew_TERRAN_SCV_HULL_NAME">Terran SCV Hull</text>
-<text name="crew_TERRAN_SCV_HULL_SHORT">SCV Hull</text>
-<text name="crew_TERRAN_SCV_HULL_DESC">YOU SHOULD NEVER SEE THIS.[CREW]</text>
-
-<text name="crew_TERRAN_SPIDER_NAME">Terran Spider Mine</text>
-<text name="crew_TERRAN_SPIDER_SHORT">Spider Mine</text>
-<text name="crew_TERRAN_SPIDER_DESC">YOU SHOULD NEVER SEE THIS.[CREW]</text>
-
-<text name="crew_TERRAN_SPIDER_1_NAME">Terran Spider Mine Qt.1</text>
-<text name="crew_TERRAN_SPIDER_1_SHORT">Spider Mine 1</text>
-<text name="crew_TERRAN_SPIDER_1_DESC">YOU SHOULD NEVER SEE THIS.(crew)</text>
--->
 <text name="crew_TERRAN_SPIDER_SET_NAME">Terran Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_SET_SHORT">Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_SET_DESC">[[Need terran_spider_set Description]][CREW]</text>
 
 <text name="crew_TERRAN_SPIDER_MINE_NAME">Terran Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_MINE_SHORT">Spider Mine</text>
-<text name="crew_TERRAN_SPIDER_MINE_DESC">YOU SHOULD NEVER SEE THIS.[CREW]</text>
-
-
+<text name="crew_TERRAN_SPIDER_MINE_DESC">Civilians are quick learners, but ill equipped for combat.</text>
 
 <!-- TERRAN AUGMENTS -->
 <text name="system_lily_system_bracers_NAME">System Bracers</text>
@@ -245,3 +227,8 @@
 
 <text name="aug_TERRAN_SHIP_ARMOR_HEAVY_NAME">Heavy Armor Plating</text>
 <text name="aug_TERRAN_SHIP_ARMOR_HEAVY_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a significan cost to maneuverability  UPGRADE: System Bracers +2 System Bracers have a chance to block incoming damage (System Bracer Health * 20%) PENALTY: Evasion -2% per engine level</text>
+
+<text name="aug_SC_DETECTOR_NAME">SC Detector</text>
+<text name="aug_SC_DETECTOR_DESC">Advanced sensors allow this ship to track enemy targets more effectively. For each active level of sensors, weapons will charge while enemies are cloaked at a cumulative 25% speed.
+    
+    UPGRADE: Sensors +1 Projectiles will gain a cumulative 2.5% increase in accuracy per level. Missile gain double that amnount.</text>
