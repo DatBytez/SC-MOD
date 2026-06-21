@@ -1164,9 +1164,7 @@
 		</exclusivityOverride>
 		</mod-append:customShip>
 	</mod:findLike>	
-</FTL>
 
-<FTL>
 	<mod:findLike type="ships">
 		<mod-append:ship name="PLAYER_SHIP_TERRAN_WRAITH" b="false" c="false" />
 		<mod-append:customShip name="PLAYER_SHIP_TERRAN_WRAITH">
@@ -1193,14 +1191,12 @@
 		</exclusivityOverride>
 		</mod-append:customShip>
 	</mod:findLike>
-</FTL>
 
-<FTL>
-	<mod:findLike type="ships">
-		<mod-append:ship name="PLAYER_SHIP_TERRAN_VESSEL" b="false" c="false" />
-		<mod-append:customShip name="PLAYER_SHIP_TERRAN_VESSEL">
-			<crewLimit>8</crewLimit>
-			<systemLimit>8</systemLimit>
+<mod:findLike type="ships">
+	<mod-append:ship name="PLAYER_SHIP_TERRAN_VESSEL" a="true" b="false" c="false" />
+	<mod-append:customShip name="PLAYER_SHIP_TERRAN_VESSEL">
+		<crewLimit>8</crewLimit>
+		<systemLimit>8</systemLimit>
 			<subsystemLimit>5</subsystemLimit>
 		</mod-append:customShip>
 	</mod:findLike>

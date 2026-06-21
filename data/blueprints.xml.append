@@ -2273,55 +2273,57 @@
 	<class id="text_SHIP_TERRAN_VESSEL_class"></class>
 	<name id="text_PLAYER_SHIP_HARD_name"></name>
 	<desc id="text_SHIP_TERRAN_VESSEL_desc"></desc>
-	<systemList>
-		<battery power="1" room="5" start="false" img="room_battery" />
+<systemList>
+		<lily_system_bracers max="3"power="1" room="4" start="true" img="room_mind" />
+		<battery power="1" room="5" start="false" img="invisible" />
+		<cloaking power="1" room="12" start="false" img="invisible" />
 		<clonebay power="1" room="8" start="false">
 			<slot>
 				<number>1</number>
 			</slot>
 		</clonebay>
-		<doors power="2" room="10" start="true" img="room_doors">
+		<doors power="2" room="4" start="true" img="invisible">
 			<slot>
 				<direction>up</direction>
-				<number>0</number>
+				<number>1</number>
 			</slot>
 		</doors>
-		<drones power="2" room="7" start="true" img="room_drones" />
-		<engines power="3" room="12" start="true" img="room_engines">
+		<drones power="2" room="7" start="true" img="invisible" />
+		<engines power="3" room="11" start="true" img="invisible">
 			<slot>
 				<direction>down</direction>
-				<number>2</number>
+				<number>0</number>
 			</slot>
 		</engines>
-		<hacking power="1" room="13" start="false" img="room_hacking" />
-		<medbay power="2" room="8" start="true" img="room_medbay">
+		<hacking power="1" room="0" start="false" img="invisible" />
+		<medbay power="2" room="8" start="true" img="invisible">
 			<slot>
 				<number>1</number>
 			</slot>
 		</medbay>
-		<lily_system_bracers max="3"power="1" room="4" start="true" img="room_mind" />
-		<mind power="1" room="0" start="false" img="room_mind" />
-		<oxygen power="2" room="6" start="true" img="room_oxygen" />
-		<pilot power="1" room="2" start="true" img="room_pilot">
+		<mind power="1" room="13" start="false" img="invisible" />
+		<oxygen power="2" room="6" start="true" img="invisible" />
+		<pilot power="1" room="2" start="true" img="invisible">
 			<slot>
 				<direction>right</direction>
 				<number>3</number>
 			</slot>
 		</pilot>
-		<sensors power="3" room="11" start="true" img="room_sensors">
+		<sensors power="1" max="3" room="10" start="true" img="invisible">
+			<slot>
+				<direction>down</direction>
+				<number>0</number>
+			</slot>
+		</sensors>
+		<shields power="1" room="1" start="false" img="invisible">
 			<slot>
 				<direction>up</direction>
 				<number>1</number>
 			</slot>
-		</sensors>
-		<shields power="1" room="1" start="false" img="room_shields">
-			<slot>
-				<direction>left</direction>
-				<number>0</number>
-			</slot>
 		</shields>
 		<teleporter power="1" room="9" start="false" />
-		<weapons power="3" room="3" start="true" img="room_weapons">
+		<temporal power="1" room="14" start="false" />
+		<weapons power="3" room="3" start="true" img="invisible">
 			<slot>
 				<direction>up</direction>
 				<number>1</number>
@@ -2330,20 +2332,21 @@
 	</systemList>
 	<weaponSlots>3</weaponSlots>
 	<droneSlots>3</droneSlots>
-	<weaponList missiles="10" count="2">
+	<weaponList missiles="10" count="3">
 		<weapon name="IRRADIATE_BEAM" />
 		<weapon name="EMP_MISSILE" />
 	</weaponList>
 	<droneList drones="10" count="3">
-		<drone name="TERRAN_DEFENSE_1" />		
+		<drone name="TERRAN_DEFENSE_1" />
 		<drone name="TERRAN_DEFENSE_2" />
 		<drone name="TERRAN_DEFENSE_3" />
 	</droneList>
 	<health amount="30" />
-	<maxPower amount="6" />
+	<maxPower amount="8" />
 	<crewCount amount="1" class="terran_civilian" />
 	<crewCount amount="1" class="terran_civilian" />
 	<crewCount amount="1" class="terran_civilian" />
 	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
 	<aug name="SC_DETECTOR" />
+</shipBlueprint>
 </shipBlueprint>

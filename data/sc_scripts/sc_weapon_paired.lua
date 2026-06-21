@@ -10,6 +10,7 @@ DESCRIPTION: Paired weapons using copied projectiles and target-weapon replaceme
     - The secondary weapon has autoFiring forced off while paired.
     - Ship-loop pairing logic is disabled unless Hyperspace.App.world.bStartedGame is true.
     - Pairing is built left-to-right as non-overlapping pairs of two.
+    - The primary/left weapon must be powered for a pair to be valid.
     - The left weapon fires normally and creates a copied projectile from the right weapon's launch point.
     - The right weapon's own projectiles are killed/cleared so only the left weapon's copied projectiles apply damage.
 DEPENDENCIES: mv_core
@@ -159,9 +160,17 @@ local function get_left_slot(weapon)
     return weaponSlot - 1
 end
 
+local function primary_weapon_is_powered(primaryWeapon)
+    if not primaryWeapon then return false end
+    if not primaryWeapon.powered then return false end
+
+    return true
+end
+
 local function primary_matches_secondary(primaryWeapon, secondaryWeapon)
     if not primaryWeapon or not secondaryWeapon then return false end
     if not primaryWeapon.blueprint or not secondaryWeapon.blueprint then return false end
+    if not primary_weapon_is_powered(primaryWeapon) then return false end
 
     local primaryGroup = get_weapon_group(primaryWeapon)
     local secondaryGroup = get_weapon_group(secondaryWeapon)
