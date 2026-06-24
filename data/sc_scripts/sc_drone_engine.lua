@@ -13,7 +13,7 @@ local vter = mods.multiverse.vter
 
 local TARGET_DRONE = "TERRAN_DEFENSE_1"
 --local TARGET_ENGINE_IMAGE = "ship/drones/matrix_drone_engine.png"
-local TARGET_ENGINE_IMAGE = "ship/drones/test_drone_engine.png"
+local TARGET_ENGINE_IMAGE = "ship/drones/matrix_drone_engine.png"
 
 -- Optional: use this later if you replace the vanilla drone engine image
 -- with a transparent image and want to manually restore normal engines.
@@ -23,14 +23,14 @@ local DEFAULT_ENGINE_IMAGE = "ship/drones/drone_engine.png"
 -- These always behave like normal screen coordinates:
 -- positive X = right
 -- positive Y = down
-local ENGINE_SCREEN_X_OFFSET = 385 -- 385
-local ENGINE_SCREEN_Y_OFFSET = 175 -- 175
+local ENGINE_SCREEN_X_OFFSET = 382 -- 382
+local ENGINE_SCREEN_Y_OFFSET = 172 -- 172
 
 -- Drone-local offset.
 -- These rotate with the drone.
 -- If the drone turns, these directions turn with it.
-local ENGINE_LOCAL_X_OFFSET = -16 -- -6
-local ENGINE_LOCAL_Y_OFFSET = 10 -- 10
+local ENGINE_LOCAL_X_OFFSET = -9 -- -9
+local ENGINE_LOCAL_Y_OFFSET = 9 -- 9
 
 local ENGINE_SCALE = 1.0
 

@@ -2274,7 +2274,7 @@
 	<name id="text_PLAYER_SHIP_HARD_name"></name>
 	<desc id="text_SHIP_TERRAN_VESSEL_desc"></desc>
 <systemList>
-		<lily_system_bracers max="3"power="1" room="4" start="true" img="room_mind" />
+		<lily_system_bracers max="3"power="1" room="1" start="true" img="room_mind" />
 		<battery power="1" room="5" start="false" img="invisible" />
 		<cloaking power="1" room="12" start="false" img="invisible" />
 		<clonebay power="1" room="8" start="false">
