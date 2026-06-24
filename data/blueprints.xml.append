@@ -40,6 +40,13 @@
   TERRAN AUGMENTS
 **********************************************************************************************************************
 -->
+<augBlueprint name="TERRAN_SHIP">
+	<title id="NOYB"></title>
+	<desc id="NOYB"></desc>
+	<cost>0</cost>
+	<rarity>0</rarity>
+	<stackable>false</stackable>
+</augBlueprint>
 
 <augBlueprint name="TERRAN_WRAITH_BATTERY">
 	<title id="aug_TERRAN_WRAITH_BATTERY_NAME"></title>

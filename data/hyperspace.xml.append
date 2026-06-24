@@ -1142,6 +1142,7 @@
 	<mod:findLike type="ships">
 		<mod-append:ship name="PLAYER_SHIP_TERRAN_BATTLECRUISER" b="false" c="false" />
 		<mod-append:customShip name="PLAYER_SHIP_TERRAN_BATTLECRUISER">
+			<hiddenAug>TERRAN_SHIP</hiddenAug>
 		    <hiddenAug>ARTILLERY_ORDER</hiddenAug>
 			<crewLimit>10</crewLimit>
 			<systemLimit>8</systemLimit>
@@ -1168,7 +1169,7 @@
 	<mod:findLike type="ships">
 		<mod-append:ship name="PLAYER_SHIP_TERRAN_WRAITH" b="false" c="false" />
 		<mod-append:customShip name="PLAYER_SHIP_TERRAN_WRAITH">
-			<hiddenAug>O2_MASKS</hiddenAug>
+			<hiddenAug>TERRAN_SHIP</hiddenAug>
 			<hiddenAug>CLOAK_FIRE</hiddenAug>
 			<crewLimit>2</crewLimit>
 			<systemLimit>8</systemLimit>
@@ -1195,9 +1196,10 @@
 <mod:findLike type="ships">
 	<mod-append:ship name="PLAYER_SHIP_TERRAN_VESSEL" a="true" b="false" c="false" />
 	<mod-append:customShip name="PLAYER_SHIP_TERRAN_VESSEL">
+		<hiddenAug>TERRAN_SHIP</hiddenAug>
 		<crewLimit>8</crewLimit>
 		<systemLimit>8</systemLimit>
-			<subsystemLimit>5</subsystemLimit>
+		<subsystemLimit>5</subsystemLimit>
 		</mod-append:customShip>
 	</mod:findLike>
 </FTL>
@@ -1246,6 +1248,7 @@
 	<mod-append:script>data/sc_scripts/sc_augment_armor.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_augment_repair.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_copy.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
