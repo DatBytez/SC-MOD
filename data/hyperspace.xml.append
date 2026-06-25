@@ -1250,6 +1250,7 @@
 	<mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_augment_repair.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_scv_ai.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_copy.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_active.lua</mod-append:script>

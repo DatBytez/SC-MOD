@@ -121,7 +121,7 @@
 	<shots>2</shots>
 	<sc-chain stat="shots" amount="1"/>
 	<power>1</power>
-	<cooldown>8.5</cooldown>
+	<cooldown>9</cooldown>
 	<boost>
 		<type>cooldown</type>
 		<amount>1.2</amount>
@@ -172,10 +172,10 @@
 	<shots>3</shots>
 	<sc-chain stat="shots" amount="1"/>
 	<power>2</power>
-	<cooldown>12</cooldown>
+	<cooldown>11.5</cooldown>
 	<boost>
 		<type>cooldown</type>
-		<amount>1.6</amount>
+		<amount>1.4</amount>
 		<count>5</count>
 	</boost>	
 	<sc-chain stat="accuracyMod" amount="-5"/>
@@ -222,10 +222,10 @@
 	<shots>4</shots>
 	<sc-chain stat="shots" amount="2"/>
 	<power>3</power>	
-	<cooldown>13</cooldown>
+	<cooldown>14</cooldown>
 	<boost>
 		<type>cooldown</type>
-		<amount>1.4</amount>
+		<amount>1.6</amount>
 		<count>5</count>
 	</boost>
 	<accuracyMod>-5</accuracyMod>
