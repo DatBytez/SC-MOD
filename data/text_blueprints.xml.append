@@ -70,7 +70,12 @@
 <!-- GEMINI MISSILES -->
 <text name="weapon_GEMINI_MISSILES_BREACH_title">Terran Gemini Missiles - Breach</text>
 <text name="weapon_GEMINI_MISSILES_BREACH_short">Gemini Breach</text>
-<text name="weapon_GEMINI_MISSILES_BREACH_desc">A light missile system that excels when its versatility is utilized properly.</text>
+<text name="weapon_GEMINI_MISSILES_BREACH_desc">This light missile system has a high breach chance and is more efficient when paired.
+
+PAIRED: When powered, these weapons will pair with other Gemini Missile weapons to fire simultaniously at a reduced missile cost and power consumption.
+
+When paired the main weapon provides power and amunition to the weapon on it's right.</text>
+
 <text name="weapon_GEMINI_MISSILES_BREACH_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
 
 <text name="weapon_GEMINI_MISSILES_BREACH_PAIRED_title">Terran Gemini Missiles - Paired</text>
@@ -225,25 +230,23 @@ OVERCHARGED: Systems powered by the reactor recover more quickly from ion damage
 - Engines: Increased evasion and ftl charge rate.
 - Oxygen: Automated fire supression. Increased refill speed.
 
-UPGRADE: Battery System +2</text>
+UPGRADE: Battery System (+2 max level)</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_LIGHT_NAME">Light Armor Plating</text>
 <text name="aug_TERRAN_SHIP_ARMOR_LIGHT_DESC">Light neosteel hulls and reinforced structural bracers provide better maneuverability at a cost of durability.  
 
 ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 20%)
-    
-UPGRADE: System Bracers +0
 
-BONUS: Evasion +2% per engine level 
+BONUS: Evasion +2% per engine level
     
-STRAIF: Increase Accuracy and Projectile Speed</text>
+STRAIF: Increase Accuracy and Projectile Speed (Accuracy +0.5% per Evasion)</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_MEDIUM_NAME">Medium Armor Plating</text>
 <text name="aug_TERRAN_SHIP_ARMOR_MEDIUM_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a slight cost to maneuverability.  
     
 ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 20%)
 
-UPGRADE: System Bracers +1
+UPGRADE: System Bracers (+1 max level)
 
 PENALTY: Evasion -1% per engine level</text>
 
@@ -252,11 +255,14 @@ PENALTY: Evasion -1% per engine level</text>
 
 ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 20%)
 
-UPGRADE: System Bracers +2 System Bracers
+UPGRADE: System Bracers (+2 max level)
 
 PENALTY: Evasion -2% per engine level</text>
 
-<text name="aug_SC_DETECTOR_NAME">SC Detector</text>
+<text name="aug_SC_DETECTOR_NAME">Advanced Sensor Suite</text>
+<!-- Protoss could be called Advanced Sensor Array, Zerg could be something biological -->
 <text name="aug_SC_DETECTOR_DESC">Advanced sensors allow this ship to track enemy targets more effectively. For each active level of sensors, weapons will charge while enemies are cloaked at a cumulative 25% speed.
     
-    UPGRADE: Sensors +1 Projectiles will gain a cumulative 2.5% increase in accuracy per level. Missile gain double that amnount.</text>
+UPGRADE: Sensors +1 (+1 max level)
+
+DETECTOR: Projectiles +2.5% accuracy per sensor level. Missiles gain double that.</text>

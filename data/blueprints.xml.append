@@ -2055,7 +2055,8 @@
 	<speed>20</speed>					
 	<cost>60</cost>
 	<sc-active-shield/>				
-	<droneImage>terran_defense_1</droneImage>					
+	<droneImage>terran_defense_1</droneImage>
+	<sc-droneEngine>matrix_engine_1</sc-droneEngine>			
 	<weaponBlueprint>TERRAN_DEFENSE_1</weaponBlueprint>					
 	<iconImage>defense</iconImage>					 
 	<rarity>3</rarity>					
@@ -2082,7 +2083,8 @@
 	<speed>20</speed>					
 	<cost>80</cost>
 	<sc-active-shield/>				
-	<droneImage>terran_defense_2</droneImage>					
+	<droneImage>terran_defense_2</droneImage>
+	<sc-droneEngine>matrix_engine_2</sc-droneEngine>				
 	<weaponBlueprint>TERRAN_DEFENSE_2</weaponBlueprint>					
 	<iconImage>defense</iconImage>					
 	<rarity>4</rarity>					
@@ -2109,7 +2111,8 @@
 	<speed>20</speed>					
 	<cost>140</cost>
 	<sc-active-shield/>			
-	<droneImage>terran_defense_3</droneImage>					
+	<droneImage>terran_defense_3</droneImage>
+	<sc-droneEngine>matrix_engine_3</sc-droneEngine>			
 	<weaponBlueprint>TERRAN_DEFENSE_3</weaponBlueprint>					
 	<iconImage>defense</iconImage>					
 	<rarity>5</rarity>					
@@ -2129,7 +2132,7 @@
 	<desc id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_desc"></desc>
 	<systemList>
 		<artillery max="4" power="1" room="0" start="true" weapon="ARTILLERY_YAMATO_LASER" img="sc_room_artillery_1" />
-		<lily_system_bracers max="3" power="1" room="18" start="true" />
+		<lily_system_bracers power="2" room="18" start="true" />
 		<battery power="1" room="15" start="false" img="sc_room_battery_1" />
 		<clonebay power="1" room="8" start="false">
 			<slot>
@@ -2181,11 +2184,8 @@
 	<weaponList missiles="2" count="4">
 		<weapon name="TERRAN_LASER_BATTERY_1" />
 		<weapon name="TERRAN_LASER_BATTERY_1" />
-		<weapon name="TERRAN_LASER_BATTERY_1" />
-		<weapon name="TERRAN_LASER_BATTERY_1" />
 	</weaponList>
 	<droneList drones="4" count="3">
-		<drone name="TERRAN_SCV" />
 		<drone name="TERRAN_SCV" />
 	</droneList>
 	<health amount="30" />
@@ -2259,7 +2259,7 @@
 	<droneSlots>2</droneSlots>
 	<weaponList missiles="10" count="3">
 		<weapon name="TERRAN_BURST_LASER_1" />
-		<weapon name="GEMINI_HULL_1" />
+		<weapon name="GEMINI_ION_1" />
 		<weapon name="GEMINI_FIRE_1" />
 	</weaponList>
 	<droneList drones="5" count="2">
@@ -2281,7 +2281,7 @@
 	<name id="text_PLAYER_SHIP_HARD_name"></name>
 	<desc id="text_SHIP_TERRAN_VESSEL_desc"></desc>
 <systemList>
-		<lily_system_bracers max="3"power="1" room="1" start="true" img="room_mind" />
+		<lily_system_bracers max="3"power="1" room="1" start="true" img="invisible" />
 		<battery power="1" room="5" start="false" img="invisible" />
 		<cloaking power="1" room="12" start="false" img="invisible" />
 		<clonebay power="1" room="8" start="false">

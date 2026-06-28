@@ -3,9 +3,9 @@ This code is a reimplementation of TNE_ACTIVE_DRONE_LUA.lua from TNE.
 
 SC active shield fallback behavior:
 - Drones tagged with <sc-active-shield> still add a super shield when they fire.
-- While a ship has one of these active shield drones deployed, all of that ship's
-  super shields are popped whenever there are no enemy projectiles currently
-  incoming toward that ship.
+- While a ship has one of these active shield drones deployed and powered, all of
+  that ship's super shields are popped whenever there are no enemy projectiles
+  currently incoming toward that ship.
 ]]
 
 mods.multiverse.droneTagParsers = mods.multiverse.droneTagParsers or {}
@@ -63,16 +63,30 @@ local function get_pop_location(shipManager)
     return Hyperspace.Point(0, 0)
 end
 
-local function ship_has_active_shield_drone(shipId)
-    local world = Hyperspace.App and Hyperspace.App.world
-    local spaceManager = world and world.space
-    if not spaceManager or not spaceManager.drones then return false end
+local function drone_has_active_shield_tag(drone)
+    if not drone then return false end
+    if not drone.blueprint then return false end
+    if not drone.blueprint.name then return false end
 
-    for drone in vter(spaceManager.drones) do
-        if drone and drone.blueprint and activeDrones[drone.blueprint.name] then
-            if drone.iShipId == shipId or drone.currentSpace == shipId then
-                return true
-            end
+    return activeDrones[drone.blueprint.name] == true
+end
+
+local function drone_is_active_and_powered(drone)
+    if not drone_has_active_shield_tag(drone) then return false end
+    if drone.deployed ~= true then return false end
+    if drone.powered ~= true then return false end
+    if drone.bDead == true then return false end
+
+    return true
+end
+
+local function ship_has_active_powered_shield_drone(shipManager)
+    if not shipManager then return false end
+    if not shipManager.droneSystem or not shipManager.droneSystem.drones then return false end
+
+    for drone in vter(shipManager.droneSystem.drones) do
+        if drone_is_active_and_powered(drone) then
+            return true
         end
     end
 
@@ -136,8 +150,7 @@ script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile,
     if not projectile then return end
     if not spacedrone or not spacedrone.blueprint then return end
 
-    local droneName = spacedrone.blueprint.name
-    if activeDrones[droneName] == nil then
+    if not drone_has_active_shield_tag(spacedrone) then
         return
     end
 
@@ -168,7 +181,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     local shipId = shipManager.iShipId
     if shipId == nil then return end
 
-    if not ship_has_active_shield_drone(shipId) then return end
+    if not ship_has_active_powered_shield_drone(shipManager) then return end
     if ship_has_incoming_enemy_projectile(shipId) then return end
 
     pop_all_super_shields(shipManager)
