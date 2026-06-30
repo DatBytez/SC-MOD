@@ -1484,11 +1484,11 @@
 	<sysDamage>0</sysDamage>
 	<breachChance>2</breachChance>
 	<cooldown>28</cooldown>
-	<sc-chainstep fireThreshold="7" chainStep="3.5"/>
+	<sc-chainstep fireThreshold="6" chainStep="3.0"/>
 	<speed>1</speed> <!--<speed>10</speed>-->
 	<length>1</length> <!--<length>50</length>-->
 	<mv-aiCrewTarget>MOST_CREW</mv-aiCrewTarget>
-	<power>3</power>
+	<power>2</power>
 	<cost>90</cost>
 	<rarity>4</rarity>
 	<boost>
@@ -2050,7 +2050,7 @@
 	<short id="drone_TERRAN_DEFENSE_1_SHORT"></short>					
 	<desc id="drone_TERRAN_DEFENSE_1_DESC"></desc>					
 	<power>2</power>					
-	<cooldown>3000</cooldown><!-- was 1500-->					
+	<cooldown>1500</cooldown><!-- was 1500-->					
 	<dodge>100</dodge>					
 	<speed>20</speed>					
 	<cost>60</cost>
@@ -2078,7 +2078,7 @@
 	<short id="drone_TERRAN_DEFENSE_2_SHORT"></short>					
 	<desc id="drone_TERRAN_DEFENSE_2_DESC"></desc>					
 	<power>3</power>					
-	<cooldown>1500</cooldown>					
+	<cooldown>1000</cooldown>					
 	<dodge>100</dodge>					
 	<speed>20</speed>					
 	<cost>80</cost>
@@ -2281,7 +2281,7 @@
 	<name id="text_PLAYER_SHIP_HARD_name"></name>
 	<desc id="text_SHIP_TERRAN_VESSEL_desc"></desc>
 <systemList>
-		<lily_system_bracers max="3"power="1" room="1" start="true" img="invisible" />
+		<lily_system_bracers max="3"power="2" room="1" start="true" img="invisible" />
 		<battery power="1" room="5" start="false" img="invisible" />
 		<cloaking power="1" room="12" start="false" img="invisible" />
 		<clonebay power="1" room="8" start="false">
@@ -2295,7 +2295,7 @@
 				<number>1</number>
 			</slot>
 		</doors>
-		<drones power="2" room="7" start="true" img="invisible" />
+		<drones power="3" room="7" start="true" img="invisible" />
 		<engines power="3" room="11" start="true" img="invisible">
 			<slot>
 				<direction>down</direction>
@@ -2305,7 +2305,7 @@
 		<hacking power="1" room="0" start="false" img="invisible" />
 		<medbay power="2" room="8" start="true" img="invisible">
 			<slot>
-				<number>1</number>
+				<number>-2</number>
 			</slot>
 		</medbay>
 		<mind power="1" room="13" start="false" img="invisible" />
@@ -2319,7 +2319,7 @@
 		<sensors power="1" max="3" room="10" start="true" img="invisible">
 			<slot>
 				<direction>down</direction>
-				<number>0</number>
+				<number>2</number>
 			</slot>
 		</sensors>
 		<shields power="1" room="1" start="false" img="invisible">
@@ -2330,7 +2330,7 @@
 		</shields>
 		<teleporter power="1" room="9" start="false" />
 		<temporal power="1" room="14" start="false" />
-		<weapons power="3" room="3" start="true" img="invisible">
+		<weapons power="4" room="3" start="true" img="invisible">
 			<slot>
 				<direction>up</direction>
 				<number>1</number>
@@ -2349,7 +2349,7 @@
 		<drone name="TERRAN_DEFENSE_3" />
 	</droneList>
 	<health amount="30" />
-	<maxPower amount="8" />
+	<maxPower amount="10" />
 	<crewCount amount="1" class="terran_civilian" />
 	<crewCount amount="1" class="terran_civilian" />
 	<crewCount amount="1" class="terran_civilian" />

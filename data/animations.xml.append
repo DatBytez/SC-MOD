@@ -235,7 +235,7 @@
 		<chargedFrame>1</chargedFrame>
 		<fireFrame>2</fireFrame>
 		<firePoint x="18" y="19" />
-		<mountPoint x="3" y="37" />
+		<mountPoint x="3" y="66" />
 		<chargeImage>weapons/terran_irradiate_glow.png</chargeImage>
 	</weaponAnim>
 	

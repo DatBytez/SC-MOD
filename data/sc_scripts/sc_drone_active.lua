@@ -20,6 +20,10 @@ local activeDrones = mods.sc.activeShield
 -- Set to true temporarily if you want to confirm when the fallback pop runs.
 local DEBUG_ACTIVE_SHIELD = true
 
+-- Extra movement/reaction updates for active shield drones.
+-- 1 = normal speed, 2 = one extra OnLoop per frame, 3 = two extra OnLoops, etc.
+local ACTIVE_SHIELD_DRONE_SPEED_MULTIPLIER = 2
+
 local function debug_log(message)
     if not DEBUG_ACTIVE_SHIELD then return end
 
@@ -91,6 +95,42 @@ local function ship_has_active_powered_shield_drone(shipManager)
     end
 
     return false
+end
+
+local function space_drone_is_active_shield_drone(drone)
+    if not drone_has_active_shield_tag(drone) then return false end
+    if drone.powered ~= true then return false end
+    if drone.bDead == true then return false end
+
+    return true
+end
+
+local function boost_active_shield_space_drones(shipManager)
+    if not shipManager then return end
+    if ACTIVE_SHIELD_DRONE_SPEED_MULTIPLIER <= 1 then return end
+    if not shipManager.spaceDrones then return end
+
+    local speedBoost = ACTIVE_SHIELD_DRONE_SPEED_MULTIPLIER - 1
+    local extraUpdates = math.floor(speedBoost)
+    if extraUpdates <= 0 then return end
+
+    for drone in vter(shipManager.spaceDrones) do
+        if space_drone_is_active_shield_drone(drone) then
+            -- Match the behavior used in drones.lua: manually accelerate drone
+            -- weapon cooldown, then run extra drone OnLoop updates so movement and
+            -- targeting/reaction logic also advances faster.
+            if drone.currentSpeed and drone.weaponCooldown and drone.weaponCooldown >= 0 then
+                drone.weaponCooldown = drone.weaponCooldown - Hyperspace.FPS.SpeedFactor / 16 * speedBoost
+                if drone.weaponCooldown <= 0 then
+                    drone.weaponCooldown = -1
+                end
+            end
+
+            for _ = 1, extraUpdates do
+                drone:OnLoop()
+            end
+        end
+    end
 end
 
 local function ship_has_incoming_enemy_projectile(shipId)
@@ -177,6 +217,8 @@ end)
 
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     if not shipManager then return end
+
+    boost_active_shield_space_drones(shipManager)
 
     local shipId = shipManager.iShipId
     if shipId == nil then return end
