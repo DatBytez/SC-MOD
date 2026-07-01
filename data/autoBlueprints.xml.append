@@ -2,34 +2,6 @@
 <!-- Copyright (c) 2012 by Subset Games. All rights reserved -->
 <FTL>
 
-<blueprintList name="DRONES_STANDARD">  <!-- this is just all of them -->
-	<!-- <name>SHIP_REPAIR</name> -->
-	<name>COMBAT_1</name>
-	<name>COMBAT_2</name>
-	<name>COMBAT_BEAM</name>
-	<name>DEFENSE_1</name>
-	<name>DEFENSE_2_ENEMY</name> <!--changed-->
-	<name>REPAIR</name>
-	<name>BATTLE</name>
-	<name>BOARDER</name>
-</blueprintList>
-
-<blueprintList name="DRONES_COMBAT">
-	<name>COMBAT_1</name>
-	<name>COMBAT_2</name>
-	<name>COMBAT_BEAM</name>
-</blueprintList>
-
-<blueprintList name="DRONES_INTERNAL">
-	<name>REPAIR</name>
-	<name>BATTLE</name>
-</blueprintList>
-
-<blueprintList name="DRONES_DEFENSE">
-	<name>DEFENSE_1</name>
-	<name>DEFENSE_2_ENEMY</name> <!--changed-->
-</blueprintList>
-
 <blueprintList name="TERRAN_DRONES_STANDARD">
 	<name>TERRAN_SCV</name>
 	<name>TERRAN_SPIDER_1</name>
@@ -54,38 +26,6 @@
 	<name>TERRAN_DEFENSE_1</name>
 	<name>TERRAN_DEFENSE_2</name>
 	<name>TERRAN_DEFENSE_3</name>
-</blueprintList>
-
-<blueprintList name="STANDARD_WEAPONS">  <!-- this is just all of them -->
-	<name>LASER_BURST_1</name>
-	<!--<name>LASER_BURST_2</name>-->
-	<name>LASER_BURST_2_A</name>
-	<name>LASER_BURST_3</name>
-	<name>LASER_BURST_5</name>
-	<name>LASER_HEAVY_1</name>
-	<name>LASER_HEAVY_2</name>
-	<name>MISSILES_1</name>
-	<name>MISSILES_2</name>
-	<!-- <name>MISSILES_2_PLAYER</name> -->
-	<name>MISSILES_3</name>
-	<name>MISSILES_BURST</name>
-	<name>MISSILES_BREACH</name>
-	<name>BEAM_1</name>
-	<name>BEAM_2</name>
-	<name>BEAM_3</name>
-	<name>BEAM_LONG</name>
-	<name>BEAM_FIRE</name>
-	<name>ION_1</name>
-	<name>ION_2</name>
-	<name>ION_4</name>
-	<name>BOMB_1</name>
-	<name>BOMB_FIRE</name>
-	<name>BOMB_ION</name>
-	<!--  <name>BOMB_HEAL</name>  -->
-	<name>LASER_HULL_1</name>
-	<name>LASER_HULL_2</name>
-	<name>BEAM_HULL</name>
-	<name>MISSILES_HULL</name>
 </blueprintList>
 
 <blueprintList name="TERRAN_STANDARD_WEAPONS">  <!-- this is just all of them -->
@@ -120,12 +60,6 @@
 	<name>TERRAN_BURST_LASER_1</name>
 	<name>TERRAN_LASER_BATTERY_1</name>
 	<name>GEMINI_SYS_1</name>
-</blueprintList>
-
-<blueprintList name="WEAPONS_FREE">
-	<name>LASER_BURST_1</name>
-	<name>BEAM_1</name>
-	<name>MISSILES_1</name>
 </blueprintList>
 
 <blueprintList name="WEAPONS_REBEL">
