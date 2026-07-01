@@ -7,11 +7,11 @@
 <text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_desc">The Terran Battlecruiser stands as the pinnacle of Dominion naval engineering, an orbital fortress bristling with weapons and armored to The Terran Battlecruiser is the pinnacle of Dominion naval power, an orbital fortress built for long campaigns, combining overwhelming firepower with near-impenetrable defenses.</text>
 
 <text name="text_PLAYER_SHIP_TERRAN_WRAITH_class">Stealth Fighter</text>
-<text name="text_PLAYER_SHIP_TERRAN_WRAITH_name">Terran Wraith</text>
+<text name="text_PLAYER_SHIP_TERRAN_WRAITH_name">Wraith</text>
 <text name="text_PLAYER_SHIP_TERRAN_WRAITH_desc">The Wraith is a Terran space superiority fighter known for it's maneuverability and cloaking technology.</text>
 
 <text name="text_SHIP_TERRAN_VESSEL_class">Science Vessel</text>
-<text name="text_PLAYER_SHIP_HARD_name">Terran Science Vessel</text>
+<text name="text_PLAYER_SHIP_HARD_name">Science Vessel</text>
 <text name="text_SHIP_TERRAN_VESSEL_desc">[NEED SCIENCE VESSEL DESCRIPTION]</text>
 
 				
@@ -191,19 +191,35 @@ When paired the main weapon provides power and amunition to the weapon on it's r
 <!-- TERRAN CREW -->
 <text name="crew_TERRAN_MARINE_NAME">Terran Marine</text>
 <text name="crew_TERRAN_MARINE_SHORT">Marine</text>
-<text name="crew_TERRAN_MARINE_DESC">Basic Terran soldier equipped with powered armor and a rapid-fire C-14 rifle.  Powered Armor Stats: -Minor fire and damage resistance -Resistant to suffocation -Reduced movement speed.</text>
+<text name="crew_TERRAN_MARINE_DESC">Basic Terran soldier equipped with powered armor and a rapid-fire C-14 rifle.  
+Powered Armor Stats:
+-Minor fire and damage resistance
+-Resistant to suffocation|
+-Reduced movement speed.</text>
 
 <text name="crew_TERRAN_MEDIC_NAME">Terran Medic</text>
 <text name="crew_TERRAN_MEDIC_SHORT">Medic</text>
-<text name="crew_TERRAN_MEDIC_DESC">Terran field medic trained to supress enemy forces and keep infantry alive in combat zones.  Powered Armor Stats: -Minor fire and damage resistance -Resistant to suffocation -Reduced movement speed.</text>
+<text name="crew_TERRAN_MEDIC_DESC">Terran field medic trained to supress enemy forces and keep infantry alive in combat zones.
+Powered Armor Stats:
+-Minor fire and damage resistance
+-Resistant to suffocation
+-Reduced movement speed.</text>
 
 <text name="crew_TERRAN_FIREBAT_NAME">Terran Firebat</text>
 <text name="crew_TERRAN_FIREBAT_SHORT">Firebat</text>
-<text name="crew_TERRAN_FIREBAT_DESC">Flame-wielding shock trooper built for close combat and clearing out enemy infantry.  Powered Armor Stats: -Immune to fire damage -Minor damage resistance -Resistant to suffocation -Reduced movement speed.</text>
+<text name="crew_TERRAN_FIREBAT_DESC">Flame-wielding shock trooper built for close combat and clearing out enemy infantry.
+Powered Armor Stats:
+-Immune to fire damage
+-Minor damage resistance
+-Resistant to suffocation
+-Reduced movement speed.</text>
 
 <text name="crew_TERRAN_GHOST_NAME">Terran Ghost</text>
 <text name="crew_TERRAN_GHOST_SHORT">Ghost</text>
-<text name="crew_TERRAN_GHOST_DESC">Cloaked specialist skilled in sabotage, psionics, and high-value target elimination.  Hostile Environment Suit Stats: -Resistant to suffocation -Increased movement speed.</text>
+<text name="crew_TERRAN_GHOST_DESC">Cloaked specialist skilled in sabotage, psionics, and high-value target elimination.
+Hostile Environment Suit Stats:
+-Resistant to suffocation
+-Increased movement speed.</text>
 
 <text name="crew_TERRAN_CIVILIAN_NAME">Terran Civilian</text>
 <text name="crew_TERRAN_CIVILIAN_SHORT">Civilian</text>
@@ -225,7 +241,6 @@ When paired the main weapon provides power and amunition to the weapon on it's r
 <text name="aug_TERRAN_WRAITH_BATTERY_DESC">High yield uranium reactors designed by the Terran Confederacy.  
 
 OVERCHARGED: Systems powered by the reactor recover more quickly from ion damage and have increased performance.
-
 - Cloak: Reduced Downtime.
 - Engines: Increased evasion and ftl charge rate.
 - Oxygen: Automated fire supression. Increased refill speed.

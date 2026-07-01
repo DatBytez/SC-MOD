@@ -48,7 +48,7 @@ local function handle_reduction_armor(ship, projectile, location, damage, forceH
     local bracersHP = bracers.healthState.first or 0
     if bracersHP <= 0 then return end
 
-    local blockChance = math.min(1.0, bracersHP * 0.20)
+    local blockChance = math.min(1.0, bracersHP * 0.40)
     if math.random() > blockChance then return end
 
     local soaked = math.min(damage.iDamage, bracersHP)
