@@ -2047,12 +2047,12 @@
 -->
 
 <!-- ====================
-     TERRAN_BATTLECRUISER
-     ====================-->
-<shipBlueprint name="PLAYER_SHIP_TERRAN_BATTLECRUISER" layout="SHIP_TERRAN_BATTLECRUISER" img="terran_battlecruiser">
-	<class id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_class"></class>
-	<name id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_name"></name>
-	<desc id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_desc"></desc>
+	TERRAN_BATTLECRUISER
+	====================-->
+<shipBlueprint name="PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER" layout="SHIP_PLAYER_TERRAN_BATTLECRUISER" img="terran_battlecruiser">
+    <class id="text_PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER_class"></class>
+    <name id="text_PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER_name"></name>
+    <desc id="text_PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER_desc"></desc>
 	<systemList>
 		<artillery max="4" power="1" room="0" start="true" weapon="ARTILLERY_YAMATO_LASER" img="sc_room_artillery_1" />
 		<lily_system_bracers power="2" room="18" start="true" />
@@ -2122,12 +2122,12 @@
 </shipBlueprint>
 
 <!-- ====================
-     TERRAN_WRAITH
-     ====================-->
-<shipBlueprint name="PLAYER_SHIP_TERRAN_WRAITH" layout="SHIP_TERRAN_WRAITH" img="terran_wraith">
-	<class id="text_PLAYER_SHIP_TERRAN_WRAITH_class"></class>
-	<name id="text_PLAYER_SHIP_TERRAN_WRAITH_name"></name>
-	<desc id="text_PLAYER_SHIP_TERRAN_WRAITH_desc"></desc>
+	TERRAN_WRAITH
+	====================-->
+<shipBlueprint name="PLAYER_SHIP_PLAYER_TERRAN_WRAITH" layout="SHIP_PLAYER_TERRAN_WRAITH" img="terran_wraith">
+    <class id="text_PLAYER_SHIP_PLAYER_TERRAN_WRAITH_class"></class>
+    <name id="text_PLAYER_SHIP_PLAYER_TERRAN_WRAITH_name"></name>
+    <desc id="text_PLAYER_SHIP_PLAYER_TERRAN_WRAITH_desc"></desc>
 	<systemList>
 		<battery power="1" room="5" start="true" img="terran_computer_d" />
 		<cloaking power="1" room="9" start="true" img="terran_computer_t" />
@@ -2199,10 +2199,10 @@
 <!-- ====================
      TERRAN_VESSEL
      ====================-->
-<shipBlueprint name="PLAYER_SHIP_TERRAN_VESSEL" layout="SHIP_TERRAN_VESSEL" img="terran_vessel">
-	<class id="text_SHIP_TERRAN_VESSEL_class"></class>
+<shipBlueprint name="PLAYER_SHIP_PLAYER_TERRAN_VESSEL" layout="SHIP_PLAYER_TERRAN_VESSEL" img="terran_vessel">
+	<class id="text_SHIP_PLAYER_TERRAN_VESSEL_class"></class>
 	<name id="text_PLAYER_SHIP_HARD_name"></name>
-	<desc id="text_SHIP_TERRAN_VESSEL_desc"></desc>
+	<desc id="text_SHIP_PLAYER_TERRAN_VESSEL_desc"></desc>
 <systemList>
 		<lily_system_bracers max="3"power="2" room="1" start="true" img="invisible" />
 		<battery power="1" room="5" start="false" img="invisible" />

@@ -2,17 +2,17 @@
 
 <text name="NOYB">[[YOU SHOULD NEVER SEE THIS]]</text>
 
-<text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_class">Battlecruiser</text>
-<text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_name">Battlecruiser</text>
-<text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_desc">The Terran Battlecruiser stands as the pinnacle of Dominion naval engineering, an orbital fortress bristling with weapons and armored to The Terran Battlecruiser is the pinnacle of Dominion naval power, an orbital fortress built for long campaigns, combining overwhelming firepower with near-impenetrable defenses.</text>
+<text name="text_PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER_class">Battlecruiser</text>
+<text name="text_PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER_name">Battlecruiser</text>
+<text name="text_PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER_desc">The Terran Battlecruiser stands as the pinnacle of Dominion naval engineering, an orbital fortress bristling with weapons and armored to The Terran Battlecruiser is the pinnacle of Dominion naval power, an orbital fortress built for long campaigns, combining overwhelming firepower with near-impenetrable defenses.</text>
 
-<text name="text_PLAYER_SHIP_TERRAN_WRAITH_class">Stealth Fighter</text>
-<text name="text_PLAYER_SHIP_TERRAN_WRAITH_name">Wraith</text>
-<text name="text_PLAYER_SHIP_TERRAN_WRAITH_desc">The Wraith is a Terran space superiority fighter known for it's maneuverability and cloaking technology.</text>
+<text name="text_PLAYER_SHIP_PLAYER_TERRAN_WRAITH_class">Stealth Fighter</text>
+<text name="text_PLAYER_SHIP_PLAYER_TERRAN_WRAITH_name">Wraith</text>
+<text name="text_PLAYER_SHIP_PLAYER_TERRAN_WRAITH_desc">The Wraith is a Terran space superiority fighter known for it's maneuverability and cloaking technology.</text>
 
-<text name="text_SHIP_TERRAN_VESSEL_class">Science Vessel</text>
+<text name="text_SHIP_PLAYER_TERRAN_VESSEL_class">Science Vessel</text>
 <text name="text_PLAYER_SHIP_HARD_name">Science Vessel</text>
-<text name="text_SHIP_TERRAN_VESSEL_desc">[NEED SCIENCE VESSEL DESCRIPTION]</text>
+<text name="text_SHIP_PLAYER_TERRAN_VESSEL_desc">[NEED SCIENCE VESSEL DESCRIPTION]</text>
 
 <!-- ENEMY SHIPS -->
 <text name="text_ENEMY_TERRAN_WRAITH_class">Terran Scout</text>

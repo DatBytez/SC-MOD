@@ -1125,9 +1125,9 @@
 	</hangarAnims>
 
 	<shipOrder>
-		<ship>PLAYER_SHIP_TERRAN_BATTLECRUISER</ship>
-		<ship>PLAYER_SHIP_TERRAN_WRAITH</ship>
-		<ship>PLAYER_SHIP_TERRAN_VESSEL</ship>
+		<ship>PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER</ship>
+		<ship>PLAYER_SHIP_PLAYER_TERRAN_WRAITH</ship>
+		<ship>PLAYER_SHIP_PLAYER_TERRAN_VESSEL</ship>
 		<empty/>
 		<empty/>
 		<empty/>
@@ -1140,8 +1140,8 @@
 
 <FTL>
 	<mod:findLike type="ships">
-		<mod-append:ship name="PLAYER_SHIP_TERRAN_BATTLECRUISER" b="false" c="false" />
-		<mod-append:customShip name="PLAYER_SHIP_TERRAN_BATTLECRUISER">
+		<mod-append:ship name="PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER" b="false" c="false" />
+		<mod-append:customShip name="PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER">
 			<hiddenAug>TERRAN_SHIP</hiddenAug>
 		    <hiddenAug>ARTILLERY_ORDER</hiddenAug>
 			<crewLimit>10</crewLimit>
@@ -1167,8 +1167,8 @@
 	</mod:findLike>	
 
 	<mod:findLike type="ships">
-		<mod-append:ship name="PLAYER_SHIP_TERRAN_WRAITH" b="false" c="false" />
-		<mod-append:customShip name="PLAYER_SHIP_TERRAN_WRAITH">
+		<mod-append:ship name="PLAYER_SHIP_PLAYER_TERRAN_WRAITH" b="false" c="false" />
+		<mod-append:customShip name="PLAYER_SHIP_PLAYER_TERRAN_WRAITH">
 			<hiddenAug>TERRAN_SHIP</hiddenAug>
 			<hiddenAug>CLOAK_FIRE</hiddenAug>
 			<crewLimit>2</crewLimit>
@@ -1194,8 +1194,8 @@
 	</mod:findLike>
 
 <mod:findLike type="ships">
-	<mod-append:ship name="PLAYER_SHIP_TERRAN_VESSEL" a="true" b="false" c="false" />
-		<mod-append:customShip name="PLAYER_SHIP_TERRAN_VESSEL">
+	<mod-append:ship name="PLAYER_SHIP_PLAYER_TERRAN_VESSEL" a="true" b="false" c="false" />
+		<mod-append:customShip name="PLAYER_SHIP_PLAYER_TERRAN_VESSEL">
 			<hiddenAug>TERRAN_SHIP</hiddenAug>
 			<crewLimit>8</crewLimit>
 			<systemLimit>8</systemLimit>

@@ -39,7 +39,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
 
-<ship name="SC_SHIP_TERRAN_PATROL" auto_blueprint="LIST_SHIPS_SC_TERRAN_PATROL">
+<ship name="SC_SHIP_PLAYER_TERRAN_PATROL" auto_blueprint="LIST_SHIPS_SC_PLAYER_TERRAN_PATROL">
     <surrender chance="0.35" min="2" max="4" load="SC_SURRENDER_TERRAN"/>
     <destroyed load="SC_DESTROYED_TERRAN"/>
     <deadCrew load="SC_DEAD_CREW_TERRAN"/>
@@ -50,7 +50,7 @@
     </crew>
 </ship>
 
-<ship name="SC_SHIP_TERRAN_RAIDERS" auto_blueprint="LIST_SHIPS_SC_TERRAN_RAIDERS">
+<ship name="SC_SHIP_PLAYER_TERRAN_RAIDERS" auto_blueprint="LIST_SHIPS_SC_PLAYER_TERRAN_RAIDERS">
     <surrender chance="0.45" min="2" max="4" load="SC_SURRENDER_RAIDER"/>
     <destroyed load="SC_DESTROYED_RAIDER"/>
     <deadCrew load="SC_DEAD_CREW_RAIDER"/>
@@ -389,7 +389,7 @@
 
 <event name="SC_COLONY_CHECKPOINT" unique="true">
     <text>A Terran checkpoint scans your ship and demands identification. They are not hostile yet, but their guns track your movement.</text>
-    <ship load="SC_SHIP_TERRAN_PATROL" hostile="false"/>
+    <ship load="SC_SHIP_PLAYER_TERRAN_PATROL" hostile="false"/>
     <choice hidden="true">
         <text>Submit to the inspection.</text>
         <event load="SC_COLONY_CHECKPOINT_INSPECTION"/>
@@ -449,7 +449,7 @@
     </event>
     <event>
         <text>Raiders were waiting for someone to expose the ore. They move in to claim it by force.</text>
-        <ship load="SC_SHIP_TERRAN_RAIDERS" hostile="true"/>
+        <ship load="SC_SHIP_PLAYER_TERRAN_RAIDERS" hostile="true"/>
         <choice hidden="true">
             <text>Continue...</text>
             <event load="COMBAT_CHECK"/>
@@ -610,7 +610,7 @@
         <unvisitedTooltip>Escort the refugee convoy through hostile SC sector space.</unvisitedTooltip>
     </beaconType>
     <text>The convoy arrives behind you, but raiders tracked their jump signature. They move to attack.</text>
-    <ship load="SC_SHIP_TERRAN_RAIDERS" hostile="true"/>
+    <ship load="SC_SHIP_PLAYER_TERRAN_RAIDERS" hostile="true"/>
     <choice hidden="true">
         <text>Continue...</text>
         <event load="COMBAT_CHECK"/>
@@ -713,7 +713,7 @@
         <unvisitedTooltip>Raiders are occupying a Terran platform at this beacon.</unvisitedTooltip>
     </beaconType>
     <text>You arrive at the captured platform. The raiders immediately power their weapons.</text>
-    <ship load="SC_SHIP_TERRAN_RAIDERS" hostile="true"/>
+    <ship load="SC_SHIP_PLAYER_TERRAN_RAIDERS" hostile="true"/>
     <choice hidden="true">
         <text>Continue...</text>
         <event load="COMBAT_CHECK"/>
@@ -750,7 +750,7 @@
             <unvisitedTooltip>Escort the colony ship to this beacon.</unvisitedTooltip>
         </beaconType>
         <text>Raiders ambush the colony ship as it drops out of FTL. You move to intercept.</text>
-        <ship load="SC_SHIP_TERRAN_RAIDERS" hostile="true"/>
+        <ship load="SC_SHIP_PLAYER_TERRAN_RAIDERS" hostile="true"/>
         <choice hidden="true">
             <text>Continue...</text>
             <event load="COMBAT_CHECK"/>
@@ -774,7 +774,7 @@
 
 <event name="SC_ENCOUNTER_DOMINION_PATROL">
     <text>A Dominion patrol identifies you as an unauthorized Multiverse vessel and moves to attack.</text>
-    <ship load="SC_SHIP_TERRAN_PATROL" hostile="true"/>
+    <ship load="SC_SHIP_PLAYER_TERRAN_PATROL" hostile="true"/>
     <choice hidden="true">
         <text>Continue...</text>
         <event load="COMBAT_CHECK"/>
@@ -783,7 +783,7 @@
 
 <event name="SC_ENCOUNTER_TERRAN_RAIDERS">
     <text>Raiders emerge from a debris field, weapons hot and comms silent.</text>
-    <ship load="SC_SHIP_TERRAN_RAIDERS" hostile="true"/>
+    <ship load="SC_SHIP_PLAYER_TERRAN_RAIDERS" hostile="true"/>
     <choice hidden="true">
         <text>Continue...</text>
         <event load="COMBAT_CHECK"/>

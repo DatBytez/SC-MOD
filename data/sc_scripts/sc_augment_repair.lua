@@ -5,7 +5,7 @@
 -- destroyed systems is repaired back above destroyed status.
 
 local TERRAN_SHIP_AUG = "TERRAN_SHIP"
-local HULL_HEAL_AMOUNT = 2
+local HULL_HEAL_AMOUNT = 1
 local HULL_HEAL_FORCE = true
 local LILY_SYSTEM_BRACERS_ID = Hyperspace.ShipSystem.NameToSystemId("lily_system_bracers")
 

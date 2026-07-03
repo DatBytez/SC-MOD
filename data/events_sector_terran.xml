@@ -2,11 +2,11 @@
 
 <eventList name="SC_LIST_BOARDERS">
 	<event/>
-<event load="SC_BOARDER_MARINE"/>
-<event load="SC_BOARDER_MARINE"/>
-<event load="SC_BOARDER_MARINE"/>
-<event load="SC_BOARDER_FIRE"/>
-<event load="SC_BOARDER_GHOST"/>
+	<event load="SC_BOARDER_MARINE"/>
+	<event load="SC_BOARDER_MARINE"/>
+	<event load="SC_BOARDER_MARINE"/>
+	<event load="SC_BOARDER_FIRE"/>
+	<event load="SC_BOARDER_GHOST"/>
 </eventList>
 
 <textList name="SC_TXT_LIST_GHOST">
