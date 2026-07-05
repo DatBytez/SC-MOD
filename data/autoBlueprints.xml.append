@@ -455,18 +455,29 @@
   TERRAN SHIPS
   *******************
 -->
+<blueprintList name="LIST_CREW_TERRAN_WRAITH">
+	<blueprint load="terran_civilian"/>
+	<blueprint load="terran_civilian"/>
+	<blueprint load="terran_civilian"/>
+	<blueprint load="terran_marine"/>
+	<blueprint load="terran_marine"/>
+	<blueprint load="terran_medic"/>
+	<blueprint load="terran_ghost"/>
+</blueprintList>
 
-<shipBlueprint name="ENEMY_TERRAN_WRAITH" layout="enemy_terran_wraith" img="enemy_terran_wraith">
-	<class id="text_ENEMY_TERRAN_WRAITH_class">Terran Scout</class>
+<shipBlueprint name="SHIP_TERRAN_WRAITH" layout="SHIP_TERRAN_WRAITH" img="SHIP_TERRAN_WRAITH">
+	<class>Terran Scout</class>
 	<minSector>1</minSector>
 	<maxSector>6</maxSector>
 	<systemList>
-		<doors power="1" max="3" room="2" start="false" />
-		<engines power="1" max="5" room="4" start="true" />
+		<cloaking power="1" max="3" room="2" start="false" />
+		<drones power="1" max="2" room="6" start="false" />
+		<engines power="1" max="5" room="3" start="true" />
+		<medbay power="1" max="1" room="7" start="false" />
 		<oxygen power="1" max="3" room="5" start="true" />
-		<pilot power="1" max="3" room="0" start="true" />
-		<shields power="2" max="8" room="1" start="true" />
-		<weapons power="2" max="8" room="3" start="true" />
+		<pilot power="1" max="3" room="1" start="true" />
+		<lily_system_bracers power="1" max="3" room="4" start="true" />
+		<weapons power="2" max="8" room="0" start="true" />
 	</systemList>
 	<weaponSlots>3</weaponSlots>
 	<droneSlots>2</droneSlots>
@@ -474,7 +485,7 @@
 	<droneList drones="2" count="2" load="TERRAN_DRONES_STANDARD" />
 	<health amount="7" />
 	<maxPower amount="10" />
-	<crewCount amount="2" max="3" class="human" />
+	<crewCount amount="2" max="3" class="LIST_CREW_TERRAN_WRAITH" />
 	<boardingAI>sabotage</boardingAI>
 	<aug name="SHIP_STEALTH" />
 	<aug name="TERRAN_SHIP_ARMOR_LIGHT" />
