@@ -672,7 +672,6 @@
 		<fireDamageMultiplier>0.9</fireDamageMultiplier>
 		<moveSpeedMultiplier>1.2</moveSpeedMultiplier>
 		<!-- STATIC ABILITIES -->
-		<detectsLifeforms>true</detectsLifeforms>
 		<isTelepathic>true</isTelepathic>
 		<resistsMindControl>true</resistsMindControl>
 		<repairSpeed>1.5</repairSpeed>

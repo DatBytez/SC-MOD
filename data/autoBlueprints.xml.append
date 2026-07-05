@@ -456,13 +456,13 @@
   *******************
 -->
 <blueprintList name="LIST_CREW_TERRAN_WRAITH">
-	<blueprint load="terran_civilian"/>
-	<blueprint load="terran_civilian"/>
-	<blueprint load="terran_civilian"/>
-	<blueprint load="terran_marine"/>
-	<blueprint load="terran_marine"/>
-	<blueprint load="terran_medic"/>
-	<blueprint load="terran_ghost"/>
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_marine</name>
+	<name>terran_marine</name>
+	<name>terran_medic</name>
+	<name>terran_ghost</name>
 </blueprintList>
 
 <shipBlueprint name="SHIP_TERRAN_WRAITH" layout="SHIP_TERRAN_WRAITH" img="SHIP_TERRAN_WRAITH">
@@ -472,7 +472,7 @@
 	<systemList>
 		<cloaking power="1" max="3" room="2" start="false" />
 		<drones power="1" max="2" room="6" start="false" />
-		<engines power="1" max="5" room="3" start="true" />
+		<engines power="2" max="4" room="3" start="true" />
 		<medbay power="1" max="1" room="7" start="false" />
 		<oxygen power="1" max="3" room="5" start="true" />
 		<pilot power="1" max="3" room="1" start="true" />

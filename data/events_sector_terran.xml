@@ -71,14 +71,11 @@
 <!-- Ship event definitions -->
 
 <ship name="SHIP_TERRAN_WRAITH" auto_blueprint="SHIP_TERRAN_WRAITH">
-<surrender  chance="0.8" min="2" max="3" load="SURRENDER_EVENT"/>
+<surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
 <gotaway load="GOTAWAY_EVENT"/>
-<destroyed>
-<text>The civilians have been defeated. You aren't exactly proud, but at least the Rebels won't know your location.</text>
-<autoReward level="LOW">standard</autoReward>
-</destroyed>
-<deadCrew load="DEAD_CREW_EVENT"/>
+<destroyed load="SC_DESTROYED_TERRAN"/>
+<deadCrew load="SC_DEAD_CREW_TERRAN"/>
 <crew>
     <crewMember type="terran_ghost" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_WRAITH" prop="0.99"/>
@@ -88,4 +85,145 @@
 <event name="EVENT_TERRAN_WRAITH">
 	<text>Aaaaa! Scary ship!</text>
 	<ship load="SHIP_TERRAN_WRAITH" hostile="true"/>
+</event>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////
+    GENERIC COMBAT RESULT EVENTS
+////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+<event name="SC_SURRENDER_TERRAN">
+    <text>"Stand down. We can transfer supplies if you let us limp out of here."</text>
+    <choice>
+        <text>Accept their surrender.</text>
+        <event>
+            <ship hostile="false"/>
+            <autoReward level="LOW">stuff</autoReward>
+        </event>
+    </choice>
+    <choice>
+        <text>Refuse.</text>
+        <event/>
+    </choice>
+</event>
+
+<event name="SC_SURRENDER_TERRAN_SCOUT">
+    <text>"You recieve a jumbled message from the heavily damaged ship. The remaining crew has surrendered and is requesting immediate aid."</text>
+    <choice>
+        <text>Accept their surrender.</text>
+        <event>
+            <ship hostile="false"/>
+            <autoReward level="LOW">stuff</autoReward>
+        </event>
+    </choice>
+    <choice>
+        <text>Refuse.</text>
+        <event/>
+    </choice>
+</event>
+
+<event name="SC_SURRENDER_TERRAN_TRANSPORT">
+    <text>"Fine, fine. Take the cargo. Just do not vent us into space."</text>
+    <choice>
+        <text>Accept the cargo.</text>
+        <event>
+            <ship hostile="false"/>
+            <autoReward level="MED">stuff</autoReward>
+        </event>
+    </choice>
+    <choice>
+        <text>Finish the fight.</text>
+        <event/>
+    </choice>
+</event>
+
+<event name="SC_SURRENDER_PROTOSS">
+    <text>The Protoss commander transmits a terse offer of withdrawal. Their vessel remains dangerous, but they seem willing to leave.</text>
+    <choice>
+        <text>Allow them to withdraw.</text>
+        <event>
+            <ship hostile="false"/>
+            <autoReward level="LOW">standard</autoReward>
+        </event>
+    </choice>
+    <choice>
+        <text>Continue the battle.</text>
+        <event/>
+    </choice>
+</event>
+
+<event name="SC_SURRENDER_DOMINION_ELITE">
+    <text>"You have made your point. We are authorized to offer battlefield salvage for safe passage."</text>
+    <choice>
+        <text>Accept the offer.</text>
+        <event>
+            <ship hostile="false"/>
+            <autoReward level="MED">item</autoReward>
+        </event>
+    </choice>
+    <choice>
+        <text>No deal.</text>
+        <event/>
+    </choice>
+</event>
+
+<event name="SC_DESTROYED_TERRAN">
+    <text>The Terran patrol ship breaks apart. You salvage what remains.</text>
+    <autoReward level="MED">standard</autoReward>
+</event>
+
+<event name="SC_DEAD_CREW_TERRAN">
+    <text>With the crew neutralized, you search the Terran vessel and secure its supplies.</text>
+    <autoReward level="HIGH">standard</autoReward>
+</event>
+
+<event name="SC_DESTROYED_RAIDER">
+    <text>The raider ship is destroyed. Whatever cargo survived is now yours.</text>
+    <autoReward level="MED">standard</autoReward>
+</event>
+
+<event name="SC_DEAD_CREW_RAIDER">
+    <text>The raiders are gone. Their hold is easy to search now.</text>
+    <autoReward level="HIGH">item</autoReward>
+</event>
+
+<event name="SC_DESTROYED_ZERG">
+    <text>The swarm vessel ruptures, leaving behind only scorched biological residue and a few salvageable fragments.</text>
+    <autoReward level="LOW">standard</autoReward>
+</event>
+
+<event name="SC_DEAD_CREW_ZERG">
+    <text>The infestation is quiet. Your crew carefully collects what can be salvaged.</text>
+    <autoReward level="MED">standard</autoReward>
+</event>
+
+<event name="SC_DESTROYED_INFESTED">
+    <text>The infested ship collapses in a cloud of spores. You keep your distance and recover whatever drifts clear.</text>
+    <autoReward level="LOW">standard</autoReward>
+</event>
+
+<event name="SC_DEAD_CREW_INFESTED">
+    <text>The last infested life-sign fades. The ship is dangerous to board, but some supplies are intact.</text>
+    <autoReward level="MED">standard</autoReward>
+</event>
+
+<event name="SC_DESTROYED_PROTOSS">
+    <text>The Protoss ship fractures under your fire. Its strange components are difficult to repurpose, but valuable.</text>
+    <autoReward level="MED">standard</autoReward>
+</event>
+
+<event name="SC_DEAD_CREW_PROTOSS">
+    <text>The Protoss vessel falls silent. You recover advanced components from the ship.</text>
+    <autoReward level="HIGH">standard</autoReward>
+</event>
+
+<event name="SC_DESTROYED_DOMINION_ELITE">
+    <text>The Dominion elite ship is destroyed. Its reinforced hull leaves useful salvage behind.</text>
+    <autoReward level="HIGH">standard</autoReward>
+</event>
+
+<event name="SC_DEAD_CREW_DOMINION_ELITE">
+    <text>With the Dominion crew defeated, you seize their equipment and encrypted supply manifest.</text>
+    <autoReward level="HIGH">item</autoReward>
 </event>
