@@ -51,7 +51,7 @@
 <augBlueprint name="TERRAN_WRAITH_BATTERY">
 	<title id="aug_TERRAN_WRAITH_BATTERY_NAME"></title>
 	<desc id="aug_TERRAN_WRAITH_BATTERY_DESC"></desc>
-	<cost>120</cost>
+	<cost>60</cost>
 	<rarity>4</rarity>
 	<stackable>false</stackable>
 	<sc-upgrade system="battery" amount="2"/>
@@ -60,7 +60,7 @@
 <augBlueprint name="TERRAN_SHIP_ARMOR_LIGHT">
 	<title id="aug_TERRAN_SHIP_ARMOR_LIGHT_NAME"></title>
 	<desc id="aug_TERRAN_SHIP_ARMOR_LIGHT_DESC"></desc>
-	<cost>120</cost>
+	<cost>60</cost>
 	<rarity>3</rarity>
 	<stackable>false</stackable>
 	<sc-armor/>
@@ -70,7 +70,7 @@
 <augBlueprint name="TERRAN_SHIP_ARMOR_MEDIUM">
 	<title id="aug_TERRAN_SHIP_ARMOR_MEDIUM_NAME"></title>
 	<desc id="aug_TERRAN_SHIP_ARMOR_MEDIUM_DESC"></desc>
-	<cost>140</cost>
+	<cost>70</cost>
 	<rarity>3</rarity>
 	<stackable>false</stackable>
 	<sc-upgrade system="lily_system_bracers" amount="1"/>
@@ -81,7 +81,7 @@
 <augBlueprint name="TERRAN_SHIP_ARMOR_HEAVY">
 	<title id="aug_TERRAN_SHIP_ARMOR_HEAVY_NAME"></title>
 	<desc id="aug_TERRAN_SHIP_ARMOR_HEAVY_DESC"></desc>
-	<cost>160</cost>
+	<cost>80</cost>
 	<rarity>4</rarity>
 	<stackable>false</stackable>
 	<sc-upgrade system="lily_system_bracers" amount="2"/>
@@ -2145,7 +2145,7 @@
 				<number>0</number>
 			</slot>
 		</doors>
-		<drones power="1" room="10" start="true" img="terran_computer_t" />
+		<drones power="2" room="10" start="true" img="terran_computer_t" />
 		<engines power="4" room="7" start="true" img="terran_computer_l">
 			<slot>
 				<direction>left</direction>

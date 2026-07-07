@@ -1,0 +1,59 @@
+<!--
+*********************************************************************************************************
+  TERRAN PATROL SHIP WRAPPER
+*********************************************************************************************************
+-->
+
+<ship name="SC_TERRAN_PATROL_SHIP" auto_blueprint="LIST_SHIP_TERRAN_PATROL">
+
+	<escape chance="0.65" min="1" max="5">
+		<text>
+			The Terran patrol ship has taken serious damage. Its engines flare as it attempts to disengage and jump away.
+		</text>
+	</escape>
+
+	<!--
+	  No gotaway tag.
+	-->
+
+	<surrender chance="0.35" min="1" max="3">
+		<text>
+			The Terran patrol ship is barely holding together. They transmit a surrender offer, promising supplies if you let them retreat.
+		</text>
+
+		<choice>
+			<text>Accept their surrender.</text>
+			<event>
+				<text>
+					The patrol transfers a small cache of supplies, then powers down its weapons and retreats.
+				</text>
+				<ship hostile="false"/>
+				<autoReward level="RANDOM">stuff</autoReward>
+			</event>
+		</choice>
+
+		<choice>
+			<text>Refuse. Finish them off.</text>
+			<event>
+				<text>
+					You reject the offer and continue the attack.
+				</text>
+				<ship hostile="true"/>
+			</event>
+		</choice>
+	</surrender>
+
+	<destroyed>
+		<text>
+			The Terran patrol ship breaks apart under your final volley. You salvage what remains.
+		</text>
+		<autoReward level="MED">standard</autoReward>
+	</destroyed>
+
+	<deadCrew>
+		<text>
+			With the patrol crew neutralized, you strip the ship for useful supplies.
+		</text>
+		<autoReward level="HIGH">standard</autoReward>
+	</deadCrew>
+</ship>

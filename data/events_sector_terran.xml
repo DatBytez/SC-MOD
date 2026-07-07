@@ -227,3 +227,244 @@
     <text>With the Dominion crew defeated, you seize their equipment and encrypted supply manifest.</text>
     <autoReward level="HIGH">item</autoReward>
 </event>
+
+<!-- ========== 
+ 	TERRAN PATROL SHIP -->
+
+	<!--
+*********************************************************************************************************
+  TERRAN PATROL ENCOUNTER
+*********************************************************************************************************
+-->
+
+<event name="SC_TERRAN_PATROL">
+	<text>
+		Your ship arrives near the edge of a Terran patrol route. Sensor shadows flicker between nearby debris fields.
+	</text>
+
+	<!-- Sensors 4+ -->
+	<choice req="sensors" lvl="4" hidden="true">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_PATROL_SENSOR_ROLL_4"/>
+	</choice>
+
+	<!-- Sensors 3 exactly -->
+	<choice req="sensors" lvl="3" max_lvl="3" hidden="true">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_PATROL_SENSOR_ROLL_3"/>
+	</choice>
+
+	<!-- Sensors 2 exactly -->
+	<choice req="sensors" lvl="2" max_lvl="2" hidden="true">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_PATROL_SENSOR_ROLL_2"/>
+	</choice>
+
+	<!-- Sensors 1 exactly -->
+	<choice req="sensors" lvl="1" max_lvl="1" hidden="true">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_PATROL_SENSOR_ROLL_1"/>
+	</choice>
+
+	<!-- No working sensors / fallback -->
+	<choice req="sensors" lvl="0" max_lvl="0" hidden="true">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_PATROL_DETECT_FAIL"/>
+	</choice>
+</event>
+
+<eventList name="SC_TERRAN_PATROL_SENSOR_ROLL_1">
+	<event load="SC_TERRAN_PATROL_DETECT_FAIL"/>
+	<event load="SC_TERRAN_PATROL_DETECT_SUCCESS_1"/>
+</eventList>
+
+
+<eventList name="SC_TERRAN_PATROL_SENSOR_ROLL_2">
+	<event load="SC_TERRAN_PATROL_DETECT_FAIL"/>
+	<event load="SC_TERRAN_PATROL_DETECT_SUCCESS_1"/>
+	<event load="SC_TERRAN_PATROL_DETECT_SUCCESS_2"/>
+</eventList>
+
+
+<eventList name="SC_TERRAN_PATROL_SENSOR_ROLL_3">
+	<event load="SC_TERRAN_PATROL_DETECT_FAIL"/>
+	<event load="SC_TERRAN_PATROL_DETECT_SUCCESS_1"/>
+	<event load="SC_TERRAN_PATROL_DETECT_SUCCESS_2"/>
+	<event load="SC_TERRAN_PATROL_DETECT_SUCCESS_3"/>
+</eventList>
+
+
+<eventList name="SC_TERRAN_PATROL_SENSOR_ROLL_4">
+	<event load="SC_TERRAN_PATROL_DETECT_FAIL"/>
+	<event load="SC_TERRAN_PATROL_DETECT_SUCCESS_1"/>
+	<event load="SC_TERRAN_PATROL_DETECT_SUCCESS_2"/>
+	<event load="SC_TERRAN_PATROL_DETECT_SUCCESS_3"/>
+	<event load="SC_TERRAN_PATROL_DETECT_SUCCESS_4"/>
+</eventList>
+
+<event name="SC_TERRAN_PATROL_DETECT_SUCCESS_1">
+	<text>
+		Your sensors catch a faint Terran patrol signature before they fully lock onto you. You have a narrow chance to act first.
+	</text>
+
+	<choice>
+		<text>Ambush the patrol.</text>
+		<event load="SC_TERRAN_PATROL_AMBUSH"/>
+	</choice>
+
+	<choice>
+		<text>Avoid the patrol and move on.</text>
+		<event>
+			<text>
+				You alter course and slip away before the patrol can confirm your position.
+			</text>
+		</event>
+	</choice>
+</event>
+
+
+<event name="SC_TERRAN_PATROL_DETECT_SUCCESS_2">
+	<text>
+		Your improved sensors identify the patrol route before they spot you. You can choose the terms of engagement.
+	</text>
+
+	<choice>
+		<text>Ambush the patrol.</text>
+		<event load="SC_TERRAN_PATROL_AMBUSH"/>
+	</choice>
+
+	<choice>
+		<text>Avoid the patrol and move on.</text>
+		<event>
+			<text>
+				You skirt the edge of their patrol route and continue undetected.
+			</text>
+		</event>
+	</choice>
+</event>
+
+
+<event name="SC_TERRAN_PATROL_DETECT_SUCCESS_3">
+	<text>
+		Your advanced sensors resolve the patrol's course, weapon profile, and blind spots before they notice you.
+	</text>
+
+	<choice>
+		<text>Ambush the patrol from their blind spot.</text>
+		<event load="SC_TERRAN_PATROL_AMBUSH"/>
+	</choice>
+
+	<choice>
+		<text>Avoid the patrol and move on.</text>
+		<event>
+			<text>
+				You pass cleanly through a gap in their sweep pattern.
+			</text>
+		</event>
+	</choice>
+</event>
+
+
+<event name="SC_TERRAN_PATROL_DETECT_SUCCESS_4">
+	<text>
+		Your sensor suite maps the patrol in detail before they have any chance of seeing you. Their formation, course, and weak points are all exposed.
+	</text>
+
+	<choice>
+		<text>Launch a precise ambush.</text>
+		<event load="SC_TERRAN_PATROL_AMBUSH"/>
+	</choice>
+
+	<choice>
+		<text>Avoid the patrol entirely.</text>
+		<event>
+			<text>
+				With complete knowledge of their patrol pattern, you leave the area without ever appearing on their scopes.
+			</text>
+		</event>
+	</choice>
+</event>
+
+<event name="SC_TERRAN_PATROL_AMBUSH">
+	<text>
+		Your sensors resolve the patrol's course before they notice you. You maneuver into position and spring the attack.
+	</text>
+
+	<ship load="SC_TERRAN_PATROL_SHIP" hostile="true"/>
+</event>
+
+<event name="SC_TERRAN_PATROL_DETECT_FAIL">
+	<text>
+		The patrol detects you first. A Terran vessel turns toward your position, weapons charging as it moves to intercept.
+	</text>
+
+	<choice req="engines" lvl="4" blue="true">
+		<text>(High Evasion) Push the engines and attempt to outrun the patrol.</text>
+		<event load="SC_TERRAN_PATROL_EVADE_ROLL"/>
+	</choice>
+
+	<choice req="cloaking" lvl="1" blue="true">
+		<text>(Cloaking) Attempt to avoid the patrol under cloak.</text>
+		<event load="SC_TERRAN_PATROL_CLOAK_ROLL"/>
+	</choice>
+
+	<choice>
+		<text>Prepare to fight.</text>
+		<event load="SC_TERRAN_PATROL_FIGHT"/>
+	</choice>
+</event>
+
+<eventList name="SC_TERRAN_PATROL_EVADE_ROLL">
+	<event load="SC_TERRAN_PATROL_EVADE_SUCCESS"/>
+	<event load="SC_TERRAN_PATROL_EVADE_FAILURE"/>
+</eventList>
+
+
+<event name="SC_TERRAN_PATROL_EVADE_SUCCESS">
+	<text>
+		You divert power to evasive maneuvers and break away before the patrol can establish a firing solution.
+	</text>
+</event>
+
+
+<event name="SC_TERRAN_PATROL_EVADE_FAILURE">
+	<text>
+		You push the engines hard, but the patrol anticipates your course and cuts off your escape.
+	</text>
+
+	<ship load="SC_TERRAN_PATROL_SHIP" hostile="true"/>
+</event>
+
+
+<eventList name="SC_TERRAN_PATROL_CLOAK_ROLL">
+	<event load="SC_TERRAN_PATROL_CLOAK_SUCCESS"/>
+	<event load="SC_TERRAN_PATROL_CLOAK_SUCCESS"/>
+	<event load="SC_TERRAN_PATROL_CLOAK_FAILURE"/>
+</eventList>
+
+
+<event name="SC_TERRAN_PATROL_CLOAK_SUCCESS">
+	<text>
+		You cloak and drift beyond the patrol's search pattern. By the time your signature returns, the Terran ship is scanning the wrong part of the beacon.
+	</text>
+</event>
+
+
+<event name="SC_TERRAN_PATROL_CLOAK_FAILURE">
+	<text>
+		You cloak, but the patrol has already narrowed your position. They spread their search pattern and catch you as your cloak begins to fade.
+	</text>
+
+	<ship load="SC_TERRAN_PATROL_SHIP" hostile="true"/>
+</event>
+
+
+<event name="SC_TERRAN_PATROL_FIGHT">
+	<text>
+		The patrol closes in before you can escape. You power your weapons and prepare for battle.
+	</text>
+
+	<ship load="SC_TERRAN_PATROL_SHIP" hostile="true"/>
+</event>
+
+

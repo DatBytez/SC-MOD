@@ -207,6 +207,7 @@
 
 <events>
 <eventFile>sector_terran</eventFile>
+<eventFile>ships_terran</eventFile>
 </events>
 
 
@@ -953,7 +954,7 @@
 			Click to arm Spider Mine</tooltip>
 			<hideCooldown>true</hideCooldown>
 			<cooldown>0.1</cooldown>
-
+			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
 			<transformRace>terran_spider_mine</transformRace>
 			
 			<powerSounds enemy="true"> <!--Sound effects to use when activating the power. enemy="false" mutes the sound for enemy crew. -->
@@ -1115,8 +1116,6 @@
 		<tooltipName>Terran Spider Mine (Armed)</tooltipName>
 	</drone>
 </drones>
-
-<eventFile>sc_terran</eventFile>
 
 <ships hideFirstShipPage="true">
 	<hangarAnims>
