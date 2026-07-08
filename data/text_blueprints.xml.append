@@ -16,7 +16,8 @@
 
 <!-- ENEMY SHIPS -->
 <text name="text_SHIP_TERRAN_WRAITH_class">Terran Scout</text>
-				
+<text name="text_SHIP_TERRAN_BATTLECRUISER_class">Battlecruiser</text>	
+
 <!-- TERRAN BURST LASER -->
 <text name="weapon_TERRAN_BURST_LASER_1_title">Burst Laser Mk I</text>
 <text name="weapon_TERRAN_BURST_LASER_1_short">Burst Laser I</text>
