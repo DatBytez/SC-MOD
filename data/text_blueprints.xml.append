@@ -15,8 +15,9 @@
 <text name="text_SHIP_PLAYER_TERRAN_VESSEL_desc">[NEED SCIENCE VESSEL DESCRIPTION]</text>
 
 <!-- ENEMY SHIPS -->
-<text name="text_SHIP_TERRAN_WRAITH_class">Terran Scout</text>
+<text name="text_SHIP_TERRAN_WRAITH_class">Scout</text>
 <text name="text_SHIP_TERRAN_BATTLECRUISER_class">Battlecruiser</text>	
+<text name="text_SHIP_TERRAN_VESSEL_class">Science Vessel</text>
 
 <!-- TERRAN BURST LASER -->
 <text name="weapon_TERRAN_BURST_LASER_1_title">Burst Laser Mk I</text>

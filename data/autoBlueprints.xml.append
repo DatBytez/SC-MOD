@@ -142,8 +142,8 @@
 <blueprintList name="LIST_SHIP_TERRAN_PATROL">
 	<name>SHIP_TERRAN_WRAITH</name>
 	<name>SHIP_TERRAN_BATTLECRUISER</name>
-	<!--<name>SHIP_TERRAN_VESSEL</name>
-	<name>SHIP_TERRAN_VALKYRIE</name>
+	<name>SHIP_TERRAN_VESSEL</name>
+	<!--<name>SHIP_TERRAN_VALKYRIE</name>
 	<name>SHIP_TERRAN_DROPSHIP</name>-->
 </blueprintList>
 
@@ -156,10 +156,10 @@
 	<name>terran_civilian</name>
 	<name>terran_civilian</name>
 	<name>terran_civilian</name>
-	<name>terran_marine</name>
-	<name>terran_marine</name>
-	<name>terran_medic</name>
 	<name>terran_ghost</name>
+	<name>terran_ghost</name>
+	<name>terran_medic</name>
+	<name>terran_marine</name>
 </blueprintList>
 <shipBlueprint name="SHIP_TERRAN_WRAITH" layout="SHIP_TERRAN_WRAITH" img="SHIP_TERRAN_WRAITH">
 	<class>Terran Scout</class>
@@ -225,6 +225,46 @@
 	<boardingAI>sabotage</boardingAI>
 	<aug name="TERRAN_SHIP" />
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
+</shipBlueprint>
+
+<blueprintList name="LIST_CREW_TERRAN_VESSEL">
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_medic</name>
+	<name>terran_medic</name>
+	<name>terran_ghost</name>
+	<name>terran_ghost</name>
+</blueprintList>
+<shipBlueprint name="SHIP_TERRAN_VESSEL" layout="SHIP_TERRAN_VESSEL" img="SHIP_TERRAN_VESSEL">
+	<class id="text_SHIP_TERRAN_VESSEL_class">Science Vessel</class>
+	<minSector>1</minSector>
+	<maxSector>8</maxSector>
+	<systemList>
+		<battery power="1" max="2" room="10" start="false" />
+		<doors power="1" max="3" room="7" start="false" />
+		<drones power="3" max="10" room="6" start="true" />
+		<engines power="1" max="6" room="11" start="true" />
+		<hacking power="1" max="3" room="1" start="false" />
+		<medbay power="1" max="3" room="4" start="false" />
+		<mind power="1" max="3" room="2" start="false" />
+		<oxygen power="1" max="3" room="5" start="true" />
+		<pilot power="1" max="3" room="3" start="true" />
+		<sensors power="1" max="3" room="0" start="false" />
+		<lily_system_bracers power="1" max="4" room="8" start="true" />
+		<weapons power="2" max="10" room="9" start="true" />
+	</systemList>
+	<weaponSlots>3</weaponSlots>
+	<droneSlots>3</droneSlots>
+	<weaponList missiles="8" count="3" load="TERRAN_STANDARD_WEAPONS" />
+	<droneList drones="10" count="3" load="TERRAN_DRONES_STANDARD" />
+	<health amount="7" />
+	<maxPower amount="8" />
+	<crewCount amount="3" max="8" class="LIST_CREW_TERRAN_VESSEL" />
+	<boardingAI>sabotage</boardingAI>
+	<aug name="TERRAN_SHIP" />
+	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
+	<aug name="SC_DETECTOR" />
 </shipBlueprint>
 
 </FTL>
