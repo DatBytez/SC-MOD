@@ -198,22 +198,20 @@
 	<name>terran_firebat</name>
 </blueprintList>
 <shipBlueprint name="SHIP_TERRAN_BATTLECRUISER" layout="SHIP_TERRAN_BATTLECRUISER" img="SHIP_TERRAN_BATTLECRUISER">
-	<class id="text_SHIP_TERRAN_BATTLECRUISER_class">Battlecruiser</class>
+	<class>Battlecruiser</class>
 	<minSector>1</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
 		<artillery power="1" max="3" room="0" start="false" weapon="ARTILLERY_YAMATO_LASER" />
-		<battery power="1" max="13" room="10" start="false" />
-		<doors power="1" max="3" room="4" start="false" />
-		<drones power="2" max="8" room="14" start="false" />
-		<engines power="1" max="6" room="17" start="true" />
-		<medbay power="1" max="2" room="16" start="false" />
-		<oxygen power="1" max="2" room="15" start="true" />
+		<battery power="1" max="2" room="3" start="false" />
+		<drones power="2" max="8" room="7" start="false" />
+		<engines power="1" max="6" room="10" start="true" />
+		<medbay power="1" max="2" room="9" start="false" />
+		<oxygen power="1" max="2" room="8" start="true" />
 		<pilot power="1" max="1" room="1" start="true" />
 		<sensors power="1" max="3" room="2" start="true" />
-		<lily_system_bracers power="3" max="5" room="13" start="true" />
-		<teleporter power="1" max="3" room="11" start="false" />
-		<weapons power="4" max="12" room="12" start="true" />
+		<teleporter power="1" max="3" room="4" start="false" />
+		<weapons power="4" max="8" room="5" start="true" />
 	</systemList>
 	<weaponSlots>4</weaponSlots>
 	<droneSlots>3</droneSlots>
