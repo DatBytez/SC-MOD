@@ -70,7 +70,7 @@
 
 <!-- Ship event definitions -->
 
-<ship name="SHIP_TERRAN_WRAITH" auto_blueprint="SHIP_TERRAN_WRAITH">
+<ship name="SHIP_TERRAN_WRAITH_SMALL" auto_blueprint="SHIP_TERRAN_WRAITH_SMALL">
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
 <gotaway load="GOTAWAY_EVENT"/>
@@ -84,7 +84,7 @@
 
 <event name="EVENT_TERRAN_WRAITH">
 	<text>Aaaaa! Scary ship!</text>
-	<ship load="SHIP_TERRAN_WRAITH" hostile="true"/>
+	<ship load="SHIP_TERRAN_WRAITH_SMALL" hostile="true"/>
 </event>
 
 <ship name="SHIP_TERRAN_BATTLECRUISER" auto_blueprint="SHIP_TERRAN_BATTLECRUISER">
@@ -94,7 +94,7 @@
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
 <crew>
-    <crewMember type="terran_ghost" prop="0.01"/>
+    <crewMember type="terran_marine" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_BATTLECRUISER" prop="0.99"/>
 </crew>
 </ship>
@@ -111,7 +111,7 @@
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
 <crew>
-    <crewMember type="terran_ghost" prop="0.01"/>
+    <crewMember type="terran_civilian" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
 </crew>
 </ship>
