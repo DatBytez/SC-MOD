@@ -149,6 +149,14 @@
 	<name>SHIP_TERRAN_DROPSHIP</name>-->
 </blueprintList>
 
+<blueprintList name="LIST_SHIP_TERRAN_SCOUT">
+	<name>SHIP_TERRAN_WRAITH_A</name>
+	<name>SHIP_TERRAN_WRAITH_B</name>
+	<name>SHIP_TERRAN_VESSEL</name>
+	<!--<name>SHIP_TERRAN_VALKYRIE</name>
+	<name>SHIP_TERRAN_DROPSHIP</name>-->
+</blueprintList>
+
 <!--
 ********************
   TERRAN SHIPS

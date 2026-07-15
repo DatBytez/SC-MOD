@@ -297,7 +297,7 @@
 </event>
 -->
 
-
+<!--<ENCOUNTER TERRAN PATROL ENCOUNTER>-->
 <!--
 *********************************************************************************************************
   TERRAN PATROL ENCOUNTER
@@ -413,7 +413,6 @@
 		Your sensors resolve the patrol's course before they notice you. You maneuver into position and spring the attack.
 	</text>
 
-	<!--<ship load="SC_TERRAN_PATROL_SHIP" hostile="true"/>-->
 	<ship hostile="true"/>
 </event>
 <event name="SC_TERRAN_PATROL_DETECT_FAIL">
@@ -523,3 +522,225 @@
 	<ship hostile="true"/>
 </event>
 
+
+<!--<ENCOUNTER TERRAN SCOUT ENCOUNTER>-->
+<!--
+*********************************************************************************************************
+  TERRAN SCOUT ENCOUNTER
+*********************************************************************************************************
+-->
+<event name="SC_TERRAN_SCOUT">
+	<text>
+		An enemy scout picked up your signal. If they escape, they will surely contact the enemy fleet.
+	</text>
+
+	<ship load="SC_TERRAN_SCOUT_SHIP" hostile="false"/>
+
+	<choice req="sensors" lvl="4" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_SCOUT_SENSOR_ROLL_3"/>
+	</choice>
+
+	<choice req="sensors" lvl="3" max_lvl="3" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_SCOUT_SENSOR_ROLL_2"/>
+	</choice>
+
+	<choice req="sensors" lvl="2" max_lvl="2" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_SCOUT_SENSOR_ROLL_1"/>
+	</choice>
+
+	<choice req="sensors" lvl="0" max_lvl="1" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_SCOUT_DETECT_FAIL"/>
+	</choice>
+</event>
+<eventList name="SC_TERRAN_SCOUT_SENSOR_ROLL_1">
+	<event load="SC_TERRAN_SCOUT_DETECT_FAIL"/>
+	<event load="SC_TERRAN_SCOUT_DETECT_FAIL"/>
+	<event load="SC_TERRAN_SCOUT_DETECT_FAIL"/>
+	<event load="SC_TERRAN_SCOUT_DETECT_FAIL"/>
+	<event load="SC_TERRAN_SCOUT_DETECT_SUCCESS_1"/>
+</eventList>
+<eventList name="SC_TERRAN_SCOUT_SENSOR_ROLL_2">
+	<event load="SC_TERRAN_SCOUT_DETECT_FAIL"/>
+	<event load="SC_TERRAN_SCOUT_DETECT_FAIL"/>
+	<event load="SC_TERRAN_SCOUT_DETECT_FAIL"/>
+	<event load="SC_TERRAN_SCOUT_DETECT_SUCCESS_1"/>
+	<event load="SC_TERRAN_SCOUT_DETECT_SUCCESS_2"/>
+</eventList>
+<eventList name="SC_TERRAN_SCOUT_SENSOR_ROLL_3">
+	<event load="SC_TERRAN_SCOUT_DETECT_FAIL"/>
+	<event load="SC_TERRAN_SCOUT_DETECT_FAIL"/>
+	<event load="SC_TERRAN_SCOUT_DETECT_SUCCESS_1"/>
+	<event load="SC_TERRAN_SCOUT_DETECT_SUCCESS_2"/>
+	<event load="SC_TERRAN_SCOUT_DETECT_SUCCESS_3"/>
+</eventList>
+<event name="SC_TERRAN_SCOUT_DETECT_SUCCESS_1">
+	<text>
+		Your sensors catch a faint Terran patrol signature before they fully lock onto you. You have a narrow chance to act first.
+	</text>
+
+	<choice>
+		<text>Ambush the patrol.</text>
+		<event load="SC_TERRAN_SCOUT_AMBUSH"/>
+	</choice>
+
+	<choice>
+		<text>Avoid the patrol and move on.</text>
+		<event>
+			<text>
+				You alter course and slip away before the patrol can confirm your position.
+			</text>
+		</event>
+	</choice>
+</event>
+<event name="SC_TERRAN_SCOUT_DETECT_SUCCESS_2">
+	<text>
+		Your improved sensors identify the patrol route before they spot you. You can choose the terms of engagement.
+	</text>
+
+	<choice>
+		<text>Ambush the patrol.</text>
+		<event load="SC_TERRAN_SCOUT_AMBUSH"/>
+	</choice>
+
+	<choice>
+		<text>Avoid the patrol and move on.</text>
+		<event>
+			<text>
+				You skirt the edge of their patrol route and continue undetected.
+			</text>
+		</event>
+	</choice>
+</event>
+<event name="SC_TERRAN_SCOUT_DETECT_SUCCESS_3">
+	<text>
+		Your advanced sensors resolve the patrol's course, weapon profile, and blind spots before they notice you.
+	</text>
+
+	<choice>
+		<text>Ambush the patrol from their blind spot.</text>
+		<event load="SC_TERRAN_SCOUT_AMBUSH"/>
+	</choice>
+
+	<choice>
+		<text>Avoid the patrol and move on.</text>
+		<event>
+			<text>
+				You pass cleanly through a gap in their sweep pattern.
+			</text>
+		</event>
+	</choice>
+</event>
+<event name="SC_TERRAN_SCOUT_AMBUSH">
+	<text>
+		Your sensors resolve the patrol's course before they notice you. You maneuver into position and spring the attack.
+	</text>
+
+	<ship hostile="true"/>
+</event>
+<event name="SC_TERRAN_SCOUT_DETECT_FAIL">
+	<text>
+		The patrol detects you first. A Terran ship turns toward your position, weapons charging as it moves to intercept.
+	</text>
+
+	<choice req="engines" lvl="7" hidden="true" blue="false">
+		<text>Push the engines and attempt to outrun the patrol.</text>
+		<event load="SC_TERRAN_SCOUT_EVADE_ROLL_4"/>
+	</choice>
+
+	<choice req="engines" lvl="5" max_lvl="6" hidden="true" blue="false">
+		<text>Push the engines and attempt to outrun the patrol.</text>
+		<event load="SC_TERRAN_SCOUT_EVADE_ROLL_3"/>
+	</choice>
+
+	<choice req="engines" lvl="3" max_lvl="4" hidden="true" blue="false">
+		<text>Attempt to outrun the patrol.</text>
+		<event load="SC_TERRAN_SCOUT_EVADE_ROLL_2"/>
+	</choice>
+
+	<choice req="engines" lvl="0" max_lvl="2" hidden="true" blue="false">
+		<text>Attempt to outrun the patrol.</text>
+		<event load="SC_TERRAN_SCOUT_EVADE_ROLL_1"/>
+	</choice>
+
+	<choice req="cloaking" lvl="1" blue="true">
+		<text>(Cloaking) Attempt to avoid the patrol under cloak.</text>
+		<event load="SC_TERRAN_SCOUT_CLOAK_ROLL"/>
+	</choice>
+
+	<choice>
+		<text>Prepare to fight.</text>
+		<event load="SC_TERRAN_SCOUT_FIGHT"/>
+	</choice>
+</event>
+<eventList name="SC_TERRAN_SCOUT_EVADE_ROLL_1">
+	<event load="SC_TERRAN_SCOUT_EVADE_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_SCOUT_EVADE_ROLL_2">
+	<event load="SC_TERRAN_SCOUT_EVADE_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_SCOUT_EVADE_ROLL_3">
+	<event load="SC_TERRAN_SCOUT_EVADE_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_SCOUT_EVADE_ROLL_4">
+	<event load="SC_TERRAN_SCOUT_EVADE_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_EVADE_FAILURE"/>
+</eventList>
+<event name="SC_TERRAN_SCOUT_EVADE_SUCCESS">
+	<text>
+		You divert power to evasive maneuvers and break away before the patrol can establish a firing solution.
+	</text>
+</event>
+<event name="SC_TERRAN_SCOUT_EVADE_FAILURE">
+	<text>
+		You push the engines hard, but the patrol anticipates your course and cuts off your escape.
+	</text>
+
+	<ship hostile="true"/>
+</event>
+<eventList name="SC_TERRAN_SCOUT_CLOAK_ROLL">
+	<event load="SC_TERRAN_SCOUT_CLOAK_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CLOAK_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CLOAK_FAILURE"/>
+</eventList>
+<event name="SC_TERRAN_SCOUT_CLOAK_SUCCESS">
+	<text>
+		You cloak and drift beyond the patrol's search pattern. By the time your signature returns, the Terran ship is scanning the wrong part of the beacon.
+	</text>
+</event>
+<event name="SC_TERRAN_SCOUT_CLOAK_FAILURE">
+	<text>
+		You cloak, but the patrol has already narrowed your position. They spread their search pattern and catch you as your cloak begins to fade.
+	</text>
+
+	<ship hostile="true"/>
+</event>
+<event name="SC_TERRAN_SCOUT_FIGHT">
+	<text>
+		The patrol closes in before you can escape. You power your weapons and prepare for battle.
+	</text>
+
+	<ship hostile="true"/>
+</event>
