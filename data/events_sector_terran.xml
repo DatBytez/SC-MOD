@@ -70,7 +70,7 @@
 
 <!-- Ship event definitions -->
 
-<ship name="SHIP_TERRAN_WRAITH_SMALL" auto_blueprint="SHIP_TERRAN_WRAITH_SMALL">
+<ship name="SHIP_TERRAN_WRAITH_ELITE" auto_blueprint="SHIP_TERRAN_WRAITH_ELITE">
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
 <gotaway load="GOTAWAY_EVENT"/>
@@ -82,9 +82,43 @@
 </crew>
 </ship>
 
-<event name="EVENT_TERRAN_WRAITH">
+<ship name="SHIP_TERRAN_WRAITH_A" auto_blueprint="SHIP_TERRAN_WRAITH_A">
+<surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
+<escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
+<gotaway load="GOTAWAY_EVENT"/>
+<destroyed load="SC_DESTROYED_TERRAN"/>
+<deadCrew load="SC_DEAD_CREW_TERRAN"/>
+<crew>
+    <crewMember type="terran_ghost" prop="0.01"/>
+	<crewMember type="LIST_CREW_TERRAN_WRAITH" prop="0.99"/>
+</crew>
+</ship>
+
+<ship name="SHIP_TERRAN_WRAITH_B" auto_blueprint="SHIP_TERRAN_WRAITH_B">
+<surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
+<escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
+<gotaway load="GOTAWAY_EVENT"/>
+<destroyed load="SC_DESTROYED_TERRAN"/>
+<deadCrew load="SC_DEAD_CREW_TERRAN"/>
+<crew>
+    <crewMember type="terran_ghost" prop="0.01"/>
+	<crewMember type="LIST_CREW_TERRAN_WRAITH" prop="0.99"/>
+</crew>
+</ship>
+
+<event name="EVENT_TERRAN_WRAITH_ELITE">
 	<text>Aaaaa! Scary ship!</text>
-	<ship load="SHIP_TERRAN_WRAITH_SMALL" hostile="true"/>
+	<ship load="SHIP_TERRAN_WRAITH_ELITE" hostile="true"/>
+</event>
+
+<event name="EVENT_TERRAN_WRAITH_A">
+	<text>Aaaaa! Scary ship!</text>
+	<ship load="SHIP_TERRAN_WRAITH_A" hostile="true"/>
+</event>
+
+<event name="EVENT_TERRAN_WRAITH_B">
+	<text>Aaaaa! Scary ship!</text>
+	<ship load="SHIP_TERRAN_WRAITH_B" hostile="true"/>
 </event>
 
 <ship name="SHIP_TERRAN_BATTLECRUISER" auto_blueprint="SHIP_TERRAN_BATTLECRUISER">
@@ -120,11 +154,12 @@
 	<text>Aaaaa! Scary ship!</text>
 	<ship load="SHIP_TERRAN_VESSEL" hostile="true"/>
 </event>
+
 <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     GENERIC COMBAT RESULT EVENTS
 ////////////////////////////////////////////////////////////////////////////////////////////////////
--->
+
 
 <event name="SC_SURRENDER_TERRAN">
     <text>"Stand down. We can transfer supplies if you let us limp out of here."</text>
@@ -260,11 +295,10 @@
     <text>With the Dominion crew defeated, you seize their equipment and encrypted supply manifest.</text>
     <autoReward level="HIGH">item</autoReward>
 </event>
+-->
 
-<!-- ========== 
- 	TERRAN PATROL SHIP -->
 
-	<!--
+<!--
 *********************************************************************************************************
   TERRAN PATROL ENCOUNTER
 *********************************************************************************************************
