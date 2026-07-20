@@ -2118,6 +2118,7 @@
 	<crewCount amount="1" class="terran_medic" />
 	<crewCount amount="1" class="terran_marine" />
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
+	<aug name="WEAPON_PREIGNITE" />
 	<!--<mv-mapImage>map_icon_mup_mvfed_a</mv-mapImage>-->
 </shipBlueprint>
 

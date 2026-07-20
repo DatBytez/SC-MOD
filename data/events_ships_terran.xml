@@ -71,7 +71,7 @@
 	-->
 	<escape min="2" max="999">
 		<text>
-			The Terran scout throws everything into its engines and begins charging its FTL drive. If it escapes, the fleet will know exactly where to look.
+			The Terran scout throws everything into its engines and begins charging its FTL drive.
 		</text>
 	</escape>
 
