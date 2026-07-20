@@ -65,26 +65,33 @@
 -->
 <ship name="SC_TERRAN_SCOUT_SHIP" auto_blueprint="LIST_SHIP_TERRAN_SCOUT">
 
-	<escape chance="0.65" min="1" max="5">
+	<!--
+	  Starts fleeing immediately once combat begins.
+	  min=2 leaves exactly 1 HP available for the surrender event.
+	-->
+	<escape min="2" max="999">
 		<text>
-			[SCOUT] The Terran patrol ship has taken serious damage. Its engines flare as it attempts to disengage and jump away.
+			The Terran scout throws everything into its engines and begins charging its FTL drive. If it escapes, the fleet will know exactly where to look.
 		</text>
 	</escape>
 
-	<!--
-	  No gotaway tag.
-	-->
-
-	<surrender chance="0.35" min="1" max="3">
+	<gotaway>
 		<text>
-			[SCOUT] The Terran patrol ship is barely holding together. They transmit a surrender offer, promising supplies if you let them retreat.
+			The scout jumps away before you can stop it. Moments later, encrypted fleet traffic spikes across the sector.
+		</text>
+		<modifyPursuit amount="1"/>
+	</gotaway>
+
+	<surrender chance="0.35" min="1" max="1">
+		<text>
+			The scout is barely holding together. Its crew transmits a frantic surrender offer, promising supplies if you let them live.
 		</text>
 
 		<choice>
 			<text>Accept their surrender.</text>
 			<event>
 				<text>
-					[SCOUT] The patrol transfers a small cache of supplies, then powers down its weapons and retreats.
+					The scout transfers what supplies it can spare and powers down its weapons.
 				</text>
 				<ship hostile="false"/>
 				<autoReward level="RANDOM">stuff</autoReward>
@@ -92,10 +99,10 @@
 		</choice>
 
 		<choice>
-			<text>Refuse. Finish them off.</text>
+			<text>Refuse. They cannot be allowed to report your position.</text>
 			<event>
 				<text>
-					[SCOUT] You reject the offer and continue the attack.
+					You reject the offer and continue the attack.
 				</text>
 				<ship hostile="true"/>
 			</event>
@@ -104,14 +111,14 @@
 
 	<destroyed>
 		<text>
-			[SCOUT] The Terran patrol ship breaks apart under your final volley. You salvage what remains.
+			The Terran scout breaks apart before it can escape. You collect what little salvage remains.
 		</text>
-		<autoReward level="MED">standard</autoReward>
+		<autoReward level="LOW">standard</autoReward>
 	</destroyed>
 
 	<deadCrew>
 		<text>
-			[SCOUT] With the patrol crew neutralized, you strip the ship for useful supplies.
+			With the scout's crew neutralized, you search its databanks and secure its emergency supplies before any message can be sent.
 		</text>
 		<autoReward level="HIGH">standard</autoReward>
 	</deadCrew>
