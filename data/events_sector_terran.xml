@@ -721,62 +721,51 @@
 		With the scout's crew neutralized, you search its databanks and secure its emergency supplies before any message can be sent. The ship's still-active comms buffer may contain a way to delay the pursuing fleet, but tampering with it could also expose your position.
 	</text>
 
-	<choice req="sensors" lvl="1" blue="true">
+	<choice req="sensors" lvl="4" hidden="true" blue="false">
 		<text>(Sensors) Analyze the scout's transmission logs and try to redirect the fleet.</text>
-		<event load="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_CHECK"/>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_4"/>
 	</choice>
 
-	<choice req="hacking" lvl="1" blue="true">
-		<text>(Hacking) Break into the scout's comms buffer and falsify its final report.</text>
-		<event load="SC_TERRAN_SCOUT_CREW_KILL_HACKING_CHECK"/>
+	<choice req="sensors" lvl="3" max_level="3" hidden="true" blue="false">
+		<text>(Sensors) Analyze the scout's transmission logs and try to redirect the fleet.</text>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_3"/>
 	</choice>
 
-	<choice>
+	<choice req="sensors" lvl="2" max_lvl="2" hidden="true" blue="false">
+		<text>(Sensors) Analyze the scout's transmission logs and try to redirect the fleet.</text> 
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_2"/>
+	</choice>
+
+	<choice req="sensors" lvl="1" max_lvl="1" hidden="true" blue="false">
+		<text>(Sensors) Analyze the scout's transmission logs and try to redirect the fleet.</text>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_1"/>
+	</choice>
+
+	<choice req="hacking" lvl="3" hidden="true" blue="false">
+		<text>(Hacking) Attempt to break into the scout's comms buffer and falsify its final report.</text>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_3"/>
+	</choice>
+
+	<choice req="hacking" lvl="2" max_lvl="2" hidden="true" blue="false">
+		<text>(Hacking) Attempt to break into the scout's comms buffer and falsify its final report.</text>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_2"/>
+	</choice>
+
+	<choice req="hacking" lvl="1" max_lvl="1" hidden="true" blue="false">
+		<text>(Hacking) Attempt to break into the scout's comms buffer and falsify its final report.</text>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_1"/>
+	</choice>
+
+	<choice hidden="true">
 		<text>Take the supplies and leave.</text>
 		<event load="SC_TERRAN_SCOUT_CREW_KILL_REWARD"/>
 	</choice>
 </event>
 
-<event name="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_CHECK">
-	<text>Continue...</text>
-
-	<choice req="sensors" lvl="4" hidden="true" blue="false">
-		<text>Continue...</text>
-		<event load="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_3"/>
-	</choice>
-
-	<choice req="sensors" lvl="3" max_lvl="3" hidden="true" blue="false">
-		<text>Continue...</text>
-		<event load="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_2"/>
-	</choice>
-
-	<choice req="sensors" lvl="1" max_lvl="2" hidden="true" blue="false">
-		<text>Continue...</text>
-		<event load="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_1"/>
-	</choice>
-</event>
-
-<event name="SC_TERRAN_SCOUT_CREW_KILL_HACKING_CHECK">
-	<text>Continue...</text>
-
-	<choice req="hacking" lvl="3" hidden="true" blue="false">
-		<text>Continue...</text>
-		<event load="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_3"/>
-	</choice>
-
-	<choice req="hacking" lvl="2" max_lvl="2" hidden="true" blue="false">
-		<text>Continue...</text>
-		<event load="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_2"/>
-	</choice>
-
-	<choice req="hacking" lvl="1" max_lvl="1" hidden="true" blue="false">
-		<text>Continue...</text>
-		<event load="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_1"/>
-	</choice>
-</event>
-
 <eventList name="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_1">
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 </eventList>
@@ -785,9 +774,20 @@
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 </eventList>
 
 <eventList name="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_3">
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
+</eventList>
+
+<eventList name="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_4">
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
@@ -796,7 +796,6 @@
 
 <eventList name="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_1">
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
-	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 </eventList>
 
