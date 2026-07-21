@@ -2119,6 +2119,7 @@
 	<crewCount amount="1" class="terran_marine" />
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
 	<aug name="WEAPON_PREIGNITE" />
+	<aug name="FTL_JAMMER" />
 	<!--<mv-mapImage>map_icon_mup_mvfed_a</mv-mapImage>-->
 </shipBlueprint>
 
@@ -2195,6 +2196,8 @@
 	<crewCount amount="1" class="terran_civilian" />
 	<aug name="TERRAN_WRAITH_BATTERY" />
 	<aug name="TERRAN_SHIP_ARMOR_LIGHT" />
+	<aug name="WEAPON_PREIGNITE" />
+	
 </shipBlueprint>
 
 <!-- ====================

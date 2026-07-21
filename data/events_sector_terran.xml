@@ -538,6 +538,11 @@
 		<text>Engage the scout before it can escape.</text>
 		<event load="SC_TERRAN_SCOUT_FIGHT"/>
 	</choice>
+
+	<choice>
+		<text>Let the scout go.</text>
+		<event load="SC_TERRAN_SCOUT_GOTAWAY"/>
+	</choice>
 </event>
 
 <event name="SC_TERRAN_SCOUT_PREIGNITER">
@@ -588,6 +593,11 @@
 	<choice req="hacking" lvl="1" max_lvl="1" hidden="true" blue="false">
 		<text>Try to hack the scout's engines.</text>
 		<event load="SC_TERRAN_SCOUT_HACKING_ROLL_1"/>
+	</choice>
+
+	<choice>
+		<text>Let the scout go.</text>
+		<event load="SC_TERRAN_SCOUT_GOTAWAY"/>
 	</choice>
 </event>
 
@@ -681,6 +691,13 @@
 	</triggeredEvent>
 </event>
 
+<event name="SC_TERRAN_SCOUT_GOTAWAY">
+	<text>
+		The scout jumps away before you can stop it. Moments later, encrypted fleet traffic spikes across the sector.
+	</text>
+	<modifyPursuit amount="1"/>
+</event>
+
 <event name="SC_TERRAN_SCOUT_FIGHT">
 	<text>
 		The scout is already turning away, its FTL drive flaring hot. You power weapons and move to stop it.
@@ -697,4 +714,124 @@
 		<text>Continue the fight.</text>
 		<event/>
 	</choice>
+</event>
+
+<event name="SC_TERRAN_SCOUT_DEAD_CREW">
+	<text>
+		With the scout's crew neutralized, you search its databanks and secure its emergency supplies before any message can be sent. The ship's still-active comms buffer may contain a way to delay the pursuing fleet, but tampering with it could also expose your position.
+	</text>
+
+	<choice req="sensors" lvl="1" blue="true">
+		<text>(Sensors) Analyze the scout's transmission logs and try to redirect the fleet.</text>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_CHECK"/>
+	</choice>
+
+	<choice req="hacking" lvl="1" blue="true">
+		<text>(Hacking) Break into the scout's comms buffer and falsify its final report.</text>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_HACKING_CHECK"/>
+	</choice>
+
+	<choice>
+		<text>Take the supplies and leave.</text>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_REWARD"/>
+	</choice>
+</event>
+
+<event name="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_CHECK">
+	<text>Continue...</text>
+
+	<choice req="sensors" lvl="4" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_3"/>
+	</choice>
+
+	<choice req="sensors" lvl="3" max_lvl="3" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_2"/>
+	</choice>
+
+	<choice req="sensors" lvl="1" max_lvl="2" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_1"/>
+	</choice>
+</event>
+
+<event name="SC_TERRAN_SCOUT_CREW_KILL_HACKING_CHECK">
+	<text>Continue...</text>
+
+	<choice req="hacking" lvl="3" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_3"/>
+	</choice>
+
+	<choice req="hacking" lvl="2" max_lvl="2" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_2"/>
+	</choice>
+
+	<choice req="hacking" lvl="1" max_lvl="1" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_1"/>
+	</choice>
+</event>
+
+<eventList name="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_1">
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
+</eventList>
+
+<eventList name="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_2">
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
+</eventList>
+
+<eventList name="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_3">
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
+</eventList>
+
+<eventList name="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_1">
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
+</eventList>
+
+<eventList name="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_2">
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
+</eventList>
+
+<eventList name="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_3">
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
+	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
+</eventList>
+
+<event name="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS">
+	<text>
+		You alter the scout's final telemetry before it can be recovered. The pursuing fleet diverts toward a false trail, buying you time.
+	</text>
+	<modifyPursuit amount="-1"/>
+	<autoReward level="HIGH">standard</autoReward>
+</event>
+
+<event name="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE">
+	<text>
+		The scout's comms buffer resists your attempt. The failed intrusion causes an emergency beacon to fire, giving the pursuing fleet a cleaner trail to follow.
+	</text>
+	<modifyPursuit amount="1"/>
+	<autoReward level="HIGH">standard</autoReward>
+</event>
+
+<event name="SC_TERRAN_SCOUT_CREW_KILL_REWARD">
+	<text>
+		You leave the scout's comms buffer alone and focus on stripping the ship before more Terran forces arrive.
+	</text>
+	<autoReward level="HIGH">standard</autoReward>
 </event>
