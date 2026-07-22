@@ -64,20 +64,13 @@
 *********************************************************************************************************
 -->
 <ship name="SC_TERRAN_SCOUT_SHIP" auto_blueprint="LIST_SHIP_TERRAN_SCOUT">
-
-	<!--
-	  Starts fleeing immediately once combat begins.
-	  min=2 leaves exactly 1 HP available for the surrender event.
-	-->
 	<escape min="2" max="999">
 		<text>
 			The Terran scout throws everything into its engines and begins charging its FTL drive.
 		</text>
 	</escape>
 
-	<gotaway>
-		<gotaway load="SC_TERRAN_SCOUT_GOTAWAY"/>
-	</gotaway>
+	<gotaway load="SC_TERRAN_SCOUT_GOTAWAY"/>
 
 	<surrender chance="0.35" min="1" max="1">
 		<text>
@@ -114,4 +107,89 @@
 	</destroyed>
 
 	<deadCrew load="SC_TERRAN_SCOUT_DEAD_CREW"/>
+</ship>
+
+<!--
+*********************************************************************************************************
+  TERRAN ASSAULT SHIP WRAPPERS
+*********************************************************************************************************
+-->
+<!-- FIRST SHIP -->
+<ship name="SC_TERRAN_ASSAULT_SHIP_1" auto_blueprint="LIST_SHIP_TERRAN_ASSAULT">
+	<!--<surrender chance="0.35" min="1" max="3">
+		<text>
+			The first Terran assault ship is heavily damaged. Its captain signals a withdrawal and orders the rest of the formation to continue the attack.
+		</text>
+
+		<choice>
+			<text>Let them fall back and face the next attacker.</text>
+			<event>
+				<text>
+					The damaged ship drifts away from the line of fire, but another Terran vessel immediately advances to take its place.
+				</text>
+				<ship hostile="false"/>
+				<choice hidden="true">
+					<text>Continue...</text>
+					<event load="SC_TERRAN_ASSAULT_SECOND_WAVE"/>
+				</choice>
+			</event>
+		</choice>
+
+		<choice>
+			<text>Refuse. Finish the first ship.</text>
+			<event>
+				<text>
+					You reject their withdrawal and continue the attack.
+				</text>
+				<ship hostile="true"/>
+			</event>
+		</choice>
+	</surrender>-->
+
+	<destroyed load="SC_TERRAN_ASSAULT_SECOND_WAVE"/>
+	<deadCrew load="SC_TERRAN_ASSAULT_SECOND_WAVE"/>
+</ship>
+
+<!-- SECOND SHIP -->
+<ship name="SC_TERRAN_ASSAULT_SHIP_2" auto_blueprint="LIST_SHIP_TERRAN_ASSAULT">
+	<surrender chance="0.35" min="1" max="3">
+		<text>
+			The second Terran assault ship is badly damaged. With the attack broken, its captain offers supplies in exchange for being allowed to withdraw.
+		</text>
+
+		<choice>
+			<text>Accept their surrender.</text>
+			<event>
+				<text>
+					The assault ship powers down its weapons and transfers a cache of supplies before limping away.
+				</text>
+				<ship hostile="false"/>
+				<autoReward level="RANDOM">stuff</autoReward>
+			</event>
+		</choice>
+
+		<choice>
+			<text>Refuse. Finish them off.</text>
+			<event>
+				<text>
+					You reject the offer and continue the attack.
+				</text>
+				<ship hostile="true"/>
+			</event>
+		</choice>
+	</surrender>
+
+	<destroyed>
+		<text>
+			The second Terran assault ship breaks apart under your final volley. With the attack force destroyed, you salvage the wreckage.
+		</text>
+		<autoReward level="MED">standard</autoReward>
+	</destroyed>
+
+	<deadCrew>
+		<text>
+			With the second assault crew neutralized, you secure the ship and strip it for supplies.
+		</text>
+		<autoReward level="HIGH">standard</autoReward>
+	</deadCrew>
 </ship>

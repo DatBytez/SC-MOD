@@ -140,21 +140,36 @@
 -->
 
 <blueprintList name="LIST_SHIP_TERRAN_PATROL">
-	<name>SHIP_TERRAN_WRAITH_ELITE</name>
 	<name>SHIP_TERRAN_WRAITH_A</name>
 	<name>SHIP_TERRAN_WRAITH_B</name>
 	<name>SHIP_TERRAN_BATTLECRUISER</name>
 	<name>SHIP_TERRAN_VESSEL</name>
-	<!--<name>SHIP_TERRAN_VALKYRIE</name>
-	<name>SHIP_TERRAN_DROPSHIP</name>-->
+	<!--<name>SHIP_TERRAN_VALKYRIE</name>-->
 </blueprintList>
 
 <blueprintList name="LIST_SHIP_TERRAN_SCOUT">
 	<name>SHIP_TERRAN_WRAITH_A</name>
 	<name>SHIP_TERRAN_WRAITH_B</name>
 	<name>SHIP_TERRAN_VESSEL</name>
-	<!--<name>SHIP_TERRAN_VALKYRIE</name>
-	<name>SHIP_TERRAN_DROPSHIP</name>-->
+</blueprintList>
+
+<blueprintList name="LIST_SHIP_TERRAN_ASSAULT">
+	<name>SHIP_TERRAN_WRAITH_A</name>
+	<name>SHIP_TERRAN_WRAITH_B</name>
+	<name>SHIP_TERRAN_BATTLECRUISER</name>
+	<!--<name>SHIP_TERRAN_VALKYRIE</name>-->
+</blueprintList>
+
+<blueprintList name="LIST_SHIP_TERRAN_AMBUSH">
+	<name>SHIP_TERRAN_WRAITH_A</name>
+	<name>SHIP_TERRAN_WRAITH_B</name>
+	<name>SHIP_TERRAN_BATTLECRUISER</name>
+	<!--<name>SHIP_TERRAN_VALKYRIE</name>-->
+</blueprintList>
+
+<blueprintList name="LIST_SHIP_TERRAN_TRANSPORT">
+	<name>SHIP_TERRAN_VESSEL</name>
+	<!--<name>SHIP_TERRAN_DROPSHIP</name>-->
 </blueprintList>
 
 <!--

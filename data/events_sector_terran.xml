@@ -683,7 +683,7 @@
 	</text>
 	<ship load="SC_TERRAN_SCOUT_SHIP" hostile="true"/>
 	<status type="limit" target="enemy" system="engines" amount="0"/>
-	<triggeredEvent event="SC_TERRAN_SCOUT_ENGINE_STATUS_CLEAR" time="45" thisFight="true">
+	<triggeredEvent event="SC_TERRAN_SCOUT_ENGINE_STATUS_CLEAR" time="35" thisFight="true">
 		<triggeredEventBox load="DEFAULT_SMALL">
 			<tooltip>The scout's jammed engines will recover in this amount of time.</tooltip>
 		</triggeredEventBox>
@@ -833,4 +833,38 @@
 		You leave the scout's comms buffer alone and focus on stripping the ship before more Terran forces arrive.
 	</text>
 	<autoReward level="HIGH">standard</autoReward>
+</event>
+
+<!--
+*********************************************************************************************************
+  TERRAN ASSAULT ENCOUNTER
+*********************************************************************************************************
+-->
+<event name="SC_TERRAN_ASSAULT">
+	<text>
+		A Terran assault group is already waiting at this beacon. Their lead ship moves to intercept, weapons hot and formation tight. This is not a scout or patrol trying to identify you; this is a direct attack.
+	</text>
+
+	<ship load="SC_TERRAN_ASSAULT_SHIP_1" hostile="false"/>
+
+	<choice>
+		<text>Prepare to repel the assault.</text>
+		<event load="SC_TERRAN_ASSAULT_FIGHT_1"/>
+	</choice>
+</event>
+
+<event name="SC_TERRAN_ASSAULT_FIGHT_1">
+	<text>
+		The first Terran attacker breaks formation and opens fire. More contacts remain at the edge of sensor range.
+	</text>
+
+	<ship hostile="true"/>
+</event>
+
+<event name="SC_TERRAN_ASSAULT_SECOND_WAVE">
+	<text>
+		As the first attacker falls back or breaks apart, a second Terran ship moves in to continue the assault. This one is committed to finishing the fight.
+	</text>
+
+	<ship load="SC_TERRAN_ASSAULT_SHIP_2" hostile="true"/>
 </event>

@@ -23,7 +23,7 @@
 <preIgniteChargers enabled="true"/>
 <showDummyEquipmentSlots enabled="true" opacity="0.2"/>
 <showScrapCollectorScrap enabled="true"/>
-<rightClickDoorOpening enabled="true"/>
+<multiShipFix enabled="true"/>
 
 <alternateOxygenRendering enabled="false">
     <gradient>
