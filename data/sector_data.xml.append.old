@@ -1,0 +1,101 @@
+<FTL>
+
+<!--ZONES:
+S1 (0): Droppoint                 
+S2 (1): Safe zone                maxSector="4"
+S3-5 (2-4): Generic Sectors      minSector="2" maxSector="4"
+S4-7 (3-6): Safe Unique Sectors  minSector="3"
+S6-7 (5-6): Risk Unique Sectors  minSector="5"
+S8 (7): Last Stand-->
+
+<!--
+<sectorDescription name="TEMPLATE_FRIENDLY" unique="false">
+	<nameList>
+		<name>Template</name>
+	</nameList>
+	<trackList>
+		<track>civilian</track>
+	</trackList>
+	<rarityList>
+		<blueprint name="human" rarity="0"/>
+		<blueprint name="human_medic" rarity="0"/>
+		<blueprint name="human_engineer" rarity="0"/>
+		<blueprint name="engi" rarity="0"/>
+		<blueprint name="engi_separatist" rarity="0"/>
+		<blueprint name="zoltan" rarity="0"/>
+		<blueprint name="zoltan_monk" rarity="0"/>
+		<blueprint name="zoltan_devotee" rarity="0"/>
+		<blueprint name="rock" rarity="0"/>
+		<blueprint name="rock_outcast" rarity="0"/>
+		<blueprint name="rock_commando" rarity="0"/>
+		<blueprint name="mantis" rarity="0"/>
+		<blueprint name="mantis_free" rarity="0"/>
+		<blueprint name="slug" rarity="0"/>
+		<blueprint name="slug_clansman" rarity="0"/>
+		<blueprint name="shell" rarity="0"/>
+		<blueprint name="shell_scientist" rarity="0"/>
+		<blueprint name="shell_mechanic" rarity="0"/>
+		<blueprint name="shell_guardian" rarity="0"/>
+		<blueprint name="crystal" rarity="0"/>
+		<blueprint name="crystal_liberator" rarity="0"/>
+		<blueprint name="orchid" rarity="0"/>
+		<blueprint name="orchid_vampweed" rarity="0"/>
+		<blueprint name="leech" rarity="0"/>
+		<blueprint name="lanius" rarity="0"/>
+		<blueprint name="phantom" rarity="0"/>
+		<blueprint name="phantom_goul" rarity="0"/>
+		<blueprint name="phantom_mare" rarity="0"/>
+		<blueprint name="phantom_wraith" rarity="0"/>
+	</rarityList>
+	<startEvent>START_BEACON</startEvent>
+	<removeFirstBeaconNebula/>
+	<exitBeacon event="FINISH_BEACON_FACTION" nebulaEvent="FINISH_BEACON_NEBULA" rebelEvent="FINISH_BEACON_FLEET_ELITE"/>
+	<rebelBeacon event="FLEET_THREAT_MEDIUM" nebulaEvent="NEBULA_LIGHT_FLEET_THREAT_MEDIUM"/>
+	<priorityEvent name="ANOMALY_SPAWNER" min="1" max="1" priority="1" req="ANOMALY_SPAWN_CHECK" lvl="1"/>
+	<event name="MV_TRAVELER" min="1" max="1"/>
+	<event name="SYLVAN_CHANCE" min="0" max="1"/>
+	
+	<event name="OUTPOST_FACTION_SPAWNER" min="0" max="1"/>
+	<event name="STORELIST_SECTOR" min="2" max="3"/>
+	
+	<event name="ITEMS_SECTOR" min="3" max="4"/>
+	<event name="NEUTRAL_SECTOR" min="4" max="5"/>
+	<event name="DISTRESS_SECTOR" min="1" max="2"/>
+	<event name="QUESTS_SECTOR" min="1" max="1"/>
+	
+	<event name="HOSTILE_SECTOR" min="4" max="6"/>
+	
+	<event name="PIRACY_LIST" min="0" max="2"/>
+	<event name="FILLER_LIST" min="5" max="5"/>
+</sectorDescription>
+-->
+
+<sectorDescription name="SECTOR_ID" unique="false">
+	<nameList>
+<name>Cool Sector</name>
+<name>Cool Space</name>
+<name>Cool Settlements</name>
+</nameList>
+<trackList>
+	<track>song1</track>
+<track>song2</track>
+</trackList>
+<rarityList>
+	<blueprint name="human" rarity="5"/>
+<blueprint name="shell" rarity="1"/>
+</rarityList>
+<startEvent>ENTER_COOL</startEvent>
+
+<event name="STORELIST_COOL" min="1" max="2"/>
+
+<event name="ITEMS_COOL" min="3" max="4"/>
+<event name="NEUTRAL_COOL" min="4" max="5"/>
+<event name="DISTRESS_COOL" min="1" max="2"/>
+<event name="QUESTS_COOL" min="1" max="1"/>
+
+<event name="HOSTILE_COOL" min="4" max="6"/>
+
+<event name="PIRACY_LIST" min="0" max="2"/>
+<event name="FILLER_LIST" min="5" max="5"/>
+</sectorDescription>
+</FTL>

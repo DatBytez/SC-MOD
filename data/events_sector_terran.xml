@@ -126,15 +126,17 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     GENERIC COMBAT RESULT EVENTS
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+-->
 
 <event name="SC_SURRENDER_TERRAN">
     <text>"Stand down. We can transfer supplies if you let us limp out of here."</text>
+	<text>"You recieve a jumbled message from the heavily damaged ship. The remaining crew has surrendered and is requesting immediate aid."</text>
+	<text>"Fine, fine. Take the cargo. Just do not vent us into space."</text>
     <choice>
         <text>Accept their surrender.</text>
         <event>
             <ship hostile="false"/>
-            <autoReward level="LOW">stuff</autoReward>
+            <autoReward level="RANDOM">stuff</autoReward>
         </event>
     </choice>
     <choice>
@@ -142,7 +144,7 @@
         <event/>
     </choice>
 </event>
-
+<!--
 <event name="SC_SURRENDER_TERRAN_SCOUT">
     <text>"You recieve a jumbled message from the heavily damaged ship. The remaining crew has surrendered and is requesting immediate aid."</text>
     <choice>
@@ -202,17 +204,22 @@
         <event/>
     </choice>
 </event>
-
+-->
 <event name="SC_DESTROYED_TERRAN">
-    <text>The Terran patrol ship breaks apart. You salvage what remains.</text>
+    <text>The Terran ship breaks apart. You salvage what remains.</text>
     <autoReward level="MED">standard</autoReward>
 </event>
-
+<event name="SC_ESCAPE_TERRAN">
+    <text>The Terran ship escaped.</text>
+</event>
+<event name="SC_GOTAWAY_TERRAN">
+    <text>The Terran ship got away.</text>
+</event>
 <event name="SC_DEAD_CREW_TERRAN">
-    <text>With the crew neutralized, you search the Terran vessel and secure its supplies.</text>
+    <text>With the crew neutralized, you search the Terran ship and secure its supplies.</text>
     <autoReward level="HIGH">standard</autoReward>
 </event>
-
+<!--
 <event name="SC_DESTROYED_RAIDER">
     <text>The raider ship is destroyed. Whatever cargo survived is now yours.</text>
     <autoReward level="MED">standard</autoReward>
@@ -264,7 +271,894 @@
 </event>
 -->
 
-<!--<ENCOUNTER TERRAN PATROL ENCOUNTER>-->
+<!--
+*********************************************************************************************************
+  EVENTS FROM MV
+*********************************************************************************************************
+-->
+<!--
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+					ITEM EVENTS ()
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+-->	
+<eventList name="ITEMS_TERRAN">
+	<event load="DOMINION_SUPPLY"/>
+	<event load="DOMINION_FREECREW"/>
+	<event load="DOMINION_AMMO"/>
+</eventList>
+
+<event name="DOMINION_SUPPLY" unique="true">
+	<text>You discover a fully militarized Dominion station here, though it appears they are selling supplies to passing allied ships.</text>
+	<ship load="SC_TERRAN_ALL_SHIPS" hostile="false"/>
+	<choice>
+		<text>Purchase fuel.</text>
+		<event>
+			<item_modify>
+				<item type="fuel" min="5" max="7"/>
+				<item type="scrap" min="-20" max="-10"/>
+			</item_modify>
+		</event>
+	</choice>
+	<choice>
+		<text>Purchase ammunition.</text>
+		<event>
+			<item_modify>
+				<item type="missiles" min="8" max="10"/>
+				<item type="scrap" min="-40" max="-25"/>
+			</item_modify>
+		</event>
+	</choice>
+	<choice>
+		<text>Purchase a weapon.</text>
+		<event>
+			<item_modify>
+				<item type="scrap" min="-60" max="-40"/>
+			</item_modify>
+			<weapon name="RANDOM"/>
+		</event>
+	</choice>
+	<choice hidden="true">
+		<text>Attack the station!</text>
+		<event>
+			<text>No one is safe from you. The Dominion will not be pleased when they hear of this.</text>
+			<ship hostile="true"/>
+		</event>
+	</choice>
+	<choice hidden="true">
+		<text>Ignore the station.</text>
+	</choice>
+</event>
+<event name="DOMINION_SUPPLY_STATION_KILL">
+	<text>Your unprovoked, attack on a Dominion Station has been successful. You scrap what remains.</text>
+	<autoReward level="MED">standard</autoReward>
+</event>
+
+<event name="DOMINION_FREECREW" unique="true">
+	<text>A damaged Dominion ship hails you. "Good, a friendly face for once. Our ship has taken catastrophic damage and there's no chance of repairing it. I don't suppose you'd be willing to allow me aboard? I'm handy with a wrench and I'm sure my skills could be of service to you."</text>
+	<choice hidden="true">
+		<text>Welcome them aboard.</text>
+		<event load="DOMINION_FREECREW_WELCOME"/>
+	</choice>
+	<choice hidden="true">
+		<text>We don't need any more crew, sorry.</text>
+		<event>
+			<text>"Oh... ok. Hopefully I'll be able to keep the stabilizers under control so they don't collapse before another ship arrives to help..."</text>
+		</event>
+	</choice>
+</event>
+<eventList name="DOMINION_FREECREW_WELCOME">
+	<event>
+		<text>The civilian is thankful for your assistance.</text>
+		<crewMember amount="1" class="terran_civilian" repair="1"/>
+	</event>
+	<event>
+		<text>As the crewman comes onto your ship, draws a laser and shoots at you. Luckily, no one is hit, but a ship bearing the markings of the Sons of Korhal uncloaks nearby and attacks. It was a trap!</text>
+		<boarders min="1" max="1" class="terran_civilian"/>
+		<ship load="SC_TERRAN_ALL_SHIPS" hostile="true"/>
+	</event>
+</eventList>
+
+
+<event name="DOMINION_AMMO" unique="true">
+    <text>A Dominion station is sending out a request for ammunition, in return for scrap. Their high demand is likely due to the increasing number of blockades by the outlaws, the Sons of Korhal. They might be able to spare some blueprints if you are generous.</text>
+    <choice>
+        <text>Offer 5 missiles for whatever scrap they have.</text>
+        <event>
+            <disableScrapAugments/>
+            <item_modify>
+                <item type="scrap" min="35" max="35"/>
+                <item type="missiles" min="-5" max="-5"/>
+            </item_modify>
+        </event>
+    </choice>
+    <choice>
+        <text>Offer 10 missiles for a patch-up and some extra fuel.</text>
+        <event>
+            <disableScrapAugments/>
+            <item_modify>
+                <item type="missiles" min="-10" max="-10"/>
+                <item type="fuel" min="5" max="5"/>
+            </item_modify>
+            <damage amount="-20"/>
+        </event>
+    </choice>
+    <choice>
+        <text>Offer 10 missiles for an augment.</text>
+        <event>
+            <disableScrapAugments/>
+            <item_modify>
+                <item type="missiles" min="-10" max="-10"/>
+            </item_modify>
+			<augment name="LIST_AUGMENT_TERRAN_ALL"/>
+        </event>
+    </choice>
+    <choice>
+        <text>Offer 15 missiles for a weapon.</text>
+        <event>
+            <item_modify>
+                <item type="missiles" min="-15" max="-15"/>
+            </item_modify>
+            <weapon name="TERRAN_STANDARD_WEAPONS"/>
+        </event>
+    </choice>
+	<choice>
+        <text>Offer 20 missiles because the Sons of Korhal need to be stopped!</text>
+        <event>
+            <disableScrapAugments/>
+            <text>"Wow, are you serious? Thank you, your commitment to the cause will not be forgotten! The Dominion is grateful for your support."</text>
+            <item_modify>
+                <item type="missiles" min="-20" max="-20"/>
+            </item_modify>
+            <modifyPursuit amount="-2"/>
+			<choice>
+				<text>Continue...</text>
+				<event load="MORALITY_REMOVE_GENERAL"/>
+			</choice>
+        </event>
+    </choice>
+    <choice hidden="true">
+        <text>We don't have anything to sell.</text>
+    </choice>
+</event>
+
+<!--
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+					NEUTRAL EVENTS ()
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+-->	
+<eventList name="NEUTRAL_TERRAN">
+	<event load="DOMINION_KORHAL_CHOICE"/>
+	<event load="DOMINION_HANGAR_RAID"/>
+	<event load="DOMINION_KORHAL_CONTACT"/>
+	<event load="DOMINION_ENCOUNTER_ELITE_STEALTH"/>
+</eventList>
+
+<event name="DOMINION_KORHAL_CONTACT" unique="true">
+    <text>A small Dominion ship is skulking far from the beacon. They seem to be waiting for someone.</text>
+    <choice hidden="true">
+        <text>Contact the Dominion ship.</text>
+        <event>
+            <text>The Dominion ship responds. "You're here for... business, aren't you?"</text>
+            <choice>
+                <text>Yes.</text>
+                <event>
+                    <text>"Thought so. Let me tell them that the coast is clear." A moment later, a ship bearing the markings of the Sons of Korhal approaches.</text>
+                    <choice>
+                        <text>Threaten to report the Federation ship for being in cahoots with smugglers.</text>
+                        <event load="DOMINION_KORHAL_THREATEN"/>
+                    </choice>
+                    <choice>
+                        <text>Attack the pirate!</text>
+                        <event>
+                            <text>The Dominion captain quickly flies away. The smuggler angrily yells after the Dominion captain: "Damn you! You were supposed to protect us!"</text>
+                            <ship load="SC_TERRAN_ALL_SHIPS" hostile="true"/>
+                        </event>
+                    </choice>
+                    <choice>
+                        <text>Do business with the smugglers.</text>
+                        <event load="SMUGGLER_OFFERS"/>
+                    </choice>
+                </event>
+            </choice>
+            <choice>
+                <text>No.</text>
+                <event>
+                    <text>"I must have you confused for someone else. Go on your way."</text>
+                </event>
+            </choice>
+        </event>
+    </choice>
+    <choice>
+        <text>Give the ship some space.</text>
+    </choice>
+</event>
+<eventList name="DOMINION_KORHAL_THREATEN">
+    <event>
+        <text>The smuggler puts his hands up. "Okay, okay! Let's not get hasty! Surely a discerning Renegade like yourself would be amenable to an understanding. Perhaps you see something you like in my stock?"</text>
+        <choice>
+            <text>Take a free legal weapon off their hands.</text>
+            <event>
+                <text>"You have no eye for quality, Renegade. Even so, we appreciate your discretion."</text>
+                <weapon name="TERRAN_STANDARD_WEAPONS"/>
+            </event>
+        </choice>
+        <choice>
+            <text>Purchase contraband at a discount.</text>
+            <event>
+                <text>"You're as shrewd as you are reasonable, Renegade. Pleasure doing business with you."</text>
+                <item_modify>
+                    <item type="scrap" min="-45" max="-30"/>
+                </item_modify>
+                <weapon name="WEAPONS_ION"/>
+            </event>
+        </choice>
+        <choice>
+            <text>Insist they face justice.</text>
+            <event>
+				<text>"Then you leave me no choice! Prepare to die!"</text>
+				<ship load="SC_TERRAN_ALL_SHIPS" hostile="true"/>
+            </event>
+        </choice>        
+    </event>
+    <event>
+        <text>The smuggler screams, "Narcs get what they deserve! Prepare to die!" Meanwhile, the Federation ship makes a hasty retreat.</text>
+        <ship load="SC_TERRAN_ALL_SHIPS" hostile="true"/>
+    </event>
+    <event>
+        <text>The Federation warms its weapons up. "You think you can just threaten my career and get away with it? I'll never give in!"</text>
+        <ship load="SC_TERRAN_ALL_SHIPS" hostile="true"/>
+    </event>
+</eventList>
+<eventList name="DOMINION_KORHAL_TERRAN_DEFEAT">
+    <event>
+        <text>The smuggler is nowhere to be found. You radio the nearest Federation base and let them know that there is a smuggler on the loose.</text>
+    </event>
+    <event>
+        <text>You chase down the smuggler. "You law-abiding Federation types are scary! Please don't kill us!" You escort the smuggler to the nearest Federation base, where you are rewarded.</text>
+        <autoReward level="LOW">standard</autoReward>
+    </event>
+</eventList>
+
+
+<event name="DOMINION_KORHAL_CHOICE">
+	<text load="TEXT_DOMINION_KORHAL_CHOICE"/>
+	<ship load="SC_TERRAN_ALL_SHIPS" hostile="false"/>
+	<choice hidden="true">
+		<text>Fight the ship.</text>
+		<event>
+			<text>No Sons of Korhal will be allowed to live so long as you can help it.</text>
+			<ship hostile="true"/>
+		</event>
+	</choice>
+	<choice hidden="true">
+		<text>Avoid the ship.</text>
+		<event>
+			<text>You have no interest in fighting with the Sons of Korhal.</text>
+		</event>
+	</choice>
+</event>
+<textList name="TEXT_DOMINION_KORHAL_CHOICE">
+    <text>A ship bearing the markings of the Sons of Korhal is making minor repairs at this beacon, likely repairing the damage they took charging past the Dominion's borders. They will probably leave you alone if you do not engage them.</text>
+    <text>A nearby ship bearing the markings of the Sons of Korhal gives you a wide berth. They're looking to damage Federation supply lines, not pick a fight with you.</text>
+    <text>Some ships bearing the markings of the Sons of Korhal break through the outer defenses of the sector. This one is avoiding you, likely not wanting to endanger its mission.</text>
+    <text>The Sons of Korhal fleet that is chasing you through this sector might not be focusing all their attention on you. This ship seems preoccupied.</text>
+</textList>
+
+<event name="DOMINION_HANGAR_RAID" unique="true">
+	<text>A large Dominion hangar has been built on the nearby planet. Any Domionion ship is allowed to dock.</text>
+	<choice hidden="true">
+		<text>Dock.</text>
+		<event>
+			<text>You transmit your ID and not long after are allowed to enter. A repair team moves in to refuel your ship and make some repairs.</text>
+			<autoReward level="HIGH">fuel_only</autoReward>
+			<damage amount="-7"/>
+			<choice hidden="true">
+				<text>Leave.</text>
+				<event>
+					<text>As you exit the hangar a blaring siren fills the air. A Sons of Korhal squadron is approaching! The planetary defense cannons are overwhelmed and most of the attacking ships are able to get past. A ship locks onto you and attacks!</text>
+					<ship load="SHIP_REBEL_ELITE_FIGHT" hostile="true"/>
+				</event>
+			</choice>
+		</event>
+	</choice>
+	<choice hidden="true">
+		<text>Ignore the hangar.</text>
+		<event>
+			<text>It's tempting, but you can't waste any time.</text>
+		</event>
+	</choice>
+</event>
+
+<event name="DOMINION_ENCOUNTER_ELITE_STEALTH" unique="true">
+	<text>The Dominion ship patrolling this beacon is no ordinary vessel. Its distinct shape marks it as part of the Federation's latest stealth fleet, created to help keep up with the never ending arms race with the Rebellion. Fortunately, they don't seem to object to your presence, but they aren't particularly welcoming either.</text>
+	<ship load="SC_TERRAN_ALL_SHIPS" hostile="false"/>
+	<choice hidden="true">
+		<text>Attack them.</text>
+		<event>
+			<text>For some reason, you decide to open fire on an especially well-armed allied ship. They hardly hesitate to return the favor. Hopefully this will be worth it.</text>
+			<ship hostile="true"/>
+			<choice>
+				<text>Continue...</text>
+				<event load="MORALITY_UPDATE_GENERAL_FIGHT"/>
+			</choice>
+		</event>
+	</choice>
+	<choice hidden="true" req="rep_comb_federation" lvl="2" blue="false">
+		<text>Given your sketchy reputation, it's probably best to avoid making unnecessary requests from your allies.</text>
+		<event load="OPTION_INVALID"/>
+	</choice>
+	<choice hidden="true" req="rep_comb_federation" lvl="0" max_lvl="1" blue="false">
+		<text>Request assistance from them.</text>
+		<event>
+			<text>"...Yes? We are currently not under any orders to provide aid to passing vessels. We can provide you with some additional fuel, but not much else."</text>
+			<choice>
+				<text>Accept their offer.</text>
+				<event>
+					<item_modify>
+						<item type="fuel" min="3" max="5"/>
+					</item_modify>
+				</event>
+			</choice>
+			<choice>
+				<text>Attack them instead.</text>
+				<event>
+					<text>Unsatisfied at their pitiful offer, you've decided to do whatever it takes to get more.</text>
+					<ship hostile="true"/>
+					<choice>
+						<text>Continue...</text>
+						<event load="MORALITY_UPDATE_GENERAL_FIGHT"/>
+					</choice>
+				</event>
+			</choice>
+		</event>
+	</choice>
+	<choice hidden="true" req="rep_comb_federation" lvl="-999" max_lvl="-1" blue="false">
+		<text>Request assistance from them.</text>
+		<event>
+			<text>"...Yes? We are currently not under any orders to provide aid to passing vessels. Though given your contributions, we could probably make an exception for you. Just don't spend too long deciding."</text>
+			<choice>
+				<text>Request a weapon.</text>
+				<event>
+					<weapon name="RANDOM"/>
+				</event>
+			</choice>
+			<choice>
+				<text>Request a drone.</text>
+				<event>
+					<drone name="RANDOM"/>
+				</event>
+			</choice>
+			<choice>
+				<text>Request supplies.</text>
+				<event>
+					<item_modify>
+						<item type="fuel" min="5" max="5"/>
+						<item type="missiles" min="4" max="4"/>
+						<item type="drones" min="3" max="3"/>
+					</item_modify>
+				</event>
+			</choice>
+		</event>
+	</choice>
+	<choice hidden="true">
+		<text>Leave them alone.</text>
+		<event>
+			<text>Their patrol route soons takes them away from your ship, leaving you mostly alone here.</text>
+		</event>
+	</choice>
+</event>
+
+<!--
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+					DISTRESS EVENTS ()
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+-->
+<eventList name="DISTRESS_TERRAN">
+	<!--<event load="DISTRESS_FEDERATION_TEAMUP"/> Could be used once zerg or protoss are added, a more simplified version could just let the player pick which sons of horhal ship type to fight against. -->
+	<!--<event load="DISTRESS_FEDERATION_COLONY_HOSTAGE"/> Very cool but complicated -->
+</eventList>
+<!--
+<event name="DISTRESS_FEDERATION_TEAMUP" unique="true">
+    <distressBeacon/>
+	<text>You detect three ships in the system as you arrive at the beacon. A Duskbringer and a Rebel are trying to outflank a Federation guard as it transmits its distress call. The uneasy alliance of your enemies has broken through the Federation's defenses!</text>
+	<choice hidden="true">
+		<text>Attack the Duskbringer.</text>
+		<event>
+			<text>You power up your weapons and engage the Duskbringer vessel. As soon as you do, the Federation ship turns to fight the Rebel.</text>
+			<ship load="SHIP_FED_DUSKBRINGER_CHOICE" hostile="true"/> 
+			<choice hidden="true">
+				<text>Continue...</text>
+				<event load="COMBAT_CHECK"/>
+			</choice>
+		</event>
+	</choice>
+	<choice hidden="true">
+		<text>Attack the Rebel.</text>
+		<event>
+			<text>You power up your weapons and engage the Rebel vessel. As soon as you do, the Federation ship turns to fight the Duskbringer.</text>
+			<ship load="SHIP_FED_REBEL_CHOICE" hostile="true"/> 
+			<choice hidden="true">
+				<text>Continue...</text>
+				<event load="COMBAT_CHECK"/>
+			</choice>
+		</event>
+	</choice>
+	<choice req="unique_devorak" hidden="true">
+		<text>(Devorak) Convince the Duskbringer to turn on the Rebel.</text>
+		<event>
+			<text>Devorak hails the Duskbringer ship. "Those treacherous Rebels are not to be trusted. Turn on them and we'll send you back to base." The Duskbringers hardly blink as they turn on their allies. The Rebel ship is promptly surrounded and eradicated by the force of three ships. Your crew begins to harvest the remains.</text>
+			<autoReward level="MED">standard</autoReward>
+			<choice hidden="true">
+				<text>Discuss the Duskbringer's surrender.</text>
+				<event>
+					<text>The Duskbringers grimace, but agree to be escorted out of Federation space. It's clear they're uneasy with any sort of compliance to the Federation, but they don't seem broken up about the deaths of the Rebels. The Federation captain is impressed. "Renegades make some strange bedfellows, don't they?"</text>
+					<autoReward level="LOW">standard</autoReward>
+					<choice hidden="true">
+						<text>Continue...</text>
+						<event load="MORALITY_REMOVE_GENERAL"/>
+					</choice>
+				</event>
+			</choice>
+		</event>
+	</choice>
+	<choice hidden="true">	
+		<text>Ignore the three ships.</text>
+		<event>
+			<text>The Federation ship can likely find help if they continue to evade. Your mission is too important to be distracted by a skirmish like this.</text>
+			<choice hidden="true">
+				<text>Do something onboard the ship.</text>
+				<event load="STORAGE_CHECK"/>
+			</choice>
+			<choice hidden="true">
+				<text>Do nothing.</text>
+				<event/>
+			</choice>
+		</event>
+	</choice>
+</event>
+<event name="FEDERATION_TEAMUP_FOLLOWUP">
+	<text>The Federation Captain salutes you. "Thanks for stopping to help, Renegade. When the Rebels and Duskbringers started playing nice, I was hoping their alliance would fall apart. Guess it was just wishful thinking. Good luck on your mission, captain."</text>
+	<autoReward level="LOW">standard</autoReward>
+	<choice hidden="true">
+		<text>Continue...</text>
+		<event load="MORALITY_REMOVE_GENERAL"/>
+	</choice>
+</event>
+<eventList name="DISTRESS_FEDERATION_UNIQUE">
+	<event load="DISTRESS_FEDERATION_COLONY_HOSTAGE"/>
+	<event load="DISTRESS_FEDERATION_EMBASSY"/>
+</eventList>
+-->
+<!--
+<event name="DISTRESS_FEDERATION_COLONY_HOSTAGE" unique="true">
+	<distressBeacon/>
+	<text>Arriving at this beacon, there is a Federation ship and a strange, heavily armored transport ship with some old-fashioned technology. The Federation ship hails you. "This is Commodore Freamon. We have a major crisis on our hands here. That pirate transport has important hostages on board; we can't fire upon it, and you shouldn't either." The Federation officer pauses, and then continues. "They're also threatening to start attacking the colony from orbit if their demands aren't met."</text>
+	<img planet="PLANET_POPULATED"/>
+    <choice>
+		<text>Continue...</text>
+		<event>
+			<text>Commodore Freamon sighs. "One of their demands is a powerful ship, and they have the means to take one. If you even try to get close enough to fight, they'll send boarding pods and try to take over your ship. But if you can handle a lot of attackers, we might be able to stage a counter-strike and save the hostages. Are you up for this?"</text>
+			<choice>
+				<text>Agree to take on the pirates.</text>
+				<event>
+					<text>"Best of luck, Renegade. You know what to do." The boarding pods hurtle towards your ship at a blisteringly fast pace. You're going to have to get ready for a fight!</text>
+					<choice req="BLUELIST_DRONES_DEFENSE_STRONG">
+						<text>(Strong Defense Drone) Attempt to shoot down the pods with your Defense Drone.</text>
+						<event>
+							<text>Your Defense Drone fires at the incoming pods. The pods are tough, but your drone is powerful enough to destroy one of the pods before the arrival. The other one still manages to break through!</text>
+							<boarders min="1" max="1" class="LIST_CREW_PIRATE_RANDOM"/>
+							<damage amount="0" system="room" effect="breach"/>
+							<variable name="loc_colony_drone_deployed" op="set" val="1"/>
+							<item_modify>
+								<item type="drones" min="-1" max="-1"/>
+							</item_modify>
+							<triggeredEvent event="FEDERATION_BOARDINGPODS_WAVE2" time="12" thisFight="false" clearOnJump="true">
+								<triggeredEventBox load="DEFAULT_SMALL">
+									<tooltip>More boarding pods are approaching!</tooltip>
+								</triggeredEventBox>
+								<timerSounds load="DEFAULT_TIMER_SOUNDS"/>
+							</triggeredEvent>
+						</event>
+					</choice>
+					<choice req="BLUELIST_DRONES_DEFENSE_WEAK">
+						<text>(Weak Defense Drone) Attempt to shoot down the pods with your Defense Drone.</text>
+						<event load="FEDERATION_WEAK_DEFENSE_1"/>
+					</choice>
+					<choice req="LIST_CHECK_ENERGY_SHIELD" lvl="1" blue="false">
+						<text>Continue...</text>
+						<event>
+							<text>The pods impact your Energy Shield. Unfortunately, it was unable to stop them from tunneling in. You'll have to fight them!</text>
+							<boarders min="2" max="2" class="LIST_CREW_PIRATE_RANDOM"/>
+							<damage amount="0" system="room" effect="breach"/>
+							<triggeredEvent event="FEDERATION_BOARDINGPODS_WAVE2" time="12" thisFight="false" clearOnJump="true">
+								<triggeredEventBox load="DEFAULT_SMALL">
+									<tooltip>More boarding pods are approaching!</tooltip>
+								</triggeredEventBox>
+								<timerSounds load="DEFAULT_TIMER_SOUNDS"/>
+							</triggeredEvent>
+						</event>
+					</choice>
+					<choice req="LIST_CHECK_ENERGY_SHIELD" lvl="0" max_lvl="0" blue="false">
+						<text>Continue...</text>
+						<event>
+							<text>The first two pods break through your hull. It's a fight!</text>
+							<boarders min="2" max="2" class="LIST_CREW_PIRATE_RANDOM"/>
+							<damage amount="0" system="room" effect="breach"/>
+							<triggeredEvent event="FEDERATION_BOARDINGPODS_WAVE2" time="12" thisFight="false" clearOnJump="true">
+								<triggeredEventBox load="DEFAULT_SMALL">
+									<tooltip>More boarding pods are approaching!</tooltip>
+								</triggeredEventBox>
+								<timerSounds load="DEFAULT_TIMER_SOUNDS"/>
+							</triggeredEvent>
+						</event>
+					</choice>
+				</event>
+			</choice>
+			<choice>
+				<text>Tell Freamon your crew isn't ready for this.</text>
+				<event>
+					<text>"If you can't do it, we'll find another way. Good luck on your mission."</text>
+					<choice>
+						<text>Do something onboard the ship.</text>
+						<event load="STORAGE_CHECK"/>
+					</choice>
+					<choice>
+						<text>Do nothing.</text>
+						<event/>
+					</choice>
+				</event>
+			</choice>
+		</event>
+    </choice>
+</event>
+<event name="FEDERATION_BOARDINGPODS_WAVE2">
+    <text>Three more boarding pods come hurtling towards the hull. The pirates are serious about taking your ship.</text>
+    <choice req="BLUELIST_DRONES_DEFENSE_STRONG"> 
+		<text>(Strong Defense Drone) Attempt to shoot down the pods with your Defense Drone.</text>
+		<event>
+			<text>Your Defense Drone fires at the incoming pods. The pods are tough, but your drone is powerful enough to destroy one of the pods before it gets to you. The other two still manage to break through!</text>
+			<boarders min="2" max="2" class="LIST_CREW_PIRATE_RANDOM"/>
+			<damage amount="0" system="room" effect="breach"/>
+			<variable name="loc_colony_drone_deployed" op="set" val="1"/>
+			<item_modify>
+				<item type="drones" min="-1" max="-1"/>
+			</item_modify>
+			<triggeredEvent event="FEDERATION_BOARDINGPODS_WAVE3" time="15" thisFight="false" clearOnJump="true">
+				<triggeredEventBox load="DEFAULT_SMALL">
+					<tooltip>More boarding pods are approaching!</tooltip>
+				</triggeredEventBox>
+				<timerSounds load="DEFAULT_TIMER_SOUNDS"/>
+			</triggeredEvent>
+		</event>
+    </choice>
+	<choice req="DEFENSE_STRONG_DEPLOYED"> 
+		<text>(Strong Defense Drone) Attempt to shoot down the pods with your Defense Drone.</text>
+		<event>
+			<text>Your Defense Drone fires at the incoming pods. The pods are tough, but your drone is powerful enough to destroy one of the pods before it gets to you. The other two still manage to break through!</text>
+			<boarders min="2" max="2" class="LIST_CREW_PIRATE_RANDOM"/>
+			<damage amount="0" system="room" effect="breach"/>
+			<triggeredEvent event="FEDERATION_BOARDINGPODS_WAVE3" time="15" thisFight="false" clearOnJump="true">
+				<triggeredEventBox load="DEFAULT_SMALL">
+					<tooltip>More boarding pods are approaching!</tooltip>
+				</triggeredEventBox>
+				<timerSounds load="DEFAULT_TIMER_SOUNDS"/>
+			</triggeredEvent>
+		</event>
+    </choice>
+	<choice req="BLUELIST_DRONES_DEFENSE_WEAK"> 
+		<text>(Weak Defense Drone) Attempt to shoot down the pods with your Defense Drone.</text>
+		<event>
+			<text>You finally decide to deploy your drone...</text>
+			<item_modify>
+				<item type="drones" min="-1" max="-1"/>
+			</item_modify>
+			<variable name="loc_colony_drone_weak_deployed" op="set" val="1"/>
+			<choice>
+				<text>Continue...</text>
+				<event load="FEDERATION_WEAK_DEFENSE_2"/>
+			</choice>
+		</event>
+    </choice>
+	<choice req="DEFENSE_WEAK_DEPLOYED"> 
+		<text>(Weak Defense Drone) Attempt to shoot down the pods with your Defense Drone.</text>
+		<event load="FEDERATION_WEAK_DEFENSE_2"/>
+    </choice>
+    <choice>
+		<text>Continue...</text>
+		<event>
+			<text>All three pods break into your ship. More are surely on their way!</text>
+			<boarders min="3" max="3" class="LIST_CREW_PIRATE_RANDOM"/>
+			<damage amount="0" system="room" effect="breach"/>
+			<triggeredEvent event="FEDERATION_BOARDINGPODS_WAVE3" time="15" thisFight="false" clearOnJump="true">
+				<triggeredEventBox load="DEFAULT_SMALL">
+					<tooltip>More boarding pods are approaching!</tooltip>
+				</triggeredEventBox>
+				<timerSounds load="DEFAULT_TIMER_SOUNDS"/>
+			</triggeredEvent>
+		</event>
+    </choice>
+</event>
+<eventList name="FEDERATION_WEAK_DEFENSE_1">
+    <event>
+		<text>Your Defense Drone lands a glancing blow, but it's no use - the pod is too strong. You'll have to fight all of the crew that are boarding!</text>
+		<boarders min="2" max="2" class="LIST_CREW_PIRATE_RANDOM"/>
+		<damage amount="0" system="room" effect="breach"/>
+		<variable name="loc_colony_drone_weak_deployed" op="set" val="1"/>
+		<item_modify>
+			<item type="drones" min="-1" max="-1"/>
+		</item_modify>
+		<triggeredEvent event="FEDERATION_BOARDINGPODS_WAVE2" time="12" thisFight="false" clearOnJump="true">
+			<triggeredEventBox load="DEFAULT_SMALL">
+				<tooltip>More boarding pods are approaching!</tooltip>
+			</triggeredEventBox>
+			<timerSounds load="DEFAULT_TIMER_SOUNDS"/>
+		</triggeredEvent>
+    </event>
+    <event>
+		<text>Your Defense Drone's first shot staggers one of the pods, and its second shot manages to knock it away, sending the boarding pod off course. You'll still have to deal with the other pod!</text>
+		<boarders min="1" max="1" class="LIST_CREW_PIRATE_RANDOM"/>
+		<damage amount="0" system="room" effect="breach"/>
+		<variable name="loc_colony_drone_weak_deployed" op="set" val="1"/>
+		<item_modify>
+			<item type="drones" min="-1" max="-1"/>
+		</item_modify>
+		<triggeredEvent event="FEDERATION_BOARDINGPODS_WAVE2" time="12" thisFight="false" clearOnJump="true">
+			<triggeredEventBox load="DEFAULT_SMALL">
+				<tooltip>More boarding pods are approaching!</tooltip>
+			</triggeredEventBox>
+			<timerSounds load="DEFAULT_TIMER_SOUNDS"/>
+		</triggeredEvent>
+    </event>
+</eventList>
+
+<eventList name="FEDERATION_WEAK_DEFENSE_2">
+    <event>
+		<text>Your Defense Drone lands a glancing blow, but it's no use - the pod is too strong. You'll have to fight all of the crew that are boarding!</text>
+		<boarders min="3" max="3" class="LIST_CREW_PIRATE_RANDOM"/>
+		<damage amount="0" system="room" effect="breach"/>
+		<triggeredEvent event="FEDERATION_BOARDINGPODS_WAVE3" time="15" thisFight="false" clearOnJump="true">
+			<triggeredEventBox load="DEFAULT_SMALL">
+				<tooltip>More boarding pods are approaching!</tooltip>
+			</triggeredEventBox>
+			<timerSounds load="DEFAULT_TIMER_SOUNDS"/>
+		</triggeredEvent>
+    </event>
+    <event>
+		<text>Your Defense Drone's first shot staggers one of the pods, and its second shot manages to knock it away, sending the boarding pod off course. You'll still have to deal with the other pods!</text>
+		<boarders min="2" max="2" class="LIST_CREW_PIRATE_RANDOM"/>
+		<damage amount="0" system="room" effect="breach"/>
+		<triggeredEvent event="FEDERATION_BOARDINGPODS_WAVE3" time="15" thisFight="false" clearOnJump="true">
+			<triggeredEventBox load="DEFAULT_SMALL">
+				<tooltip>More boarding pods are approaching!</tooltip>
+			</triggeredEventBox>
+			<timerSounds load="DEFAULT_TIMER_SOUNDS"/>
+		</triggeredEvent>
+    </event>
+</eventList>
+<eventList name="FEDERATION_WEAK_DEFENSE_3">
+    <event>
+		<text>Your Defense Drone lands a glancing blow, but it's no use - the pod is too strong. You'll have to fight all of the crew that are boarding!</text>
+		<boarders min="4" max="4" class="LIST_CREW_PIRATE_RANDOM"/>
+		<damage amount="0" system="room" effect="breach"/>
+    </event>
+    <event>
+		<text>Your Defense Drone's first shot staggers one of the pods, and its second shot manages to knock it away, sending the boarding pod off course. You'll still have to deal with the other pods!</text>
+		<boarders min="3" max="3" class="LIST_CREW_PIRATE_RANDOM"/>
+		<damage amount="0" system="room" effect="breach"/>
+    </event>
+</eventList>
+
+<event name="FEDERATION_BOARDINGPODS_WAVE3">
+    <text>They're committing fully to taking your ship. Four more pods are approaching!</text>
+    <triggeredEvent event="FEDERATION_BOARDINGPODS_WIN" thisFight="false" clearOnJump="true">
+		<enemyCrew amount="0" includeClonebay="false"/>
+	</triggeredEvent>
+    <choice req="BLUELIST_DRONES_DEFENSE_STRONG">
+		<text>(Strong Defense Drone) Attempt to shoot down the pods with your Defense Drone.</text>
+		<event>
+			<text>Your Defense Drone fires at the incoming pods. The pods are tough, but your Defense Drone is powerful enough to destroy one of the pods before it gets to you. The other three still manage to break through. This is it!</text>
+			<boarders min="3" max="3" class="LIST_CREW_PIRATE_RANDOM"/>
+			<damage amount="0" system="room" effect="breach"/>
+			<variable name="loc_colony_drone_deployed" op="set" val="1"/>
+			<item_modify>
+				<item type="drones" min="-1" max="-1"/>
+			</item_modify>
+		</event>
+    </choice>
+	<choice req="DEFENSE_STRONG_DEPLOYED">
+		<text>(Strong Defense Drone) Attempt to shoot down the pods with your Defense Drone.</text>
+		<event>
+			<text>Your Defense Drone fires at the incoming pods. The pods are tough, but your Defense Drone is powerful enough to destroy one of the pods before it gets to you. The other three still manage to break through. This is it!</text>
+			<boarders min="3" max="3" class="LIST_CREW_PIRATE_RANDOM"/>
+			<damage amount="0" system="room" effect="breach"/>
+		</event>
+    </choice>
+	<choice req="BLUELIST_DRONES_DEFENSE_WEAK">
+		<text>(Weak Defense Drone) Attempt to shoot down the pods with your Defense Drone.</text>
+		<event>
+			<text>You finally decide to deploy your drone...</text>
+			<item_modify>
+				<item type="drones" min="-1" max="-1"/>
+			</item_modify>
+			<variable name="loc_colony_drone_deployed" op="set" val="1"/>
+			<choice>
+				<text>Continue...</text>
+				<event load="FEDERATION_WEAK_DEFENSE_3"/>
+			</choice>
+		</event>
+    </choice>
+	<choice req="DEFENSE_WEAK_DEPLOYED"> 
+		<text>(Weak Defense Drone) Attempt to shoot down the pods with your Defense Drone.</text>
+		<event load="FEDERATION_WEAK_DEFENSE_3"/>
+    </choice>
+    <choice>
+		<text>Continue...</text>
+		<event>
+			<text>All four pods break into your ship. This is it!</text>
+			<boarders min="4" max="4" class="LIST_CREW_PIRATE_RANDOM"/>
+			<damage amount="0" system="room" effect="breach"/>
+		</event>
+    </choice>
+</event>
+<event name="FEDERATION_BOARDINGPODS_WIN">
+    <text>"This is Freamon. We've successfully secured the hostages. I want to extend my utmost appreciation for what you've done here today. We're going to get them all to safety. The pirates had some military equipment on their ship - if you want it, it's yours." As the Commodore has his crew bring you the pirate's belongings, one of them passes on a thank-you note from a child that had been taken.</text>
+    <autoReward level="HIGH">weapon</autoReward>
+	<variable name="loc_colony_drone_deployed" op="set" val="0"/>
+	<variable name="loc_colony_drone_weak_deployed" op="set" val="0"/>
+    <choice>
+		<text>Continue...</text>
+		<event load="MORALITY_REMOVE_GENERAL"/>
+    </choice>
+</event>
+-->
+
+<!--
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+					QUEST EVENTS ()
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+-->
+<eventList name="QUESTS_TERRAN"> <!--NEEDS MORE-->
+	<event load="DOMINION_SHIP_STOLEN"/>
+</eventList>
+
+<event name="DOMINION_SHIP_STOLEN" unique="true">
+    <text>A charred and smoking hangar resides at this beacon, barely functional. "We've been waiting for help to come by... we have truly awful news! A Dominion ship has been taken by the Sons of Korhal! Please, you have to do something! We have no idea what they're going to do with it, but whatever they are planning cannot happen!"</text>
+    <choice>
+        <text>Agree to their request.</text>
+        <event>
+            <text>"We can still track their ship... fortunately we were not all killed in their escape. Please hurry!"</text>
+            <quest event="DOMINION_SHIP_STOLEN_QUEST"/>
+        </event>
+    </choice>
+    <choice>
+        <text>We can't help.</text>
+        <event>
+            <text>"Are you insane? The importance of this mission is... no, I'm sorry. I know your mission is important too. We will find somebody else."</text>
+        </event>
+    </choice>
+</event>
+<event name="DOMINION_SHIP_STOLEN_QUEST">
+    <beaconType id="map_icon_quest" global="true">
+        <color r="69" g="168" b="235" a="1"/>
+        <unvisitedTooltip>The Sons of Korhal have seized a Dominion ship, and it is currently at this beacon.</unvisitedTooltip>
+    </beaconType>
+    <text>The occupied Dominion ship is approaching a Union station. But as soon as you move within sensor range, it disengages to face your ship instead!</text>
+    <ship load="SHIP_DOMINION_STOLEN" hostile="true"/>
+    <choice>
+        <text>Continue...</text>
+        <event load="COMBAT_CHECK"/>
+    </choice>
+</event>
+
+<!--
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+					HOSTILE EVENTS ()
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+-->
+<eventList name="HOSTILE_TERRAN">
+	<event load="ENCOUNTER_DOMINION_SALVAGE"/>
+	<event load="ENCOUNTER_DOMINION_KORHAL_TAKEOVER"/>
+	
+	<event load="ENCOUNTER_KORHAL"/>
+	<event load="ENCOUNTER_KORHAL"/>
+</eventList>
+
+<event name="ENCOUNTER_DOMINION_SALVAGE" unique="true">
+    <text>You find the wreck of a Dominion ship nearby. Before you can even begin to consider salvaging it, another Federation ship jumps in. They demand an explanation for what happened.</text>
+    <ship load="SHIP_FED_SALVAGE" hostile="false"/>
+    <choice hidden="true" req="rep_comb_federation" lvl="-999" max_lvl="-2" blue="false">
+        <text>Tell them you didn't destroy this ship.</text>
+        <event>
+            <text>Your good reputation precedes you. Once they realize who you are, they apologize for the mix-up and offer to help you harvest the ship faster. Though not much remains, you find some usable equipment, and a small helping of scrap for your troubles.</text>
+            <autoReward level="LOW">item</autoReward>
+        </event>
+    </choice>
+    <choice hidden="true" req="rep_comb_federation" lvl="-1" max_lvl="1" blue="false">
+        <text>Tell them you didn't destroy this ship.</text>
+        <event load="ENCOUNTER_DOMINION_SALVAGE_LIST"/>
+    </choice>
+    <choice hidden="true" req="rep_comb_federation" lvl="2" blue="false">
+        <text>Tell them you didn't destroy this ship.</text>
+        <event>
+            <text>Whilst you try to convince them that they're mistaken, they don't seem inclined to believe you. "We've heard about all your misdeeds here! You really expect us to buy that you're not responsible?"</text>
+            <ship hostile="true"/>
+        </event>
+    </choice>
+    <choice hidden="true">
+        <text>Fight your way out of this.</text>
+        <event>
+            <text>You mute comms and prepare to fight them. Judging by how quickly they move to defend themselves, it seems this was what they expected you to do.</text>
+            <ship hostile="true"/>
+            <choice hidden="true">
+                <text>Continue...</text>
+                <event load="MORALITY_UPDATE_GENERAL_FIGHT"/>
+            </choice>
+        </event>
+    </choice>
+</event>
+<eventList name="ENCOUNTER_DOMINION_SALVAGE_LIST">
+    <event>
+        <text>After a few moments of skepticism, the Dominion relents and lets you harvest the ship in peace. Though not much remains, you find some usable equipment, and a small helping of scrap for your troubles.</text>
+        <autoReward level="LOW">item</autoReward>
+    </event>
+    <event>
+        <text>"Hmph. You're still taking the remains, you vulture." They back off, letting you harvest the ship. Though not much remains, you find some usable equipment, and a small helping of scrap for your troubles.</text>
+        <autoReward level="LOW">item</autoReward>
+    </event>
+    <event>
+        <text>"Sorry about that. Some folks aren't so well behaved. I'll help you out." Though not much remains, you find some usable equipment, and a small helping of scrap for your troubles.</text>
+        <autoReward level="LOW">item</autoReward>
+    </event>
+    <event>
+        <text>"Well, if you were responsible for this, I'm sure we'd already be fighting. Let me give you a hand." Though not much remains, you find some usable equipment, and a small helping of scrap for your troubles.</text>
+        <autoReward level="LOW">item</autoReward>
+    </event>
+    <event>
+        <text>"A likely story! Word has it that some folks will harvest any ship unlucky enough to cross paths with them. You'll pay for this!"</text>
+        <ship hostile="true"/>
+    </event>
+</eventList>
+
+<event name="ENCOUNTER_DOMINION_KORHAL_TAKEOVER" unique="true">
+	<text>You receive an urgent hail from the nearby Dominion ship. "You have to help, the Sons of Korhal, they've taken over the ship!" The call suddenly goes to static and the ship turns hostile!</text>
+	<ship load="SHIP_DOMINION_KORHAL_TAKEOVER" hostile="true"/> 
+</event>
+<event name="KORHAL_TAKEOVER_SURRENDER">
+	<text>The new "captain" of the ship hails you. "Alright, you've caused enough damage. Let us go, and we'll spare the last survivor of the original crew."</text>
+	<choice>
+		<text>Agree to spare them.</text>
+		<event>
+			<crewMember amount="1" class="terran_civilian"/>
+			<ship hostile="false"/> 
+		</event>
+	</choice>
+	<choice>
+		<text>The death of one more civilian is worth the death of even more Sons of Korhal.</text>
+		<event/>
+	</choice>
+</event>
+<event name="KORHAL_TAKEOVER_DESTROY">
+	<text>You've destroyed the Dominion ship, and with it the Sons of Korhal and Dominion crew. You salvage what's left of the wreck.</text>
+	<autoReward level="MED">standard</autoReward>
+</event>
+<event name="KORHAL_TAKEOVER_DEADCREW">
+	<text>You've killed off all of the Sons of Korhal. As you salvage the ship, you notice the body of one of the old Dominion crew. You find they're still alive, and help them to their feet. After some washing and first-aid they're good as new and ready to serve on your ship.</text>
+	<autoReward level="HIGH">standard</autoReward>
+	<crewMember amount="1" class="terran_civilian"/>
+</event>
+
+
+
 <!--
 *********************************************************************************************************
   TERRAN PATROL ENCOUNTER
@@ -845,7 +1739,7 @@
 		A Terran assault group is already waiting at this beacon. Their lead ship moves to intercept, weapons hot and formation tight. This is not a scout or patrol trying to identify you; this is a direct attack.
 	</text>
 
-	<ship load="SC_TERRAN_ASSAULT_SHIP_1" hostile="false"/>
+	<ship load="SC_TERRAN_ASSAULT_SHIP_1" hostile="true"/>
 
 	<choice>
 		<text>Prepare to repel the assault.</text>
@@ -866,5 +1760,326 @@
 		As the first attacker falls back or breaks apart, a second Terran ship moves in to continue the assault. This one is committed to finishing the fight.
 	</text>
 
-	<ship load="SC_TERRAN_ASSAULT_SHIP_2" hostile="true"/>
+	<ship load="SC_TERRAN_ASSAULT_SHIP_2" hostile="false"/>
+
+	<choice>
+		<text>Face the second attacker.</text>
+		<event load="SC_TERRAN_ASSAULT_FIGHT_2"/>
+	</choice>
+</event>
+
+<event name="SC_TERRAN_ASSAULT_FIGHT_2">
+	<text>
+		The second Terran assault ship advances and opens fire.
+	</text>
+
+	<ship hostile="true"/>
+</event>
+
+<!--
+*********************************************************************************************************
+  TERRAN AMBUSH ENCOUNTER
+*********************************************************************************************************
+-->
+<event name="SC_TERRAN_AMBUSH">
+	<text>
+		You arrive in a quiet stretch of space. The beacon appears empty at first glance: no distress calls, no obvious wreckage, and no active Terran signatures on your sensors.
+	</text>
+
+	<choice req="LIST_CREW_TELEPATHIC" lvl="1" hidden="true" blue="false" max_group="0">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_AMBUSH_WARNED"/>
+	</choice>
+
+	<choice req="LIST_CREW_TELEPATHIC" lvl="0" max_lvl="0" hidden="true" blue="false" max_group="0">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_AMBUSH_SPRUNG"/>
+	</choice>
+</event>
+
+<event name="SC_TERRAN_AMBUSH_WARNED">
+	<text>
+		One of your crew stiffens before the sensors catch anything. A hostile presence is waiting nearby, masked behind the quiet beacon traffic. You have a brief chance to act before the trap fully closes.
+	</text>
+
+	<choice>
+		<text>Push the engines and try to escape the ambush.</text>
+		<event load="SC_TERRAN_AMBUSH_ENGINE_CHECK"/>
+	</choice>
+
+	<choice>
+		<text>Engage the exposed Terran ship before it can spring the trap.</text>
+		<event load="SC_TERRAN_AMBUSH_NON_AMBUSH_FIGHT"/>
+	</choice>
+</event>
+
+<event name="SC_TERRAN_AMBUSH_SPRUNG">
+	<text>
+		The empty beacon suddenly comes alive. A Terran ship cuts power to its masking field and moves into attack position. You have only seconds to react.
+	</text>
+
+	<choice>
+		<text>Continue...</text>
+		<event load="SC_TERRAN_AMBUSH_PILOT_CHECK"/>
+	</choice>
+</event>
+
+<event name="SC_TERRAN_AMBUSH_ENGINE_CHECK">
+	<text>Continue...</text>
+
+	<choice req="engines" lvl="7" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_AMBUSH_ENGINE_ROLL_4"/>
+	</choice>
+
+	<choice req="engines" lvl="5" max_lvl="6" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_AMBUSH_ENGINE_ROLL_3"/>
+	</choice>
+
+	<choice req="engines" lvl="3" max_lvl="4" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_AMBUSH_ENGINE_ROLL_2"/>
+	</choice>
+
+	<choice req="engines" lvl="0" max_lvl="2" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_AMBUSH_ENGINE_ROLL_1"/>
+	</choice>
+</event>
+
+<eventList name="SC_TERRAN_AMBUSH_ENGINE_ROLL_1">
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
+</eventList>
+
+<eventList name="SC_TERRAN_AMBUSH_ENGINE_ROLL_2">
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
+</eventList>
+
+<eventList name="SC_TERRAN_AMBUSH_ENGINE_ROLL_3">
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
+</eventList>
+
+<eventList name="SC_TERRAN_AMBUSH_ENGINE_ROLL_4">
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
+</eventList>
+
+<event name="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS">
+	<text>
+		You slam power into the engines and break away before the Terran ship can fully close the trap.
+	</text>
+</event>
+
+<event name="SC_TERRAN_AMBUSH_ESCAPE_FAILURE">
+	<text>
+		You try to accelerate out of the kill zone, but the Terran ship anticipates your course and cuts off your escape.
+	</text>
+	<ship load="SC_TERRAN_AMBUSH_SHIP" hostile="true"/>
+</event>
+
+<event name="SC_TERRAN_AMBUSH_PILOT_CHECK">
+	<text>Continue...</text>
+
+	<choice req="pilot" lvl="3" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_AMBUSH_PILOT_ROLL_3"/>
+	</choice>
+
+	<choice req="pilot" lvl="2" max_lvl="2" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_AMBUSH_PILOT_ROLL_2"/>
+	</choice>
+
+	<choice req="pilot" lvl="1" max_lvl="1" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_AMBUSH_PILOT_ROLL_1"/>
+	</choice>
+</event>
+
+<eventList name="SC_TERRAN_AMBUSH_PILOT_ROLL_1">
+	<event load="SC_TERRAN_AMBUSH_PILOT_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_PILOT_FAILURE"/>
+	<event load="SC_TERRAN_AMBUSH_PILOT_FAILURE"/>
+	<event load="SC_TERRAN_AMBUSH_PILOT_FAILURE"/>
+</eventList>
+
+<eventList name="SC_TERRAN_AMBUSH_PILOT_ROLL_2">
+	<event load="SC_TERRAN_AMBUSH_PILOT_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_PILOT_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_PILOT_FAILURE"/>
+	<event load="SC_TERRAN_AMBUSH_PILOT_FAILURE"/>
+</eventList>
+
+<eventList name="SC_TERRAN_AMBUSH_PILOT_ROLL_3">
+	<event load="SC_TERRAN_AMBUSH_PILOT_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_PILOT_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_PILOT_SUCCESS"/>
+	<event load="SC_TERRAN_AMBUSH_PILOT_FAILURE"/>
+</eventList>
+
+<event name="SC_TERRAN_AMBUSH_PILOT_SUCCESS">
+	<text>
+		Your pilot reacts instantly, rolling the ship clear of the main firing lane. The ambusher loses its perfect angle, forcing it into a more conventional engagement.
+	</text>
+	<ship load="SC_TERRAN_NON_AMBUSH_SHIP" hostile="true"/>
+</event>
+
+<event name="SC_TERRAN_AMBUSH_PILOT_FAILURE">
+	<text>
+		Your pilot tries to break away, but the Terran ship already has the vector covered. The ambush lands exactly as planned.
+	</text>
+	<ship load="SC_TERRAN_AMBUSH_SHIP" hostile="true"/>
+</event>
+
+<event name="SC_TERRAN_AMBUSH_NON_AMBUSH_FIGHT">
+	<text>
+		Warned by your crew, you turn the trap against the Terran ship and force it into open combat.
+	</text>
+	<ship load="SC_TERRAN_NON_AMBUSH_SHIP" hostile="true"/>
+</event>
+
+<!--
+*********************************************************************************************************
+  TERRAN TRANSPORT ENCOUNTER
+*********************************************************************************************************
+-->
+<event name="SC_TERRAN_TRANSPORT">
+	<text>
+		You arrive near a heavily escorted Terran transport vessel. Its cargo holds are reinforced and its engines are already cycling up, but it has not jumped yet.
+	</text>
+
+	<ship load="SC_TERRAN_TRANSPORT_SHIP" hostile="false"/>
+
+	<choice>
+		<text>Move to intercept the transport.</text>
+		<event load="SC_TERRAN_TRANSPORT_FIGHT"/>
+	</choice>
+</event>
+
+<event name="SC_TERRAN_TRANSPORT_FIGHT">
+	<text>
+		The transport diverts power to its engines and attempts to flee as soon as you close in.
+	</text>
+
+	<ship hostile="true"/>
+</event>
+
+<event name="SC_TERRAN_TRANSPORT_GOTAWAY">
+	<text>
+		The transport jumps away before you can stop it. Its FTL trail is unstable, but a strong sensor sweep might still recover its destination.
+	</text>
+
+	<choice>
+		<text>Try to follow the transport's FTL trail.</text>
+		<event load="SC_TERRAN_TRANSPORT_SENSORS_CHECK"/>
+	</choice>
+</event>
+
+<event name="SC_TERRAN_TRANSPORT_SURRENDER_TRACK">
+	<text>
+		The transport powers down its weapons and transfers a cargo manifest fragment along with the surrender payment. The data may reveal where the rest of its convoy was headed.
+	</text>
+
+	<autoReward level="MED">scrap_only</autoReward>
+
+	<choice>
+		<text>Use your sensors to analyze the transport's route data.</text>
+		<event load="SC_TERRAN_TRANSPORT_SENSORS_CHECK"/>
+	</choice>
+
+	<choice>
+		<text>Take the scrap and move on.</text>
+		<event/>
+	</choice>
+</event>
+
+<event name="SC_TERRAN_TRANSPORT_SENSORS_CHECK">
+	<text>
+		Your crew scans the transport's residual jump data, looking for a usable destination.
+	</text>
+
+	<choice req="sensors" lvl="4" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_TRANSPORT_SENSORS_ROLL_4"/>
+	</choice>
+
+	<choice req="sensors" lvl="3" max_lvl="3" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_TRANSPORT_SENSORS_ROLL_3"/>
+	</choice>
+
+	<choice req="sensors" lvl="2" max_lvl="2" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_TRANSPORT_SENSORS_ROLL_2"/>
+	</choice>
+
+	<choice req="sensors" lvl="0" max_lvl="1" hidden="true" blue="false">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_TRANSPORT_SENSORS_ROLL_1"/>
+	</choice>
+</event>
+
+<eventList name="SC_TERRAN_TRANSPORT_SENSORS_ROLL_1">
+	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
+	<event load="SC_TERRAN_TRANSPORT_QUEST_FAILURE"/>
+	<event load="SC_TERRAN_TRANSPORT_QUEST_FAILURE"/>
+	<event load="SC_TERRAN_TRANSPORT_QUEST_FAILURE"/>
+</eventList>
+
+<eventList name="SC_TERRAN_TRANSPORT_SENSORS_ROLL_2">
+	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
+	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
+	<event load="SC_TERRAN_TRANSPORT_QUEST_FAILURE"/>
+	<event load="SC_TERRAN_TRANSPORT_QUEST_FAILURE"/>
+</eventList>
+
+<eventList name="SC_TERRAN_TRANSPORT_SENSORS_ROLL_3">
+	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
+	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
+	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
+	<event load="SC_TERRAN_TRANSPORT_QUEST_FAILURE"/>
+</eventList>
+
+<eventList name="SC_TERRAN_TRANSPORT_SENSORS_ROLL_4">
+	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
+	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
+	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
+	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
+	<event load="SC_TERRAN_TRANSPORT_QUEST_FAILURE"/>
+</eventList>
+
+<event name="SC_TERRAN_TRANSPORT_QUEST_SUCCESS">
+	<text>
+		Your sensors isolate a clean jump vector from the transport's route data. You mark the destination on your map.
+	</text>
+
+	<quest event="SC_TERRAN_TRANSPORT_QUEST"/>
+</event>
+
+<event name="SC_TERRAN_TRANSPORT_QUEST_FAILURE">
+	<text>
+		The transport's trail breaks apart before your sensors can resolve a destination. Whatever it was carrying is gone.
+	</text>
+</event>
+
+<event name="SC_TERRAN_TRANSPORT_QUEST">
+	<text>
+		You arrive at the coordinates recovered from the transport's route data. The trail leads to a Terran logistics waypoint, but this event is still a stub and can be expanded into a follow-up fight, cache, or special reward later.
+	</text>
 </event>

@@ -62,7 +62,6 @@
 	<name>GEMINI_SYS_1</name>
 </blueprintList>
 
-
 <!-- USED IN EVENT DOCK_BOMB_SALESMAN -->
 <blueprintList name="WEAPONS_BOMBS_CHEAP">
 	<name>BOMB_ION</name>
@@ -85,7 +84,6 @@
 	<name>human</name>
 	<name>slug</name>
 </blueprintList>
-
 
 <blueprintList name="WEAPONS_ION"> <!-- for events -->
 	<name>ION_1</name>
@@ -136,38 +134,71 @@
 </blueprintList>
 
 <!--
+********************            AUGMENT LISTS            *******************
+-->
+<blueprintList name="LIST_AUGMENT_TERRAN_ALL">
+	<name>TERRAN_WRAITH_BATTERY</name>
+	<name>TERRAN_SHIP_ARMOR_LIGHT</name>
+	<name>TERRAN_SHIP_ARMOR_MEDIUM</name>
+	<name>TERRAN_SHIP_ARMOR_HEAVY</name>
+	<name>SC_DETECTOR</name>
+</blueprintList>
+
+<!--
+********************            CREW LISTS            *******************
+-->
+<blueprintList name="LIST_CREW_TELEPATHIC">
+	<name>terran_ghost</name>
+	<name>slug</name>
+	<name>slug_clansman</name>
+	<name>slug_saboteur</name>
+	<name>slug_ranger</name>
+	<name>slug_knight</name>
+	<name>slug_hektar</name>
+</blueprintList>
+
+<!--
 ********************            SHIP LISTS            *******************
 -->
-
-<blueprintList name="LIST_SHIP_TERRAN_PATROL">
+<blueprintList name="LIST_SHIPS_TERRAN_ALL">
+	<name>SHIP_TERRAN_WRAITH_A</name>
+	<name>SHIP_TERRAN_WRAITH_B</name>
+	<name>SHIP_TERRAN_BATTLECRUISER</name>
+	<name>SHIP_TERRAN_VESSEL</name>
+	<!--<name>SHIP_TERRAN_VALKYRIE</name>-->
+	<!--<name>SHIP_TERRAN_DROPSHIP</name>-->
+</blueprintList>
+<blueprintList name="LIST_SHIPS_TERRAN_PATROL">
 	<name>SHIP_TERRAN_WRAITH_A</name>
 	<name>SHIP_TERRAN_WRAITH_B</name>
 	<name>SHIP_TERRAN_BATTLECRUISER</name>
 	<name>SHIP_TERRAN_VESSEL</name>
 	<!--<name>SHIP_TERRAN_VALKYRIE</name>-->
 </blueprintList>
-
-<blueprintList name="LIST_SHIP_TERRAN_SCOUT">
+<blueprintList name="LIST_SHIPS_TERRAN_SCOUT">
 	<name>SHIP_TERRAN_WRAITH_A</name>
 	<name>SHIP_TERRAN_WRAITH_B</name>
 	<name>SHIP_TERRAN_VESSEL</name>
 </blueprintList>
-
-<blueprintList name="LIST_SHIP_TERRAN_ASSAULT">
+<blueprintList name="LIST_SHIPS_TERRAN_ASSAULT">
 	<name>SHIP_TERRAN_WRAITH_A</name>
 	<name>SHIP_TERRAN_WRAITH_B</name>
 	<name>SHIP_TERRAN_BATTLECRUISER</name>
 	<!--<name>SHIP_TERRAN_VALKYRIE</name>-->
 </blueprintList>
-
-<blueprintList name="LIST_SHIP_TERRAN_AMBUSH">
+<blueprintList name="LIST_SHIPS_TERRAN_AMBUSH">
 	<name>SHIP_TERRAN_WRAITH_A</name>
 	<name>SHIP_TERRAN_WRAITH_B</name>
 	<name>SHIP_TERRAN_BATTLECRUISER</name>
 	<!--<name>SHIP_TERRAN_VALKYRIE</name>-->
 </blueprintList>
-
-<blueprintList name="LIST_SHIP_TERRAN_TRANSPORT">
+<blueprintList name="LIST_SHIPS_TERRAN_NON_AMBUSH">
+	<name>SHIP_TERRAN_WRAITH_A</name>
+	<name>SHIP_TERRAN_WRAITH_B</name>
+	<name>SHIP_TERRAN_BATTLECRUISER</name>
+	<!--<name>SHIP_TERRAN_VALKYRIE</name>-->
+</blueprintList>
+<blueprintList name="LIST_SHIPS_TERRAN_TRANSPORT">
 	<name>SHIP_TERRAN_VESSEL</name>
 	<!--<name>SHIP_TERRAN_DROPSHIP</name>-->
 </blueprintList>
@@ -341,5 +372,4 @@
 	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
 	<aug name="SC_DETECTOR" />
 </shipBlueprint>
-
 </FTL>

@@ -1,5 +1,19 @@
 <!--
 *********************************************************************************************************
+  TERRAN ALL SHIP WRAPPER
+*********************************************************************************************************
+-->
+
+<ship name="SC_TERRAN_ALL_SHIPS" auto_blueprint="LIST_SHIP_TERRAN_ALL">
+	<surrender chance="0.4" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
+	<escape  chance="0.3" min="3" max="4" load="SC_ESCAPE_TERRAN"/>
+	<gotaway load="SC_GOTAWAY_TERRAN"/>
+	<destroyed load="SC_DESTROYED_TERRAN"/>
+	<deadCrew load="SC_DEAD_CREW_TERRAN"/>
+</ship>
+
+<!--
+*********************************************************************************************************
   TERRAN PATROL SHIP WRAPPER
 *********************************************************************************************************
 -->
@@ -191,5 +205,106 @@
 			With the second assault crew neutralized, you secure the ship and strip it for supplies.
 		</text>
 		<autoReward level="HIGH">standard</autoReward>
+	</deadCrew>
+</ship>
+
+<!--
+*********************************************************************************************************
+  TERRAN AMBUSH SHIP WRAPPERS
+*********************************************************************************************************
+-->
+
+<ship name="SC_TERRAN_AMBUSH_SHIP" auto_blueprint="LIST_SHIP_TERRAN_AMBUSH">
+	<escape chance="0.35" min="1" max="5">
+		<text>
+			The ambush ship has taken heavy damage. Its engines flare as it attempts to withdraw before you can finish it off.
+		</text>
+	</escape>
+
+	<destroyed>
+		<text>
+			The Terran ambusher breaks apart under your final volley. You salvage the remains of the attack ship.
+		</text>
+		<autoReward level="HIGH">standard</autoReward>
+	</destroyed>
+
+	<deadCrew>
+		<text>
+			With the ambush crew neutralized, you secure the ship and strip it of everything useful.
+		</text>
+		<autoReward level="HIGH">standard</autoReward>
+	</deadCrew>
+</ship>
+
+
+<ship name="SC_TERRAN_NON_AMBUSH_SHIP" auto_blueprint="LIST_SHIP_TERRAN_NON_AMBUSH">
+	<destroyed>
+		<text>
+			The Terran ship is destroyed. You salvage what remains.
+		</text>
+		<autoReward level="MED">standard</autoReward>
+	</destroyed>
+
+	<deadCrew>
+		<text>
+			With the Terran crew defeated, you search the ship and secure its supplies.
+		</text>
+		<autoReward level="HIGH">standard</autoReward>
+	</deadCrew>
+</ship>
+
+<!--
+*********************************************************************************************************
+  TERRAN TRANSPORT SHIP WRAPPER
+*********************************************************************************************************
+-->
+<ship name="SC_TERRAN_TRANSPORT_SHIP" auto_blueprint="LIST_SHIP_TERRAN_TRANSPORT">
+	<escape min="1" max="999">
+		<text>
+			The transport throws full power into its engines and begins charging its FTL drive.
+		</text>
+	</escape>
+
+	<gotaway load="SC_TERRAN_TRANSPORT_GOTAWAY"/>
+
+	<surrender chance="0.35" min="3" max="5">
+		<text>
+			The transport's hull buckles under the damage. Its captain offers a shipment of raw scrap if you allow them to disengage.
+		</text>
+
+		<choice>
+			<text>Accept their surrender.</text>
+			<event>
+				<text>
+					The transport transfers the promised scrap and begins powering down its weapons.
+				</text>
+				<ship hostile="false"/>
+				<event load="SC_TERRAN_TRANSPORT_SURRENDER_TRACK"/>
+			</event>
+		</choice>
+
+		<choice>
+			<text>Refuse. Seize the cargo by force.</text>
+			<event>
+				<text>
+					You reject the offer and continue the attack.
+				</text>
+				<ship hostile="true"/>
+			</event>
+		</choice>
+	</surrender>
+
+	<destroyed>
+		<text>
+			The transport breaks apart before you can secure its cargo. You salvage what little survives the explosion.
+		</text>
+		<autoReward level="LOW">standard_no_item</autoReward>
+	</destroyed>
+
+	<deadCrew>
+		<text>
+			With the transport crew neutralized, you board the vessel and recover its intact cargo records and supplies.
+		</text>
+		<autoReward level="HIGH">item</autoReward>
 	</deadCrew>
 </ship>
