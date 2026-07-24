@@ -372,4 +372,36 @@
 	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
 	<aug name="SC_DETECTOR" />
 </shipBlueprint>
+
+<shipBlueprint name="SHIP_TERRAN_VESSEL_A" layout="SHIP_TERRAN_VESSEL_A" img="SHIP_TERRAN_VESSEL_A">
+	<class>Science Vessel</class>
+	<minSector>1</minSector>
+	<maxSector>8</maxSector>
+	<systemList>
+		<clonebay power="1" max="3" room="6" start="true" />
+		<doors power="1" max="1" room="1" start="true" />
+		<drones power="1" max="6" room="8" start="true" />
+		<engines power="1" max="6" room="7" start="true" />
+		<hacking power="1" max="3" room="4" start="true" />
+		<medbay power="1" max="3" room="5" start="true" />
+		<mind power="1" max="1" room="2" start="true" />
+		<oxygen power="1" max="3" room="11" start="true" />
+		<pilot power="1" max="1" room="10" start="true" />
+		<sensors power="1" max="3" room="0" start="true" />
+		<shields power="1" max="4" room="3" start="true" />
+		<weapons power="3" max="6" room="9" start="true" />
+	</systemList>
+	<weaponSlots>2</weaponSlots>
+	<droneSlots>2</droneSlots>
+	<weaponList missiles="5" count="2" load="TERRAN_STANDARD_WEAPONS" />
+	<droneList drones="3" count="2" load="TERRAN_DRONES_STANDARD" />
+	<health amount="7" />
+	<maxPower amount="8" />
+	<!--<crewCount amount="1" max="2" class="terran_civilian" />-->
+	<crewCount amount="3" max="8" class="LIST_CREW_TERRAN_VESSEL" />
+	<boardingAI>sabotage</boardingAI>
+	<aug name="TERRAN_SHIP" />
+	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
+	<aug name="SC_DETECTOR" />
+</shipBlueprint>
 </FTL>
