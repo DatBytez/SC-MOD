@@ -160,47 +160,70 @@
 <!--
 ********************            SHIP LISTS            *******************
 -->
-<blueprintList name="LIST_SHIPS_TERRAN_ALL">
-	<name>SHIP_TERRAN_WRAITH_A</name>
-	<name>SHIP_TERRAN_WRAITH_B</name>
-	<name>SHIP_TERRAN_BATTLECRUISER</name>
-	<name>SHIP_TERRAN_VESSEL</name>
-	<!--<name>SHIP_TERRAN_VALKYRIE</name>-->
-	<!--<name>SHIP_TERRAN_DROPSHIP</name>-->
+<blueprintList name="LIST_TERRAN_SHIPS_ALL">
+	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
+	<name>TERRAN_SHIP_WRAITH_A</name>
+	<name>TERRAN_SHIP_WRAITH_B</name>
+	<name>TERRAN_SHIP_WRAITH_C</name>
+	<name>TERRAN_SHIP_WRAITH_D</name>
+	<name>TERRAN_SHIP_VESSEL_A</name>
+	<name>TERRAN_SHIP_VESSEL_B</name>
+	<name>TERRAN_SHIP_VESSEL_C</name>
+	<name>TERRAN_SHIP_VESSEL_D</name>
+	<!--<name>TERRAN_SHIP_VALKYRIE</name>-->
+	<!--<name>TERRAN_SHIP_DROPSHIP</name>-->
 </blueprintList>
-<blueprintList name="LIST_SHIPS_TERRAN_PATROL">
-	<name>SHIP_TERRAN_WRAITH_A</name>
-	<name>SHIP_TERRAN_WRAITH_B</name>
-	<name>SHIP_TERRAN_BATTLECRUISER</name>
-	<name>SHIP_TERRAN_VESSEL</name>
-	<!--<name>SHIP_TERRAN_VALKYRIE</name>-->
+<blueprintList name="LIST_TERRAN_SHIPS_PATROL">
+	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
+	<name>TERRAN_SHIP_WRAITH_A</name>
+	<name>TERRAN_SHIP_WRAITH_B</name>
+	<name>TERRAN_SHIP_WRAITH_C</name>
+	<name>TERRAN_SHIP_WRAITH_D</name>
+	<name>TERRAN_SHIP_VESSEL_A</name>
+	<name>TERRAN_SHIP_VESSEL_B</name>
+	<name>TERRAN_SHIP_VESSEL_C</name>
+	<name>TERRAN_SHIP_VESSEL_D</name>
+	<!--<name>TERRAN_SHIP_VALKYRIE</name>-->
 </blueprintList>
-<blueprintList name="LIST_SHIPS_TERRAN_SCOUT">
-	<name>SHIP_TERRAN_WRAITH_A</name>
-	<name>SHIP_TERRAN_WRAITH_B</name>
-	<name>SHIP_TERRAN_VESSEL</name>
+<blueprintList name="LIST_TERRAN_SHIPS_SCOUT">
+	<name>TERRAN_SHIP_WRAITH_A</name>
+	<name>TERRAN_SHIP_WRAITH_A</name>
+	<name>TERRAN_SHIP_WRAITH_A</name>
+	<name>TERRAN_SHIP_WRAITH_B</name>
+	<name>TERRAN_SHIP_WRAITH_C</name>
+	<name>TERRAN_SHIP_VESSEL_A</name>
 </blueprintList>
-<blueprintList name="LIST_SHIPS_TERRAN_ASSAULT">
-	<name>SHIP_TERRAN_WRAITH_A</name>
-	<name>SHIP_TERRAN_WRAITH_B</name>
-	<name>SHIP_TERRAN_BATTLECRUISER</name>
-	<!--<name>SHIP_TERRAN_VALKYRIE</name>-->
+<blueprintList name="LIST_TERRAN_SHIPS_ASSAULT">
+	<name>TERRAN_SHIP_WRAITH_C</name>
+	<name>TERRAN_SHIP_WRAITH_D</name>
+	<name>TERRAN_SHIP_WRAITH_D</name>
+	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
+	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
+	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
+	<!--<name>TERRAN_SHIP_VALKYRIE</name>-->
 </blueprintList>
-<blueprintList name="LIST_SHIPS_TERRAN_AMBUSH">
-	<name>SHIP_TERRAN_WRAITH_A</name>
-	<name>SHIP_TERRAN_WRAITH_B</name>
-	<name>SHIP_TERRAN_BATTLECRUISER</name>
-	<!--<name>SHIP_TERRAN_VALKYRIE</name>-->
+<blueprintList name="LIST_TERRAN_SHIPS_AMBUSH">
+	<name>TERRAN_SHIP_WRAITH_B</name>
+	<name>TERRAN_SHIP_WRAITH_C</name>
+	<name>TERRAN_SHIP_WRAITH_D</name>
+	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
+	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
+	<!--<name>TERRAN_SHIP_VALKYRIE</name>-->
 </blueprintList>
-<blueprintList name="LIST_SHIPS_TERRAN_NON_AMBUSH">
-	<name>SHIP_TERRAN_WRAITH_A</name>
-	<name>SHIP_TERRAN_WRAITH_B</name>
-	<name>SHIP_TERRAN_BATTLECRUISER</name>
-	<!--<name>SHIP_TERRAN_VALKYRIE</name>-->
+<blueprintList name="LIST_TERRAN_SHIPS_NON_AMBUSH">
+	<name>TERRAN_SHIP_WRAITH_B</name>
+	<name>TERRAN_SHIP_WRAITH_C</name>
+	<name>TERRAN_SHIP_WRAITH_D</name>
+	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
+	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
+	<!--<name>TERRAN_SHIP_VALKYRIE</name>-->
 </blueprintList>
-<blueprintList name="LIST_SHIPS_TERRAN_TRANSPORT">
-	<name>SHIP_TERRAN_VESSEL</name>
-	<!--<name>SHIP_TERRAN_DROPSHIP</name>-->
+<blueprintList name="LIST_TERRAN_SHIPS_TRANSPORT">
+	<name>TERRAN_SHIP_VESSEL_A</name>
+	<name>TERRAN_SHIP_VESSEL_B</name>
+	<name>TERRAN_SHIP_VESSEL_C</name>
+	<name>TERRAN_SHIP_VESSEL_D</name>
+	<!--<name>TERRAN_SHIP_DROPSHIP</name>-->
 </blueprintList>
 
 <!--
@@ -254,7 +277,7 @@
 		<engines power="4" max="8" room="2" start="true" />
 		<oxygen power="1" max="3" room="0" start="true" />
 		<pilot power="3" max="3" room="1" start="true" />
-		<shields power="1" max="2" room="5" start="false" />
+		<lily_system_bracers power="1" max="3" room="5" start="false" />
 		<weapons power="2" max="8" room="3" start="true" />
 	</systemList>
 	<weaponSlots>2</weaponSlots>
@@ -267,6 +290,7 @@
 	<boardingAI>sabotage</boardingAI>
 	<aug name="TERRAN_SHIP_ARMOR_LIGHT" />
 	<aug name="TERRAN_SHIP" />
+	<aug name="CLOAK_FIRE" />
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_WRAITH_B" layout="TERRAN_SHIP_WRAITH_B" img="TERRAN_SHIP_WRAITH_B">
@@ -280,8 +304,8 @@
 		<hacking power="1" max="2" room="3" start="false" />
 		<oxygen power="1" max="3" room="0" start="true" />
 		<pilot power="3" max="3" room="4" start="true" />
-		<shields power="1" max="2" room="2" start="true" />
-		<weapons power="3" max="8" room="1" start="true" />
+		<lily_system_bracers power="1" max="3" room="2" start="true" />
+		<weapons power="5" max="12" room="1" start="true" />
 	</systemList>
 	<weaponSlots>4</weaponSlots>
 	<droneSlots>1</droneSlots>
@@ -293,6 +317,7 @@
 	<boardingAI>sabotage</boardingAI>
 	<aug name="TERRAN_SHIP_ARMOR_LIGHT" />
 	<aug name="TERRAN_SHIP" />
+	<aug name="CLOAK_FIRE" />
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_WRAITH_C" layout="TERRAN_SHIP_WRAITH_C" img="TERRAN_SHIP_WRAITH_C">
@@ -306,7 +331,8 @@
 		<hacking power="1" max="2" room="6" start="false" />
 		<oxygen power="1" max="3" room="4" start="true" />
 		<pilot power="3" max="3" room="0" start="true" />
-		<shields power="1" max="2" room="2" start="true" />
+		<lily_system_bracers power="1" max="3" room="2" start="true" />
+		<artillery power="1" max="5" room="2" start="true" weapon="TERRAN_BURST_LASER_1" />
 		<weapons power="3" max="8" room="1" start="true" />
 	</systemList>
 	<weaponSlots>4</weaponSlots>
@@ -319,6 +345,7 @@
 	<boardingAI>sabotage</boardingAI>
 	<aug name="TERRAN_SHIP_ARMOR_LIGHT" />
 	<aug name="TERRAN_SHIP" />
+	<aug name="CLOAK_FIRE" />
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_WRAITH_D" layout="TERRAN_SHIP_WRAITH_D" img="TERRAN_SHIP_WRAITH_D">
@@ -326,9 +353,9 @@
 	<minSector>1</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
-		<artillery power="5" max="5" room="1" start="false" weapon="TERRAN_BURST_LASER_1" />
-		<artillery power="5" max="5" room="7" start="true" weapon="TERRAN_BURST_LASER_1" />
-		<artillery power="5" max="5" room="10" start="true" weapon="TERRAN_BURST_LASER_1" />
+		<artillery power="1" max="5" room="1" start="false" weapon="TERRAN_BURST_LASER_1" />
+		<artillery power="1" max="5" room="7" start="true" weapon="TERRAN_BURST_LASER_1" />
+		<artillery power="1" max="5" room="10" start="true" weapon="TERRAN_BURST_LASER_1" />
 		<battery power="1" max="2" room="5" start="false" />
 		<cloaking power="1" max="3" room="9" start="true" />
 		<drones power="1" max="4" room="6" start="false" />
@@ -336,7 +363,7 @@
 		<hacking power="1" max="2" room="3" start="false" />
 		<oxygen power="1" max="3" room="8" start="true" />
 		<pilot power="3" max="3" room="0" start="true" />
-		<shields power="1" max="2" room="4" start="true" />
+		<lily_system_bracers power="1" max="3" room="4" start="true" />
 		<weapons power="3" max="8" room="2" start="true" />
 	</systemList>
 	<weaponSlots>4</weaponSlots>
@@ -349,6 +376,7 @@
 	<boardingAI>sabotage</boardingAI>
 	<aug name="TERRAN_SHIP_ARMOR_LIGHT" />
 	<aug name="TERRAN_SHIP" />
+	<aug name="CLOAK_FIRE" />
 </shipBlueprint>
 
 
@@ -376,7 +404,7 @@
 		<medbay power="1" max="3" room="4" start="false" />
 		<oxygen power="1" max="2" room="1" start="true" />
 		<pilot power="1" max="1" room="11" start="true" />
-		<shields power="3" max="8" room="6" start="true" />
+		<lily_system_bracers power="3" max="8" room="6" start="true" />
 		<teleporter power="1" max="3" room="9" start="false" />
 		<weapons power="3" max="8" room="5" start="true" />
 	</systemList>
@@ -414,7 +442,7 @@
 		<oxygen power="1" max="3" room="1" start="true" />
 		<pilot power="1" max="2" room="8" start="true" />
 		<sensors power="1" max="3" room="0" start="true" />
-		<shields power="2" max="6" room="3" start="true" />
+		<lily_system_bracers power="2" max="6" room="3" start="true" />
 		<weapons power="3" max="8" room="6" start="true" />
 	</systemList>
 	<weaponSlots>2</weaponSlots>
@@ -443,7 +471,7 @@
 		<oxygen power="2" max="3" room="1" start="true" />
 		<pilot power="1" max="1" room="9" start="true" />
 		<sensors power="2" max="3" room="0" start="true" />
-		<shields power="2" max="6" room="3" start="true" />
+		<lily_system_bracers power="2" max="6" room="3" start="true" />
 		<weapons power="3" max="8" room="6" start="true" />
 	</systemList>
 	<weaponSlots>2</weaponSlots>
@@ -472,7 +500,7 @@
 		<oxygen power="1" max="3" room="1" start="true" />
 		<pilot power="1" max="2" room="8" start="true" />
 		<sensors power="1" max="3" room="0" start="true" />
-		<shields power="2" max="6" room="3" start="true" />
+		<lily_system_bracers power="2" max="6" room="3" start="true" />
 		<weapons power="3" max="8" room="6" start="true" />
 	</systemList>
 	<weaponSlots>2</weaponSlots>
@@ -502,7 +530,7 @@
 		<oxygen power="2" max="3" room="1" start="true" />
 		<pilot power="1" max="1" room="9" start="true" />
 		<sensors power="2" max="3" room="0" start="true" />
-		<shields power="2" max="6" room="3" start="true" />
+		<lily_system_bracers power="2" max="6" room="3" start="true" />
 		<weapons power="3" max="8" room="6" start="true" />
 	</systemList>
 	<weaponSlots>2</weaponSlots>
@@ -517,91 +545,5 @@
 	<aug name="SC_DETECTOR" />
 	<aug name="TERRAN_SHIP" />
 </shipBlueprint>
-
-<shipBlueprint name="SHIP_TERRAN_VESSEL_E" layout="SHIP_TERRAN_VESSEL_E" img="SHIP_TERRAN_VESSEL_E">
-	<class>Science Vessel</class>
-	<minSector>1</minSector>
-	<maxSector>4</maxSector>
-	<systemList>
-		<clonebay power="1" max="3" room="4" start="false" />
-		<doors power="1" max="2" room="2" start="false" />
-		<drones power="2" max="10" room="7" start="true" />
-		<engines power="2" max="6" room="5" start="true" />
-		<medbay power="1" max="3" room="4" start="false" />
-		<oxygen power="2" max="3" room="1" start="true" />
-		<pilot power="1" max="1" room="8" start="true" />
-		<sensors power="1" max="3" room="0" start="true" />
-		<shields power="2" max="6" room="3" start="true" />
-		<weapons power="3" max="8" room="6" start="true" />
-	</systemList>
-	<weaponSlots>2</weaponSlots>
-	<droneSlots>2</droneSlots>
-	<weaponList missiles="4" count="2" load="TERRAN_STANDARD_WEAPONS" />
-	<droneList drones="4" count="2" load="TERRAN_DRONES_DEFENSE" />
-	<health amount="6" />
-	<maxPower amount="10" />
-	<crewCount amount="2" max="6" class="LIST_CREW_TERRAN_VESSEL" />
-	<boardingAI>sabotage</boardingAI>
-	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
-	<aug name="SC_DETECTOR" />
-	<aug name="TERRAN_SHIP" />
-</shipBlueprint>
-
-
-<shipBlueprint name="SHIP_TERRAN_WRAITH_C" layout="SHIP_TERRAN_WRAITH_C" img="SHIP_TERRAN_WRAITH_C">
-	<class>Squadron Class</class>
-	<minSector>1</minSector>
-	<maxSector>8</maxSector>
-	<systemList>
-		<cloaking power="1" max="3" room="5" start="true" />
-		<drones power="1" max="4" room="3" start="false" />
-		<engines power="1" max="1" room="7" start="true" />
-		<hacking power="1" max="2" room="6" start="false" />
-		<oxygen power="1" max="3" room="4" start="true" />
-		<pilot power="3" max="3" room="0" start="true" />
-		<shields power="1" max="2" room="2" start="true" />
-		<weapons power="3" max="8" room="1" start="true" />
-	</systemList>
-	<weaponSlots>4</weaponSlots>
-	<droneSlots>1</droneSlots>
-	<weaponList missiles="8" count="4" load="TERRAN_STANDARD_WEAPONS" />
-	<droneList drones="3" count="1" load="TERRAN_DRONES_STANDARD" />
-	<health amount="6" />
-	<maxPower amount="6" />
-	<crewCount amount="2" max="3" class="LIST_CREW_TERRAN_WRAITH" />
-	<boardingAI>sabotage</boardingAI>
-	<aug name="TERRAN_SHIP_ARMOR_LIGHT" />
-	<aug name="TERRAN_SHIP" />
-</shipBlueprint>
-
-
-<shipBlueprint name="SHIP_TERRAN_WRAITH_D" layout="SHIP_TERRAN_WRAITH_D" img="SHIP_TERRAN_WRAITH_D">
-	<class>Squadron Class</class>
-	<minSector>1</minSector>
-	<maxSector>8</maxSector>
-	<systemList>
-		<artillery power="5" max="5" room="7" start="false" weapon="TERRAN_BURST_LASER_1" />
-		<battery power="1" max="2" room="5" start="false" />
-		<cloaking power="1" max="3" room="9" start="true" />
-		<drones power="1" max="4" room="6" start="false" />
-		<engines power="1" max="1" room="11" start="true" />
-		<hacking power="1" max="2" room="3" start="false" />
-		<oxygen power="1" max="3" room="8" start="true" />
-		<pilot power="3" max="3" room="0" start="true" />
-		<shields power="1" max="2" room="4" start="true" />
-		<weapons power="3" max="8" room="2" start="true" />
-	</systemList>
-	<weaponSlots>4</weaponSlots>
-	<droneSlots>1</droneSlots>
-	<weaponList missiles="8" count="4" load="TERRAN_STANDARD_WEAPONS" />
-	<droneList drones="3" count="1" load="TERRAN_DRONES_STANDARD" />
-	<health amount="6" />
-	<maxPower amount="6" />
-	<crewCount amount="3" max="3" class="LIST_CREW_TERRAN_WRAITH" />
-	<boardingAI>sabotage</boardingAI>
-	<aug name="TERRAN_SHIP_ARMOR_LIGHT" />
-	<aug name="TERRAN_SHIP" />
-</shipBlueprint>
-
 
 </FTL>

@@ -17,7 +17,7 @@
   TERRAN PATROL SHIP WRAPPER
 *********************************************************************************************************
 -->
-<ship name="SC_TERRAN_PATROL_SHIP" auto_blueprint="LIST_SHIP_TERRAN_PATROL">
+<ship name="SC_TERRAN_PATROL_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_PATROL">
 
 	<escape chance="0.65" min="1" max="5">
 		<text>
@@ -77,7 +77,7 @@
   TERRAN SCOUT SHIP WRAPPER
 *********************************************************************************************************
 -->
-<ship name="SC_TERRAN_SCOUT_SHIP" auto_blueprint="LIST_SHIP_TERRAN_SCOUT">
+<ship name="SC_TERRAN_SCOUT_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_SCOUT">
 	<escape min="2" max="999">
 		<text>
 			The Terran scout throws everything into its engines and begins charging its FTL drive.
@@ -129,7 +129,7 @@
 *********************************************************************************************************
 -->
 <!-- FIRST SHIP -->
-<ship name="SC_TERRAN_ASSAULT_SHIP_1" auto_blueprint="LIST_SHIP_TERRAN_ASSAULT">
+<ship name="SC_TERRAN_ASSAULT_SHIP_1" auto_blueprint="LIST_TERRAN_SHIPS_ASSAULT">
 	<!--<surrender chance="0.35" min="1" max="3">
 		<text>
 			The first Terran assault ship is heavily damaged. Its captain signals a withdrawal and orders the rest of the formation to continue the attack.
@@ -165,7 +165,7 @@
 </ship>
 
 <!-- SECOND SHIP -->
-<ship name="SC_TERRAN_ASSAULT_SHIP_2" auto_blueprint="LIST_SHIP_TERRAN_ASSAULT">
+<ship name="SC_TERRAN_ASSAULT_SHIP_2" auto_blueprint="LIST_TERRAN_SHIPS_ASSAULT">
 	<surrender chance="0.35" min="1" max="3">
 		<text>
 			The second Terran assault ship is badly damaged. With the attack broken, its captain offers supplies in exchange for being allowed to withdraw.
@@ -214,7 +214,7 @@
 *********************************************************************************************************
 -->
 
-<ship name="SC_TERRAN_AMBUSH_SHIP" auto_blueprint="LIST_SHIP_TERRAN_AMBUSH">
+<ship name="SC_TERRAN_AMBUSH_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_AMBUSH">
 	<escape chance="0.35" min="1" max="5">
 		<text>
 			The ambush ship has taken heavy damage. Its engines flare as it attempts to withdraw before you can finish it off.
@@ -237,7 +237,7 @@
 </ship>
 
 
-<ship name="SC_TERRAN_NON_AMBUSH_SHIP" auto_blueprint="LIST_SHIP_TERRAN_NON_AMBUSH">
+<ship name="SC_TERRAN_NON_AMBUSH_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_NON_AMBUSH">
 	<destroyed>
 		<text>
 			The Terran ship is destroyed. You salvage what remains.
@@ -258,7 +258,7 @@
   TERRAN TRANSPORT SHIP WRAPPER
 *********************************************************************************************************
 -->
-<ship name="SC_TERRAN_TRANSPORT_SHIP" auto_blueprint="LIST_SHIP_TERRAN_TRANSPORT">
+<ship name="SC_TERRAN_TRANSPORT_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_TRANSPORT">
 	<escape min="1" max="999">
 		<text>
 			The transport throws full power into its engines and begins charging its FTL drive.
