@@ -1349,7 +1349,7 @@
 </event>
 <event name="SC_TERRAN_PATROL_DETECT_FAIL">
 	<text>
-		The patrol detects you first. A Terran ship turns toward your position, weapons charging as it moves to intercept.
+		A nearby patrol has detected you. A Terran ship turns toward your position, weapons charging as it moves to intercept.
 	</text>
 
 	<choice req="engines" lvl="7" hidden="true" blue="false">
