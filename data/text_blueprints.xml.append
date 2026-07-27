@@ -14,6 +14,10 @@
 <text name="text_PLAYER_SHIP_HARD_name">Science Vessel</text>
 <text name="text_SHIP_PLAYER_TERRAN_VESSEL_desc">[NEED SCIENCE VESSEL DESCRIPTION]</text>
 
+<text name="text_PLAYER_SHIP_HARD_class">Assault Class</text>
+<text name="text_PLAYER_SHIP_HARD_name">Terran Valkyrie</text>
+<text name="text_PLAYER_SHIP_HARD_desc">[[NEED VALKYRIE DESCRIPTION HERE]]</text>
+
 <!-- ENEMY SHIPS -->
 <text name="text_SHIP_TERRAN_WRAITH_class">Scout</text>
 <text name="text_SHIP_TERRAN_BATTLECRUISER_class">Battlecruiser</text>	

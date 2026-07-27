@@ -1126,7 +1126,7 @@
 		<ship>PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER</ship>
 		<ship>PLAYER_SHIP_PLAYER_TERRAN_WRAITH</ship>
 		<ship>PLAYER_SHIP_PLAYER_TERRAN_VESSEL</ship>
-		<empty/>
+		<ship>PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE</ship>
 		<empty/>
 		<empty/>
 		<empty/>
@@ -1141,7 +1141,7 @@
 		<mod-append:ship name="PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER" b="false" c="false" />
 		<mod-append:customShip name="PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER">
 			<hiddenAug>TERRAN_SHIP</hiddenAug>
-		    <hiddenAug>ARTILLERY_ORDER</hiddenAug>
+			<hiddenAug>ARTILLERY_ORDER</hiddenAug>
 			<crewLimit>10</crewLimit>
 			<systemLimit>8</systemLimit>
 			<subsystemLimit>5</subsystemLimit>
@@ -1191,9 +1191,29 @@
 		</mod-append:customShip>
 	</mod:findLike>
 
-<mod:findLike type="ships">
+	<mod:findLike type="ships">
 	<mod-append:ship name="PLAYER_SHIP_PLAYER_TERRAN_VESSEL" a="true" b="false" c="false" />
 		<mod-append:customShip name="PLAYER_SHIP_PLAYER_TERRAN_VESSEL">
+			<hiddenAug>TERRAN_SHIP</hiddenAug>
+			<crewLimit>8</crewLimit>
+			<systemLimit>8</systemLimit>
+			<subsystemLimit>5</subsystemLimit>
+			<exclusivityOverride>
+				<exclusivityGroup>
+					<clonebay/>
+					<medbay/>
+				</exclusivityGroup>
+				<exclusivityGroup>
+					<shields/>
+					<lily_system_bracers/>
+				</exclusivityGroup>
+			</exclusivityOverride>
+		</mod-append:customShip>
+	</mod:findLike>
+
+	<mod:findLike type="ships">
+	<mod-append:ship name="PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE" a="true" b="false" c="false" />
+		<mod-append:customShip name="PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE">
 			<hiddenAug>TERRAN_SHIP</hiddenAug>
 			<crewLimit>8</crewLimit>
 			<systemLimit>8</systemLimit>

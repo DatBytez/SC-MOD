@@ -1,5 +1,6 @@
 local userdata_table = mods.multiverse.userdata_table
 local vter = mods.multiverse.vter
+local is_first_shot = mods.multiverse.is_first_shot
 
 mods.multiverse.weaponTagParsers = mods.multiverse.weaponTagParsers or {}
 local weaponTagParsers = mods.multiverse.weaponTagParsers
@@ -20,10 +21,13 @@ table.insert(weaponTagParsers, function(weaponNode)
     while tagNode do
         local statAttr = tagNode:first_attribute("stat")
         local amountAttr = tagNode:first_attribute("amount")
+        local baseAttr = tagNode:first_attribute("base")
+
         if statAttr then
             table.insert(entries, {
                 stat = statAttr:value(),
-                amount = amountAttr and tonumber(amountAttr:value()) or 1
+                amount = amountAttr and tonumber(amountAttr:value()) or 1,
+                base = baseAttr and tonumber(baseAttr:value()) or nil
             })
         end
 
@@ -70,6 +74,28 @@ local function get_preview_radius_charge_boost(weapon)
     return math.max(0, (weapon.chargeLevel or 0) - 1)
 end
 
+local function get_charge_missile_data(statBoosts)
+    if not statBoosts then return nil end
+
+    for _, statBoost in ipairs(statBoosts) do
+        if statBoost.stat == "missileCost" then
+            return statBoost
+        end
+    end
+
+    return nil
+end
+
+local function get_charge_missile_cost(statBoost, boost)
+    if not statBoost then return nil end
+
+    local baseCost = statBoost.base or 1
+    local amount = statBoost.amount or 0
+    local cost = baseCost + boost * amount
+
+    return math.max(1, math.floor(cost))
+end
+
 local function get_charge_shot_amount(statBoosts)
     if not statBoosts then return nil end
 
@@ -89,10 +115,19 @@ function mods.sc.apply_charge_shot_limit(weapon, shotLimit)
     local name = bp and bp.name
     if not name then return end
 
-    local allowedTotal = math.max(1, math.floor(shotLimit))
+    local allowedShots = math.max(1, math.floor(shotLimit))
+
+    local miniProjectileCount = 1
+
+    if bp.miniProjectiles and bp.miniProjectiles:size() > 0 then
+        miniProjectileCount = bp.miniProjectiles:size()
+    end
+
+    local allowedTotal = allowedShots * miniProjectileCount
 
     local wdata = userdata_table(weapon, "mods.sc.weaponStuff")
     local key = "chargeShotsFiredThisVolley_" .. name
+
     wdata[key] = (wdata[key] or 0) + 1
 
     if wdata[key] >= allowedTotal then
@@ -104,6 +139,46 @@ function mods.sc.apply_charge_shot_limit(weapon, shotLimit)
     end
 end
 
+-- -------------------
+-- CHARGE MISSILE COST
+-- -------------------
+
+script.on_internal_event(Defines.InternalEvents.SELECT_ARMAMENT_PRE, function(armamentSlot)
+    local ship = Hyperspace.ships.player
+
+    if not ship
+        or not ship.weaponSystem
+        or not ship.weaponSystem.weapons then
+        return Defines.Chain.CONTINUE, armamentSlot
+    end
+
+    local weapon = ship.weaponSystem.weapons[armamentSlot]
+
+    if not weapon or not weapon.blueprint then
+        return Defines.Chain.CONTINUE, armamentSlot
+    end
+
+    local statBoosts = chargers[weapon.blueprint.name]
+    local missileData = get_charge_missile_data(statBoosts)
+
+    if not missileData then
+        return Defines.Chain.CONTINUE, armamentSlot
+    end
+
+    local boost = math.max(0, (weapon.chargeLevel or 0) - 1)
+
+    local missileCost = get_charge_missile_cost(
+        missileData,
+        boost
+    )
+
+    if ship:GetMissileCount() < missileCost then
+        return Defines.Chain.PREEMPT, armamentSlot
+    end
+
+    return Defines.Chain.CONTINUE, armamentSlot
+end)
+
 -- -------------
 -- CHARGE STATS
 -- -------------
@@ -111,12 +186,65 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
     local statBoosts = chargers[weapon and weapon.blueprint and weapon.blueprint.name]
     if not statBoosts then return end
 
+    -- Capture all volley information BEFORE anything modifies
+    -- weapon.queuedProjectiles.
+    local firstShot = is_first_shot(weapon, true)
+
+    -- Existing charge boost used by the other sc-charge stats.
+    local boost = get_effective_stored_charge_boost(weapon)
+
+    -- Missile cost specifically uses the actual charge level,
+    -- not the number of projectiles in the volley.
+    local missileBoost = get_fired_charge_boost(weapon)
+
+    -- -----------------
+    -- SHOT LIMIT
+    -- -----------------
+
     local shotAmount = get_charge_shot_amount(statBoosts)
+
     if shotAmount then
         mods.sc.apply_charge_shot_limit(weapon, shotAmount)
     end
 
-    local boost = get_effective_stored_charge_boost(weapon)
+    -- -------------------
+    -- CHARGE MISSILE COST
+    -- -------------------
+
+    local missileData = get_charge_missile_data(statBoosts)
+
+    if missileData
+        and weapon.iShipId == 0
+        and firstShot then
+
+        local ship = Hyperspace.ships.player
+
+        if ship then
+            local totalMissileCost = get_charge_missile_cost(
+                missileData,
+                missileBoost
+            )
+
+            -- FTL pays the normal XML missile cost itself.
+            local nativeMissileCost =
+                (weapon.blueprint and weapon.blueprint.missiles)
+                or 0
+
+            -- Lua only charges the difference.
+            local extraMissileCost = math.max(
+                0,
+                totalMissileCost - nativeMissileCost
+            )
+
+            if extraMissileCost > 0 then
+                ship:ModifyMissileCount(-extraMissileCost)
+            end
+        end
+    end
+
+    -- -------------------
+    -- OTHER CHARGE STATS
+    -- -------------------
 
     for _, statBoost in ipairs(statBoosts) do
         local amount = statBoost.amount or 1
@@ -126,39 +254,36 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
                 local base = projectile.extend.customDamage.accuracyMod or 0
                 projectile.extend.customDamage.accuracyMod = base + boost * amount
             end
+
         elseif statBoost.stat == "cooldown" then
             -- handled in SHIP_LOOP
+
         elseif statBoost.stat == "shots" then
-            -- handled before stat changes above
+            -- handled above
+
+        elseif statBoost.stat == "missileCost" then
+            -- handled above
+
         elseif statBoost.stat == "radius" then
             local baseRadius = mods.sc.radius.get_base_radius(weapon)
-            local firedRadius = math.max(0, (weapon.radius or mods.sc.radius.get_base_radius(weapon)) + amount * boost)
 
-            local wdata = userdata_table(weapon, "mods.sc.weaponStuff")
+            local firedRadius = math.max(
+                0,
+                (weapon.radius or mods.sc.radius.get_base_radius(weapon))
+                    + amount * boost
+            )
+
+            local wdata = userdata_table(
+                weapon,
+                "mods.sc.weaponStuff"
+            )
+
             wdata.fireRadiusOverride = firedRadius
             wdata.fireRadiusOverrideActive = true
+
         else
             local base = projectile.damage[statBoost.stat] or 0
             projectile.damage[statBoost.stat] = base + boost * amount
-        end
-    end
-end)
-
-script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
-    local weapons = ship and ship.weaponSystem and ship.weaponSystem.weapons
-    if not weapons then return end
-
-    for weapon in vter(weapons) do
-        clear_stored_charge_boost_if_idle(weapon)
-
-        local statBoosts = chargers[weapon and weapon.blueprint and weapon.blueprint.name]
-        if statBoosts then
-            for _, statBoost in ipairs(statBoosts) do
-                if statBoost.stat == "cooldown" then
-                    mods.sc.apply_charge_cooldown_bonus(weapon, statBoost.amount or 1)
-                    break
-                end
-            end
         end
     end
 end)
