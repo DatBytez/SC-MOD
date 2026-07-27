@@ -28,7 +28,6 @@ Lua then pays the entire missile cost once per volley.
 ]]
 
 local vter = mods.multiverse.vter
-local is_first_shot = mods.multiverse.is_first_shot
 local userdata_table = mods.multiverse.userdata_table
 
 mods.multiverse.weaponTagParsers = mods.multiverse.weaponTagParsers or {}
@@ -149,16 +148,10 @@ local function get_chainstep_level(weapon)
     )
 end
 
-local function get_chainstep_missile_cost(weapon, chainWeapon)
-    if not weapon or not chainWeapon then
+local function get_chainstep_missile_cost_from_level(chainWeapon, chainLevel)
+    if not chainWeapon or chainWeapon.missileCost == nil then
         return nil
     end
-
-    if chainWeapon.missileCost == nil then
-        return nil
-    end
-
-    local chainLevel = get_chainstep_level(weapon)
 
     local cost =
         chainWeapon.missileCost
@@ -167,6 +160,19 @@ local function get_chainstep_missile_cost(weapon, chainWeapon)
     return math.max(
         1,
         math.floor(cost)
+    )
+end
+
+local function get_chainstep_missile_cost(weapon, chainWeapon)
+    if not weapon or not chainWeapon then
+        return nil
+    end
+
+    local chainLevel = get_chainstep_level(weapon)
+
+    return get_chainstep_missile_cost_from_level(
+        chainWeapon,
+        chainLevel
     )
 end
 
@@ -240,14 +246,33 @@ script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
 
                     weapon.boostLevel = overCharge
 
-                    -- Store our own copy so missile cost does not
-                    -- depend on projectile count or charge weapons.
                     local wdata = userdata_table(
                         weapon,
                         "mods.sc.chainstep"
                     )
 
-                    wdata.level = overCharge
+                    local queuedShots = weapon.queuedProjectiles:size()
+
+                    -- Only update the available chainstep level while
+                    -- the weapon is not currently firing a volley.
+                    if queuedShots <= 0 and not wdata.volleyActive then
+                        wdata.level = overCharge
+                    end
+
+                    -- Once the previous volley has completely finished
+                    -- and the weapon has started charging again, reset
+                    -- the frozen firing state for the next volley.
+                    if wdata.volleyActive
+                        and queuedShots <= 0
+                        and weapon.cooldown.first > 0 then
+
+                        wdata.volleyActive = false
+                        wdata.firingLevel = nil
+                        wdata.missilePaid = false
+
+                        -- Resume tracking the current charge state.
+                        wdata.level = overCharge
+                    end
                 end
             end
         end
@@ -320,23 +345,38 @@ script.on_internal_event(
             return
         end
 
-        -- Most important part:
-        -- pay ONCE for the entire volley.
-        if not is_first_shot(weapon, true) then
-            return
-        end
-
         local ship = Hyperspace.ships.player
         if not ship then return end
 
-        local missileCost =
-            get_chainstep_missile_cost(
-                weapon,
-                chainWeapon
-            )
+        local wdata = userdata_table(
+            weapon,
+            "mods.sc.chainstep"
+        )
 
-        if missileCost and missileCost > 0 then
-            ship:ModifyMissileCount(-missileCost)
+        -- First projectile of a new volley:
+        -- freeze the chainstep level that existed when firing began.
+        if not wdata.volleyActive then
+            wdata.volleyActive = true
+            wdata.firingLevel = math.max(
+                0,
+                math.floor(wdata.level or 0)
+            )
+            wdata.missilePaid = false
+        end
+
+        -- Pay exactly once for the entire volley.
+        if not wdata.missilePaid then
+            local missileCost =
+                get_chainstep_missile_cost_from_level(
+                    chainWeapon,
+                    wdata.firingLevel or 0
+                )
+
+            if missileCost and missileCost > 0 then
+                ship:ModifyMissileCount(-missileCost)
+            end
+
+            wdata.missilePaid = true
         end
     end
 )
