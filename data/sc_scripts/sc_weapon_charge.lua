@@ -45,8 +45,13 @@ local function get_stored_charge_boost(weapon)
     local wdata = userdata_table(weapon, "mods.sc.weaponStuff")
 
     if not wdata.chargeBurstActive then
-        local firedVolleyShots = math.max(0, weapon.queuedProjectiles:size() + 1)
-        wdata.chargeBurstBoost = firedVolleyShots
+        local boostLevel = 0
+
+        if weapon.weaponVisual then
+            boostLevel = weapon.weaponVisual.boostLevel or 0
+        end
+
+        wdata.chargeBurstBoost = math.max(0, boostLevel)
         wdata.chargeBurstActive = true
     end
 
@@ -62,11 +67,6 @@ local function clear_stored_charge_boost_if_idle(weapon)
         wdata.chargeBurstBoost = 0
         wdata.chargeBurstActive = false
     end
-end
-
-local function get_effective_stored_charge_boost(weapon)
-    local rawBoost = get_stored_charge_boost(weapon)
-    return math.max(0, rawBoost - 1)
 end
 
 local function get_preview_radius_charge_boost(weapon)
@@ -186,30 +186,18 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
     local statBoosts = chargers[weapon and weapon.blueprint and weapon.blueprint.name]
     if not statBoosts then return end
 
-    -- Capture all volley information BEFORE anything modifies
-    -- weapon.queuedProjectiles.
+    -- Capture first-shot state before the shot limiter changes the queue.
     local firstShot = is_first_shot(weapon, true)
 
-    -- Existing charge boost used by the other sc-charge stats.
-    local boost = get_effective_stored_charge_boost(weapon)
+    -- Actual charge level, independent of number of shots/projectiles.
+    local boost = get_stored_charge_boost(weapon)
 
-    -- Missile cost specifically uses the actual charge level,
-    -- not the number of projectiles in the volley.
-    local missileBoost = get_fired_charge_boost(weapon)
-
-    -- -----------------
-    -- SHOT LIMIT
-    -- -----------------
-
+    -- Limit the physical number of shots.
     local shotAmount = get_charge_shot_amount(statBoosts)
 
     if shotAmount then
         mods.sc.apply_charge_shot_limit(weapon, shotAmount)
     end
-
-    -- -------------------
-    -- CHARGE MISSILE COST
-    -- -------------------
 
     local missileData = get_charge_missile_data(statBoosts)
 
@@ -220,24 +208,11 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
         local ship = Hyperspace.ships.player
 
         if ship then
-            local totalMissileCost = get_charge_missile_cost(
-                missileData,
-                missileBoost
-            )
+            local totalMissileCost =
+                get_charge_missile_cost(missileData, boost)
 
-            -- FTL pays the normal XML missile cost itself.
-            local nativeMissileCost =
-                (weapon.blueprint and weapon.blueprint.missiles)
-                or 0
-
-            -- Lua only charges the difference.
-            local extraMissileCost = math.max(
-                0,
-                totalMissileCost - nativeMissileCost
-            )
-
-            if extraMissileCost > 0 then
-                ship:ModifyMissileCount(-extraMissileCost)
+            if totalMissileCost > 0 then
+                ship:ModifyMissileCount(-totalMissileCost)
             end
         end
     end

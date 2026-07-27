@@ -52,7 +52,7 @@
 	<name>GEMINI_HULL_2</name>
 	<name>GEMINI_SYS_1</name>
 	<name>GEMINI_SYS_2</name>
-	<name>IRRADIATE_BEAM</name>
+	<name>TERRAN_BEAM_IRRADIATE</name>
 	<name>EMP_MISSILE</name>
 </blueprintList>
 

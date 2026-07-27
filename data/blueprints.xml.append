@@ -1467,15 +1467,15 @@
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
 
-<weaponBlueprint name="IRRADIATE_BEAM">
+<weaponBlueprint name="TERRAN_BEAM_IRRADIATE">
 	<type>BEAM</type>
 	<flavorType>Pinpoint</flavorType>
 	<tip>tip_focus</tip>
-	<title id="weapon_IRRADIATE_BEAM_title"></title>
-	<short id="weapon_IRRADIATE_BEAM_short"></short>
+	<title id="weapon_TERRAN_BEAM_IRRADIATE_title"></title>
+	<short id="weapon_TERRAN_BEAM_IRRADIATE_short"></short>
 	<desc>...</desc>
-	<descriptionOverride id="weapon_IRRADIATE_BEAM_desc"></descriptionOverride>
-	<tooltipOverride id="weapon_IRRADIATE_BEAM_tooltip"></tooltipOverride>
+	<descriptionOverride id="weapon_TERRAN_BEAM_IRRADIATE_desc"></descriptionOverride>
+	<tooltipOverride id="weapon_TERRAN_BEAM_IRRADIATE_tooltip"></tooltipOverride>
 	<tooltip>tip_bio_weapon</tooltip>
 	<damage>1</damage>
 	<bio-weapon/>
@@ -1549,15 +1549,15 @@
 	</statBoosts>
 </weaponBlueprint>
 
-<weaponBlueprint name="IRRADIATE_BEAM_LITE">
+<weaponBlueprint name="TERRAN_BEAM_IRRADIATE_LITE">
 	<type>BEAM</type>
 	<flavorType>Pinpoint</flavorType>
 	<tip>tip_focus</tip>
-	<title id="weapon_IRRADIATE_BEAM_LITE_title"></title>
-	<short id="weapon_IRRADIATE_BEAM_LITE_short"></short>
+	<title id="weapon_TERRAN_BEAM_IRRADIATE_LITE_title"></title>
+	<short id="weapon_TERRAN_BEAM_IRRADIATE_LITE_short"></short>
 	<desc>...</desc>
-	<descriptionOverride id="weapon_IRRADIATE_BEAM_LITE_desc"></descriptionOverride>
-	<tooltipOverride id="weapon_IRRADIATE_BEAM_LITE_tooltip"></tooltipOverride>
+	<descriptionOverride id="weapon_TERRAN_BEAM_IRRADIATE_LITE_desc"></descriptionOverride>
+	<tooltipOverride id="weapon_TERRAN_BEAM_IRRADIATE_LITE_tooltip"></tooltipOverride>
 	<tooltip>tip_bio_weapon</tooltip>
 	<damage>1</damage>
 	<bio-weapon/>
@@ -1642,18 +1642,22 @@
 	<tooltip id="weapon_TERRAN_MISSILE_HALO_tooltip"/>
 	<radius>35</radius>  <!-- was 34-->
 	<accuracyMod>100</accuracyMod>
-	<missiles>1</missiles>
+	<missiles>0</missiles>
 	<damage>1</damage>
-	<shots>1</shots>
+	<shots>4</shots>
 	<sp>5</sp>
 	<fireChance>1</fireChance>
 	<breachChance>1</breachChance>
 	<drone_targetable>1</drone_targetable>
-	<cooldown>3.5</cooldown>
-	<power>2</power>
-	<chargeLevels>4</chargeLevels>
-	<sc-charge stat="shots" amount="1"/>
-	<sc-charge stat="missileCost" base="5" amount="-1"/>
+	<power>3</power>
+	<cooldown>16</cooldown>
+	<sc-chainstep
+		fireThreshold="4"
+		chainStep="4"
+		maxSteps="3"
+		missileCost="4"
+		missileStep="1"
+	/>
 	<cost>65</cost>
 	<bp>10</bp>
 	<speed>45</speed>
@@ -2400,7 +2404,7 @@
 	<weaponSlots>3</weaponSlots>
 	<droneSlots>3</droneSlots>
 	<weaponList missiles="10" count="3">
-		<weapon name="IRRADIATE_BEAM" />
+		<weapon name="TERRAN_BEAM_IRRADIATE" />
 		<weapon name="EMP_MISSILE" />
 	</weaponList>
 	<droneList drones="10" count="3">
@@ -2421,13 +2425,12 @@
      TERRAN_VALKYRIE
      ====================-->
 <shipBlueprint name="PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE" layout="TERRAN_PLAYER_SHIP_VALKYRIE" img="TERRAN_PLAYER_SHIP_VALKYRIE">
-	<class id="text_PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE_class">Assault Class</class>
-	<name id="text_PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE_name">Terran Valkyrie</name>
-	<desc id="text_PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE_desc">[[NEED VALKYRIE DESCRIPTION HERE]]</desc>
+	<class>text_PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE_class</class>
+	<name>text_PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE_name</name>
+	<desc>text_PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE_desc</desc>
 	<systemList>
-		<artillery power="1" room="11" start="false" weapon="ARTILLERY_FED" img="invisible" />
 		<battery power="1" room="3" start="false" img="invisible" />
-		<cloaking power="1" room="13" start="false" img="invisible" />
+		<cloaking power="1" room="12" start="false" img="invisible" />
 		<clonebay power="1" room="4" start="false">
 			<slot>
 				<number>1</number>
@@ -2446,7 +2449,7 @@
 				<number>5</number>
 			</slot>
 		</engines>
-		<hacking power="1" room="14" start="false" img="invisible" />
+		<hacking power="1" room="13" start="false" img="invisible" />
 		<medbay power="1" room="4" start="true" img="room_medbay">
 			<slot>
 				<number>1</number>
@@ -2466,17 +2469,19 @@
 				<number>1</number>
 			</slot>
 		</sensors>
-		<shields power="3" room="6" start="true" img="invisible">
+		<lily_system_bracers max="3" power="2" room="6" start="true" img="invisible" />
+		<shields power="3" room="6" start="false" img="invisible">
 			<slot>
 				<direction>right</direction>
 				<number>3</number>
 			</slot>
 		</shields>
+		
 		<teleporter power="1" room="1" start="false" />
-		<weapons power="4" room="12" start="true" img="invisible">
+		<weapons power="4" room="11" start="true" img="invisible">
 			<slot>
 				<direction>right</direction>
-				<number>2</number>
+				<number>3</number>
 			</slot>
 		</weapons>
 	</systemList>
@@ -2489,9 +2494,9 @@
 	<droneList drones="5" count="2" />
 	<health amount="30" />
 	<maxPower amount="8" />
-	<crewCount amount="1" class="human" />
-	<crewCount amount="1" class="human" />
-	<crewCount amount="1" class="human" />
+	<crewCount amount="1" class="terran_civilian" />
+	<crewCount amount="1" class="terran_marine" />
+	<crewCount amount="1" class="terran_marine" />
 	<aug name="TERRAN_SHIP" />
 	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
 </shipBlueprint>
