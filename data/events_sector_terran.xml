@@ -804,42 +804,7 @@
 	<!--<event load="DISTRESS_FEDERATION_COLONY_HOSTAGE"/> Very cool but complicated -->
 </eventList>
 
-<event name="RKS_STORE_SNIPER_SIEGED">
-	<preventQuest/>
-	<beaconType id="map_icon_hostilestore" global="false">
-		<color r="215" g="175" b="175" a="1"/>
-	</beaconType>
-	<text>Looks like an EXTREME-ly deadly stealth ship is attacking the nearby market owned by a certain "Sniper Girl". If you can stop them, you should be able to access the store.
-		The specialized store looks ready to provide fire support.
-	</text>
-	<ship load="SHIP_RKS_STORE_SNIPER_EXTREME" hostile="false"/>
-	<choice hidden="true">
-		<text>Rescue the store.</text>
-		<event>
-			<text>You prepare for combat.</text>
-			<environment type="PDS" target="enemy"/>
-			<ship hostile="true"/>
-			<choice hidden="true">
-				<text>Continue...</text>
-				<event load="COMBAT_CHECK"/>
-			</choice>
-		</event>
-	</choice>
-	<choice hidden="true">
-		<text>Ignore the merchant.</text>
-		<event>
-			<text>You are pretty sure they noticed your presence, but they seem too busy to care.</text>
-			<choice>
-				<text>Do something onboard the ship.</text>
-				<event load="STORAGE_CHECK"/>
-			</choice>
-			<choice>
-				<text>Do nothing.</text>
-				<event/>
-			</choice>
-		</event>
-	</choice>
-</event>
+
 
 <!--
 *********************************************************************************************************
@@ -2312,3 +2277,95 @@
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 -->
+
+<!--
+*********************************************************************************************************
+  TERRAN STORES
+*********************************************************************************************************
+-->
+
+<eventList name="STORELIST_TERRAN">
+	<event load="STOREEVENT_TERRAN_DEPOT"/>
+	<event load="STOREEVENT_TERRAN_ARMORY"/>
+	<event load="STOREEVENT_TERRAN_CIVILIAN_MARKET"/>
+</eventList>
+
+<event name="STOREEVENT_TERRAN_DEPOT">
+	<preventQuest/>
+	<beaconType id="map_icon_store_generic" global="false">
+		<color r="215" g="255" b="200" a="1"/>
+	</beaconType>
+
+	<text>
+		You discover a Terran supply depot operating near the beacon. The quartermaster is cautious, but willing to trade with passing vessels.
+	</text>
+
+	<choice>
+		<text>Dock with the depot.</text>
+		<event load="STORE_LOAD_TERRAN_STANDARD"/>
+	</choice>
+
+	<choice>
+		<text>Ignore the depot.</text>
+		<event/>
+	</choice>
+</event>
+
+<event name="STOREEVENT_TERRAN_ARMORY">
+	<preventQuest/>
+	<beaconType id="map_icon_store_generic" global="false">
+		<color r="215" g="255" b="200" a="1"/>
+	</beaconType>
+
+	<text>
+		A fortified Terran armory broadcasts a restricted trade signal. Their inventory is military-grade, but their prices are still open to outsiders with enough scrap.
+	</text>
+
+	<choice>
+		<text>Browse the armory.</text>
+		<event load="STORE_LOAD_TERRAN_STANDARD"/>
+	</choice>
+
+	<choice>
+		<text>Move on.</text>
+		<event/>
+	</choice>
+</event>
+
+<event name="STOREEVENT_TERRAN_CIVILIAN_MARKET">
+	<preventQuest/>
+	<beaconType id="map_icon_store_generic" global="false">
+		<color r="215" g="255" b="200" a="1"/>
+	</beaconType>
+
+	<text>
+		A cluster of Terran civilian transports has gathered around a temporary market hub. Their captains are eager to trade before Dominion patrols tighten the area.
+	</text>
+
+	<choice>
+		<text>Visit the market.</text>
+		<event load="STORE_LOAD_TERRAN_STANDARD"/>
+	</choice>
+
+	<choice>
+		<text>Leave them alone.</text>
+		<event/>
+	</choice>
+</event>
+
+<event name="STORE_LOAD_TERRAN_STANDARD">
+	<store>STORE_STANDARD</store>
+	<text>
+		Before you continue, you still have time to do something aboard the ship.
+	</text>
+
+	<choice>
+		<text>Do something onboard the ship.</text>
+		<event load="STORAGE_CHECK"/>
+	</choice>
+
+	<choice>
+		<text>Do nothing.</text>
+		<event/>
+	</choice>
+</event>
