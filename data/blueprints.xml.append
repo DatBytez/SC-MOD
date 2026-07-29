@@ -1658,6 +1658,8 @@
 		missileCost="4"
 		missileStep="1"
 	/>
+	<!--<sc-chainstep stat="accuracyMod" amount="-45"/>-->
+	<sc-chainstep stat="radius" amount="30"/>
 	<cost>65</cost>
 	<bp>10</bp>
 	<speed>45</speed>
