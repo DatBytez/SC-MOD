@@ -1287,3 +1287,152 @@
 
 	<!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>-->
 </mod:findLike>
+
+<!--
+<customStore id="ID">
+	<hullRepair>
+		<price>10</price> Option 1: Set price
+		<price min="5" max="10"/> Option 2: Min-max price, uses random between min-max if not <sectorScaled/>
+
+		<sectorScaled/> chooses between min-max price depending on sector ((max - min) * ((sector - 1) / 7) + min)
+
+
+		<modifier flat="false">0.8</modifier> Option 1: Set modifier
+		<modifier min="0.5" max="0.9" flat="false"/> Option 2: random modifier between min-max
+	</hullRepair>
+
+	<resource>
+	  <type>missiles</type> missiles, drones, fuel
+	  <minCount>99</minCount>
+	  <maxCount>999</maxCount>
+	  <price>1</price>
+	</resource>
+	
+	
+	<category type="WEAPONS"> WEAPONS, DRONES, AUGMENTS, CREW, SYSTEMS
+		<item>
+			<blueprint>BEAM_GUILLOTINE_PLAYER</blueprint>
+			<modifier>0.7</modifier>
+		</item>    
+		<item>
+			<blueprint>BEAM_SYSTEM</blueprint>
+			<modifier flat="false">0.7</modifier>
+		</item>    
+		<item>
+			<blueprint>FOCUS_1</blueprint>
+			<modifier flat="false">0.7</modifier> flat is optional
+			<price>80</price> if price is -1 or not set, it will use blueprint price
+		</item>    
+	</category>
+	<category type="SYSTEMS" group="1"> If group is not set, defaults to -1
+		<chance>50</chance>
+		<groupChance>25</groupChance>
+		<item>...</item>
+	</category>
+	<category type="DRONES" group="1">
+		<allowDuplicates/>
+		<item>...</item>
+		<item>...</item>
+		<item>...</item>
+	</category>
+</customStore>
+-->
+<!--
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+						 CUSTOM STORES
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+-->
+<store>
+	<!--
+	/////////////////
+	STORES
+	/////////////////
+	-->
+
+	<customStore id="STORE_TERRAN">
+		<hullRepair>
+			<price min="2" max="4"/>
+			<sectorScaled/>
+		</hullRepair>
+
+		<resource>
+			<type>fuel</type>
+			<count min="5" max="10"/>
+		</resource>
+
+		<resource>
+			<type>missiles</type>
+			<count min="4" max="8"/>
+		</resource>
+
+		<resource>
+			<type>drones</type>
+			<count min="5" max="10"/>
+		</resource>
+
+		<category type="WEAPONS">
+			<customTitle>TERRAN WEAPONS</customTitle>
+			<item>
+				<blueprint>TERRAN_STANDARD_WEAPONS</blueprint>
+			</item>
+			<item>
+				<blueprint>TERRAN_STANDARD_WEAPONS</blueprint>
+			</item>
+			<item>
+				<blueprint>TERRAN_STANDARD_WEAPONS</blueprint>
+			</item>
+			<item/>
+			<chance>100</chance>
+		</category>
+
+		<category type="DRONES">
+			<customTitle>TERRAN DRONES</customTitle>
+			<item>
+				<blueprint>TERRAN_DRONES_STANDARD</blueprint>
+			</item>
+			<item>
+				<blueprint>TERRAN_DRONES_STANDARD</blueprint>
+			</item>
+			<chance>25</chance>
+		</category>
+
+		<category type="AUGMENTS">
+			<customTitle>AUGMENTS</customTitle>
+			<item/>
+			<item/>
+			<item/>
+			<chance>65</chance>
+		</category>
+
+		<category type="CREW">
+			<customTitle>TERRAN CONTRACTORS</customTitle>
+			<allowDuplicates/>
+			<item>
+				<blueprint>TERRAN_LIST_CREW_ALL</blueprint>
+			</item>
+			<item>
+				<blueprint>TERRAN_LIST_CREW_ALL</blueprint>
+			</item>
+			<item>
+				<blueprint>TERRAN_LIST_CREW_ALL</blueprint>
+			</item>
+			<chance>75</chance>
+		</category>
+
+		<category type="SYSTEMS">
+			<customTitle>TERRAN SYSTEMS</customTitle>
+			<item>
+				<blueprint>SHOP_TERRAN_SYSTEMS_ESSENTIAL</blueprint>
+			</item>
+			<item>
+				<blueprint>SHOP_TERRAN_SYSTEMS_BONUS</blueprint>
+			</item>
+			<item>
+				<blueprint>SHOP_TERRAN_SYSTEMS_BONUS</blueprint>
+			</item>
+			<chance>75</chance>
+		</category>
+	</customStore>
+</store>

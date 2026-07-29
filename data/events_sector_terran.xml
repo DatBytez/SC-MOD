@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<FTL>
  <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     SHIP EVENT DEFINITIONS (PRIMARILY FOR TESTING)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
-<FTL>
+
  <ship name="TERRAN_SHIP_WRAITH_A" auto_blueprint="TERRAN_SHIP_WRAITH_A">
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
@@ -161,14 +162,12 @@
 	<text>Aaaaa! Scary ship!</text>
 	<ship load="TERRAN_SHIP_VESSEL_D" hostile="true"/>
 </event>
-</FTL>
 
 <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     GENERIC COMBAT RESULT EVENTS
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
-<FTL>
 <event name="SC_SURRENDER_TERRAN">
     <text>"Stand down. We can transfer supplies if you let us limp out of here."</text>
 	<text>"You recieve a jumbled message from the heavily damaged ship. The remaining crew has surrendered and is requesting immediate aid."</text>
@@ -311,7 +310,6 @@
     <autoReward level="HIGH">item</autoReward>
 </event>
 -->
-</FTL>
 
 <!--
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -366,21 +364,14 @@
 	<event load="DOMINION_AMMO"/>
 </eventList>
 
-<eventList name="ITEMS_TERRAN_UNIQUE">
-	<event load="DOMINION_SUPPLY"/>
-	<event load="DOMINION_FREECREW"/>
-	<event load="DOMINION_AMMO"/>
-</eventList>
-
 <!--
 *********************************************************************************************************
   DOMINION SUPPLY (MV)
 *********************************************************************************************************
 -->
-<FTL>
 <event name="DOMINION_SUPPLY" unique="true">
 	<text>You discover a fully militarized Dominion station here, though it appears they are selling supplies to passing allied ships.</text>
-	<ship load="SC_TERRAN_ALL_SHIPS" hostile="false"/>
+	<ship load="SC_TERRAN_PATROL_SHIP" hostile="false"/>
 	<choice>
 		<text>Purchase fuel.</text>
 		<event>
@@ -423,14 +414,12 @@
 	<text>Your unprovoked, attack on a Dominion Station has been successful. You scrap what remains.</text>
 	<autoReward level="MED">standard</autoReward>
 </event>
-</FTL>
-
+ 
 <!--
 *********************************************************************************************************
   DOMINION FREECREW (MV)
 *********************************************************************************************************
 -->
-<FTL>
 <event name="DOMINION_FREECREW" unique="true">
 	<text>A damaged Dominion ship hails you. "Good, a friendly face for once. Our ship has taken catastrophic damage and there's no chance of repairing it. I don't suppose you'd be willing to allow me aboard? I'm handy with a wrench and I'm sure my skills could be of service to you."</text>
 	<choice hidden="true">
@@ -455,15 +444,13 @@
 		<ship load="SC_TERRAN_ALL_SHIPS" hostile="true"/>
 	</event>
 </eventList>
-</FTL>
 
 <!--
 *********************************************************************************************************
   DOMINION AMMO (MV)
 *********************************************************************************************************
 -->
-<FTL>
-<event name="DOMINION_AMMO" unique="true">
+<event name="DOMINION_AMMO" unique="false">
     <text>A Dominion station is sending out a request for ammunition, in return for scrap. Their high demand is likely due to the increasing number of blockades by the outlaws, the Sons of Korhal. They might be able to spare some blueprints if you are generous.</text>
     <choice>
         <text>Offer 5 missiles for whatever scrap they have.</text>
@@ -493,7 +480,7 @@
             <item_modify>
                 <item type="missiles" min="-10" max="-10"/>
             </item_modify>
-			<augment name="LIST_AUGMENT_TERRAN_ALL"/>
+			<augment name="TERRAN_LIST_AUGMENT_ALL"/>
         </event>
     </choice>
     <choice>
@@ -514,17 +501,16 @@
                 <item type="missiles" min="-20" max="-20"/>
             </item_modify>
             <modifyPursuit amount="-2"/>
-			<choice>
+			<!--<choice>
 				<text>Continue...</text>
 				<event load="MORALITY_REMOVE_GENERAL"/>
-			</choice>
+			</choice>-->
         </event>
     </choice>
     <choice hidden="true">
         <text>We don't have anything to sell.</text>
     </choice>
 </event>
-</FTL>
 
 <!--
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -552,7 +538,6 @@
   DOMINION KORHAL CONTACT (MV)
 *********************************************************************************************************
 -->
-<FTL>
 <event name="DOMINION_KORHAL_CONTACT" unique="true">
     <text>A small Dominion ship is skulking far from the beacon. They seem to be waiting for someone.</text>
     <choice hidden="true">
@@ -638,14 +623,12 @@
         <autoReward level="LOW">standard</autoReward>
     </event>
 </eventList>
-</FTL>
 
 <!--
 *********************************************************************************************************
   DOMINION KORHAL CHOICE (MV)
 *********************************************************************************************************
 -->
-<FTL>
 <event name="DOMINION_KORHAL_CHOICE">
 	<text load="TEXT_DOMINION_KORHAL_CHOICE"/>
 	<ship load="SC_TERRAN_ALL_SHIPS" hostile="false"/>
@@ -669,14 +652,12 @@
     <text>Some ships bearing the markings of the Sons of Korhal break through the outer defenses of the sector. This one is avoiding you, likely not wanting to endanger its mission.</text>
     <text>The Sons of Korhal fleet that is chasing you through this sector might not be focusing all their attention on you. This ship seems preoccupied.</text>
 </textList>
-</FTL>
 
 <!--
 *********************************************************************************************************
   DOMINION HANGER RAID (MV)
 *********************************************************************************************************
 -->
-<FTL>
 <event name="DOMINION_HANGAR_RAID" unique="true">
 	<text>A large Dominion hangar has been built on the nearby planet. Any Domionion ship is allowed to dock.</text>
 	<choice hidden="true">
@@ -701,14 +682,12 @@
 		</event>
 	</choice>
 </event>
-</FTL>
 
 <!--
 *********************************************************************************************************
   DOMINION ELITE STEALTH ENCOUNTER (MV) [Incomplete: Enemy elite ship. Bonuses for rep with Dominion.]
 *********************************************************************************************************
 -->
-<FTL>
 <event name="DOMINION_ENCOUNTER_ELITE_STEALTH" unique="true">
 	<text>The Dominion ship patrolling this beacon is no ordinary vessel. Its distinct shape marks it as part of the Federation's latest stealth fleet, created to help keep up with the never ending arms race with the Rebellion. Fortunately, they don't seem to object to your presence, but they aren't particularly welcoming either.</text>
 	<ship load="SC_TERRAN_ALL_SHIPS" hostile="false"/>
@@ -787,7 +766,6 @@
 		</event>
 	</choice>
 </event>
-</FTL>
 
 <!--
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -1189,7 +1167,6 @@
   DOMINION SHIP STOLEN ENCOUNTER (MV)
 *********************************************************************************************************
 -->
-<FTL>
 <event name="DOMINION_SHIP_STOLEN" unique="true">
     <text>A charred and smoking hangar resides at this beacon, barely functional. "We've been waiting for help to come by... we have truly awful news! A Dominion ship has been taken by the Sons of Korhal! Please, you have to do something! We have no idea what they're going to do with it, but whatever they are planning cannot happen!"</text>
     <choice>
@@ -1218,14 +1195,12 @@
         <event load="COMBAT_CHECK"/>
     </choice>
 </event>
-</FTL>
 
 <!--
 *********************************************************************************************************
   TERRAN TRANSPORT ENCOUNTER
 *********************************************************************************************************
 -->
-<FTL>
 <event name="SC_TERRAN_TRANSPORT">
 	<text>
 		You arrive near a heavily escorted Terran transport vessel. Its cargo holds are reinforced and its engines are already cycling up, but it has not jumped yet.
@@ -1350,7 +1325,6 @@
 		You arrive at the coordinates recovered from the transport's route data. The trail leads to a Terran logistics waypoint, but this event is still a stub and can be expanded into a follow-up fight, cache, or special reward later.
 	</text>
 </event>
-</FTL>
 
 <!--
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -1375,7 +1349,6 @@
   DOMINION SALVAGE ENCOUNTER (MV)
 *********************************************************************************************************
 -->
-<FTL>
 <event name="ENCOUNTER_DOMINION_SALVAGE" unique="true">
     <text>You find the wreck of a Dominion ship nearby. Before you can even begin to consider salvaging it, another Federation ship jumps in. They demand an explanation for what happened.</text>
     <ship load="SHIP_FED_SALVAGE" hostile="false"/>
@@ -1431,14 +1404,12 @@
         <ship hostile="true"/>
     </event>
 </eventList>
-</FTL>
 
 <!--
 *********************************************************************************************************
   DOMINION KORHAL TAKEOVER ENCOUNTER (MV)
 *********************************************************************************************************
 -->
-<FTL>
 <event name="ENCOUNTER_DOMINION_KORHAL_TAKEOVER" unique="true">
 	<text>You receive an urgent hail from the nearby Dominion ship. "You have to help, the Sons of Korhal, they've taken over the ship!" The call suddenly goes to static and the ship turns hostile!</text>
 	<ship load="SHIP_DOMINION_KORHAL_TAKEOVER" hostile="true"/> 
@@ -1466,14 +1437,12 @@
 	<autoReward level="HIGH">standard</autoReward>
 	<crewMember amount="1" class="terran_civilian"/>
 </event>
-</FTL>
 
 <!--
 *********************************************************************************************************
   TERRAN PATROL ENCOUNTER
 *********************************************************************************************************
 -->
-<FTL>
 <event name="SC_TERRAN_PATROL">
 	<text>
 		Your ship arrives near the edge of a Terran patrol route. Sensor shadows flicker between nearby debris fields.
@@ -1686,14 +1655,12 @@
 	</text>
 	<ship hostile="true"/>
 </event>
-</FTL>
 
 <!--
 *********************************************************************************************************
   TERRAN SCOUT ENCOUNTER
 *********************************************************************************************************
 -->
-<FTL>
 <event name="SC_TERRAN_SCOUT">
 	<text>
 		A Terran scout drops out of FTL almost on top of you. It catches your transponder signature before you can mask it and immediately turns to flee.
@@ -2040,14 +2007,12 @@
 	</text>
 	<autoReward level="HIGH">standard</autoReward>
 </event>
-</FTL>
 
 <!--
 *********************************************************************************************************
   TERRAN ASSAULT ENCOUNTER
 *********************************************************************************************************
 -->
-<FTL>
 <event name="SC_TERRAN_ASSAULT">
 	<text>
 		A Terran assault group is already waiting at this beacon. Their lead ship moves to intercept, weapons hot and formation tight. This is not a scout or patrol trying to identify you; this is a direct attack.
@@ -2089,13 +2054,11 @@
 
 	<ship hostile="true"/>
 </event>
-</FTL>
 <!--
 *********************************************************************************************************
   TERRAN AMBUSH ENCOUNTER
 *********************************************************************************************************
 -->
-<FTL>
 <event name="SC_TERRAN_AMBUSH">
 	<text>
 		You arrive in a quiet stretch of space. The beacon appears empty at first glance: no distress calls, no obvious wreckage, and no active Terran signatures on your sensors.
@@ -2268,7 +2231,6 @@
 	</text>
 	<ship load="SC_TERRAN_NON_AMBUSH_SHIP" hostile="true"/>
 </event>
-</FTL>
 
 <!--
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -2354,18 +2316,19 @@
 </event>
 
 <event name="STORE_LOAD_TERRAN_STANDARD">
-	<store>STORE_STANDARD</store>
+	<store>STORE_TERRAN</store>
 	<text>
 		Before you continue, you still have time to do something aboard the ship.
 	</text>
-
+<!--
 	<choice>
 		<text>Do something onboard the ship.</text>
 		<event load="STORAGE_CHECK"/>
 	</choice>
-
+-->
 	<choice>
 		<text>Do nothing.</text>
 		<event/>
 	</choice>
 </event>
+</FTL>

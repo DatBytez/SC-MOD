@@ -4,7 +4,7 @@
 *********************************************************************************************************
 -->
 
-<ship name="SC_TERRAN_ALL_SHIPS" auto_blueprint="LIST_SHIP_TERRAN_ALL">
+<ship name="SC_TERRAN_ALL_SHIPS" auto_blueprint="TERRAN_LIST_SHIPS_ALL">
 	<surrender chance="0.4" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 	<escape  chance="0.3" min="3" max="4" load="SC_ESCAPE_TERRAN"/>
 	<gotaway load="SC_GOTAWAY_TERRAN"/>

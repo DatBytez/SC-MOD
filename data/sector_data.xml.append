@@ -59,9 +59,10 @@ S8 (7): Last Stand-->
 	
 	<event name="STORELIST_TERRAN" min="2" max="3"/>
 	
-	<event name="ITEMS_TERRAN" min="3" max="4"/>
+	<!--<event name="ITEMS_TERRAN" min="3" max="4"/>-->
+	<event name="ITEMS_TERRAN" min="2" max="2"/>
 	<event name="NEUTRAL_TERRAN" min="4" max="5"/>
-	<event name="DISTRESS_TERRAN" min="1" max="2"/>
+	<event name="DISTRESS_TERRAN" min="0" max="0"/>
 	<event name="QUESTS_TERRAN" min="1" max="1"/>
 	
 	<event name="HOSTILE_TERRAN" min="4" max="6"/>

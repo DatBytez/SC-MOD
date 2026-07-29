@@ -136,7 +136,7 @@
 <!--
 ********************            AUGMENT LISTS            *******************
 -->
-<blueprintList name="LIST_AUGMENT_TERRAN_ALL">
+<blueprintList name="TERRAN_LIST_AUGMENT_ALL">
 	<name>TERRAN_WRAITH_BATTERY</name>
 	<name>TERRAN_SHIP_ARMOR_LIGHT</name>
 	<name>TERRAN_SHIP_ARMOR_MEDIUM</name>
@@ -147,6 +147,13 @@
 <!--
 ********************            CREW LISTS            *******************
 -->
+<blueprintList name="TERRAN_LIST_CREW_ALL">
+	<name>terran_civilian</name>
+	<name>terran_firebat</name>
+	<name>terran_ghost</name>
+	<name>terran_marine</name>
+	<name>terran_medic</name>
+</blueprintList>
 <blueprintList name="LIST_CREW_TELEPATHIC">
 	<name>terran_ghost</name>
 	<name>slug</name>
@@ -158,9 +165,34 @@
 </blueprintList>
 
 <!--
+********************            SHOP ITEM LISTS            *******************
+-->
+<blueprintList name="SHOP_TERRAN_SYSTEMS_ESSENTIAL">
+	<name>oxygen</name>
+	<name>weapons</name>
+	<name>doors</name>
+	<name>sensors</name>
+	<name>medbay</name>
+	<name>lily_system_bracers</name>
+</blueprintList>
+<blueprintList name="SHOP_TERRAN_SYSTEMS_BONUS">
+	<name>drones</name>
+	<name>hacking</name>
+	<name>cloaking</name>
+	<name>battery</name>
+	<name>clonebay</name>
+</blueprintList>
+<blueprintList name="SHOP_TERRAN_SYSTEMS_LOCKED">
+	<name>mind</name>
+	<name>shields</name>
+	<name>teleporter</name>
+</blueprintList>
+
+
+<!--
 ********************            SHIP LISTS            *******************
 -->
-<blueprintList name="LIST_TERRAN_SHIPS_ALL">
+<blueprintList name="TERRAN_LIST_SHIPS_ALL">
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
 	<name>TERRAN_SHIP_WRAITH_A</name>
 	<name>TERRAN_SHIP_WRAITH_B</name>
