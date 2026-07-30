@@ -369,7 +369,7 @@
   DOMINION SUPPLY (MV)
 *********************************************************************************************************
 -->
-<event name="DOMINION_SUPPLY" unique="true">
+<event name="DOMINION_SUPPLY" unique="false">
 	<text>You discover a fully militarized Dominion station here, though it appears they are selling supplies to passing allied ships.</text>
 	<ship load="SC_TERRAN_PATROL_SHIP" hostile="false"/>
 	<choice>
@@ -396,7 +396,7 @@
 			<item_modify>
 				<item type="scrap" min="-60" max="-40"/>
 			</item_modify>
-			<weapon name="RANDOM"/>
+			<weapon name="TERRAN_STANDARD_WEAPONS"/>
 		</event>
 	</choice>
 	<choice hidden="true">
@@ -408,6 +408,7 @@
 	</choice>
 	<choice hidden="true">
 		<text>Ignore the station.</text>
+		<event/>
 	</choice>
 </event>
 <event name="DOMINION_SUPPLY_STATION_KILL">
@@ -509,6 +510,7 @@
     </choice>
     <choice hidden="true">
         <text>We don't have anything to sell.</text>
+		<event/>
     </choice>
 </event>
 
@@ -573,9 +575,10 @@
             </choice>
         </event>
     </choice>
-    <choice>
-        <text>Give the ship some space.</text>
-    </choice>
+	<choice>
+		<text>Give the ship some space.</text>
+		<event/>
+	</choice>
 </event>
 <eventList name="DOMINION_KORHAL_THREATEN">
     <event>
@@ -2332,3 +2335,62 @@
 	</choice>
 </event>
 </FTL>
+
+<!--
+*********************************************************************************************************
+  TERRAN FLEET ENCOUNTER
+*********************************************************************************************************
+-->
+
+<event name="SC_TERRAN_FLEET_CHECK">
+	<text>
+		The pursuing fleet has caught up to you. A Terran identification sweep cuts through the sector as hostile ships move to intercept.
+	</text>
+
+	<choice req="TERRAN_SHIP" lvl="1" hidden="true" blue="false" max_group="0">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_FLEET_BATTLECRUISER"/>
+	</choice>
+
+	<choice req="TERRAN_SHIP" lvl="0" max_lvl="0" hidden="true" blue="false" max_group="0">
+		<text>Continue...</text>
+		<event load="FLEET_THREAT_MEDIUM"/>
+	</choice>
+</event>
+
+<event name="SC_TERRAN_FLEET_CHECK_NEBULA">
+	<text>
+		[STARCRAFT] The pursuing fleet has caught up to you inside the nebula. Distorted Terran sensor pings echo through the clouds.
+	</text>
+
+	<choice req="TERRAN_SHIP" lvl="1" hidden="true" blue="false" max_group="0">
+		<text>Continue...</text>
+		<event load="SC_TERRAN_FLEET_BATTLECRUISER"/>
+	</choice>
+
+	<choice req="TERRAN_SHIP" lvl="0" max_lvl="0" hidden="true" blue="false" max_group="0">
+		<text>Continue...</text>
+		<event load="NEBULA_LIGHT_FLEET_THREAT_MEDIUM"/>
+	</choice>
+</event>
+
+<event name="SC_TERRAN_FLEET_BATTLECRUISER">
+	<revisitEvent>SC_TERRAN_FLEET_BATTLECRUISER</revisitEvent>
+	<!--<customFleet right="false" firing="true" autoDarkening="false">CUSTOM_FLEET_TERRAN</customFleet>-->
+	<customFleet right="false" firing="true" autoDarkening="false">CUSTOM_FLEET_REBEL</customFleet>
+
+	<text>
+		Your Terran ship signature confuses the automated fleet routing long enough to draw a Terran response instead of the standard Rebel fleet ship. A battlecruiser breaks formation and moves to engage.
+	</text>
+
+	<variable name="loc_dives" op="add" val="1"/>
+	<ship load="SC_TERRAN_FLEET_BATTLECRUISER_SHIP" hostile="true"/>
+	<fleet>rebel</fleet>
+	<environment type="PDS" target="player"/>
+	<noASBPlanet/>
+
+	<choice hidden="true">
+		<text>Continue...</text>
+		<event load="COMBAT_CHECK"/>
+	</choice>
+</event>

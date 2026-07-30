@@ -308,3 +308,29 @@
 		<autoReward level="HIGH">item</autoReward>
 	</deadCrew>
 </ship>
+
+<!--
+*********************************************************************************************************
+  TERRAN FLEET WRAPPER
+*********************************************************************************************************
+-->
+
+<ship name="SC_TERRAN_FLEET_BATTLECRUISER_SHIP" auto_blueprint="TERRAN_SHIP_BATTLECRUISER_A">
+	<destroyed>
+		<text>
+			The Terran battlecruiser breaks apart under your fire, but the pursuing fleet is still dangerously close.
+		</text>
+		<item_modify>
+			<item type="fuel" min="1" max="1"/>
+		</item_modify>
+	</destroyed>
+
+	<deadCrew>
+		<text>
+			With the battlecruiser's crew neutralized, you strip what supplies you can before the rest of the fleet closes in.
+		</text>
+		<item_modify>
+			<item type="fuel" min="1" max="1"/>
+		</item_modify>
+	</deadCrew>
+</ship>

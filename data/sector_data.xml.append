@@ -51,23 +51,16 @@ S8 (7): Last Stand-->
 	<removeFirstBeaconNebula/>
 	<!--<exitBeacon event="FINISH_BEACON_TERRAN" nebulaEvent="FINISH_BEACON_NEBULA" rebelEvent="FINISH_BEACON_FLEET_ELITE"/>-->
 	<exitBeacon event="FINISH_BEACON_TERRAN" nebulaEvent="FINISH_BEACON_TERRAN" rebelEvent="FINISH_BEACON_TERRAN"/>
-	<rebelBeacon event="FLEET_THREAT_MEDIUM" nebulaEvent="NEBULA_LIGHT_FLEET_THREAT_MEDIUM"/>
-	<priorityEvent name="ANOMALY_SPAWNER" min="1" max="1" priority="1" req="ANOMALY_SPAWN_CHECK" lvl="1"/>
-	<event name="MV_TRAVELER" min="0" max="0"/>
-	<event name="SYLVAN_CHANCE" min="0" max="0"/>
-	<event name="OUTPOST_FACTION_SPAWNER" min="0" max="0"/>
-	
+	<rebelBeacon event="SC_TERRAN_FLEET_CHECK" nebulaEvent="SC_TERRAN_FLEET_CHECK_NEBULA"/>
+	<!--<priorityEvent name="ANOMALY_SPAWNER" min="1" max="1" priority="1" req="ANOMALY_SPAWN_CHECK" lvl="1"/>-->
+
 	<event name="STORELIST_TERRAN" min="2" max="3"/>
-	
-	<!--<event name="ITEMS_TERRAN" min="3" max="4"/>-->
-	<event name="ITEMS_TERRAN" min="2" max="2"/>
+	<event name="ITEMS_TERRAN" min="3" max="4"/>
 	<event name="NEUTRAL_TERRAN" min="4" max="5"/>
 	<event name="DISTRESS_TERRAN" min="0" max="0"/>
 	<event name="QUESTS_TERRAN" min="1" max="1"/>
-	
 	<event name="HOSTILE_TERRAN" min="4" max="6"/>
-	
-	<!--<event name="PIRACY_LIST" min="0" max="2"/>-->
+
 	<event name="FILLER_LIST" min="999" max="999"/>
 </sectorDescription>
 </FTL>
