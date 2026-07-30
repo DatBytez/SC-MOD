@@ -2344,7 +2344,7 @@
 
 <event name="SC_TERRAN_FLEET_CHECK">
 	<text>
-		The pursuing fleet has caught up to you. A Terran identification sweep cuts through the sector as hostile ships move to intercept.
+		[STARCRAFT] The pursuing fleet has caught up to you. A Terran identification sweep cuts through the sector as hostile ships move to intercept.
 	</text>
 
 	<choice req="TERRAN_SHIP" lvl="1" hidden="true" blue="false" max_group="0">
@@ -2376,8 +2376,8 @@
 
 <event name="SC_TERRAN_FLEET_BATTLECRUISER">
 	<revisitEvent>SC_TERRAN_FLEET_BATTLECRUISER</revisitEvent>
-	<!--<customFleet right="false" firing="true" autoDarkening="false">CUSTOM_FLEET_TERRAN</customFleet>-->
-	<customFleet right="false" firing="true" autoDarkening="false">CUSTOM_FLEET_REBEL</customFleet>
+	<customFleet right="false" firing="true" autoDarkening="false">CUSTOM_FLEET_TERRAN</customFleet>
+	<!--<customFleet right="false" firing="true" autoDarkening="false">CUSTOM_FLEET_REBEL</customFleet>-->
 
 	<text>
 		Your Terran ship signature confuses the automated fleet routing long enough to draw a Terran response instead of the standard Rebel fleet ship. A battlecruiser breaks formation and moves to engage.
