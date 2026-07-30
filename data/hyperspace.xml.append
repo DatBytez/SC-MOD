@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<FTL>
 
 <advancedCrewTooltips enabled="true" ally="false" enemy="false" rounding="2"/>
 <eventTooltips enabled="true"/>
@@ -1136,7 +1137,6 @@
 	</shipOrder>
 	</ships>
 
-<FTL>
 	<mod:findLike type="ships">
 		<mod-append:ship name="PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER" b="false" c="false" />
 		<mod-append:customShip name="PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER">
@@ -1230,7 +1230,7 @@
 			</exclusivityOverride>
 		</mod-append:customShip>
 	</mod:findLike>
-</FTL>
+
 
 <!--				
 			<exclusivityOverride>
@@ -1395,7 +1395,7 @@
 *********************************************************************************************************
 -->
 
-<fleetDef name="CUSTOM_FLEET_TERRAN">
+<fleetDef name="TERRAN_CUSTOM_FLEET">
 	<ship layer="0">terran_fleet_battlecruiser_1_small</ship>
 	<ship layer="0">terran_fleet_wraith_1_small</ship>
 	<ship layer="0">terran_fleet_valkyrie_1_small</ship>
@@ -1413,3 +1413,5 @@
 	<numShips layer="1">3</numShips>
 	<numShips layer="0">5</numShips>
 </fleetDef>
+
+</FTL>
