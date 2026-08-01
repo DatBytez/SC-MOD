@@ -7,21 +7,18 @@ local FOLLOW_DRONE_BLUEPRINT = "TERRAN_GOLIATH_T"
 local FOLLOW_OFFSET_X = 3
 local FOLLOW_OFFSET_Y = 0
 
--- Optional adjustment applied to every rendered head angle.
--- Leave at 0 initially. Change this if the image appears consistently
--- 90, 180, or 270 degrees away from the intended direction.
-local HEAD_ROTATION_OFFSET = 0
-
--- Optional final positioning adjustment for the manually rendered head.
+-- Position of the manually rendered turret relative to the crew position.
 local HEAD_RENDER_OFFSET_X = 0
 local HEAD_RENDER_OFFSET_Y = 0
 
--- The filename supplied by the user. The script also tries paths derived
--- automatically from the drone blueprint's <droneImage> value.
-local PREFERRED_HEAD_IMAGE =
-    "ship/drones/terran_goliath_turret.png"
+-- Apply this to every angle if the image's default orientation is different.
+-- Try 90, 180, 270, or -90 if the head appears rotated consistently.
+local HEAD_ROTATION_OFFSET = 0
 
-local IDLE_LOOK_DISTANCE = 100
+-- The native defense-drone gun images are now transparent.
+-- This separate image is rendered by Lua.
+local HEAD_IMAGE_PATH = "ship/drones/terran_goliath_turret.png"
+
 local MOVEMENT_EPSILON = 0.1
 
 local DEBUG_RENDER = true
@@ -30,8 +27,9 @@ local DEBUG_INTERVAL_TICKS = 120
 local debugTickCounter = 0
 local lastStatus = nil
 local headTexture = nil
-local headTexturePath = nil
-local textureSearchFinished = false
+local renderCallbackConfirmed = false
+local renderErrorPrinted = false
+local textureFailurePrinted = false
 
 local function configure_print_display()
     local success, printHelper = pcall(function()
@@ -63,7 +61,7 @@ local function print_status_once(message)
 end
 
 configure_print_display()
-game_print("Custom head-render script loaded.")
+game_print("Corrected custom head-render script loaded.")
 
 local function find_follow_crew(shipManager)
     for crew in vter(shipManager.vCrewList) do
@@ -124,17 +122,16 @@ local function direction_name(directionX, directionY)
     end
 end
 
-local function fallback_direction_angle(directionX, directionY)
-    -- These values assume the unrotated gun image points right.
-    -- HEAD_ROTATION_OFFSET can correct a different base orientation.
+local function direction_angle(directionX, directionY)
+    -- These values assume that the unrotated turret image points right.
     if directionX > 0 then
-        return 0
-    elseif directionY > 0 then
         return 90
-    elseif directionX < 0 then
+    elseif directionY > 0 then
         return 180
-    else
+    elseif directionX < 0 then
         return 270
+    else
+        return 0
     end
 end
 
@@ -153,7 +150,7 @@ local function update_facing_state(crew)
         state.directionX = 0
         state.directionY = 1
         state.directionName = "DOWN"
-        state.idleAngle = fallback_direction_angle(0, 1)
+        state.idleAngle = direction_angle(0, 1)
 
         game_print("Facing state initialized.")
         return state
@@ -181,7 +178,7 @@ local function update_facing_state(crew)
             state.directionY
         )
 
-        state.idleAngle = fallback_direction_angle(
+        state.idleAngle = direction_angle(
             state.directionX,
             state.directionY
         )
@@ -190,9 +187,9 @@ local function update_facing_state(crew)
             state.directionName = newDirectionName
 
             game_print(
-                "Leg direction: "
+                "Leg direction="
                 .. newDirectionName
-                .. "; fallback angle="
+                .. " idleAngle="
                 .. tostring(state.idleAngle)
             )
         end
@@ -201,29 +198,13 @@ local function update_facing_state(crew)
     return state
 end
 
-local function hide_native_gun(defenseDrone)
-    -- The original defense-drone renderer is what keeps overriding the
-    -- requested rotation, so hide all of its possible gun-image states.
-    if defenseDrone.gun_image_off then
-        defenseDrone.gun_image_off:SetScale(0, 0)
-    end
-
-    if defenseDrone.gun_image_charging then
-        defenseDrone.gun_image_charging:SetScale(0, 0)
-    end
-
-    if defenseDrone.gun_image_on then
-        defenseDrone.gun_image_on:SetScale(0, 0)
-    end
-end
-
-local function try_load_texture(path)
-    if not path or path == "" then
-        return nil
+local function load_head_texture()
+    if headTexture then
+        return headTexture
     end
 
     local success, texture = pcall(function()
-        return Hyperspace.Resources:GetImageId(path)
+        return Hyperspace.Resources:GetImageId(HEAD_IMAGE_PATH)
     end)
 
     if success
@@ -232,109 +213,35 @@ local function try_load_texture(path)
         and texture.height
         and texture.width > 1
         and texture.height > 1 then
-        return texture
-    end
 
-    return nil
-end
+        headTexture = texture
 
-local function load_head_texture(defenseDrone)
-    if textureSearchFinished then
+        game_print(
+            "Loaded "
+            .. HEAD_IMAGE_PATH
+            .. " size="
+            .. tostring(texture.width)
+            .. "x"
+            .. tostring(texture.height)
+        )
+
         return headTexture
     end
 
-    textureSearchFinished = true
+    if not textureFailurePrinted then
+        textureFailurePrinted = true
 
-    local candidates = {
-        PREFERRED_HEAD_IMAGE
-    }
-
-    if defenseDrone.blueprint
-        and defenseDrone.blueprint.droneImage
-        and defenseDrone.blueprint.droneImage ~= "" then
-
-        local imageBase = defenseDrone.blueprint.droneImage
-
-        table.insert(
-            candidates,
-            "ship/drones/" .. imageBase .. "_gun_on.png"
-        )
-
-        table.insert(
-            candidates,
-            "ship/drones/" .. imageBase .. "_gun.png"
-        )
-
-        table.insert(
-            candidates,
-            "ship/drones/" .. imageBase .. "_gun_charged.png"
+        game_print(
+            "Unable to load "
+            .. HEAD_IMAGE_PATH
+            .. "; success="
+            .. tostring(success)
+            .. " texture="
+            .. tostring(texture)
         )
     end
-
-    for _, path in ipairs(candidates) do
-        local texture = try_load_texture(path)
-
-        if texture then
-            headTexture = texture
-            headTexturePath = path
-
-            game_print(
-                "Using head image "
-                .. path
-                .. " ("
-                .. tostring(texture.width)
-                .. "x"
-                .. tostring(texture.height)
-                .. ")."
-            )
-
-            return headTexture
-        end
-    end
-
-    game_print(
-        "Could not load a head image. Checked: "
-        .. table.concat(candidates, ", ")
-    )
 
     return nil
-end
-
-local function calculate_idle_angle(
-    defenseDrone,
-    state
-)
-    local targetPoint = Hyperspace.Pointf(
-        defenseDrone.currentLocation.x
-            + state.directionX * IDLE_LOOK_DISTANCE,
-
-        defenseDrone.currentLocation.y
-            + state.directionY * IDLE_LOOK_DISTANCE
-    )
-
-    -- Use FTL's own angle calculation when available, but store the result
-    -- for our separate render pass instead of relying on the native gun draw.
-    local success, calculatedAngle = pcall(function()
-        return defenseDrone:UpdateAimingAngle(
-            targetPoint,
-            1,
-            1
-        )
-    end)
-
-    if success and type(calculatedAngle) == "number" then
-        state.idleAngle = calculatedAngle
-    elseif defenseDrone.desiredAimingAngle
-        and type(defenseDrone.desiredAimingAngle) == "number" then
-        state.idleAngle = defenseDrone.desiredAimingAngle
-    else
-        state.idleAngle = fallback_direction_angle(
-            state.directionX,
-            state.directionY
-        )
-    end
-
-    return state.idleAngle
 end
 
 local function get_render_angle(
@@ -343,8 +250,10 @@ local function get_render_angle(
     state
 )
     if has_incoming_hostile_projectile(shipManager) then
-        -- Preserve the defense drone's native projectile-tracking direction.
-        return defenseDrone.current_angle or state.idleAngle, "COMBAT"
+        -- The invisible native gun still updates this angle while targeting.
+        if type(defenseDrone.current_angle) == "number" then
+            return defenseDrone.current_angle, "COMBAT"
+        end
     end
 
     return state.idleAngle, "IDLE"
@@ -402,20 +311,13 @@ script.on_internal_event(
 
         local state = update_facing_state(crew)
 
-        if not has_incoming_hostile_projectile(shipManager) then
-            calculate_idle_angle(
-                defenseDrone,
-                state
-            )
-        end
-
-        hide_native_gun(defenseDrone)
-        load_head_texture(defenseDrone)
+        load_head_texture()
 
         debugTickCounter = debugTickCounter + 1
 
         if DEBUG_RENDER
             and debugTickCounter >= DEBUG_INTERVAL_TICKS then
+
             debugTickCounter = 0
 
             local renderAngle, mode = get_render_angle(
@@ -438,15 +340,26 @@ script.on_internal_event(
     end
 )
 
--- Draw the head ourselves after the ship has finished rendering.
--- This bypasses the defense drone's native gun renderer.
+-- IMPORTANT:
+-- Defines.RenderEvents.SHIP passes a Ship object, not a ShipManager.
+-- Retrieve the real ShipManager before accessing vCrewList or spaceDrones.
 script.on_render_event(
     Defines.RenderEvents.SHIP,
     function() end,
-    function(shipManager)
-        if not shipManager
-            or shipManager.iShipId ~= 0 then
+    function(ship)
+        if not ship or ship.iShipId ~= 0 then
             return
+        end
+
+        local shipManager = Hyperspace.ships.player
+
+        if not shipManager then
+            return
+        end
+
+        if not renderCallbackConfirmed then
+            renderCallbackConfirmed = true
+            game_print("SHIP render callback reached successfully.")
         end
 
         local crew = find_follow_crew(shipManager)
@@ -456,7 +369,7 @@ script.on_render_event(
             return
         end
 
-        local texture = load_head_texture(defenseDrone)
+        local texture = load_head_texture()
 
         if not texture then
             return
@@ -471,7 +384,7 @@ script.on_render_event(
             return
         end
 
-        local angle = get_render_angle(
+        local angle, mode = get_render_angle(
             shipManager,
             defenseDrone,
             state
@@ -491,18 +404,35 @@ script.on_render_event(
             + FOLLOW_OFFSET_Y
             + HEAD_RENDER_OFFSET_Y
 
-        local drawX = centerX - texture.width / 2
-        local drawY = centerY - texture.height / 2
+        local success, errorMessage = pcall(function()
+            Graphics.CSurface.GL_PushMatrix()
 
-        Graphics.CSurface.GL_BlitImage(
-            texture,
-            drawX,
-            drawY,
-            texture.width,
-            texture.height,
-            angle,
-            Graphics.GL_Color(1, 1, 1, 1),
-            false
-        )
+            Graphics.CSurface.GL_Translate(
+                centerX,
+                centerY,
+                0
+            )
+
+            Graphics.CSurface.GL_BlitImage(
+                texture,
+                -texture.width / 2,
+                -texture.height / 2,
+                texture.width,
+                texture.height,
+                angle,
+                Graphics.GL_Color(1, 1, 1, 1),
+                false
+            )
+
+            Graphics.CSurface.GL_PopMatrix()
+        end)
+
+        if not success and not renderErrorPrinted then
+            renderErrorPrinted = true
+            game_print(
+                "Render error: "
+                .. tostring(errorMessage)
+            )
+        end
     end
 )
