@@ -1397,6 +1397,148 @@
 </anim>
 <!--
 *********************************************************************************************************
+      terran_goliath
+*********************************************************************************************************
+-->
+<animSheet name="terran_goliath" w="400" h="160" fw="40" fh="40">people/terran_goliath_base.png</animSheet>
+<anim name="terran_goliath_clone">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="2" />
+	<time>0.75</time>
+</anim>
+<animSheet name="explosion_terran_goliath_death" w="640" h="64" fw="64" fh="64">effects/explosion_firebat_death.png</animSheet>
+<anim name="terran_goliath_death_right">
+	<sheet>explosion_terran_goliath_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_goliath_death_right">
+	<sheet>explosion_terran_goliath_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_goliath_death_left">
+	<sheet>terran_goliath</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_goliath_power_down">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="2"/>
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_power_up">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="2"/>
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_walk_down">
+	<sheet>terran_goliath</sheet>
+	<desc length="10" x="0" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_walk_right">
+	<sheet>terran_goliath</sheet>
+	<desc length="10" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_walk_up">
+	<sheet>terran_goliath</sheet>
+	<desc length="10" x="0" y="3" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_walk_left">
+	<sheet>terran_goliath</sheet>
+	<desc length="10" x="0" y="0" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_shoot_down">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_shoot_right">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_shoot_up">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_shoot_left">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="3" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_fire_down">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_fire_right">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="1" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_fire_up">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_fire_left">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="3" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_repair">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_punch_up">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_punch_down">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_goliath_teleport">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="2" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_goliath_type_right">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_goliath_type_left">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="3" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_goliath_type_up">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_goliath_type_down">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="2" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_goliath_portrait">
+	<sheet>terran_goliath</sheet>
+	<desc length="1" x="0" y="2" />
+	<time>1</time>
+</anim>
+<!--
+*********************************************************************************************************
             TERRAN_SPIDER
 *********************************************************************************************************
 -->

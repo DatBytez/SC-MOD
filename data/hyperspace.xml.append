@@ -215,25 +215,7 @@
   TERRAN CUSTOM FLEET VISUAL
 *********************************************************************************************************
 -->
-	<fleetDef name="TERRAN_CUSTOM_FLEET">
-        <ship layer="0">fleetcivilian_1_small</ship>
-		<ship layer="0">fleetcivilian_2_small</ship>
-		<ship layer="0">fleetcivilian_3_small</ship>
-		<ship layer="0">fleetcivilian_4_small</ship>
-		<ship layer="0">fleetcivilian_5_small</ship>
-		<ship layer="1">fleetcivilian_1_med</ship>
-		<ship layer="1">fleetcivilian_2_med</ship>
-		<ship layer="1">fleetcivilian_3_med</ship>
-		<ship layer="1">fleetcivilian_4_med</ship>
-		<ship layer="1">fleetcivilian_5_med</ship>
-        <bigShip>fleetcivilian_1_med</bigShip>
-        <numShips layer="2">1</numShips>
-        <numShips layer="1">4</numShips>
-		<numShips layer="0">6</numShips>
-    </fleetDef>
-
-	<!--
-	<fleetDef name="TERRAN_CUSTOM_FLEET">
+		<fleetDef name="TERRAN_CUSTOM_FLEET">
 		<ship layer="0">terran_fleet_battlecruiser_1_small</ship>
 		<ship layer="0">terran_fleet_wraith_1_small</ship>
 		<ship layer="0">terran_fleet_valkyrie_1_small</ship>
@@ -250,29 +232,8 @@
 		<numShips layer="2">1</numShips>
 		<numShips layer="1">3</numShips>
 		<numShips layer="0">5</numShips>
-	</fleetDef>-->
-
-	<fleetDef name="RINGSHIP">
-        <ship layer="0">ringship</ship>
-        <numShips layer="0">1</numShips>
-    </fleetDef>
-	
-	<!--
-	////////////////////
-		MISC FLEETS
-	////////////////////
-	-->
-	<fleetDef name="CUSTOM_FLEET_CIVILIAN">
-        <ship layer="0">fleetcivilian_1_small</ship>
-		<ship layer="1">fleetcivilian_1_med</ship>
-        <bigShip>fleetcivilian_1_med</bigShip>
-        <numShips layer="2">0</numShips>
-        <numShips layer="1">1</numShips>
-		<numShips layer="0">1</numShips>
-    </fleetDef>
+	</fleetDef>	
 </events>
-
-
 	<!-- 
 *********************************************************************************************************
   TERRAN AUGMENTS
@@ -600,6 +561,8 @@
 				<priority>0</priority>
 				<whiteList>
 					<terran_scv/>
+					<terran_goliath/>
+					<terran_spider_mine/>
 				</whiteList>
 			</statBoost>
 		</passiveStatBoosts>
@@ -858,7 +821,54 @@
 		</powerEffect>
 
 	</race>
-	
+		<!--
+*********************************************************************************************************
+  TERRAN GOLIATH
+*********************************************************************************************************
+-->
+	<race name="terran_goliath">
+		<crewSlots>0</crewSlots>
+		<noSlot>true</noSlot>
+		<noClone>true</noClone>
+		<selectable>true</selectable>
+		<controllable>true</controllable>
+		<canFight>true</canFight>
+		<canRepair>false</canRepair>
+		<canSabotage>true</canSabotage>
+		<canSuffocate>false</canSuffocate>
+		<canMan>false</canMan>
+		<maxHealth>200</maxHealth>
+		<stunMultiplier>0.25</stunMultiplier>
+		<droneAI>
+			<returnToDroneRoom />
+			<fightAI/>
+		</droneAI>
+		<animBase>human</animBase>
+		<hasCustomDeathAnimation>true</hasCustomDeathAnimation>
+		<fireDamageMultiplier>0.4</fireDamageMultiplier>
+		<moveSpeedMultiplier>0.5</moveSpeedMultiplier>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+		<deathSounds>
+			<deathSound>terran_goliath_death</deathSound>
+		</deathSounds>
+		<powerEffect name="LAUNCH_TURRET">
+			<cooldown>0.5</cooldown>
+			<!--<activateWhenReady enemiesOnly="true">true</activateWhenReady>-->
+			<buttonText>REPAIR HULL</buttonText>
+			<tooltip>[READY]&#xD;&#xD;
+				Repair a portion of the ships hull at the cost of an SCV.</tooltip>
+			<cooldownColor r="255" g="78" b="69" />
+			<effectAnim>explosion_big1_heal</effectAnim>
+			<transformRace health="0" deathSound="false">terran_scv_hull</transformRace>
+			<selfHealth>-999.0</selfHealth>
+		</powerEffect>
+	</race>
 		<!-- 
 *********************************************************************************************************
   TERRAN SPIDER
@@ -1157,10 +1167,10 @@
 		<crewBlueprint>terran_scv_hull</crewBlueprint>
 		<tooltipName>Terran SCV Hull Repair</tooltipName>
 	</drone>
-	<!--<drone name="TERRAN_SPIDER">
-		<crewBlueprint>terran_spider</crewBlueprint>
-		<tooltipName>Terran Spider Mine</tooltipName>
-	</drone>-->
+	<drone name="TERRAN_GOLIATH">
+		<crewBlueprint>terran_goliath</crewBlueprint>
+		<tooltipName>Terran Goliath</tooltipName>
+	</drone>
 	<drone name="TERRAN_SPIDER_1">
 		<crewBlueprint>terran_spider_1</crewBlueprint>
 		<tooltipName>Terran Spider Mine</tooltipName>
@@ -1292,7 +1302,6 @@
 		</mod-append:customShip>
 	</mod:findLike>
 
-
 <!--				
 			<exclusivityOverride>
 				<exclusivityGroup>
@@ -1338,6 +1347,7 @@
 	<mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_augment_repair.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_goliath.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_scv_ai.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_copy.lua</mod-append:script>
@@ -1377,7 +1387,7 @@
 
 		<resource>
 			<type>missiles</type>
-			<count min="4" max="8"/>
+			<count min="3" max="7"/>
 		</resource>
 
 		<resource>

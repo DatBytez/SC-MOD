@@ -18,6 +18,7 @@
 	<terran_civilian_death volume="5">crew/terran_civilian_death.wav</terran_civilian_death>
 	<terran_scv_death volume="5">crew/terran_scv_death.wav</terran_scv_death>
 	<terran_scv_launch volume="5">crew/terran_scv_launch.wav</terran_scv_launch>
+	<terran_goliath_death volume="5">crew/terran_scv_death.wav</terran_goliath_death>
 	<terran_spider_death volume="6">crew/terran_spider_death.wav</terran_spider_death>
 	<terran_spider_run volume="5">crew/terran_spider_run.wav</terran_spider_run>
 	<terran_spider_set volume="5">crew/terran_spider_set.wav</terran_spider_set>

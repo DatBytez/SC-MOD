@@ -1865,7 +1865,7 @@
 	<title id="drone_TERRAN_SCV_NAME"></title>
 	<short id="drone_TERRAN_SCV_SHORT"></short>
 	<desc id="drone_TERRAN_SCV_DESC"></desc>
-	<power>1</power>
+	<power>2</power>
 	<cost>50</cost>
 	<bp>3</bp>
 	<rarity>1</rarity>
@@ -1884,9 +1884,9 @@
 <droneBlueprint name="TERRAN_SCV_HULL">
 	<type>SHIP_REPAIR</type>
 	<tip>tip_crew</tip>
-	<title id="drone_TERRAN_SCV_HULL_NAME"></title>
-	<short id="drone_TERRAN_SCV_HULL_SHORT"></short>
-	<desc id="drone_TERRAN_SCV_HULL_DESC"></desc>
+	<title id="NOYB"></title>
+	<short id="NOYB"></short>
+	<desc id="NOYB"></desc>
 	<power>1</power>
 	<cooldown>1000</cooldown>
 	<!-- Doesn't effect repair drone -->
@@ -1899,6 +1899,82 @@
 	<image>weapons/laser_light2_strip4.png</image>
 	<rarity>0</rarity>
 	<iconImage>Srepair</iconImage>
+</droneBlueprint>
+<!-- 
+**********************************************************************************************************************
+           TERRAN_GOLIATH
+**********************************************************************************************************************
+-->
+<!-- *****************
+	TERRAN_GOLIATH
+	****************** -->
+<crewBlueprint name="terran_goliath">
+	<title id="NOYB"></title>
+	<short id="NOYB"></short>
+	<desc id="NOYB"></desc>
+	<cost>0</cost>
+	<rarity>0</rarity>
+	<powerList>
+		<power>DRONE</power>
+	</powerList>
+	<!--<colorList>
+		<layer>
+			<color r="244" g="4" b="4" a="1.0" />
+			<color r="12" g="72" b="204" a="1.0" />
+			<color r="44" g="180" b="148" a="1.0" />
+			<color r="136" g="64" b="156" a="1.0" />
+			<color r="248" g="140" b="20" a="1.0" />
+			<color r="112" g="48" b="20" a="1.0" />
+			<color r="204" g="224" b="208" a="1.0" />
+			<color r="252" g="252" b="56" a="1.0" />
+		</layer>
+	</colorList>-->
+</crewBlueprint>
+<droneBlueprint name="TERRAN_GOLIATH">
+	<type>REPAIR</type>
+	<tip>tip_crew</tip>
+	<title id="drone_TERRAN_GOLIATH_NAME"></title>
+	<short id="drone_TERRAN_GOLIATH_SHORT"></short>
+	<desc id="drone_TERRAN_GOLIATH_DESC"></desc>
+	<power>1</power>
+	<cost>80</cost>
+	<rarity>4</rarity>
+	<iconImage>battle</iconImage>
+</droneBlueprint>
+<crewBlueprint name="terran_scv_hull">
+	<title id="NOYB"></title>
+	<short id="NOYB"></short>
+	<desc id="NOYB"></desc>
+	<cost>0</cost>
+	<rarity>0</rarity>
+	<powerList>
+		<power>DRONE</power>
+	</powerList>
+</crewBlueprint>
+
+<!-- *****************
+	TERRAN_GOLIATH_T
+	****************** -->
+<droneBlueprint name="TERRAN_GOLIATH_T">
+	<target>ALL</target>
+	<type>DEFENSE</type>
+	<level>1</level>
+	<tip>tip_defense</tip>
+	<title id="NOYB"></title>
+	<short id="NOYB"></short>
+	<desc id="NOYB"></desc>
+	<power>1</power>
+	<cooldown>1000</cooldown>
+	<!-- cooldown for shooting at asteroids/missiles, in ms -->
+	<dodge>0</dodge>
+	<speed>5</speed>
+	<!-- fly faster -->
+	<cost>0</cost>
+	<bp>2</bp>
+	<droneImage>terran_goliath_t</droneImage>
+	<weaponBlueprint>DRONE_LASER</weaponBlueprint>
+	<iconImage>defense</iconImage>
+	<rarity>0</rarity>
 </droneBlueprint>
 <!-- 
 **********************************************************************************************************************
@@ -2335,7 +2411,6 @@
 	<crewCount amount="1" class="terran_civilian" />
 	<aug name="TERRAN_WRAITH_BATTERY" />
 	<aug name="TERRAN_SHIP_ARMOR_LIGHT" />
-	<aug name="WEAPON_PREIGNITE" />
 	
 </shipBlueprint>
 
@@ -2444,7 +2519,7 @@
 				<number>0</number>
 			</slot>
 		</doors>
-		<drones power="1" room="5" start="true" img="invisible" />
+		<drones power="4" room="5" start="true" img="invisible" />
 		<engines power="3" room="2" start="true" img="invisible">
 			<slot>
 				<direction>right</direction>
@@ -2493,7 +2568,10 @@
 		<weapon name="TERRAN_MISSILE_HALO" />
 		<weapon name="MISSILES_BURST" />
 	</weaponList>
-	<droneList drones="5" count="2" />
+	<droneList drones="5" count="2">
+		<drone name="TERRAN_GOLIATH" />
+		<drone name="TERRAN_GOLIATH_T" />
+	</droneList>
 	<health amount="30" />
 	<maxPower amount="8" />
 	<crewCount amount="1" class="terran_civilian" />
