@@ -1,270 +1,541 @@
--- ------------------------
--- TERRAN SHIP REPAIR HULL
--- ------------------------
--- If a ship has TERRAN_SHIP, heal 1 hull when one of its completely
--- destroyed systems is repaired back above destroyed status.
---
--- This version does NOT rely only on healthState.first.
--- It tracks each real ShipSystem object from ship.vSystemList and uses
--- ShipSystem:CompletelyDestroyed(), with healthState/GetDamage fallbacks.
+--[[
+SC DEBUG - HALO PROJECTILE REPORT
 
-local TERRAN_SHIP_AUG = "TERRAN_SHIP"
-local HULL_HEAL_AMOUNT = 1
-local HULL_HEAL_FORCE = true
-local DEBUG_REPAIR_HULL = true
+Purpose:
+    Keep the most recent complete/active HALO attack visible on screen.
 
-local function fallback_vter(cvec)
-    local i = -1
-    local n = cvec:size()
-    return function()
-        i = i + 1
-        if i < n then return cvec[i] end
-    end
-end
-local vter = (mods.multiverse and mods.multiverse.vter) or fallback_vter
+A HALO attack currently produces 8 projectile events:
+    4 real missile projectiles
+    4 fake visual projectiles
 
--- MV provides this table. The fallback keeps this script usable if vSystemList
--- is not available for some reason.
-local systemIds = (mods.multiverse and mods.multiverse.systemIds) or {
-    [0] = "shields",
-    [1] = "engines",
-    [2] = "oxygen",
-    [3] = "weapons",
-    [4] = "drones",
-    [5] = "medbay",
-    [6] = "piloting",
-    [7] = "sensors",
-    [8] = "doors",
-    [9] = "teleporter",
-    [10] = "cloaking",
-    [11] = "artillery",
-    [12] = "battery",
-    [13] = "clonebay",
-    [14] = "mind",
-    [15] = "hacking",
-    [20] = "temporal"
-}
+This script records:
+    selected  = weapon.targets[0], the original aim center
+    core      = projectile.target when PROJECTILE_FIRE reaches this file
+    final     = projectile.target on the projectile's first update
+    coreDist  = distance from selected to core
+    haloMove  = distance from core to final
+    finalDist = distance from selected to final
 
-local function debug_print(message)
-    if DEBUG_REPAIR_HULL then
-        print("[SC TERRAN REPAIR HULL] " .. message)
-    end
-end
+REQUIRED SCRIPT ORDER:
+    sc_radius_core.lua
+    sc_weapon_chainstep.lua
+    sc_debug.lua
+    sc_weapon_halo.lua
 
-local function ship_has_terran_aug(ship)
-    return ship and ship:HasAugmentation(TERRAN_SHIP_AUG) > 0
-end
+With that order:
+    "core" shows the result after sc_radius_core.lua.
+    "final" shows the result after sc_weapon_halo.lua.
 
-local function get_system_state(system)
-    if not system then return nil end
+The report remains visible until another HALO attack begins.
+]]
 
-    -- ShipSystem.table exists in Hyperspace 1.4.0+ and stays attached to the
-    -- system object. This is safer than a separate ship/sysId table because it
-    -- also handles duplicate artillery systems.
-    system.table.sc_terran_repair_hull = system.table.sc_terran_repair_hull or {}
-    return system.table.sc_terran_repair_hull
-end
+mods.sc_debug = mods.sc_debug or {}
+mods.sc_debug.halo = mods.sc_debug.halo or {}
 
-local function get_system_name(system)
-    if not system then return "?" end
+local HALO_WEAPON_NAME = "TERRAN_MISSILE_HALO"
+local HALO_PROJECTILES_PER_ATTACK = 8
+local FAKE_PROJECTILE_SCALE = 0.25
 
-    local sysId = system.iSystemType
-    if sysId ~= nil and Hyperspace.ShipSystem.SystemIdToName then
-        local ok, name = pcall(Hyperspace.ShipSystem.SystemIdToName, sysId)
-        if ok and name and name ~= "" then
-            return name
-        end
-    end
+-- Track only player-fired HALO attacks.
+-- Change this to nil to accept either player or enemy projectiles.
+local TRACK_OWNER_ID = 0
 
-    if system.GetName then
-        local ok, namePtr = pcall(function() return system:GetName() end)
-        if ok and namePtr then
-            return tostring(namePtr)
-        end
+-- A large gap also starts a new report, which prevents an interrupted
+-- partial volley from being combined with the next attack.
+local NEW_ATTACK_TICK_GAP = 120
+
+local SCREEN_X = 10
+local SCREEN_Y = 175
+local LINE_HEIGHT = 20
+
+local POSITION_EPSILON = 0.05
+
+local userdata_table =
+    mods.multiverse
+    and mods.multiverse.userdata_table
+
+local report = mods.sc_debug.halo
+
+report.attackNumber =
+    report.attackNumber or 0
+
+report.shots =
+    report.shots or {}
+
+report.tick =
+    report.tick or 0
+
+report.lastShotTick =
+    report.lastShotTick or -100000
+
+-- -----------------
+-- GENERAL HELPERS
+-- -----------------
+
+local function copy_point(point)
+    if not point then
+        return nil
     end
 
-    return tostring(sysId or "?")
+    return {
+        x = point.x or 0,
+        y = point.y or 0
+    }
 end
 
-local function get_hull_text(ship)
-    if not (ship and ship.ship and ship.ship.hullIntegrity) then
-        return "nil"
+local function get_weapon_target(weapon)
+    if not weapon
+        or not weapon.targets
+        or weapon.targets:size() <= 0 then
+
+        return nil
     end
 
-    return tostring(ship.ship.hullIntegrity.first or 0) .. "/" .. tostring(ship.ship.hullIntegrity.second or 0)
+    return copy_point(
+        weapon.targets[0]
+    )
 end
 
-local function get_system_health(system)
-    if not (system and system.healthState) then
-        return nil, nil
+local function distance_between(pointA, pointB)
+    if not pointA or not pointB then
+        return nil
     end
 
-    return system.healthState.first or 0, system.healthState.second or 0
+    local dx =
+        pointB.x - pointA.x
+
+    local dy =
+        pointB.y - pointA.y
+
+    return math.sqrt(
+        dx * dx + dy * dy
+    )
 end
 
-local function get_system_damage(system)
-    if not system then return nil, nil end
-
-    local damage = nil
-    local maxDamage = nil
-
-    if system.GetDamage then
-        local ok, value = pcall(function() return system:GetDamage() end)
-        if ok then damage = value end
-    end
-    if damage == nil then
-        damage = system.fDamage
+local function format_number(value)
+    if value == nil then
+        return "-"
     end
 
-    maxDamage = system.fMaxDamage
-
-    return damage, maxDamage
+    return string.format(
+        "%.1f",
+        value
+    )
 end
 
-local function system_is_completely_destroyed(system)
-    if not system then return false end
-
-    -- Preferred method: use the engine's own definition of completely destroyed.
-    if system.CompletelyDestroyed then
-        local ok, destroyed = pcall(function() return system:CompletelyDestroyed() end)
-        if ok and destroyed ~= nil then
-            return destroyed
-        end
+local function format_point(point)
+    if not point then
+        return "(-,-)"
     end
 
-    -- Fallback 1: if damage/maxDamage are available, destroyed means damage has
-    -- reached or passed max damage.
-    local damage, maxDamage = get_system_damage(system)
-    if damage ~= nil and maxDamage ~= nil and maxDamage > 0 then
-        return damage >= maxDamage
-    end
-
-    -- Fallback 2: old healthState method.
-    local currentHealth, maxHealth = get_system_health(system)
-    if currentHealth ~= nil and maxHealth ~= nil and maxHealth > 0 then
-        return currentHealth <= 0
-    end
-
-    return false
+    return string.format(
+        "(%.0f,%.0f)",
+        point.x,
+        point.y
+    )
 end
 
-local function system_repaired_from_destroyed(system, state)
-    if not (system and state and state.wasCompletelyDestroyed) then
+local function get_projectile_scale(projectile)
+    if projectile
+        and projectile.death_animation then
+
+        return projectile
+            .death_animation
+            .fScale
+    end
+
+    return nil
+end
+
+local function is_fake_projectile(projectile)
+    local scale =
+        get_projectile_scale(projectile)
+
+    return scale ~= nil
+        and math.abs(
+            scale - FAKE_PROJECTILE_SCALE
+        ) < 0.0001
+end
+
+local function is_tracked_halo_projectile(projectile, weapon)
+    if not projectile
+        or not weapon
+        or not weapon.blueprint
+        or weapon.blueprint.name ~= HALO_WEAPON_NAME then
+
         return false
     end
 
-    -- Primary repair transition: engine says this system is no longer completely destroyed.
-    if not system_is_completely_destroyed(system) then
-        return true, "CompletelyDestroyed false"
-    end
+    if TRACK_OWNER_ID ~= nil
+        and projectile.ownerId ~= TRACK_OWNER_ID then
 
-    -- Fallback transition: health crossed from 0 to above 0.
-    local currentHealth, maxHealth = get_system_health(system)
-    if state.lastHealth ~= nil and currentHealth ~= nil and maxHealth ~= nil and maxHealth > 0 then
-        if state.lastHealth <= 0 and currentHealth > 0 then
-            return true, "healthState crossed above 0"
-        end
-    end
-
-    -- Fallback transition: damage dropped below its prior max-damage value.
-    local damage, maxDamage = get_system_damage(system)
-    local priorMaxDamage = state.lastMaxDamage or maxDamage
-    if state.lastDamage ~= nil and damage ~= nil and priorMaxDamage ~= nil and priorMaxDamage > 0 then
-        if state.lastDamage >= priorMaxDamage and damage < priorMaxDamage then
-            return true, "damage dropped below max"
-        end
-    end
-
-    return false, nil
-end
-
-local function heal_hull(ship, systemName, system, reason)
-    if not (ship and ship.DamageHull) then
-        return
-    end
-
-    -- This is intentionally the only active print line.
-    debug_print("Healing ship: " .. tostring(HULL_HEAL_AMOUNT)
-        .. " | ship=" .. tostring(ship.iShipId or "?")
-        .. " | system=" .. tostring(systemName or "?")
-        .. " | reason=" .. tostring(reason or "?")
-        .. " | hullBefore=" .. get_hull_text(ship))
-
-    ship:DamageHull(-HULL_HEAL_AMOUNT, HULL_HEAL_FORCE)
-end
-
-local function update_system_state(ship, system)
-    if not (ship and system) then return end
-
-    local state = get_system_state(system)
-    if not state then return end
-
-    local systemName = get_system_name(system)
-    local currentHealth, maxHealth = get_system_health(system)
-    local damage, maxDamage = get_system_damage(system)
-    local currentlyDestroyed = system_is_completely_destroyed(system)
-
-    local repaired, reason = system_repaired_from_destroyed(system, state)
-    if repaired then
-        if ship_has_terran_aug(ship) then
-            heal_hull(ship, systemName, system, reason)
-        end
-
-        -- Do not heal again until the system becomes completely destroyed again.
-        state.wasCompletelyDestroyed = false
-    elseif currentlyDestroyed then
-        state.wasCompletelyDestroyed = true
-    end
-
-    state.lastDestroyed = currentlyDestroyed
-    state.lastHealth = currentHealth
-    state.lastMaxHealth = maxHealth
-    state.lastDamage = damage
-    state.lastMaxDamage = maxDamage
-end
-
-local function update_ship_systems_from_vsystemlist(ship)
-    if not (ship and ship.vSystemList) then
         return false
-    end
-
-    for system in vter(ship.vSystemList) do
-        update_system_state(ship, system)
     end
 
     return true
 end
 
-local function update_ship_systems_fallback(ship)
-    if not ship then return end
-
-    for sysId, _ in pairs(systemIds) do
-        local system = ship:GetSystem(sysId)
-        if system then
-            update_system_state(ship, system)
-        end
+local function get_projectile_debug_state(projectile)
+    if not projectile then
+        return nil
     end
+
+    if userdata_table then
+        return userdata_table(
+            projectile,
+            "mods.sc_debug.halo"
+        )
+    end
+
+    -- This fallback is only for installations where the MV
+    -- userdata helper is unavailable.
+    projectile.table =
+        projectile.table or {}
+
+    projectile.table.sc_debug_halo =
+        projectile.table.sc_debug_halo or {}
+
+    return projectile.table.sc_debug_halo
 end
 
-script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
-    if not (ship and ship.ship and ship.ship.hullIntegrity) then return end
+-- -----------------
+-- REPORT MANAGEMENT
+-- -----------------
 
-    -- If the ship is already destroyed, clear per-system flags so stale repair
-    -- states do not survive weird edge cases.
-    if ship.bDestroyed then
-        if ship.vSystemList then
-            for system in vter(ship.vSystemList) do
-                if system and system.table then
-                    system.table.sc_terran_repair_hull = nil
-                end
+local function start_new_attack(ownerId)
+    report.attackNumber =
+        report.attackNumber + 1
+
+    report.ownerId =
+        ownerId
+
+    report.shots = {}
+
+    report.startedTick =
+        report.tick
+end
+
+local function should_start_new_attack()
+    if #report.shots == 0 then
+        return true
+    end
+
+    if #report.shots
+        >= HALO_PROJECTILES_PER_ATTACK then
+
+        return true
+    end
+
+    return report.tick
+        - report.lastShotTick
+        > NEW_ATTACK_TICK_GAP
+end
+
+local function classify_randomizer(shot)
+    local coreMoved =
+        shot.coreDistance ~= nil
+        and shot.coreDistance
+            > POSITION_EPSILON
+
+    local haloMoved =
+        shot.haloMove ~= nil
+        and shot.haloMove
+            > POSITION_EPSILON
+
+    if coreMoved and haloMoved then
+        return "CORE+HALO"
+    elseif haloMoved then
+        return "HALO"
+    elseif coreMoved then
+        return "CORE"
+    end
+
+    if shot.finalTarget == nil then
+        return "WAIT"
+    end
+
+    return "NONE"
+end
+
+-- -----------------
+-- TICK COUNTER
+-- -----------------
+
+script.on_internal_event(
+    Defines.InternalEvents.ON_TICK,
+    function()
+        report.tick =
+            report.tick + 1
+    end
+)
+
+-- -----------------
+-- CAPTURE AFTER RADIUS CORE
+-- -----------------
+
+script.on_internal_event(
+    Defines.InternalEvents.PROJECTILE_FIRE,
+    function(projectile, weapon)
+
+        if not is_tracked_halo_projectile(
+            projectile,
+            weapon
+        ) then
+            return
+        end
+
+        if should_start_new_attack() then
+            start_new_attack(
+                projectile.ownerId
+            )
+        end
+
+        local selectedTarget =
+            get_weapon_target(weapon)
+
+        local coreTarget =
+            copy_point(
+                projectile.target
+            )
+
+        local shot = {
+            index =
+                #report.shots + 1,
+
+            fake =
+                is_fake_projectile(
+                    projectile
+                ),
+
+            scale =
+                get_projectile_scale(
+                    projectile
+                ),
+
+            selectedTarget =
+                selectedTarget,
+
+            coreTarget =
+                coreTarget,
+
+            coreDistance =
+                distance_between(
+                    selectedTarget,
+                    coreTarget
+                ),
+
+            finalTarget =
+                nil,
+
+            finalDistance =
+                nil,
+
+            haloMove =
+                nil
+        }
+
+        table.insert(
+            report.shots,
+            shot
+        )
+
+        report.lastShotTick =
+            report.tick
+
+        local projectileState =
+            get_projectile_debug_state(
+                projectile
+            )
+
+        if projectileState then
+            projectileState.shot =
+                shot
+
+            projectileState.finalCaptured =
+                false
+        end
+    end
+)
+
+-- -----------------
+-- CAPTURE AFTER HALO SCRIPT
+-- -----------------
+
+script.on_internal_event(
+    Defines.InternalEvents.PROJECTILE_UPDATE_PRE,
+    function(projectile)
+
+        local projectileState =
+            get_projectile_debug_state(
+                projectile
+            )
+
+        if not projectileState
+            or projectileState.finalCaptured
+            or not projectileState.shot then
+
+            return Defines.Chain.CONTINUE
+        end
+
+        local shot =
+            projectileState.shot
+
+        shot.finalTarget =
+            copy_point(
+                projectile.target
+            )
+
+        shot.finalDistance =
+            distance_between(
+                shot.selectedTarget,
+                shot.finalTarget
+            )
+
+        shot.haloMove =
+            distance_between(
+                shot.coreTarget,
+                shot.finalTarget
+            )
+
+        projectileState.finalCaptured =
+            true
+
+        return Defines.Chain.CONTINUE
+    end
+)
+
+-- -----------------
+-- SCREEN REPORT
+-- -----------------
+
+script.on_render_event(
+    Defines.RenderEvents.SHIP_STATUS,
+
+    function()
+        return Defines.Chain.CONTINUE
+    end,
+
+    function()
+        if #report.shots == 0 then
+            Graphics.freetype.easy_print(
+                0,
+                SCREEN_X,
+                SCREEN_Y,
+                "HALO DEBUG: waiting for a player HALO attack..."
+            )
+            return
+        end
+
+        local ownerText =
+            report.ownerId == 0
+            and "PLAYER"
+            or "ENEMY"
+
+        Graphics.freetype.easy_print(
+            0,
+            SCREEN_X,
+            SCREEN_Y,
+            "HALO ATTACK #"
+                .. tostring(
+                    report.attackNumber
+                )
+                .. " | owner="
+                .. ownerText
+                .. " | projectiles="
+                .. tostring(
+                    #report.shots
+                )
+                .. "/"
+                .. tostring(
+                    HALO_PROJECTILES_PER_ATTACK
+                )
+        )
+
+        Graphics.freetype.easy_print(
+            0,
+            SCREEN_X,
+            SCREEN_Y + LINE_HEIGHT,
+            "ID T scale | selected | core d | final d | haloMove | source"
+        )
+
+        for index = 1,
+            HALO_PROJECTILES_PER_ATTACK do
+
+            local shot =
+                report.shots[index]
+
+            local rowY =
+                SCREEN_Y
+                + LINE_HEIGHT
+                * (index + 1)
+
+            if shot then
+                local typeText =
+                    shot.fake
+                    and "F"
+                    or "R"
+
+                local rowText =
+                    string.format(
+                        "%d  %s %s | %s | %s %s | %s %s | %s | %s",
+                        index,
+                        typeText,
+                        format_number(
+                            shot.scale
+                        ),
+                        format_point(
+                            shot.selectedTarget
+                        ),
+                        format_point(
+                            shot.coreTarget
+                        ),
+                        format_number(
+                            shot.coreDistance
+                        ),
+                        format_point(
+                            shot.finalTarget
+                        ),
+                        format_number(
+                            shot.finalDistance
+                        ),
+                        format_number(
+                            shot.haloMove
+                        ),
+                        classify_randomizer(
+                            shot
+                        )
+                    )
+
+                Graphics.freetype.easy_print(
+                    0,
+                    SCREEN_X,
+                    rowY,
+                    rowText
+                )
+            else
+                Graphics.freetype.easy_print(
+                    0,
+                    SCREEN_X,
+                    rowY,
+                    tostring(index)
+                        .. "  -- waiting --"
+                )
             end
         end
-        return
-    end
 
-    -- Preferred method: iterate the actual system objects installed on this ship.
-    -- This avoids HasSystem/GetSystem quirks and duplicate artillery key issues.
-    if not update_ship_systems_from_vsystemlist(ship) then
-        update_ship_systems_fallback(ship)
+        local footerY =
+            SCREEN_Y
+            + LINE_HEIGHT
+            * (
+                HALO_PROJECTILES_PER_ATTACK
+                + 2
+            )
+
+        Graphics.freetype.easy_print(
+            0,
+            SCREEN_X,
+            footerY,
+            "R=real F=fake | core=sc_radius_core result | haloMove=change after sc_weapon_halo"
+        )
     end
-end)
+)

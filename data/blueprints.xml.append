@@ -1644,19 +1644,12 @@
 	<fireChance>1</fireChance>
 	<breachChance>1</breachChance>
 	<drone_targetable>1</drone_targetable>
-	<spin>60</spin>
 	<speed>45</speed>
 	<power>3</power>
 	<cooldown>16</cooldown>
 	<sc-chainstep fireThreshold="4" chainStep="4" maxSteps="3"/>
 	<sc-chainstep stat="missileCost" base="4" amount="-1"/>
 	<sc-chainstep stat="radius" amount="30"/>
-	<!--<sc-chainstep stat="accuracyMod" amount="-45"/>-->
-	<!--<boost>
-    <type>damage</type>
-    <amount>0.01</amount>
-    <count>3</count>
-	</boost>-->
 	<cost>65</cost>
 	<rarity>4</rarity>
 	<explosion>explosion_random</explosion>

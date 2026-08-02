@@ -13,7 +13,7 @@ normal target after the standard radius calculation has run.
 
 local HALO_WEAPON = "TERRAN_MISSILE_HALO"
 local FAKE_PROJECTILE_SCALE = 0.25
-local FAKE_RADIUS_MULTIPLIER = 2
+local FAKE_RADIUS_MULTIPLIER = 5
 
 local function is_halo_weapon(weapon)
     return weapon

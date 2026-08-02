@@ -1344,9 +1344,9 @@
 	<mod-append:script>data/sc_scripts/sc_drone_active.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_weapon_halo.lua</mod-append:script>
 
-	<!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>-->
+	<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_halo.lua</mod-append:script>
 </mod:findLike>
 
 
