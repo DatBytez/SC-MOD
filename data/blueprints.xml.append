@@ -2570,7 +2570,6 @@
 	</weaponList>
 	<droneList drones="5" count="2">
 		<drone name="TERRAN_GOLIATH" />
-		<drone name="TERRAN_GOLIATH_T" />
 	</droneList>
 	<health amount="30" />
 	<maxPower amount="8" />

@@ -163,6 +163,57 @@
 	<ship load="TERRAN_SHIP_VESSEL_D" hostile="true"/>
 </event>
 
+<ship name="TERRAN_SHIP_DROPSHIP" auto_blueprint="TERRAN_SHIP_DROPSHIP">
+<surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
+<escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
+<gotaway load="GOTAWAY_EVENT"/>
+<destroyed load="SC_DESTROYED_TERRAN"/>
+<deadCrew load="SC_DEAD_CREW_TERRAN"/>
+<crew>
+    <crewMember type="terran_civilian" prop="0.01"/>
+	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
+</crew>
+</ship>
+
+<event name="EVENT_TERRAN_DROPSHIP">
+	<text>Aaaaa! Scary ship!</text>
+	<ship load="TERRAN_SHIP_DROPSHIP" hostile="true"/>
+</event>
+
+<ship name="TERRAN_SHIP_VALKYRIE_A" auto_blueprint="TERRAN_SHIP_VALKYRIE_A">
+<surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
+<escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
+<gotaway load="GOTAWAY_EVENT"/>
+<destroyed load="SC_DESTROYED_TERRAN"/>
+<deadCrew load="SC_DEAD_CREW_TERRAN"/>
+<crew>
+    <crewMember type="terran_civilian" prop="0.01"/>
+	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
+</crew>
+</ship>
+
+<event name="EVENT_TERRAN_VALKYRIE_A">
+	<text>Aaaaa! Scary ship!</text>
+	<ship load="TERRAN_SHIP_VALKYRIE_A" hostile="true"/>
+</event>
+
+<ship name="TERRAN_SHIP_VALKYRIE_B" auto_blueprint="TERRAN_SHIP_VALKYRIE_B">
+<surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
+<escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
+<gotaway load="GOTAWAY_EVENT"/>
+<destroyed load="SC_DESTROYED_TERRAN"/>
+<deadCrew load="SC_DEAD_CREW_TERRAN"/>
+<crew>
+    <crewMember type="terran_civilian" prop="0.01"/>
+	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
+</crew>
+</ship>
+
+<event name="EVENT_TERRAN_VALKYRIE_B">
+	<text>Aaaaa! Scary ship!</text>
+	<ship load="TERRAN_SHIP_VALKYRIE_B" hostile="true"/>
+</event>
+
 <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     GENERIC COMBAT RESULT EVENTS
