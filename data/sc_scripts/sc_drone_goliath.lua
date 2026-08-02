@@ -7,29 +7,36 @@ local FOLLOW_DRONE_BLUEPRINT = "TERRAN_GOLIATH_T"
 local FOLLOW_OFFSET_X = 3
 local FOLLOW_OFFSET_Y = 0
 
--- Position of the manually rendered turret relative to the crew position.
-local HEAD_RENDER_OFFSET_X = 0
-local HEAD_RENDER_OFFSET_Y = 0
+-- Distance from the native defense drone to the artificial idle look point.
+local IDLE_LOOK_DISTANCE = 100
 
--- Apply this to every angle if the image's default orientation is different.
--- Try 90, 180, 270, or -90 if the head appears rotated consistently.
-local HEAD_ROTATION_OFFSET = 0
-
--- The native defense-drone gun images are now transparent.
--- This separate image is rendered by Lua.
-local HEAD_IMAGE_PATH = "ship/drones/terran_goliath_turret.png"
-
+-- Ignore tiny coordinate changes that are not deliberate crew movement.
 local MOVEMENT_EPSILON = 0.1
 
-local DEBUG_RENDER = true
+-- These values use the direction mapping that worked with the replacement
+-- turret image:
+--
+--     UP    = 0
+--     RIGHT = 90
+--     DOWN  = 180
+--     LEFT  = 270
+--
+-- Adjust this only if the restored native gun images use a different
+-- unrotated orientation.
+local NATIVE_ANGLE_OFFSET = -90
+
+-- Leave native projectile targeting untouched whenever a hostile projectile
+-- is present in the player's space.
+local PRESERVE_NATIVE_PROJECTILE_TARGETING = true
+
+-- In-game troubleshooting messages.
+local DEBUG_NATIVE_FACING = true
 local DEBUG_INTERVAL_TICKS = 120
 
 local debugTickCounter = 0
+local renderApplyCount = 0
 local lastStatus = nil
-local headTexture = nil
-local renderCallbackConfirmed = false
-local renderErrorPrinted = false
-local textureFailurePrinted = false
+local lastRenderError = nil
 
 local function configure_print_display()
     local success, printHelper = pcall(function()
@@ -48,8 +55,8 @@ local function configure_print_display()
 end
 
 local function game_print(message)
-    if DEBUG_RENDER then
-        print("[GOLIATH HEAD] " .. tostring(message))
+    if DEBUG_NATIVE_FACING then
+        print("[GOLIATH NATIVE] " .. tostring(message))
     end
 end
 
@@ -61,7 +68,7 @@ local function print_status_once(message)
 end
 
 configure_print_display()
-game_print("Corrected custom head-render script loaded.")
+game_print("Native defense-drone facing test loaded.")
 
 local function find_follow_crew(shipManager)
     for crew in vter(shipManager.vCrewList) do
@@ -123,7 +130,6 @@ local function direction_name(directionX, directionY)
 end
 
 local function direction_angle(directionX, directionY)
-    -- These values assume that the unrotated turret image points right.
     if directionX > 0 then
         return 90
     elseif directionY > 0 then
@@ -135,10 +141,10 @@ local function direction_angle(directionX, directionY)
     end
 end
 
-local function update_facing_state(crew)
+local function get_facing_state(crew)
     local state = userdata_table(
         crew,
-        "mods.sc.goliathCustomHeadState"
+        "mods.sc.goliathNativeFacingState"
     )
 
     local position = crew:GetLocation()
@@ -147,6 +153,7 @@ local function update_facing_state(crew)
         state.initialized = true
         state.lastX = position.x
         state.lastY = position.y
+
         state.directionX = 0
         state.directionY = 1
         state.directionName = "DOWN"
@@ -198,65 +205,107 @@ local function update_facing_state(crew)
     return state
 end
 
-local function load_head_texture()
-    if headTexture then
-        return headTexture
+local function set_cached_image_rotation(cachedImage, angle)
+    if not cachedImage then
+        return
     end
 
-    local success, texture = pcall(function()
-        return Hyperspace.Resources:GetImageId(HEAD_IMAGE_PATH)
-    end)
+    -- SetRotation rebuilds the cached primitive with the requested rotation.
+    cachedImage:SetRotation(angle)
 
-    if success
-        and texture
-        and texture.width
-        and texture.height
-        and texture.width > 1
-        and texture.height > 1 then
-
-        headTexture = texture
-
-        game_print(
-            "Loaded "
-            .. HEAD_IMAGE_PATH
-            .. " size="
-            .. tostring(texture.width)
-            .. "x"
-            .. tostring(texture.height)
-        )
-
-        return headTexture
-    end
-
-    if not textureFailurePrinted then
-        textureFailurePrinted = true
-
-        game_print(
-            "Unable to load "
-            .. HEAD_IMAGE_PATH
-            .. "; success="
-            .. tostring(success)
-            .. " texture="
-            .. tostring(texture)
-        )
-    end
-
-    return nil
+    -- Also assign the exposed field directly so the value can be checked
+    -- through the in-game diagnostics.
+    cachedImage.rotation = angle
 end
 
-local function get_render_angle(
+local function force_native_idle_facing(
     shipManager,
+    crew,
     defenseDrone,
-    state
+    sourceName
 )
-    if has_incoming_hostile_projectile(shipManager) then
-        -- The invisible native gun still updates this angle while targeting.
-        if type(defenseDrone.current_angle) == "number" then
-            return defenseDrone.current_angle, "COMBAT"
-        end
+    local state = get_facing_state(crew)
+
+    if PRESERVE_NATIVE_PROJECTILE_TARGETING
+        and has_incoming_hostile_projectile(shipManager) then
+        return false, "COMBAT", state
     end
 
-    return state.idleAngle, "IDLE"
+    local angle =
+        state.idleAngle
+        + NATIVE_ANGLE_OFFSET
+
+    -- Do not assign targetLocation, pointTarget, or call
+    -- UpdateAimingAngle with an artificial point. Those fields cause the
+    -- defense drone to treat the idle direction as a real firing target.
+
+    -- Apply the known four-direction mapping directly to every exposed
+    -- SpaceDrone aiming field immediately before rendering.
+    defenseDrone.current_angle = angle
+    defenseDrone.aimingAngle = angle
+    defenseDrone.lastAimingAngle = angle
+    defenseDrone.desiredAimingAngle = angle
+
+    -- Apply the same value to each possible native defense-drone gun image.
+    set_cached_image_rotation(
+        defenseDrone.gun_image_off,
+        angle
+    )
+
+    set_cached_image_rotation(
+        defenseDrone.gun_image_charging,
+        angle
+    )
+
+    set_cached_image_rotation(
+        defenseDrone.gun_image_on,
+        angle
+    )
+
+    -- Prevent a stale firing instruction from continuing while idle.
+    -- Native targeting can set bFire normally again when a real projectile
+    -- appears and the idle override is skipped.
+    defenseDrone.bFire = false
+
+    renderApplyCount = renderApplyCount + 1
+
+    return true, sourceName, state
+end
+
+local function apply_native_facing_before_render(sourceName)
+    local success, errorMessage = pcall(function()
+        local shipManager = Hyperspace.ships.player
+
+        if not shipManager then
+            return
+        end
+
+        local crew = find_follow_crew(shipManager)
+        local defenseDrone = find_follow_drone(shipManager)
+
+        if not crew or not defenseDrone then
+            return
+        end
+
+        force_native_idle_facing(
+            shipManager,
+            crew,
+            defenseDrone,
+            sourceName
+        )
+    end)
+
+    if not success
+        and errorMessage ~= lastRenderError then
+
+        lastRenderError = errorMessage
+
+        game_print(
+            sourceName
+            .. " render error: "
+            .. tostring(errorMessage)
+        )
+    end
 end
 
 script.on_internal_event(
@@ -309,130 +358,82 @@ script.on_internal_event(
 
         defenseDrone.speedVector = Hyperspace.Pointf(0, 0)
 
-        local state = update_facing_state(crew)
+        local state = get_facing_state(crew)
+        local incomingProjectile =
+            has_incoming_hostile_projectile(shipManager)
 
-        load_head_texture()
+        -- Clear firing during idle during the game-loop phase as well.
+        if not incomingProjectile then
+            defenseDrone.bFire = false
+        end
 
         debugTickCounter = debugTickCounter + 1
 
-        if DEBUG_RENDER
+        if DEBUG_NATIVE_FACING
             and debugTickCounter >= DEBUG_INTERVAL_TICKS then
 
             debugTickCounter = 0
 
-            local renderAngle, mode = get_render_angle(
-                shipManager,
-                defenseDrone,
-                state
+            local incoming = incomingProjectile
+
+            game_print(
+                "direction="
+                .. tostring(state.directionName)
+                .. " idleAngle="
+                .. tostring(
+                    state.idleAngle
+                    + NATIVE_ANGLE_OFFSET
+                )
+                .. " incoming="
+                .. tostring(incoming)
+                .. " bFire="
+                .. tostring(defenseDrone.bFire)
+                .. " renderApplies="
+                .. tostring(renderApplyCount)
             )
 
             game_print(
-                "mode="
-                .. mode
-                .. " direction="
-                .. tostring(state.directionName)
-                .. " renderAngle="
-                .. tostring(renderAngle)
-                .. " nativeAngle="
+                "native current="
                 .. tostring(defenseDrone.current_angle)
+                .. " aiming="
+                .. tostring(defenseDrone.aimingAngle)
+                .. " desired="
+                .. tostring(defenseDrone.desiredAimingAngle)
+                .. " gunOnRotation="
+                .. tostring(
+                    defenseDrone.gun_image_on
+                    and defenseDrone.gun_image_on.rotation
+                )
             )
+
+            renderApplyCount = 0
         end
     end
 )
 
--- IMPORTANT:
--- Defines.RenderEvents.SHIP passes a Ship object, not a ShipManager.
--- Retrieve the real ShipManager before accessing vCrewList or spaceDrones.
+-- Apply after all normal game-loop aiming updates but immediately before
+-- the player rendering sequence begins.
+script.on_render_event(
+    Defines.RenderEvents.LAYER_PLAYER,
+    function()
+        apply_native_facing_before_render(
+            "LAYER_PLAYER"
+        )
+    end,
+    function() end
+)
+
+-- Apply again at the start of the player's Ship render. This gives us a
+-- second timing point inside the player-render sequence without drawing a
+-- replacement image.
 script.on_render_event(
     Defines.RenderEvents.SHIP,
-    function() end,
     function(ship)
-        if not ship or ship.iShipId ~= 0 then
-            return
-        end
-
-        local shipManager = Hyperspace.ships.player
-
-        if not shipManager then
-            return
-        end
-
-        if not renderCallbackConfirmed then
-            renderCallbackConfirmed = true
-            game_print("SHIP render callback reached successfully.")
-        end
-
-        local crew = find_follow_crew(shipManager)
-        local defenseDrone = find_follow_drone(shipManager)
-
-        if not crew or not defenseDrone then
-            return
-        end
-
-        local texture = load_head_texture()
-
-        if not texture then
-            return
-        end
-
-        local state = userdata_table(
-            crew,
-            "mods.sc.goliathCustomHeadState"
-        )
-
-        if not state.initialized then
-            return
-        end
-
-        local angle, mode = get_render_angle(
-            shipManager,
-            defenseDrone,
-            state
-        )
-
-        angle = angle + HEAD_ROTATION_OFFSET
-
-        local crewPosition = crew:GetLocation()
-
-        local centerX =
-            crewPosition.x
-            + FOLLOW_OFFSET_X
-            + HEAD_RENDER_OFFSET_X
-
-        local centerY =
-            crewPosition.y
-            + FOLLOW_OFFSET_Y
-            + HEAD_RENDER_OFFSET_Y
-
-        local success, errorMessage = pcall(function()
-            Graphics.CSurface.GL_PushMatrix()
-
-            Graphics.CSurface.GL_Translate(
-                centerX,
-                centerY,
-                0
-            )
-
-            Graphics.CSurface.GL_BlitImage(
-                texture,
-                -texture.width / 2,
-                -texture.height / 2,
-                texture.width,
-                texture.height,
-                angle,
-                Graphics.GL_Color(1, 1, 1, 1),
-                false
-            )
-
-            Graphics.CSurface.GL_PopMatrix()
-        end)
-
-        if not success and not renderErrorPrinted then
-            renderErrorPrinted = true
-            game_print(
-                "Render error: "
-                .. tostring(errorMessage)
+        if ship and ship.iShipId == 0 then
+            apply_native_facing_before_render(
+                "SHIP"
             )
         end
-    end
+    end,
+    function() end
 )
