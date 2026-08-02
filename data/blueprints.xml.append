@@ -594,9 +594,8 @@
 	<iconImage>laser_charge2</iconImage>
 </weaponBlueprint>
 
-<!-- ===============
-     GEMINI MISSILES
-     =============== -->
+<!-- ===============     GEMINI MISSILES     =============== -->
+<FTL>
 	 <weaponBlueprint name="GEMINI_BREACH_1">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
@@ -1371,9 +1370,8 @@
 	</launchSounds>
 	<weaponArt>terran_missile_2</weaponArt> 
 </weaponBlueprint>
-<!-- ===============
-     YAMATO GUN
-     =============== -->
+</FTL>
+<!-- ===============     YAMATO GUN     =============== -->
 <weaponBlueprint name="ARTILLERY_YAMATO_LASER" NOLOC="1">
 	<type>LASER</type>
 	<title id="weapon_ARTILLERY_YAMATO_LASER_title"/>
@@ -1420,10 +1418,7 @@
 	</missSounds>
 	<weaponArt>boss_1</weaponArt>
 </weaponBlueprint>
-
-<!-- ===============
-     EMP MISSILE
-     =============== -->
+<!-- ===============     EMP MISSILE     =============== -->
 <weaponBlueprint name="EMP_MISSILE">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
@@ -1657,19 +1652,65 @@
 	<sc-chainstep stat="missileCost" base="4" amount="-1"/>
 	<sc-chainstep stat="radius" amount="30"/>
 	<!--<sc-chainstep stat="accuracyMod" amount="-45"/>-->
-	<boost>
+	<!--<boost>
     <type>damage</type>
     <amount>0.01</amount>
     <count>3</count>
-	</boost>
+	</boost>-->
 	<cost>65</cost>
-	<bp>10</bp>
-	<speed>45</speed>
 	<rarity>4</rarity>
 	<explosion>explosion_random</explosion>
 	<projectiles>
 		<projectile count="1" fake="false">missile_burst</projectile>
 		<projectile count="1" fake="true">terran_burst_laser_heavy_projectile</projectile>
+	</projectiles>
+	<launchSounds>
+		<sound>smallMissile1</sound>
+		<sound>smallMissile2</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>smallExplosion</sound>
+	</hitShipSounds>
+	<hitShieldSounds>
+		<sound>hitShield1</sound>
+		<sound>hitShield2</sound>
+		<sound>hitShield3</sound>
+	</hitShieldSounds>
+	<missSounds>
+		<sound>miss</sound>
+	</missSounds>
+	<weaponArt>chargemissile</weaponArt>
+	<iconImage>missile_charge</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="TERRAN_MISSILE_LONGBOLT">
+	<type>BURST</type>
+	<flavorType id="weapon_TERRAN_MISSILE_LONGBOLT_flavorType"/>
+	<drone_targetable>1</drone_targetable>
+	<title id="weapon_TERRAN_MISSILE_LONGBOLT_title"/>
+	<tip>tip_charge</tip>
+	<short id="weapon_TERRAN_MISSILE_LONGBOLT_short"/>
+	<desc id="weapon_TERRAN_MISSILE_LONGBOLT_desc"/>
+	<tooltip id="weapon_TERRAN_MISSILE_LONGBOLT_tooltip"/>
+	<radius>5</radius>  <!-- was 34-->
+	<accuracyMod>100</accuracyMod>
+	<missiles>0</missiles>
+	<damage>2</damage>
+	<shots>1</shots>
+	<sp>5</sp>
+	<fireChance>1</fireChance>
+	<breachChance>1</breachChance>
+	<drone_targetable>1</drone_targetable>
+	<spin>1</spin>
+	<speed>60</speed>
+	<power>3</power>
+	<cooldown>16</cooldown>
+	<cost>65</cost>
+	<rarity>4</rarity>
+	<explosion>explosion_random</explosion>
+	<projectiles>
+		<projectile count="1" fake="false">missile_1</projectile>
+		<projectile count="1" fake="false">missile_1</projectile>
 	</projectiles>
 	<launchSounds>
 		<sound>smallMissile1</sound>
@@ -1900,14 +1941,23 @@
 	<rarity>0</rarity>
 	<iconImage>Srepair</iconImage>
 </droneBlueprint>
+<crewBlueprint name="terran_scv_hull">
+	<title id="NOYB"></title>
+	<short id="NOYB"></short>
+	<desc id="NOYB"></desc>
+	<cost>0</cost>
+	<rarity>0</rarity>
+	<powerList>
+		<power>DRONE</power>
+	</powerList>
+</crewBlueprint>
 <!-- 
 **********************************************************************************************************************
            TERRAN_GOLIATH
 **********************************************************************************************************************
--->
-<!-- *****************
-	TERRAN_GOLIATH
-	****************** -->
+TERRAN_GOLIATH-->
+<FTL>
+<!-- *****************	TERRAN_GOLIATH	****************** -->
 <crewBlueprint name="terran_goliath">
 	<title id="NOYB"></title>
 	<short id="NOYB"></short>
@@ -1931,34 +1981,23 @@
 	</colorList>-->
 </crewBlueprint>
 <droneBlueprint name="TERRAN_GOLIATH">
-	<type>REPAIR</type>
+	<type>BATTLE</type>
+	<locked>1</locked><!-- Don't know what this does, but MV drones have it -->
 	<tip>tip_crew</tip>
 	<title id="drone_TERRAN_GOLIATH_NAME"></title>
 	<short id="drone_TERRAN_GOLIATH_SHORT"></short>
 	<desc id="drone_TERRAN_GOLIATH_DESC"></desc>
-	<power>1</power>
+	<power>3</power>
 	<cost>80</cost>
 	<rarity>4</rarity>
 	<iconImage>battle</iconImage>
 </droneBlueprint>
-<crewBlueprint name="terran_scv_hull">
-	<title id="NOYB"></title>
-	<short id="NOYB"></short>
-	<desc id="NOYB"></desc>
-	<cost>0</cost>
-	<rarity>0</rarity>
-	<powerList>
-		<power>DRONE</power>
-	</powerList>
-</crewBlueprint>
 
-<!-- *****************
-	TERRAN_GOLIATH_T
-	****************** -->
+<!-- *****************	TERRAN_GOLIATH_T	****************** -->
 <droneBlueprint name="TERRAN_GOLIATH_T">
-	<target>ALL</target>
+	<!--<target>ALL</target>-->
+	<!--<target>LASERS</target>-->
 	<type>DEFENSE</type>
-	<level>1</level>
 	<tip>tip_defense</tip>
 	<title id="NOYB"></title>
 	<short id="NOYB"></short>
@@ -1970,12 +2009,13 @@
 	<speed>5</speed>
 	<!-- fly faster -->
 	<cost>0</cost>
-	<bp>2</bp>
 	<droneImage>terran_goliath_t</droneImage>
-	<weaponBlueprint>DRONE_LASER</weaponBlueprint>
+	<weaponBlueprint>GEMINI_HULL_1</weaponBlueprint>
+	<!--<weaponBlueprint>DRONE_LASER</weaponBlueprint>-->
 	<iconImage>defense</iconImage>
 	<rarity>0</rarity>
 </droneBlueprint>
+</FTL>
 <!-- 
 **********************************************************************************************************************
            TERRAN_SPIDER

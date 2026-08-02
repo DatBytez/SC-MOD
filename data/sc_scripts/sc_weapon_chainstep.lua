@@ -684,3 +684,159 @@ mods.sc.radius.register_modifier(
         )
     end
 )
+
+-- -----------------
+-- CHAINSTEP TOOLTIP
+-- -----------------
+
+local function get_unique_player_weapon(weaponName)
+    local ship =
+        Hyperspace.ships.player
+
+    local weapons =
+        ship
+        and ship.weaponSystem
+        and ship.weaponSystem.weapons
+
+    if not weapons then
+        return nil
+    end
+
+    local foundWeapon = nil
+
+    for weapon in vter(weapons) do
+        if weapon
+            and weapon.blueprint
+            and weapon.blueprint.name == weaponName then
+
+            -- More than one matching weapon means the
+            -- hovered instance cannot be identified safely.
+            if foundWeapon then
+                return nil
+            end
+
+            foundWeapon = weapon
+        end
+    end
+
+    return foundWeapon
+end
+
+local function get_tooltip_chainstep_level(weapon)
+    if not weapon then
+        return 0
+    end
+
+    local wdata = userdata_table(
+        weapon,
+        "mods.sc.chainstep"
+    )
+
+    -- Preserve the paid value while a volley is firing.
+    if wdata.volleyActive
+        and wdata.firingLevel ~= nil then
+
+        return math.max(
+            0,
+            math.floor(wdata.firingLevel)
+        )
+    end
+
+    return math.max(
+        0,
+        math.floor(
+            wdata.level
+                or weapon.boostLevel
+                or 0
+        )
+    )
+end
+
+script.on_internal_event(
+    Defines.InternalEvents.WEAPON_STATBOX,
+    function(bp, stats)
+
+        local chainWeapon =
+            chainstepWeaponList[
+                bp and bp.name
+            ]
+
+        local missileData =
+            get_chainstep_stat(
+                chainWeapon,
+                "missileCost"
+            )
+
+        if not missileData then
+            return
+        end
+
+        local baseCost =
+            math.max(
+                1,
+                math.floor(missileData.base or 1)
+            )
+
+        local amount =
+            missileData.amount or 0
+
+        local maxSteps =
+            chainWeapon.maxSteps or 0
+
+        local minimumCost =
+            math.max(
+                1,
+                math.floor(
+                    baseCost
+                        + maxSteps
+                        * amount
+                )
+            )
+
+        local weapon =
+            get_unique_player_weapon(bp.name)
+
+        if weapon then
+            local chainLevel =
+                get_tooltip_chainstep_level(
+                    weapon
+                )
+
+            local currentCost =
+                get_chainstep_missile_cost_from_level(
+                    missileData,
+                    chainLevel
+                )
+
+            local discounted =
+                math.max(
+                    0,
+                    baseCost - currentCost
+                )
+
+            stats =
+                stats
+                .. "\n\n"
+                .. "Current missile cost: "
+                .. tostring(currentCost)
+                .. "\n"
+                .. "Missiles discounted: "
+                .. tostring(discounted)
+        else
+            stats =
+                stats
+                .. "\n\n"
+                .. "Base missile cost: "
+                .. tostring(baseCost)
+                .. "\n"
+                .. "Missile change per chainstep: "
+                .. tostring(amount)
+                .. "\n"
+                .. "Minimum missile cost: "
+                .. tostring(minimumCost)
+        end
+
+        return Defines.Chain.CONTINUE,
+            stats
+    end
+)

@@ -607,7 +607,7 @@
 		<oxygen power="1" max="3" room="4" start="true" />
 		<pilot power="1" max="2" room="0" start="true" />
 		<sensors power="1" max="3" room="7" start="true" />
-		<shields power="2" max="5" room="5" start="true" />
+		<lily_system_bracers power="2" max="5" room="5" start="true" />
 		<teleporter power="1" max="3" room="3" start="false" />
 		<weapons power="1" max="4" room="9" start="false" />
 	</systemList>
@@ -647,7 +647,7 @@
 		<medbay power="1" max="3" room="3" start="false" />
 		<oxygen power="1" max="3" room="0" start="true" />
 		<pilot power="1" max="3" room="1" start="true" />
-		<shields power="2" max="4" room="7" start="true" />
+		<lily_system_bracers power="2" max="4" room="7" start="true" />
 		<teleporter power="1" max="3" room="8" start="false" />
 		<weapons power="2" max="6" room="4" start="true" />
 	</systemList>
@@ -681,7 +681,7 @@
 		<oxygen power="1" max="3" room="9" start="true" />
 		<pilot power="1" max="3" room="1" start="true" />
 		<sensors power="1" max="1" room="0" start="false" />
-		<shields power="2" max="4" room="6" start="true" />
+		<lily_system_bracers power="2" max="4" room="6" start="true" />
 		<weapons power="1" max="4" room="13" start="false" />
 	</systemList>
 	<weaponSlots>2</weaponSlots>

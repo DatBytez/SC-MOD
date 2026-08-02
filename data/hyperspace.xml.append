@@ -831,43 +831,32 @@
 		<noSlot>true</noSlot>
 		<noClone>true</noClone>
 		<selectable>true</selectable>
-		<controllable>true</controllable>
 		<canFight>true</canFight>
-		<canRepair>false</canRepair>
 		<canSabotage>true</canSabotage>
+		<canRepair>false</canRepair>
 		<canSuffocate>false</canSuffocate>
 		<canMan>false</canMan>
-		<maxHealth>200</maxHealth>
+		<maxHealth>175</maxHealth>
 		<stunMultiplier>0.25</stunMultiplier>
+		<canTeleport>false</canTeleport>
+		<resistsMindControl>true</resistsMindControl>
+		<noClone>true</noClone>
+		<controllable>true</controllable>
 		<droneAI>
-			<returnToDroneRoom />
 			<fightAI/>
+			<returnToDroneRoom />
 		</droneAI>
+		<damageMultiplier>1.1</damageMultiplier>
 		<animBase>human</animBase>
 		<hasCustomDeathAnimation>true</hasCustomDeathAnimation>
 		<fireDamageMultiplier>0.4</fireDamageMultiplier>
 		<moveSpeedMultiplier>0.5</moveSpeedMultiplier>
-		<repairSounds>
-			<repairSound>ability_repair1</repairSound>
-			<repairSound>ability_repair2</repairSound>
-			<repairSound>ability_repair3</repairSound>
-			<repairSound>ability_repair4</repairSound>
-			<repairSound>ability_repair5</repairSound>
-		</repairSounds>
+		<shootingSounds>
+			<shootingSound>terran_marine_attack</shootingSound>
+		</shootingSounds>
 		<deathSounds>
 			<deathSound>terran_goliath_death</deathSound>
 		</deathSounds>
-		<powerEffect name="LAUNCH_TURRET">
-			<cooldown>0.5</cooldown>
-			<!--<activateWhenReady enemiesOnly="true">true</activateWhenReady>-->
-			<buttonText>REPAIR HULL</buttonText>
-			<tooltip>[READY]&#xD;&#xD;
-				Repair a portion of the ships hull at the cost of an SCV.</tooltip>
-			<cooldownColor r="255" g="78" b="69" />
-			<effectAnim>explosion_big1_heal</effectAnim>
-			<transformRace health="0" deathSound="false">terran_scv_hull</transformRace>
-			<selfHealth>-999.0</selfHealth>
-		</powerEffect>
 	</race>
 		<!-- 
 *********************************************************************************************************
@@ -1355,6 +1344,7 @@
 	<mod-append:script>data/sc_scripts/sc_drone_active.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_halo.lua</mod-append:script>
 
 	<!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>-->
 </mod:findLike>

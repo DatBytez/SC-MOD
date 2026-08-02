@@ -10,7 +10,12 @@ local TURRET_STATE_KEY = "mods.sc.goliathTurretCompanion"
 local FOLLOW_OFFSET_X = 3
 local FOLLOW_OFFSET_Y = 0
 
-local MOVEMENT_EPSILON = 0.1
+-- Moves the native crew health bar relative to the Goliath legs.
+-- Negative Y moves the bar upward to clear the attached turret.
+local HEALTH_BAR_OFFSET_X = 1
+local HEALTH_BAR_OFFSET_Y = -8
+
+local MOVEMENT_EPSILON = 0.2
 
 -- The former -90 adjustment is included directly in direction_angle().
 local NATIVE_ANGLE_OFFSET = 0
@@ -800,6 +805,70 @@ local function find_nearest_unclaimed_turret(
     return nearestDrone
 end
 
+local function ship_is_destroyed(shipManager)
+    if not shipManager then
+        return true
+    end
+
+    if shipManager.bDestroyed then
+        return true
+    end
+
+    local success, hullDestroyed = pcall(function()
+        return shipManager.ship
+            and shipManager.ship.hullIntegrity
+            and shipManager.ship.hullIntegrity.first <= 0
+    end)
+
+    return success and hullDestroyed or false
+end
+
+local function remove_all_goliath_turrets(
+    shipManager
+)
+    if not shipManager then
+        activePairs = {}
+        return
+    end
+
+    for defenseDrone in vter(
+        shipManager.spaceDrones
+    ) do
+        if defenseDrone
+            and defenseDrone.blueprint
+            and defenseDrone.blueprint.name
+                == FOLLOW_DRONE_BLUEPRINT
+            and not defenseDrone.bDead then
+
+            local turretState = userdata_table(
+                defenseDrone,
+                TURRET_STATE_KEY
+            )
+
+            -- Keep it permanently excluded from pairing while the engine
+            -- finishes deleting it.
+            turretState.managed = true
+            turretState.retired = true
+            turretState.replacing = false
+
+            defenseDrone.bFire = false
+            defenseDrone.powered = false
+
+            pcall(function()
+                defenseDrone:SetPowered(false)
+            end)
+
+            -- Permanent deletion: do not leave a rebuildable inventory drone.
+            defenseDrone:SetDestroyed(
+                true,
+                false
+            )
+        end
+    end
+
+    activePairs = {}
+end
+
 local function synchronize_goliath_pairs(
     shipManager
 )
@@ -1052,7 +1121,11 @@ local function apply_all_native_facing()
         local shipManager =
             Hyperspace.ships.player
 
-        if not shipManager then
+        if not shipManager
+            or ship_is_destroyed(
+                shipManager
+            ) then
+
             return
         end
 
@@ -1105,6 +1178,16 @@ script.on_internal_event(
 
         if not shipManager then
             activePairs = {}
+            return
+        end
+
+        if ship_is_destroyed(
+            shipManager
+        ) then
+            remove_all_goliath_turrets(
+                shipManager
+            )
+
             return
         end
 
@@ -1254,6 +1337,49 @@ script.on_internal_event(
         -- PREEMPT prevents the normal collision damage from being applied
         -- to the turret. The projectile keeps its normal collision response.
         return Defines.Chain.PREEMPT
+    end
+)
+
+script.on_internal_event(
+    Defines.InternalEvents.SHIP_LOOP,
+    function(shipManager)
+        if shipManager
+            and shipManager.iShipId == 0
+            and ship_is_destroyed(
+                shipManager
+            ) then
+
+            remove_all_goliath_turrets(
+                shipManager
+            )
+        end
+    end
+)
+
+-- Move only the native health overlay for Goliath crew drones. The render
+-- event wraps CrewMember:OnRenderHealth(), so the matrix translation affects
+-- the health bar without moving the crew sprite or attached turret.
+script.on_render_event(
+    Defines.RenderEvents.CREW_MEMBER_HEALTH,
+    function(crew)
+        if crew
+            and crew.type == FOLLOW_CREW_TYPE then
+
+            Graphics.CSurface.GL_PushMatrix()
+
+            Graphics.CSurface.GL_Translate(
+                HEALTH_BAR_OFFSET_X,
+                HEALTH_BAR_OFFSET_Y,
+                0
+            )
+        end
+    end,
+    function(crew)
+        if crew
+            and crew.type == FOLLOW_CREW_TYPE then
+
+            Graphics.CSurface.GL_PopMatrix()
+        end
     end
 )
 
