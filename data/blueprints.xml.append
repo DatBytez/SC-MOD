@@ -1646,10 +1646,10 @@
 	<drone_targetable>1</drone_targetable>
 	<speed>45</speed>
 	<power>3</power>
-	<cooldown>16</cooldown>
-	<sc-chainstep fireThreshold="4" chainStep="4" maxSteps="3"/>
+	<cooldown>13</cooldown>
+	<sc-chainstep fireThreshold="4" chainStep="3" maxSteps="3"/>
 	<sc-chainstep stat="missileCost" base="4" amount="-1"/>
-	<sc-chainstep stat="radius" amount="30"/>
+	<sc-chainstep stat="radius" amount="15"/>
 	<cost>65</cost>
 	<rarity>4</rarity>
 	<explosion>explosion_random</explosion>
@@ -2223,7 +2223,7 @@ TERRAN_GOLIATH-->
 	<short id="drone_TERRAN_DEFENSE_1_SHORT"></short>					
 	<desc id="drone_TERRAN_DEFENSE_1_DESC"></desc>					
 	<power>2</power>					
-	<cooldown>1500</cooldown><!-- was 1500-->					
+	<cooldown>2000</cooldown><!-- was 1500-->					
 	<dodge>100</dodge>					
 	<speed>20</speed>					
 	<cost>60</cost>
@@ -2251,7 +2251,7 @@ TERRAN_GOLIATH-->
 	<short id="drone_TERRAN_DEFENSE_2_SHORT"></short>					
 	<desc id="drone_TERRAN_DEFENSE_2_DESC"></desc>					
 	<power>3</power>					
-	<cooldown>1000</cooldown>					
+	<cooldown>1500</cooldown>					
 	<dodge>100</dodge>					
 	<speed>20</speed>					
 	<cost>80</cost>
@@ -2279,7 +2279,7 @@ TERRAN_GOLIATH-->
 	<short id="drone_TERRAN_DEFENSE_3_SHORT"></short>					
 	<desc id="drone_TERRAN_DEFENSE_3_DESC"></desc>					
 	<power>4</power>					
-	<cooldown>500</cooldown>					
+	<cooldown>1000</cooldown>					
 	<dodge>100</dodge>					
 	<speed>20</speed>					
 	<cost>140</cost>

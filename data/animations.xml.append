@@ -1400,7 +1400,7 @@
       terran_goliath
 *********************************************************************************************************
 -->
-<animSheet name="terran_goliath" w="400" h="160" fw="40" fh="40">people/terran_goliath_base.png</animSheet>
+<animSheet name="terran_goliath" w="400" h="200" fw="40" fh="40">people/terran_goliath_base.png</animSheet>
 <anim name="terran_goliath_clone">
 	<sheet>terran_goliath</sheet>
 	<desc length="1" x="0" y="2" />
@@ -1434,17 +1434,17 @@
 </anim>
 <anim name="terran_goliath_walk_down">
 	<sheet>terran_goliath</sheet>
-	<desc length="10" x="0" y="1" />
+	<desc length="10" x="0" y="2" />
 	<time>1.0</time>
 </anim>
 <anim name="terran_goliath_walk_right">
 	<sheet>terran_goliath</sheet>
-	<desc length="10" x="0" y="2" />
+	<desc length="10" x="0" y="3" />
 	<time>1.0</time>
 </anim>
 <anim name="terran_goliath_walk_up">
 	<sheet>terran_goliath</sheet>
-	<desc length="10" x="0" y="3" />
+	<desc length="10" x="0" y="4" />
 	<time>1.0</time>
 </anim>
 <anim name="terran_goliath_walk_left">
@@ -1454,7 +1454,7 @@
 </anim>
 <anim name="terran_goliath_shoot_down">
 	<sheet>terran_goliath</sheet>
-	<desc length="1" x="0" y="2" />
+	<desc length="2" x="2" y="0" />
 	<time>1.0</time>
 </anim>
 <anim name="terran_goliath_shoot_right">
@@ -1464,7 +1464,7 @@
 </anim>
 <anim name="terran_goliath_shoot_up">
 	<sheet>terran_goliath</sheet>
-	<desc length="1" x="0" y="0" />
+	<desc length="2" x="4" y="0" />
 	<time>1.0</time>
 </anim>
 <anim name="terran_goliath_shoot_left">
@@ -1534,7 +1534,7 @@
 </anim>
 <anim name="terran_goliath_portrait">
 	<sheet>terran_goliath</sheet>
-	<desc length="1" x="0" y="2" />
+	<desc length="1" x="0" y="0" />
 	<time>1</time>
 </anim>
 <!--
