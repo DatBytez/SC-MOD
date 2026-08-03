@@ -1,3 +1,5 @@
+-- Test No. 1
+
 local userdata_table = mods.multiverse.userdata_table
 local vter = mods.multiverse.vter
 
@@ -117,6 +119,19 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
     end
 
     local boost = get_effective_stored_charge_boost(weapon)
+
+    -- Store the frozen charge information used by this projectile.
+    -- chargeLevel is the zero-based level currently used by the stat
+    -- calculations below. chargeStoredShots preserves the raw charged
+    -- volley size from which that level was derived.
+    local wdata = userdata_table(weapon, "mods.sc.weaponStuff")
+    local pdata = userdata_table(projectile, "mods.sc.projectileScaling")
+    pdata.scalingVersion = 1
+    pdata.weaponName = weapon.blueprint.name
+    pdata.hasCharge = true
+    pdata.chargeLevel = boost
+    pdata.chargeStoredShots = math.max(0, wdata.chargeBurstBoost or 0)
+    pdata.chargeWeaponLevel = math.max(0, weapon.chargeLevel or 0)
 
     for _, statBoost in ipairs(statBoosts) do
         local amount = statBoost.amount or 1

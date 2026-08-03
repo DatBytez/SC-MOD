@@ -1,8 +1,43 @@
+-- Test No. 2
+
+--[[
+SC radius core.
+
+This test preserves the current Pre Radius Rebuild behavior for:
+    * base-radius storage
+    * weapon-level visual radius modifiers
+    * projectile-level radius modifiers
+    * target randomization
+
+The only gameplay change in this test is timing and radius selection for a
+fired projectile:
+
+    1. Chain, charge, and chainstep store their frozen level on the projectile.
+    2. This core registers its PROJECTILE_FIRE callback from on_load, after the scaling scripts have registered theirs.
+    3. When the shared scaling reader reports a stored radius stat, its
+       expected projectile radius becomes the starting radius.
+    4. Existing projectile modifiers, such as detector and HALO fake spread,
+       are applied afterward.
+    5. Untagged weapons and tagged weapons without a radius stat retain the
+       previous weapon-level core behavior.
+
+The existing projectile.target randomization method is intentionally unchanged.
+]]
+
 mods.sc = mods.sc or {}
 mods.sc.radius = mods.sc.radius or {}
 
 local userdata_table = mods.multiverse.userdata_table
 local vter = mods.multiverse.vter
+
+local CORE_STORAGE_KEY = "mods.sc.radiusCore"
+local CORE_TEST_NUMBER = 2
+
+mods.sc.radius.CORE_STORAGE_KEY =
+    CORE_STORAGE_KEY
+
+mods.sc.radius.CORE_TEST_NUMBER =
+    CORE_TEST_NUMBER
 
 mods.sc.radius.modifiers =
     mods.sc.radius.modifiers or {}
@@ -112,9 +147,9 @@ end
 
 -- Returns the radius that should be used for one specific projectile.
 --
--- startingRadius is optional. It is used by fireRadiusOverride so the
--- existing override behavior is preserved before projectile-specific
--- modifiers are applied.
+-- startingRadius is optional. It is used by fireRadiusOverride and by the
+-- shared projectile-scaling radius before projectile-specific modifiers
+-- are applied.
 function mods.sc.radius.get_projectile_radius(
     ship,
     projectile,
@@ -161,6 +196,146 @@ function mods.sc.radius.get_projectile_radius(
     )
 end
 
+local function get_shared_radius_calculation(
+    projectile,
+    weapon
+)
+    if not mods.sc
+        or not mods.sc.scaling
+        or not mods.sc.scaling.get_radius_calculation then
+
+        return nil
+    end
+
+    local success, calculation =
+        pcall(
+            mods.sc.scaling.get_radius_calculation,
+            projectile,
+            weapon
+        )
+
+    if not success
+        or type(calculation) ~= "table" then
+
+        return nil
+    end
+
+    return calculation
+end
+
+local function consume_fire_radius_override(weapon)
+    local wdata =
+        userdata_table(
+            weapon,
+            "mods.sc.weaponStuff"
+        )
+
+    if not wdata.fireRadiusOverrideActive then
+        return nil
+    end
+
+    local radius =
+        math.max(
+            0,
+            wdata.fireRadiusOverride or 0
+        )
+
+    wdata.fireRadiusOverrideActive =
+        false
+
+    wdata.fireRadiusOverride =
+        nil
+
+    return radius
+end
+
+local function store_applied_radius(
+    projectile,
+    calculation,
+    mode,
+    overrideRadius,
+    startingRadius,
+    finalRadius,
+    targetBefore,
+    targetAfter
+)
+    local pdata =
+        userdata_table(
+            projectile,
+            CORE_STORAGE_KEY
+        )
+
+    pdata.testNumber =
+        CORE_TEST_NUMBER
+
+    pdata.mode =
+        mode
+
+    pdata.baseRadius =
+        calculation
+        and calculation.baseRadius
+        or nil
+
+    pdata.sharedExpectedRadius =
+        calculation
+        and calculation.expectedRadius
+        or nil
+
+    pdata.legacyCoreRadius =
+        calculation
+        and calculation.liveCoreRadius
+        or nil
+
+    pdata.hasStoredScaling =
+        calculation
+        and calculation.hasStoredScaling
+        or false
+
+    pdata.hasScalingRadius =
+        calculation
+        and calculation.hasScalingRadius
+        or false
+
+    pdata.overrideRadius =
+        overrideRadius
+
+    pdata.startingRadius =
+        startingRadius
+
+    pdata.finalRadius =
+        finalRadius
+
+    pdata.projectileModifierDelta =
+        finalRadius - startingRadius
+
+    pdata.targetBeforeX =
+        targetBefore and targetBefore.x or nil
+
+    pdata.targetBeforeY =
+        targetBefore and targetBefore.y or nil
+
+    pdata.targetAfterX =
+        targetAfter and targetAfter.x or nil
+
+    pdata.targetAfterY =
+        targetAfter and targetAfter.y or nil
+
+    local dx =
+        targetBefore
+        and targetAfter
+        and targetAfter.x - targetBefore.x
+        or 0
+
+    local dy =
+        targetBefore
+        and targetAfter
+        and targetAfter.y - targetBefore.y
+        or 0
+
+    pdata.targetMovedDistance =
+        math.sqrt(dx * dx + dy * dy)
+end
+
 script.on_internal_event(
     Defines.InternalEvents.SHIP_LOOP,
     function(ship)
@@ -183,9 +358,7 @@ script.on_internal_event(
     end
 )
 
-script.on_internal_event(
-    Defines.InternalEvents.PROJECTILE_FIRE,
-    function(projectile, weapon)
+local function apply_projectile_radius(projectile, weapon)
         if not projectile
             or not weapon
             or not projectile.target then
@@ -202,30 +375,52 @@ script.on_internal_event(
             return
         end
 
-        local wdata =
-            userdata_table(
-                weapon,
-                "mods.sc.weaponStuff"
+        -- Charge Test No. 1 may set this during its normal-priority
+        -- PROJECTILE_FIRE handler. Consume it here so the old fallback
+        -- remains available and cannot leak into a later projectile.
+        local overrideRadius =
+            consume_fire_radius_override(
+                weapon
             )
 
-        local startingRadius =
-            nil
+        local calculation =
+            get_shared_radius_calculation(
+                projectile,
+                weapon
+            )
 
-        if wdata.fireRadiusOverrideActive then
+        local startingRadius = nil
+        local mode = "legacy_core"
+
+        if calculation
+            and calculation.hasScalingRadius
+            and type(calculation.expectedRadius)
+                == "number" then
+
             startingRadius =
                 math.max(
                     0,
-                    wdata.fireRadiusOverride or 0
+                    calculation.expectedRadius
                 )
 
-            wdata.fireRadiusOverrideActive =
-                false
+            mode = "shared_scaling"
 
-            wdata.fireRadiusOverride =
-                nil
+        elseif overrideRadius ~= nil then
+            startingRadius =
+                overrideRadius
+
+            mode = "legacy_override"
         end
 
-        local radius =
+        if startingRadius == nil then
+            startingRadius =
+                mods.sc.radius.get_final_radius(
+                    ship,
+                    weapon
+                )
+        end
+
+        local finalRadius =
             mods.sc.radius.get_projectile_radius(
                 ship,
                 projectile,
@@ -233,23 +428,61 @@ script.on_internal_event(
                 startingRadius
             )
 
-        if radius <= 0 then
-            return
-        end
-
-        -- Save the untouched projectile target before assigning the
-        -- single randomized result. Projectile modifiers change only
-        -- the radius used for this one calculation.
-        local center =
+        local targetBefore =
             Hyperspace.Pointf(
                 projectile.target.x,
                 projectile.target.y
             )
 
+        if finalRadius <= 0 then
+            store_applied_radius(
+                projectile,
+                calculation,
+                mode,
+                overrideRadius,
+                startingRadius,
+                finalRadius,
+                targetBefore,
+                targetBefore
+            )
+
+            return
+        end
+
+        -- Preserve the exact target-randomization method from the
+        -- current Pre Radius Rebuild core.
         projectile.target =
             get_random_point_in_radius(
-                center,
-                radius
+                targetBefore,
+                finalRadius
             )
+
+        store_applied_radius(
+            projectile,
+            calculation,
+            mode,
+            overrideRadius,
+            startingRadius,
+            finalRadius,
+            targetBefore,
+            projectile.target
+        )
     end
-)
+
+local function register_projectile_radius_handler()
+    if mods.sc.radius._projectileApplyRegisteredTest2 then
+        return
+    end
+
+    mods.sc.radius._projectileApplyRegisteredTest2 = true
+
+    script.on_internal_event(
+        Defines.InternalEvents.PROJECTILE_FIRE,
+        apply_projectile_radius
+    )
+end
+
+-- PROJECTILE_FIRE callbacks run in registration order. Register this
+-- handler from on_load so the chain, charge, and chainstep scripts have
+-- already registered the callbacks that store projectile scaling data.
+script.on_load(register_projectile_radius_handler)

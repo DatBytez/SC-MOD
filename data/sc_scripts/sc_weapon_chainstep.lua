@@ -1,3 +1,5 @@
+-- Test No. 1
+
 --[[
 This code is a reimplementation of TNE_CHAINSTEP_LUA.lua from TNE.
 
@@ -567,6 +569,32 @@ script.on_internal_event(
                     wdata.firingLevel or 0
                 )
             )
+
+        -- Store the frozen chainstep level used by this projectile.
+        -- chainstepLevel is the zero-based value used by every stat
+        -- calculation below. The live and firing values are retained
+        -- separately so the future shared scaler can be diagnosed.
+        local pdata = userdata_table(
+            projectile,
+            "mods.sc.projectileScaling"
+        )
+
+        pdata.scalingVersion = 1
+        pdata.weaponName = weapon.blueprint.name
+        pdata.hasChainstep = true
+        pdata.chainstepLevel = boost
+        pdata.chainstepLiveLevel = math.max(
+            0,
+            math.floor(
+                wdata.level
+                    or weapon.boostLevel
+                    or 0
+            )
+        )
+        pdata.chainstepFiringLevel = math.max(
+            0,
+            math.floor(wdata.firingLevel or 0)
+        )
 
         for _, statBoost in ipairs(
             chainWeapon.statBoosts or {}
