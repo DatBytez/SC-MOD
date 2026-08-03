@@ -513,7 +513,7 @@
 	<damage>2</damage>
 	<shots>1</shots>
 	<power>2</power>
-	<cooldown>6.0</cooldown>
+	<cooldown>12.0</cooldown>
 
 	<accuracyMod>-40</accuracyMod>
 	<radius>60</radius>
@@ -527,16 +527,11 @@
     <sc-charge stat="breachChance" amount="2"/>
 -->
 
-	<sc-chainstep fireThreshold="6" chainStep="3.0"/>
-	<sc-chainstep stat="shots" amount="1"/>
+	<sc-chainstep fireThreshold="6" chainStep="3.0" maxSteps="2"/>
+	<!--<sc-chainstep stat="shots" amount="1"/>-->
     <sc-chainstep stat="accuracyMod" amount="45"/>
     <sc-chainstep stat="radius" amount="-30"/>
     <sc-chainstep stat="breachChance" amount="2"/>
-	<boost>
-		<type>cooldown</type>
-		<amount>1</amount>
-		<count>3</count>
-	</boost>
 
 	<sc_battery group="terran_battery"/>
 	<simultaneousFire>true</simultaneousFire>
