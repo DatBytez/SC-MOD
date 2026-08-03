@@ -277,14 +277,10 @@
 	<fireChance>1</fireChance>
 	<breachChance>0</breachChance>
 	<shots>2</shots>
-	<!--	<sc-chain stat="shots" amount="2"/>
+	<sc-chain stat="shots" amount="2"/>
 	<sc-chain stat="stunChance" amount="1"/>
 	<sc-chain stat="accuracyMod" amount="-5"/>
-	<sc-chain stat="radius" amount="8"/>-->
-	<sc-chainstep stat="shots" amount="2"/>
-	<sc-chainstep stat="stunChance" amount="1"/>
-	<sc-chainstep stat="accuracyMod" amount="-5"/>
-	<sc-chainstep stat="radius" amount="8"/>
+	<sc-chain stat="radius" amount="8"/>
 	<power>2</power>	
 	<cooldown>10</cooldown>
 	<boost>
@@ -374,9 +370,7 @@
 	<iconImage>laser_charge2</iconImage>
 </weaponBlueprint>
 
-<!-- ===============
-     LASER BATTERIES
-     =============== -->
+<!-- ===============     LASER BATTERIES     =============== -->
 <weaponBlueprint name="TERRAN_LASER_BATTERY_1"> 
 	<type>LASER</type>
 	<title id="weapon_TERRAN_LASER_BATTERY_1_title"/>
@@ -518,16 +512,79 @@
 	<tooltip id="weapon_TERRAN_LASER_BATTERY_HEAVY_1_tooltip"/>
 	<damage>2</damage>
 	<shots>1</shots>
-	<chargeLevels>3</chargeLevels>
-	<sc-charge stat="shots" amount="1"/>
 	<power>2</power>
 	<cooldown>6.0</cooldown>
-	<sc-charge stat="cooldown" amount="0.75"/>	
+
 	<accuracyMod>-40</accuracyMod>
-    <sc-charge stat="accuracyMod" amount="45"/>	
 	<radius>60</radius>
+	
+	<!--
+	<chargeLevels>3</chargeLevels>
+	<sc-charge stat="shots" amount="1"/>
+	<sc-charge stat="cooldown" amount="0.75"/>	
+    <sc-charge stat="accuracyMod" amount="45"/>	
 	<sc-charge stat="radius" amount="-30"/>	
     <sc-charge stat="breachChance" amount="2"/>
+-->
+
+	<sc-chainstep fireThreshold="6" chainStep="3.0"/>
+	<sc-chainstep stat="shots" amount="1"/>
+    <sc-chainstep stat="accuracyMod" amount="45"/>
+    <sc-chainstep stat="radius" amount="-30"/>
+    <sc-chainstep stat="breachChance" amount="2"/>
+	<boost>
+		<type>cooldown</type>
+		<amount>1</amount>
+		<count>3</count>
+	</boost>
+
+	<sc_battery group="terran_battery"/>
+	<simultaneousFire>true</simultaneousFire>
+	<cost>70</cost>
+	<rarity>2</rarity>
+	<launchSounds>
+		<sound>weapon_burst_fire</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>weapon_laser_hit1</sound>
+		<sound>weapon_laser_hit2</sound>
+		<sound>weapon_laser_hit3</sound>
+	</hitShipSounds>
+	<hitShieldSounds>
+		<sound>hitShield1</sound>
+		<sound>hitShield2</sound>
+		<sound>hitShield3</sound>
+	</hitShieldSounds>
+	<missSounds>
+		<sound>miss</sound>
+	</missSounds>
+	<image>terran_laser_battery_heavy_projectile</image>
+	<explosion>terran_laser_battery_heavy_hit</explosion>
+	<weaponArt>terran_laser_battery_heavy_1</weaponArt> 
+	<iconImage>laser_charge2</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="TERRAN_LASER_BATTERY_HEAVY_OLD">
+	<type>LASER</type>
+	<title id="weapon_TERRAN_LASER_BATTERY_HEAVY_1_title"/>
+	<short id="weapon_TERRAN_LASER_BATTERY_HEAVY_1_short"/>
+	<tip>tip_laser</tip>
+	<desc id="weapon_TERRAN_LASER_BATTERY_HEAVY_1_desc"/>
+	<tooltip id="weapon_TERRAN_LASER_BATTERY_HEAVY_1_tooltip"/>
+	<damage>2</damage>
+	<shots>1</shots>
+	<power>2</power>
+	<cooldown>6.0</cooldown>
+	<chargeLevels>3</chargeLevels>
+	<accuracyMod>-40</accuracyMod>
+	<radius>60</radius>
+
+	<sc-charge stat="shots" amount="1"/>
+	<sc-charge stat="cooldown" amount="0.75"/>	
+    <sc-charge stat="accuracyMod" amount="45"/>	
+	<sc-charge stat="radius" amount="-30"/>	
+    <sc-charge stat="breachChance" amount="2"/>
+
 	<sc_battery group="terran_battery"/>
 	<simultaneousFire>true</simultaneousFire>
 	<cost>70</cost>
