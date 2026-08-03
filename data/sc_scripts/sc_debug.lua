@@ -1,76 +1,71 @@
 --[[
-SC DEBUG - HALO PROJECTILE REPORT
+SC DEBUG - DETECTOR / HALO TEST
 
 Purpose:
-    Keep the most recent complete/active HALO attack visible on screen.
+    Remove previous debug output and show only the information needed
+    to diagnose why the detector augment is not affecting the HALO
+    missile launcher.
 
-A HALO attack currently produces 8 projectile events:
-    4 real missile projectiles
-    4 fake visual projectiles
+What this checks:
+    1. Did the sc-detector XML tag populate mods.sc.detectorAugments?
+    2. Does the firing ship actually have one of those detector augments?
+    3. Does the firing ship have sensors, and what is their effective power?
+    4. Is the HALO weapon being identified as a missile?
+    5. What accuracy bonus should detector apply?
+    6. What accuracyMod is present on the fired projectile?
+    7. What radius reduction should detector apply?
+    8. Which radius projectile modifiers are currently registered?
+    9. How far did sc_radius_core move the HALO projectile target?
 
-This script records:
-    selected  = weapon.targets[0], the original aim center
-    core      = projectile.target when PROJECTILE_FIRE reaches this file
-    final     = projectile.target on the projectile's first update
-    coreDist  = distance from selected to core
-    haloMove  = distance from core to final
-    finalDist = distance from selected to final
-
-REQUIRED SCRIPT ORDER:
+Suggested load order for this debug file:
     sc_radius_core.lua
-    sc_weapon_chainstep.lua
-    sc_debug.lua
+    sc_augment_detector.lua
     sc_weapon_halo.lua
+    sc_debug.lua
 
-With that order:
-    "core" shows the result after sc_radius_core.lua.
-    "final" shows the result after sc_weapon_halo.lua.
-
-The report remains visible until another HALO attack begins.
+If sc_debug.lua is loaded after the detector script, the displayed
+accuracyMod should include the detector result.
 ]]
 
 mods.sc_debug = mods.sc_debug or {}
-mods.sc_debug.halo = mods.sc_debug.halo or {}
+mods.sc_debug.detectorHalo = mods.sc_debug.detectorHalo or {}
+
+local REPORT = mods.sc_debug.detectorHalo
 
 local HALO_WEAPON_NAME = "TERRAN_MISSILE_HALO"
-local HALO_PROJECTILES_PER_ATTACK = 8
 local FAKE_PROJECTILE_SCALE = 0.25
-
--- Track only player-fired HALO attacks.
--- Change this to nil to accept either player or enemy projectiles.
-local TRACK_OWNER_ID = 0
-
--- A large gap also starts a new report, which prevents an interrupted
--- partial volley from being combined with the next attack.
-local NEW_ATTACK_TICK_GAP = 120
-
 local SCREEN_X = 10
 local SCREEN_Y = 175
-local LINE_HEIGHT = 20
+local LINE_HEIGHT = 18
+local MAX_SHOTS = 8
 
-local POSITION_EPSILON = 0.05
+-- Set to 0 to only track player HALO shots.
+-- Set to nil to track both player and enemy HALO shots.
+local TRACK_OWNER_ID = 0
 
-local userdata_table =
-    mods.multiverse
-    and mods.multiverse.userdata_table
+REPORT.shots = REPORT.shots or {}
+REPORT.attackNumber = REPORT.attackNumber or 0
+REPORT.lastSummary = REPORT.lastSummary or "Waiting for player HALO fire..."
 
-local report = mods.sc_debug.halo
+local function bool_text(value)
+    return value and "YES" or "NO"
+end
 
-report.attackNumber =
-    report.attackNumber or 0
+local function number_text(value)
+    if value == nil then
+        return "-"
+    end
 
-report.shots =
-    report.shots or {}
+    return tostring(value)
+end
 
-report.tick =
-    report.tick or 0
+local function format_number(value)
+    if value == nil then
+        return "-"
+    end
 
-report.lastShotTick =
-    report.lastShotTick or -100000
-
--- -----------------
--- GENERAL HELPERS
--- -----------------
+    return string.format("%.1f", value)
+end
 
 local function copy_point(point)
     if not point then
@@ -83,6 +78,17 @@ local function copy_point(point)
     }
 end
 
+local function distance_between(pointA, pointB)
+    if not pointA or not pointB then
+        return nil
+    end
+
+    local dx = pointB.x - pointA.x
+    local dy = pointB.y - pointA.y
+
+    return math.sqrt(dx * dx + dy * dy)
+end
+
 local function get_weapon_target(weapon)
     if not weapon
         or not weapon.targets
@@ -91,78 +97,32 @@ local function get_weapon_target(weapon)
         return nil
     end
 
-    return copy_point(
-        weapon.targets[0]
-    )
-end
-
-local function distance_between(pointA, pointB)
-    if not pointA or not pointB then
-        return nil
-    end
-
-    local dx =
-        pointB.x - pointA.x
-
-    local dy =
-        pointB.y - pointA.y
-
-    return math.sqrt(
-        dx * dx + dy * dy
-    )
-end
-
-local function format_number(value)
-    if value == nil then
-        return "-"
-    end
-
-    return string.format(
-        "%.1f",
-        value
-    )
-end
-
-local function format_point(point)
-    if not point then
-        return "(-,-)"
-    end
-
-    return string.format(
-        "(%.0f,%.0f)",
-        point.x,
-        point.y
-    )
+    return copy_point(weapon.targets[0])
 end
 
 local function get_projectile_scale(projectile)
-    if projectile
-        and projectile.death_animation then
-
-        return projectile
-            .death_animation
-            .fScale
+    if projectile and projectile.death_animation then
+        return projectile.death_animation.fScale
     end
 
     return nil
 end
 
-local function is_fake_projectile(projectile)
-    local scale =
-        get_projectile_scale(projectile)
+local function is_fake_halo_projectile(projectile)
+    local scale = get_projectile_scale(projectile)
 
     return scale ~= nil
-        and math.abs(
-            scale - FAKE_PROJECTILE_SCALE
-        ) < 0.0001
+        and math.abs(scale - FAKE_PROJECTILE_SCALE) < 0.0001
 end
 
-local function is_tracked_halo_projectile(projectile, weapon)
-    if not projectile
-        or not weapon
-        or not weapon.blueprint
-        or weapon.blueprint.name ~= HALO_WEAPON_NAME then
+local function is_halo_weapon(weapon)
+    return weapon
+        and weapon.blueprint
+        and weapon.blueprint.name == HALO_WEAPON_NAME
+end
 
+local function is_tracked_halo(projectile, weapon)
+    if not projectile or not is_halo_weapon(weapon) then
         return false
     end
 
@@ -175,238 +135,213 @@ local function is_tracked_halo_projectile(projectile, weapon)
     return true
 end
 
-local function get_projectile_debug_state(projectile)
-    if not projectile then
+local function count_detector_tags()
+    local detectorAugments =
+        mods.sc
+        and mods.sc.detectorAugments
+
+    local count = 0
+    local names = {}
+
+    if detectorAugments then
+        for augName, _ in pairs(detectorAugments) do
+            count = count + 1
+            table.insert(names, augName)
+        end
+    end
+
+    table.sort(names)
+
+    return count, table.concat(names, ",")
+end
+
+local function ship_detector_info(ship)
+    if not ship then
+        return false, "no ship"
+    end
+
+    local detectorAugments =
+        mods.sc
+        and mods.sc.detectorAugments
+
+    if not detectorAugments then
+        return false, "detector table missing"
+    end
+
+    local checkedAny = false
+
+    for augName, _ in pairs(detectorAugments) do
+        checkedAny = true
+
+        if ship:HasAugmentation(augName) > 0 then
+            return true, augName
+        end
+    end
+
+    if not checkedAny then
+        return false, "detector table empty"
+    end
+
+    return false, "ship lacks parsed detector aug"
+end
+
+local function is_missile_weapon(weapon)
+    if not weapon or not weapon.blueprint then
+        return false
+    end
+
+    return weapon.blueprint.typeName == "MISSILES"
+        or weapon.blueprint.type == "MISSILE"
+        or weapon.blueprint.type == 2
+end
+
+local function get_expected_accuracy_bonus(ship, weapon)
+    if not ship then
         return nil
     end
 
-    if userdata_table then
-        return userdata_table(
-            projectile,
-            "mods.sc_debug.halo"
-        )
+    local sensors = ship:GetSystem(7)
+
+    if not sensors then
+        return nil
     end
 
-    -- This fallback is only for installations where the MV
-    -- userdata helper is unavailable.
-    projectile.table =
-        projectile.table or {}
+    local bonus = sensors:GetEffectivePower() * 2.5
 
-    projectile.table.sc_debug_halo =
-        projectile.table.sc_debug_halo or {}
+    if is_missile_weapon(weapon) then
+        bonus = bonus * 2
+    end
 
-    return projectile.table.sc_debug_halo
+    return math.ceil(bonus)
 end
 
--- -----------------
--- REPORT MANAGEMENT
--- -----------------
+local function get_base_radius(weapon)
+    if not weapon then
+        return 0
+    end
 
-local function start_new_attack(ownerId)
-    report.attackNumber =
-        report.attackNumber + 1
+    if mods.sc
+        and mods.sc.radius
+        and mods.sc.radius.get_base_radius then
 
-    report.ownerId =
-        ownerId
+        return mods.sc.radius.get_base_radius(weapon)
+    end
 
-    report.shots = {}
+    if weapon.blueprint and weapon.blueprint.radius then
+        return weapon.blueprint.radius
+    end
 
-    report.startedTick =
-        report.tick
+    return weapon.radius or 0
 end
 
-local function should_start_new_attack()
-    if #report.shots == 0 then
-        return true
+local function list_relevant_radius_modifiers()
+    local projectileModifiers =
+        mods.sc
+        and mods.sc.radius
+        and mods.sc.radius.projectileModifiers
+
+    if not projectileModifiers then
+        return "missing"
     end
 
-    if #report.shots
-        >= HALO_PROJECTILES_PER_ATTACK then
+    local names = {}
 
-        return true
+    for name, _ in pairs(projectileModifiers) do
+        if string.find(name, "detector")
+            or string.find(name, "halo") then
+
+            table.insert(names, name)
+        end
     end
 
-    return report.tick
-        - report.lastShotTick
-        > NEW_ATTACK_TICK_GAP
+    table.sort(names)
+
+    if #names == 0 then
+        return "none"
+    end
+
+    return table.concat(names, ",")
 end
 
-local function classify_randomizer(shot)
-    local coreMoved =
-        shot.coreDistance ~= nil
-        and shot.coreDistance
-            > POSITION_EPSILON
-
-    local haloMoved =
-        shot.haloMove ~= nil
-        and shot.haloMove
-            > POSITION_EPSILON
-
-    if coreMoved and haloMoved then
-        return "CORE+HALO"
-    elseif haloMoved then
-        return "HALO"
-    elseif coreMoved then
-        return "CORE"
-    end
-
-    if shot.finalTarget == nil then
-        return "WAIT"
-    end
-
-    return "NONE"
+local function reset_report(ownerId)
+    REPORT.attackNumber = REPORT.attackNumber + 1
+    REPORT.ownerId = ownerId
+    REPORT.shots = {}
 end
-
--- -----------------
--- TICK COUNTER
--- -----------------
-
-script.on_internal_event(
-    Defines.InternalEvents.ON_TICK,
-    function()
-        report.tick =
-            report.tick + 1
-    end
-)
-
--- -----------------
--- CAPTURE AFTER RADIUS CORE
--- -----------------
 
 script.on_internal_event(
     Defines.InternalEvents.PROJECTILE_FIRE,
     function(projectile, weapon)
-
-        if not is_tracked_halo_projectile(
-            projectile,
-            weapon
-        ) then
+        if not is_tracked_halo(projectile, weapon) then
             return
         end
 
-        if should_start_new_attack() then
-            start_new_attack(
-                projectile.ownerId
-            )
+        if #REPORT.shots == 0 or #REPORT.shots >= MAX_SHOTS then
+            reset_report(projectile.ownerId)
         end
 
-        local selectedTarget =
-            get_weapon_target(weapon)
+        local ship = Hyperspace.ships(projectile.ownerId)
+        local sensors = ship and ship:GetSystem(7)
+        local sensorPower = sensors and sensors:GetEffectivePower() or nil
+        local hasDetector, detectorReason = ship_detector_info(ship)
+        local tagCount, tagNames = count_detector_tags()
+        local expectedAccuracy = get_expected_accuracy_bonus(ship, weapon)
+        local baseRadius = get_base_radius(weapon)
+        local expectedReduction = expectedAccuracy and expectedAccuracy * 2 or nil
+        local expectedDetectorRadius = nil
+        local expectedFakeAfterDetector = nil
+        local expectedFakeBeforeDetector = nil
 
-        local coreTarget =
-            copy_point(
-                projectile.target
-            )
+        if expectedReduction then
+            expectedDetectorRadius = math.max(0, baseRadius - expectedReduction)
+            expectedFakeAfterDetector = expectedDetectorRadius * 5
+            expectedFakeBeforeDetector = math.max(0, baseRadius * 5 - expectedReduction)
+        end
+
+        local selectedTarget = get_weapon_target(weapon)
+        local firedTarget = copy_point(projectile.target)
+        local movedDistance = distance_between(selectedTarget, firedTarget)
+        local projectileAccuracy =
+            projectile
+            and projectile.extend
+            and projectile.extend.customDamage
+            and projectile.extend.customDamage.accuracyMod
+            or nil
 
         local shot = {
-            index =
-                #report.shots + 1,
-
-            fake =
-                is_fake_projectile(
-                    projectile
-                ),
-
-            scale =
-                get_projectile_scale(
-                    projectile
-                ),
-
-            selectedTarget =
-                selectedTarget,
-
-            coreTarget =
-                coreTarget,
-
-            coreDistance =
-                distance_between(
-                    selectedTarget,
-                    coreTarget
-                ),
-
-            finalTarget =
-                nil,
-
-            finalDistance =
-                nil,
-
-            haloMove =
-                nil
+            index = #REPORT.shots + 1,
+            fake = is_fake_halo_projectile(projectile),
+            scale = get_projectile_scale(projectile),
+            ownerId = projectile.ownerId,
+            weaponName = weapon and weapon.blueprint and weapon.blueprint.name or "-",
+            weaponType = weapon and weapon.blueprint and tostring(weapon.blueprint.type) or "-",
+            weaponTypeName = weapon and weapon.blueprint and tostring(weapon.blueprint.typeName) or "-",
+            missile = is_missile_weapon(weapon),
+            tagCount = tagCount,
+            tagNames = tagNames,
+            hasDetector = hasDetector,
+            detectorReason = detectorReason,
+            sensorPower = sensorPower,
+            expectedAccuracy = expectedAccuracy,
+            projectileAccuracy = projectileAccuracy,
+            baseRadius = baseRadius,
+            expectedReduction = expectedReduction,
+            expectedDetectorRadius = expectedDetectorRadius,
+            expectedFakeAfterDetector = expectedFakeAfterDetector,
+            expectedFakeBeforeDetector = expectedFakeBeforeDetector,
+            movedDistance = movedDistance,
+            radiusModifiers = list_relevant_radius_modifiers()
         }
 
-        table.insert(
-            report.shots,
-            shot
-        )
+        table.insert(REPORT.shots, shot)
 
-        report.lastShotTick =
-            report.tick
-
-        local projectileState =
-            get_projectile_debug_state(
-                projectile
-            )
-
-        if projectileState then
-            projectileState.shot =
-                shot
-
-            projectileState.finalCaptured =
-                false
-        end
+        REPORT.lastSummary =
+            "HALO detector debug captured shot "
+            .. tostring(shot.index)
+            .. "/"
+            .. tostring(MAX_SHOTS)
     end
 )
-
--- -----------------
--- CAPTURE AFTER HALO SCRIPT
--- -----------------
-
-script.on_internal_event(
-    Defines.InternalEvents.PROJECTILE_UPDATE_PRE,
-    function(projectile)
-
-        local projectileState =
-            get_projectile_debug_state(
-                projectile
-            )
-
-        if not projectileState
-            or projectileState.finalCaptured
-            or not projectileState.shot then
-
-            return Defines.Chain.CONTINUE
-        end
-
-        local shot =
-            projectileState.shot
-
-        shot.finalTarget =
-            copy_point(
-                projectile.target
-            )
-
-        shot.finalDistance =
-            distance_between(
-                shot.selectedTarget,
-                shot.finalTarget
-            )
-
-        shot.haloMove =
-            distance_between(
-                shot.coreTarget,
-                shot.finalTarget
-            )
-
-        projectileState.finalCaptured =
-            true
-
-        return Defines.Chain.CONTINUE
-    end
-)
-
--- -----------------
--- SCREEN REPORT
--- -----------------
 
 script.on_render_event(
     Defines.RenderEvents.SHIP_STATUS,
@@ -416,126 +351,96 @@ script.on_render_event(
     end,
 
     function()
-        if #report.shots == 0 then
-            Graphics.freetype.easy_print(
-                0,
-                SCREEN_X,
-                SCREEN_Y,
-                "HALO DEBUG: waiting for a player HALO attack..."
-            )
-            return
-        end
-
-        local ownerText =
-            report.ownerId == 0
-            and "PLAYER"
-            or "ENEMY"
-
         Graphics.freetype.easy_print(
             0,
             SCREEN_X,
             SCREEN_Y,
-            "HALO ATTACK #"
-                .. tostring(
-                    report.attackNumber
-                )
-                .. " | owner="
-                .. ownerText
-                .. " | projectiles="
-                .. tostring(
-                    #report.shots
-                )
-                .. "/"
-                .. tostring(
-                    HALO_PROJECTILES_PER_ATTACK
-                )
+            "SC DETECTOR/HALO DEBUG: " .. REPORT.lastSummary
         )
+
+        if #REPORT.shots == 0 then
+            Graphics.freetype.easy_print(
+                0,
+                SCREEN_X,
+                SCREEN_Y + LINE_HEIGHT,
+                "Fire TERRAN_MISSILE_HALO from the player ship. No other debug output is active."
+            )
+            return
+        end
+
+        local latest = REPORT.shots[#REPORT.shots]
 
         Graphics.freetype.easy_print(
             0,
             SCREEN_X,
             SCREEN_Y + LINE_HEIGHT,
-            "ID T scale | selected | core d | final d | haloMove | source"
+            "Attack #" .. tostring(REPORT.attackNumber)
+                .. " shot " .. tostring(latest.index)
+                .. " | fake=" .. bool_text(latest.fake)
+                .. " scale=" .. format_number(latest.scale)
         )
-
-        for index = 1,
-            HALO_PROJECTILES_PER_ATTACK do
-
-            local shot =
-                report.shots[index]
-
-            local rowY =
-                SCREEN_Y
-                + LINE_HEIGHT
-                * (index + 1)
-
-            if shot then
-                local typeText =
-                    shot.fake
-                    and "F"
-                    or "R"
-
-                local rowText =
-                    string.format(
-                        "%d  %s %s | %s | %s %s | %s %s | %s | %s",
-                        index,
-                        typeText,
-                        format_number(
-                            shot.scale
-                        ),
-                        format_point(
-                            shot.selectedTarget
-                        ),
-                        format_point(
-                            shot.coreTarget
-                        ),
-                        format_number(
-                            shot.coreDistance
-                        ),
-                        format_point(
-                            shot.finalTarget
-                        ),
-                        format_number(
-                            shot.finalDistance
-                        ),
-                        format_number(
-                            shot.haloMove
-                        ),
-                        classify_randomizer(
-                            shot
-                        )
-                    )
-
-                Graphics.freetype.easy_print(
-                    0,
-                    SCREEN_X,
-                    rowY,
-                    rowText
-                )
-            else
-                Graphics.freetype.easy_print(
-                    0,
-                    SCREEN_X,
-                    rowY,
-                    tostring(index)
-                        .. "  -- waiting --"
-                )
-            end
-        end
-
-        local footerY =
-            SCREEN_Y
-            + LINE_HEIGHT
-            * (
-                HALO_PROJECTILES_PER_ATTACK
-                + 2
-            )
 
         Graphics.freetype.easy_print(
             0,
             SCREEN_X,
-            footerY,
-            "R=real F=fake | core=sc_radius_core result | haloMove=change after sc_weapon_halo"
+            SCREEN_Y + LINE_HEIGHT * 2,
+            "weapon=" .. tostring(latest.weaponName)
+                .. " type=" .. tostring(latest.weaponType)
+                .. " typeName=" .. tostring(latest.weaponTypeName)
+                .. " missile=" .. bool_text(latest.missile)
+        )
+
+        Graphics.freetype.easy_print(
+            0,
+            SCREEN_X,
+            SCREEN_Y + LINE_HEIGHT * 3,
+            "detectorTags=" .. tostring(latest.tagCount)
+                .. " [" .. tostring(latest.tagNames) .. "]"
+                .. " shipHasDetector=" .. bool_text(latest.hasDetector)
+                .. " reason=" .. tostring(latest.detectorReason)
+        )
+
+        Graphics.freetype.easy_print(
+            0,
+            SCREEN_X,
+            SCREEN_Y + LINE_HEIGHT * 4,
+            "sensors=" .. number_text(latest.sensorPower)
+                .. " expectedAcc=" .. number_text(latest.expectedAccuracy)
+                .. " projectileAccMod=" .. number_text(latest.projectileAccuracy)
+        )
+
+        Graphics.freetype.easy_print(
+            0,
+            SCREEN_X,
+            SCREEN_Y + LINE_HEIGHT * 5,
+            "baseRadius=" .. format_number(latest.baseRadius)
+                .. " expectedReduce=" .. number_text(latest.expectedReduction)
+                .. " detectorRadius=" .. format_number(latest.expectedDetectorRadius)
+                .. " moved=" .. format_number(latest.movedDistance)
+        )
+
+        Graphics.freetype.easy_print(
+            0,
+            SCREEN_X,
+            SCREEN_Y + LINE_HEIGHT * 6,
+            "registered radius modifiers=" .. tostring(latest.radiusModifiers)
+        )
+
+        Graphics.freetype.easy_print(
+            0,
+            SCREEN_X,
+            SCREEN_Y + LINE_HEIGHT * 7,
+            "Fake HALO expected radius if detector before halo="
+                .. format_number(latest.expectedFakeAfterDetector)
+                .. " | if halo before detector="
+                .. format_number(latest.expectedFakeBeforeDetector)
+        )
+
+        Graphics.freetype.easy_print(
+            0,
+            SCREEN_X,
+            SCREEN_Y + LINE_HEIGHT * 8,
+            "Failure clues: tags=0 means XML/load-order issue; missile=NO means weapon type check issue; no sc_detector modifier means detector radius code not loaded."
         )
     end
 )

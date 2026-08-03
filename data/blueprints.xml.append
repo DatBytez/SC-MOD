@@ -272,8 +272,19 @@
 	<sysDamage>1</sysDamage>
 	<persDamage>2</persDamage>
 	<sp>0</sp>
+	<accuracyMod>-5</accuracyMod>	
+	<radius>30</radius>
+	<fireChance>1</fireChance>
+	<breachChance>0</breachChance>
 	<shots>2</shots>
-	<sc-chain stat="shots" amount="2"/>
+	<!--	<sc-chain stat="shots" amount="2"/>
+	<sc-chain stat="stunChance" amount="1"/>
+	<sc-chain stat="accuracyMod" amount="-5"/>
+	<sc-chain stat="radius" amount="8"/>-->
+	<sc-chainstep stat="shots" amount="2"/>
+	<sc-chainstep stat="stunChance" amount="1"/>
+	<sc-chainstep stat="accuracyMod" amount="-5"/>
+	<sc-chainstep stat="radius" amount="8"/>
 	<power>2</power>	
 	<cooldown>10</cooldown>
 	<boost>
@@ -281,13 +292,7 @@
 		<amount>1.0</amount>
 		<count>3</count>
 	</boost>
-	<accuracyMod>-5</accuracyMod>	
-	<sc-chain stat="accuracyMod" amount="-5"/>
-	<radius>30</radius>
-	<sc-chain stat="radius" amount="8"/>
-	<fireChance>1</fireChance>
-	<breachChance>0</breachChance>
-    <sc-chain stat="stunChance" amount="1"/>
+
 	<cost>70</cost>
 	<rarity>2</rarity>
 	<bp>2</bp>
@@ -2007,6 +2012,7 @@ TERRAN_GOLIATH-->
 	<!--<weaponBlueprint>DRONE_LASER</weaponBlueprint>-->
 	<iconImage>defense</iconImage>
 	<rarity>0</rarity>
+	<sc-droneEngine>drone_engine</sc-droneEngine>
 </droneBlueprint>
 </FTL>
 <!-- 

@@ -25,6 +25,43 @@ local function ship_has_sc_detector(ship)
     return false
 end
 
+local function weapon_is_missile(weapon)
+    if not weapon or not weapon.blueprint then
+        return false
+    end
+
+    return weapon.blueprint.typeName == "MISSILES" or
+           weapon.blueprint.type == "MISSILE"
+end
+
+local function get_detector_accuracy_bonus(ship, weapon)
+    local sensors = ship and ship:GetSystem(7)
+
+    if not ship or not sensors or not ship_has_sc_detector(ship) then
+        return nil
+    end
+
+    local accuracyBonus = sensors:GetEffectivePower()*2.5
+
+    if weapon_is_missile(weapon) then
+        accuracyBonus = accuracyBonus * 2
+    end
+
+    return math.ceil(accuracyBonus)
+end
+
+if mods.sc.radius and mods.sc.radius.register_projectile_modifier then
+    mods.sc.radius.register_projectile_modifier("sc_detector", function(ship, projectile, weapon, radius, baseRadius)
+        local accuracyBonus = get_detector_accuracy_bonus(ship, weapon)
+
+        if not accuracyBonus then
+            return radius
+        end
+
+        return math.max(0, radius - accuracyBonus*4)
+    end)
+end
+
 -- Cloak charging
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
     local sensors = ship:GetSystem(7)
@@ -64,15 +101,9 @@ end)
 -- Bonus accuracy
 script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projectile, weapon)
     local ship = Hyperspace.ships(projectile.ownerId)
-    local sensors = ship:GetSystem(7)
+    local accuracyBonus = get_detector_accuracy_bonus(ship, weapon)
 
-    if ship and ship_has_sc_detector(ship) and sensors then
-        local accuracyBonus = (sensors:GetEffectivePower()*2.5)
-
-        if weapon and weapon.blueprint and weapon.blueprint.type == "MISSILE" then
-            accuracyBonus = accuracyBonus * 2
-        end
-
-        projectile.extend.customDamage.accuracyMod = projectile.extend.customDamage.accuracyMod + math.ceil(accuracyBonus)
+    if accuracyBonus then
+        projectile.extend.customDamage.accuracyMod = projectile.extend.customDamage.accuracyMod + accuracyBonus
     end
 end)
