@@ -1,11 +1,19 @@
--- Test No. 3
+-- Test No. 4
 
 --[[
 SC radius core.
 
-Test No. 3 keeps the proven Pre Radius Rebuild target-randomization method,
-but uses the shared scaling system for both live targeting preview and fired
-projectile starting radius.
+Test No. 4 keeps the functioning Test No. 3 projectile path and proven
+Pre Radius Rebuild target-randomization method.
+
+It adds one paused-preview update path:
+    - SHIP_LOOP continues refreshing all ships while unpaused.
+    - MOUSE_CONTROL pre-render refreshes the player weapon radii every frame,
+      including while paused and before the targeting cursor is drawn.
+
+Before either preview refresh, the core asks sc_pilot.lua to refresh its live
+accuracy value. This lets pilot activation and cloak changes affect the visual
+radius immediately while paused.
 
 Order of calculation:
     1. Base radius.
@@ -13,8 +21,7 @@ Order of calculation:
     3. Shared weapon modifiers such as pilot and detector.
     4. Projectile-only modifiers such as HALO fake spread.
 
-The legacy modifier core remains available as a fallback if the shared scaling
-file is missing. No ComputeHeading or alternate coordinate method is used.
+No ComputeHeading or alternate coordinate method is used.
 ]]
 
 mods.sc = mods.sc or {}
@@ -24,7 +31,7 @@ local userdata_table = mods.multiverse.userdata_table
 local vter = mods.multiverse.vter
 
 local CORE_STORAGE_KEY = "mods.sc.radiusCore"
-local CORE_TEST_NUMBER = 3
+local CORE_TEST_NUMBER = 4
 
 mods.sc.radius.CORE_STORAGE_KEY =
     CORE_STORAGE_KEY
@@ -287,6 +294,62 @@ local function get_weapon_modifier_delta(
     return modifier and modifier.delta or 0
 end
 
+local function refresh_dynamic_modifier_state(ship)
+    if not ship
+        or not mods.sc
+        or not mods.sc.pilot
+        or not mods.sc.pilot.refresh_accuracy_bonus then
+
+        return
+    end
+
+    pcall(
+        mods.sc.pilot.refresh_accuracy_bonus,
+        ship
+    )
+end
+
+local function refresh_ship_weapon_radii(ship)
+    local weapons =
+        ship
+        and ship.weaponSystem
+        and ship.weaponSystem.weapons
+
+    if not weapons then
+        return
+    end
+
+    refresh_dynamic_modifier_state(ship)
+
+    for weapon in vter(weapons) do
+        local calculation =
+            get_shared_preview_calculation(
+                ship,
+                weapon
+            )
+
+        if calculation
+            and type(calculation.previewRadius)
+                == "number" then
+
+            weapon.radius =
+                math.max(
+                    0,
+                    calculation.previewRadius
+                )
+        else
+            weapon.radius =
+                mods.sc.radius.get_final_radius(
+                    ship,
+                    weapon
+                )
+        end
+    end
+end
+
+mods.sc.radius.refresh_ship_weapon_radii =
+    refresh_ship_weapon_radii
+
 local function store_applied_radius(
     projectile,
     calculation,
@@ -401,142 +464,107 @@ end
 
 script.on_internal_event(
     Defines.InternalEvents.SHIP_LOOP,
-    function(ship)
-        local weapons =
-            ship
-            and ship.weaponSystem
-            and ship.weaponSystem.weapons
+    refresh_ship_weapon_radii
+)
 
-        if not weapons then
-            return
+-- MOUSE_CONTROL is rendered every frame, including while paused. Its pre-render
+-- callback runs before the targeting cursor is drawn, so weapon.radius reflects
+-- a newly activated pilot ability or cloak state on the next rendered frame.
+script.on_render_event(
+    Defines.RenderEvents.MOUSE_CONTROL,
+
+    function()
+        local playerShip = Hyperspace.ships.player
+
+        if playerShip then
+            refresh_ship_weapon_radii(playerShip)
         end
 
-        for weapon in vter(weapons) do
-            local calculation =
-                get_shared_preview_calculation(
-                    ship,
-                    weapon
-                )
+        return Defines.Chain.CONTINUE
+    end,
 
-            if calculation
-                and type(calculation.previewRadius)
-                    == "number" then
-
-                weapon.radius =
-                    math.max(
-                        0,
-                        calculation.previewRadius
-                    )
-            else
-                weapon.radius =
-                    mods.sc.radius.get_final_radius(
-                        ship,
-                        weapon
-                    )
-            end
-        end
+    function()
     end
 )
 
-
 local function apply_projectile_radius(projectile, weapon)
-        if not projectile
-            or not weapon
-            or not projectile.target then
+    if not projectile
+        or not weapon
+        or not projectile.target then
 
-            return
-        end
+        return
+    end
 
-        local ship =
-            Hyperspace.ships(
-                projectile.ownerId
+    local ship =
+        Hyperspace.ships(
+            projectile.ownerId
+        )
+
+    if not ship then
+        return
+    end
+
+    refresh_dynamic_modifier_state(ship)
+
+    -- Charge Test No. 1 may set this during its normal-priority
+    -- PROJECTILE_FIRE handler. Consume it here so the old fallback
+    -- remains available and cannot leak into a later projectile.
+    local overrideRadius =
+        consume_fire_radius_override(
+            weapon
+        )
+
+    local calculation =
+        get_shared_projectile_calculation(
+            projectile,
+            weapon
+        )
+
+    local startingRadius = nil
+    local mode = "legacy_core"
+
+    if calculation
+        and type(calculation.startingRadius)
+            == "number" then
+
+        startingRadius =
+            math.max(
+                0,
+                calculation.startingRadius
             )
 
-        if not ship then
-            return
-        end
+        mode = "shared_weapon_radius"
 
-        -- Charge Test No. 1 may set this during its normal-priority
-        -- PROJECTILE_FIRE handler. Consume it here so the old fallback
-        -- remains available and cannot leak into a later projectile.
-        local overrideRadius =
-            consume_fire_radius_override(
-                weapon
-            )
+    elseif overrideRadius ~= nil then
+        startingRadius =
+            overrideRadius
 
-        local calculation =
-            get_shared_projectile_calculation(
-                projectile,
-                weapon
-            )
+        mode = "legacy_override"
+    end
 
-        local startingRadius = nil
-        local mode = "legacy_core"
-
-        if calculation
-            and type(calculation.startingRadius)
-                == "number" then
-
-            startingRadius =
-                math.max(
-                    0,
-                    calculation.startingRadius
-                )
-
-            mode = "shared_weapon_radius"
-
-        elseif overrideRadius ~= nil then
-            startingRadius =
-                overrideRadius
-
-            mode = "legacy_override"
-        end
-
-        if startingRadius == nil then
-            startingRadius =
-                mods.sc.radius.get_final_radius(
-                    ship,
-                    weapon
-                )
-        end
-
-        local finalRadius =
-            mods.sc.radius.get_projectile_radius(
+    if startingRadius == nil then
+        startingRadius =
+            mods.sc.radius.get_final_radius(
                 ship,
-                projectile,
-                weapon,
-                startingRadius
+                weapon
             )
+    end
 
-        local targetBefore =
-            Hyperspace.Pointf(
-                projectile.target.x,
-                projectile.target.y
-            )
+    local finalRadius =
+        mods.sc.radius.get_projectile_radius(
+            ship,
+            projectile,
+            weapon,
+            startingRadius
+        )
 
-        if finalRadius <= 0 then
-            store_applied_radius(
-                projectile,
-                calculation,
-                mode,
-                overrideRadius,
-                startingRadius,
-                finalRadius,
-                targetBefore,
-                targetBefore
-            )
+    local targetBefore =
+        Hyperspace.Pointf(
+            projectile.target.x,
+            projectile.target.y
+        )
 
-            return
-        end
-
-        -- Preserve the exact target-randomization method from the
-        -- current Pre Radius Rebuild core.
-        projectile.target =
-            get_random_point_in_radius(
-                targetBefore,
-                finalRadius
-            )
-
+    if finalRadius <= 0 then
         store_applied_radius(
             projectile,
             calculation,
@@ -545,16 +573,38 @@ local function apply_projectile_radius(projectile, weapon)
             startingRadius,
             finalRadius,
             targetBefore,
-            projectile.target
+            targetBefore
         )
-    end
 
-local function register_projectile_radius_handler()
-    if mods.sc.radius._projectileApplyRegisteredTest3 then
         return
     end
 
-    mods.sc.radius._projectileApplyRegisteredTest3 = true
+    -- Preserve the exact target-randomization method from the
+    -- current Pre Radius Rebuild core.
+    projectile.target =
+        get_random_point_in_radius(
+            targetBefore,
+            finalRadius
+        )
+
+    store_applied_radius(
+        projectile,
+        calculation,
+        mode,
+        overrideRadius,
+        startingRadius,
+        finalRadius,
+        targetBefore,
+        projectile.target
+    )
+end
+
+local function register_projectile_radius_handler()
+    if mods.sc.radius._projectileApplyRegisteredTest4 then
+        return
+    end
+
+    mods.sc.radius._projectileApplyRegisteredTest4 = true
 
     script.on_internal_event(
         Defines.InternalEvents.PROJECTILE_FIRE,

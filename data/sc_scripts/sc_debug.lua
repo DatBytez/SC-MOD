@@ -1,37 +1,30 @@
--- Test No. 7
+-- Test No. 8
 
 --[[
-Pilot / detector shared-radius integration verification.
+Paused pilot-radius preview verification.
 
-Preview line:
-    Shared  = live C/Q/S plus pilot and detector
-    Display = weapon.radius used by the targeting UI
+This report is drawn after MOUSE_CONTROL. Radius Core Test No. 4 refreshes the
+player weapon radii in the pre-render callback for the same render event, so
+Shared and Display should already match even while the game is paused.
 
-Shot lines:
-    Scale = frozen projectile C/Q/S radius before pilot/detector
-    P     = pilot weapon-radius contribution
-    D     = detector weapon-radius contribution
-    Start = radius passed to projectile-only modifiers
-    Final = radius after projectile-only modifiers such as HALO fake spread
+Test while paused:
+    1. Activate the pilot ability.
+    2. Activate cloak while pilot remains active.
+    3. Confirm Active, Cloak, Accuracy, P, Shared, and Display update.
 
-This file does not change weapon or projectile behavior.
+This file does not change gameplay behavior.
 ]]
 
-local userdata_table = mods.multiverse.userdata_table
 local vter = mods.multiverse.vter
 
-local TEST_NUMBER = 7
-local EXPECTED_CORE_TEST = 3
-local MAX_SHOTS = 3
+local TEST_NUMBER = 8
+local EXPECTED_CORE_TEST = 4
+local EXPECTED_PILOT_TEST = 3
 local SCREEN_X = 65
 local SCREEN_Y = 110
 local LINE_HEIGHT = 18
+local MAX_WEAPONS = 3
 local MATCH_EPSILON = 0.01
-
-local CORE_STORAGE_KEY = "mods.sc.radiusCore"
-local SCALING_STORAGE_KEY = "mods.sc.projectileScaling"
-
-local shots = {}
 
 local function number_text(value)
     if value == nil then
@@ -45,14 +38,18 @@ local function number_text(value)
     return string.format("%.2f", value)
 end
 
+local function bool_text(value)
+    return value and "YES" or "NO"
+end
+
 local function trim_weapon_name(name)
     name = tostring(name or "unknown")
 
-    if #name <= 30 then
+    if #name <= 28 then
         return name
     end
 
-    return string.sub(name, 1, 27) .. "..."
+    return string.sub(name, 1, 25) .. "..."
 end
 
 local function nearly_equal(a, b)
@@ -71,136 +68,41 @@ local function modifier_delta(calculation, name)
     return modifier and modifier.delta or 0
 end
 
-local function get_source_text(projectile)
-    local data = userdata_table(
-        projectile,
-        SCALING_STORAGE_KEY
-    )
-
-    if data.hasChain then
-        return "C" .. number_text(data.chainLevel)
-    end
-
-    if data.hasCharge then
-        return "Q" .. number_text(data.chargeLevel)
-    end
-
-    if data.hasChainstep then
-        return "S" .. number_text(data.chainstepLevel)
-    end
-
-    return "none"
-end
-
-local function capture_shot(projectile, weapon)
-    if not projectile
-        or not weapon
-        or projectile.ownerId ~= 0 then
-
-        return
-    end
-
-    local core = userdata_table(
-        projectile,
-        CORE_STORAGE_KEY
-    )
-
-    local shot = {
-        weaponName = weapon.blueprint
-            and weapon.blueprint.name
-            or "unknown",
-        source = get_source_text(projectile),
-        coreTest = core.testNumber,
-        mode = core.mode,
-        scalingRadius = core.scalingRadius,
-        weaponModifiedRadius = core.weaponModifiedRadius,
-        pilotDelta = core.pilotModifierDelta,
-        detectorDelta = core.detectorModifierDelta,
-        startingRadius = core.startingRadius,
-        finalRadius = core.finalRadius,
-        projectileDelta = core.projectileModifierDelta
-    }
-
-    shot.match =
-        shot.coreTest == EXPECTED_CORE_TEST
-        and nearly_equal(
-            shot.startingRadius,
-            shot.weaponModifiedRadius
-        )
-
-    table.insert(shots, shot)
-
-    while #shots > MAX_SHOTS do
-        table.remove(shots, 1)
-    end
-end
-
-local function register_debug_handler()
-    if mods.sc_debug_radius_integration_registered_test7 then
-        return
-    end
-
-    mods.sc_debug_radius_integration_registered_test7 = true
-
-    script.on_internal_event(
-        Defines.InternalEvents.PROJECTILE_FIRE,
-        capture_shot
-    )
-end
-
--- Radius Core Test No. 3 also registers its fire handler from on_load.
--- Because this debug file loads last, this handler is registered afterward.
-script.on_load(register_debug_handler)
-
-local function get_first_weapon_preview()
-    local ship = Hyperspace.ships.player
-    local weapons = ship
-        and ship.weaponSystem
-        and ship.weaponSystem.weapons
-
-    if not weapons then
-        return nil
-    end
-
-    for weapon in vter(weapons) do
-        if mods.sc
-            and mods.sc.scaling
-            and mods.sc.scaling
-                .get_weapon_preview_calculation then
-
-            local calculation =
-                mods.sc.scaling
-                    .get_weapon_preview_calculation(
-                        ship,
-                        weapon
-                    )
-
-            return {
-                weaponName = weapon.blueprint
-                    and weapon.blueprint.name
-                    or "unknown",
-                shared = calculation
-                    and calculation.previewRadius,
-                display = weapon.radius,
-                pilotDelta = modifier_delta(
-                    calculation,
-                    "pilot_accuracy"
-                ),
-                detectorDelta = modifier_delta(
-                    calculation,
-                    "sc_detector"
-                )
-            }
+local function game_is_paused()
+    local success, paused = pcall(
+        function()
+            return Hyperspace.App.world.space.gamePaused
         end
+    )
 
-        return nil
-    end
+    return success and paused or false
+end
 
-    return nil
+local function get_live_state()
+    local ship = Hyperspace.ships.player
+    local shipId = ship and ship.iShipId or 0
+
+    local active = ship
+        and mods.sc_pilot_button
+        and mods.sc_pilot_button.activated
+        and mods.sc_pilot_button.activated[shipId]
+        or false
+
+    local cloaked = ship
+        and ship.cloakSystem
+        and ship.cloakSystem.bTurnedOn
+        or false
+
+    local accuracy = mods.sc_accuracy
+        and mods.sc_accuracy.dodgeToAccuracy
+        and mods.sc_accuracy.dodgeToAccuracy[shipId]
+        or 0
+
+    return ship, active, cloaked, accuracy
 end
 
 script.on_render_event(
-    Defines.RenderEvents.SHIP_STATUS,
+    Defines.RenderEvents.MOUSE_CONTROL,
 
     function()
         return Defines.Chain.CONTINUE
@@ -211,95 +113,100 @@ script.on_render_event(
             0,
             SCREEN_X,
             SCREEN_Y,
-            "Radius Integration - Debug Test No. "
+            "Paused Radius Refresh - Debug Test No. "
                 .. tostring(TEST_NUMBER)
         )
 
-        local pilotRegistered =
-            mods.sc
-            and mods.sc.scaling
-            and mods.sc.scaling.has_preview_modifier
-            and mods.sc.scaling.has_preview_modifier(
-                "pilot_accuracy"
-            )
+        local ship, active, cloaked, accuracy =
+            get_live_state()
 
-        local detectorRegistered =
-            mods.sc
-            and mods.sc.scaling
-            and mods.sc.scaling.has_preview_modifier
-            and mods.sc.scaling.has_preview_modifier(
-                "sc_detector"
-            )
+        local coreTest = mods.sc
+            and mods.sc.radius
+            and mods.sc.radius.CORE_TEST_NUMBER
+            or nil
+
+        local pilotRefresh = mods.sc
+            and mods.sc.pilot
+            and mods.sc.pilot.refresh_accuracy_bonus
+            ~= nil
 
         Graphics.freetype.easy_print(
             0,
             SCREEN_X,
             SCREEN_Y + LINE_HEIGHT,
-            "Shared modifiers: Pilot="
-                .. (pilotRegistered and "YES" or "NO")
-                .. " Detector="
-                .. (detectorRegistered and "YES" or "NO")
-                .. " | Expected Core="
-                .. tostring(EXPECTED_CORE_TEST)
+            "Paused=" .. bool_text(game_is_paused())
+                .. " Active=" .. bool_text(active)
+                .. " Cloak=" .. bool_text(cloaked)
+                .. " Accuracy=" .. number_text(accuracy)
+                .. " | Core=" .. number_text(coreTest)
+                .. " PilotRefresh=" .. bool_text(pilotRefresh)
         )
 
-        local preview = get_first_weapon_preview()
-
-        if preview then
-            local previewStatus = nearly_equal(
-                preview.shared,
-                preview.display
-            ) and "MATCH" or "DIFF"
+        if coreTest ~= EXPECTED_CORE_TEST
+            or not pilotRefresh then
 
             Graphics.freetype.easy_print(
                 0,
                 SCREEN_X,
                 SCREEN_Y + LINE_HEIGHT * 2,
-                "Preview "
-                    .. trim_weapon_name(preview.weaponName)
-                    .. ": Shared="
-                    .. number_text(preview.shared)
-                    .. " Display="
-                    .. number_text(preview.display)
-                    .. " P="
-                    .. number_text(preview.pilotDelta)
-                    .. " D="
-                    .. number_text(preview.detectorDelta)
-                    .. " | "
-                    .. previewStatus
-            )
-        else
-            Graphics.freetype.easy_print(
-                0,
-                SCREEN_X,
-                SCREEN_Y + LINE_HEIGHT * 2,
-                "Preview: no player weapon calculation"
+                "Expected Radius Core Test No. "
+                    .. tostring(EXPECTED_CORE_TEST)
+                    .. " and Pilot Test No. "
+                    .. tostring(EXPECTED_PILOT_TEST)
             )
         end
 
-        if #shots == 0 then
+        local weapons = ship
+            and ship.weaponSystem
+            and ship.weaponSystem.weapons
+
+        if not weapons then
             Graphics.freetype.easy_print(
                 0,
                 SCREEN_X,
                 SCREEN_Y + LINE_HEIGHT * 3,
-                "Fire a player weapon to capture pilot/detector radius data."
+                "No player weapons available."
             )
             return
         end
 
-        for index, shot in ipairs(shots) do
-            local y = SCREEN_Y
-                + LINE_HEIGHT * (2 + index * 2)
+        local index = 0
 
-            local status
+        for weapon in vter(weapons) do
+            index = index + 1
 
-            if shot.coreTest ~= EXPECTED_CORE_TEST then
-                status = "WRONG CORE"
-            elseif shot.match then
-                status = "MATCH"
-            else
-                status = "DIFF"
+            if index > MAX_WEAPONS then
+                break
             end
+
+            local calculation = nil
+
+            if mods.sc
+                and mods.sc.scaling
+                and mods.sc.scaling
+                    .get_weapon_preview_calculation then
+
+                calculation =
+                    mods.sc.scaling
+                        .get_weapon_preview_calculation(
+                            ship,
+                            weapon
+                        )
+            end
+
+            local shared = calculation
+                and calculation.previewRadius
+                or nil
+
+            local display = weapon.radius
+
+            local status = nearly_equal(
+                shared,
+                display
+            ) and "MATCH" or "DIFF"
+
+            local y = SCREEN_Y
+                + LINE_HEIGHT * (2 + index)
 
             Graphics.freetype.easy_print(
                 0,
@@ -307,31 +214,23 @@ script.on_render_event(
                 y,
                 tostring(index)
                     .. ": "
-                    .. trim_weapon_name(shot.weaponName)
-                    .. " Src="
-                    .. tostring(shot.source)
-                    .. " Mode="
-                    .. tostring(shot.mode or "-")
+                    .. trim_weapon_name(
+                        weapon.blueprint
+                        and weapon.blueprint.name
+                    )
+                    .. " Shared="
+                    .. number_text(shared)
+                    .. " Display="
+                    .. number_text(display)
+                    .. " P="
+                    .. number_text(
+                        modifier_delta(
+                            calculation,
+                            "pilot_accuracy"
+                        )
+                    )
                     .. " | "
                     .. status
-            )
-
-            Graphics.freetype.easy_print(
-                0,
-                SCREEN_X + 18,
-                y + LINE_HEIGHT,
-                "Scale="
-                    .. number_text(shot.scalingRadius)
-                    .. " P="
-                    .. number_text(shot.pilotDelta)
-                    .. " D="
-                    .. number_text(shot.detectorDelta)
-                    .. " Start="
-                    .. number_text(shot.startingRadius)
-                    .. " Final="
-                    .. number_text(shot.finalRadius)
-                    .. " Proj="
-                    .. number_text(shot.projectileDelta)
             )
         end
     end
