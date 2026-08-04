@@ -1,4 +1,4 @@
--- Test No. 1
+-- Test No. 2
 
 --[[
 This code is a reimplementation of TNE_CHAINSTEP_LUA.lua from TNE.
@@ -217,27 +217,6 @@ local function get_chainstep_level(weapon)
         0,
         math.floor(
             wdata.level
-                or weapon.boostLevel
-                or 0
-        )
-    )
-end
-
-local function get_chainstep_radius_level(weapon)
-    if not weapon then return 0 end
-
-    local wdata = userdata_table(
-        weapon,
-        "mods.sc.chainstep"
-    )
-
-    -- During a volley, prefer the frozen firing level.
-    -- Before firing, use the currently available level.
-    return math.max(
-        0,
-        math.floor(
-            wdata.firingLevel
-                or wdata.level
                 or weapon.boostLevel
                 or 0
         )
@@ -626,7 +605,8 @@ script.on_internal_event(
                 )
 
             elseif statBoost.stat == "radius" then
-                -- Handled by the radius modifier below.
+                -- Handled by sc_projectile_scaling.lua using the
+                -- frozen chainstep level stored above.
 
             elseif statBoost.stat == "missileCost" then
                 -- Handled by the missile payment below.
@@ -677,39 +657,6 @@ script.on_internal_event(
 
             wdata.missilePaid = true
         end
-    end
-)
-
--- -----------------
--- CHAINSTEP RADIUS
--- -----------------
-
-mods.sc.radius.register_modifier(
-    "chainstep_charge",
-    function(ship, weapon, radius, baseRadius)
-
-        local chainWeapon =
-            get_chainstep_weapon(weapon)
-
-        local radiusData =
-            get_chainstep_stat(
-                chainWeapon,
-                "radius"
-            )
-
-        if not radiusData then
-            return radius
-        end
-
-        local boost =
-            get_chainstep_radius_level(weapon)
-
-        return math.max(
-            0,
-            radius
-                + boost
-                * (radiusData.amount or 0)
-        )
     end
 )
 

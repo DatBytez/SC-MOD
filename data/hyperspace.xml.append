@@ -1322,11 +1322,11 @@
     <mod-append:script>data/aa_scripts/AA_core.lua</mod-append:script>
     <mod-append:script>data/aa_scripts/weapons/smash.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_tag.lua</mod-append:script>
-	
+    <mod-append:script>data/sc_scripts/sc_projectile_scaling.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_radius_core.lua</mod-append:script>
 
     <mod-append:script>data/sc_scripts/sc_pilot_ui.lua</mod-append:script>
-	
+
     <!-- SC scripts that may register XML tags or depend on shared helpers -->
     <mod-append:script>data/sc_scripts/sc_pilot.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_firefill.lua</mod-append:script>
@@ -1355,9 +1355,8 @@
     <mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
 
     <!-- Read XML tags only after all custom tag parsers have been registered -->
-	<mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_projectile_scaling.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
+    <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
 </mod:findLike>
 
 

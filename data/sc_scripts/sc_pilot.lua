@@ -1,4 +1,4 @@
--- Test No. 3
+-- Test No. 4
 
 mods.sc_accuracy = mods.sc_accuracy or {}
 mods.sc_accuracy.dodgeToAccuracy = mods.sc_accuracy.dodgeToAccuracy or {
@@ -8,6 +8,7 @@ mods.sc_accuracy.dodgeToAccuracy = mods.sc_accuracy.dodgeToAccuracy or {
 
 mods.sc = mods.sc or {}
 mods.sc.pilot = mods.sc.pilot or {}
+mods.sc.pilot.TEST_NUMBER = 4
 
 local PILOT_AUGMENT = "TERRAN_SHIP_ARMOR_LIGHT"
 local PILOT_SYSTEM_ID = 6
@@ -128,8 +129,8 @@ end
 mods.sc.pilot.refresh_accuracy_bonus =
     refresh_accuracy_bonus
 
--- The legacy radius core and the shared preview calculator both call this
--- exact function, so the pilot result cannot drift between the two systems.
+-- The shared scaling system uses this function for both live preview and
+-- the fired projectile starting radius.
 local function apply_pilot_radius_modifier(
     ship,
     weapon,
@@ -164,34 +165,12 @@ end
 mods.sc.pilot.apply_radius_modifier =
     apply_pilot_radius_modifier
 
--- Preserve the currently working radius-core behavior.
-mods.sc.radius.register_modifier(
+-- Shared scaling loads before this file, so registration is immediate.
+mods.sc.scaling.register_weapon_radius_modifier(
     "pilot_accuracy",
-    apply_pilot_radius_modifier
+    apply_pilot_radius_modifier,
+    100
 )
-
-local function register_shared_preview_modifier()
-    if not mods.sc or not mods.sc.scaling then
-        return
-    end
-
-    local register =
-        mods.sc.scaling.register_weapon_radius_modifier
-        or mods.sc.scaling.register_preview_modifier
-
-    if register then
-        register(
-            "pilot_accuracy",
-            apply_pilot_radius_modifier
-        )
-    end
-end
-
--- This succeeds immediately if the shared file has already loaded. The
--- on_load retry supports the current repository order, where sc_pilot.lua
--- loads before sc_projectile_scaling.lua.
-register_shared_preview_modifier()
-script.on_load(register_shared_preview_modifier)
 
 script.on_internal_event(
     Defines.InternalEvents.PROJECTILE_FIRE,

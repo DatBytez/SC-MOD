@@ -1,12 +1,11 @@
--- Test No. 1
+-- Test No. 2
 
 --[[
     This code is an almost direct copy of the MV advanced-sensors.lua.
     XML tag functionality was added for SC detector augments.
 
-    Test No. 1 keeps the existing detector accuracy and cloak-charge behavior,
-    but routes detector radius through the same weapon-radius modifier used by
-    both the shared targeting preview and the shared fired-projectile radius.
+    Test No. 2 keeps the existing detector accuracy and cloak-charge behavior.
+    Detector radius is registered only with the shared weapon-radius system.
 ]]
 
 local vter = mods.multiverse.vter
@@ -14,6 +13,7 @@ local time_increment = mods.multiverse.time_increment
 
 mods.sc = mods.sc or {}
 mods.sc.detector = mods.sc.detector or {}
+mods.sc.detector.TEST_NUMBER = 2
 mods.sc.detectorAugments = mods.sc.detectorAugments or {}
 
 local detectorAugments = mods.sc.detectorAugments
@@ -102,47 +102,12 @@ mods.sc.detector.get_accuracy_bonus =
 mods.sc.detector.apply_radius_modifier =
     apply_detector_radius_modifier
 
--- Preserve compatibility with the legacy weapon-radius core. The new shared
--- core does not call this legacy path when the shared calculator is present,
--- so the detector cannot be applied twice.
-if mods.sc.radius
-    and mods.sc.radius.register_modifier then
-
-    mods.sc.radius.register_modifier(
-        "sc_detector",
-        apply_detector_radius_modifier
-    )
-end
-
--- Remove the older projectile-only registration if this file is reloaded.
--- In a normal full restart this is simply a harmless no-op.
-if mods.sc.radius
-    and mods.sc.radius.unregister_projectile_modifier then
-
-    mods.sc.radius.unregister_projectile_modifier(
-        "sc_detector"
-    )
-end
-
-local function register_shared_detector_modifier()
-    if not mods.sc or not mods.sc.scaling then
-        return
-    end
-
-    local register =
-        mods.sc.scaling.register_weapon_radius_modifier
-        or mods.sc.scaling.register_preview_modifier
-
-    if register then
-        register(
-            "sc_detector",
-            apply_detector_radius_modifier
-        )
-    end
-end
-
-register_shared_detector_modifier()
-script.on_load(register_shared_detector_modifier)
+-- Shared scaling loads before this file, so registration is immediate.
+mods.sc.scaling.register_weapon_radius_modifier(
+    "sc_detector",
+    apply_detector_radius_modifier,
+    200
+)
 
 -- Cloak charging
 script.on_internal_event(

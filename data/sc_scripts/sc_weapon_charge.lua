@@ -1,4 +1,4 @@
--- Test No. 1
+-- Test No. 2
 
 local userdata_table = mods.multiverse.userdata_table
 local vter = mods.multiverse.vter
@@ -65,11 +65,6 @@ end
 local function get_effective_stored_charge_boost(weapon)
     local rawBoost = get_stored_charge_boost(weapon)
     return math.max(0, rawBoost - 1)
-end
-
-local function get_preview_radius_charge_boost(weapon)
-    if not weapon then return 0 end
-    return math.max(0, (weapon.chargeLevel or 0) - 1)
 end
 
 local function get_charge_shot_amount(statBoosts)
@@ -146,12 +141,8 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
         elseif statBoost.stat == "shots" then
             -- handled before stat changes above
         elseif statBoost.stat == "radius" then
-            local baseRadius = mods.sc.radius.get_base_radius(weapon)
-            local firedRadius = math.max(0, (weapon.radius or mods.sc.radius.get_base_radius(weapon)) + amount * boost)
-
-            local wdata = userdata_table(weapon, "mods.sc.weaponStuff")
-            wdata.fireRadiusOverride = firedRadius
-            wdata.fireRadiusOverrideActive = true
+            -- Handled by sc_projectile_scaling.lua using the frozen
+            -- charge level stored above.
         else
             local base = projectile.damage[statBoost.stat] or 0
             projectile.damage[statBoost.stat] = base + boost * amount
@@ -221,30 +212,3 @@ function mods.sc.apply_charge_cooldown_bonus(weapon, cdBoost)
 
     wdata.cdLast = weapon.cooldown.first
 end
-
--- --------------
--- CHARGE RADIUS
--- --------------
-mods.sc.radius.register_modifier("charge_charge", function(ship, weapon, radius, baseRadius)
-    local statBoosts = chargers[weapon and weapon.blueprint and weapon.blueprint.name]
-    if not statBoosts then
-        return radius
-    end
-
-    local perCharge = nil
-    for _, statBoost in ipairs(statBoosts) do
-        if statBoost.stat == "radius" then
-            perCharge = statBoost.amount or 0
-            break
-        end
-    end
-
-    if not perCharge then
-        return radius
-    end
-
-    local boost = get_preview_radius_charge_boost(weapon)
-    local newRadius = radius + perCharge * boost
-
-    return math.max(0, newRadius)
-end)

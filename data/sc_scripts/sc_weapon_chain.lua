@@ -1,7 +1,6 @@
--- Test No. 1
+-- Test No. 2
 
 local userdata_table = mods.multiverse.userdata_table
-local vter = mods.multiverse.vter
 
 mods.sc = mods.sc or {}
 mods.sc.chainers = mods.sc.chainers or {}
@@ -40,7 +39,7 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
         elseif statBoost.stat == "shots" then
             mods.sc.apply_warmup_chain_shots(weapon, amount)
         elseif statBoost.stat == "radius" then
-            -- Handled by radius modifier below
+            -- Handled by sc_projectile_scaling.lua
         else
             local base = projectile.damage[statBoost.stat] or 0
             projectile.damage[statBoost.stat] = base + boost * amount
@@ -73,30 +72,3 @@ function mods.sc.apply_warmup_chain_shots(weapon, startingShots)
         wdata[key] = 0
     end
 end
-
--- --------------
--- CHAIN RADIUS
--- --------------
-mods.sc.radius.register_modifier("chain_charge", function(ship, weapon, radius, baseRadius)
-    local statBoosts = chainers[weapon and weapon.blueprint and weapon.blueprint.name]
-    if not statBoosts then
-        return radius
-    end
-
-    local perLevel = nil
-    for _, statBoost in ipairs(statBoosts) do
-        if statBoost.stat == "radius" then
-            perLevel = statBoost.amount or 0
-            break
-        end
-    end
-
-    if not perLevel then
-        return radius
-    end
-
-    local boost = math.max(0, weapon.boostLevel or 0)
-    local newRadius = radius + perLevel * boost
-
-    return math.max(0, newRadius)
-end)
