@@ -1,19 +1,21 @@
+-- Test No. 1
+
 --[[
 HALO weapon-specific projectile behavior.
 
 The HALO weapon creates one real mini-projectile and one fake
 mini-projectile for each shot.
 
-This script does not randomize projectile.target itself. Instead,
-it registers a projectile-specific radius modifier with
-sc_radius_core.lua. The radius core then performs one randomization:
+The shared radius system first calculates the normal frozen chainstep radius.
+This script then adds a flat projectile-only radius delta to fake projectiles:
 
     Real HALO projectile:
-        normal final radius
+        +0 additional radius
 
     Fake HALO projectile:
-        normal final radius * FAKE_RADIUS_MULTIPLIER
+        +10 radius per stored chainstep level
 
+The radius core sums projectile deltas and clamps once after the sum.
 Load this script after sc_radius_core.lua.
 ]]
 
@@ -23,9 +25,8 @@ local HALO_WEAPON =
 local FAKE_PROJECTILE_SCALE =
     0.25
 
--- Preserved from the current repository version.
-local FAKE_RADIUS_MULTIPLIER =
-    5
+local FAKE_RADIUS_PER_CHAINSTEP =
+    10
 
 local function is_halo_weapon(weapon)
     return weapon
@@ -56,35 +57,39 @@ local function is_fake_projectile(projectile)
         == FAKE_PROJECTILE_SCALE
 end
 
--- sc_radius_core.lua must load first so this registration
--- function is available.
-if mods.sc
-    and mods.sc.radius
-    and mods.sc.radius
-        .register_projectile_modifier then
+local function get_stored_chainstep_level(projectile)
+    if not mods.sc
+        or not mods.sc.scaling
+        or not mods.sc.scaling.get_level then
 
-    mods.sc.radius.register_projectile_modifier(
-        "halo_fake_spread",
-        function(
-            ship,
+        return 0
+    end
+
+    local level =
+        mods.sc.scaling.get_level(
             projectile,
-            weapon,
-            radius,
-            baseRadius
+            "chainstep"
         )
-            if not is_halo_weapon(weapon)
-                or not is_fake_projectile(
-                    projectile
-                ) then
 
-                return radius
-            end
-
-            return radius
-                * FAKE_RADIUS_MULTIPLIER
-        end
+    return math.max(
+        0,
+        math.floor(tonumber(level) or 0)
     )
 end
+
+mods.sc.radius.register_projectile_radius_delta(
+    "halo_fake_spread",
+    function(ship, projectile, weapon)
+        if not is_halo_weapon(weapon)
+            or not is_fake_projectile(projectile) then
+
+            return 0
+        end
+
+        return get_stored_chainstep_level(projectile)
+            * FAKE_RADIUS_PER_CHAINSTEP
+    end
+)
 
 -- Give fake HALO projectiles the same shield piercing
 -- as the parent HALO weapon while leaving all damage at zero.

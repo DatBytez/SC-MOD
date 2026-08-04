@@ -517,18 +517,8 @@
 
 	<accuracyMod>-40</accuracyMod>
 	<radius>60</radius>
-	
-	<!--
-	<chargeLevels>3</chargeLevels>
-	<sc-charge stat="shots" amount="1"/>
-	<sc-charge stat="cooldown" amount="0.75"/>	
-    <sc-charge stat="accuracyMod" amount="45"/>	
-	<sc-charge stat="radius" amount="-30"/>	
-    <sc-charge stat="breachChance" amount="2"/>
--->
 
 	<sc-chainstep fireThreshold="6" chainStep="3.0" maxSteps="2"/>
-	<!--<sc-chainstep stat="shots" amount="1"/>-->
     <sc-chainstep stat="accuracyMod" amount="45"/>
     <sc-chainstep stat="radius" amount="-30"/>
     <sc-chainstep stat="breachChance" amount="2"/>

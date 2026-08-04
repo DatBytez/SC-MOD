@@ -1,13 +1,14 @@
--- Test No. 9
+-- Test No. 10
 
 --[[
-Final shared-radius cleanup verification through load-order step 4.
+Flat projectile-radius delta verification.
 
 The report confirms:
     - Shared scaling loaded before the radius core.
     - Legacy weapon-radius APIs are absent.
     - Paused pilot/cloak preview matches weapon.radius.
     - Fired projectiles use the shared frozen C/Q/S radius.
+    - Projectile-only radius effects use the flat-delta API.
 
 This file does not change gameplay behavior.
 ]]
@@ -15,9 +16,9 @@ This file does not change gameplay behavior.
 local userdata_table = mods.multiverse.userdata_table
 local vter = mods.multiverse.vter
 
-local TEST_NUMBER = 9
+local TEST_NUMBER = 10
 local EXPECTED_SCALING_TEST = 5
-local EXPECTED_CORE_TEST = 5
+local EXPECTED_CORE_TEST = 6
 local EXPECTED_PILOT_TEST = 4
 local EXPECTED_DETECTOR_TEST = 2
 
@@ -149,11 +150,11 @@ local function capture_shot(projectile, weapon)
 end
 
 local function register_debug_handler()
-    if mods.sc_debug_final_radius_registered_test9 then
+    if mods.sc_debug_final_radius_registered_test10 then
         return
     end
 
-    mods.sc_debug_final_radius_registered_test9 = true
+    mods.sc_debug_final_radius_registered_test10 = true
 
     script.on_internal_event(
         Defines.InternalEvents.PROJECTILE_FIRE,
@@ -249,14 +250,22 @@ script.on_render_event(
             and mods.sc.radius
             and mods.sc.radius.register_modifier == nil
             and mods.sc.radius.get_final_radius == nil
+            and mods.sc.radius.register_projectile_modifier == nil
+            and mods.sc.radius.unregister_projectile_modifier == nil
             and mods.sc.scaling.register_preview_modifier == nil
             and mods.sc.scaling.get_legacy_weapon_preview_radius == nil
+
+        local flatDeltaApi = mods.sc
+            and mods.sc.radius
+            and mods.sc.radius.register_projectile_radius_delta ~= nil
+            and mods.sc.radius.unregister_projectile_radius_delta ~= nil
 
         Graphics.freetype.easy_print(
             0,
             SCREEN_X,
             SCREEN_Y + LINE_HEIGHT * 2,
-            "Legacy APIs removed=" .. bool_text(legacyRemoved)
+            "Legacy=" .. bool_text(legacyRemoved)
+                .. " FlatDelta=" .. bool_text(flatDeltaApi)
                 .. " | Paused=" .. bool_text(game_is_paused())
                 .. " Active=" .. bool_text(active)
                 .. " Cloak=" .. bool_text(cloaked)

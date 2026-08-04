@@ -1,4 +1,4 @@
--- Test No. 5
+-- Test No. 6
 
 --[[
 SC radius core.
@@ -10,7 +10,7 @@ Calculation order:
     1. Base radius.
     2. Live C/Q/S for targeting preview, or frozen C/Q/S for a fired shot.
     3. Shared weapon modifiers such as artillery, pilot, and detector.
-    4. Projectile-only modifiers such as HALO fake-projectile spread.
+    4. Flat projectile-only radius deltas, summed and clamped once.
 
 Preview updates:
     - SHIP_LOOP refreshes all ships while unpaused.
@@ -29,15 +29,16 @@ local userdata_table = mods.multiverse.userdata_table
 local vter = mods.multiverse.vter
 
 local CORE_STORAGE_KEY = "mods.sc.radiusCore"
-local CORE_TEST_NUMBER = 5
+local CORE_TEST_NUMBER = 6
 
 mods.sc.radius.CORE_STORAGE_KEY = CORE_STORAGE_KEY
 mods.sc.radius.CORE_TEST_NUMBER = CORE_TEST_NUMBER
 
-mods.sc.radius.projectileModifiers =
-    mods.sc.radius.projectileModifiers or {}
+mods.sc.radius.projectileRadiusDeltas =
+    mods.sc.radius.projectileRadiusDeltas or {}
 
-local projectileModifiers = mods.sc.radius.projectileModifiers
+local projectileRadiusDeltas =
+    mods.sc.radius.projectileRadiusDeltas
 
 local function get_random_point_in_radius(center, radius)
     local distance = radius * math.sqrt(math.random())
@@ -56,25 +57,31 @@ function mods.sc.radius.get_base_radius(weapon)
     return mods.sc.scaling.get_base_radius(weapon)
 end
 
--- Projectile-only modifiers affect one projectile after the shared weapon
--- starting radius has been calculated. They do not alter weapon.radius.
-function mods.sc.radius.register_projectile_modifier(name, func)
+-- Projectile-only radius effects are flat additions or subtractions.
+-- A callback returns one numeric delta and is never given an accumulated
+-- radius. The core sums every delta and clamps the final result once.
+function mods.sc.radius.register_projectile_radius_delta(
+    name,
+    func
+)
     if type(name) ~= "string"
         or type(func) ~= "function" then
 
         return false
     end
 
-    projectileModifiers[name] = func
+    projectileRadiusDeltas[name] = func
     return true
 end
 
-function mods.sc.radius.unregister_projectile_modifier(name)
-    if projectileModifiers[name] == nil then
+function mods.sc.radius.unregister_projectile_radius_delta(
+    name
+)
+    if projectileRadiusDeltas[name] == nil then
         return false
     end
 
-    projectileModifiers[name] = nil
+    projectileRadiusDeltas[name] = nil
     return true
 end
 
@@ -99,21 +106,21 @@ function mods.sc.radius.get_projectile_radius(
 
     radius = math.max(0, radius or baseRadius)
 
-    for _, func in pairs(projectileModifiers) do
-        local modifiedRadius = func(
+    local totalDelta = 0
+
+    for _, func in pairs(projectileRadiusDeltas) do
+        local delta = func(
             ship,
             projectile,
-            weapon,
-            radius,
-            baseRadius
+            weapon
         )
 
-        if type(modifiedRadius) == "number" then
-            radius = math.max(0, modifiedRadius)
+        if type(delta) == "number" then
+            totalDelta = totalDelta + delta
         end
     end
 
-    return radius
+    return math.max(0, radius + totalDelta)
 end
 
 local function get_modifier_delta(calculation, modifierName)
@@ -339,11 +346,11 @@ mods.sc.radius.apply_projectile_radius =
     apply_projectile_radius
 
 local function register_projectile_radius_handler()
-    if mods.sc.radius._projectileApplyRegisteredTest5 then
+    if mods.sc.radius._projectileApplyRegisteredTest6 then
         return
     end
 
-    mods.sc.radius._projectileApplyRegisteredTest5 = true
+    mods.sc.radius._projectileApplyRegisteredTest6 = true
 
     script.on_internal_event(
         Defines.InternalEvents.PROJECTILE_FIRE,
