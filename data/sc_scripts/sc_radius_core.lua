@@ -1,27 +1,20 @@
--- Test No. 2
+-- Test No. 3
 
 --[[
 SC radius core.
 
-This test preserves the current Pre Radius Rebuild behavior for:
-    * base-radius storage
-    * weapon-level visual radius modifiers
-    * projectile-level radius modifiers
-    * target randomization
+Test No. 3 keeps the proven Pre Radius Rebuild target-randomization method,
+but uses the shared scaling system for both live targeting preview and fired
+projectile starting radius.
 
-The only gameplay change in this test is timing and radius selection for a
-fired projectile:
+Order of calculation:
+    1. Base radius.
+    2. Frozen C/Q/S radius for a fired projectile, or live C/Q/S for preview.
+    3. Shared weapon modifiers such as pilot and detector.
+    4. Projectile-only modifiers such as HALO fake spread.
 
-    1. Chain, charge, and chainstep store their frozen level on the projectile.
-    2. This core registers its PROJECTILE_FIRE callback from on_load, after the scaling scripts have registered theirs.
-    3. When the shared scaling reader reports a stored radius stat, its
-       expected projectile radius becomes the starting radius.
-    4. Existing projectile modifiers, such as detector and HALO fake spread,
-       are applied afterward.
-    5. Untagged weapons and tagged weapons without a radius stat retain the
-       previous weapon-level core behavior.
-
-The existing projectile.target randomization method is intentionally unchanged.
+The legacy modifier core remains available as a fallback if the shared scaling
+file is missing. No ComputeHeading or alternate coordinate method is used.
 ]]
 
 mods.sc = mods.sc or {}
@@ -31,7 +24,7 @@ local userdata_table = mods.multiverse.userdata_table
 local vter = mods.multiverse.vter
 
 local CORE_STORAGE_KEY = "mods.sc.radiusCore"
-local CORE_TEST_NUMBER = 2
+local CORE_TEST_NUMBER = 3
 
 mods.sc.radius.CORE_STORAGE_KEY =
     CORE_STORAGE_KEY
@@ -196,21 +189,52 @@ function mods.sc.radius.get_projectile_radius(
     )
 end
 
-local function get_shared_radius_calculation(
+local function get_shared_projectile_calculation(
     projectile,
     weapon
 )
     if not mods.sc
         or not mods.sc.scaling
-        or not mods.sc.scaling.get_radius_calculation then
+        or not mods.sc.scaling
+            .get_projectile_starting_radius_calculation then
 
         return nil
     end
 
     local success, calculation =
         pcall(
-            mods.sc.scaling.get_radius_calculation,
+            mods.sc.scaling
+                .get_projectile_starting_radius_calculation,
             projectile,
+            weapon
+        )
+
+    if not success
+        or type(calculation) ~= "table" then
+
+        return nil
+    end
+
+    return calculation
+end
+
+local function get_shared_preview_calculation(
+    ship,
+    weapon
+)
+    if not mods.sc
+        or not mods.sc.scaling
+        or not mods.sc.scaling
+            .get_weapon_preview_calculation then
+
+        return nil
+    end
+
+    local success, calculation =
+        pcall(
+            mods.sc.scaling
+                .get_weapon_preview_calculation,
+            ship,
             weapon
         )
 
@@ -249,6 +273,20 @@ local function consume_fire_radius_override(weapon)
     return radius
 end
 
+local function get_weapon_modifier_delta(
+    calculation,
+    modifierName
+)
+    local modifiers = calculation
+        and (calculation.weaponModifiers
+            or calculation.previewModifiers)
+
+    local modifier = modifiers
+        and modifiers[modifierName]
+
+    return modifier and modifier.delta or 0
+end
+
 local function store_applied_radius(
     projectile,
     calculation,
@@ -278,13 +316,38 @@ local function store_applied_radius(
 
     pdata.sharedExpectedRadius =
         calculation
-        and calculation.expectedRadius
+        and (calculation.startingRadius
+            or calculation.weaponModifiedRadius
+            or calculation.scalingRadius)
         or nil
 
     pdata.legacyCoreRadius =
         calculation
-        and calculation.liveCoreRadius
+        and calculation.legacyCoreRadius
         or nil
+
+    pdata.scalingRadius =
+        calculation
+        and calculation.scalingRadius
+        or nil
+
+    pdata.weaponModifiedRadius =
+        calculation
+        and (calculation.weaponModifiedRadius
+            or calculation.startingRadius)
+        or nil
+
+    pdata.pilotModifierDelta =
+        get_weapon_modifier_delta(
+            calculation,
+            "pilot_accuracy"
+        )
+
+    pdata.detectorModifierDelta =
+        get_weapon_modifier_delta(
+            calculation,
+            "sc_detector"
+        )
 
     pdata.hasStoredScaling =
         calculation
@@ -349,14 +412,32 @@ script.on_internal_event(
         end
 
         for weapon in vter(weapons) do
-            weapon.radius =
-                mods.sc.radius.get_final_radius(
+            local calculation =
+                get_shared_preview_calculation(
                     ship,
                     weapon
                 )
+
+            if calculation
+                and type(calculation.previewRadius)
+                    == "number" then
+
+                weapon.radius =
+                    math.max(
+                        0,
+                        calculation.previewRadius
+                    )
+            else
+                weapon.radius =
+                    mods.sc.radius.get_final_radius(
+                        ship,
+                        weapon
+                    )
+            end
         end
     end
 )
+
 
 local function apply_projectile_radius(projectile, weapon)
         if not projectile
@@ -384,7 +465,7 @@ local function apply_projectile_radius(projectile, weapon)
             )
 
         local calculation =
-            get_shared_radius_calculation(
+            get_shared_projectile_calculation(
                 projectile,
                 weapon
             )
@@ -393,17 +474,16 @@ local function apply_projectile_radius(projectile, weapon)
         local mode = "legacy_core"
 
         if calculation
-            and calculation.hasScalingRadius
-            and type(calculation.expectedRadius)
+            and type(calculation.startingRadius)
                 == "number" then
 
             startingRadius =
                 math.max(
                     0,
-                    calculation.expectedRadius
+                    calculation.startingRadius
                 )
 
-            mode = "shared_scaling"
+            mode = "shared_weapon_radius"
 
         elseif overrideRadius ~= nil then
             startingRadius =
@@ -470,11 +550,11 @@ local function apply_projectile_radius(projectile, weapon)
     end
 
 local function register_projectile_radius_handler()
-    if mods.sc.radius._projectileApplyRegisteredTest2 then
+    if mods.sc.radius._projectileApplyRegisteredTest3 then
         return
     end
 
-    mods.sc.radius._projectileApplyRegisteredTest2 = true
+    mods.sc.radius._projectileApplyRegisteredTest3 = true
 
     script.on_internal_event(
         Defines.InternalEvents.PROJECTILE_FIRE,

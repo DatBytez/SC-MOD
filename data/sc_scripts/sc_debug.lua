@@ -1,50 +1,44 @@
--- Test No. 5
+-- Test No. 7
 
 --[[
-Projectile radius application verification.
+Pilot / detector shared-radius integration verification.
 
-Shows the four most recent player-fired projectiles and compares:
-    Expected = passive C/Q/S radius from sc_projectile_scaling.lua Test No. 2
-    Start    = radius selected by sc_radius_core.lua Test No. 2 before
-               projectile-only modifiers
-    Final    = radius after detector, HALO, and other projectile modifiers
+Preview line:
+    Shared  = live C/Q/S plus pilot and detector
+    Display = weapon.radius used by the targeting UI
 
-This debug script does not change projectile or weapon behavior.
+Shot lines:
+    Scale = frozen projectile C/Q/S radius before pilot/detector
+    P     = pilot weapon-radius contribution
+    D     = detector weapon-radius contribution
+    Start = radius passed to projectile-only modifiers
+    Final = radius after projectile-only modifiers such as HALO fake spread
+
+This file does not change weapon or projectile behavior.
 ]]
 
-mods.sc_debug = mods.sc_debug or {}
-mods.sc_debug.projectileRadiusApply =
-    mods.sc_debug.projectileRadiusApply or {}
+local userdata_table = mods.multiverse.userdata_table
+local vter = mods.multiverse.vter
 
-local REPORT =
-    mods.sc_debug.projectileRadiusApply
-
-local userdata_table =
-    mods.multiverse.userdata_table
-
-local TEST_NUMBER = 5
-local REQUIRED_CORE_TEST = 2
-local TRACK_OWNER_ID = 0
-local MAX_SHOTS = 4
-local SCREEN_X = 70
-local SCREEN_Y = 115
+local TEST_NUMBER = 7
+local EXPECTED_CORE_TEST = 3
+local MAX_SHOTS = 3
+local SCREEN_X = 65
+local SCREEN_Y = 110
 local LINE_HEIGHT = 18
 local MATCH_EPSILON = 0.01
 
-local CORE_STORAGE_KEY =
-    mods.sc
-    and mods.sc.radius
-    and mods.sc.radius.CORE_STORAGE_KEY
-    or "mods.sc.radiusCore"
+local CORE_STORAGE_KEY = "mods.sc.radiusCore"
+local SCALING_STORAGE_KEY = "mods.sc.projectileScaling"
 
-REPORT.shots = REPORT.shots or {}
+local shots = {}
 
 local function number_text(value)
     if value == nil then
         return "-"
     end
 
-    if value == math.floor(value) then
+    if math.abs(value - math.floor(value)) < 0.0001 then
         return tostring(math.floor(value))
     end
 
@@ -54,243 +48,156 @@ end
 local function trim_weapon_name(name)
     name = tostring(name or "unknown")
 
-    if #name <= 38 then
+    if #name <= 30 then
         return name
     end
 
-    return string.sub(name, 1, 35) .. "..."
+    return string.sub(name, 1, 27) .. "..."
 end
 
-local function copy_contribution(contribution)
-    if not contribution then
-        return nil
-    end
-
-    return {
-        active = contribution.active,
-        level = contribution.level,
-        amount = contribution.amount,
-        delta = contribution.delta,
-        hasRadiusTag = contribution.hasRadiusTag
-    }
+local function nearly_equal(a, b)
+    return a ~= nil
+        and b ~= nil
+        and math.abs(a - b) <= MATCH_EPSILON
 end
 
-local function contribution_text(label, contribution)
-    if not contribution or not contribution.active then
-        return label .. "=-"
-    end
+local function modifier_delta(calculation, name)
+    local modifiers = calculation
+        and (calculation.weaponModifiers
+            or calculation.previewModifiers)
 
-    if not contribution.hasRadiusTag then
-        return label
-            .. "="
-            .. number_text(contribution.level)
-            .. "(no radius)"
-    end
+    local modifier = modifiers and modifiers[name]
 
-    return label
-        .. "="
-        .. number_text(contribution.level)
-        .. "x"
-        .. number_text(contribution.amount)
-        .. "="
-        .. number_text(contribution.delta)
+    return modifier and modifier.delta or 0
 end
 
-local function source_list(calculation)
-    if not calculation
-        or not calculation.contributions then
+local function get_source_text(projectile)
+    local data = userdata_table(
+        projectile,
+        SCALING_STORAGE_KEY
+    )
 
-        return "none"
+    if data.hasChain then
+        return "C" .. number_text(data.chainLevel)
     end
 
-    local sources = {}
-
-    if calculation.contributions.chain
-        and calculation.contributions.chain.active then
-        table.insert(sources, "C")
+    if data.hasCharge then
+        return "Q" .. number_text(data.chargeLevel)
     end
 
-    if calculation.contributions.charge
-        and calculation.contributions.charge.active then
-        table.insert(sources, "Q")
+    if data.hasChainstep then
+        return "S" .. number_text(data.chainstepLevel)
     end
 
-    if calculation.contributions.chainstep
-        and calculation.contributions.chainstep.active then
-        table.insert(sources, "S")
-    end
-
-    if #sources == 0 then
-        return "none"
-    end
-
-    return table.concat(sources, "+")
+    return "none"
 end
 
-local function get_status(calculation, coreData)
-    if not coreData then
-        return "NO CORE RECORD"
-    end
+local function capture_shot(projectile, weapon)
+    if not projectile
+        or not weapon
+        or projectile.ownerId ~= 0 then
 
-    if coreData.testNumber ~= REQUIRED_CORE_TEST then
-        return "WRONG CORE TEST"
-    end
-
-    if not calculation then
-        return "NO CALCULATION"
-    end
-
-    if not calculation.hasStoredScaling then
-        return "UNTAGGED"
-    end
-
-    if not calculation.hasScalingRadius then
-        return "NO RADIUS STAT"
-    end
-
-    if coreData.startingRadius == nil then
-        return "NO START VALUE"
-    end
-
-    if math.abs(
-        coreData.startingRadius
-            - calculation.expectedRadius
-    ) <= MATCH_EPSILON then
-        return "MATCH"
-    end
-
-    return "DIFF"
-end
-
-local function snapshot_calculation(calculation)
-    if not calculation then
-        return nil
-    end
-
-    local contributions =
-        calculation.contributions or {}
-
-    return {
-        baseRadius = calculation.baseRadius,
-        totalContribution = calculation.totalContribution,
-        expectedRadius = calculation.expectedRadius,
-        liveCoreRadius = calculation.liveCoreRadius,
-        hasStoredScaling = calculation.hasStoredScaling,
-        hasScalingRadius = calculation.hasScalingRadius,
-        contributions = {
-            chain = copy_contribution(
-                contributions.chain
-            ),
-            charge = copy_contribution(
-                contributions.charge
-            ),
-            chainstep = copy_contribution(
-                contributions.chainstep
-            )
-        }
-    }
-end
-
-local function snapshot_core_data(projectile)
-    local stored =
-        userdata_table(
-            projectile,
-            CORE_STORAGE_KEY
-        )
-
-    if not stored then
-        return nil
-    end
-
-    return {
-        testNumber = stored.testNumber,
-        mode = stored.mode,
-        baseRadius = stored.baseRadius,
-        sharedExpectedRadius = stored.sharedExpectedRadius,
-        legacyCoreRadius = stored.legacyCoreRadius,
-        overrideRadius = stored.overrideRadius,
-        startingRadius = stored.startingRadius,
-        finalRadius = stored.finalRadius,
-        projectileModifierDelta = stored.projectileModifierDelta,
-        targetMovedDistance = stored.targetMovedDistance
-    }
-end
-
-local function capture_projectile_radius(projectile, weapon)
-        if not projectile
-            or not weapon
-            or not weapon.blueprint then
-
-            return
-        end
-
-        if TRACK_OWNER_ID ~= nil
-            and projectile.ownerId
-                ~= TRACK_OWNER_ID then
-
-            return
-        end
-
-        local calculation = nil
-
-        if mods.sc
-            and mods.sc.scaling
-            and mods.sc.scaling
-                .get_radius_calculation then
-
-            calculation =
-                mods.sc.scaling
-                    .get_radius_calculation(
-                        projectile,
-                        weapon
-                    )
-        end
-
-        local coreData =
-            snapshot_core_data(
-                projectile
-            )
-
-        table.insert(REPORT.shots, {
-            weaponName =
-                weapon.blueprint.name
-                or "unknown",
-            calculation =
-                snapshot_calculation(
-                    calculation
-                ),
-            coreData = coreData,
-            status =
-                get_status(
-                    calculation,
-                    coreData
-                )
-        })
-
-        while #REPORT.shots > MAX_SHOTS do
-            table.remove(REPORT.shots, 1)
-        end
-    end
-
-local function register_debug_projectile_handler()
-    if mods.sc_debug._projectileRadiusApplyRegisteredTest5 then
         return
     end
 
-    mods.sc_debug._projectileRadiusApplyRegisteredTest5 = true
+    local core = userdata_table(
+        projectile,
+        CORE_STORAGE_KEY
+    )
+
+    local shot = {
+        weaponName = weapon.blueprint
+            and weapon.blueprint.name
+            or "unknown",
+        source = get_source_text(projectile),
+        coreTest = core.testNumber,
+        mode = core.mode,
+        scalingRadius = core.scalingRadius,
+        weaponModifiedRadius = core.weaponModifiedRadius,
+        pilotDelta = core.pilotModifierDelta,
+        detectorDelta = core.detectorModifierDelta,
+        startingRadius = core.startingRadius,
+        finalRadius = core.finalRadius,
+        projectileDelta = core.projectileModifierDelta
+    }
+
+    shot.match =
+        shot.coreTest == EXPECTED_CORE_TEST
+        and nearly_equal(
+            shot.startingRadius,
+            shot.weaponModifiedRadius
+        )
+
+    table.insert(shots, shot)
+
+    while #shots > MAX_SHOTS do
+        table.remove(shots, 1)
+    end
+end
+
+local function register_debug_handler()
+    if mods.sc_debug_radius_integration_registered_test7 then
+        return
+    end
+
+    mods.sc_debug_radius_integration_registered_test7 = true
 
     script.on_internal_event(
         Defines.InternalEvents.PROJECTILE_FIRE,
-        capture_projectile_radius
+        capture_shot
     )
 end
 
--- This on_load callback was registered after the radius core's on_load
--- callback because sc_debug.lua is loaded last. The core therefore
--- registers its PROJECTILE_FIRE handler first, and this diagnostic
--- registers immediately afterward.
-script.on_load(register_debug_projectile_handler)
+-- Radius Core Test No. 3 also registers its fire handler from on_load.
+-- Because this debug file loads last, this handler is registered afterward.
+script.on_load(register_debug_handler)
 
+local function get_first_weapon_preview()
+    local ship = Hyperspace.ships.player
+    local weapons = ship
+        and ship.weaponSystem
+        and ship.weaponSystem.weapons
+
+    if not weapons then
+        return nil
+    end
+
+    for weapon in vter(weapons) do
+        if mods.sc
+            and mods.sc.scaling
+            and mods.sc.scaling
+                .get_weapon_preview_calculation then
+
+            local calculation =
+                mods.sc.scaling
+                    .get_weapon_preview_calculation(
+                        ship,
+                        weapon
+                    )
+
+            return {
+                weaponName = weapon.blueprint
+                    and weapon.blueprint.name
+                    or "unknown",
+                shared = calculation
+                    and calculation.previewRadius,
+                display = weapon.radius,
+                pilotDelta = modifier_delta(
+                    calculation,
+                    "pilot_accuracy"
+                ),
+                detectorDelta = modifier_delta(
+                    calculation,
+                    "sc_detector"
+                )
+            }
+        end
+
+        return nil
+    end
+
+    return nil
+end
 
 script.on_render_event(
     Defines.RenderEvents.SHIP_STATUS,
@@ -304,175 +211,128 @@ script.on_render_event(
             0,
             SCREEN_X,
             SCREEN_Y,
-            "Projectile Radius Apply - Debug Test No. "
+            "Radius Integration - Debug Test No. "
                 .. tostring(TEST_NUMBER)
         )
+
+        local pilotRegistered =
+            mods.sc
+            and mods.sc.scaling
+            and mods.sc.scaling.has_preview_modifier
+            and mods.sc.scaling.has_preview_modifier(
+                "pilot_accuracy"
+            )
+
+        local detectorRegistered =
+            mods.sc
+            and mods.sc.scaling
+            and mods.sc.scaling.has_preview_modifier
+            and mods.sc.scaling.has_preview_modifier(
+                "sc_detector"
+            )
 
         Graphics.freetype.easy_print(
             0,
             SCREEN_X,
             SCREEN_Y + LINE_HEIGHT,
-            "Expected=C/Q/S | Start=core before projectile modifiers | Final=applied spread"
+            "Shared modifiers: Pilot="
+                .. (pilotRegistered and "YES" or "NO")
+                .. " Detector="
+                .. (detectorRegistered and "YES" or "NO")
+                .. " | Expected Core="
+                .. tostring(EXPECTED_CORE_TEST)
         )
 
-        if not mods.sc
-            or not mods.sc.scaling
-            or not mods.sc.scaling
-                .get_radius_calculation then
+        local preview = get_first_weapon_preview()
+
+        if preview then
+            local previewStatus = nearly_equal(
+                preview.shared,
+                preview.display
+            ) and "MATCH" or "DIFF"
 
             Graphics.freetype.easy_print(
                 0,
                 SCREEN_X,
                 SCREEN_Y + LINE_HEIGHT * 2,
-                "ERROR: sc_projectile_scaling.lua Test No. 2 is not loaded"
-            )
-
-            return
-        end
-
-        if not mods.sc.radius
-            or mods.sc.radius.CORE_TEST_NUMBER
-                ~= REQUIRED_CORE_TEST then
-
-            Graphics.freetype.easy_print(
-                0,
-                SCREEN_X,
-                SCREEN_Y + LINE_HEIGHT * 2,
-                "ERROR: sc_radius_core.lua Test No. 2 is not loaded"
-            )
-
-            return
-        end
-
-        if #REPORT.shots == 0 then
-            Graphics.freetype.easy_print(
-                0,
-                SCREEN_X,
-                SCREEN_Y + LINE_HEIGHT * 2,
-                "Fire player chain, charge, chainstep, and untagged weapons."
-            )
-
-            return
-        end
-
-        for index, shot in ipairs(REPORT.shots) do
-            local calculation =
-                shot.calculation
-
-            local coreData =
-                shot.coreData
-
-            local firstLineY =
-                SCREEN_Y
-                + LINE_HEIGHT * (index * 3 - 1)
-
-            Graphics.freetype.easy_print(
-                0,
-                SCREEN_X,
-                firstLineY,
-                "Shot "
-                    .. tostring(index)
-                    .. ": "
-                    .. trim_weapon_name(
-                        shot.weaponName
-                    )
-                    .. " | Src="
-                    .. source_list(calculation)
-                    .. " | Mode="
-                    .. tostring(
-                        coreData
-                        and coreData.mode
-                        or "-"
-                    )
+                "Preview "
+                    .. trim_weapon_name(preview.weaponName)
+                    .. ": Shared="
+                    .. number_text(preview.shared)
+                    .. " Display="
+                    .. number_text(preview.display)
+                    .. " P="
+                    .. number_text(preview.pilotDelta)
+                    .. " D="
+                    .. number_text(preview.detectorDelta)
                     .. " | "
-                    .. tostring(shot.status)
+                    .. previewStatus
+            )
+        else
+            Graphics.freetype.easy_print(
+                0,
+                SCREEN_X,
+                SCREEN_Y + LINE_HEIGHT * 2,
+                "Preview: no player weapon calculation"
+            )
+        end
+
+        if #shots == 0 then
+            Graphics.freetype.easy_print(
+                0,
+                SCREEN_X,
+                SCREEN_Y + LINE_HEIGHT * 3,
+                "Fire a player weapon to capture pilot/detector radius data."
+            )
+            return
+        end
+
+        for index, shot in ipairs(shots) do
+            local y = SCREEN_Y
+                + LINE_HEIGHT * (2 + index * 2)
+
+            local status
+
+            if shot.coreTest ~= EXPECTED_CORE_TEST then
+                status = "WRONG CORE"
+            elseif shot.match then
+                status = "MATCH"
+            else
+                status = "DIFF"
+            end
+
+            Graphics.freetype.easy_print(
+                0,
+                SCREEN_X,
+                y,
+                tostring(index)
+                    .. ": "
+                    .. trim_weapon_name(shot.weaponName)
+                    .. " Src="
+                    .. tostring(shot.source)
+                    .. " Mode="
+                    .. tostring(shot.mode or "-")
+                    .. " | "
+                    .. status
             )
 
-            if calculation and coreData then
-                Graphics.freetype.easy_print(
-                    0,
-                    SCREEN_X,
-                    firstLineY + LINE_HEIGHT,
-                    "  Base="
-                        .. number_text(
-                            calculation.baseRadius
-                        )
-                        .. " Delta="
-                        .. number_text(
-                            calculation.totalContribution
-                        )
-                        .. " Expected="
-                        .. number_text(
-                            calculation.expectedRadius
-                        )
-                        .. " LegacyCore="
-                        .. number_text(
-                            coreData.legacyCoreRadius
-                        )
-                        .. " Start="
-                        .. number_text(
-                            coreData.startingRadius
-                        )
-                        .. " Final="
-                        .. number_text(
-                            coreData.finalRadius
-                        )
-                        .. " PMod="
-                        .. number_text(
-                            coreData.projectileModifierDelta
-                        )
-                )
-
-                Graphics.freetype.easy_print(
-                    0,
-                    SCREEN_X,
-                    firstLineY + LINE_HEIGHT * 2,
-                    "  "
-                        .. contribution_text(
-                            "C",
-                            calculation.contributions.chain
-                        )
-                        .. " | "
-                        .. contribution_text(
-                            "Q",
-                            calculation.contributions.charge
-                        )
-                        .. " | "
-                        .. contribution_text(
-                            "S",
-                            calculation.contributions.chainstep
-                        )
-                        .. " | Override="
-                        .. number_text(
-                            coreData.overrideRadius
-                        )
-                        .. " Move="
-                        .. number_text(
-                            coreData.targetMovedDistance
-                        )
-                )
-
-            elseif coreData then
-                Graphics.freetype.easy_print(
-                    0,
-                    SCREEN_X,
-                    firstLineY + LINE_HEIGHT,
-                    "  Core Test="
-                        .. tostring(coreData.testNumber)
-                        .. " Start="
-                        .. number_text(coreData.startingRadius)
-                        .. " Final="
-                        .. number_text(coreData.finalRadius)
-                )
-
-            else
-                Graphics.freetype.easy_print(
-                    0,
-                    SCREEN_X,
-                    firstLineY + LINE_HEIGHT,
-                    "  No Test No. 2 radius-core record was found."
-                )
-            end
+            Graphics.freetype.easy_print(
+                0,
+                SCREEN_X + 18,
+                y + LINE_HEIGHT,
+                "Scale="
+                    .. number_text(shot.scalingRadius)
+                    .. " P="
+                    .. number_text(shot.pilotDelta)
+                    .. " D="
+                    .. number_text(shot.detectorDelta)
+                    .. " Start="
+                    .. number_text(shot.startingRadius)
+                    .. " Final="
+                    .. number_text(shot.finalRadius)
+                    .. " Proj="
+                    .. number_text(shot.projectileDelta)
+            )
         end
     end
 )
