@@ -1,4 +1,4 @@
--- Test No. 3
+-- Test No. 4
 
 --[[
 This code is a reimplementation of TNE_CHAINSTEP_LUA.lua from TNE.
@@ -42,6 +42,9 @@ mods.sc.chainstep = mods.sc.chainstep or {}
 local chainstepWeaponList =
     mods.sc.chainstep
 
+local scaling =
+    mods.sc.scaling
+
 -- -----------------
 -- XML PARSER
 -- -----------------
@@ -82,7 +85,6 @@ table.insert(weaponTagParsers, function(weaponNode)
         local baseAttr =
             tagNode:first_attribute("base")
 
-        -- Timing configuration tag.
         if fireThresholdAttr and chainStepAttr then
             fireThreshold =
                 tonumber(fireThresholdAttr:value())
@@ -96,7 +98,6 @@ table.insert(weaponTagParsers, function(weaponNode)
                 or nil
         end
 
-        -- Optional stat tag.
         if statAttr then
             table.insert(statBoosts, {
                 stat = statAttr:value(),
@@ -120,6 +121,7 @@ table.insert(weaponTagParsers, function(weaponNode)
     if not fireThreshold
         or not chainStep
         or chainStep <= 0 then
+
         return
     end
 
@@ -145,13 +147,19 @@ local function get_chainstep_weapon(weapon)
     ]
 end
 
-local function get_chainstep_stat(chainWeapon, statName)
+local function get_chainstep_stat(
+    chainWeapon,
+    statName
+)
     if not chainWeapon
         or not chainWeapon.statBoosts then
+
         return nil
     end
 
-    for _, statBoost in ipairs(chainWeapon.statBoosts) do
+    for _, statBoost in ipairs(
+        chainWeapon.statBoosts
+    ) do
         if statBoost.stat == statName then
             return statBoost
         end
@@ -173,8 +181,6 @@ local function get_max_chainsteps(
         )
     end
 
-    -- Preserve compatibility with chainstep weapons
-    -- that use <boost><count>...</count></boost>.
     if weapon.blueprint
         and weapon.blueprint.boostPower
         and weapon.blueprint.boostPower.count then
@@ -187,8 +193,6 @@ local function get_max_chainsteps(
         end
     end
 
-    -- Final fallback: calculate the number of full
-    -- steps between the fire threshold and cooldown cap.
     if chainStep > 0 then
         return math.max(
             0,
@@ -223,53 +227,6 @@ local function get_chainstep_level(weapon)
     )
 end
 
-local function get_chainstep_missile_cost_from_level(
-    missileData,
-    chainLevel
-)
-    if not missileData then
-        return nil
-    end
-
-    local baseCost =
-        missileData.base or 1
-
-    local amount =
-        missileData.amount or 0
-
-    local cost =
-        baseCost + chainLevel * amount
-
-    return math.max(
-        1,
-        math.floor(cost)
-    )
-end
-
-local function get_chainstep_missile_cost(
-    weapon,
-    chainWeapon
-)
-    if not weapon or not chainWeapon then
-        return nil
-    end
-
-    local missileData =
-        get_chainstep_stat(
-            chainWeapon,
-            "missileCost"
-        )
-
-    if not missileData then
-        return nil
-    end
-
-    return get_chainstep_missile_cost_from_level(
-        missileData,
-        get_chainstep_level(weapon)
-    )
-end
-
 -- -----------------
 -- CHAINSTEP SHOTS
 -- -----------------
@@ -283,11 +240,8 @@ local function apply_chainstep_shots(
         return
     end
 
-    local bp =
-        weapon.blueprint
-
-    local name =
-        bp and bp.name
+    local bp = weapon.blueprint
+    local name = bp and bp.name
 
     if not name then return end
 
@@ -302,9 +256,6 @@ local function apply_chainstep_shots(
     wdata[key] =
         (wdata[key] or 0) + 1
 
-    -- Match sc_weapon_chain.lua behavior:
-    -- the blueprint shot count is the maximum volley size,
-    -- and chain levels unlock more of that native volley.
     local cap =
         (bp and bp.shots) or 1
 
@@ -336,7 +287,6 @@ end
 script.on_internal_event(
     Defines.InternalEvents.ON_TICK,
     function()
-
         local weapons = {}
 
         pcall(function()
@@ -419,8 +369,6 @@ script.on_internal_event(
                         local queuedShots =
                             weapon.queuedProjectiles:size()
 
-                        -- Track the live chainstep level only while
-                        -- the weapon is not firing a volley.
                         if queuedShots <= 0
                             and not wdata.volleyActive then
 
@@ -428,9 +376,6 @@ script.on_internal_event(
                                 overCharge
                         end
 
-                        -- Reset the frozen volley state once the
-                        -- previous volley is finished and charging
-                        -- has resumed.
                         if wdata.volleyActive
                             and queuedShots <= 0
                             and weapon.cooldown.first > 0 then
@@ -454,7 +399,6 @@ script.on_internal_event(
 script.on_internal_event(
     Defines.InternalEvents.SELECT_ARMAMENT_PRE,
     function(armamentSlot)
-
         local ship =
             Hyperspace.ships.player
 
@@ -485,15 +429,15 @@ script.on_internal_event(
                 armamentSlot
         end
 
-        local missileCost =
-            get_chainstep_missile_cost(
+        local canPay =
+            scaling.can_pay_missile_cost(
+                ship,
                 weapon,
-                chainWeapon
+                "chainstep",
+                get_chainstep_level(weapon)
             )
 
-        if missileCost
-            and ship:GetMissileCount()
-                < missileCost then
+        if not canPay then
 
             return Defines.Chain.PREEMPT,
                 armamentSlot
@@ -511,7 +455,6 @@ script.on_internal_event(
 script.on_internal_event(
     Defines.InternalEvents.PROJECTILE_FIRE,
     function(projectile, weapon)
-
         local chainWeapon =
             get_chainstep_weapon(weapon)
 
@@ -524,7 +467,6 @@ script.on_internal_event(
             "mods.sc.chainstep"
         )
 
-        -- Freeze the chainstep level for this volley.
         if not wdata.volleyActive then
             wdata.volleyActive = true
 
@@ -549,97 +491,47 @@ script.on_internal_event(
                 )
             )
 
-        -- Freeze the zero-based chainstep level used by this projectile.
         local pdata = userdata_table(
             projectile,
             "mods.sc.projectileScaling"
         )
 
-        pdata.weaponName = weapon.blueprint.name
+        pdata.weaponName =
+            weapon.blueprint.name
+
         pdata.hasChainstep = true
         pdata.chainstepLevel = boost
 
-        for _, statBoost in ipairs(
-            chainWeapon.statBoosts or {}
-        ) do
-            local amount =
-                statBoost.amount or 1
-
-            if statBoost.stat == "accuracyMod" then
-                if projectile.extend
-                    and projectile.extend.customDamage then
-
-                    local base =
-                        projectile.extend
-                            .customDamage
-                            .accuracyMod
-                        or 0
-
-                    projectile.extend
-                        .customDamage
-                        .accuracyMod =
-                        base + boost * amount
-                end
-
-            elseif statBoost.stat == "shots" then
-                apply_chainstep_shots(
-                    weapon,
-                    amount,
-                    boost
+        scaling.apply_projectile_stats(
+            projectile,
+            weapon,
+            "chainstep",
+            boost,
+            {
+                shots = function(
+                    currentProjectile,
+                    currentWeapon,
+                    statBoost,
+                    level
                 )
-
-            elseif statBoost.stat == "radius" then
-                -- Handled by sc_projectile_scaling.lua using the
-                -- frozen chainstep level stored above.
-
-            elseif statBoost.stat == "missileCost" then
-                -- Handled by the missile payment below.
-
-            else
-                local base =
-                    projectile.damage[
-                        statBoost.stat
-                    ] or 0
-
-                projectile.damage[
-                    statBoost.stat
-                ] =
-                    base + boost * amount
-            end
-        end
-
-        -- Pay a Lua-controlled missile cost once
-        -- for the entire player volley.
-        local missileData =
-            get_chainstep_stat(
-                chainWeapon,
-                "missileCost"
-            )
-
-        if missileData
-            and weapon.iShipId == 0
-            and not wdata.missilePaid then
-
-            local ship =
-                Hyperspace.ships.player
-
-            if ship then
-                local missileCost =
-                    get_chainstep_missile_cost_from_level(
-                        missileData,
-                        boost
-                    )
-
-                if missileCost
-                    and missileCost > 0 then
-
-                    ship:ModifyMissileCount(
-                        -missileCost
+                    apply_chainstep_shots(
+                        currentWeapon,
+                        statBoost.amount or 1,
+                        level
                     )
                 end
-            end
+            }
+        )
 
-            wdata.missilePaid = true
+        if weapon.iShipId == 0 then
+            scaling.pay_missile_cost_once(
+                Hyperspace.ships.player,
+                weapon,
+                "chainstep",
+                boost,
+                wdata,
+                "missilePaid"
+            )
         end
     end
 )
@@ -668,8 +560,6 @@ local function get_unique_player_weapon(weaponName)
             and weapon.blueprint
             and weapon.blueprint.name == weaponName then
 
-            -- More than one matching weapon means the
-            -- hovered instance cannot be identified safely.
             if foundWeapon then
                 return nil
             end
@@ -691,7 +581,6 @@ local function get_tooltip_chainstep_level(weapon)
         "mods.sc.chainstep"
     )
 
-    -- Preserve the paid value while a volley is firing.
     if wdata.volleyActive
         and wdata.firingLevel ~= nil then
 
@@ -714,7 +603,6 @@ end
 script.on_internal_event(
     Defines.InternalEvents.WEAPON_STATBOX,
     function(bp, stats)
-
         local chainWeapon =
             chainstepWeaponList[
                 bp and bp.name
@@ -733,7 +621,9 @@ script.on_internal_event(
         local baseCost =
             math.max(
                 1,
-                math.floor(missileData.base or 1)
+                math.floor(
+                    missileData.base or 1
+                )
             )
 
         local amount =
@@ -753,7 +643,9 @@ script.on_internal_event(
             )
 
         local weapon =
-            get_unique_player_weapon(bp.name)
+            get_unique_player_weapon(
+                bp.name
+            )
 
         if weapon then
             local chainLevel =
@@ -762,7 +654,7 @@ script.on_internal_event(
                 )
 
             local currentCost =
-                get_chainstep_missile_cost_from_level(
+                scaling.calculate_missile_cost(
                     missileData,
                     chainLevel
                 )
