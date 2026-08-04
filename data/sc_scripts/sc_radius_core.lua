@@ -1,10 +1,7 @@
--- Test No. 6
+-- Test No. 7
 
 --[[
 SC radius core.
-
-This version uses sc_projectile_scaling.lua as the only weapon-radius
-calculation and weapon-modifier registry.
 
 Calculation order:
     1. Base radius.
@@ -12,27 +9,19 @@ Calculation order:
     3. Shared weapon modifiers such as artillery, pilot, and detector.
     4. Flat projectile-only radius deltas, summed and clamped once.
 
-Preview updates:
-    - SHIP_LOOP refreshes all ships while unpaused.
-    - MOUSE_CONTROL pre-render refreshes the player while paused or unpaused,
-      before the targeting cursor is drawn.
+SHIP_LOOP refreshes weapon.radius while unpaused. MOUSE_CONTROL pre-render
+also refreshes the player weapon radii while paused, before the targeting
+cursor is drawn.
 
-Projectile targeting preserves the proven Pre Radius Rebuild method: the
-existing FTL projectile target is used as the center and replaced once with a
-single randomized Hyperspace.Pointf. ComputeHeading is not called.
+Projectile targeting uses the existing FTL projectile target as the center and
+replaces it once with a randomized Hyperspace.Pointf. ComputeHeading is not
+called.
 ]]
 
 mods.sc = mods.sc or {}
 mods.sc.radius = mods.sc.radius or {}
 
-local userdata_table = mods.multiverse.userdata_table
 local vter = mods.multiverse.vter
-
-local CORE_STORAGE_KEY = "mods.sc.radiusCore"
-local CORE_TEST_NUMBER = 6
-
-mods.sc.radius.CORE_STORAGE_KEY = CORE_STORAGE_KEY
-mods.sc.radius.CORE_TEST_NUMBER = CORE_TEST_NUMBER
 
 mods.sc.radius.projectileRadiusDeltas =
     mods.sc.radius.projectileRadiusDeltas or {}
@@ -58,8 +47,8 @@ function mods.sc.radius.get_base_radius(weapon)
 end
 
 -- Projectile-only radius effects are flat additions or subtractions.
--- A callback returns one numeric delta and is never given an accumulated
--- radius. The core sums every delta and clamps the final result once.
+-- Each callback returns one numeric delta. The core sums all deltas and
+-- clamps the final result once.
 function mods.sc.radius.register_projectile_radius_delta(
     name,
     func
@@ -123,14 +112,6 @@ function mods.sc.radius.get_projectile_radius(
     return math.max(0, radius + totalDelta)
 end
 
-local function get_modifier_delta(calculation, modifierName)
-    local modifier = calculation
-        and calculation.weaponModifiers
-        and calculation.weaponModifiers[modifierName]
-
-    return modifier and modifier.delta or 0
-end
-
 local function refresh_dynamic_modifier_state(ship)
     if mods.sc.pilot
         and mods.sc.pilot.refresh_accuracy_bonus then
@@ -151,102 +132,22 @@ local function refresh_ship_weapon_radii(ship)
     refresh_dynamic_modifier_state(ship)
 
     for weapon in vter(weapons) do
-        local calculation =
-            mods.sc.scaling.get_weapon_preview_calculation(
+        local previewRadius =
+            mods.sc.scaling.get_weapon_preview_radius(
                 ship,
                 weapon
             )
 
-        if calculation
-            and type(calculation.previewRadius) == "number" then
-
-            weapon.radius = math.max(
-                0,
-                calculation.previewRadius
-            )
-        else
-            weapon.radius =
-                mods.sc.scaling.get_base_radius(weapon)
-        end
+        weapon.radius = math.max(
+            0,
+            previewRadius
+                or mods.sc.scaling.get_base_radius(weapon)
+        )
     end
 end
 
 mods.sc.radius.refresh_ship_weapon_radii =
     refresh_ship_weapon_radii
-
-local function store_applied_radius(
-    projectile,
-    calculation,
-    startingRadius,
-    finalRadius,
-    targetBefore,
-    targetAfter
-)
-    local data = userdata_table(
-        projectile,
-        CORE_STORAGE_KEY
-    )
-
-    data.testNumber = CORE_TEST_NUMBER
-    data.mode = "shared_radius"
-    data.baseRadius = calculation
-        and calculation.baseRadius
-        or nil
-    data.scalingRadius = calculation
-        and calculation.scalingRadius
-        or nil
-    data.weaponModifiedRadius = calculation
-        and calculation.startingRadius
-        or nil
-    data.pilotModifierDelta = get_modifier_delta(
-        calculation,
-        "pilot_accuracy"
-    )
-    data.detectorModifierDelta = get_modifier_delta(
-        calculation,
-        "sc_detector"
-    )
-    data.artilleryModifierDelta = get_modifier_delta(
-        calculation,
-        "chain_artillery"
-    )
-    data.hasStoredScaling = calculation
-        and calculation.hasStoredScaling
-        or false
-    data.hasScalingRadius = calculation
-        and calculation.hasScalingRadius
-        or false
-    data.startingRadius = startingRadius
-    data.finalRadius = finalRadius
-    data.projectileModifierDelta =
-        finalRadius - startingRadius
-
-    data.targetBeforeX = targetBefore
-        and targetBefore.x
-        or nil
-    data.targetBeforeY = targetBefore
-        and targetBefore.y
-        or nil
-    data.targetAfterX = targetAfter
-        and targetAfter.x
-        or nil
-    data.targetAfterY = targetAfter
-        and targetAfter.y
-        or nil
-
-    local dx = targetBefore
-        and targetAfter
-        and targetAfter.x - targetBefore.x
-        or 0
-    local dy = targetBefore
-        and targetAfter
-        and targetAfter.y - targetBefore.y
-        or 0
-
-    data.targetMovedDistance = math.sqrt(
-        dx * dx + dy * dy
-    )
-end
 
 script.on_internal_event(
     Defines.InternalEvents.SHIP_LOOP,
@@ -288,69 +189,42 @@ local function apply_projectile_radius(projectile, weapon)
 
     refresh_dynamic_modifier_state(ship)
 
-    local calculation =
-        mods.sc.scaling
-            .get_projectile_starting_radius_calculation(
-                projectile,
-                weapon
-            )
-
-    local startingRadius = calculation
-        and calculation.startingRadius
+    local startingRadius =
+        mods.sc.scaling.get_projectile_starting_radius(
+            projectile,
+            weapon
+        )
         or mods.sc.scaling.get_base_radius(weapon)
-
-    startingRadius = math.max(0, startingRadius)
 
     local finalRadius =
         mods.sc.radius.get_projectile_radius(
             ship,
             projectile,
             weapon,
-            startingRadius
+            math.max(0, startingRadius)
         )
 
-    local targetBefore = Hyperspace.Pointf(
+    if finalRadius <= 0 then
+        return
+    end
+
+    local targetCenter = Hyperspace.Pointf(
         projectile.target.x,
         projectile.target.y
     )
 
-    if finalRadius <= 0 then
-        store_applied_radius(
-            projectile,
-            calculation,
-            startingRadius,
-            finalRadius,
-            targetBefore,
-            targetBefore
-        )
-
-        return
-    end
-
     projectile.target = get_random_point_in_radius(
-        targetBefore,
+        targetCenter,
         finalRadius
-    )
-
-    store_applied_radius(
-        projectile,
-        calculation,
-        startingRadius,
-        finalRadius,
-        targetBefore,
-        projectile.target
     )
 end
 
-mods.sc.radius.apply_projectile_radius =
-    apply_projectile_radius
-
 local function register_projectile_radius_handler()
-    if mods.sc.radius._projectileApplyRegisteredTest6 then
+    if mods.sc.radius._projectileApplyRegistered then
         return
     end
 
-    mods.sc.radius._projectileApplyRegisteredTest6 = true
+    mods.sc.radius._projectileApplyRegistered = true
 
     script.on_internal_event(
         Defines.InternalEvents.PROJECTILE_FIRE,

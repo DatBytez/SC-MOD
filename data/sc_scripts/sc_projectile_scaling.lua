@@ -1,4 +1,4 @@
--- Test No. 5
+-- Test No. 6
 
 --[[
 Shared projectile-scaling and weapon-radius calculations.
@@ -17,11 +17,8 @@ weapon state for the targeting preview. Radius is calculated in this order:
     2. Chain, charge, and chainstep radius contributions.
     3. Registered weapon-radius modifiers in priority order.
 
-Projectile-only effects, such as HALO fake-projectile spread, remain in
-sc_radius_core.lua and are applied after the starting radius returned here.
-
-This is the only weapon-radius calculation and modifier registry. No legacy
-radius-core calculation or compatibility aliases remain.
+Projectile-only flat radius deltas are applied afterward by
+sc_radius_core.lua.
 ]]
 
 local userdata_table = mods.multiverse.userdata_table
@@ -33,7 +30,6 @@ local scaling = mods.sc.scaling
 
 local STORAGE_KEY = "mods.sc.projectileScaling"
 local WEAPON_DATA_KEY = "mods.sc.weaponStuff"
-local READER_VERSION = 5
 
 local SOURCE_ORDER = {
     "chain",
@@ -41,30 +37,8 @@ local SOURCE_ORDER = {
     "chainstep"
 }
 
-scaling.READER_VERSION = READER_VERSION
-scaling.STORAGE_KEY = STORAGE_KEY
-
-local function copy_table(source)
-    if type(source) ~= "table" then
-        return nil
-    end
-
-    local result = {}
-
-    for key, value in pairs(source) do
-        if type(value) == "table" then
-            result[key] = copy_table(value)
-        else
-            result[key] = value
-        end
-    end
-
-    return result
-end
-
 local function number_or_zero(value)
-    local number = tonumber(value)
-    return number or 0
+    return tonumber(value) or 0
 end
 
 local function clamp_radius(radius)
@@ -168,9 +142,7 @@ local function get_radius_amount(sourceName, weaponName)
     return find_radius_entry(definition)
 end
 
--- Returns a detached, normalized copy of the scaling metadata stored on a
--- projectile. Only sources that were stored by a weapon script are present.
-function scaling.get_projectile_data(projectile)
+local function get_projectile_data(projectile)
     local stored = read_storage(projectile)
 
     if not stored then
@@ -178,31 +150,33 @@ function scaling.get_projectile_data(projectile)
     end
 
     local data = {
-        readerVersion = READER_VERSION,
-        scalingVersion = stored.scalingVersion,
         weaponName = stored.weaponName
     }
 
     if stored.hasChain == true then
         data.chain = {
-            level = stored.chainLevel,
-            rawLevel = stored.chainRawLevel
+            level = math.max(
+                0,
+                number_or_zero(stored.chainLevel)
+            )
         }
     end
 
     if stored.hasCharge == true then
         data.charge = {
-            level = stored.chargeLevel,
-            storedShots = stored.chargeStoredShots,
-            weaponLevel = stored.chargeWeaponLevel
+            level = math.max(
+                0,
+                number_or_zero(stored.chargeLevel)
+            )
         }
     end
 
     if stored.hasChainstep == true then
         data.chainstep = {
-            level = stored.chainstepLevel,
-            liveLevel = stored.chainstepLiveLevel,
-            firingLevel = stored.chainstepFiringLevel
+            level = math.max(
+                0,
+                number_or_zero(stored.chainstepLevel)
+            )
         }
     end
 
@@ -210,48 +184,18 @@ function scaling.get_projectile_data(projectile)
 end
 
 function scaling.get_level(projectile, sourceName)
-    local data = scaling.get_projectile_data(projectile)
+    local data = get_projectile_data(projectile)
     local source = data and data[sourceName]
 
     return source and source.level or nil
 end
 
-function scaling.has_source(projectile, sourceName)
-    local data = scaling.get_projectile_data(projectile)
-    return data ~= nil and data[sourceName] ~= nil
-end
-
-function scaling.get_active_sources(projectile)
-    local data = scaling.get_projectile_data(projectile)
-    local result = {}
-
-    if not data then
-        return result
-    end
-
-    for _, sourceName in ipairs(SOURCE_ORDER) do
-        if data[sourceName] then
-            table.insert(result, sourceName)
-        end
-    end
-
-    return result
-end
-
-function scaling.get_source_data(projectile, sourceName)
-    local data = scaling.get_projectile_data(projectile)
-    return data and copy_table(data[sourceName]) or nil
-end
-
-local function calculate_source_contributions(
+local function calculate_source_radius(
     weaponName,
     baseRadius,
     getLevel
 )
-    local contributions = {}
-    local totalContribution = 0
-    local activeSourceCount = 0
-    local activeRadiusSourceCount = 0
+    local radius = baseRadius
 
     for _, sourceName in ipairs(SOURCE_ORDER) do
         local definition = get_source_definition(
@@ -269,108 +213,14 @@ local function calculate_source_contributions(
             weaponName
         )
 
-        local hasRadiusTag = amount ~= nil
-        local delta = 0
-
-        if active then
-            activeSourceCount = activeSourceCount + 1
+        if active and amount ~= nil then
+            radius = radius
+                + math.max(0, number_or_zero(level))
+                * amount
         end
-
-        if active and hasRadiusTag then
-            level = math.max(0, number_or_zero(level))
-            delta = level * amount
-            totalContribution = totalContribution + delta
-            activeRadiusSourceCount = activeRadiusSourceCount + 1
-        end
-
-        contributions[sourceName] = {
-            active = active,
-            level = active and math.max(0, number_or_zero(level)) or nil,
-            amount = amount,
-            delta = delta,
-            hasRadiusTag = hasRadiusTag
-        }
     end
 
-    local unclampedRadius = baseRadius + totalContribution
-
-    return {
-        baseRadius = baseRadius,
-        totalContribution = totalContribution,
-        unclampedRadius = unclampedRadius,
-        radius = clamp_radius(unclampedRadius),
-        activeSourceCount = activeSourceCount,
-        activeRadiusSourceCount = activeRadiusSourceCount,
-        hasStoredScaling = activeSourceCount > 0,
-        hasScalingRadius = activeRadiusSourceCount > 0,
-        contributions = contributions
-    }
-end
-
--- Calculates only the frozen C/Q/S radius for one fired projectile.
-function scaling.get_radius_calculation(projectile, weapon)
-    if not projectile or not weapon then
-        return nil
-    end
-
-    local projectileData = scaling.get_projectile_data(projectile)
-    local weaponName = get_weapon_name(projectileData, weapon)
-    local baseRadius = scaling.get_base_radius(weapon)
-
-    local calculation = calculate_source_contributions(
-        weaponName,
-        baseRadius,
-        function(sourceName)
-            local sourceData = projectileData
-                and projectileData[sourceName]
-                or nil
-
-            return sourceData ~= nil,
-                sourceData and sourceData.level or nil
-        end
-    )
-
-    calculation.calculatorVersion = READER_VERSION
-    calculation.scalingVersion = projectileData
-        and projectileData.scalingVersion
-        or nil
-    calculation.weaponName = weaponName
-    calculation.expectedRadius = calculation.radius
-    calculation.clampAdjustment =
-        calculation.radius - calculation.unclampedRadius
-    calculation.weaponRadius = type(weapon.radius) == "number"
-        and weapon.radius
-        or nil
-
-    return calculation
-end
-
-function scaling.get_expected_radius(projectile, weapon)
-    local calculation = scaling.get_radius_calculation(
-        projectile,
-        weapon
-    )
-
-    if not calculation then
-        return nil, nil
-    end
-
-    return calculation.expectedRadius, calculation
-end
-
-function scaling.get_radius_contribution(
-    projectile,
-    weapon,
-    sourceName
-)
-    local calculation = scaling.get_radius_calculation(
-        projectile,
-        weapon
-    )
-
-    return calculation
-        and copy_table(calculation.contributions[sourceName])
-        or nil
+    return clamp_radius(radius)
 end
 
 -- --------------------------------------------------------------------------
@@ -460,18 +310,6 @@ function scaling.has_weapon_radius_modifier(name)
     return weaponRadiusModifiers[name] ~= nil
 end
 
-function scaling.get_weapon_radius_modifier_names()
-    local result = {}
-
-    for _, name in ipairs(weaponRadiusModifierOrder) do
-        if weaponRadiusModifiers[name] then
-            table.insert(result, name)
-        end
-    end
-
-    return result
-end
-
 function scaling.apply_weapon_radius_modifiers(
     ship,
     weapon,
@@ -479,15 +317,11 @@ function scaling.apply_weapon_radius_modifiers(
     baseRadius
 )
     local radius = clamp_radius(startingRadius)
-    local results = {}
-    local errors = {}
 
     for _, name in ipairs(weaponRadiusModifierOrder) do
         local entry = weaponRadiusModifiers[name]
 
         if entry and entry.func then
-            local beforeRadius = radius
-
             local success, modifiedRadius = pcall(
                 entry.func,
                 ship,
@@ -496,35 +330,15 @@ function scaling.apply_weapon_radius_modifiers(
                 baseRadius
             )
 
-            if success then
-                if modifiedRadius ~= nil then
-                    if type(modifiedRadius) == "number" then
-                        radius = clamp_radius(modifiedRadius)
-                    else
-                        table.insert(
-                            errors,
-                            name .. ": non-number result"
-                        )
-                    end
-                end
-            else
-                table.insert(
-                    errors,
-                    name .. ": " .. tostring(modifiedRadius)
-                )
-            end
+            if success
+                and type(modifiedRadius) == "number" then
 
-            results[name] = {
-                beforeRadius = beforeRadius,
-                afterRadius = radius,
-                delta = radius - beforeRadius,
-                priority = entry.priority,
-                success = success
-            }
+                radius = clamp_radius(modifiedRadius)
+            end
         end
     end
 
-    return radius, results, errors
+    return radius
 end
 
 -- --------------------------------------------------------------------------
@@ -571,21 +385,6 @@ local function get_live_level(weapon, sourceName)
     return 0
 end
 
-function scaling.get_weapon_preview_level(weapon, sourceName)
-    if not weapon or not weapon.blueprint then
-        return nil
-    end
-
-    if not get_source_definition(
-        sourceName,
-        weapon.blueprint.name
-    ) then
-        return nil
-    end
-
-    return get_live_level(weapon, sourceName)
-end
-
 function scaling.get_weapon_preview_calculation(ship, weapon)
     if not weapon or not weapon.blueprint then
         return nil
@@ -594,46 +393,30 @@ function scaling.get_weapon_preview_calculation(ship, weapon)
     local weaponName = weapon.blueprint.name
     local baseRadius = scaling.get_base_radius(weapon)
 
-    local sourceCalculation = calculate_source_contributions(
+    local scalingRadius = calculate_source_radius(
         weaponName,
         baseRadius,
         function(sourceName, definition)
             return definition ~= nil,
-                definition and get_live_level(weapon, sourceName) or nil
+                definition and get_live_level(
+                    weapon,
+                    sourceName
+                ) or nil
         end
     )
 
-    local previewRadius, modifierResults, modifierErrors =
+    local previewRadius =
         scaling.apply_weapon_radius_modifiers(
             ship,
             weapon,
-            sourceCalculation.radius,
+            scalingRadius,
             baseRadius
         )
 
-    local weaponRadius = type(weapon.radius) == "number"
-        and weapon.radius
-        or nil
-
     return {
-        previewVersion = READER_VERSION,
-        weaponName = weaponName,
         baseRadius = baseRadius,
-        totalScalingContribution =
-            sourceCalculation.totalContribution,
-        scalingUnclampedRadius =
-            sourceCalculation.unclampedRadius,
-        scalingRadius = sourceCalculation.radius,
-        previewRadius = previewRadius,
-        contributions = sourceCalculation.contributions,
-        weaponModifiers = modifierResults,
-        weaponModifierOrder =
-            scaling.get_weapon_radius_modifier_names(),
-        modifierErrors = modifierErrors,
-        weaponRadius = weaponRadius,
-        displayDifference = weaponRadius ~= nil
-            and weaponRadius - previewRadius
-            or nil
+        scalingRadius = scalingRadius,
+        previewRadius = previewRadius
     }
 end
 
@@ -644,32 +427,15 @@ function scaling.get_weapon_preview_radius(ship, weapon)
     )
 
     if not calculation then
-        return nil, nil
+        return nil
     end
 
-    return calculation.previewRadius, calculation
-end
-
-function scaling.get_weapon_radius_modifier_contribution(
-    ship,
-    weapon,
-    modifierName
-)
-    local calculation = scaling.get_weapon_preview_calculation(
-        ship,
-        weapon
-    )
-
-    return calculation
-        and copy_table(
-            calculation.weaponModifiers[modifierName]
-        )
-        or nil
+    return calculation.previewRadius
 end
 
 -- Calculates the frozen starting radius for one fired projectile. C/Q/S use
 -- metadata already stored on the projectile. Weapon modifiers use the firing
--- ship's current state at the moment the radius core handles the shot.
+-- ship's current state when the radius core handles the shot.
 function scaling.get_projectile_starting_radius_calculation(
     projectile,
     weapon
@@ -678,50 +444,40 @@ function scaling.get_projectile_starting_radius_calculation(
         return nil
     end
 
-    local baseCalculation = scaling.get_radius_calculation(
-        projectile,
+    local projectileData = get_projectile_data(projectile)
+    local weaponName = get_weapon_name(
+        projectileData,
         weapon
     )
+    local baseRadius = scaling.get_base_radius(weapon)
 
-    if not baseCalculation then
-        return nil
-    end
+    local scalingRadius = calculate_source_radius(
+        weaponName,
+        baseRadius,
+        function(sourceName)
+            local sourceData = projectileData
+                and projectileData[sourceName]
+                or nil
+
+            return sourceData ~= nil,
+                sourceData and sourceData.level or nil
+        end
+    )
 
     local ship = Hyperspace.ships(projectile.ownerId)
 
-    local startingRadius, modifierResults, modifierErrors =
+    local startingRadius =
         scaling.apply_weapon_radius_modifiers(
             ship,
             weapon,
-            baseCalculation.expectedRadius,
-            baseCalculation.baseRadius
+            scalingRadius,
+            baseRadius
         )
 
     return {
-        calculatorVersion = READER_VERSION,
-        weaponName = baseCalculation.weaponName,
-        baseRadius = baseCalculation.baseRadius,
-        scalingRadius = baseCalculation.expectedRadius,
-        scalingUnclampedRadius =
-            baseCalculation.unclampedRadius,
-        totalScalingContribution =
-            baseCalculation.totalContribution,
-        contributions =
-            copy_table(baseCalculation.contributions),
-        hasStoredScaling =
-            baseCalculation.hasStoredScaling,
-        hasScalingRadius =
-            baseCalculation.hasScalingRadius,
-        activeSourceCount =
-            baseCalculation.activeSourceCount,
-        activeRadiusSourceCount =
-            baseCalculation.activeRadiusSourceCount,
-        startingRadius = startingRadius,
-        weaponModifiedRadius = startingRadius,
-        weaponModifiers = modifierResults,
-        weaponModifierOrder =
-            scaling.get_weapon_radius_modifier_names(),
-        modifierErrors = modifierErrors
+        baseRadius = baseRadius,
+        scalingRadius = scalingRadius,
+        startingRadius = startingRadius
     }
 end
 
@@ -735,9 +491,5 @@ function scaling.get_projectile_starting_radius(
             weapon
         )
 
-    if not calculation then
-        return nil, nil
-    end
-
-    return calculation.startingRadius, calculation
+    return calculation and calculation.startingRadius or nil
 end

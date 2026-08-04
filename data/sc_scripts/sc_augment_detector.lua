@@ -1,11 +1,10 @@
--- Test No. 2
+-- Test No. 3
 
 --[[
     This code is an almost direct copy of the MV advanced-sensors.lua.
     XML tag functionality was added for SC detector augments.
 
-    Test No. 2 keeps the existing detector accuracy and cloak-charge behavior.
-    Detector radius is registered only with the shared weapon-radius system.
+    Detector radius is registered with the shared weapon-radius system.
 ]]
 
 local vter = mods.multiverse.vter
@@ -13,7 +12,6 @@ local time_increment = mods.multiverse.time_increment
 
 mods.sc = mods.sc or {}
 mods.sc.detector = mods.sc.detector or {}
-mods.sc.detector.TEST_NUMBER = 2
 mods.sc.detectorAugments = mods.sc.detectorAugments or {}
 
 local detectorAugments = mods.sc.detectorAugments

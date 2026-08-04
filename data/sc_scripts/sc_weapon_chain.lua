@@ -1,4 +1,4 @@
--- Test No. 2
+-- Test No. 3
 
 local userdata_table = mods.multiverse.userdata_table
 
@@ -18,15 +18,11 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
 
     local boost = math.max(0, weapon.boostLevel or 0)
 
-    -- Store the exact chain level used by this projectile so a later
-    -- shared scaling script can apply projectile effects independently
-    -- of the weapon's live boost level.
+    -- Freeze the chain level used by this projectile.
     local pdata = userdata_table(projectile, "mods.sc.projectileScaling")
-    pdata.scalingVersion = 1
     pdata.weaponName = weapon.blueprint.name
     pdata.hasChain = true
     pdata.chainLevel = boost
-    pdata.chainRawLevel = weapon.boostLevel or 0
 
     for _, statBoost in ipairs(statBoosts) do
         local amount = statBoost.amount or 1

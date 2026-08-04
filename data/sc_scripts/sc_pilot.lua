@@ -1,4 +1,4 @@
--- Test No. 4
+-- Test No. 5
 
 mods.sc_accuracy = mods.sc_accuracy or {}
 mods.sc_accuracy.dodgeToAccuracy = mods.sc_accuracy.dodgeToAccuracy or {
@@ -8,7 +8,6 @@ mods.sc_accuracy.dodgeToAccuracy = mods.sc_accuracy.dodgeToAccuracy or {
 
 mods.sc = mods.sc or {}
 mods.sc.pilot = mods.sc.pilot or {}
-mods.sc.pilot.TEST_NUMBER = 4
 
 local PILOT_AUGMENT = "TERRAN_SHIP_ARMOR_LIGHT"
 local PILOT_SYSTEM_ID = 6
