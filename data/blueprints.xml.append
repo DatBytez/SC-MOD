@@ -2658,5 +2658,4 @@ TERRAN_GOLIATH-->
 	<crewCount amount="1" class="terran_marine" />
 	<crewCount amount="1" class="terran_marine" />
 	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
-	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
 </shipBlueprint>
