@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+*********************************************************************************************************
+      terran_scv
+*********************************************************************************************************
+-->
+<animSheet name="terran_scv" w="315" h="455" fw="35" fh="35">people/terran_scv_base.png</animSheet>
+<anim name="terran_scv_clone">
+	<sheet>terran_scv</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.75</time>
+</anim>
+<animSheet name="explosion_terran_scv_death" w="640" h="64" fw="64" fh="64">effects/explosion_firebat_death.png</animSheet>
+<anim name="terran_scv_death_right">
+	<sheet>explosion_terran_scv_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_death_right">
+	<sheet>explosion_terran_scv_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_death_left">
+	<sheet>terran_scv</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_power_down">
+	<sheet>terran_scv</sheet>
+	<desc length="2" x="0" y="6"/>
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_power_up">
+	<sheet>terran_scv</sheet>
+	<desc length="3" x="1" y="6"/>
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_walk_down">
+	<sheet>terran_scv</sheet>
+	<desc length="8" x="0" y="3" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_walk_right">
+	<sheet>terran_scv</sheet>
+	<desc length="8" x="0" y="4" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_walk_up">
+	<sheet>terran_scv</sheet>
+	<desc length="8" x="0" y="5" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_walk_left">
+	<sheet>terran_scv</sheet>
+	<desc length="8" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_shoot_down">
+	<sheet>terran_scv</sheet>
+	<desc length="3" x="0" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_shoot_right">
+	<sheet>terran_scv</sheet>
+	<desc length="3" x="3" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_shoot_up">
+	<sheet>terran_scv</sheet>
+	<desc length="3" x="0" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_shoot_left">
+	<sheet>terran_scv</sheet>
+	<desc length="3" x="3" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_fire_down">
+	<sheet>terran_scv</sheet>
+	<desc length="4" x="0" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_fire_right">
+	<sheet>terran_scv</sheet>
+	<desc length="4" x="4" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_fire_up">
+	<sheet>terran_scv</sheet>
+	<desc length="4" x="0" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_fire_left">
+	<sheet>terran_scv</sheet>
+	<desc length="4" x="4" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_repair">
+	<sheet>terran_scv</sheet>
+	<desc length="3" x="0" y="6" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_punch_up">
+	<sheet>terran_scv</sheet>
+	<desc length="4" x="0" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_punch_down">
+	<sheet>terran_scv</sheet>
+	<desc length="4" x="4" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_teleport">
+	<sheet>terran_scv</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_scv_type_right">
+	<sheet>terran_scv</sheet>
+	<desc length="2" x="4" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_type_left">
+	<sheet>terran_scv</sheet>
+	<desc length="2" x="6" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_type_up">
+	<sheet>terran_scv</sheet>
+	<desc length="2" x="0" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_type_down">
+	<sheet>terran_scv</sheet>
+	<desc length="2" x="2" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_portrait">
+	<sheet>terran_scv</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
+<!--
+*********************************************************************************************************
+      TERRAN_SCV_HULL (This code is probably not necessary)
+*********************************************************************************************************
+-->
+<animSheet name="terran_scv_hull" w="315" h="455" fw="35" fh="35">ship/drones/terran_scv_hull_base.png</animSheet>
+<anim name="terran_scv_hull_clone">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_hull_death_right">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_hull_death_left">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_hull_walk_down">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="8" x="0" y="3" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_walk_right">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="8" x="0" y="4" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_walk_up">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="8" x="0" y="5" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_walk_left">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="8" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_shoot_down">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="3" x="0" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_shoot_right">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="3" x="3" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_shoot_up">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="3" x="0" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_shoot_left">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="3" x="3" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_fire_down">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="4" x="0" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_fire_right">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="4" x="4" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_fire_up">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="4" x="0" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_fire_left">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="4" x="4" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_repair">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="3" x="0" y="6" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_punch_up">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="4" x="0" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_punch_down">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="4" x="4" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_scv_hull_teleport">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_scv_hull_type_right">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="2" x="4" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_hull_type_left">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="2" x="6" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_hull_type_up">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="2" x="0" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_hull_type_down">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="2" x="2" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_scv_hull_portrait">
+	<sheet>terran_scv_hull</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>

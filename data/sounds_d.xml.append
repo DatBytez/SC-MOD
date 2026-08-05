@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<FTL>
+	<!-- Copyright (c) 2012 by Subset Games. All rights reserved -->
+	<!-- Crew Sounds -->
+	<terran_marine_attack volume="5">crew/terran_marine_attack.wav</terran_marine_attack>
+	<terran_marine_death volume="5">crew/terran_marine_death.wav</terran_marine_death>
+	<terran_marine_death2 volume="5">crew/terran_marine_death2.wav</terran_marine_death2>
+	<terran_medic_death volume="5">crew/terran_medic_death.wav</terran_medic_death>
+	<terran_ghost_attack volume="5">crew/terran_ghost_attack.wav</terran_ghost_attack>
+	<terran_ghost_death volume="5">crew/terran_ghost_death.wav</terran_ghost_death>
+	<terran_ghost_death2 volume="5">crew/terran_ghost_death2.wav</terran_ghost_death2>
+	<terran_firebat_death volume="5">crew/terran_firebat_death.wav</terran_firebat_death>
+	<terran_firebat_death2 volume="5">crew/terran_firebat_death2.wav</terran_firebat_death2>
+	<terran_firebat_death3 volume="5">crew/terran_firebat_death3.wav</terran_firebat_death3>
+	<terran_firebat_attack1 volume="3">crew/terran_firebat_attack1.wav</terran_firebat_attack1>
+	<terran_firebat_attack2 volume="3">crew/terran_firebat_attack2.wav</terran_firebat_attack2>
+	<terran_civilian_death volume="5">crew/terran_civilian_death.wav</terran_civilian_death>
+	<terran_scv_death volume="5">crew/terran_scv_death.wav</terran_scv_death>
+	<terran_scv_launch volume="5">crew/terran_scv_launch.wav</terran_scv_launch>
+	<terran_goliath_death volume="5">crew/terran_scv_death.wav</terran_goliath_death>
+	<terran_spider_death volume="6">crew/terran_spider_death.wav</terran_spider_death>
+	<terran_spider_run volume="5">crew/terran_spider_run.wav</terran_spider_run>
+	<terran_spider_set volume="5">crew/terran_spider_set.wav</terran_spider_set>
+	<!-- Crew Ability Sounds -->
+	<ability_stimpack1 volume="4">crew/ability_stimpack1.wav</ability_stimpack1>
+	<ability_stimpack2 volume="4">crew/ability_stimpack2.wav</ability_stimpack2>
+	<ability_flashbang volume="6">crew/ability_flashbang.wav</ability_flashbang>
+	<ability_heal volume="4">crew/ability_heal.wav</ability_heal>
+	<ability_repair1 volume="4">crew/terran_scv_repair1.wav</ability_repair1>
+	<ability_repair2 volume="4">crew/terran_scv_repair2.wav</ability_repair2>
+	<ability_repair3 volume="4">crew/terran_scv_repair3.wav</ability_repair3>
+	<ability_repair4 volume="4">crew/terran_scv_repair4.wav</ability_repair4>
+	<ability_repair5 volume="4">crew/terran_scv_repair5.wav</ability_repair5>
+	<!-- Drone Sounds -->
+	<terran_matrix_activate volume="6">drone/terran_matrix_activate.wav</terran_matrix_activate>
+	<terran_defense_activate volume="6">drone/terran_matrix_activate.wav</terran_defense_activate>
+	<terran_scv_hull_repair1 volume="6">drone/terran_scv_hull_repair1.wav</terran_scv_hull_repair1>	
+	<terran_scv_hull_repair2 volume="6">drone/terran_scv_hull_repair2.wav</terran_scv_hull_repair2>
+	<!-- Weapoon Sounds -->
+	<weapon_yamato_launch volume="7">ship/weapon_yamato_launch.wav</weapon_yamato_launch>
+	<weapon_yamato_hit1 volume="6">ship/weapon_yamato_hit1.wav</weapon_yamato_hit1>
+	<weapon_yamato_hit2 volume="6">ship/weapon_yamato_hit2.wav</weapon_yamato_hit2>
+	<weapon_yamato_hit3 volume="6">ship/weapon_yamato_hit3.wav</weapon_yamato_hit3>
+	<weapon_25mm_fire1 volume="5">ship/weapon_25mm_fire1.wav</weapon_25mm_fire1>
+	<weapon_25mm_fire2 volume="5">ship/weapon_25mm_fire2.wav</weapon_25mm_fire2>
+	<weapon_40mm_fire volume="5">ship/weapon_40mm_fire.wav</weapon_40mm_fire>
+	<weapon_burst_fire volume="5">ship/weapon_burst_fire.wav</weapon_burst_fire>
+	<weapon_gemini_fire volume="5">ship/weapon_gemini_fire.wav</weapon_gemini_fire>
+	<weapon_gemini_target volume="3">ship/weapon_gemini_target.wav</weapon_gemini_target>
+	<weapon_laser_hit1 volume="5">ship/weapon_laser_hit1.wav</weapon_laser_hit1>
+	<weapon_laser_hit2 volume="5">ship/weapon_laser_hit2.wav</weapon_laser_hit2>
+	<weapon_laser_hit3 volume="5">ship/weapon_laser_hit3.wav</weapon_laser_hit3>
+	
+</FTL>
+

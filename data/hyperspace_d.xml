@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<!--
+*********************************************************************************************************
+  TERRAN SCV
+*********************************************************************************************************
+-->
+	<race name="terran_scv">
+		<crewSlots>0</crewSlots>
+		<noSlot>true</noSlot>
+		<noClone>true</noClone>
+		<selectable>true</selectable>
+		<controllable>true</controllable>
+		<canFight>true</canFight>
+		<canRepair>true</canRepair>
+		<canSabotage>true</canSabotage>
+		<canSuffocate>true</canSuffocate>
+		<canMan>false</canMan>
+		<maxHealth>50</maxHealth>
+		<stunMultiplier>0.25</stunMultiplier>
+		<droneAI>
+			<repairAI />
+			<returnToDroneRoom />
+			<manAI/>
+			<fightAI/>
+		</droneAI>
+		<repairSpeed>2.5</repairSpeed>
+		<animBase>human</animBase>
+		<hasCustomDeathAnimation>true</hasCustomDeathAnimation>
+		<suffocationModifier>0.1</suffocationModifier>
+		<fireDamageMultiplier>0.4</fireDamageMultiplier>
+		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
+		<fireRepairMultiplier>1.8</fireRepairMultiplier>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+		<deathSounds>
+			<deathSound>terran_scv_death</deathSound>
+		</deathSounds>
+		<powerEffect name="LAUNCH_REPAIR">
+			<cooldown>0.5</cooldown>
+			<!--<activateWhenReady enemiesOnly="true">true</activateWhenReady>-->
+			<buttonText>REPAIR HULL</buttonText>
+			<tooltip>[READY]&#xD;&#xD;
+				Repair a portion of the ships hull at the cost of an SCV.</tooltip>
+			<cooldownColor r="255" g="78" b="69" />
+			<effectAnim>explosion_big1_heal</effectAnim>
+			<transformRace health="0" deathSound="false">terran_scv_hull</transformRace>
+			<selfHealth>-999.0</selfHealth>
+		</powerEffect>
+		<powerEffect load="Repair"/>
+	</race>
+	<!-- *************
+	TERRAN_SCV_HULL
+	****************** -->
+	<race name="terran_scv_hull" drone="REPAIR_HULL">
+		<crewSlots>0</crewSlots>
+		<noSlot>true</noSlot>
+		<noClone>true</noClone>
+		
+		<deathSounds>
+			<deathSound>terran_scv_launch</deathSound>
+		</deathSounds>
+		<powerEffect name="Swap">
+			<cooldown>0</cooldown>
+			<req type="enemy">
+				<minHealth>100</minHealth>
+			</req>
+			<req type="player">
+				<minHealth>100</minHealth>
+			</req>
+			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
+			<transformRace>terran_scv</transformRace>
+		</powerEffect>
+		<powerEffect name="Die">
+			<cooldown>0</cooldown>
+			<req type="enemy">
+				<maxHealth>50</maxHealth>
+			</req>
+			<req type="player">
+				<maxHealth>50</maxHealth>
+			</req>
+			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
+			<selfHealth>-999.0</selfHealth>
+		</powerEffect>
+
+	</race>
