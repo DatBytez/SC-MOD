@@ -1,13 +1,28 @@
+-- Test No. 5
+
 mods.sc_accuracy = mods.sc_accuracy or {}
 mods.sc_accuracy.dodgeToAccuracy = mods.sc_accuracy.dodgeToAccuracy or {
     [0] = 0,
     [1] = 0
 }
 
+mods.sc = mods.sc or {}
+mods.sc.pilot = mods.sc.pilot or {}
+
 local PILOT_AUGMENT = "TERRAN_SHIP_ARMOR_LIGHT"
 local PILOT_SYSTEM_ID = 6
 local RADIUS_PER_ACCURACY = 1.5
 local MIN_RADIUS = 1
+
+local dodgeRefreshInProgress = {
+    [0] = false,
+    [1] = false
+}
+
+local dodgeEventSerial = {
+    [0] = 0,
+    [1] = 0
+}
 
 local function has_pilot_augment(ship)
     return ship
@@ -15,87 +30,207 @@ local function has_pilot_augment(ship)
 end
 
 local function piloting_manned(ship)
-    return ship
-        and ship:GetSystem(PILOT_SYSTEM_ID).bManned
+    local piloting =
+        ship and ship:GetSystem(PILOT_SYSTEM_ID)
+
+    return piloting and piloting.bManned or false
 end
 
-mods.sc.radius.register_modifier("pilot_accuracy", function(ship, weapon, radius, baseRadius)
+local function pilot_effect_active(ship)
+    local shipId = ship and ship.iShipId
+
+    return shipId ~= nil
+        and mods.sc_pilot_button
+        and mods.sc_pilot_button.activated
+        and mods.sc_pilot_button.activated[shipId]
+        and has_pilot_augment(ship)
+        and piloting_manned(ship)
+end
+
+local function update_accuracy_bonus_from_dodge(ship, dodge)
+    if not ship then
+        return 0
+    end
+
+    local shipId = ship.iShipId or 0
+
+    if not pilot_effect_active(ship) then
+        mods.sc_accuracy.dodgeToAccuracy[shipId] = 0
+        return 0
+    end
+
+    local effectiveDodge = dodge or 0
+
+    if ship.cloakSystem
+        and ship.cloakSystem.bTurnedOn then
+
+        effectiveDodge = effectiveDodge + 60
+    end
+
+    local removedAmount =
+        math.floor(effectiveDodge / 2)
+
+    mods.sc_accuracy.dodgeToAccuracy[shipId] =
+        removedAmount
+
+    return removedAmount
+end
+
+-- Refreshes the pilot accuracy value immediately, including while paused.
+-- ShipManager:GetDodgeFactor() invokes GET_DODGE_FACTOR, so this uses the
+-- same dodge source and cloak handling as the normal unpaused calculation.
+local function refresh_accuracy_bonus(ship)
+    if not ship then
+        return 0
+    end
+
+    local shipId = ship.iShipId or 0
+
+    if not pilot_effect_active(ship) then
+        mods.sc_accuracy.dodgeToAccuracy[shipId] = 0
+        return 0
+    end
+
+    if dodgeRefreshInProgress[shipId] then
+        return mods.sc_accuracy.dodgeToAccuracy[shipId] or 0
+    end
+
+    dodgeRefreshInProgress[shipId] = true
+
+    local serialBefore =
+        dodgeEventSerial[shipId] or 0
+
+    local success, dodge = pcall(
+        function()
+            return ship:GetDodgeFactor()
+        end
+    )
+
+    dodgeRefreshInProgress[shipId] = false
+
+    -- GetDodgeFactor normally invokes the event below, which already writes
+    -- the value using the exact event dodge input. Only use the returned value
+    -- as a fallback if the event was not invoked for some reason.
+    if success
+        and type(dodge) == "number"
+        and (dodgeEventSerial[shipId] or 0)
+            == serialBefore then
+
+        update_accuracy_bonus_from_dodge(
+            ship,
+            dodge
+        )
+    end
+
+    return mods.sc_accuracy.dodgeToAccuracy[shipId] or 0
+end
+
+mods.sc.pilot.refresh_accuracy_bonus =
+    refresh_accuracy_bonus
+
+-- The shared scaling system uses this function for both live preview and
+-- the fired projectile starting radius.
+local function apply_pilot_radius_modifier(
+    ship,
+    weapon,
+    radius,
+    baseRadius
+)
     local shipId = ship and ship.iShipId
     if shipId == nil then
         return radius
     end
 
-    local active = mods.sc_pilot_button
-        and mods.sc_pilot_button.activated
-        and mods.sc_pilot_button.activated[shipId]
-
-    if not active
-        or not has_pilot_augment(ship)
-        or not piloting_manned(ship) then
+    if not pilot_effect_active(ship) then
         return radius
     end
 
-    local accuracyBonus = mods.sc_accuracy.dodgeToAccuracy[shipId] or 0
+    local accuracyBonus =
+        mods.sc_accuracy.dodgeToAccuracy[shipId]
+        or 0
+
     if accuracyBonus <= 0 then
         return radius
     end
 
-    return math.max(MIN_RADIUS, radius - accuracyBonus * RADIUS_PER_ACCURACY)
-end)
+    return math.max(
+        MIN_RADIUS,
+        radius
+            - accuracyBonus
+            * RADIUS_PER_ACCURACY
+    )
+end
 
-script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projectile, weapon)
-    if not projectile or not projectile.extend or not projectile.extend.customDamage then return end
+mods.sc.pilot.apply_radius_modifier =
+    apply_pilot_radius_modifier
 
-    local ship = Hyperspace.ships(projectile.ownerId)
-    if not ship then return end
+-- Shared scaling loads before this file, so registration is immediate.
+mods.sc.scaling.register_weapon_radius_modifier(
+    "pilot_accuracy",
+    apply_pilot_radius_modifier,
+    100
+)
 
-    local shipId = projectile.ownerId or 0
-    if not (
-        mods.sc_pilot_button
-        and mods.sc_pilot_button.activated
-        and mods.sc_pilot_button.activated[shipId]
-        and has_pilot_augment(ship)
-        and piloting_manned(ship)
-    ) then
-        mods.sc_accuracy.dodgeToAccuracy[shipId] = 0
-        return
-    end
-
-    local accuracyBonus = mods.sc_accuracy.dodgeToAccuracy[shipId] or 0
-    projectile.extend.customDamage.accuracyMod =
-        projectile.extend.customDamage.accuracyMod + accuracyBonus
-
-    local mult = 1.0 + (accuracyBonus * 0.01)
-    local speedX, speedY = projectile.speed.x, projectile.speed.y
-    projectile.speed = Hyperspace.Pointf(speedX * mult, speedY * mult)
-    projectile.speed_magnitude = projectile.speed_magnitude * mult
-end)
-
-script.on_internal_event(Defines.InternalEvents.GET_DODGE_FACTOR, function(shipMgr, dodge)
-    if not shipMgr then
-        return Defines.Chain.CONTINUE, dodge
-    end
-
-    local shipId = shipMgr.iShipId or 0
-
-    if mods.sc_pilot_button
-        and mods.sc_pilot_button.activated
-        and mods.sc_pilot_button.activated[shipId]
-        and has_pilot_augment(shipMgr)
-        and piloting_manned(shipMgr) then
-
-        local effectiveDodge = dodge
-
-        if shipMgr.cloakSystem and shipMgr.cloakSystem.bTurnedOn then
-            effectiveDodge = effectiveDodge + 60
+script.on_internal_event(
+    Defines.InternalEvents.PROJECTILE_FIRE,
+    function(projectile, weapon)
+        if not projectile
+            or not projectile.extend
+            or not projectile.extend.customDamage then
+            return
         end
 
-        local removedAmount = math.floor(effectiveDodge / 2)
-        mods.sc_accuracy.dodgeToAccuracy[shipId] = removedAmount
-        --dodge = dodge - removedAmount
-    else
-        mods.sc_accuracy.dodgeToAccuracy[shipId] = 0
-    end
+        local ship =
+            Hyperspace.ships(projectile.ownerId)
 
-    return Defines.Chain.CONTINUE, dodge
-end)
+        if not ship then return end
+
+        local shipId = projectile.ownerId or 0
+
+        if not pilot_effect_active(ship) then
+            mods.sc_accuracy.dodgeToAccuracy[shipId] = 0
+            return
+        end
+
+        local accuracyBonus =
+            refresh_accuracy_bonus(ship)
+
+        projectile.extend.customDamage.accuracyMod =
+            projectile.extend.customDamage.accuracyMod
+            + accuracyBonus
+
+        local mult = 1.0 + (accuracyBonus * 0.01)
+        local speedX = projectile.speed.x
+        local speedY = projectile.speed.y
+
+        projectile.speed = Hyperspace.Pointf(
+            speedX * mult,
+            speedY * mult
+        )
+
+        projectile.speed_magnitude =
+            projectile.speed_magnitude * mult
+    end
+)
+
+script.on_internal_event(
+    Defines.InternalEvents.GET_DODGE_FACTOR,
+    function(shipMgr, dodge)
+        if not shipMgr then
+            return Defines.Chain.CONTINUE, dodge
+        end
+
+        local shipId = shipMgr.iShipId or 0
+
+        dodgeEventSerial[shipId] =
+            (dodgeEventSerial[shipId] or 0) + 1
+
+        update_accuracy_bonus_from_dodge(
+            shipMgr,
+            dodge
+        )
+
+        -- dodge = dodge - removedAmount
+        return Defines.Chain.CONTINUE, dodge
+    end
+)
