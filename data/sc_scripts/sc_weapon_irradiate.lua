@@ -1,9 +1,11 @@
 -- Irradiate chainstep effect scaling.
 --
--- The original TERRAN_BEAM_IRRADIATE erosion and crew effects remain
--- unchanged. Each newly struck beam tile receives one additional hidden
--- impact selected from the frozen chainstep level stored on the beam
--- projectile.
+-- Weapons opt into this script with:
+--
+--     <sc-irradiate/>
+--
+-- Each newly struck beam tile receives one additional hidden impact selected
+-- from the frozen chainstep level stored on the beam projectile.
 --
 -- Each hidden impact applies:
 --     1. Bonus native erosion.
@@ -14,17 +16,17 @@
 -- Chainstep level 2: SC_IRRADIATE_EROSION_BONUS_3
 -- Chainstep level 3: SC_IRRADIATE_EROSION_BONUS_4
 -- Chainstep level 4+: SC_IRRADIATE_EROSION_BONUS_5
---
--- Load after:
---     sc_projectile_scaling.lua
---     sc_weapon_chainstep.lua
 
 mods.sc = mods.sc or {}
 mods.sc.irradiate = mods.sc.irradiate or {}
+mods.sc.irradiateWeapons = mods.sc.irradiateWeapons or {}
 
-local IRRADIATE_WEAPONS = {
-    TERRAN_BEAM_IRRADIATE = true
-}
+local irradiateWeapons = mods.sc.irradiateWeapons
+
+mods.sc.tag.register_flag_tag(
+    "sc-irradiate",
+    irradiateWeapons
+)
 
 local EFFECT_BLUEPRINT_BY_LEVEL = {
     [0] = "SC_IRRADIATE_EROSION_BONUS_1",
@@ -36,10 +38,7 @@ local EFFECT_BLUEPRINT_BY_LEVEL = {
 
 local MAX_EFFECT_LEVEL = 4
 
-local function get_room_center(
-    shipId,
-    location
-)
+local function get_room_center(shipId, location)
     local roomId =
         Hyperspace.ShipGraph
             .GetShipInfo(shipId)
@@ -59,16 +58,17 @@ local function get_room_center(
     )
 end
 
-local function get_effect_blueprint_name(
-    projectile
-)
+local function get_effect_blueprint_name(projectile)
     if not projectile
         or not projectile.extend
-        or not projectile.extend.name
-        or not IRRADIATE_WEAPONS[
-            projectile.extend.name
-        ] then
+        or not projectile.extend.name then
 
+        return nil
+    end
+
+    local weaponName = projectile.extend.name
+
+    if not irradiateWeapons[weaponName] then
         return nil
     end
 
@@ -86,9 +86,7 @@ local function get_effect_blueprint_name(
 
     level = math.max(
         0,
-        math.floor(
-            tonumber(level) or 0
-        )
+        math.floor(tonumber(level) or 0)
     )
 
     level = math.min(
@@ -155,8 +153,7 @@ script.on_internal_event(
     )
         if not shipManager
             or not projectile
-            or beamHitType
-                == Defines.BeamHit.SAME_TILE then
+            or beamHitType == Defines.BeamHit.SAME_TILE then
 
             return Defines.Chain.CONTINUE,
                 beamHitType

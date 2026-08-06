@@ -505,9 +505,9 @@
 
 <weaponBlueprint name="TERRAN_LASER_BATTERY_HEAVY_1">
 	<type>LASER</type>
+	<tip>tip_laser</tip>
 	<title id="weapon_TERRAN_LASER_BATTERY_HEAVY_1_title"/>
 	<short id="weapon_TERRAN_LASER_BATTERY_HEAVY_1_short"/>
-	<tip>tip_laser</tip>
 	<desc id="weapon_TERRAN_LASER_BATTERY_HEAVY_1_desc"/>
 	<tooltip id="weapon_TERRAN_LASER_BATTERY_HEAVY_1_tooltip"/>
 	<damage>2</damage>
@@ -522,7 +522,11 @@
     <sc-chainstep stat="accuracyMod" amount="45"/>
     <sc-chainstep stat="radius" amount="-30"/>
     <sc-chainstep stat="breachChance" amount="2"/>
-
+	<boost>
+		<type>cooldown</type>
+		<amount>1.0</amount>
+		<count>3</count>
+	</boost>
 	<sc_battery group="terran_battery"/>
 	<simultaneousFire>true</simultaneousFire>
 	<cost>70</cost>
@@ -597,6 +601,56 @@
 </weaponBlueprint>
 
 <weaponBlueprint name="TERRAN_LASER_BATTERY_HEAVY_2">
+	<type>LASER</type>
+	<tip>tip_laser</tip>
+	<title id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_title"/>
+	<short id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_short"/>
+	<desc id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_desc"/>
+	<tooltip id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_tooltip"/>
+	<damage>2</damage>
+	<shots>2</shots>
+	<power>3</power>	
+	<cooldown>13.5</cooldown>
+	<accuracyMod>-40</accuracyMod>
+	<radius>65</radius>
+
+	<sc-chainstep fireThreshold="8.5" chainStep="3.0" maxSteps="2"/>
+    <sc-chainstep stat="accuracyMod" amount="45"/>
+    <sc-chainstep stat="radius" amount="-20"/>
+    <sc-chainstep stat="breachChance" amount="2"/>
+	<boost>
+		<type>cooldown</type>
+		<amount>1.0</amount>
+		<count>3</count>
+	</boost>
+
+	<sc_battery group="terran_battery"/>
+	<simultaneousFire>true</simultaneousFire>
+	<cost>95</cost>
+	<rarity>4</rarity>
+	<launchSounds>
+		<sound>weapon_burst_fire</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>weapon_laser_hit1</sound>
+		<sound>weapon_laser_hit2</sound>
+		<sound>weapon_laser_hit3</sound>
+	</hitShipSounds>
+	<hitShieldSounds>
+		<sound>hitShield1</sound>
+		<sound>hitShield2</sound>
+		<sound>hitShield3</sound>
+	</hitShieldSounds>
+	<missSounds>
+		<sound>miss</sound> 
+	</missSounds>
+	<image>terran_laser_battery_heavy_projectile</image>
+	<explosion>terran_laser_battery_heavy_hit</explosion>
+	<weaponArt>terran_laser_battery_heavy_2</weaponArt> 
+	<iconImage>laser_charge2</iconImage>
+</weaponBlueprint>
+
+<weaponBlueprint name="TERRAN_LASER_BATTERY_HEAVY_OLD_2">
 	<type>LASER</type>
 	<tip>tip_laser</tip>
 	<title id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_title"/>
@@ -1520,12 +1574,13 @@
 	<tooltipOverride id="weapon_TERRAN_BEAM_IRRADIATE_tooltip"></tooltipOverride>
 	<tooltip>tip_bio_weapon</tooltip>
 	<damage>1</damage>
+	<sc-irradiate/>
 	<bio-weapon/>
 	<rust-weapon/>
 	<persDamage>0</persDamage>
 	<sysDamage>0</sysDamage>
 	<breachChance>2</breachChance>
-	<cooldown>28</cooldown>
+	<cooldown>18</cooldown>
 	<sc-chainstep fireThreshold="6" chainStep="3.0"/>
 	<speed>1</speed> <!--<speed>10</speed>-->
 	<length>1</length> <!--<length>50</length>-->
@@ -1536,7 +1591,51 @@
 	<boost>
 		<type>damage</type>
 		<amount>1</amount>
-		<count>6</count>
+		<count>4</count>
+	</boost>
+	<launchSounds>
+		<sound>beam1</sound>
+		<sound>beam1_2</sound>
+	</launchSounds>
+	<color>
+		<r>200</r>
+		<g>255</g>
+		<b>200</b>
+	</color>
+	<weaponArt>terran_irradiate</weaponArt>
+	<iconImage>beam</iconImage>
+	<image>beam_contact</image>
+</weaponBlueprint>
+
+<weaponBlueprint name="TERRAN_BEAM_IRRADIATE_LITE">
+	<type>BEAM</type>
+	<flavorType>Pinpoint</flavorType>
+	<tip>tip_focus</tip>
+	<title id="weapon_TERRAN_BEAM_IRRADIATE_LITE_title"></title>
+	<short id="weapon_TERRAN_BEAM_IRRADIATE_LITE_short"></short>
+	<desc>...</desc>
+	<descriptionOverride id="weapon_TERRAN_BEAM_IRRADIATE_LITE_desc"></descriptionOverride>
+	<tooltipOverride id="weapon_TERRAN_BEAM_IRRADIATE_LITE_tooltip"></tooltipOverride>
+	<tooltip>tip_bio_weapon</tooltip>
+	<damage>1</damage>
+	<sc-irradiate/>
+	<bio-weapon/>
+	<rust-weapon/>
+	<persDamage>0</persDamage>
+	<sysDamage>0</sysDamage>
+	<breachChance>2</breachChance>
+	<cooldown>10</cooldown>
+	<sc-chainstep fireThreshold="5" chainStep="2.5"/>
+	<speed>1</speed> <!--<speed>10</speed>-->
+	<length>1</length> <!--<length>50</length>-->
+	<mv-aiCrewTarget>MOST_CREW</mv-aiCrewTarget>
+	<power>2</power>
+	<cost>65</cost>
+	<rarity>3</rarity>
+	<boost>
+		<type>damage</type>
+		<amount>1</amount>
+		<count>3</count>
 	</boost>
 	<launchSounds>
 		<sound>beam1</sound>
@@ -1561,8 +1660,10 @@
     <desc>Hidden Irradiate chainstep effect.</desc>
     <tooltip>Hidden Irradiate chainstep effect.</tooltip>
 
+	<sp>0</sp>
     <damage>0</damage>
 	<rarity>0</rarity>
+	<accuracyMod>100</accuracyMod>
     <erosionChance>100</erosionChance>
 
     <erosion>
@@ -1592,6 +1693,7 @@
                 <blueprintList load="TERRAN_SCV"/>
             </blackList>
             <maxStacks>3</maxStacks>
+			<boostAnim>sc_irradiate</boostAnim>
         </statBoost>
     </statBoosts>
 </weaponBlueprint>
@@ -1603,8 +1705,10 @@
     <desc>Hidden Irradiate chainstep effect.</desc>
     <tooltip>Hidden Irradiate chainstep effect.</tooltip>
 
+    <sp>0</sp>
     <damage>0</damage>
 	<rarity>0</rarity>
+	<accuracyMod>100</accuracyMod>
     <erosionChance>100</erosionChance>
 	
     <erosion>
@@ -1634,6 +1738,7 @@
                 <blueprintList load="TERRAN_SCV"/>
             </blackList>
             <maxStacks>3</maxStacks>
+			<boostAnim>sc_irradiate</boostAnim>
         </statBoost>
     </statBoosts>
 </weaponBlueprint>
@@ -1645,8 +1750,10 @@
     <desc>Hidden Irradiate chainstep effect.</desc>
     <tooltip>Hidden Irradiate chainstep effect.</tooltip>
 
+    <sp>0</sp>
     <damage>0</damage>
 	<rarity>0</rarity>
+	<accuracyMod>100</accuracyMod>
     <erosionChance>100</erosionChance>
 	
     <erosion>
@@ -1676,6 +1783,7 @@
                 <blueprintList load="TERRAN_SCV"/>
             </blackList>
             <maxStacks>3</maxStacks>
+			<boostAnim>sc_irradiate</boostAnim>
         </statBoost>
     </statBoosts>
 </weaponBlueprint>
@@ -1687,8 +1795,10 @@
     <desc>Hidden Irradiate chainstep effect.</desc>
     <tooltip>Hidden Irradiate chainstep effect.</tooltip>
 
+    <sp>0</sp>
     <damage>0</damage>
 	<rarity>0</rarity>
+	<accuracyMod>100</accuracyMod>
     <erosionChance>100</erosionChance>
 	
     <erosion>
@@ -1718,6 +1828,7 @@
                 <blueprintList load="TERRAN_SCV"/>
             </blackList>
             <maxStacks>3</maxStacks>
+			<boostAnim>sc_irradiate</boostAnim>
         </statBoost>
     </statBoosts>
 </weaponBlueprint>
@@ -1729,8 +1840,10 @@
     <desc>Hidden Irradiate chainstep effect.</desc>
     <tooltip>Hidden Irradiate chainstep effect.</tooltip>
 
+    <sp>0</sp>
     <damage>0</damage>
 	<rarity>0</rarity>
+	<accuracyMod>100</accuracyMod>
     <erosionChance>100</erosionChance>
 	
     <erosion>
@@ -1760,94 +1873,13 @@
                 <blueprintList load="TERRAN_SCV"/>
             </blackList>
             <maxStacks>3</maxStacks>
+			<boostAnim>sc_irradiate</boostAnim>
         </statBoost>
     </statBoosts>
 </weaponBlueprint>
 
 
 
-
-<weaponBlueprint name="TERRAN_BEAM_IRRADIATE_LITE">
-	<type>BEAM</type>
-	<flavorType>Pinpoint</flavorType>
-	<tip>tip_focus</tip>
-	<title id="weapon_TERRAN_BEAM_IRRADIATE_LITE_title"></title>
-	<short id="weapon_TERRAN_BEAM_IRRADIATE_LITE_short"></short>
-	<desc>...</desc>
-	<descriptionOverride id="weapon_TERRAN_BEAM_IRRADIATE_LITE_desc"></descriptionOverride>
-	<tooltipOverride id="weapon_TERRAN_BEAM_IRRADIATE_LITE_tooltip"></tooltipOverride>
-	<tooltip>tip_bio_weapon</tooltip>
-	<damage>1</damage>
-	<bio-weapon/>
-	<rust-weapon/>
-	<persDamage>0</persDamage>
-	<sysDamage>0</sysDamage>
-	<breachChance>2</breachChance>
-	<cooldown>14</cooldown>
-	<sc-chainstep fireThreshold="6" chainStep="3.0"/>
-	<speed>1</speed> <!--<speed>10</speed>-->
-	<length>1</length> <!--<length>50</length>-->
-	<mv-aiCrewTarget>MOST_CREW</mv-aiCrewTarget>
-	<power>2</power>
-	<cost>65</cost>
-	<rarity>4</rarity>
-	<boost>
-		<type>damage</type>
-		<amount>1</amount>
-		<count>6</count>
-	</boost>
-	<launchSounds>
-		<sound>beam1</sound>
-		<sound>beam1_2</sound>
-	</launchSounds>
-	<color>
-		<r>200</r>
-		<g>255</g>
-		<b>200</b>
-	</color>
-	<weaponArt>terran_irradiate</weaponArt>
-	<iconImage>beam</iconImage>
-	<image>beam_contact</image>
-
-	<erosionChance>100</erosionChance> <!-- May not be necessary-->
-	<erosion>
-		<speed>0.5</speed>
-		<maxSpeed>2</maxSpeed>
-		<time>2.5</time>
-		<maxTime>5.0</maxTime>
-		<systemRepairMultiplier>1</systemRepairMultiplier>
-		<erodeShields>false</erodeShields>
-		<roomAnim renderLayer="1">
-			<anim animType="default" animBorder="2">invisible</anim>
-			<wallAnim>irradiate_wall</wallAnim>
-		</roomAnim>
-	</erosion>
-	<statBoosts>
-		<statBoost name="trueHealAmount">
-			<boostType>FLAT</boostType>
-			<amount>-2.5</amount>
-			<shipTarget>CURRENT_ROOM</shipTarget>
-			<crewTarget>ALL</crewTarget>
-			<droneTarget>CREW</droneTarget>
-			<affectsSelf>true</affectsSelf>
-			<priority>-100</priority>
-			<duration>10</duration>
-			<!--<blackList load="BP_LIST">  Robots -->
-			<boostAnim>sc_irradiate</boostAnim>
-			<maxStacks>3</maxStacks>
-		</statBoost>
-		<statBoost name="healSpeed">
-			<boostType>MULT</boostType>
-			<amount>0.3</amount>
-			<shipTarget>CURRENT_ROOM</shipTarget>
-			<crewTarget>ALL</crewTarget>
-			<droneTarget>CREW</droneTarget>
-			<affectsSelf>true</affectsSelf>
-			<priority>-100</priority>
-			<duration>10</duration>
-		</statBoost>
-	</statBoosts>
-</weaponBlueprint>
 
 
 

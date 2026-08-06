@@ -36,6 +36,19 @@ function mods.sc.tag.register_tag(tagName, targetTable)
     end)
 end
 
+function mods.sc.tag.register_flag_tag(tagName, targetTable)
+    table.insert(weaponTagParsers, function(weaponNode)
+        local nameAttr = weaponNode:first_attribute("name")
+        if not nameAttr then return end
+        local weaponName = nameAttr:value()
+
+        local tagNode = weaponNode:first_node(tagName)
+        if tagNode then
+            targetTable[weaponName] = true
+        end
+    end)
+end
+
 function mods.sc.tag.register_augment_tag(tagName, targetTable)
     table.insert(augmentTagParsers, function(augNode)
         local nameAttr = augNode:first_attribute("name")
