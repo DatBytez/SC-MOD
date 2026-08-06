@@ -1339,6 +1339,7 @@
     <mod-append:script>data/sc_scripts/sc_weapon_copy.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_irradiate.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_halo.lua</mod-append:script>
 
     <mod-append:script>data/sc_scripts/sc_augment_battery.lua</mod-append:script>

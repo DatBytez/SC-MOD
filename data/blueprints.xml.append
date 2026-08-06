@@ -1550,20 +1550,6 @@
 	<weaponArt>terran_irradiate</weaponArt>
 	<iconImage>beam</iconImage>
 	<image>beam_contact</image>
-
-	<erosionChance>100</erosionChance> <!-- May not be necessary-->
-	<erosion>
-		<speed>0.5</speed>
-		<maxSpeed>2</maxSpeed>
-		<time>5.0</time>
-		<maxTime>10.0</maxTime>
-		<systemRepairMultiplier>1</systemRepairMultiplier>
-		<erodeShields>false</erodeShields>
-		<roomAnim renderLayer="1">
-			<anim animType="default" animBorder="2">invisible</anim>
-			<wallAnim>irradiate_wall</wallAnim>
-		</roomAnim>
-	</erosion>
 	<statBoosts>
 		<statBoost name="trueHealAmount">
 			<boostType>FLAT</boostType>
@@ -1589,6 +1575,131 @@
 			<duration>25</duration>
 		</statBoost>
 	</statBoosts>
+</weaponBlueprint>
+
+<weaponBlueprint name="SC_IRRADIATE_EROSION_BONUS_1">
+    <type>LASER</type>
+    <title>Hidden Irradiate Erosion I</title>
+    <short>Hidden Irradiate Erosion I</short>
+    <desc>Hidden Irradiate erosion test effect.</desc>
+    <tooltip>Hidden Irradiate erosion test effect.</tooltip>
+    <damage>0</damage>
+    <sp>5</sp>
+    <rarity>0</rarity>
+
+    <erosionChance>100</erosionChance>
+    <erosion>
+        <speed>0.5</speed>
+        <maxSpeed>2</maxSpeed>
+        <time>2.5</time>
+        <maxTime>30.0</maxTime>
+        <systemRepairMultiplier>1</systemRepairMultiplier>
+        <erodeShields>false</erodeShields>
+        <roomAnim renderLayer="1">
+            <anim animType="default" animBorder="2">invisible</anim>
+            <wallAnim>irradiate_wall</wallAnim>
+        </roomAnim>
+    </erosion>
+</weaponBlueprint>
+
+<weaponBlueprint name="SC_IRRADIATE_EROSION_BONUS_2">
+    <type>LASER</type>
+    <title>Hidden Irradiate Erosion II</title>
+    <short>Hidden Irradiate Erosion II</short>
+    <desc>Hidden Irradiate erosion test effect.</desc>
+    <tooltip>Hidden Irradiate erosion test effect.</tooltip>
+    <damage>0</damage>
+    <sp>5</sp>
+	<rarity>0</rarity>
+
+    <erosionChance>100</erosionChance>
+    <erosion>
+        <speed>0.5</speed>
+        <maxSpeed>2</maxSpeed>
+        <time>5.0</time>
+        <maxTime>30.0</maxTime>
+        <systemRepairMultiplier>1</systemRepairMultiplier>
+        <erodeShields>false</erodeShields>
+        <roomAnim renderLayer="1">
+            <anim animType="default" animBorder="2">invisible</anim>
+            <wallAnim>irradiate_wall</wallAnim>
+        </roomAnim>
+    </erosion>
+</weaponBlueprint>
+
+<weaponBlueprint name="SC_IRRADIATE_EROSION_BONUS_3">
+    <type>LASER</type>
+    <title>Hidden Irradiate Erosion III</title>
+    <short>Hidden Irradiate Erosion III</short>
+    <desc>Hidden Irradiate erosion test effect.</desc>
+    <tooltip>Hidden Irradiate erosion test effect.</tooltip>
+    <damage>0</damage>
+    <sp>5</sp>
+	<rarity>0</rarity>
+
+    <erosionChance>100</erosionChance>
+    <erosion>
+        <speed>0.5</speed>
+        <maxSpeed>2</maxSpeed>
+        <time>7.5</time>
+        <maxTime>30.0</maxTime>
+        <systemRepairMultiplier>1</systemRepairMultiplier>
+        <erodeShields>false</erodeShields>
+        <roomAnim renderLayer="1">
+            <anim animType="default" animBorder="2">invisible</anim>
+            <wallAnim>irradiate_wall</wallAnim>
+        </roomAnim>
+    </erosion>
+</weaponBlueprint>
+
+<weaponBlueprint name="SC_IRRADIATE_EROSION_BONUS_4">
+    <type>LASER</type>
+    <title>Hidden Irradiate Erosion IV</title>
+    <short>Hidden Irradiate Erosion IV</short>
+    <desc>Hidden Irradiate erosion test effect.</desc>
+    <tooltip>Hidden Irradiate erosion test effect.</tooltip>
+    <damage>0</damage>
+    <sp>5</sp>
+	<rarity>0</rarity>
+
+    <erosionChance>100</erosionChance>
+    <erosion>
+        <speed>0.5</speed>
+        <maxSpeed>2</maxSpeed>
+        <time>1.0</time>
+        <maxTime>30.0</maxTime>
+        <systemRepairMultiplier>1</systemRepairMultiplier>
+        <erodeShields>false</erodeShields>
+        <roomAnim renderLayer="1">
+            <anim animType="default" animBorder="2">invisible</anim>
+            <wallAnim>irradiate_wall</wallAnim>
+        </roomAnim>
+    </erosion>
+</weaponBlueprint>
+
+<weaponBlueprint name="SC_IRRADIATE_EROSION_BONUS_5">
+    <type>LASER</type>
+    <title>Hidden Irradiate Erosion V</title>
+    <short>Hidden Irradiate Erosion V</short>
+    <desc>Hidden Irradiate erosion test effect.</desc>
+    <tooltip>Hidden Irradiate erosion test effect.</tooltip>
+    <damage>0</damage>
+    <sp>5</sp>
+	<rarity>0</rarity>
+
+    <erosionChance>100</erosionChance>
+    <erosion>
+        <speed>0.5</speed>
+        <maxSpeed>2</maxSpeed>
+        <time>12.5</time>
+        <maxTime>30.0</maxTime>
+        <systemRepairMultiplier>1</systemRepairMultiplier>
+        <erodeShields>false</erodeShields>
+        <roomAnim renderLayer="1">
+            <anim animType="default" animBorder="2">invisible</anim>
+            <wallAnim>irradiate_wall</wallAnim>
+        </roomAnim>
+    </erosion>
 </weaponBlueprint>
 
 <weaponBlueprint name="TERRAN_BEAM_IRRADIATE_LITE">
@@ -1672,6 +1783,8 @@
 		</statBoost>
 	</statBoosts>
 </weaponBlueprint>
+
+
 
 <weaponBlueprint name="TERRAN_MISSILE_HALO">
 	<type>BURST</type>
