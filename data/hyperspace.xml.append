@@ -1235,7 +1235,10 @@
         <crewBlueprint>terran_pod</crewBlueprint>
         <tooltipName>Terran Boarding Pod</tooltipName>
     </drone>
-
+    <drone name="TERRAN_POD_BOARDER">
+        <crewBlueprint>human</crewBlueprint>
+        <tooltipName>Terran Marine</tooltipName>
+    </drone>
 </drones>
 
 <ships hideFirstShipPage="true">

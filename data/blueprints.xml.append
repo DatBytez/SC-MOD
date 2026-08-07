@@ -2578,6 +2578,20 @@ TERRAN_GOLIATH-->
     <rarity>2</rarity>
     <iconImage>custom_crew_drone</iconImage>
 </droneBlueprint>
+
+<droneBlueprint name="TERRAN_POD_BOARDER">
+    <type>BOARDER</type>
+    <tip>tip_boarding</tip>
+    <locked>1</locked>
+    <title>Terran Boarding Pod</title>
+    <short>Terran Pod</short>
+    <desc>Temporary Terran transport pod used by the Terran Pod crew drone.</desc>
+    <power>0</power>
+    <speed>18</speed>
+    <cost>0</cost>
+    <rarity>0</rarity>
+    <iconImage>boarder</iconImage>
+</droneBlueprint>
 <!-- 
 *********************************************************************************************************
 						SHIPS
