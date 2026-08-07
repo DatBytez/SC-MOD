@@ -1,5 +1,4 @@
 local userdata_table = mods.multiverse.userdata_table
-local spawn_temp_drone = mods.multiverse.spawn_temp_drone
 
 mods.sc_drone_pod = mods.sc_drone_pod or {}
 local pod = mods.sc_drone_pod
@@ -7,17 +6,11 @@ local pod = mods.sc_drone_pod
 local POD_SPECIES = "terran_pod"
 local LAUNCH_POWER = "LAUNCH"
 
--- This dedicated BOARDER blueprint is mapped in hyperspace.xml.append to
--- terran_marine. Hyperspace therefore creates a Terran Marine when this
--- boarding drone reaches the target ship instead of creating the default
--- boarding-drone crew.
-local ATTACK_DRONE_BLUEPRINT = "TERRAN_POD_BOARDER"
+-- Stage 3: the travel object is now a projectile rather than a BOARDER drone.
+-- This lets us create an ordinary CrewMember at impact instead of a drone crew.
+local POD_PROJECTILE_BLUEPRINT = "TERRAN_POD_PROJECTILE"
 local TEST_PAYLOAD_BLUEPRINT = "terran_marine"
-local ATTACK_DRONE_SHOTS = 9999
 
--- The integer ID and payload table are intentionally separate from the
--- temporary drone object. In the next stage, this table can hold serialized
--- data from an actual crew entity selected in the drone room.
 pod.nextTransportId = pod.nextTransportId or 0
 pod.activeTransports = pod.activeTransports or {}
 
@@ -36,6 +29,38 @@ local function create_transport_payload(sourceShipId, targetShipId)
     return payload
 end
 
+local function launch_transport_projectile(podCrew, ownerShip, targetShip)
+    if not userdata_table then return nil end
+
+    local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint(POD_PROJECTILE_BLUEPRINT)
+    if not blueprint then return nil end
+
+    local sourceShipId = podCrew.iShipId
+    local targetShipId = targetShip.iShipId
+
+    -- Launch from the room containing the crew drone. For the boarding pod this
+    -- should normally be the drone-control room.
+    local sourcePosition = ownerShip:GetRoomCenter(podCrew.iRoomId)
+    local targetPosition = targetShip:GetRandomRoomCenter()
+
+    -- Normal player projectiles face right; enemy projectiles face left.
+    local heading = sourceShipId == 0 and 0 or 180
+
+    local spaceManager = Hyperspace.App and Hyperspace.App.world and Hyperspace.App.world.space
+    if not spaceManager then return nil end
+
+    local projectile = spaceManager:CreateMissile(
+        blueprint,
+        sourcePosition,
+        sourceShipId,
+        sourceShipId,
+        targetPosition,
+        targetShipId,
+        heading)
+
+    return projectile
+end
+
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, shipManager)
     if not power or not power.def or power.def.name ~= LAUNCH_POWER then
         return
@@ -52,39 +77,79 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, 
     local targetShip = Hyperspace.Global.GetInstance():GetShipManager(targetShipId)
     if not targetShip then return end
 
-    local blueprint = Hyperspace.Blueprints:GetDroneBlueprint(ATTACK_DRONE_BLUEPRINT)
-    if not blueprint then return end
-    if not spawn_temp_drone or not userdata_table then return end
-
-    local drone = spawn_temp_drone(
-        blueprint,
-        ownerShip,
-        targetShip,
-        nil,
-        ATTACK_DRONE_SHOTS,
-        nil)
-
-    if not drone then return end
+    local projectile = launch_transport_projectile(podCrew, ownerShip, targetShip)
+    if not projectile then return end
 
     local payload = create_transport_payload(podCrew.iShipId, targetShipId)
 
-    -- Store the transport ID and the current test payload directly on the
-    -- launched drone. A later arrival handler can use this ID to retrieve the
-    -- complete stored crew record from pod.activeTransports.
-    local podData = userdata_table(drone, "mods.sc.dronePod")
+    -- The projectile carries only the transport ID plus enough identifying data
+    -- for the current test. In the next stage activeTransports[transportId] can
+    -- contain a serialized record of the actual crew member removed at launch.
+    local podData = userdata_table(projectile, "mods.sc.dronePod")
     podData.launchedByPod = true
     podData.transportId = payload.transportId
     podData.crewBlueprint = payload.crewBlueprint
     podData.sourceShipId = payload.sourceShipId
     podData.targetShipId = payload.targetShipId
-
-    -- Match the existing temporary-drone cleanup behavior used by SC-MOD/MV.
-    userdata_table(drone, "mods.mv.droneStuff").clearOnJump = true
 end)
 
--- A transport cannot remain valid after leaving the encounter. The later
--- dynamic-crew implementation can replace this with more specific cleanup
--- when a pod arrives, is destroyed, or misses.
+-- Projectile impacts use the same DAMAGE_AREA_HIT hook used by MV/Fusion weapon
+-- scripts. Nothing in the projectile blueprint spawns crew automatically; Lua
+-- creates an ordinary CrewMember here so the result is not treated as a drone.
+script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA_HIT, function(shipManager, projectile, location, damage, shipFriendlyFire)
+    if not projectile or not projectile.extend then
+        return Defines.Chain.CONTINUE
+    end
+
+    if projectile.extend.name ~= POD_PROJECTILE_BLUEPRINT then
+        return Defines.Chain.CONTINUE
+    end
+
+    if not userdata_table then
+        return Defines.Chain.CONTINUE
+    end
+
+    local podData = userdata_table(projectile, "mods.sc.dronePod")
+    if not podData or not podData.launchedByPod or podData.delivered then
+        return Defines.Chain.CONTINUE
+    end
+
+    local roomId = Hyperspace.ShipGraph.GetShipInfo(shipManager.iShipId):GetSelectedRoom(
+        location.x,
+        location.y,
+        true)
+
+    if roomId == nil or roomId < 0 then
+        return Defines.Chain.CONTINUE
+    end
+
+    local crewBlueprintName = podData.crewBlueprint or TEST_PAYLOAD_BLUEPRINT
+    local crewBlueprint = Hyperspace.Blueprints:GetCrewBlueprint(crewBlueprintName)
+    if not crewBlueprint then
+        return Defines.Chain.CONTINUE
+    end
+
+    -- A crew member transported to the opposing ship is an intruder there.
+    local intruder = podData.sourceShipId ~= shipManager.iShipId
+
+    local spawnedCrew = shipManager:AddCrewMemberFromBlueprint(
+        crewBlueprint,
+        0,
+        true,
+        roomId,
+        intruder)
+
+    if spawnedCrew then
+        podData.delivered = true
+
+        if podData.transportId then
+            pod.activeTransports[podData.transportId] = nil
+        end
+    end
+
+    return Defines.Chain.CONTINUE
+end)
+
 script.on_internal_event(Defines.InternalEvents.JUMP_LEAVE, function()
     pod.activeTransports = {}
 end)
