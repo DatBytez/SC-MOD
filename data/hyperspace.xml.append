@@ -1455,7 +1455,7 @@
 
     <!-- Read XML tags only after all custom tag parsers have been registered -->
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
-    <!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>-->
+    <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
 </mod:findLike>
 
 
