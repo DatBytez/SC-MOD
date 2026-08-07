@@ -2578,7 +2578,7 @@ TERRAN_GOLIATH-->
     <rarity>2</rarity>
     <iconImage>custom_crew_drone</iconImage>
 </droneBlueprint>
-
+<!--
 <droneBlueprint name="TERRAN_POD_BOARDER">
     <type>BOARDER</type>
     <tip>tip_boarding</tip>
@@ -2591,8 +2591,7 @@ TERRAN_GOLIATH-->
     <cost>0</cost>
     <rarity>0</rarity>
     <iconImage>boarder</iconImage>
-</droneBlueprint>
-
+</droneBlueprint>-->
 <weaponBlueprint name="TERRAN_POD_PROJECTILE">
     <type>MISSILES</type>
     <title>Terran Boarding Pod Projectile</title>
@@ -2601,26 +2600,13 @@ TERRAN_GOLIATH-->
     <tooltip>Hidden projectile used by the Terran Boarding Pod.</tooltip>
 
     <damage>0</damage>
-    <sysDamage>0</sysDamage>
-    <persDamage>0</persDamage>
-    <ion>0</ion>
-
     <missiles>0</missiles>
     <shots>1</shots>
     <sp>10</sp>
     <accuracyMod>100</accuracyMod>
-    <radius>0</radius>
     <speed>18</speed>
-
-    <!-- Keep it interceptable like a physical boarding pod. -->
     <drone_targetable>1</drone_targetable>
-
-    <cooldown>0</cooldown>
-    <power>0</power>
-    <cost>0</cost>
     <rarity>0</rarity>
-
-    <!-- Temporary travel art for this functionality test. -->
     <image>missile_1</image>
     <explosion>explosion_random</explosion>
 </weaponBlueprint>

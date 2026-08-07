@@ -5,28 +5,115 @@ local pod = mods.sc_drone_pod
 
 local POD_SPECIES = "terran_pod"
 local LAUNCH_POWER = "LAUNCH"
-
--- Stage 3: the travel object is now a projectile rather than a BOARDER drone.
--- This lets us create an ordinary CrewMember at impact instead of a drone crew.
 local POD_PROJECTILE_BLUEPRINT = "TERRAN_POD_PROJECTILE"
-local TEST_PAYLOAD_BLUEPRINT = "terran_marine"
+local POD_USERDATA = "mods.sc.dronePod"
 
 pod.nextTransportId = pod.nextTransportId or 0
 pod.activeTransports = pod.activeTransports or {}
 
-local function create_transport_payload(sourceShipId, targetShipId)
+-- Find one normal, friendly crew member in the same room as the pod drone.
+-- The pod itself and all crew drones are deliberately excluded.
+local function find_payload_crew(ownerShip, podCrew)
+    local crewList = ownerShip.vCrewList
+    if not crewList then return nil end
+
+    for i = 0, crewList:size() - 1 do
+        local crew = crewList[i]
+
+        if crew
+            and crew ~= podCrew
+            and crew.iShipId == ownerShip.iShipId
+            and crew.currentShipId == ownerShip.iShipId
+            and crew.iRoomId == podCrew.iRoomId
+            and crew:IsCrew()
+            and not crew:IsDrone()
+            and not crew.bDead
+            and not crew.bOutOfGame then
+            return crew
+        end
+    end
+
+    return nil
+end
+
+local function create_transport_payload(crew, sourceShipId, targetShipId)
     pod.nextTransportId = pod.nextTransportId + 1
 
     local payload = {
         transportId = pod.nextTransportId,
-        mode = "blueprint_test",
-        crewBlueprint = TEST_PAYLOAD_BLUEPRINT,
+        crew = crew,
+        crewSelfId = crew.extend and crew.extend.selfId or nil,
         sourceShipId = sourceShipId,
-        targetShipId = targetShipId
+        sourceRoomId = crew.iRoomId,
+        targetShipId = targetShipId,
+        wasFrozen = crew.bFrozen,
+        wasFrozenLocation = crew.bFrozenLocation
     }
 
     pod.activeTransports[payload.transportId] = payload
     return payload
+end
+
+local function mark_crew_in_transit(payload)
+    local crew = payload.crew
+    if not crew then return false end
+
+    if userdata_table then
+        local crewData = userdata_table(crew, POD_USERDATA)
+        crewData.inTransit = true
+        crewData.transportId = payload.transportId
+    end
+
+    -- Keep the actual CrewMember alive, but remove it from normal gameplay while
+    -- the projectile is travelling. This preserves the complete crew entity.
+    crew:SetOutOfGame()
+    return true
+end
+
+local function clear_crew_transport_marker(crew, transportId)
+    if not crew or not userdata_table then return end
+
+    local crewData = userdata_table(crew, POD_USERDATA)
+    if crewData.transportId == transportId then
+        crewData.inTransit = false
+        crewData.transportId = nil
+    end
+end
+
+local function place_crew(payload, shipId, roomId)
+    local crew = payload and payload.crew
+    if not crew then return false end
+
+    -- SetOutOfGame has no paired public method. bOutOfGame is exposed and is
+    -- also used by existing MV-compatible scripts when reviving/moving crew.
+    crew.bOutOfGame = false
+    crew.bDead = false
+
+    -- Move the original CrewMember object itself. iShipId remains its owner;
+    -- currentShipId changes to the ship the crew is physically aboard.
+    crew:SetCurrentShip(shipId)
+    crew:SetRoom(roomId)
+
+    -- Preserve any pre-launch frozen state rather than silently clearing it.
+    crew.bFrozen = payload.wasFrozen
+    crew.bFrozenLocation = payload.wasFrozenLocation
+
+    clear_crew_transport_marker(crew, payload.transportId)
+    return true
+end
+
+local function return_transport_to_source(transportId)
+    local payload = pod.activeTransports[transportId]
+    if not payload then return end
+
+    local sourceShip = Hyperspace.Global.GetInstance():GetShipManager(payload.sourceShipId)
+    if sourceShip and payload.crew then
+        place_crew(payload, payload.sourceShipId, payload.sourceRoomId)
+    else
+        clear_crew_transport_marker(payload.crew, payload.transportId)
+    end
+
+    pod.activeTransports[transportId] = nil
 end
 
 local function launch_transport_projectile(podCrew, ownerShip, targetShip)
@@ -38,18 +125,14 @@ local function launch_transport_projectile(podCrew, ownerShip, targetShip)
     local sourceShipId = podCrew.iShipId
     local targetShipId = targetShip.iShipId
 
-    -- Launch from the room containing the crew drone. For the boarding pod this
-    -- should normally be the drone-control room.
     local sourcePosition = ownerShip:GetRoomCenter(podCrew.iRoomId)
     local targetPosition = targetShip:GetRandomRoomCenter()
-
-    -- Normal player projectiles face right; enemy projectiles face left.
     local heading = sourceShipId == 0 and 0 or 180
 
     local spaceManager = Hyperspace.App and Hyperspace.App.world and Hyperspace.App.world.space
     if not spaceManager then return nil end
 
-    local projectile = spaceManager:CreateMissile(
+    return spaceManager:CreateMissile(
         blueprint,
         sourcePosition,
         sourceShipId,
@@ -57,8 +140,6 @@ local function launch_transport_projectile(podCrew, ownerShip, targetShip)
         targetPosition,
         targetShipId,
         heading)
-
-    return projectile
 end
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, shipManager)
@@ -73,29 +154,32 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, 
     local ownerShip = Hyperspace.Global.GetInstance():GetShipManager(podCrew.iShipId)
     if not ownerShip then return end
 
+    -- The payload must already be physically present in the drone room when
+    -- LAUNCH activates.
+    local payloadCrew = find_payload_crew(ownerShip, podCrew)
+    if not payloadCrew then return end
+
     local targetShipId = 1 - podCrew.iShipId
     local targetShip = Hyperspace.Global.GetInstance():GetShipManager(targetShipId)
     if not targetShip then return end
 
+    -- Do not remove the crew unless projectile creation succeeds.
     local projectile = launch_transport_projectile(podCrew, ownerShip, targetShip)
     if not projectile then return end
 
-    local payload = create_transport_payload(podCrew.iShipId, targetShipId)
+    local payload = create_transport_payload(payloadCrew, podCrew.iShipId, targetShipId)
 
-    -- The projectile carries only the transport ID plus enough identifying data
-    -- for the current test. In the next stage activeTransports[transportId] can
-    -- contain a serialized record of the actual crew member removed at launch.
-    local podData = userdata_table(projectile, "mods.sc.dronePod")
+    local podData = userdata_table(projectile, POD_USERDATA)
     podData.launchedByPod = true
     podData.transportId = payload.transportId
-    podData.crewBlueprint = payload.crewBlueprint
     podData.sourceShipId = payload.sourceShipId
     podData.targetShipId = payload.targetShipId
+    podData.delivered = false
+
+    mark_crew_in_transit(payload)
 end)
 
--- Projectile impacts use the same DAMAGE_AREA_HIT hook used by MV/Fusion weapon
--- scripts. Nothing in the projectile blueprint spawns crew automatically; Lua
--- creates an ordinary CrewMember here so the result is not treated as a drone.
+-- Deliver the exact CrewMember stored at launch into the room hit by the pod.
 script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA_HIT, function(shipManager, projectile, location, damage, shipFriendlyFire)
     if not projectile or not projectile.extend then
         return Defines.Chain.CONTINUE
@@ -109,8 +193,14 @@ script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA_HIT, function(shipMa
         return Defines.Chain.CONTINUE
     end
 
-    local podData = userdata_table(projectile, "mods.sc.dronePod")
+    local podData = userdata_table(projectile, POD_USERDATA)
     if not podData or not podData.launchedByPod or podData.delivered then
+        return Defines.Chain.CONTINUE
+    end
+
+    local transportId = podData.transportId
+    local payload = transportId and pod.activeTransports[transportId] or nil
+    if not payload then
         return Defines.Chain.CONTINUE
     end
 
@@ -123,33 +213,47 @@ script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA_HIT, function(shipMa
         return Defines.Chain.CONTINUE
     end
 
-    local crewBlueprintName = podData.crewBlueprint or TEST_PAYLOAD_BLUEPRINT
-    local crewBlueprint = Hyperspace.Blueprints:GetCrewBlueprint(crewBlueprintName)
-    if not crewBlueprint then
-        return Defines.Chain.CONTINUE
-    end
-
-    -- A crew member transported to the opposing ship is an intruder there.
-    local intruder = podData.sourceShipId ~= shipManager.iShipId
-
-    local spawnedCrew = shipManager:AddCrewMemberFromBlueprint(
-        crewBlueprint,
-        0,
-        true,
-        roomId,
-        intruder)
-
-    if spawnedCrew then
+    if place_crew(payload, shipManager.iShipId, roomId) then
         podData.delivered = true
-
-        if podData.transportId then
-            pod.activeTransports[podData.transportId] = nil
-        end
+        pod.activeTransports[transportId] = nil
     end
 
     return Defines.Chain.CONTINUE
 end)
 
-script.on_internal_event(Defines.InternalEvents.JUMP_LEAVE, function()
-    pod.activeTransports = {}
+-- If the physical pod projectile is destroyed before delivery, return the crew
+-- to its original room for now. A later version can change this to whatever
+-- consequence is desired for an intercepted boarding pod.
+script.on_internal_event(Defines.InternalEvents.PROJECTILE_UPDATE_POST, function(projectile, preempted)
+    if not projectile or not projectile.extend then
+        return Defines.Chain.CONTINUE
+    end
+
+    if projectile.extend.name ~= POD_PROJECTILE_BLUEPRINT or not userdata_table then
+        return Defines.Chain.CONTINUE
+    end
+
+    local podData = userdata_table(projectile, POD_USERDATA)
+    if not podData or not podData.launchedByPod or podData.delivered then
+        return Defines.Chain.CONTINUE
+    end
+
+    if projectile:Dead() and podData.transportId then
+        return_transport_to_source(podData.transportId)
+    end
+
+    return Defines.Chain.CONTINUE
+end)
+
+-- Never leave a real crew member stranded out-of-game when the encounter ends.
+script.on_internal_event(Defines.InternalEvents.JUMP_LEAVE, function(shipManager)
+    local transportIds = {}
+
+    for transportId, _ in pairs(pod.activeTransports) do
+        transportIds[#transportIds + 1] = transportId
+    end
+
+    for _, transportId in ipairs(transportIds) do
+        return_transport_to_source(transportId)
+    end
 end)
