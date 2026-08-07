@@ -1190,7 +1190,6 @@
         <powerEffect name="LAUNCH">
             <cooldown>0</cooldown>
             <jumpCooldown>full</jumpCooldown>
-            <powerCharges>1</powerCharges>
             <activateWhenReady enemiesOnly="false">true</activateWhenReady>
             <buttonText>LAUNCH</buttonText>
             <tooltip>Automatically activates when the custom crew drone is deployed.</tooltip>
@@ -1413,6 +1412,7 @@
     <mod-append:script>data/sc_scripts/sc_drone_goliath.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv_ai.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_pod.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_active.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
 
