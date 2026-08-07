@@ -1146,6 +1146,62 @@
 	</race>
 </crew>
 
+		<!-- 
+*********************************************************************************************************
+  TERRAN BOARDING POD
+*********************************************************************************************************
+-->
+<crew>
+    <race name="terran_pod">
+        <crewSlots>0</crewSlots>
+        <noSlot>true</noSlot>
+        <noClone>true</noClone>
+
+        <selectable>true</selectable>
+        <controllable>true</controllable>
+
+        <canFight>false</canFight>
+        <canPunch>false</canPunch>
+        <canRepair>false</canRepair>
+        <canSabotage>false</canSabotage>
+        <canMan>false</canMan>
+        <canSuffocate>false</canSuffocate>
+        <canBurn>false</canBurn>
+        <canTeleport>false</canTeleport>
+        <resistsMindControl>true</resistsMindControl>
+
+        <maxHealth>100</maxHealth>
+        <stunMultiplier>0</stunMultiplier>
+        <fireDamageMultiplier>0</fireDamageMultiplier>
+        <moveSpeedMultiplier>1</moveSpeedMultiplier>
+
+        <!-- Uses the animation names defined in animations.xml.append. -->
+        <animBase>mantis</animBase>
+        <animSheet>terran_pod</animSheet>
+
+        <deathSounds>
+            <deathSound>terran_scv_launch</deathSound>
+        </deathSounds>
+
+        <droneAI>
+            <returnToDroneRoom/>
+        </droneAI>
+
+        <powerEffect name="LAUNCH">
+            <cooldown>0</cooldown>
+            <jumpCooldown>full</jumpCooldown>
+            <powerCharges>1</powerCharges>
+            <activateWhenReady enemiesOnly="false">true</activateWhenReady>
+            <buttonText>LAUNCH</buttonText>
+            <tooltip>Automatically activates when the custom crew drone is deployed.</tooltip>
+            <cooldownColor r="255" g="120" b="40"/>
+           <!-- <powerSounds>
+                <powerSound>customCrewDroneLaunch</powerSound>
+            </powerSounds>-->
+            <selfHealth>-999.0</selfHealth>
+        </powerEffect>
+    </race>
+</crew>
 
 <drones>
 	<drone name="TERRAN_SCV">
@@ -1176,6 +1232,11 @@
 		<crewBlueprint>terran_spider_mine</crewBlueprint>
 		<tooltipName>Terran Spider Mine (Armed)</tooltipName>
 	</drone>
+    <drone name="TERRAN_POD">
+        <crewBlueprint>terran_pod</crewBlueprint>
+        <tooltipName>Terran Boarding Pod</tooltipName>
+    </drone>
+
 </drones>
 
 <ships hideFirstShipPage="true">

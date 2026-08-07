@@ -2548,6 +2548,36 @@ TERRAN_GOLIATH-->
 	<iconImage>defense</iconImage>					
 	<rarity>5</rarity>					
 </droneBlueprint>	
+
+<!-- 
+**********************************************************************************************************************
+           TERRAN_POD
+**********************************************************************************************************************
+-->
+
+<crewBlueprint name="terran_pod">
+    <title>Terran Boarding Pod</title>
+    <short>Boarding Pod</short>
+    <desc>...</desc>
+    <cost>0</cost>
+    <rarity>0</rarity>
+    <powerList>
+        <power>DRONE</power>
+    </powerList>
+</crewBlueprint>
+
+<droneBlueprint name="TERRAN_POD">
+    <type>BATTLE</type>
+    <locked>1</locked>
+    <tip>tip_crew</tip>
+    <title>Terran Boarding Pod</title>
+    <short>Boarding Pod</short>
+    <desc>[[NEED CREWPOD DESCRIPTION]]</desc>
+    <power>1</power>
+    <cost>30</cost>
+    <rarity>2</rarity>
+    <iconImage>custom_crew_drone</iconImage>
+</droneBlueprint>
 <!-- 
 *********************************************************************************************************
 						SHIPS

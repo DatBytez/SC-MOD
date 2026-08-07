@@ -2047,4 +2047,142 @@
 	<time>1</time>
 </anim>
 
+	<!--
+*********************************************************************************************************
+            TERRAN_POD
+*********************************************************************************************************
+-->
+<animSheet name="terran_pod" w="315" h="455" fw="35" fh="35">people/terran_pod_base.png</animSheet>
+<anim name="terran_pod_clone">
+	<sheet>terran_pod</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.75</time>
+</anim>
+<animSheet name="explosion_terran_pod_death" w="640" h="64" fw="64" fh="64">effects/explosion_firebat_death.png</animSheet>
+<anim name="terran_pod_death_right">
+	<sheet>explosion_terran_pod_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_pod_death_left">
+	<sheet>explosion_terran_pod_death</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_pod_power_down">
+	<sheet>terran_pod</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_pod_power_up">
+	<sheet>terran_pod</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_pod_walk_down">
+	<sheet>terran_pod</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_pod_walk_right">
+	<sheet>terran_pod</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_pod_walk_up">
+	<sheet>terran_pod</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_pod_walk_left">
+	<sheet>terran_pod</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_pod_shoot_down">
+	<sheet>terran_pod</sheet>
+	<desc length="3" x="0" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_pod_shoot_right">
+	<sheet>terran_pod</sheet>
+	<desc length="3" x="3" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_pod_shoot_up">
+	<sheet>terran_pod</sheet>
+	<desc length="3" x="0" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_pod_shoot_left">
+	<sheet>terran_pod</sheet>
+	<desc length="3" x="3" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_pod_fire_down">
+	<sheet>terran_pod</sheet>
+	<desc length="4" x="0" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_pod_fire_right">
+	<sheet>terran_pod</sheet>
+	<desc length="4" x="4" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_pod_fire_up">
+	<sheet>terran_pod</sheet>
+	<desc length="4" x="0" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_pod_fire_left">
+	<sheet>terran_pod</sheet>
+	<desc length="4" x="4" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_pod_repair">
+	<sheet>terran_pod</sheet>
+	<desc length="3" x="0" y="6" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_pod_punch_up">
+	<sheet>terran_pod</sheet>
+	<desc length="4" x="0" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_pod_punch_down">
+	<sheet>terran_pod</sheet>
+	<desc length="4" x="4" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="terran_pod_teleport">
+	<sheet>terran_pod</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="terran_pod_type_right">
+	<sheet>terran_pod</sheet>
+	<desc length="2" x="4" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_pod_type_left">
+	<sheet>terran_pod</sheet>
+	<desc length="2" x="6" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_pod_type_up">
+	<sheet>terran_pod</sheet>
+	<desc length="2" x="0" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_pod_type_down">
+	<sheet>terran_pod</sheet>
+	<desc length="2" x="2" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="terran_pod_portrait">
+	<sheet>terran_pod</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
+
 </FTL>

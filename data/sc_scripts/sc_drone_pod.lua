@@ -5,7 +5,7 @@ mods.sc_drone_pod = mods.sc_drone_pod or {}
 
 local POD_SPECIES = "terran_pod"
 local LAUNCH_POWER = "LAUNCH"
-local ATTACK_DRONE_BLUEPRINT = "COMBAT_1"
+local ATTACK_DRONE_BLUEPRINT = "BOARDER"
 local ATTACK_DRONE_SHOTS = 9999
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, shipManager)
