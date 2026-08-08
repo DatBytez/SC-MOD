@@ -6,6 +6,7 @@ local pod = mods.sc_drone_pod
 local POD_SPECIES = "terran_pod"
 local LAUNCH_POWER = "LAUNCH"
 local POD_PROJECTILE_BLUEPRINT = "TERRAN_POD_PROJECTILE"
+local POD_DRONE_BLUEPRINT = "TERRAN_POD"
 local POD_USERDATA = "mods.sc.dronePod"
 
 pod.nextTransportId = pod.nextTransportId or 0
@@ -149,6 +150,268 @@ local function find_payload_crew(ownerShip, podCrew, droneRoomId)
     return nil
 end
 
+
+local function update_pod_deployment_guard(shipManager)
+    -- This guard is player-only. Enemy use can be handled separately later if
+    -- desired, but it should not affect enemy drone AI now.
+    if not shipManager or shipManager.iShipId ~= 0 then
+        return
+    end
+
+    local droneSystem = shipManager.droneSystem
+    if not droneSystem or not droneSystem.drones then
+        return
+    end
+
+    -- Strictly use the actual Drone Control room. If it cannot be resolved,
+    -- the pod remains blocked rather than falling back to another room.
+    local droneRoomId = get_drone_room_id(shipManager)
+    local payloadReady = false
+
+    if droneRoomId ~= nil then
+        payloadReady =
+            find_payload_crew(
+                shipManager,
+                nil,
+                droneRoomId
+            ) ~= nil
+    end
+
+    local normalPower = nil
+    local blockedPower = droneSystem:GetMaxPower() + 1
+
+    for i = 0, droneSystem.drones:size() - 1 do
+        local drone = droneSystem.drones[i]
+
+        if drone
+            and drone.blueprint
+            and drone.blueprint.name == POD_DRONE_BLUEPRINT then
+
+            normalPower = drone.blueprint.power
+
+            -- Never alter an already powered/deployed pod. The guard exists to
+            -- prevent a new deployment, not to interfere with one in progress.
+            if not drone.powered and not drone.deployed then
+                local desiredPower =
+                    payloadReady
+                    and normalPower
+                    or math.max(normalPower, blockedPower)
+
+                if drone.powerRequired ~= desiredPower then
+                    drone.powerRequired = desiredPower
+
+                    local stateText =
+                        payloadReady
+                        and "READY"
+                        or "BLOCKED"
+
+                    if pod.lastDeploymentGuardState ~= stateText then
+                        pod.lastDeploymentGuardState = stateText
+
+                        debug_line(
+                            "POD GUARD " .. stateText
+                            .. ": droneR="
+                            .. tostring(droneRoomId)
+                            .. " power="
+                            .. tostring(desiredPower)
+                        )
+                    end
+                end
+            end
+        end
+    end
+end
+
+script.on_internal_event(
+    Defines.InternalEvents.SHIP_LOOP,
+    function(shipManager)
+        update_pod_deployment_guard(shipManager)
+    end
+)
+
+
+local function snapshot_crew_powers(crew)
+    local snapshots = {}
+    local powers = crew and crew.extend and crew.extend.crewPowers
+
+    if not powers then
+        return snapshots
+    end
+
+    for i = 0, powers:size() - 1 do
+        local power = powers[i]
+
+        if power then
+            local cooldownCurrent =
+                power.powerCooldown and power.powerCooldown.first or 0
+
+            local cooldownTotal =
+                power.powerCooldown and power.powerCooldown.second or 0
+
+            local cooldownFraction = 1
+
+            if cooldownTotal and cooldownTotal > 0 then
+                cooldownFraction =
+                    math.max(
+                        0,
+                        math.min(1, cooldownCurrent / cooldownTotal)
+                    )
+            end
+
+            snapshots[#snapshots + 1] = {
+                index = i,
+                name =
+                    power.def and power.def.name
+                    or nil,
+                cooldownCurrent = cooldownCurrent,
+                cooldownTotal = cooldownTotal,
+                cooldownFraction = cooldownFraction,
+                chargesCurrent =
+                    power.powerCharges
+                    and power.powerCharges.first
+                    or nil,
+                chargesTotal =
+                    power.powerCharges
+                    and power.powerCharges.second
+                    or nil
+            }
+        end
+    end
+
+    return snapshots
+end
+
+local function find_matching_power(crew, savedPower)
+    local powers = crew and crew.extend and crew.extend.crewPowers
+    if not powers or not savedPower then
+        return nil
+    end
+
+    -- Same-race recreation should preserve power order. Prefer the original
+    -- index when its definition name still matches.
+    if savedPower.index ~= nil
+        and savedPower.index >= 0
+        and savedPower.index < powers:size() then
+
+        local indexedPower = powers[savedPower.index]
+
+        if indexedPower then
+            local indexedName =
+                indexedPower.def and indexedPower.def.name
+                or nil
+
+            if savedPower.name == nil
+                or savedPower.name == indexedName then
+                return indexedPower
+            end
+        end
+    end
+
+    -- Named fallback handles cases where another power changes the ordering.
+    if savedPower.name ~= nil then
+        for i = 0, powers:size() - 1 do
+            local power = powers[i]
+
+            if power
+                and power.def
+                and power.def.name == savedPower.name then
+                return power
+            end
+        end
+    end
+
+    return nil
+end
+
+local function restore_crew_powers(crew, savedPowers)
+    if not crew or not savedPowers then
+        return
+    end
+
+    for _, savedPower in ipairs(savedPowers) do
+        local power = find_matching_power(crew, savedPower)
+
+        if power then
+            local restoreOk, restoreText = pcall(
+                function()
+                    local newCooldownTotal =
+                        power.powerCooldown.second
+
+                    if newCooldownTotal and newCooldownTotal > 0 then
+                        power.powerCooldown.first =
+                            newCooldownTotal
+                            * savedPower.cooldownFraction
+                    elseif savedPower.cooldownCurrent ~= nil then
+                        power.powerCooldown.first =
+                            savedPower.cooldownCurrent
+                    end
+
+                    -- Preserve remaining charges when the ability uses them.
+                    -- Keep the recreated power's current maximum, since that
+                    -- may reflect the current definition/stat modifiers.
+                    if savedPower.chargesCurrent ~= nil
+                        and power.powerCharges then
+
+                        local newChargesTotal =
+                            power.powerCharges.second
+
+                        if newChargesTotal ~= nil
+                            and newChargesTotal >= 0 then
+
+                            power.powerCharges.first =
+                                math.max(
+                                    0,
+                                    math.min(
+                                        savedPower.chargesCurrent,
+                                        newChargesTotal
+                                    )
+                                )
+                        else
+                            power.powerCharges.first =
+                                savedPower.chargesCurrent
+                        end
+                    end
+
+                    return "name=" .. tostring(savedPower.name)
+                        .. " cd="
+                        .. string.format(
+                            "%.2f/%.2f",
+                            power.powerCooldown.first,
+                            power.powerCooldown.second
+                        )
+                        .. " fraction="
+                        .. string.format(
+                            "%.2f",
+                            savedPower.cooldownFraction
+                        )
+                        .. " charges="
+                        .. tostring(power.powerCharges.first)
+                        .. "/"
+                        .. tostring(power.powerCharges.second)
+                end
+            )
+
+            if restoreOk then
+                debug_line("POWER restore: " .. restoreText)
+            else
+                debug_line(
+                    "POWER restore ERROR: "
+                    .. tostring(savedPower.name)
+                    .. " "
+                    .. tostring(restoreText)
+                )
+            end
+        else
+            debug_line(
+                "POWER restore missing: "
+                .. tostring(savedPower.name)
+                .. " index="
+                .. tostring(savedPower.index)
+            )
+        end
+    end
+end
+
 local function snapshot_crew(crew)
     if not crew then
         return nil
@@ -161,6 +424,7 @@ local function snapshot_crew(crew)
         species = crew:GetSpecies(),
         health = health and health.first or nil,
         maxHealth = health and health.second or nil,
+        powers = snapshot_crew_powers(crew),
         originalSelfId = crew_self_id(crew)
     }
 end
@@ -290,6 +554,10 @@ local function recreate_crew(payload, shipManager, roomId)
         debug_line("RECREATE failed: spawn returned nil")
         return nil
     end
+
+    -- Restore power recharge/charge state immediately, before the recreated
+    -- crew receives its next normal update and can auto-activate a reset power.
+    restore_crew_powers(newCrew, snapshot.powers)
 
     local newSelfId = crew_self_id(newCrew)
     local previousSelfId = pod.lastSpawnedCrewSelfId
@@ -541,7 +809,29 @@ script.on_internal_event(
             .. " name=" .. tostring(snapshot.name)
             .. " race=" .. tostring(snapshot.species)
             .. " hp=" .. tostring(snapshot.health)
+            .. " powers=" .. tostring(#(snapshot.powers or {}))
         )
+
+        for _, savedPower in ipairs(snapshot.powers or {}) do
+            debug_line(
+                "POWER save: name=" .. tostring(savedPower.name)
+                .. " cd="
+                .. string.format(
+                    "%.2f/%.2f",
+                    savedPower.cooldownCurrent or 0,
+                    savedPower.cooldownTotal or 0
+                )
+                .. " fraction="
+                .. string.format(
+                    "%.2f",
+                    savedPower.cooldownFraction or 0
+                )
+                .. " charges="
+                .. tostring(savedPower.chargesCurrent)
+                .. "/"
+                .. tostring(savedPower.chargesTotal)
+            )
+        end
 
         local podData = userdata_table(projectile, POD_USERDATA)
         podData.launchedByPod = true
