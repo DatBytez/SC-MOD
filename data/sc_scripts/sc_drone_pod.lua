@@ -7,7 +7,6 @@ local POD_SPECIES = "terran_pod"
 local LAUNCH_POWER = "LAUNCH"
 local POD_PROJECTILE_BLUEPRINT = "TERRAN_POD_PROJECTILE"
 local POD_USERDATA = "mods.sc.dronePod"
-local DRONE_SYSTEM_ID = 4
 
 pod.nextTransportId = pod.nextTransportId or 0
 pod.activeTransports = pod.activeTransports or {}
@@ -71,39 +70,27 @@ local function find_crew_list(crew)
     return "none"
 end
 
-local function get_drone_room_id(ownerShip, podCrew)
-    -- Prefer the actual Drone Control system object. This avoids assuming the
-    -- temporary pod crew itself always occupies the Drone Control room.
-    if ownerShip and ownerShip.droneSystem then
-        local ok, roomId = pcall(
-            function()
-                return ownerShip.droneSystem.roomId
-            end
-        )
-
-        if ok and roomId ~= nil and roomId >= 0 then
-            return roomId, "droneSystem.roomId"
-        end
+local function get_drone_room_id(ownerShip)
+    -- Strict rule: payload crew may only be selected from the actual
+    -- Drone Control system room. If that room cannot be resolved, abort.
+    if not ownerShip or not ownerShip.droneSystem then
+        return nil
     end
 
-    -- Fallback to ShipManager:GetSystemRoom if available in the running build.
-    if ownerShip then
-        local ok, roomId = pcall(
-            function()
-                return ownerShip:GetSystemRoom(DRONE_SYSTEM_ID)
-            end
-        )
-
-        if ok and roomId ~= nil and roomId >= 0 then
-            return roomId, "GetSystemRoom(4)"
+    local ok, roomId = pcall(
+        function()
+            return ownerShip.droneSystem.roomId
         end
+    )
+
+    if not ok or roomId == nil or roomId < 0 then
+        return nil
     end
 
-    -- Last-resort compatibility fallback.
-    return podCrew and podCrew.iRoomId or -1, "pod room fallback"
+    return roomId
 end
 
-local function describe_available_payload_rooms(ownerShip, podCrew)
+local function describe_drone_room_payloads(ownerShip, podCrew, droneRoomId)
     local crewList = ownerShip and ownerShip.vCrewList
     if not crewList then
         return "none"
@@ -118,6 +105,7 @@ local function describe_available_payload_rooms(ownerShip, podCrew)
             and crew ~= podCrew
             and crew.iShipId == ownerShip.iShipId
             and crew.currentShipId == ownerShip.iShipId
+            and crew.iRoomId == droneRoomId
             and crew:IsCrew()
             and not crew:IsDrone()
             and not crew.bDead
@@ -125,7 +113,6 @@ local function describe_available_payload_rooms(ownerShip, podCrew)
 
             found[#found + 1] =
                 tostring(crew_self_id(crew))
-                .. "@R" .. tostring(crew.iRoomId)
         end
     end
 
@@ -210,14 +197,36 @@ local function remove_original_crew(crew, transportId)
         crewData.transportId = transportId
     end
 
-    -- SetOutOfGame proved to remove the crew from normal play immediately.
-    -- We are no longer trying to revive this object. Instead, its state has
-    -- already been copied into the transport payload.
-    crew:SetOutOfGame()
+    -- Release the crew's occupied room tile before marking the source entity
+    -- out-of-game. SetOutOfGame() removes the crew from normal play, but by
+    -- itself it does not reliably clear the Room slot occupancy.
+    local emptySlotOk, emptySlotError = pcall(
+        function()
+            crew:EmptySlot()
+        end
+    )
 
-    -- Explicitly prevent the removed source entity from becoming clone-ready.
-    -- The replacement crew will be created from the saved transport snapshot.
+    debug_line(
+        "EmptySlot: ok=" .. tostring(emptySlotOk)
+        .. (emptySlotOk and "" or " error=" .. tostring(emptySlotError))
+    )
+
+    if not emptySlotOk then
+        -- Do not consume the crew if its room tile cannot be released.
+        if userdata_table then
+            local crewData = userdata_table(crew, POD_USERDATA)
+            crewData.inTransit = false
+            crewData.transportId = nil
+        end
+        return false
+    end
+
+    -- Prevent the discarded source entity from becoming clone-ready.
     crew:SetCloneReady(false)
+
+    -- The transport now owns a snapshot of this crew's state. The original
+    -- CrewMember is intentionally retired and is never reused at destination.
+    crew:SetOutOfGame()
 
     debug_line(
         "REMOVE after:  "
@@ -458,13 +467,17 @@ script.on_internal_event(
             return
         end
 
-        local droneRoomId, droneRoomSource =
-            get_drone_room_id(ownerShip, podCrew)
+        local droneRoomId = get_drone_room_id(ownerShip)
+
+        if droneRoomId == nil then
+            debug_line("FAIL: Drone Control room unavailable")
+            return
+        end
 
         debug_line(
             "DRONE ROOM: R" .. tostring(droneRoomId)
-            .. " via " .. tostring(droneRoomSource)
             .. " podR=" .. tostring(podCrew.iRoomId)
+            .. " strict=true"
         )
 
         local payloadCrew =
@@ -476,8 +489,12 @@ script.on_internal_event(
                 .. tostring(droneRoomId)
             )
             debug_line(
-                "AVAILABLE normal crew: "
-                .. describe_available_payload_rooms(ownerShip, podCrew)
+                "DRONE ROOM eligible crew: "
+                .. describe_drone_room_payloads(
+                    ownerShip,
+                    podCrew,
+                    droneRoomId
+                )
             )
             return
         end
