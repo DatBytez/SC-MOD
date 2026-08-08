@@ -23,6 +23,11 @@
 <text name="text_SHIP_TERRAN_BATTLECRUISER_class">Battlecruiser</text>	
 <text name="text_SHIP_TERRAN_VESSEL_class">Science Vessel</text>
 
+<!-- ENEMY STORE SHIPS -->
+ <text name="text_TERRAN_SHIP_SCIENCE_class">Building</text>
+<text name="text_TERRAN_SHIP_FACTORY_class">Building</text>
+<text name="text_TERRAN_SHIP_COMMAND_class">Building</text>
+
 <!-- TERRAN BURST LASER -->
 <text name="weapon_TERRAN_BURST_LASER_1_title">Burst Laser Mk I</text>
 <text name="weapon_TERRAN_BURST_LASER_1_short">Burst Laser I</text>

@@ -24,7 +24,6 @@
 	<ship load="TERRAN_SHIP_WRAITH_A" hostile="true"/>
 </event>
 
-<!-- MEDIUM SIZED -->
 <ship name="TERRAN_SHIP_WRAITH_B" auto_blueprint="TERRAN_SHIP_WRAITH_B">
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
@@ -42,7 +41,6 @@
 	<ship load="TERRAN_SHIP_WRAITH_B" hostile="true"/>
 </event>
 
-<!-- SMALL 2 SQUAD -->
 <ship name="TERRAN_SHIP_WRAITH_C" auto_blueprint="TERRAN_SHIP_WRAITH_C">
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
@@ -60,7 +58,6 @@
 	<ship load="TERRAN_SHIP_WRAITH_C" hostile="true"/>
 </event>
 
-<!-- SMALL 3 SQUAD -->
 <ship name="TERRAN_SHIP_WRAITH_D" auto_blueprint="TERRAN_SHIP_WRAITH_D">
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
@@ -214,6 +211,73 @@
 	<ship load="TERRAN_SHIP_VALKYRIE_B" hostile="true"/>
 </event>
 
+<ship name="TERRAN_SHIP_BARRACKS" auto_blueprint="TERRAN_SHIP_BARRACKS">
+<surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
+<escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
+<gotaway load="GOTAWAY_EVENT"/>
+<destroyed load="SC_DESTROYED_TERRAN"/>
+<deadCrew load="SC_DEAD_CREW_TERRAN"/>
+<crew>
+    <crewMember type="terran_civilian" prop="0.01"/>
+	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
+</crew>
+</ship>
+
+<event name="EVENT_TERRAN_BARRACKS">
+	<text>Aaaaa! Scary ship!</text>
+	<ship load="TERRAN_SHIP_BARRACKS" hostile="true"/>
+</event>
+
+<ship name="TERRAN_SHIP_SCIENCE" auto_blueprint="TERRAN_SHIP_SCIENCE">
+<surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
+<escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
+<gotaway load="GOTAWAY_EVENT"/>
+<destroyed load="SC_DESTROYED_TERRAN"/>
+<deadCrew load="SC_DEAD_CREW_TERRAN"/>
+<crew>
+    <crewMember type="terran_civilian" prop="0.01"/>
+	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
+</crew>
+</ship>
+
+<event name="EVENT_TERRAN_SCIENCE">
+	<text>Aaaaa! Scary ship!</text>
+	<ship load="TERRAN_SHIP_SCIENCE" hostile="true"/>
+</event>
+
+<ship name="TERRAN_SHIP_FACTORY" auto_blueprint="TERRAN_SHIP_FACTORY">
+<surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
+<escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
+<gotaway load="GOTAWAY_EVENT"/>
+<destroyed load="SC_DESTROYED_TERRAN"/>
+<deadCrew load="SC_DEAD_CREW_TERRAN"/>
+<crew>
+    <crewMember type="terran_civilian" prop="0.01"/>
+	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
+</crew>
+</ship>
+
+<event name="EVENT_TERRAN_FACTORY">
+	<text>Aaaaa! Scary ship!</text>
+	<ship load="TERRAN_SHIP_FACTORY" hostile="true"/>
+</event>
+
+<ship name="TERRAN_SHIP_COMMAND" auto_blueprint="TERRAN_SHIP_COMMAND">
+<surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
+<escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
+<gotaway load="GOTAWAY_EVENT"/>
+<destroyed load="SC_DESTROYED_TERRAN"/>
+<deadCrew load="SC_DEAD_CREW_TERRAN"/>
+<crew>
+    <crewMember type="terran_civilian" prop="0.01"/>
+	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
+</crew>
+</ship>
+
+<event name="EVENT_TERRAN_COMMAND">
+	<text>Aaaaa! Scary ship!</text>
+	<ship load="TERRAN_SHIP_COMMAND" hostile="true"/>
+</event>
 <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     GENERIC COMBAT RESULT EVENTS

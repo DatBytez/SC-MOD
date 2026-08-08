@@ -695,4 +695,108 @@
 	<aug name="TERRAN_SHIP" />
 	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
 </shipBlueprint>
+
+<!-- ********** TERRAN STORE SHIPS ********** -->
+
+<shipBlueprint name="TERRAN_SHIP_COMMAND" layout="TERRAN_SHIP_COMMAND" img="TERRAN_SHIP_COMMAND">
+	<class id="text_TERRAN_SHIP_COMMAND_class">Building</class>
+	<minSector>1</minSector>
+	<maxSector>8</maxSector>
+	<systemList>
+		<artillery power="1" max="1" room="2" start="true" weapon="TERRAN_LASER_BATTERY_HEAVY_2" />
+		<clonebay power="1" max="1" room="1" start="true" />
+		<doors power="1" max="1" room="6" start="true" />
+		<drones power="1" max="1" room="0" start="true" />
+		<oxygen power="1" max="1" room="5" start="true" />
+		<sensors power="1" max="1" room="4" start="true" />
+		<shields power="1" max="1" room="3" start="true" />
+	</systemList>
+	<weaponSlots>0</weaponSlots>
+	<droneSlots>4</droneSlots>
+	<weaponList missiles="0" count="0" />
+	<droneList drones="8" count="4" load="BLUELIST_DRONES_REPAIR_CREW" />
+	<health amount="10" />
+	<maxPower amount="6" />
+	<crewCount amount="2" max="4" class="human" />
+	<boardingAI>sabotage</boardingAI>
+	<aug name="TERRAN_SHIP" />
+	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
+</shipBlueprint>
+
+<shipBlueprint name="TERRAN_SHIP_FACTORY" layout="TERRAN_SHIP_FACTORY" img="TERRAN_SHIP_FACTORY">
+	<class id="text_TERRAN_SHIP_FACTORY_class">Building</class>
+	<minSector>1</minSector>
+	<maxSector>8</maxSector>
+	<systemList>
+		<artillery power="1" max="4" room="1" start="false" weapon="TERRAN_MISSILE_HALO" />
+		<clonebay power="1" max="3" room="0" start="true" />
+		<doors power="1" max="3" room="4" start="true" />
+		<drones power="1" max="10" room="2" start="true" />
+		<hacking power="1" max="3" room="5" start="false" />
+		<oxygen power="1" max="3" room="6" start="true" />
+		<shields power="1" max="5" room="3" start="true" />
+	</systemList>
+	<weaponSlots>0</weaponSlots>
+	<droneSlots>6</droneSlots>
+	<weaponList missiles="6" count="0" />
+	<droneList drones="6" count="6" load="BLUELIST_DRONES_REPAIR_CREW" />
+	<health amount="10" />
+	<maxPower amount="10" />
+	<crewCount amount="2" max="4" class="human" />
+	<boardingAI>sabotage</boardingAI>
+	<aug name="TERRAN_SHIP" />
+	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
+</shipBlueprint>
+
+<shipBlueprint name="TERRAN_SHIP_SCIENCE" layout="TERRAN_SHIP_SCIENCE" img="TERRAN_SHIP_SCIENCE">
+	<class id="text_TERRAN_SHIP_SCIENCE_class">Building</class>
+	<minSector>1</minSector>
+	<maxSector>8</maxSector>
+	<systemList>
+		<artillery power="1" max="1" room="9" start="true" weapon="TERRAN_BEAM_IRRADIATE" />
+		<cloaking power="1" max="1" room="7" start="true" />
+		<clonebay power="1" max="1" room="5" start="true" />
+		<doors power="1" max="1" room="1" start="true" />
+		<drones power="1" max="1" room="6" start="true" />
+		<medbay power="1" max="1" room="0" start="true" />
+		<mind power="1" max="1" room="4" start="true" />
+		<oxygen power="1" max="1" room="10" start="true" />
+		<shields power="1" max="1" room="2" start="true" />
+	</systemList>
+	<weaponSlots>0</weaponSlots>
+	<droneSlots>2</droneSlots>
+	<weaponList missiles="0" count="0" />
+	<droneList drones="4" count="2" load="BLUELIST_DRONES_REPAIR_CREW" />
+	<health amount="10" />
+	<maxPower amount="8" />
+	<crewCount amount="2" max="4" class="human" />
+	<boardingAI>sabotage</boardingAI>
+	<aug name="TERRAN_SHIP" />
+	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
+</shipBlueprint>
+
+<shipBlueprint name="TERRAN_SHIP_BARRACKS" layout="TERRAN_SHIP_BARRACKS" img="TERRAN_SHIP_BARRACKS">
+	<class>Building</class>
+	<minSector>1</minSector>
+	<maxSector>8</maxSector>
+	<systemList>
+		<clonebay power="1" max="1" room="9" start="true" />
+		<doors power="1" max="1" room="4" start="true" />
+		<drones power="1" max="1" room="0" start="true" />
+		<medbay power="1" max="1" room="5" start="true" />
+		<oxygen power="1" max="1" room="1" start="true" />
+		<shields power="1" max="1" room="7" start="true" />
+		<teleporter power="1" max="3" room="3" start="true" />
+	</systemList>
+	<weaponSlots>0</weaponSlots>
+	<droneSlots>2</droneSlots>
+	<weaponList missiles="0" count="0" />
+	<droneList drones="2" count="2" load="TERRAN_DRONES_INTERNAL" />
+	<health amount="10" />
+	<maxPower amount="5" />
+	<crewCount amount="5" max="10" class="TERRAN_LIST_CREW_ALL" />
+	<boardingAI>invasion</boardingAI>
+	<aug name="TERRAN_SHIP" />
+	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
+</shipBlueprint>
 </FTL>
