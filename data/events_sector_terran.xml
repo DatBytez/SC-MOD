@@ -213,8 +213,6 @@
 
 <ship name="TERRAN_SHIP_BARRACKS" auto_blueprint="TERRAN_SHIP_BARRACKS">
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
-<escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
-<gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
 <crew>
@@ -230,8 +228,6 @@
 
 <ship name="TERRAN_SHIP_SCIENCE" auto_blueprint="TERRAN_SHIP_SCIENCE">
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
-<escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
-<gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
 <crew>
@@ -247,8 +243,6 @@
 
 <ship name="TERRAN_SHIP_FACTORY" auto_blueprint="TERRAN_SHIP_FACTORY">
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
-<escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
-<gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
 <crew>
@@ -264,8 +258,6 @@
 
 <ship name="TERRAN_SHIP_COMMAND" auto_blueprint="TERRAN_SHIP_COMMAND">
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
-<escape  chance="0.25" min="3" max="4" load="ESCAPE_EVENT"/>
-<gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
 <crew>
