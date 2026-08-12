@@ -239,6 +239,107 @@
 	<name>terran_medic</name>
 	<name>terran_marine</name>
 </blueprintList>
+
+<blueprintList name="LIST_WEAPONS_TERRAN_WRAITH">
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>GEMINI_BREACH_1</name>
+	<name>GEMINI_FIRE_1</name>
+	<name>GEMINI_HULL_1</name>
+	<name>GEMINI_ION_1</name>
+	<name>GEMINI_SYS_1</name>
+	<name>GEMINI_BREACH_1</name>
+	<name>GEMINI_FIRE_1</name>
+	<name>GEMINI_HULL_1</name>
+	<name>GEMINI_ION_1</name>
+	<name>GEMINI_SYS_1</name>
+
+	<name>TERRAN_BURST_LASER_2</name>
+	<name>TERRAN_BURST_LASER_HEAVY_1</name>
+	<name>TERRAN_BURST_LASER_2</name>
+	<name>TERRAN_BURST_LASER_HEAVY_1</name>
+	<name>GEMINI_BREACH_2</name>
+	<name>GEMINI_FIRE_2</name>
+	<name>GEMINI_HULL_2</name>
+	<name>GEMINI_ION_2</name>
+	<name>GEMINI_SYS_2</name>
+
+	<name>TERRAN_BURST_LASER_3</name>
+	<name>TERRAN_BURST_LASER_HEAVY_2</name>
+	<name>GEMINI_BREACH_3</name>
+	<name>GEMINI_FIRE_3</name>
+	<name>GEMINI_ION_3</name>
+</blueprintList>
+
+<blueprintList name="LIST_WEAPONS_TERRAN_BURST">
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_1</name>
+
+	<name>TERRAN_BURST_LASER_2</name>
+	<name>TERRAN_BURST_LASER_HEAVY_1</name>
+	<name>TERRAN_BURST_LASER_2</name>
+	<name>TERRAN_BURST_LASER_HEAVY_1</name>
+
+	<name>TERRAN_BURST_LASER_3</name>
+	<name>TERRAN_BURST_LASER_HEAVY_2</name>
+</blueprintList>
+
+<blueprintList name="LIST_WEAPONS_TERRAN_GEMINI">
+	<name>GEMINI_BREACH_1</name>
+	<name>GEMINI_FIRE_1</name>
+	<name>GEMINI_HULL_1</name>
+	<name>GEMINI_ION_1</name>
+	<name>GEMINI_SYS_1</name>
+	<name>GEMINI_BREACH_1</name>
+	<name>GEMINI_FIRE_1</name>
+	<name>GEMINI_HULL_1</name>
+	<name>GEMINI_ION_1</name>
+	<name>GEMINI_SYS_1</name>
+
+	<name>GEMINI_BREACH_2</name>
+	<name>GEMINI_FIRE_2</name>
+	<name>GEMINI_HULL_2</name>
+	<name>GEMINI_ION_2</name>
+	<name>GEMINI_SYS_2</name>
+
+	<name>GEMINI_BREACH_3</name>
+	<name>GEMINI_FIRE_3</name>
+	<name>GEMINI_ION_3</name>
+</blueprintList>
+
+<blueprintList name="LIST_DRONES_TERRAN_WRAITH">
+	<name>TERRAN_SPIDER_1</name>
+	<name>TERRAN_SPIDER_1</name>
+	<name>TERRAN_SPIDER_1</name>
+	<name>TERRAN_SPIDER_1</name>
+	<name>TERRAN_SPIDER_1</name>
+	<name>TERRAN_SPIDER_1</name>
+
+	<name>TERRAN_SPIDER_2</name>
+	<name>TERRAN_DEFENSE_1</name>
+	<name>TERRAN_SCV</name>
+	<name>TERRAN_SPIDER_2</name>
+	<name>TERRAN_DEFENSE_1</name>
+	<name>TERRAN_SCV</name>
+
+	<name>TERRAN_SPIDER_3</name>
+	<name>TERRAN_DEFENSE_2</name>
+	<name>TERRAN_DEFENSE_3</name>
+	<!--<name>TERRAN_COMSAT</name>-->
+</blueprintList>
+
 <shipBlueprint name="SHIP_TERRAN_WRAITH_ELITE" layout="SHIP_TERRAN_WRAITH_ELITE" img="SHIP_TERRAN_WRAITH_ELITE">
 	<class>Terran Scout</class>
 	<minSector>1</minSector>
@@ -272,20 +373,20 @@
 	<maxSector>6</maxSector>
 	<systemList>
 		<cloaking power="1" max="3" room="4" start="false" />
-		<drones power="1" max="4" room="6" start="false" />
-		<engines power="4" max="8" room="2" start="true" />
+		<drones power="1" max="2" room="6" start="false" />
+		<engines power="4" max="12" room="2" start="true" />
 		<oxygen power="1" max="3" room="0" start="true" />
-		<pilot power="3" max="3" room="1" start="true" />
+		<pilot power="1" max="3" room="1" start="true" />
 		<lily_system_bracers power="1" max="3" room="5" start="false" />
 		<weapons power="2" max="8" room="3" start="true" />
 	</systemList>
 	<weaponSlots>2</weaponSlots>
 	<droneSlots>1</droneSlots>
-	<weaponList missiles="8" count="2" load="TERRAN_STANDARD_WEAPONS" />
-	<droneList drones="3" count="1" load="TERRAN_DRONES_STANDARD" />
+	<weaponList missiles="8" count="2" load="LIST_WEAPONS_TERRAN_WRAITH" />
+	<droneList drones="3" count="1" load="LIST_DRONES_TERRAN_WRAITH" />
 	<health amount="6" />
 	<maxPower amount="8" />
-	<crewCount amount="2" max="3" class="LIST_CREW_TERRAN_WRAITH" />
+	<crewCount amount="1" max="2" class="LIST_CREW_TERRAN_WRAITH" />
 	<boardingAI>sabotage</boardingAI>
 	<aug name="TERRAN_SHIP_ARMOR_LIGHT" />
 	<aug name="TERRAN_SHIP" />
@@ -297,22 +398,22 @@
 	<minSector>1</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
-		<cloaking power="1" max="3" room="5" start="true" />
-		<drones power="1" max="4" room="6" start="false" />
-		<engines power="1" max="1" room="7" start="true" />
-		<hacking power="1" max="2" room="3" start="false" />
+		<cloaking power="1" max="3" room="5" start="false" />
+		<drones power="1" max="2" room="6" start="false" />
+		<engines power="2" max="12" room="7" start="true" />
+		<hacking power="1" max="2" room="6" start="false" />
 		<oxygen power="1" max="3" room="0" start="true" />
-		<pilot power="3" max="3" room="4" start="true" />
-		<lily_system_bracers power="1" max="3" room="2" start="true" />
-		<weapons power="5" max="12" room="1" start="true" />
+		<pilot power="1" max="3" room="4" start="true" />
+		<lily_system_bracers power="1" max="3" room="2" start="false" />
+		<weapons power="2" max="8" room="1" start="true" />
 	</systemList>
 	<weaponSlots>4</weaponSlots>
 	<droneSlots>1</droneSlots>
-	<weaponList missiles="8" count="4" load="TERRAN_STANDARD_WEAPONS" />
-	<droneList drones="3" count="1" load="TERRAN_DRONES_STANDARD" />
+	<weaponList missiles="12" count="4" load="LIST_WEAPONS_TERRAN_GEMINI" />
+	<droneList drones="3" count="1" load="LIST_DRONES_TERRAN_WRAITH" />
 	<health amount="6" />
 	<maxPower amount="8" />
-	<crewCount amount="2" max="3" class="LIST_CREW_TERRAN_WRAITH" />
+	<crewCount amount="1" max="2" class="LIST_CREW_TERRAN_WRAITH" />
 	<boardingAI>sabotage</boardingAI>
 	<aug name="TERRAN_SHIP_ARMOR_LIGHT" />
 	<aug name="TERRAN_SHIP" />
@@ -321,30 +422,30 @@
 
 <shipBlueprint name="TERRAN_SHIP_WRAITH_C" layout="TERRAN_SHIP_WRAITH_C" img="TERRAN_SHIP_WRAITH_C">
 	<class>Squadron Class</class>
-	<minSector>1</minSector>
+	<minSector>2</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
 		<cloaking power="1" max="3" room="5" start="true" />
 		<drones power="1" max="4" room="3" start="false" />
-		<engines power="1" max="1" room="7" start="true" />
+		<engines power="1" max="12" room="7" start="true" />
 		<hacking power="1" max="2" room="6" start="false" />
 		<oxygen power="1" max="3" room="4" start="true" />
-		<pilot power="3" max="3" room="0" start="true" />
-		<lily_system_bracers power="1" max="3" room="2" start="true" />
+		<pilot power="1" max="3" room="0" start="true" />
+		<lily_system_bracers power="1" max="3" room="2" start="false" />
 		<artillery power="1" max="5" room="2" start="true" weapon="TERRAN_BURST_LASER_1" />
-		<weapons power="3" max="8" room="1" start="true" />
+		<weapons power="2" max="8" room="1" start="true" />
 	</systemList>
 	<weaponSlots>4</weaponSlots>
 	<droneSlots>1</droneSlots>
-	<weaponList missiles="8" count="4" load="TERRAN_STANDARD_WEAPONS" />
-	<droneList drones="3" count="1" load="TERRAN_DRONES_STANDARD" />
+	<weaponList missiles="4" count="2" load="LIST_WEAPONS_TERRAN_BURST" />
+	<droneList drones="3" count="1" load="LIST_DRONES_TERRAN_WRAITH" />
 	<health amount="6" />
 	<maxPower amount="6" />
 	<crewCount amount="2" max="3" class="LIST_CREW_TERRAN_WRAITH" />
 	<boardingAI>sabotage</boardingAI>
 	<aug name="TERRAN_SHIP_ARMOR_LIGHT" />
 	<aug name="TERRAN_SHIP" />
-	<aug name="CLOAK_FIRE" />
+	<aug name="CLOAK_FIRE" />                                                                                                                                                                                                              n
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_WRAITH_D" layout="TERRAN_SHIP_WRAITH_D" img="TERRAN_SHIP_WRAITH_D">
@@ -357,18 +458,18 @@
 		<artillery power="1" max="5" room="10" start="true" weapon="TERRAN_BURST_LASER_1" />
 		<battery power="1" max="2" room="5" start="false" />
 		<cloaking power="1" max="3" room="9" start="true" />
-		<drones power="1" max="4" room="6" start="false" />
-		<engines power="1" max="1" room="11" start="true" />
+		<drones power="1" max="4" room="6" start="false" /> 
+		<engines power="1" max="12" room="11" start="true" />
 		<hacking power="1" max="2" room="3" start="false" />
 		<oxygen power="1" max="3" room="8" start="true" />
-		<pilot power="3" max="3" room="0" start="true" />
+		<pilot power="1" max="3" room="0" start="true" />
 		<lily_system_bracers power="1" max="3" room="4" start="true" />
-		<weapons power="3" max="8" room="2" start="true" />
+		<weapons power="1" max="8" room="2" start="true" />
 	</systemList>
 	<weaponSlots>4</weaponSlots>
 	<droneSlots>1</droneSlots>
-	<weaponList missiles="8" count="4" load="TERRAN_STANDARD_WEAPONS" />
-	<droneList drones="3" count="1" load="TERRAN_DRONES_STANDARD" />
+	<weaponList missiles="8" count="4" load="LIST_WEAPONS_TERRAN_BURST" />
+	<droneList drones="3" count="1" load="LIST_DRONES_TERRAN_WRAITH" />
 	<health amount="6" />
 	<maxPower amount="12" />
 	<crewCount amount="3" max="3" class="LIST_CREW_TERRAN_WRAITH" />

@@ -2419,7 +2419,7 @@
 			<text>
 				You are cleared for docking and directed toward the station's equipment exchange.
 			</text>
-			<store>STORE_TERRAN_ENGINEERING_BAY</store>
+			<store>STORE_TERRAN_ENGINEERING</store>
 		</event>
 	</choice>
 

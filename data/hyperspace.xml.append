@@ -1473,7 +1473,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
 
-<customStore id="STORE_TERRAN_ENGINEERING_BAY">
+<customStore id="STORE_TERRAN_ENGINEERING">
 
     <resource>
         <type>fuel</type>
@@ -1492,17 +1492,15 @@
         <customTitle>AUGMENTS</customTitle>
         <item/>
         <item/>
-        <item/>
         <chance>100</chance>
     </category>
 
     <!-- Secondary Category -->
     <category type="SYSTEMS">
-        <customTitle>ENGINEERING SYSTEMS</customTitle>
+        <customTitle>SYSTEMS</customTitle>
         <item/>
         <item/>
-        <item/>
-        <chance>75</chance>
+        <chance>100</chance>
     </category>
 
 </customStore>
@@ -1534,15 +1532,22 @@
         <allowDuplicates/>
         <item/>
         <item/>
-        <item/>
         <chance>100</chance>
     </category>
 
     <!-- Secondary Crew Category -->
     <category type="CREW">
-        <customTitle>SPECIALIST PERSONNEL</customTitle>
+        <customTitle>PERSONNEL</customTitle>
         <allowDuplicates/>
         <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
+
+	    <!-- Third Crew Category -->
+    <category type="CREW">
+        <customTitle>PERSONNEL</customTitle>
+        <allowDuplicates/>
         <item/>
         <item/>
         <chance>75</chance>
@@ -1579,44 +1584,11 @@
 
     <!-- Primary Category WEAPONS -->
 
-    <category type="WEAPONS" group="0">
+    <category type="WEAPONS">
         <customTitle>TERRAN WEAPONS</customTitle>
-        <item>
-			<blueprint>TERRAN_STANDARD_WEAPONS</blueprint>
-		</item>
-        <item>
-			<blueprint>TERRAN_STANDARD_WEAPONS</blueprint>
-		</item>
-        <item>
-			<blueprint>TERRAN_STANDARD_WEAPONS</blueprint>
-		</item>
-        <chance>100</chance>
-    </category>
-
-    <category type="WEAPONS" group="0">
-        <customTitle>TERRAN LASER WEAPONS</customTitle>
-        <item>
-			<blueprint>TERRAN_LASER_WEAPONS</blueprint>
-		</item>
-		<item>
-			<blueprint>TERRAN_LASER_WEAPONS</blueprint>
-		</item>
-        <item>
-			<blueprint>TERRAN_LASER_WEAPONS</blueprint>
-		</item>
-        <chance>100</chance>
-    </category>
-
-    <category type="WEAPONS" group="0">
-        <item>
-			<blueprint>TERRAN_GEMINI_WEAPONS</blueprint>
-		</item>
-        <item>
-			<blueprint>TERRAN_GEMINI_WEAPONS</blueprint>
-		</item>
-        <item>
-			<blueprint>TERRAN_GEMINI_WEAPONS</blueprint>
-		</item>
+        <allowDuplicates/>
+        <item/>
+        <item/>
         <chance>100</chance>
     </category>
 
@@ -1625,8 +1597,7 @@
         <customTitle>SUPPORT DRONES</customTitle>
         <item/>
         <item/>
-        <item/>
-        <chance>75</chance>
+        <chance>100</chance>
     </category>
 
 </customStore>
@@ -1657,7 +1628,6 @@
         <customTitle>DRONES</customTitle>
         <item/>
         <item/>
-        <item/>
         <chance>100</chance>
     </category>
 
@@ -1666,8 +1636,7 @@
         <customTitle>INDUSTRIAL SYSTEMS</customTitle>
         <item/>
         <item/>
-        <item/>
-        <chance>75</chance>
+        <chance>100</chance>
     </category>
 
 </customStore>
@@ -1698,7 +1667,6 @@
         <customTitle>RESEARCH SYSTEMS</customTitle>
         <item/>
         <item/>
-        <item/>
         <chance>100</chance>
     </category>
 
@@ -1707,8 +1675,7 @@
         <customTitle>ABILITY UPGRADES</customTitle>
         <item/>
         <item/>
-        <item/>
-        <chance>75</chance>
+        <chance>100</chance>
     </category>
 
 </customStore>
@@ -1755,7 +1722,6 @@
         <customTitle>WEAPONS</customTitle>
         <item/>
         <item/>
-        <item/>
         <chance>100</chance>
     </category>
 
@@ -1763,13 +1729,11 @@
         <customTitle>DRONES</customTitle>
         <item/>
         <item/>
-        <item/>
         <chance>100</chance>
     </category>
 
     <category type="AUGMENTS" group="0">
         <customTitle>AUGMENTS</customTitle>
-        <item/>
         <item/>
         <item/>
         <chance>100</chance>
@@ -1780,13 +1744,11 @@
         <allowDuplicates/>
         <item/>
         <item/>
-        <item/>
         <chance>100</chance>
     </category>
 
     <category type="SYSTEMS" group="0">
         <customTitle>SYSTEMS</customTitle>
-        <item/>
         <item/>
         <item/>
         <chance>100</chance>
@@ -1799,7 +1761,6 @@
         <customTitle>WEAPONS</customTitle>
         <item/>
         <item/>
-        <item/>
         <chance>100</chance>
     </category>
 
@@ -1807,13 +1768,11 @@
         <customTitle>DRONES</customTitle>
         <item/>
         <item/>
-        <item/>
         <chance>100</chance>
     </category>
 
     <category type="AUGMENTS" group="1">
         <customTitle>AUGMENTS</customTitle>
-        <item/>
         <item/>
         <item/>
         <chance>100</chance>
@@ -1824,13 +1783,11 @@
         <allowDuplicates/>
         <item/>
         <item/>
-        <item/>
         <chance>100</chance>
     </category>
 
     <category type="SYSTEMS" group="1">
         <customTitle>SYSTEMS</customTitle>
-        <item/>
         <item/>
         <item/>
         <chance>100</chance>
@@ -1839,46 +1796,22 @@
 
     <!--    GROUP 2    -->
 
-    <category type="WEAPONS" group="2">
-        <customTitle>WEAPONS</customTitle>
+	<category type="DRONES" group="2">
+        <customTitle>DRONES</customTitle>
         <item/>
+			<blueprint>TERRAN_SCV</blueprint>
         <item/>
-        <item/>
-        <chance>50</chance>
+        <chance>100</chance>
     </category>
 
     <category type="DRONES" group="2">
         <customTitle>DRONES</customTitle>
         <item/>
+			<blueprint>TERRAN_GOLIATH</blueprint>
         <item/>
-        <item/>
-        <chance>50</chance>
+        <chance>100</chance>
     </category>
 
-    <category type="AUGMENTS" group="2">
-        <customTitle>AUGMENTS</customTitle>
-        <item/>
-        <item/>
-        <item/>
-        <chance>50</chance>
-    </category>
-
-    <category type="CREW" group="2">
-        <customTitle>PERSONNEL</customTitle>
-        <allowDuplicates/>
-        <item/>
-        <item/>
-        <item/>
-        <chance>50</chance>
-    </category>
-
-    <category type="SYSTEMS" group="2">
-        <customTitle>SYSTEMS</customTitle>
-        <item/>
-        <item/>
-        <item/>
-        <chance>50</chance>
-    </category>
 
 </customStore>
 
