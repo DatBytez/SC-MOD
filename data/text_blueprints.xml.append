@@ -18,18 +18,12 @@
 <text name="text_PLAYER_SHIP_TERRAN_VALKYRIE_name">Terran Valkyrie</text>
 <text name="text_PLAYER_SHIP_TERRAN_VALKYRIE_desc">[[NEED VALKYRIE DESCRIPTION HERE]]</text>
 
-<!-- ENEMY SHIPS -->
+<!-- ENEMY SHIP CLASSES -->
 <text name="text_SHIP_TERRAN_WRAITH_class">Scout</text>
 <text name="text_SHIP_TERRAN_BATTLECRUISER_class">Battlecruiser</text>	
 <text name="text_SHIP_TERRAN_VESSEL_class">Science Vessel</text>
 <text name="text_SHIP_TERRAN_VALKYRIE_class">Assault Class</text>
-
-<!-- ENEMY STORE SHIPS -->
- <text name="text_TERRAN_SHIP_SCIENCE_class">Building</text>
-<text name="text_TERRAN_SHIP_FACTORY_class">Building</text>
-<text name="text_TERRAN_SHIP_COMMAND_class">Building</text>
-<text name="text_TERRAN_SHIP_BARRACKS_class">Building</text>
-<text name="text_TERRAN_SHIP_ENGINEERING_class">Building</text>
+<text name="text_TERRAN_BUILDING_class">Building</text>
 
 <!-- TERRAN BURST LASER -->
 <text name="weapon_TERRAN_BURST_LASER_1_title">Burst Laser Mk I</text>

@@ -1,5 +1,5 @@
--- Terran Boarding Pod - snapshot/recreate transport debug.
--- This file is diagnostic only and does not alter gameplay behavior.
+-- Terran Boarding Pod - appearance preservation debug.
+-- Diagnostic only. Gameplay must not depend on this file.
 
 mods.sc_drone_pod = mods.sc_drone_pod or {}
 local pod = mods.sc_drone_pod
@@ -7,12 +7,12 @@ local pod = mods.sc_drone_pod
 local SCREEN_X = 65
 local SCREEN_Y = 110
 local LINE_HEIGHT = 18
-local MAX_LINES = 22
+local MAX_LINES = 12
 
-local function active_transport_count()
+local function count_table(tbl)
     local count = 0
 
-    for _, _ in pairs(pod.activeTransports or {}) do
+    for _, _ in pairs(tbl or {}) do
         count = count + 1
     end
 
@@ -31,20 +31,21 @@ script.on_render_event(
             0,
             SCREEN_X,
             SCREEN_Y,
-            "Terran Boarding Pod - Snapshot Transport Debug"
+            "Terran Boarding Pod - Appearance Test"
         )
 
         Graphics.freetype.easy_print(
             0,
             SCREEN_X,
             SCREEN_Y + LINE_HEIGHT,
-            "Active transports: "
-            .. tostring(active_transport_count())
+            "Tracked boarders: "
+            .. tostring(count_table(pod.returnableBoarders))
+            .. "   In flight: "
+            .. tostring(count_table(pod.activeTransports))
         )
 
-        local lines = pod.debugLines or {}
+        local lines = pod.appearanceDebugLines or {}
         local first = math.max(1, #lines - MAX_LINES + 1)
-
         local displayIndex = 0
 
         for index = first, #lines do
@@ -54,9 +55,7 @@ script.on_render_event(
                 0,
                 SCREEN_X,
                 SCREEN_Y + LINE_HEIGHT * (1 + displayIndex),
-                tostring(index)
-                .. ". "
-                .. tostring(lines[index])
+                tostring(lines[index])
             )
         end
     end
