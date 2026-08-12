@@ -285,6 +285,21 @@
 	<text>Aaaaa! Scary ship!</text>
 	<ship load="TERRAN_SHIP_ENGINEERING" hostile="true"/>
 </event>
+
+<ship name="TERRAN_SHIP_STARPORT" auto_blueprint="TERRAN_SHIP_STARPORT">
+	<surrender chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
+	<destroyed load="SC_DESTROYED_TERRAN"/>
+	<deadCrew load="SC_DEAD_CREW_TERRAN"/>
+	<crew>
+		<crewMember type="terran_civilian" prop="0.01"/>
+		<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
+	</crew>
+</ship>
+
+<event name="EVENT_TERRAN_STARPORT">
+	<text>Aaaaa! Scary ship!</text>
+	<ship load="TERRAN_SHIP_STARPORT" hostile="true"/>
+</event>
 <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     GENERIC COMBAT RESULT EVENTS
@@ -2372,10 +2387,285 @@
 -->
 
 <eventList name="STORELIST_TERRAN">
-	<event load="STOREEVENT_TERRAN_DEPOT"/>
-	<event load="STOREEVENT_TERRAN_ARMORY"/>
-	<event load="STOREEVENT_TERRAN_CIVILIAN_MARKET"/>
+	<event load="STOREEVENT_TERRAN_ENGINEERING"/>
+	<event load="STOREEVENT_TERRAN_BARRACKS"/>
+	<event load="STOREEVENT_TERRAN_STARPORT"/>
+	<event load="STOREEVENT_TERRAN_FACTORY"/>
+	<event load="STOREEVENT_TERRAN_COMMAND"/>
+	<event load="STOREEVENT_TERRAN_SCIENCE"/>
 </eventList>
+
+<!--
+*********************************************************************************************************
+  TERRAN ENGINEERING BAY STORE
+*********************************************************************************************************
+-->
+
+<event name="STOREEVENT_TERRAN_ENGINEERING">
+	<preventQuest/>
+	<beaconType id="map_icon_store_generic" global="false">
+		<color r="215" g="255" b="200" a="1"/>
+	</beaconType>
+
+	<text>
+		A Terran Engineering Bay operates at this beacon. Repair drones and maintenance craft move between the station and nearby vessels while its quartermaster broadcasts an open offer of engineering supplies.
+	</text>
+
+	<ship load="TERRAN_SHIP_ENGINEERING" hostile="false"/>
+
+	<choice>
+		<text>Dock with the Engineering Bay.</text>
+		<event>
+			<text>
+				You are cleared for docking and directed toward the station's equipment exchange.
+			</text>
+			<store>STORE_TERRAN_ENGINEERING_BAY</store>
+		</event>
+	</choice>
+
+	<choice>
+		<text>Attack the Engineering Bay.</text>
+		<event>
+			<text>
+				You power your weapons and move against the Engineering Bay. Warning lights flare across the station as its defensive systems come online.
+			</text>
+			<ship load="TERRAN_SHIP_ENGINEERING" hostile="true"/>
+		</event>
+	</choice>
+
+	<choice>
+		<text>Leave the station alone.</text>
+		<event/>
+	</choice>
+</event>
+
+<!--
+*********************************************************************************************************
+  TERRAN BARRACKS STORE
+*********************************************************************************************************
+-->
+
+<event name="STOREEVENT_TERRAN_BARRACKS">
+	<preventQuest/>
+	<beaconType id="map_icon_store_generic" global="false">
+		<color r="215" g="255" b="200" a="1"/>
+	</beaconType>
+
+	<text>
+		A heavily fortified Terran Barracks occupies this beacon. Troop transports continuously arrive and depart while recruiters and supply officers advertise personnel available for reassignment.
+	</text>
+
+	<ship load="TERRAN_SHIP_BARRACKS" hostile="false"/>
+
+	<choice>
+		<text>Dock with the Barracks.</text>
+		<event>
+			<text>
+				The station grants you access to its personnel and supply offices.
+			</text>
+			<store>STORE_TERRAN_BARRACKS</store>
+		</event>
+	</choice>
+
+	<choice>
+		<text>Attack the Barracks.</text>
+		<event>
+			<text>
+				You open fire on the Barracks. Its garrison scrambles to defend the station.
+			</text>
+			<text>
+				Your hostile approach immediately triggers the Barracks' defenses. Its garrison scrambles to battle stations.
+			</text>
+			<ship load="TERRAN_SHIP_BARRACKS" hostile="true"/>
+		</event>
+	</choice>
+
+	<choice>
+		<text>Leave the station alone.</text>
+		<event/>
+	</choice>
+</event>
+
+<!--
+*********************************************************************************************************
+  TERRAN STARPORT STORE
+*********************************************************************************************************
+-->
+
+<event name="STOREEVENT_TERRAN_STARPORT">
+	<preventQuest/>
+	<beaconType id="map_icon_store_generic" global="false">
+		<color r="215" g="255" b="200" a="1"/>
+	</beaconType>
+
+	<text>
+		A large Terran Starport dominates the beacon. Military craft pass through its docking lanes while fuel, ammunition, and weapons are transferred between supply ships and station warehouses.
+	</text>
+
+	<ship load="TERRAN_SHIP_STARPORT" hostile="false"/>
+
+	<choice>
+		<text>Dock with the Starport.</text>
+		<event>
+			<text>
+				Traffic control assigns you a berth near the Starport's military supply exchange.
+			</text>
+			<store>STORE_TERRAN_STARPORT</store>
+		</event>
+	</choice>
+
+	<choice>
+		<text>Attack the Starport.</text>
+		<event>
+			<text>
+				You break from the traffic pattern and open fire. Docking clamps retract and the Starport redirects power to its combat systems.
+			</text>
+			<ship load="TERRAN_SHIP_STARPORT" hostile="true"/>
+		</event>
+	</choice>
+
+	<choice>
+		<text>Leave the station alone.</text>
+		<event/>
+	</choice>
+</event>
+
+<!--
+*********************************************************************************************************
+  TERRAN FACTORY STORE
+*********************************************************************************************************
+-->
+
+<event name="STOREEVENT_TERRAN_FACTORY">
+	<preventQuest/>
+	<beaconType id="map_icon_store_generic" global="false">
+		<color r="215" g="255" b="200" a="1"/>
+	</beaconType>
+
+	<text>
+		An industrial Terran Factory fills the surrounding space with cargo traffic. Finished components and equipment are being loaded onto transports directly from its production lines.
+	</text>
+
+		<ship load="TERRAN_SHIP_FACTORY" hostile="false"/>
+
+	<choice>
+		<text>Dock with the Factory.</text>
+		<event>
+			<text>
+				A factory representative gives you access to the facility's commercial inventory.
+			</text>
+			<store>STORE_TERRAN_FACTORY</store>
+		</event>
+	</choice>
+
+	<choice>
+		<text>Attack the Factory.</text>
+		<event>
+			<text>
+				As you move to attack, production lines shut down and armored bulkheads seal across the Factory. Its defensive systems activate.
+			</text>
+			<ship load="TERRAN_SHIP_FACTORY" hostile="true"/>
+		</event>
+	</choice>
+
+	<choice>
+		<text>Leave the station alone.</text>
+		<event/>
+	</choice>
+</event>
+
+<!--
+*********************************************************************************************************
+  TERRAN COMMAND CENTER STORE
+*********************************************************************************************************
+-->
+
+<event name="STOREEVENT_TERRAN_COMMAND">
+	<preventQuest/>
+	<beaconType id="map_icon_store_generic" global="false">
+		<color r="215" g="255" b="200" a="1"/>
+	</beaconType>
+
+	<text>
+		A Terran Command Center coordinates military activity throughout the surrounding region. Despite the constant communications traffic, its logistics division permits passing vessels to purchase repairs and military supplies.
+	</text>
+
+		<ship load="TERRAN_SHIP_COMMAND" hostile="false"/>
+
+	<choice>
+		<text>Request access to the Command Center's supplies.</text>
+		<event>
+			<text>
+				Command authorizes limited access to its repair docks and logistical reserves.
+			</text>
+			<store>STORE_TERRAN_COMMAND</store>
+		</event>
+	</choice>
+
+	<choice>
+		<text>Attack the Command Center.</text>
+		<event>
+			<text>
+				Your weapons lock onto the Command Center. The station immediately declares you hostile and redirects its military systems against your ship.
+			</text>
+			<ship load="TERRAN_SHIP_COMMAND" hostile="true"/>
+		</event>
+	</choice>
+
+	<choice>
+		<text>Leave the Command Center alone.</text>
+		<event/>
+	</choice>
+</event>
+
+<!--
+*********************************************************************************************************
+  TERRAN SCIENCE FACILITY STORE
+*********************************************************************************************************
+-->
+
+<event name="STOREEVENT_TERRAN_SCIENCE">
+	<preventQuest/>
+	<beaconType id="map_icon_store_generic" global="false">
+		<color r="215" g="255" b="200" a="1"/>
+	</beaconType>
+
+	<text>
+		A Terran Science Facility is positioned at this beacon, surrounded by sensor arrays and experimental equipment. Its research administration offers selected technology to approved vessels.
+	</text>
+
+	<ship load="TERRAN_SHIP_SCIENCE" hostile="false"/>
+
+	<choice>
+		<text>Dock with the Science Facility.</text>
+		<event>
+			<text>
+				You receive clearance to inspect technology released by the facility's research division.
+			</text>
+			<store>STORE_TERRAN_SCIENCE</store>
+		</event>
+	</choice>
+
+	<choice>
+		<text>Attack the Science Facility.</text>
+		<event>
+			<text>
+				You open fire on the Science Facility. Its research personnel scramble to defend the station.
+			</text>
+			<text>
+				Research personnel scramble for cover as you begin your attack. Experimental systems power up throughout the facility as it prepares to defend itself.
+			</text>
+			<ship hostile="true"/>
+		</event>
+	</choice>
+
+	<choice>
+		<text>Leave the facility alone.</text>
+		<event/>
+	</choice>
+</event>
+
+<!-- OTHER TERRAN STORE EVENTS -->
 
 <event name="STOREEVENT_TERRAN_DEPOT">
 	<preventQuest/>
