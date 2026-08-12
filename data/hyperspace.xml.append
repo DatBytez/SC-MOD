@@ -1455,7 +1455,7 @@
 
     <!-- Read XML tags only after all custom tag parsers have been registered -->
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
+    <!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>-->
 </mod:findLike>
 
 
@@ -1467,95 +1467,420 @@
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 -->
 <store>
-	<!--
-	/////////////////
-	STORES
-	/////////////////
-	-->
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// TERRAN ENGINEERING BAY
+////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
 
-	<customStore id="STORE_TERRAN">
-		<hullRepair>
-			<price min="2" max="4"/>
-			<sectorScaled/>
-		</hullRepair>
+<customStore id="STORE_TERRAN_ENGINEERING_BAY">
 
-		<resource>
-			<type>fuel</type>
-			<count min="5" max="10"/>
-		</resource>
+    <resource>
+        <type>fuel</type>
+        <count min="3" max="6"/>
+        <price>3</price>
+    </resource>
 
-		<resource>
-			<type>missiles</type>
-			<count min="3" max="7"/>
-		</resource>
+    <resource>
+        <type>drones</type>
+        <count min="8" max="14"/>
+        <price min="5" max="6"/>
+    </resource>
 
-		<resource>
-			<type>drones</type>
-			<count min="5" max="10"/>
-		</resource>
+    <!-- Primary Category -->
+    <category type="AUGMENTS">
+        <customTitle>AUGMENTS</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
 
-		<category type="WEAPONS">
-			<customTitle>TERRAN WEAPONS</customTitle>
-			<item>
-				<blueprint>TERRAN_STANDARD_WEAPONS</blueprint>
-			</item>
-			<item>
-				<blueprint>TERRAN_STANDARD_WEAPONS</blueprint>
-			</item>
-			<item>
-				<blueprint>TERRAN_STANDARD_WEAPONS</blueprint>
-			</item>
-			<item/>
-			<chance>100</chance>
-		</category>
+    <!-- Secondary Category -->
+    <category type="SYSTEMS">
+        <customTitle>ENGINEERING SYSTEMS</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>75</chance>
+    </category>
 
-		<category type="DRONES">
-			<customTitle>TERRAN DRONES</customTitle>
-			<item>
-				<blueprint>TERRAN_DRONES_STANDARD</blueprint>
-			</item>
-			<item>
-				<blueprint>TERRAN_DRONES_STANDARD</blueprint>
-			</item>
-			<chance>25</chance>
-		</category>
+</customStore>
 
-		<category type="AUGMENTS">
-			<customTitle>AUGMENTS</customTitle>
-			<item/>
-			<item/>
-			<item/>
-			<chance>65</chance>
-		</category>
 
-		<category type="CREW">
-			<customTitle>TERRAN CONTRACTORS</customTitle>
-			<allowDuplicates/>
-			<item>
-				<blueprint>TERRAN_LIST_CREW_ALL</blueprint>
-			</item>
-			<item>
-				<blueprint>TERRAN_LIST_CREW_ALL</blueprint>
-			</item>
-			<item>
-				<blueprint>TERRAN_LIST_CREW_ALL</blueprint>
-			</item>
-			<chance>75</chance>
-		</category>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// TERRAN BARRACKS
+////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
 
-		<category type="SYSTEMS">
-			<customTitle>TERRAN SYSTEMS</customTitle>
-			<item>
-				<blueprint>SHOP_TERRAN_SYSTEMS_ESSENTIAL</blueprint>
-			</item>
-			<item>
-				<blueprint>SHOP_TERRAN_SYSTEMS_BONUS</blueprint>
-			</item>
-			<item>
-				<blueprint>SHOP_TERRAN_SYSTEMS_BONUS</blueprint>
-			</item>
-			<chance>75</chance>
-		</category>
-	</customStore>
+<customStore id="STORE_TERRAN_BARRACKS">
+
+    <resource>
+        <type>fuel</type>
+        <count min="3" max="6"/>
+        <price min="3" max="4"/>
+    </resource>
+
+    <resource>
+        <type>missiles</type>
+        <count min="4" max="8"/>
+        <price min="5" max="6"/>
+    </resource>
+
+    <!-- Primary Crew Category -->
+    <category type="CREW">
+        <customTitle>PERSONNEL</customTitle>
+        <allowDuplicates/>
+        <item/>
+        <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
+
+    <!-- Secondary Crew Category -->
+    <category type="CREW">
+        <customTitle>SPECIALIST PERSONNEL</customTitle>
+        <allowDuplicates/>
+        <item/>
+        <item/>
+        <item/>
+        <chance>75</chance>
+    </category>
+
+</customStore>
+
+
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// TERRAN STARPORT
+////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+<customStore id="STORE_TERRAN_STARPORT">
+
+    <resource>
+        <type>fuel</type>
+        <count min="8" max="14"/>
+        <price min="2" max="3"/>
+    </resource>
+
+    <resource>
+        <type>missiles</type>
+        <count min="6" max="10"/>
+        <price min="5" max="6"/>
+    </resource>
+
+    <resource>
+        <type>drones</type>
+        <count min="3" max="6"/>
+        <price>8</price>
+    </resource>
+
+    <!-- Primary Category WEAPONS -->
+
+    <category type="WEAPONS" group="0">
+        <customTitle>TERRAN WEAPONS</customTitle>
+        <item>
+			<blueprint>TERRAN_STANDARD_WEAPONS</blueprint>
+		</item>
+        <item>
+			<blueprint>TERRAN_STANDARD_WEAPONS</blueprint>
+		</item>
+        <item>
+			<blueprint>TERRAN_STANDARD_WEAPONS</blueprint>
+		</item>
+        <chance>100</chance>
+    </category>
+
+    <category type="WEAPONS" group="0">
+        <customTitle>TERRAN LASER WEAPONS</customTitle>
+        <item>
+			<blueprint>TERRAN_LASER_WEAPONS</blueprint>
+		</item>
+		<item>
+			<blueprint>TERRAN_LASER_WEAPONS</blueprint>
+		</item>
+        <item>
+			<blueprint>TERRAN_LASER_WEAPONS</blueprint>
+		</item>
+        <chance>100</chance>
+    </category>
+
+    <category type="WEAPONS" group="0">
+        <item>
+			<blueprint>TERRAN_GEMINI_WEAPONS</blueprint>
+		</item>
+        <item>
+			<blueprint>TERRAN_GEMINI_WEAPONS</blueprint>
+		</item>
+        <item>
+			<blueprint>TERRAN_GEMINI_WEAPONS</blueprint>
+		</item>
+        <chance>100</chance>
+    </category>
+
+    <!-- Secondary Category -->
+    <category type="DRONES">
+        <customTitle>SUPPORT DRONES</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>75</chance>
+    </category>
+
+</customStore>
+
+
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// TERRAN FACTORY
+////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+<customStore id="STORE_TERRAN_FACTORY">
+
+    <resource>
+        <type>missiles</type>
+        <count min="4" max="7"/>
+        <price min="5" max="6"/>
+    </resource>
+
+    <resource>
+        <type>drones</type>
+        <count min="8" max="13"/>
+        <price min="5" max="6"/>
+    </resource>
+
+    <!-- Primary Category -->
+    <category type="DRONES">
+        <customTitle>DRONES</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
+
+    <!-- Secondary Category -->
+    <category type="SYSTEMS">
+        <customTitle>INDUSTRIAL SYSTEMS</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>75</chance>
+    </category>
+
+</customStore>
+
+
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// TERRAN SCIENCE FACILITY
+////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+<customStore id="STORE_TERRAN_SCIENCE">
+
+    <resource>
+        <type>fuel</type>
+        <count min="2" max="5"/>
+        <price>4</price>
+    </resource>
+
+    <resource>
+        <type>drones</type>
+        <count min="3" max="6"/>
+        <price min="8" max="9"/>
+    </resource>
+
+    <!-- Primary Category -->
+    <category type="SYSTEMS">
+        <customTitle>RESEARCH SYSTEMS</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
+
+    <!-- Secondary Category / Ability Upgrades -->
+    <category type="AUGMENTS">
+        <customTitle>ABILITY UPGRADES</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>75</chance>
+    </category>
+
+</customStore>
+
+
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// TERRAN COMMAND CENTER
+////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+<customStore id="STORE_TERRAN_COMMAND">
+
+    <!-- Discounted Hull Repairs -->
+    <hullRepair>
+        <price min="1" max="3"/>
+        <sectorScaled/>
+    </hullRepair>
+
+    <!-- Discounted Supplies -->
+
+    <resource>
+        <type>fuel</type>
+        <count min="8" max="14"/>
+        <price min="2" max="3"/>
+    </resource>
+
+    <resource>
+        <type>missiles</type>
+        <count min="6" max="10"/>
+        <price min="5" max="6"/>
+    </resource>
+
+    <resource>
+        <type>drones</type>
+        <count min="8" max="13"/>
+        <price min="6" max="7"/>
+    </resource>
+
+
+    <!--    GROUP 0    -->
+
+    <category type="WEAPONS" group="0">
+        <customTitle>WEAPONS</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
+
+    <category type="DRONES" group="0">
+        <customTitle>DRONES</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
+
+    <category type="AUGMENTS" group="0">
+        <customTitle>AUGMENTS</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
+
+    <category type="CREW" group="0">
+        <customTitle>PERSONNEL</customTitle>
+        <allowDuplicates/>
+        <item/>
+        <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
+
+    <category type="SYSTEMS" group="0">
+        <customTitle>SYSTEMS</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
+
+
+    <!--    GROUP 1    -->
+
+    <category type="WEAPONS" group="1">
+        <customTitle>WEAPONS</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
+
+    <category type="DRONES" group="1">
+        <customTitle>DRONES</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
+
+    <category type="AUGMENTS" group="1">
+        <customTitle>AUGMENTS</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
+
+    <category type="CREW" group="1">
+        <customTitle>PERSONNEL</customTitle>
+        <allowDuplicates/>
+        <item/>
+        <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
+
+    <category type="SYSTEMS" group="1">
+        <customTitle>SYSTEMS</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>100</chance>
+    </category>
+
+
+    <!--    GROUP 2    -->
+
+    <category type="WEAPONS" group="2">
+        <customTitle>WEAPONS</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>50</chance>
+    </category>
+
+    <category type="DRONES" group="2">
+        <customTitle>DRONES</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>50</chance>
+    </category>
+
+    <category type="AUGMENTS" group="2">
+        <customTitle>AUGMENTS</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>50</chance>
+    </category>
+
+    <category type="CREW" group="2">
+        <customTitle>PERSONNEL</customTitle>
+        <allowDuplicates/>
+        <item/>
+        <item/>
+        <item/>
+        <chance>50</chance>
+    </category>
+
+    <category type="SYSTEMS" group="2">
+        <customTitle>SYSTEMS</customTitle>
+        <item/>
+        <item/>
+        <item/>
+        <chance>50</chance>
+    </category>
+
+</customStore>
+
 </store>
 </FTL>

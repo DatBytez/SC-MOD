@@ -10,6 +10,8 @@
 	<name>TERRAN_DEFENSE_1</name>
 	<name>TERRAN_DEFENSE_2</name>
 	<name>TERRAN_DEFENSE_3</name>
+	<name>TERRAN_POD</name>
+	<name>TERRAN_GOLIATH</name>
 </blueprintList>
 
 <blueprintList name="TERRAN_DRONES_COMBAT">
@@ -20,6 +22,7 @@
 	<name>TERRAN_SPIDER_1</name>
 	<name>TERRAN_SPIDER_2</name>
 	<name>TERRAN_SPIDER_3</name>
+	<name>TERRAN_GOLIATH</name>
 </blueprintList>
 
 <blueprintList name="TERRAN_DRONES_DEFENSE">
@@ -54,83 +57,42 @@
 	<name>GEMINI_SYS_2</name>
 	<name>TERRAN_BEAM_IRRADIATE</name>
 	<name>EMP_MISSILE</name>
+	<name>TERRAN_MISSILE_HALO</name>
 </blueprintList>
 
-<blueprintList name="TERRAN_WEAPONS_FREE">
+<blueprintList name="TERRAN_GEMINI_WEAPONS">
+	<name>GEMINI_FIRE_1</name>
+	<name>GEMINI_FIRE_2</name>
+	<name>GEMINI_FIRE_3</name>
+	<name>GEMINI_ION_1</name>
+	<name>GEMINI_ION_2</name>
+	<name>GEMINI_ION_3</name>
+	<name>GEMINI_BREACH_1</name>
+	<name>GEMINI_BREACH_2</name>
+	<name>GEMINI_BREACH_3</name>
+	<name>GEMINI_HULL_1</name>
+	<name>GEMINI_HULL_2</name>
+	<name>GEMINI_SYS_1</name>
+	<name>GEMINI_SYS_2</name>
+</blueprintList>
+
+<blueprintList name="TERRAN_LASER_WEAPONS">
+	<name>TERRAN_BURST_LASER_1</name>
+	<name>TERRAN_BURST_LASER_2</name>
+	<name>TERRAN_BURST_LASER_3</name>
+	<name>TERRAN_BURST_LASER_HEAVY_1</name>
+	<name>TERRAN_BURST_LASER_HEAVY_2</name>
+	<name>TERRAN_LASER_BATTERY_1</name>
+	<name>TERRAN_LASER_BATTERY_2</name>
+	<name>TERRAN_LASER_BATTERY_3</name>
+	<name>TERRAN_LASER_BATTERY_HEAVY_1</name>
+	<name>TERRAN_LASER_BATTERY_HEAVY_2</name>
+</blueprintList>
+
+<blueprintList name="TERRAN_WEAPONS_FREE"> <!-- UNUSED -->
 	<name>TERRAN_BURST_LASER_1</name>
 	<name>TERRAN_LASER_BATTERY_1</name>
 	<name>GEMINI_SYS_1</name>
-</blueprintList>
-
-<!-- USED IN EVENT DOCK_BOMB_SALESMAN -->
-<blueprintList name="WEAPONS_BOMBS_CHEAP">
-	<name>BOMB_ION</name>
-	<name>BOMB_1</name>
-	<name>BOMB_BREACH_1</name>
-</blueprintList>
-
-<!-- USED IN EVENT DOCK_BOMB_SALESMAN -->
-<blueprintList name="WEAPONS_MISSILES_EXPENSIVE">
-	<name>MISSILES_3</name>
-	<name>MISSILES_BURST</name>
-	<name>MISSILES_BREACH</name>
-</blueprintList>
-
-<blueprintList name="CREW_RANDOM">
-	<name>mantis</name>
-	<name>rock</name>
-	<name>engi</name>
-	<name>energy</name>
-	<name>human</name>
-	<name>slug</name>
-</blueprintList>
-
-<blueprintList name="WEAPONS_ION"> <!-- for events -->
-	<name>ION_1</name>
-	<name>ION_2</name>
-	<name>ION_4</name>
-	<name>BOMB_ION</name>
-	<name>ION_STUN</name>
-	<name>BOMB_STUN</name>
-	<name>ION_CHARGEGUN</name>
-	<name>ION_CHAINGUN</name>
-	<name>ION_STUN</name>
-</blueprintList>
-
-<blueprintList name="WEAPONS_MISSILES"> <!-- for events -->
-	<name>MISSILES_1</name>
-	<name>MISSILES_2</name>
-	<name>MISSILES_2_PLAYER</name>
-	<name>MISSILES_3</name>
-	<name>MISSILES_BURST</name>
-	<name>MISSILES_BREACH</name>
-	<name>MISSILE_CHARGEGUN</name>
-</blueprintList>
-<blueprintList name="WEAPONS_BEAM_DAMAGE">  <!-- for events -->
-	<name>BEAM_HULL</name>
-	<name>BEAM_3</name>
-	<name>BEAM_2</name>
-	<name>BEAM_1</name>
-	<name>BEAM_LONG</name>
-	<name>ARTILLERY_FED</name>
-</blueprintList>
-
-<blueprintList name="COMBAT_BEAM_DRONE_LIST"> <!-- for events -->
-	<name>COMBAT_BEAM</name>
-	<name>COMBAT_BEAM_2</name>
-</blueprintList>
-
-<blueprintList name="DRONES_DEFENSE_LIST"> <!-- for events -->
-	<name>DEFENSE_1</name>
-	<name>DEFENSE_2</name>
-</blueprintList>
-
-<blueprintList name="COMBAT_DRONE_LIST"> <!-- for events -->
-	<name>COMBAT_1</name>
-	<name>COMBAT_2</name>
-	<name>COMBAT_BEAM</name>
-	<name>COMBAT_BEAM_2</name>
-	<name>DRONE_FIREBEAM</name>
 </blueprintList>
 
 <!--********************            AUGMENT LISTS            *******************-->
@@ -796,6 +758,33 @@
 	<maxPower amount="5" />
 	<crewCount amount="5" max="10" class="TERRAN_LIST_CREW_ALL" />
 	<boardingAI>invasion</boardingAI>
+	<aug name="TERRAN_SHIP" />
+	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
+</shipBlueprint>
+
+<shipBlueprint name="TERRAN_SHIP_ENGINEERING" layout="TERRAN_SHIP_ENGINEERING" img="TERRAN_SHIP_ENGINEERING">
+	<class id="text_TERRAN_SHIP_ENGINEERING_class">Building</class>
+	<minSector>1</minSector>
+	<maxSector>8</maxSector>
+	<systemList>
+		<artillery power="1" max="4" room="6" start="false" weapon="TERRAN_LASER_BATTERY_HEAVY_OLD_2" />
+		<artillery power="1" max="4" room="8" start="false" weapon="TERRAN_LASER_BATTERY_HEAVY_OLD_2" />
+		<artillery power="1" max="4" room="7" start="false" weapon="TERRAN_LASER_BATTERY_HEAVY_OLD_2" />
+		<clonebay power="1" max="3" room="4" start="true" />
+		<doors power="1" max="3" room="0" start="true" />
+		<drones power="2" max="6" room="3" start="true" />
+		<hacking power="1" max="3" room="1" start="true" />
+		<oxygen power="1" max="3" room="5" start="true" />
+		<shields power="1" max="4" room="2" start="true" />
+	</systemList>
+	<weaponSlots>0</weaponSlots>
+	<droneSlots>3</droneSlots>
+	<weaponList missiles="0" count="0" />
+	<droneList drones="4" count="3" load="TERRAN_DRONES_DEFENSE" />
+	<health amount="8" />
+	<maxPower amount="12" />
+	<crewCount amount="1" max="5" class="human" />
+	<boardingAI>sabotage</boardingAI>
 	<aug name="TERRAN_SHIP" />
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
 </shipBlueprint>

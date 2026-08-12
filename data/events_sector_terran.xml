@@ -270,6 +270,21 @@
 	<text>Aaaaa! Scary ship!</text>
 	<ship load="TERRAN_SHIP_COMMAND" hostile="true"/>
 </event>
+
+<ship name="TERRAN_SHIP_ENGINEERING" auto_blueprint="TERRAN_SHIP_ENGINEERING">
+<surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
+<destroyed load="SC_DESTROYED_TERRAN"/>
+<deadCrew load="SC_DEAD_CREW_TERRAN"/>
+<crew>
+    <crewMember type="terran_civilian" prop="0.01"/>
+	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
+</crew>
+</ship>
+
+<event name="EVENT_TERRAN_ENGINEERING">
+	<text>Aaaaa! Scary ship!</text>
+	<ship load="TERRAN_SHIP_ENGINEERING" hostile="true"/>
+</event>
 <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     GENERIC COMBAT RESULT EVENTS
