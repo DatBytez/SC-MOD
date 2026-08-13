@@ -358,7 +358,7 @@
 		<animBase>human</animBase>
 		<maxHealth>80</maxHealth>
 		<canFight>false</canFight>
-		<canSabotage>false</canSabotage>
+		<canSabotage>true</canSabotage>
 		<canShoot>false</canShoot>
 		<deathSounds>
 			<deathSound>terran_civilian_death</deathSound>
@@ -1411,52 +1411,7 @@
 				</exclusivityGroup>
 			</exclusivityOverride>				-->
 
-<mod:findLike type="scripts" limit="1">
-    <!-- MV tag framework initialization first -->
-    <mod-append:script>data/mv_scripts/tags/tag-data-init.lua</mod-append:script>
 
-    <!-- Shared/helper scripts used by later SC scripts -->
-    <mod-append:script>data/aa_scripts/AA_core.lua</mod-append:script>
-    <mod-append:script>data/aa_scripts/weapons/smash.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_tag.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_projectile_scaling.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_radius_core.lua</mod-append:script>
-
-    <mod-append:script>data/sc_scripts/sc_pilot_ui.lua</mod-append:script>
-
-    <!-- SC scripts that may register XML tags or depend on shared helpers -->
-    <mod-append:script>data/sc_scripts/sc_pilot.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_firefill.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_breachfill.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_filter.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_chain.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_charge.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_paired.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_yamato.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_copy.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_weapon_irradiate.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_halo.lua</mod-append:script>
-
-    <mod-append:script>data/sc_scripts/sc_augment_battery.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_augment_detector.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_augment_armor.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_augment_repair.lua</mod-append:script>
-
-    <mod-append:script>data/sc_scripts/sc_drone_goliath.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_drone_scv_ai.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_drone_pod.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_drone_active.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
-
-    <!-- Read XML tags only after all custom tag parsers have been registered -->
-    <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
-    <!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>-->
-</mod:findLike>
 
 
 <!--
@@ -1816,4 +1771,54 @@
 </customStore>
 
 </store>
+
+
+
+
+
+<mod:findLike type="scripts" limit="1">
+    <mod-append:script>data/mv_scripts/tags/tag-data-init.lua</mod-append:script>
+
+    <mod-append:script>data/aa_scripts/AA_core.lua</mod-append:script>
+    <mod-append:script>data/aa_scripts/weapons/smash.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_tag.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_projectile_scaling.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_radius_core.lua</mod-append:script>
+
+    <mod-append:script>data/sc_scripts/sc_pilot_ui.lua</mod-append:script>
+
+    <mod-append:script>data/sc_scripts/sc_pilot.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_firefill.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_breachfill.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_filter.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_chain.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_charge.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_paired.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_yamato.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_copy.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_irradiate.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_halo.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_emp.lua</mod-append:script>
+
+    <mod-append:script>data/sc_scripts/sc_augment_battery.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_targeting_core.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_augment_detector.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_augment_armor.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_augment_repair.lua</mod-append:script>
+
+    <mod-append:script>data/sc_scripts/sc_drone_goliath.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_drone_scv_ai.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_pod.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_comsat.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_drone_active.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
+
+    <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
+    <!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>-->
+</mod:findLike>
 </FTL>

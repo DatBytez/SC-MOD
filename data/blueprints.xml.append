@@ -1531,6 +1531,7 @@
 		<stunChance>1</stunChance>
 		<ion>1</ion>
     </mv-aoe>
+	<sc-emp droneStun="30"/>
 	<damage>0</damage>
 	<missiles>1</missiles>
 	<speed>25</speed>
@@ -2464,7 +2465,6 @@ TERRAN_GOLIATH-->
            TERRAN_DEFENSE
 **********************************************************************************************************************
 -->
-
 <weaponBlueprint name="TERRAN_DEFENSE_1">
 	<type>LASER</type>
 	<title id="weapon_TERRAN_DEFENSE_1_title"></title>
@@ -2551,6 +2551,32 @@ TERRAN_GOLIATH-->
 
 <!-- 
 **********************************************************************************************************************
+           TERRAN_COMSAT
+**********************************************************************************************************************
+-->
+<droneBlueprint name="COMBAT_1">
+	<type>COMBAT</type>
+	<tip>tip_combat</tip>
+	<title>Combat Drone Mark I</title>
+	<short>Combat I</short>
+	<desc>Powerful drone that continually attacks the enemy ship.</desc>
+	<power>2</power>
+	<cooldown>1000</cooldown>
+	<!-- Doesn't effect combat drone -->
+	<dodge>0</dodge>
+	<speed>15</speed>
+	<!-- Change this to increase/decrease firing speed -->
+	<!-- was 20-->
+	<cost>50</cost>
+	<sc-comsat/>
+	<bp>3</bp>
+	<droneImage>drone_combat</droneImage>
+	<weaponBlueprint>DRONE_LASER</weaponBlueprint>
+	<rarity>0</rarity>
+	<iconImage>combat</iconImage>
+</droneBlueprint>
+<!-- 
+**********************************************************************************************************************
            TERRAN_POD
 **********************************************************************************************************************
 -->
@@ -2578,20 +2604,7 @@ TERRAN_GOLIATH-->
     <rarity>2</rarity>
     <iconImage>custom_crew_drone</iconImage>
 </droneBlueprint>
-<!--
-<droneBlueprint name="TERRAN_POD_BOARDER">
-    <type>BOARDER</type>
-    <tip>tip_boarding</tip>
-    <locked>1</locked>
-    <title>Terran Boarding Pod</title>
-    <short>Terran Pod</short>
-    <desc>Temporary Terran transport pod used by the Terran Pod crew drone.</desc>
-    <power>0</power>
-    <speed>18</speed>
-    <cost>0</cost>
-    <rarity>0</rarity>
-    <iconImage>boarder</iconImage>
-</droneBlueprint>-->
+
 <weaponBlueprint name="TERRAN_POD_PROJECTILE">
     <type>MISSILES</type>
     <title>Terran Boarding Pod Projectile</title>
