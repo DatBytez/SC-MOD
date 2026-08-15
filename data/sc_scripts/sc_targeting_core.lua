@@ -10,6 +10,7 @@ The core owns the shared targeting effects used by those sources:
     2. Detector-style weapon-radius reduction.
     3. Detector-style weapon charging while the enemy ship is cloaked.
     4. Anti-cloak targeting support while effective detection is active.
+    5. Detection of specifically listed invisible crew.
 
 Anti-cloak targeting uses the same Lua-side workaround proven by Lily's
 Targeting Core: while the opposing ship is cloaked, an inert hologram intruder
@@ -39,6 +40,13 @@ local CLOAK_PROXY_NAME = "SC Targeting Proxy"
 local CLOAK_PROXY_RACE = "hologram"
 local CLOAK_PROXY_BOOST_DURATION = 99
 local CLOAK_PROXY_BOOST_PRIORITY = 9999
+
+-- Crew races whose VALID_TARGET=false state can be overridden by effective
+-- SC detection. Add future invisible crew races here rather than adding
+-- race-specific checks to the targeting logic.
+local LIST_SC_CREW_INVISIBLE = {
+    terran_ghost = true,
+}
 
 targeting.sources = targeting.sources or {}
 targeting.cloakProxies = targeting.cloakProxies or {}
@@ -176,6 +184,47 @@ function targeting.has_effective_detection(ship)
     return type(strength) == "number"
         and strength > 0
 end
+
+local function crew_is_listed_invisible(crew)
+    return crew
+        and crew.species
+        and LIST_SC_CREW_INVISIBLE[crew.species] == true
+end
+
+-- Invisible-crew detection is applied at the final VALID_TARGET calculation
+-- rather than by adding a temporary stat boost. This leaves the crew's own
+-- cloak/invisibility effect intact and immediately restores its normal
+-- targetability when SC detection is no longer effective.
+script.on_internal_event(
+    Defines.InternalEvents.CALCULATE_STAT_POST,
+    function(crew, stat, def, amount, value)
+        if stat ~= Hyperspace.CrewStat.VALID_TARGET
+            or value
+            or not crew_is_listed_invisible(crew) then
+
+            return Defines.Chain.CONTINUE, amount, value
+        end
+
+        local crewShipId = crew.iShipId
+
+        if crewShipId ~= 0
+            and crewShipId ~= 1 then
+
+            return Defines.Chain.CONTINUE, amount, value
+        end
+
+        local detectingShip =
+            Hyperspace.ships(1 - crewShipId)
+
+        if targeting.has_effective_detection(
+            detectingShip
+        ) then
+            value = true
+        end
+
+        return Defines.Chain.CONTINUE, amount, value
+    end
+)
 
 function targeting.weapon_is_missile(weapon)
     if not weapon or not weapon.blueprint then

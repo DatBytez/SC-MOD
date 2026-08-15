@@ -2549,31 +2549,63 @@ TERRAN_GOLIATH-->
 	<rarity>5</rarity>					
 </droneBlueprint>	
 
-<!-- 
+<!--
 **********************************************************************************************************************
            TERRAN_COMSAT
 **********************************************************************************************************************
 -->
-<droneBlueprint name="COMBAT_1">
-	<type>COMBAT</type>
-	<tip>tip_combat</tip>
-	<title>Combat Drone Mark I</title>
-	<short>Combat I</short>
-	<desc>Powerful drone that continually attacks the enemy ship.</desc>
-	<power>2</power>
-	<cooldown>1000</cooldown>
-	<!-- Doesn't effect combat drone -->
-	<dodge>0</dodge>
-	<speed>15</speed>
-	<!-- Change this to increase/decrease firing speed -->
-	<!-- was 20-->
-	<cost>50</cost>
-	<sc-comsat/>
-	<bp>3</bp>
-	<droneImage>drone_combat</droneImage>
-	<weaponBlueprint>DRONE_LASER</weaponBlueprint>
-	<rarity>0</rarity>
-	<iconImage>combat</iconImage>
+<weaponBlueprint name="TERRAN_COMSAT_PROJECTILE">
+    <type>LASER</type>
+    <title>Terran Comsat Scan Pulse</title>
+    <short>Comsat Pulse</short>
+    <desc>Hidden scan pulse used by the Terran Comsat.</desc>
+    <tooltip>Hidden scan pulse used by the Terran Comsat.</tooltip>
+
+    <damage>0</damage>
+    <sysDamage>0</sysDamage>
+    <persDamage>0</persDamage>
+    <ion>0</ion>
+    <sp>10</sp>
+    <shots>1</shots>
+
+    <cooldown>5</cooldown>
+    <speed>20</speed>
+    <accuracyMod>100</accuracyMod>
+    <radius>0</radius>
+
+    <power>0</power>
+    <cost>0</cost>
+    <rarity>0</rarity>
+
+    <!-- Rendered invisible by sc_drone_comsat.lua. -->
+    <image>laser_light2</image>
+
+    <!-- Temporary standard impact effect. -->
+    <explosion>explosion_random</explosion>
+</weaponBlueprint>
+
+<droneBlueprint name="TERRAN_COMSAT">
+    <type>COMBAT</type>
+    <tip>tip_combat</tip>
+    <title>Terran Comsat</title>
+    <short>Comsat</short>
+    <desc>Terran communications and sensor drone. While deployed, powered, and intact, it provides Detector-style targeting support using the ship's Sensors power.</desc>
+
+    <power>2</power>
+    <cooldown>1000</cooldown>
+    <dodge>0</dodge>
+    <speed>15</speed>
+
+    <cost>50</cost>
+    <rarity>3</rarity>
+
+    <sc-comsat/>
+
+    <!-- FTL resolves combat-drone art from img/ship/drones/ using this basename. -->
+    <droneImage>terran_comsat</droneImage>
+
+    <weaponBlueprint>TERRAN_COMSAT_PROJECTILE</weaponBlueprint>
+    <iconImage>combat</iconImage>
 </droneBlueprint>
 <!-- 
 **********************************************************************************************************************

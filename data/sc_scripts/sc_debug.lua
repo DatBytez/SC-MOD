@@ -1,124 +1,264 @@
--- Active projectile flight-state debug.
--- Diagnostic only. Gameplay must not depend on this file.
+-- Comsat lifetime diagnostic only.
+-- Gameplay must not depend on this file.
+--
+-- This intentionally replaces all previous sc_debug.lua diagnostics.
 
 local SCREEN_X = 65
 local SCREEN_Y = 110
 local LINE_HEIGHT = 18
+local MAX_DRONES_PER_SHIP = 4
 
--- Keep a stable display number for each projectile while it remains active.
--- Projectile selfId is stable for the lifetime of the projectile.
-local projectileLabels = {}
+local vter =
+    mods.multiverse.vter
 
-local function format_number(value)
+local function bool_text(value)
+    if value == true then
+        return "true"
+    elseif value == false then
+        return "false"
+    end
+
+    return tostring(value)
+end
+
+local function number_text(value)
     if type(value) ~= "number" then
-        return "?"
+        return tostring(value)
     end
 
-    return string.format("%.1f", value)
+    return string.format("%.2f", value)
 end
 
-local function projectile_key(projectile, vectorIndex)
-    if projectile and projectile.selfId ~= nil then
-        return tostring(projectile.selfId)
+local function safe_call(
+    object,
+    methodName
+)
+    if not object then
+        return nil
     end
 
-    -- selfId should normally exist, but keep the debug script safe if a
-    -- projectile subtype does not expose it for some reason.
-    return "index:" .. tostring(vectorIndex)
+    local method =
+        object[methodName]
+
+    if type(method) ~= "function" then
+        return nil
+    end
+
+    local ok, result =
+        pcall(
+            method,
+            object
+        )
+
+    if not ok then
+        return "ERROR"
+    end
+
+    return result
 end
 
-local function get_active_projectiles()
-    local app = Hyperspace.App
-    local world = app and app.world
-    local space = world and world.space
-    local projectiles = space and space.projectiles
+local function get_registry()
+    return mods.sc
+        and mods.sc.comsatDrones
+        or {}
+end
 
-    if not projectiles then
-        return {}
+local function get_registered_lifetime(
+    drone
+)
+    if not drone
+        or not drone.blueprint
+        or not drone.blueprint.name then
+
+        return nil
     end
 
-    local active = {}
-    local activeKeys = {}
+    return get_registry()[
+        drone.blueprint.name
+    ]
+end
 
-    for index = 0, projectiles:size() - 1 do
-        local projectile = projectiles[index]
+local function get_timer_state(
+    shipId,
+    drone
+)
+    if not mods.sc
+        or not mods.sc.comsat
+        or not mods.sc.comsat.get_timer_state
+        or not drone
+        or drone.selfId == nil then
 
-        if projectile and not projectile:Dead() then
-            local key = projectile_key(projectile, index)
-
-            active[#active + 1] = {
-                projectile = projectile,
-                key = key,
-            }
-
-            activeKeys[key] = true
-        end
+        return nil
     end
 
-    -- Remove labels belonging to projectiles that no longer exist.
-    for key, _ in pairs(projectileLabels) do
-        if not activeKeys[key] then
-            projectileLabels[key] = nil
-        end
+    return mods.sc.comsat.get_timer_state(
+        shipId,
+        drone.selfId
+    )
+end
+
+local function count_table_entries(tbl)
+    local count = 0
+
+    for _, _ in pairs(tbl or {}) do
+        count = count + 1
     end
 
-    -- Preserve labels already assigned to surviving projectiles.
-    local usedLabels = {}
+    return count
+end
 
-    for _, entry in ipairs(active) do
-        local label = projectileLabels[entry.key]
+local function append(
+    lines,
+    text
+)
+    lines[#lines + 1] =
+        text
+end
 
-        if label then
-            usedLabels[label] = true
-        end
+local function append_ship_debug(
+    lines,
+    shipId
+)
+    local ship =
+        Hyperspace.ships(shipId)
+
+    if not ship then
+        append(
+            lines,
+            "Ship " .. tostring(shipId) .. ": unavailable"
+        )
+        return
     end
 
-    -- Give newly-seen projectiles the lowest currently unused number.
-    for _, entry in ipairs(active) do
-        if not projectileLabels[entry.key] then
-            local label = 1
+    local drones =
+        ship.droneSystem
+        and ship.droneSystem.drones
 
-            while usedLabels[label] do
-                label = label + 1
+    local spaceDrones =
+        ship.spaceDrones
+
+    append(
+        lines,
+        string.format(
+            "Ship %d: droneSystem.drones=%d spaceDrones=%d",
+            shipId,
+            drones and drones:size() or 0,
+            spaceDrones and spaceDrones:size() or 0
+        )
+    )
+
+    if not drones then
+        append(
+            lines,
+            "   no droneSystem.drones vector"
+        )
+        return
+    end
+
+    local found = 0
+
+    for drone in vter(drones) do
+        local lifetime =
+            get_registered_lifetime(drone)
+
+        if lifetime ~= nil then
+            found = found + 1
+
+            if found <= MAX_DRONES_PER_SHIP then
+                local destroyed =
+                    safe_call(
+                        drone,
+                        "Destroyed"
+                    )
+
+                append(
+                    lines,
+                    string.format(
+                        "D%d %s id:%s life:%s dep:%s pow:%s dead:%s destroyed:%s",
+                        found,
+                        drone.blueprint.name,
+                        tostring(drone.selfId),
+                        number_text(lifetime),
+                        bool_text(drone.deployed),
+                        bool_text(drone.powered),
+                        bool_text(drone.bDead),
+                        bool_text(destroyed)
+                    )
+                )
+
+                local state =
+                    get_timer_state(
+                        shipId,
+                        drone
+                    )
+
+                if state then
+                    append(
+                        lines,
+                        string.format(
+                            "   timer started:%s remaining:%s expired:%s",
+                            bool_text(state.started),
+                            number_text(state.remaining),
+                            bool_text(state.expired)
+                        )
+                    )
+                else
+                    append(
+                        lines,
+                        "   timer state: MISSING"
+                    )
+                end
             end
-
-            projectileLabels[entry.key] = label
-            usedLabels[label] = true
         end
-
-        entry.label = projectileLabels[entry.key]
     end
 
-    table.sort(
-        active,
-        function(a, b)
-            return a.label < b.label
-        end
-    )
-
-    return active
+    if found == 0 then
+        append(
+            lines,
+            "   no registered Comsat found"
+        )
+    end
 end
 
-local function projectile_debug_line(label, projectile)
-    local position = projectile.position
-    local target = projectile.target
+local function build_debug_lines()
+    local lines = {}
 
-    local px = position and format_number(position.x) or "?"
-    local py = position and format_number(position.y) or "?"
-    local tx = target and format_number(target.x) or "?"
-    local ty = target and format_number(target.y) or "?"
-
-    return string.format(
-        "Projectile %d: h:%s p:(%s,%s) t:(%s,%s), cS:%s dS:%s",
-        label,
-        format_number(projectile.heading),
-        px,
-        py,
-        tx,
-        ty,
-        tostring(projectile.currentSpace),
-        tostring(projectile.destinationSpace)
+    append(
+        lines,
+        "COMSAT TIMER DEBUG - PILOT STYLE"
     )
+
+    append(
+        lines,
+        string.format(
+            "registry:%d TERRAN_COMSAT:%s SpeedFactor:%s step:%s",
+            count_table_entries(
+                get_registry()
+            ),
+            number_text(
+                get_registry().TERRAN_COMSAT
+            ),
+            number_text(
+                Hyperspace.FPS.SpeedFactor
+            ),
+            number_text(
+                Hyperspace.FPS.SpeedFactor
+                    / 16
+            )
+        )
+    )
+
+    append_ship_debug(
+        lines,
+        0
+    )
+
+    append_ship_debug(
+        lines,
+        1
+    )
+
+    return lines
 end
 
 script.on_render_event(
@@ -129,17 +269,17 @@ script.on_render_event(
     end,
 
     function()
-        local activeProjectiles = get_active_projectiles()
+        local lines =
+            build_debug_lines()
 
-        for lineIndex, entry in ipairs(activeProjectiles) do
+        for index, line in ipairs(lines) do
             Graphics.freetype.easy_print(
                 0,
                 SCREEN_X,
-                SCREEN_Y + LINE_HEIGHT * (lineIndex - 1),
-                projectile_debug_line(
-                    entry.label,
-                    entry.projectile
-                )
+                SCREEN_Y
+                    + LINE_HEIGHT
+                    * (index - 1),
+                line
             )
         end
     end
