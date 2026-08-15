@@ -307,23 +307,23 @@
 		<locked/>
 	</aug>
 	<aug name="TERRAN_HIDDEN_FIRE_EXTINGUISHERS_3">
-		<function name="FIRE_EXTINGUISHERS" value="10" useForReqs="true" warning="false"/>
+		<function name="FIRE_EXTINGUISHERS" value="3" useForReqs="true" warning="false"/>
 		<locked/>
 	</aug>
 	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_1">
-    	<function name="FTL_BOOSTER" value="0.10" useForReqs="true" warning="false"/>
+    	<function name="FTL_BOOSTER" value="400.10" useForReqs="true" warning="false"/>
 		<locked/>
     </aug>
 	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_2">
-    	<function name="FTL_BOOSTER" value="0.20" useForReqs="true" warning="false"/>
+    	<function name="FTL_BOOSTER" value="400.20" useForReqs="true" warning="false"/>
 		<locked/>
     </aug>
 	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_3">
-    	<function name="FTL_BOOSTER" value="0.30" useForReqs="true" warning="false"/>
+    	<function name="FTL_BOOSTER" value="400.30" useForReqs="true" warning="false"/>
 		<locked/>
     </aug>
 	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_4">
-    	<function name="FTL_BOOSTER" value="0.40" useForReqs="true" warning="false"/>
+    	<function name="FTL_BOOSTER" value="400.40" useForReqs="true" warning="false"/>
 		<locked/>
     </aug>
 	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_5">
@@ -1782,6 +1782,7 @@
     <mod-append:script>data/aa_scripts/AA_core.lua</mod-append:script>
     <mod-append:script>data/aa_scripts/weapons/smash.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_tag.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_helpers.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_projectile_scaling.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_radius_core.lua</mod-append:script>
 
@@ -1803,6 +1804,12 @@
 	<mod-append:script>data/sc_scripts/sc_weapon_emp.lua</mod-append:script>
 
     <mod-append:script>data/sc_scripts/sc_augment_battery.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_augment_battery_ion.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_augment_battery_dodge.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_augment_battery_oxygen.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_augment_battery_fire.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_augment_battery_ftl.lua</mod-append:script>
+
 	<mod-append:script>data/sc_scripts/sc_targeting_core.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_detector.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_armor.lua</mod-append:script>
@@ -1819,6 +1826,6 @@
     <mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
 
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
+    <!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>-->
 </mod:findLike>
 </FTL>

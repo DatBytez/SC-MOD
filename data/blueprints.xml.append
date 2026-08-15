@@ -49,12 +49,18 @@
 </augBlueprint>
 
 <augBlueprint name="TERRAN_WRAITH_BATTERY">
-	<title id="aug_TERRAN_WRAITH_BATTERY_NAME"></title>
-	<desc id="aug_TERRAN_WRAITH_BATTERY_DESC"></desc>
-	<cost>60</cost>
-	<rarity>4</rarity>
-	<stackable>false</stackable>
-	<sc-upgrade system="battery" amount="2"/>
+    <title id="aug_TERRAN_WRAITH_BATTERY_NAME"></title>
+    <desc id="aug_TERRAN_WRAITH_BATTERY_DESC"></desc>
+    <cost>60</cost>
+    <rarity>4</rarity>
+    <stackable>false</stackable>
+    <sc-upgrade system="battery" amount="2"/>
+    <sc-battery/>
+    <sc-battery-ion/>
+    <sc-battery-dodge/>
+    <sc-battery-oxygen/>
+    <sc-battery-fire/>
+    <sc-battery-ftl/>
 </augBlueprint>
 
 <augBlueprint name="TERRAN_SHIP_ARMOR_LIGHT">
