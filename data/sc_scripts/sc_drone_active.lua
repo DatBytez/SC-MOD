@@ -11,6 +11,7 @@ SC active shield fallback behavior:
 mods.multiverse.droneTagParsers = mods.multiverse.droneTagParsers or {}
 local droneTagParsers = mods.multiverse.droneTagParsers
 local vter = mods.multiverse.vter
+local helpers = mods.sc.helpers or require("mods.sc.helpers")
 
 mods.sc = mods.sc or {}
 mods.sc.activeShield = mods.sc.activeShield or {}
@@ -85,16 +86,7 @@ local function drone_is_active_and_powered(drone)
 end
 
 local function ship_has_active_powered_shield_drone(shipManager)
-    if not shipManager then return false end
-    if not shipManager.droneSystem or not shipManager.droneSystem.drones then return false end
-
-    for drone in vter(shipManager.droneSystem.drones) do
-        if drone_is_active_and_powered(drone) then
-            return true
-        end
-    end
-
-    return false
+    return helpers.ship_has_drone_matching(shipManager, drone_is_active_and_powered)
 end
 
 local function space_drone_is_active_shield_drone(drone)

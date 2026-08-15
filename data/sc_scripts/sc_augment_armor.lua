@@ -14,36 +14,23 @@ local vter = mods.multiverse.vter
 mods.sc = mods.sc or {}
 mods.sc.armorAugments = mods.sc.armorAugments or {}
 
+local helpers = mods.sc.helpers or require("mods.sc.helpers")
+
 local armorAugments = mods.sc.armorAugments
 
 mods.sc.tag.register_augment_flag_tag("sc-armor", armorAugments)
 
-local function ship_has_sc_armor(ship)
-    if not ship then return false end
-
-    for augName, _ in pairs(armorAugments) do
-        if ship:HasAugmentation(augName) > 0 then
-            return true
-        end
-    end
-
-    return false
-end
-
 -- Armored modification of Lily's bracers.
 local function handle_reduction_armor(ship, projectile, location, damage, forceHit, shipFriendlyFire)
-    if not ship then return end
-    if not ship_has_sc_armor(ship) then return end
+    if not helpers.ship_has_augment_in_set(ship, armorAugments) then return end
 
     local bracersId = Hyperspace.ShipSystem.NameToSystemId("lily_system_bracers")
-    if not ship:HasSystem(bracersId) then return end
+    if not helpers.ship_has_powered_system(ship, bracersId) then return end
 
-    if not damage or not damage.iDamage or damage.iDamage <= 0 then return end
-
+    if not damage or damage.iDamage <= 0 then return end
     if damage.bFriendlyFire and damage.ownerId == ship.iShipId then return end
 
     local bracers = ship:GetSystem(bracersId)
-    if not bracers or bracers:CompletelyDestroyed() then return end
 
     local bracersHP = bracers.healthState.first or 0
     if bracersHP <= 0 then return end
@@ -125,11 +112,8 @@ end)
 
 -- Reset soak between battles
 local function reset_bracers_soak_bank(ship)
-    if not ship then return end
     local bracersId = Hyperspace.ShipSystem.NameToSystemId("lily_system_bracers")
-    if not ship:HasSystem(bracersId) then return end
-
-    local bracers = ship:GetSystem(bracersId)
+    local bracers = ship and ship:HasSystem(bracersId) and ship:GetSystem(bracersId)
     if not bracers then return end
 
     local bdata = userdata_table(bracers, "mods.mv.bracersSoak")

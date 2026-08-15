@@ -13,30 +13,17 @@ mods.sc.detectorAugments = mods.sc.detectorAugments or {}
 local detector = mods.sc.detector
 local detectorAugments = mods.sc.detectorAugments
 local targeting = mods.sc.targeting
+local helpers = mods.sc.helpers or require("mods.sc.helpers")
 
 mods.sc.tag.register_augment_flag_tag(
     "sc-detector",
     detectorAugments
 )
 
-local function ship_has_sc_detector(ship)
-    if not ship then return false end
-
-    for augName, _ in pairs(detectorAugments) do
-        if ship:HasAugmentation(augName) > 0 then
-            return true
-        end
-    end
-
-    return false
-end
-
 local function get_detector_strength(ship)
     local sensors = ship and ship:GetSystem(7)
 
-    if not sensors
-        or not ship_has_sc_detector(ship) then
-
+    if not sensors or not helpers.ship_has_augment_in_set(ship, detectorAugments) then
         return nil
     end
 
@@ -78,7 +65,7 @@ end
 -- Keep the detector helpers available to other SC scripts while the shared
 -- targeting core owns the actual gameplay callbacks.
 detector.ship_has_detector =
-    ship_has_sc_detector
+    function(ship) return helpers.ship_has_augment_in_set(ship, detectorAugments) end
 
 detector.get_strength =
     get_detector_strength

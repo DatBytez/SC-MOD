@@ -35,6 +35,7 @@ local droneTagParsers =
     mods.multiverse.droneTagParsers
 
 local vter = mods.multiverse.vter
+local helpers = mods.sc.helpers or require("mods.sc.helpers")
 
 mods.sc = mods.sc or {}
 mods.sc.comsat = mods.sc.comsat or {}
@@ -82,20 +83,7 @@ local function drone_is_active_comsat(drone)
 end
 
 local function ship_has_active_comsat(ship)
-    if not ship
-        or not ship.droneSystem
-        or not ship.droneSystem.drones then
-
-        return false
-    end
-
-    for drone in vter(ship.droneSystem.drones) do
-        if drone_is_active_comsat(drone) then
-            return true
-        end
-    end
-
-    return false
+    return helpers.ship_has_drone_matching(ship, drone_is_active_comsat)
 end
 
 local function get_comsat_strength(ship)
@@ -195,9 +183,6 @@ local comsatTimers = {
     [1] = {}
 }
 
-comsat.timers =
-    comsatTimers
-
 local function get_ship_timer_table(shipId)
     if not comsatTimers[shipId] then
         comsatTimers[shipId] = {}
@@ -215,23 +200,6 @@ local function get_drone_timer_key(drone)
 
     return drone.selfId
 end
-
-local function get_timer_state(
-    shipId,
-    droneSelfId
-)
-    local shipTimers =
-        comsatTimers[shipId]
-
-    if not shipTimers then
-        return nil
-    end
-
-    return shipTimers[droneSelfId]
-end
-
-comsat.get_timer_state =
-    get_timer_state
 
 local function reset_all_timers()
     comsatTimers[0] = {}

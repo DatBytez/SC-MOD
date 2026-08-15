@@ -9,19 +9,8 @@ local HULL_HEAL_AMOUNT = 1
 local HULL_HEAL_FORCE = true
 local LILY_SYSTEM_BRACERS_ID = Hyperspace.ShipSystem.NameToSystemId("lily_system_bracers")
 
-local function fallback_vter(cvec)
-    local i = -1
-    local n = cvec:size()
-    return function()
-        i = i + 1
-        if i < n then return cvec[i] end
-    end
-end
-local vter = (mods.multiverse and mods.multiverse.vter) or fallback_vter
-
-local function ship_has_terran_aug(ship)
-    return ship and ship:HasAugmentation(TERRAN_SHIP_AUG) > 0
-end
+local vter = mods.multiverse.vter
+local helpers = mods.sc.helpers or require("mods.sc.helpers")
 
 local function get_system_state(system)
     if not system then return nil end
@@ -62,7 +51,7 @@ local function update_system_state(ship, system)
     local currentlyDestroyed = system_is_completely_destroyed(system)
 
     if state.wasCompletelyDestroyed and not currentlyDestroyed then
-        if ship_has_terran_aug(ship) then
+        if helpers.ship_has_augment(ship, TERRAN_SHIP_AUG) then
             heal_hull(ship)
         end
 

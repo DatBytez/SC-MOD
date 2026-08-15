@@ -1,4 +1,6 @@
 mods.sc_pilot_button = mods.sc_pilot_button or {}
+mods.sc = mods.sc or {}
+local helpers = mods.sc.helpers or require("mods.sc.helpers")
 
 local PILOT_AUGMENT = "TERRAN_SHIP_ARMOR_LIGHT"
 local PILOT_SYSTEM_ID = 6
@@ -53,8 +55,7 @@ local function format_text(textId, value)
 end
 
 local function has_pilot_augment(ship)
-    return ship
-        and ship:HasAugmentation(PILOT_AUGMENT) > 0
+    return helpers.ship_has_augment(ship, PILOT_AUGMENT)
 end
 
 local function get_piloting_effect_duration(shipSystem)

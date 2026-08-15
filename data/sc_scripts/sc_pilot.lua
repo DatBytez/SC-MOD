@@ -9,6 +9,8 @@ mods.sc_accuracy.dodgeToAccuracy = mods.sc_accuracy.dodgeToAccuracy or {
 mods.sc = mods.sc or {}
 mods.sc.pilot = mods.sc.pilot or {}
 
+local helpers = mods.sc.helpers or require("mods.sc.helpers")
+
 local PILOT_AUGMENT = "TERRAN_SHIP_ARMOR_LIGHT"
 local PILOT_SYSTEM_ID = 6
 local RADIUS_PER_ACCURACY = 1.5
@@ -25,8 +27,7 @@ local dodgeEventSerial = {
 }
 
 local function has_pilot_augment(ship)
-    return ship
-        and ship:HasAugmentation(PILOT_AUGMENT) > 0
+    return helpers.ship_has_augment(ship, PILOT_AUGMENT)
 end
 
 local function piloting_manned(ship)
