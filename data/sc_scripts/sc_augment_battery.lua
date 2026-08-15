@@ -9,7 +9,6 @@ SOURCE CREDIT: MsBinaryLily
 ]]
 
 local vter = mods.multiverse.vter
-local modf = math.modf
 local helpers = mods.sc.helpers or require("mods.sc.helpers")
 
 local activationTimer = 0
@@ -24,45 +23,37 @@ local function get_bars_and_level(shipManager, systemName)
     local system = helpers.get_system_by_name(shipManager, systemName)
     if not system then return 0, 0, 0 end
 
-    local batteryPow = system.iBatteryPower or 0
+    local batteryPow = system.iBatteryPower
     local systemPow= system:GetEffectivePower()
     local systemLvl = system:GetMaxPower()
     return batteryPow, systemPow, systemLvl
 end
 
 local function piloting_allows_positive_dodge(shipManager)
-    if not shipManager then return false end
-
     local piloting = helpers.get_system_by_name(shipManager, "piloting")
     if not piloting or piloting:CompletelyDestroyed() then return false end
     if not piloting.bManned then return false end
 
-    local pilotingPower = piloting:GetEffectivePower() or 0
+    local pilotingPower = piloting:GetEffectivePower()
     return pilotingPower > 0
 end
 
 local activeHiddenAugs = {}
-local activeAugs = {}
 
 local function get_hidden_aug_name(augName)
     return "HIDDEN " .. augName
 end
 
+-- Is this necessary?
 local function get_ship_hidden_aug_table(shipManager)
-    if not shipManager then return nil end
 
     local shipId = shipManager.iShipId
-    if shipId == nil then
-        shipId = -1
-    end
 
     activeHiddenAugs[shipId] = activeHiddenAugs[shipId] or {}
     return activeHiddenAugs[shipId]
 end
 
 local function set_hidden_aug(shipManager, augName, enabled)
-    if not shipManager then return end
-    if not augName then return end
 
     local shipAugs = get_ship_hidden_aug_table(shipManager)
     if not shipAugs then return end
@@ -76,30 +67,6 @@ local function set_hidden_aug(shipManager, augName, enabled)
 
     elseif not enabled and currentlyEnabled then
         shipManager:RemoveAugmentation(hiddenAug)
-        shipAugs[augName] = false
-    end
-end
-
-local function set_aug(shipManager, augName, enabled)
-    local shipId = shipManager.iShipId or 0
-    activeAugs[shipId] = activeAugs[shipId] or {}
-    local shipAugs = activeAugs[shipId]
-
-    local currentlyEnabled = shipAugs[augName] == true
-    if enabled == nil then enabled = false end
-
-    local augBp = Hyperspace.Blueprints:GetAugmentBlueprint(augName)
-    if not augBp then
-        shipAugs[augName] = false
-        return
-    end
-
-    if enabled and not currentlyEnabled then
-        shipManager:AddAugmentation(augBp)
-        shipAugs[augName] = true
-
-    elseif not enabled and currentlyEnabled then
-        shipManager:RemoveAugmentation(augBp)
         shipAugs[augName] = false
     end
 end
@@ -191,19 +158,17 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     -- Shock neutralizer effect (systems de-ionize faster)
     for system in vter(shipManager.vSystemList) do
         if system then
-            local batteryPow = system.iBatteryPower or 0
-            if batteryPow > 0 and system.iLockCount and system.iLockCount > 0 then
+            local batteryPow = system.iBatteryPower
+            if batteryPow > 0 and system.iLockCount > 0 then
                 local systemLvl = system:GetMaxPower()
-                local scale = math.max(0, batteryPow * systemLvl)
+                local scale = batteryPow * systemLvl
                 local deionizationBoost = activationTimer * 0.15 * scale
 
                 if system:GetId() == Hyperspace.ShipSystem.NameToSystemId("cloaking") then
                     deionizationBoost = deionizationBoost * 0.5
                 end
 
-                if system.lockTimer then
-                    system.lockTimer.currTime = system.lockTimer.currTime + tick * deionizationBoost
-                end
+                system.lockTimer.currTime = system.lockTimer.currTime + tick * deionizationBoost
             end
         end
     end
@@ -212,28 +177,27 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     local oxygenSystem = helpers.get_system_by_name(shipManager, "oxygen")
     local oxygen = shipManager.oxygenSystem
 
-    if not (oxygenSystem and oxygen and oxygen.oxygenLevels and oxygenSystem:Powered()) then
+    if not (oxygenSystem and oxygen and oxygenSystem:Powered()) then
         set_scaling_hidden_aug(shipManager, FIRE_EXTINGUISHER_AUG, false, 0)
     else
-        local oxygenBatteryPow = (oxygenSystem.iBatteryPower or 0)
+        local oxygenBatteryPow = (oxygenSystem.iBatteryPower)
         local oxygenBatteryActive = oxygenBatteryPow > 0
 
         if oxygenBatteryActive and activationTimer > 0 then
             local oxygenSystemPow = oxygenSystem:GetEffectivePower()
             if oxygenSystemPow > 0 then
                 local refill = oxygen:GetRefillSpeed()
-                local scale = math.max(0, oxygenBatteryPow * oxygenSystemPow)
+                local scale = oxygenBatteryPow * oxygenSystemPow
                 local extraFactor = activationTimer * O2_REFILL_FACTOR_PER_SCALE * scale
 
-                if extraFactor > 0 then
-                    local delta = refill * tick * extraFactor
-                    if delta ~= 0 then
-                        local levels = oxygen.oxygenLevels
-                        for i = 0, levels:size() - 1 do
-                            levels[i] = math.min(math.max(levels[i] + delta, 0), 100)
-                        end
+                local delta = refill * tick * extraFactor
+                if delta ~= 0 then
+                    local levels = oxygen.oxygenLevels
+                    for i = 0, levels:size() - 1 do
+                        levels[i] = math.min(math.max(levels[i] + delta, 0), 100)
                     end
                 end
+
             end
         end
         set_scaling_hidden_aug(shipManager, FIRE_EXTINGUISHER_AUG, oxygenBatteryActive, oxygenBatteryPow)
@@ -244,7 +208,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     local enginesBatteryActive = false
 
     if enginesSystem and enginesSystem:Powered() then
-        local enginesBatteryPow = enginesSystem.iBatteryPower or 0
+        local enginesBatteryPow = enginesSystem.iBatteryPower
         enginesBatteryActive = enginesBatteryPow > 0
     end
     set_hidden_aug(shipManager, FTL_BOOSTER_AUG, enginesBatteryActive)
@@ -266,8 +230,7 @@ local function render_shock_neutralizer_effects(ship, experimental)
     local level = battery:GetMaxPower()
     if level <= 0 then return end
 
-    local shipId = shipManager.iShipId or 0
-    local alpha = activationTimer or 0
+    local alpha = activationTimer
     if alpha <= 0 then return end
 
     local poweredRooms = {}
