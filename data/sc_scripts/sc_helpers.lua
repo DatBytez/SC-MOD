@@ -46,7 +46,7 @@ end
 -- System Check
 -- ============================================================================
 
-function helpers.ship_has_powered_system(ship, systemId)
+function helpers.ship_has_working_system(ship, systemId)
     if not ship then return false end
 
     local system = ship:HasSystem(systemId) and ship:GetSystem(systemId)
