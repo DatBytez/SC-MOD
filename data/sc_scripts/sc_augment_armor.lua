@@ -18,11 +18,13 @@ local helpers = mods.sc.helpers or require("mods.sc.helpers")
 
 local armorAugments = mods.sc.armorAugments
 
-mods.sc.tag.register_augment_flag_tag("sc-armor", armorAugments)
+mods.sc.tag.register_augment_tag("sc-armor", armorAugments)
+
+local BLOCK_CHANCE_PER_HP = 0.40
 
 -- Armored modification of Lily's bracers.
 local function handle_reduction_armor(ship, projectile, location, damage, forceHit, shipFriendlyFire)
-    if not helpers.ship_has_augment_in_set(ship, armorAugments) then return end
+     if not helpers.ship_has_augment(ship, armorAugments) then return end
 
     local bracersId = Hyperspace.ShipSystem.NameToSystemId("lily_system_bracers")
     if not helpers.ship_has_powered_system(ship, bracersId) then return end
@@ -35,7 +37,7 @@ local function handle_reduction_armor(ship, projectile, location, damage, forceH
     local bracersHP = bracers.healthState.first or 0
     if bracersHP <= 0 then return end
 
-    local blockChance = math.min(1.0, bracersHP * 0.40)
+    local blockChance = math.min(1.0, bracersHP * BLOCK_CHANCE_PER_HP)
     if math.random() > blockChance then return end
 
     local soaked = math.min(damage.iDamage, bracersHP)
