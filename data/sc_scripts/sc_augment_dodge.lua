@@ -2,6 +2,7 @@ local vter = mods.multiverse.vter
 
 mods.sc = mods.sc or {}
 mods.sc.dodgeAugments = mods.sc.dodgeAugments or {}
+local helpers = mods.sc.helpers or require("mods.sc.helpers")
 
 local dodgeAugments = mods.sc.dodgeAugments
 
@@ -27,29 +28,8 @@ end
 -- Helpers
 -- -------
 
-local function find_system_by_name(shipManager, systemName)
-    local systemId = Hyperspace.ShipSystem.NameToSystemId(systemName)
-    if not shipManager or not shipManager.vSystemList then return nil end
-    for system in vter(shipManager.vSystemList) do
-        if system and system.GetId and system:GetId() == systemId then
-            return system
-        end
-    end
-    return nil
-end
-
-local function find_system_by_id(shipMgr, sysId)
-    if not shipMgr or not shipMgr.vSystemList then return nil end
-    for sys in vter(shipMgr.vSystemList) do
-        if sys and sys.GetId and sys:GetId() == sysId then
-            return sys
-        end
-    end
-    return nil
-end
-
 local function get_bars_and_level(shipManager, systemName)
-    local system = find_system_by_name(shipManager, systemName)
+    local system = helpers.get_system_by_name(shipManager, systemName)
     if not system then return 0, 0, 0 end
 
     local batteryPow = system.iBatteryPower or 0

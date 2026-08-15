@@ -40,7 +40,7 @@ local function handle_reduction_armor(ship, projectile, location, damage)
     damage.iDamage = damage.iDamage - blockedDamage
 
     if projectile then
-        userdata_table(projectile, "mods.mv.reductionArmor").pendingSoak = blockedDamage
+        userdata_table(projectile, "mods.mv.reductionArmor").blockedDamage = blockedDamage
         userdata_table(projectile, "mods.mv.reductionArmor").showMsg = true
     else
         bracers.healthState.first = math.max(0, bracers.healthState.first - blockedDamage)
@@ -54,7 +54,7 @@ script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA_HIT, function(ship, 
     if not projectile then return end
 
     local pdata = userdata_table(projectile, "mods.mv.reductionArmor")
-    local blockedDamage = pdata.pendingSoak or 0
+    local blockedDamage = pdata.blockedDamage or 0
 
     if blockedDamage > 0 and ship:HasSystem(BRACERS_ID) then
         local bracers = ship:GetSystem(BRACERS_ID)
@@ -63,7 +63,7 @@ script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA_HIT, function(ship, 
         end
     end
 
-    pdata.pendingSoak = 0
+    pdata.blockedDamage = 0
 
     if pdata.showMsg then
         pdata.showMsg = false

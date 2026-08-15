@@ -1,49 +1,27 @@
 --[[
 DESCRIPTION: Upgrades battery system to act as Shock Neutralizer and System Boost
 		Systems powered by battery
-		- Reduice ion damage more quickly
-		- Engines encrease evade
-		- Oxygen supresses fire
-		- Clone experience loss reduced (wip)
+		- Reduce ion damage more quickly
+		- Engines increase evade
+		- Oxygen suppresses fire
 		- Drone rebuild faster (wip)
 SOURCE CREDIT: MsBinaryLily
 ]]
 
 local vter = mods.multiverse.vter
 local modf = math.modf
+local helpers = mods.sc.helpers or require("mods.sc.helpers")
 
 local activationTimer = 0
 local sfxPlayed = false
 
 -- Adjustable Scales (Still need lots of balancing)
 local O2_REFILL_FACTOR_PER_SCALE = 5.00
-
 local FIRE_EXTINGUISHER_AUG = "TERRAN_HIDDEN_FIRE_EXTINGUISHERS"
 local FTL_BOOSTER_AUG = "TERRAN_HIDDEN_FTL_BOOSTER"
 
-local function find_system_by_name(shipManager, systemName)
-    local systemId = Hyperspace.ShipSystem.NameToSystemId(systemName)
-    if not shipManager or not shipManager.vSystemList then return nil end
-    for system in vter(shipManager.vSystemList) do
-        if system and system.GetId and system:GetId() == systemId then
-            return system
-        end
-    end
-    return nil
-end
- 
-local function find_system_by_id(shipMgr, sysId)
-    if not shipMgr or not shipMgr.vSystemList then return nil end
-    for sys in vter(shipMgr.vSystemList) do
-        if sys and sys.GetId and sys:GetId() == sysId then
-            return sys
-        end
-    end
-    return nil
-end
-
 local function get_bars_and_level(shipManager, systemName)
-    local system = find_system_by_name(shipManager, systemName)
+    local system = helpers.get_system_by_name(shipManager, systemName)
     if not system then return 0, 0, 0 end
 
     local batteryPow = system.iBatteryPower or 0
@@ -52,21 +30,15 @@ local function get_bars_and_level(shipManager, systemName)
     return batteryPow, systemPow, systemLvl
 end
 
-local PILOT_SYSTEM_ID = 6
-
 local function piloting_allows_positive_dodge(shipManager)
     if not shipManager then return false end
 
-    local piloting = shipManager:GetSystem(PILOT_SYSTEM_ID)
-    if not piloting then return false end
-
+    local piloting = helpers.get_system_by_name(shipManager, "piloting")
+    if not piloting or piloting:CompletelyDestroyed() then return false end
     if not piloting.bManned then return false end
-    if piloting:CompletelyDestroyed() then return false end
 
     local pilotingPower = piloting:GetEffectivePower() or 0
-    if pilotingPower <= 0 then return false end
-
-    return true
+    return pilotingPower > 0
 end
 
 local activeHiddenAugs = {}
@@ -154,23 +126,25 @@ local function set_scaling_hidden_aug(shipManager, augName, enabled, batteryPow)
 	elseif batteryPow == 1 then
 	    set_hidden_aug(shipManager, augName .. "_1", enabled)
 		end
-	end
+end
+
+local function disable_battery_effects(shipManager)
+    activationTimer = 0
+    clear_scaling_hidden_aug(shipManager, FIRE_EXTINGUISHER_AUG, 0)
+    set_hidden_aug(shipManager, FTL_BOOSTER_AUG, false)
+end
 
 -- Dodge bonus
 script.on_internal_event(Defines.InternalEvents.GET_DODGE_FACTOR, function(shipManager, dodge)
-    if shipManager:HasAugmentation("TERRAN_WRAITH_BATTERY") <= 0 then return end
+    if not helpers.ship_has_augment(shipManager, "TERRAN_WRAITH_BATTERY") then return end
 
     local battery = shipManager.batterySystem
     if not (battery and battery.bTurnedOn) then return end
 
     local batteryPow, systemPow, systemLvl = get_bars_and_level(shipManager, "engines")
-    if batteryPow < 1 then return end
+    if batteryPow < 1 or activationTimer <= 0 then return end
 
-    local alpha = activationTimer
-    if alpha <= 0 then return end
-
-    local penalty = (0.47 * systemPow)
-    local bonus = alpha * (2.0 + (0.4 * systemLvl) - penalty)
+    local bonus = activationTimer * (2.0 + (0.4 * systemLvl) - (0.47 * systemPow))
     bonus = math.floor(bonus * batteryPow)
 
     -- Positive dodge bonuses require manned, functioning piloting.
@@ -180,49 +154,36 @@ script.on_internal_event(Defines.InternalEvents.GET_DODGE_FACTOR, function(shipM
 
     if bonus == 0 then return end
 
-    dodge = dodge + bonus
-
-    return 0, dodge
+    return 0, dodge + bonus
 end)
 
 -- Charge activationTimer while Battery is ON
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
-    if shipManager:HasAugmentation("TERRAN_WRAITH_BATTERY") <= 0 then
-        activationTimer = 0
-	clear_scaling_hidden_aug(shipManager, FIRE_EXTINGUISHER_AUG, 0)
-	set_hidden_aug(shipManager, FTL_BOOSTER_AUG, false)
+    if not helpers.ship_has_augment(shipManager, "TERRAN_WRAITH_BATTERY") then
+        disable_battery_effects(shipManager)
         return
     end
 
     local batteryId = Hyperspace.ShipSystem.NameToSystemId("battery")
-    if not shipManager:HasSystem(batteryId) then
-        activationTimer = 0
-	clear_scaling_hidden_aug(shipManager, FIRE_EXTINGUISHER_AUG, 0)
-	set_hidden_aug(shipManager, FTL_BOOSTER_AUG, false)
+    if not helpers.ship_has_working_system(shipManager, batteryId) then
+        disable_battery_effects(shipManager)
         return
     end
 
     local battery = shipManager.batterySystem
     if not (battery and battery.bTurnedOn) then
-        activationTimer = 0
-	clear_scaling_hidden_aug(shipManager, FIRE_EXTINGUISHER_AUG, 0)
-	set_hidden_aug(shipManager, FTL_BOOSTER_AUG, false)
+        disable_battery_effects(shipManager)
         return
     end
 
     local tick = Hyperspace.FPS.SpeedFactor / 16
-
     local multiplier = 0.15
-    activationTimer = math.max(
-        0,
-        math.min(1, (activationTimer or 0) + multiplier * tick)
-    )
+    activationTimer = math.max(0, math.min(1, activationTimer + multiplier * tick))
 
     -- Ready sound once fully charged
-    if (activationTimer or 0) < 1 then
+    if activationTimer < 1 then
         sfxPlayed = false
-    end
-    if (activationTimer or 0) >= 1 and not sfxPlayed then
+    elseif not sfxPlayed then
         Hyperspace.Sounds:PlaySoundMix("lily_shock_neutralizer_select_1", -1, false)
         sfxPlayed = true
     end
@@ -230,17 +191,17 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     -- Shock neutralizer effect (systems de-ionize faster)
     for system in vter(shipManager.vSystemList) do
         if system then
-            local batteryPow = (system.iBatteryPower or 0)
-            if batteryPow > 0 then
-                if system.iLockCount and system.iLockCount > 0 then
-                    local systemLvl = system:GetMaxPower()
-                    local scale = math.max(0, batteryPow * systemLvl)
-                    local deionizationBoost = (activationTimer or 0) * 0.15 * scale
+            local batteryPow = system.iBatteryPower or 0
+            if batteryPow > 0 and system.iLockCount and system.iLockCount > 0 then
+                local systemLvl = system:GetMaxPower()
+                local scale = math.max(0, batteryPow * systemLvl)
+                local deionizationBoost = activationTimer * 0.15 * scale
 
-                    if system:GetId() == Hyperspace.ShipSystem.NameToSystemId("cloaking") then
-                        deionizationBoost = deionizationBoost * 0.5
-                    end
+                if system:GetId() == Hyperspace.ShipSystem.NameToSystemId("cloaking") then
+                    deionizationBoost = deionizationBoost * 0.5
+                end
 
+                if system.lockTimer then
                     system.lockTimer.currTime = system.lockTimer.currTime + tick * deionizationBoost
                 end
             end
@@ -248,30 +209,21 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     end
 
     -- Oxygen
-    local oxygenSystem = find_system_by_name(shipManager, "oxygen")
+    local oxygenSystem = helpers.get_system_by_name(shipManager, "oxygen")
     local oxygen = shipManager.oxygenSystem
-    local oxygenBatteryActive = false
-    local oxygenBatteryPow = 0
 
-    if oxygenSystem and oxygen and oxygen.oxygenLevels and oxygenSystem:Powered() then
-        oxygenBatteryPow = oxygenSystem.iBatteryPower
-        if oxygenBatteryPow == nil then
-            oxygenBatteryPow = 0
-        end
+    if not (oxygenSystem and oxygen and oxygen.oxygenLevels and oxygenSystem:Powered()) then
+        set_scaling_hidden_aug(shipManager, FIRE_EXTINGUISHER_AUG, false, 0)
+    else
+        local oxygenBatteryPow = (oxygenSystem.iBatteryPower or 0)
+        local oxygenBatteryActive = oxygenBatteryPow > 0
 
-        if oxygenBatteryPow > 0 then
-            oxygenBatteryActive = true
-
+        if oxygenBatteryActive and activationTimer > 0 then
             local oxygenSystemPow = oxygenSystem:GetEffectivePower()
-            local alpha = activationTimer
-            if alpha == nil then
-                alpha = 0
-            end
-
-            if alpha > 0 and oxygenSystemPow > 0 then
+            if oxygenSystemPow > 0 then
                 local refill = oxygen:GetRefillSpeed()
                 local scale = math.max(0, oxygenBatteryPow * oxygenSystemPow)
-                local extraFactor = alpha * O2_REFILL_FACTOR_PER_SCALE * scale
+                local extraFactor = activationTimer * O2_REFILL_FACTOR_PER_SCALE * scale
 
                 if extraFactor > 0 then
                     local delta = refill * tick * extraFactor
@@ -284,16 +236,16 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
                 end
             end
         end
+        set_scaling_hidden_aug(shipManager, FIRE_EXTINGUISHER_AUG, oxygenBatteryActive, oxygenBatteryPow)
     end
-    set_scaling_hidden_aug(shipManager, FIRE_EXTINGUISHER_AUG, oxygenBatteryActive, oxygenBatteryPow)
 
     -- FTL booster: enable while Engines are receiving battery power
-    local enginesSystem = find_system_by_name(shipManager, "engines")
+    local enginesSystem = helpers.get_system_by_name(shipManager, "engines")
     local enginesBatteryActive = false
+
     if enginesSystem and enginesSystem:Powered() then
-        local enginesBatteryPow = enginesSystem.iBatteryPower
-        if enginesBatteryPow == nil then enginesBatteryPow = 0 end
-        if enginesBatteryPow > 0 then enginesBatteryActive = true end
+        local enginesBatteryPow = enginesSystem.iBatteryPower or 0
+        enginesBatteryActive = enginesBatteryPow > 0
     end
     set_hidden_aug(shipManager, FTL_BOOSTER_AUG, enginesBatteryActive)
 end)
@@ -302,10 +254,10 @@ end)
 local function render_shock_neutralizer_effects(ship, experimental)
     local shipManager = Hyperspace.ships(ship.iShipId)
     if not shipManager then return end
-    if shipManager:HasAugmentation("TERRAN_WRAITH_BATTERY") <= 0 then return end
+    if not helpers.ship_has_augment(shipManager, "TERRAN_WRAITH_BATTERY") then return end
 
     local batteryId = Hyperspace.ShipSystem.NameToSystemId("battery")
-    if not shipManager:HasSystem(batteryId) then return end
+    if not helpers.ship_has_working_system(shipManager, batteryId) then return end
 
     local battery = shipManager.batterySystem
     if not (battery and battery.bTurnedOn) then return end

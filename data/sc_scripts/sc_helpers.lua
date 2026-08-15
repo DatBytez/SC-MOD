@@ -52,3 +52,24 @@ function helpers.ship_has_working_system(ship, systemId)
     local system = ship:HasSystem(systemId) and ship:GetSystem(systemId)
     return system and not system:CompletelyDestroyed()
 end
+
+function helpers.get_system_by_name(shipManager, systemName)
+    local systemId = Hyperspace.ShipSystem.NameToSystemId(systemName)
+    if not shipManager or not shipManager.vSystemList then return nil end
+    for system in vter(shipManager.vSystemList) do
+        if system and system.GetId and system:GetId() == systemId then
+            return system
+        end
+    end
+    return nil
+end
+
+function helpers.get_system_by_id(shipManager, systemId)
+    if not shipManager or not shipManager.vSystemList then return nil end
+    for system in vter(shipManager.vSystemList) do
+        if system and system.GetId and system:GetId() == systemId then
+            return system
+        end
+    end
+    return nil
+end
