@@ -26,7 +26,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     local oxygenBatteryPow = oxygenSystem.iBatteryPower
     if oxygenBatteryPow <= 0 then return end
 
-    local activationTimer = battery.get_activation(shipManager)
+    local activationTimer = battery.get_state(shipManager).activationTimer
     if activationTimer <= 0 then return end
 
     local oxygenSystemPow = oxygenSystem:GetEffectivePower()

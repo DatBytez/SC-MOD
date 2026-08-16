@@ -311,19 +311,19 @@
 		<locked/>
 	</aug>
 	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_1">
-    	<function name="FTL_BOOSTER" value="400.10" useForReqs="true" warning="false"/>
+    	<function name="FTL_BOOSTER" value="0.10" useForReqs="true" warning="false"/>
 		<locked/>
     </aug>
 	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_2">
-    	<function name="FTL_BOOSTER" value="400.20" useForReqs="true" warning="false"/>
+    	<function name="FTL_BOOSTER" value="0.20" useForReqs="true" warning="false"/>
 		<locked/>
     </aug>
 	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_3">
-    	<function name="FTL_BOOSTER" value="400.30" useForReqs="true" warning="false"/>
+    	<function name="FTL_BOOSTER" value="0.30" useForReqs="true" warning="false"/>
 		<locked/>
     </aug>
 	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_4">
-    	<function name="FTL_BOOSTER" value="400.40" useForReqs="true" warning="false"/>
+    	<function name="FTL_BOOSTER" value="0.40" useForReqs="true" warning="false"/>
 		<locked/>
     </aug>
 	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_5">
@@ -1804,7 +1804,6 @@
 	<mod-append:script>data/sc_scripts/sc_weapon_emp.lua</mod-append:script>
 
     <mod-append:script>data/sc_scripts/sc_augment_battery.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_augment_battery_ion.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_battery_dodge.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_battery_oxygen.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_battery_fire.lua</mod-append:script>

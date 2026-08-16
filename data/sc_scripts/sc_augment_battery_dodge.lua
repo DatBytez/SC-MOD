@@ -12,8 +12,10 @@ local dodgeAugments = mods.sc.batteryDodgeAugments
 
 mods.sc.tag.register_augment_flag_tag("sc-battery-dodge", dodgeAugments)
 
+local PILOT_SYSTEM_ID = 6
+
 local function piloting_allows_positive_dodge(shipManager)
-    local piloting = helpers.get_system_by_name(shipManager, "piloting")
+    local piloting = shipManager:GetSystem(PILOT_SYSTEM_ID)
     if not piloting or piloting:CompletelyDestroyed() then return false end
     if not piloting.bManned then return false end
 
@@ -28,7 +30,7 @@ script.on_internal_event(
 
         local batteryPow, systemPow, systemLvl =
             battery.get_system_power_info(shipManager, "engines")
-        local activationTimer = battery.get_activation(shipManager)
+        local activationTimer = battery.get_state(shipManager).activationTimer
 
         if batteryPow < 1 or activationTimer <= 0 then return end
 

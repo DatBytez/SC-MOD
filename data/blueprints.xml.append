@@ -56,7 +56,6 @@
     <stackable>false</stackable>
     <sc-upgrade system="battery" amount="2"/>
     <sc-battery/>
-    <sc-battery-ion/>
     <sc-battery-dodge/>
     <sc-battery-oxygen/>
     <sc-battery-fire/>

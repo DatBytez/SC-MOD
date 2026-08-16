@@ -1,5 +1,5 @@
 --[[
-DESCRIPTION: Battery power supplied to Engines enables the hidden FTL booster.
+DESCRIPTION: Battery power supplied to Engines enables a scaling hidden FTL booster.
 TAG: <sc-battery-ftl/>
 DEPENDENCIES: sc_augment_battery.lua
 ]]
@@ -18,20 +18,26 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     if not helpers.ship_has_augment(shipManager, ftlAugments)
         or not battery.is_active(shipManager)
     then
-        battery.set_hidden_aug(shipManager, FTL_BOOSTER_AUG, false)
+        battery.set_scaling_hidden_aug(
+            shipManager,
+            FTL_BOOSTER_AUG,
+            false,
+            0
+        )
         return
     end
 
     local enginesSystem = helpers.get_system_by_name(shipManager, "engines")
-    local enginesBatteryActive = false
+    local enginesBatteryPow = 0
 
     if enginesSystem and enginesSystem:Powered() then
-        enginesBatteryActive = enginesSystem.iBatteryPower > 0
+        enginesBatteryPow = enginesSystem.iBatteryPower
     end
 
-    battery.set_hidden_aug(
+    battery.set_scaling_hidden_aug(
         shipManager,
         FTL_BOOSTER_AUG,
-        enginesBatteryActive
+        enginesBatteryPow > 0,
+        enginesBatteryPow
     )
 end)
