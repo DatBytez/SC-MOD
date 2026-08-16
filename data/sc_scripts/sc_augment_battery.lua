@@ -25,6 +25,9 @@ local ACTIVATION_RATE = 0.15
 
 local batteryState = {}
 local activeHiddenAugs = {}
+local scalingHiddenAugCounts = {}
+
+local augmentManager = Hyperspace.CustomAugmentManager.GetInstance()
 
 
 -- ============================================================================
@@ -42,12 +45,20 @@ function battery.get_state(shipManager)
     return batteryState[shipId]
 end
 
+function battery.has_battery_augment(shipManager)
+    return helpers.ship_has_augment(shipManager, batteryAugments)
+end
+
 function battery.is_active(shipManager)
-    if not helpers.ship_has_augment(shipManager, batteryAugments) then return false end
+    if not battery.has_battery_augment(shipManager) then return false end
     if not helpers.ship_has_working_system(shipManager, BATTERY_ID) then return false end
 
     local batterySystem = shipManager.batterySystem
     return batterySystem and batterySystem.bTurnedOn
+end
+
+function battery.get_activation(shipManager)
+    return battery.get_state(shipManager).activationTimer
 end
 
 function battery.get_system_power_info(shipManager, systemName)
@@ -55,6 +66,13 @@ function battery.get_system_power_info(shipManager, systemName)
     if not system then return 0, 0, 0 end
 
     return system.iBatteryPower, system:GetEffectivePower(), system:GetMaxPower()
+end
+
+function battery.get_system_battery_power(shipManager, systemName)
+    local system = helpers.get_system_by_name(shipManager, systemName)
+    if not system then return 0 end
+
+    return system.iBatteryPower
 end
 
 
@@ -68,36 +86,58 @@ local function get_ship_hidden_aug_table(shipManager)
     return activeHiddenAugs[shipId]
 end
 
-function battery.set_hidden_aug(shipManager, augName, shouldEnabled)
+function battery.set_hidden_aug(shipManager, augName, shouldEnable)
     local shipAugs = get_ship_hidden_aug_table(shipManager)
     local hiddenAug = "HIDDEN " .. augName
     local currentlyEnabled = shipAugs[augName] == true
 
-    if shouldEnabled and not currentlyEnabled then
+    if shouldEnable and not currentlyEnabled then
         shipManager:AddAugmentation(hiddenAug)
         shipAugs[augName] = true
-    elseif not shouldEnabled and currentlyEnabled then
+    elseif not shouldEnable and currentlyEnabled then
         shipManager:RemoveAugmentation(hiddenAug)
         shipAugs[augName] = false
     end
 end
 
-function battery.clear_scaling_hidden_aug(shipManager, augName, batteryPow)
-    for _, power in ipairs({1, 2, 3}) do
-        if batteryPow ~= power then
-            battery.set_hidden_aug(shipManager, augName .. "_" .. power, false)
-        end
+local function get_scaling_hidden_aug_count(augName)
+    local count = scalingHiddenAugCounts[augName]
+    if count ~= nil then return count end
+
+    count = 0
+
+    while augmentManager:GetAugmentDefinition(
+        augName .. "_" .. (count + 1)
+    ) do
+        count = count + 1
+    end
+
+    scalingHiddenAugCounts[augName] = count
+    return count
+end
+
+function battery.clear_scaling_hidden_aug(shipManager, augName)
+    local count = get_scaling_hidden_aug_count(augName)
+
+    for power = 1, count do
+        battery.set_hidden_aug(
+            shipManager,
+            augName .. "_" .. power,
+            false
+        )
     end
 end
 
 function battery.set_scaling_hidden_aug(shipManager, augName, enabled, batteryPow)
-    battery.clear_scaling_hidden_aug(shipManager, augName, batteryPow)
+    local count = get_scaling_hidden_aug_count(augName)
+    local activePower = math.min(batteryPow, count)
 
-    for _, power in ipairs({1, 2, 3}) do
-        if batteryPow == power then
-            battery.set_hidden_aug(shipManager, augName .. "_" .. power, enabled)
-            break
-        end
+    for power = 1, count do
+        battery.set_hidden_aug(
+            shipManager,
+            augName .. "_" .. power,
+            enabled and power == activePower
+        )
     end
 end
 
@@ -140,7 +180,7 @@ local function render_battery_effects(ship)
     local level = shipManager.batterySystem:GetMaxPower()
     if level <= 0 then return end
 
-    local alpha = battery.get_state(shipManager).activationTimer
+    local alpha = battery.get_activation(shipManager)
     if alpha <= 0 then return end
 
     local poweredRooms = {}
