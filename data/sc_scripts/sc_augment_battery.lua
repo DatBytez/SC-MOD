@@ -1,8 +1,7 @@
 --[[
 DESCRIPTION: Shared battery framework for tag-driven battery augments.
-        - Tracks battery activation state per ship.
+        - Tracks activation state per battery-powered room.
         - Provides shared helpers for modular battery effects.
-        - Plays the battery ready sound.
         - Renders battery-powered room visuals.
 TAG: <sc-battery/>
 SOURCE CREDIT: MsBinaryLily
@@ -38,27 +37,26 @@ function battery.get_state(shipManager)
     local shipId = shipManager.iShipId
 
     batteryState[shipId] = batteryState[shipId] or {
-        activationTimer = 0,
-        sfxPlayed = false
+        roomActivationTimers = {}
     }
 
     return batteryState[shipId]
 end
 
-function battery.has_battery_augment(shipManager)
-    return helpers.ship_has_augment(shipManager, batteryAugments)
-end
-
 function battery.is_active(shipManager)
-    if not battery.has_battery_augment(shipManager) then return false end
+    if not helpers.ship_has_augment(shipManager, batteryAugments) then return false end
     if not helpers.ship_has_working_system(shipManager, BATTERY_ID) then return false end
 
     local batterySystem = shipManager.batterySystem
     return batterySystem and batterySystem.bTurnedOn
 end
 
-function battery.get_activation(shipManager)
-    return battery.get_state(shipManager).activationTimer
+function battery.get_system_activation(shipManager, systemName)
+    local system = helpers.get_system_by_name(shipManager, systemName)
+    if not system then return 0 end
+
+    local state = battery.get_state(shipManager)
+    return state.roomActivationTimers[system.roomId] or 0
 end
 
 function battery.get_system_power_info(shipManager, systemName)
@@ -106,9 +104,7 @@ local function get_scaling_hidden_aug_count(augName)
 
     count = 0
 
-    while augmentManager:GetAugmentDefinition(
-        augName .. "_" .. (count + 1)
-    ) do
+    while augmentManager:GetAugmentDefinition(augName .. "_" .. (count + 1)) do
         count = count + 1
     end
 
@@ -120,11 +116,7 @@ function battery.clear_scaling_hidden_aug(shipManager, augName)
     local count = get_scaling_hidden_aug_count(augName)
 
     for power = 1, count do
-        battery.set_hidden_aug(
-            shipManager,
-            augName .. "_" .. power,
-            false
-        )
+        battery.set_hidden_aug(shipManager, augName .. "_" .. power, false)
     end
 end
 
@@ -133,37 +125,45 @@ function battery.set_scaling_hidden_aug(shipManager, augName, enabled, batteryPo
     local activePower = math.min(batteryPow, count)
 
     for power = 1, count do
-        battery.set_hidden_aug(
-            shipManager,
-            augName .. "_" .. power,
-            enabled and power == activePower
-        )
+        battery.set_hidden_aug(shipManager, augName .. "_" .. power, enabled and power == activePower)
     end
 end
 
 
 -- ============================================================================
--- Activation State
+-- Room Activation State
 -- ============================================================================
 
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     local state = battery.get_state(shipManager)
 
     if not battery.is_active(shipManager) then
-        state.activationTimer = 0
-        state.sfxPlayed = false
+        state.roomActivationTimers = {}
         return
     end
 
     local tick = Hyperspace.FPS.SpeedFactor / 16
+    local poweredRooms = {}
 
-    state.activationTimer = math.max(0, math.min(1, state.activationTimer + ACTIVATION_RATE * tick))
+    for system in vter(shipManager.vSystemList) do
+        if system and system.iBatteryPower > 0 then
+            poweredRooms[system.roomId] = true
+        end
+    end
 
-    if state.activationTimer < 1 then
-        state.sfxPlayed = false
-    elseif not state.sfxPlayed then
-        Hyperspace.Sounds:PlaySoundMix("lily_shock_neutralizer_select_1", -1, false)
-        state.sfxPlayed = true
+    for roomId, _ in pairs(poweredRooms) do
+        local activationTimer = state.roomActivationTimers[roomId] or 0
+
+        state.roomActivationTimers[roomId] = math.min(
+            1,
+            activationTimer + ACTIVATION_RATE * tick
+        )
+    end
+
+    for roomId, _ in pairs(state.roomActivationTimers) do
+        if not poweredRooms[roomId] then
+            state.roomActivationTimers[roomId] = nil
+        end
     end
 end)
 
@@ -180,35 +180,32 @@ local function render_battery_effects(ship)
     local level = shipManager.batterySystem:GetMaxPower()
     if level <= 0 then return end
 
-    local alpha = battery.get_activation(shipManager)
-    if alpha <= 0 then return end
-
-    local poweredRooms = {}
-
-    for system in vter(shipManager.vSystemList) do
-        if system and system.iBatteryPower > 0 then
-            poweredRooms[system.roomId] = true
-        end
-    end
-
     local rooms = ship.vRoomList
+    local roomActivationTimers =
+        battery.get_state(shipManager).roomActivationTimers
 
-    for roomId, _ in pairs(poweredRooms) do
-        local roomdata = rooms[roomId]
+    for roomId, alpha in pairs(roomActivationTimers) do
+        if alpha > 0 then
+            local roomdata = rooms[roomId]
 
-        if roomdata then
-            local rect = roomdata.rect
-            local baseG = math.min(1, (25 * level + 154) / 255)
-            local color1 = Graphics.GL_Color(14 / 255, baseG, 255 / 255, alpha)
-            local color2 = Graphics.GL_Color(14 / 255, baseG, 255 / 255, 0.4 * alpha)
+            if roomdata then
+                local rect = roomdata.rect
+                local baseG = math.min(1, (25 * level + 154) / 255)
+                local color1 = Graphics.GL_Color(14 / 255, baseG, 255 / 255, alpha)
+                local color2 = Graphics.GL_Color(14 / 255, baseG, 255 / 255, 0.4 * alpha)
 
-            Graphics.CSurface.GL_PushMatrix()
-            Graphics.CSurface.GL_DrawRectOutline(rect.x, rect.y, rect.w, rect.h, color2, (level + 5) * alpha)
-            Graphics.CSurface.GL_DrawRectOutline(rect.x, rect.y, rect.w, rect.h, color2, (level + 3) * alpha)
-            Graphics.CSurface.GL_DrawRectOutline(rect.x, rect.y, rect.w, rect.h, color1, (level + 1) * alpha)
-            Graphics.CSurface.GL_PopMatrix()
+                Graphics.CSurface.GL_PushMatrix()
+                Graphics.CSurface.GL_DrawRectOutline(rect.x, rect.y, rect.w, rect.h, color2, (level + 5) * alpha)
+                Graphics.CSurface.GL_DrawRectOutline(rect.x, rect.y, rect.w, rect.h, color2, (level + 3) * alpha)
+                Graphics.CSurface.GL_DrawRectOutline(rect.x, rect.y, rect.w, rect.h, color1, (level + 1) * alpha)
+                Graphics.CSurface.GL_PopMatrix()
+            end
         end
     end
 end
 
-script.on_render_event(Defines.RenderEvents.SHIP_FLOOR, function() end, render_battery_effects)
+script.on_render_event(
+    Defines.RenderEvents.SHIP_FLOOR,
+    function() end,
+    render_battery_effects
+)

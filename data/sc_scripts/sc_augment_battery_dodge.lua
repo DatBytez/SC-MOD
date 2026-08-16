@@ -30,7 +30,8 @@ script.on_internal_event(
 
         local batteryPow, systemPow, systemLvl =
             battery.get_system_power_info(shipManager, "engines")
-        local activationTimer = battery.get_state(shipManager).activationTimer
+        local activationTimer =
+            battery.get_system_activation(shipManager, "engines")
 
         if batteryPow < 1 or activationTimer <= 0 then return end
 
