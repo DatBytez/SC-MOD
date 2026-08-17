@@ -1,342 +1,103 @@
 --[[
-SC Comsat drone targeting source.
-
-A drone blueprint tagged with:
-
-    <sc-comsat/>
-
-or:
-
-    <sc-comsat>15</sc-comsat>
-
-provides the same targeting strength as the SC Detector augment while that
-specific drone is deployed, powered, and alive. The tag value is the drone's
-maximum deployed lifetime in seconds. An empty tag defaults to 10 seconds. The strength is the ship's
-current effective Sensors power, so the Comsat inherits the shared targeting
-core's existing Detector behavior without duplicating any gameplay callbacks.
-
-The shared targeting core owns:
-    1. Projectile accuracy bonus.
-    2. Missile accuracy multiplier.
-    3. Weapon-radius reduction.
-    4. Weapon charging while the enemy ship is cloaked.
-    5. Anti-cloak targeting/firing support.
-
-If Detector and Comsat are active at the same time, the shared targeting core
-uses the strongest registered source rather than stacking them. Since both use
-Sensors power, they therefore provide the same strength rather than doubling
-the effect.
+DESCRIPTION: Comsat drones provide temporary detector-style targeting while deployed.
+        - Tagged drones use Sensors effective power as targeting strength.
+        - Tagged drones self-destruct after the lifetime defined by <sc-comsat>.
+        - Hides the scan projectile in flight while preserving its impact animation.
+TAG: <sc-comsat>15</sc-comsat>
+DEPENDENCIES: sc_targeting_core.lua, sc_helpers.lua
 ]]
 
-mods.multiverse.droneTagParsers =
-    mods.multiverse.droneTagParsers or {}
-
-local droneTagParsers =
-    mods.multiverse.droneTagParsers
-
+local droneTagParsers = mods.multiverse.droneTagParsers
 local vter = mods.multiverse.vter
 local helpers = mods.sc.helpers
-
-mods.sc = mods.sc or {}
-mods.sc.comsat = mods.sc.comsat or {}
-mods.sc.comsatDrones = mods.sc.comsatDrones or {}
-
-local comsat = mods.sc.comsat
-local comsatDrones = mods.sc.comsatDrones
 local targeting = mods.sc.targeting
 
-local DEFAULT_COMSAT_LIFETIME = 10
-
-local function get_comsat_lifetime(drone)
-    if not drone
-        or not drone.blueprint
-        or not drone.blueprint.name then
-
-        return nil
-    end
-
-    return comsatDrones[drone.blueprint.name]
-end
-
-local function drone_has_comsat_tag(drone)
-    return get_comsat_lifetime(drone) ~= nil
-end
-
-local function drone_is_active_comsat(drone)
-    if not drone_has_comsat_tag(drone) then
-        return false
-    end
-
-    if drone.deployed ~= true then
-        return false
-    end
-
-    if drone.powered ~= true then
-        return false
-    end
-
-    if drone.bDead == true then
-        return false
-    end
-
-    return true
-end
-
-local function ship_has_active_comsat(ship)
-    return helpers.ship_has_drone_matching(ship, drone_is_active_comsat)
-end
-
-local function get_comsat_strength(ship)
-    if not ship_has_active_comsat(ship) then
-        return nil
-    end
-
-    local sensors = ship:GetSystem(7)
-
-    if not sensors then
-        return nil
-    end
-
-    return sensors:GetEffectivePower()
-end
-
--- Public helpers for later Comsat-specific features such as full room reveal
--- and invisible-crew detection.
-comsat.drone_has_comsat_tag =
-    drone_has_comsat_tag
-
-comsat.get_lifetime =
-    get_comsat_lifetime
-
-comsat.drone_is_active =
-    drone_is_active_comsat
-
-comsat.ship_has_active_comsat =
-    ship_has_active_comsat
-
-comsat.get_strength =
-    get_comsat_strength
-
--- Register Comsat as a temporary activation source for the shared targeting
--- package. No projectile, radius, or cloak callbacks are duplicated here.
-targeting.register_source(
-    "sc_comsat",
-    get_comsat_strength
-)
-
--- Read the Comsat lifetime from droneBlueprint nodes before tag-data-read.lua
--- runs.
---
---     <sc-comsat/>       = 10 seconds
---     <sc-comsat>15</sc-comsat> = 15 seconds
---
--- Invalid, zero, or negative values fall back to the 10-second default.
-table.insert(
-    droneTagParsers,
-    function(droneNode)
-        local nameAttr =
-            droneNode:first_attribute("name")
-
-        if not nameAttr then
-            return
-        end
-
-        local tagNode =
-            droneNode:first_node("sc-comsat")
-
-        if not tagNode then
-            return
-        end
-
-        local lifetime =
-            tonumber(tagNode:value())
-
-        if not lifetime
-            or lifetime <= 0 then
-
-            lifetime =
-                DEFAULT_COMSAT_LIFETIME
-        end
-
-        comsatDrones[nameAttr:value()] =
-            lifetime
-    end
-)
-
-
-------------------------------------------------------------------------------------
--- Comsat deployment lifetime
---
--- Use the same timing method as sc_pilot_ui.lua:
---
---     timer += Hyperspace.FPS.SpeedFactor / 16
---
--- Timer state is kept in ordinary Lua tables rather than userdata storage.
--- Each drone is keyed by shipId + SpaceDrone.selfId so simultaneous Comsats
--- receive independent timers.
---
--- Lifetime begins when the Comsat is deployed. Depowering does not pause the
--- timer, although an unpowered Comsat still stops contributing targeting
--- strength through drone_is_active_comsat().
+local comsatDrones = {}
 local comsatTimers = {
     [0] = {},
     [1] = {}
 }
 
-local function get_ship_timer_table(shipId)
-    if not comsatTimers[shipId] then
-        comsatTimers[shipId] = {}
-    end
+table.insert(droneTagParsers, function(droneNode)
+    local tagNode = droneNode:first_node("sc-comsat")
+    if not tagNode then return end
 
-    return comsatTimers[shipId]
+    local lifetime = tonumber(tagNode:value())
+    if not lifetime or lifetime <= 0 then return end
+
+    comsatDrones[droneNode:first_attribute("name"):value()] = lifetime
+end)
+
+local function drone_is_active_comsat(drone)
+    return comsatDrones[drone.blueprint.name] ~= nil and drone.deployed and drone.powered and not drone.bDead
 end
 
-local function get_drone_timer_key(drone)
-    if not drone
-        or drone.selfId == nil then
+local function get_comsat_strength(ship)
+    if not helpers.ship_has_drone_matching(ship, drone_is_active_comsat) then return nil end
 
-        return nil
-    end
+    local sensors = ship:GetSystem(7)
+    if not sensors then return nil end
 
-    return drone.selfId
+    return sensors:GetEffectivePower()
 end
 
-local function reset_all_timers()
+targeting.register_source("sc_comsat", get_comsat_strength)
+
+local function reset_comsat_timers()
     comsatTimers[0] = {}
     comsatTimers[1] = {}
 end
 
-local function update_comsat_lifetime(
-    ship,
-    drone
-)
-    local lifetime =
-        get_comsat_lifetime(drone)
+local function update_comsat_lifetime(shipTimers, drone, lifetime)
+    if drone.bDead then return end
 
-    if not lifetime
-        or not ship then
+    local droneId = drone.selfId
 
-        return
-    end
-
-    local shipId =
-        ship.iShipId
-
-    local droneKey =
-        get_drone_timer_key(drone)
-
-    if shipId == nil
-        or droneKey == nil then
-
-        return
-    end
-
-    local shipTimers =
-        get_ship_timer_table(shipId)
-
-    local state =
-        shipTimers[droneKey]
-
-    -- A non-deployed, living drone is ready for a fresh future deployment.
-    if drone.deployed ~= true then
-        if drone.bDead ~= true then
-            shipTimers[droneKey] = nil
+    if not drone.powered then
+        if drone.deployed or shipTimers[droneId] then
+            drone:SetDestroyed(true, false)
         end
 
+        shipTimers[droneId] = nil
         return
     end
 
-    -- Do not restart or continue a timer after the drone is already dead.
-    if drone.bDead == true then
+    if not drone.deployed then
+        shipTimers[droneId] = nil
         return
     end
 
-    if not state then
-        state = {
-            started = true,
-            remaining = lifetime,
-            expired = false
-        }
+    local remaining = (shipTimers[droneId] or lifetime) - Hyperspace.FPS.SpeedFactor / 16
+    shipTimers[droneId] = remaining
 
-        shipTimers[droneKey] =
-            state
-    end
-
-    if state.expired then
-        return
-    end
-
-    state.remaining =
-        math.max(
-            0,
-            state.remaining
-                - Hyperspace.FPS.SpeedFactor
-                / 16
-        )
-
-    if state.remaining <= 0 then
-        state.expired = true
-
-        -- dead=true, rebuildRequired=false
-        drone:SetDestroyed(
-            true,
-            false
-        )
+    if remaining <= 0 then
+        drone:SetDestroyed(true, false)
     end
 end
 
-script.on_init(
-    reset_all_timers
-)
+script.on_init(reset_comsat_timers)
 
-script.on_internal_event(
-    Defines.InternalEvents.JUMP_ARRIVE,
-    function()
-        reset_all_timers()
-    end
-)
+script.on_internal_event(Defines.InternalEvents.JUMP_ARRIVE, function()
+    reset_comsat_timers()
+end)
 
-script.on_internal_event(
-    Defines.InternalEvents.SHIP_LOOP,
-    function(ship)
-        if not ship
-            or not ship.droneSystem
-            or not ship.droneSystem.drones then
+script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
+    if not ship.droneSystem then return end
 
-            return
-        end
+    local shipTimers = comsatTimers[ship.iShipId]
 
-        for drone in vter(
-            ship.droneSystem.drones
-        ) do
-            if drone_has_comsat_tag(drone) then
-                update_comsat_lifetime(
-                    ship,
-                    drone
-                )
-            end
+    for drone in vter(ship.droneSystem.drones) do
+        local lifetime = comsatDrones[drone.blueprint.name]
+        if lifetime then
+            update_comsat_lifetime(shipTimers, drone, lifetime)
         end
     end
-)
+end)
 
-------------------------------------------------------------------------------------
--- Comsat scan projectile visuals
---
--- The projectile blueprint uses a normal stock projectile image so FTL always has
--- a valid projectile animation. Hide only the in-flight animation here. The death
--- animation is deliberately left unchanged so the impact explosion remains visible
--- and can later be replaced by the Comsat sparkling scan effect.
-script.on_internal_event(
-    Defines.InternalEvents.DRONE_FIRE,
-    function(projectile, spacedrone)
-        if not projectile
-            or not drone_has_comsat_tag(spacedrone) then
+script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile, spacedrone)
+    if not comsatDrones[spacedrone.blueprint.name] then return end
 
-            return
-        end
-
-        if projectile.flight_animation then
-            projectile.flight_animation.fScale = 0
-        end
+    if projectile.flight_animation then
+        projectile.flight_animation.fScale = 0
     end
-)
+end)

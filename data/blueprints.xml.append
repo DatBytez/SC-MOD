@@ -2600,15 +2600,11 @@ TERRAN_GOLIATH-->
     <cooldown>1000</cooldown>
     <dodge>0</dodge>
     <speed>15</speed>
-
     <cost>50</cost>
     <rarity>3</rarity>
-
-    <sc-comsat/>
-
-    <!-- FTL resolves combat-drone art from img/ship/drones/ using this basename. -->
+    <sc-comsat>5</sc-comsat>
+	
     <droneImage>terran_comsat</droneImage>
-
     <weaponBlueprint>TERRAN_COMSAT_PROJECTILE</weaponBlueprint>
     <iconImage>combat</iconImage>
 </droneBlueprint>
