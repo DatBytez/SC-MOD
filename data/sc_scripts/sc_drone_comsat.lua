@@ -35,7 +35,7 @@ local droneTagParsers =
     mods.multiverse.droneTagParsers
 
 local vter = mods.multiverse.vter
-local helpers = mods.sc.helpers or require("mods.sc.helpers")
+local helpers = mods.sc.helpers
 
 mods.sc = mods.sc or {}
 mods.sc.comsat = mods.sc.comsat or {}

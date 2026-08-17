@@ -2,7 +2,7 @@ local vter = mods.multiverse.vter
 
 mods.sc = mods.sc or {}
 mods.sc.dodgeAugments = mods.sc.dodgeAugments or {}
-local helpers = mods.sc.helpers or require("mods.sc.helpers")
+local helpers = mods.sc.helpers
 
 local dodgeAugments = mods.sc.dodgeAugments
 

@@ -55,9 +55,16 @@ function mods.sc.tag.register_augment_tag(tagName, targetTable)
         if not nameAttr then return end
         local augmentName = nameAttr:value()
 
+        local tagNode = augNode:first_node(tagName)
+        if not tagNode then return end
+
+        if not tagNode:first_attribute("system") and not tagNode:first_attribute("amount") then
+            targetTable[augmentName] = true
+            return
+        end
+
         local entries = {}
 
-        local tagNode = augNode:first_node(tagName)
         while tagNode do
             local systemAttr = tagNode:first_attribute("system")
             local amountAttr = tagNode:first_attribute("amount")
@@ -78,18 +85,7 @@ function mods.sc.tag.register_augment_tag(tagName, targetTable)
     end)
 end
 
-function mods.sc.tag.register_augment_flag_tag(tagName, targetTable)
-    table.insert(augmentTagParsers, function(augNode)
-        local nameAttr = augNode:first_attribute("name")
-        if not nameAttr then return end
-        local augmentName = nameAttr:value()
-
-        local tagNode = augNode:first_node(tagName)
-        if tagNode then
-            targetTable[augmentName] = true
-        end
-    end)
-end
+mods.sc.tag.register_augment_flag_tag = mods.sc.tag.register_augment_tag
 
 function mods.sc.tag.register_augment_amount_tag(tagName, targetTable)
     table.insert(augmentTagParsers, function(augNode)

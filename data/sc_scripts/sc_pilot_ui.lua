@@ -1,6 +1,6 @@
 mods.sc_pilot_button = mods.sc_pilot_button or {}
 mods.sc = mods.sc or {}
-local helpers = mods.sc.helpers or require("mods.sc.helpers")
+local helpers = mods.sc.helpers
 
 local PILOT_AUGMENT = "TERRAN_SHIP_ARMOR_LIGHT"
 local PILOT_SYSTEM_ID = 6

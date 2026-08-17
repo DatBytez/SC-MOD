@@ -9,7 +9,7 @@ mods.sc_accuracy.dodgeToAccuracy = mods.sc_accuracy.dodgeToAccuracy or {
 mods.sc = mods.sc or {}
 mods.sc.pilot = mods.sc.pilot or {}
 
-local helpers = mods.sc.helpers or require("mods.sc.helpers")
+local helpers = mods.sc.helpers
 
 local PILOT_AUGMENT = "TERRAN_SHIP_ARMOR_LIGHT"
 local PILOT_SYSTEM_ID = 6

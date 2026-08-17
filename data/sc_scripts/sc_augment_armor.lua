@@ -12,7 +12,7 @@ local damageMessages = mods.multiverse.damageMessages
 mods.sc = mods.sc or {}
 mods.sc.armorAugments = mods.sc.armorAugments or {}
 
-local helpers = mods.sc.helpers or require("mods.sc.helpers")
+local helpers = mods.sc.helpers
 
 local armorAugments = mods.sc.armorAugments
 

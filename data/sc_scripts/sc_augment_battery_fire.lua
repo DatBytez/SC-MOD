@@ -4,13 +4,13 @@ TAG: <sc-battery-fire/>
 DEPENDENCIES: sc_augment_battery.lua
 ]]
 
-local helpers = mods.sc.helpers or require("mods.sc.helpers")
+local helpers = mods.sc.helpers
 local battery = mods.sc.battery
 
 mods.sc.batteryFireAugments = mods.sc.batteryFireAugments or {}
 local fireAugments = mods.sc.batteryFireAugments
 
-mods.sc.tag.register_augment_flag_tag("sc-battery-fire", fireAugments)
+mods.sc.tag.register_augment_tag("sc-battery-fire", fireAugments)
 
 local FIRE_EXTINGUISHER_AUG = "TERRAN_HIDDEN_FIRE_EXTINGUISHERS"
 
@@ -18,12 +18,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     if not helpers.ship_has_augment(shipManager, fireAugments)
         or not battery.is_active(shipManager)
     then
-        battery.set_scaling_hidden_aug(
-            shipManager,
-            FIRE_EXTINGUISHER_AUG,
-            false,
-            0
-        )
+        battery.set_scaling_hidden_aug(shipManager, FIRE_EXTINGUISHER_AUG, false, 0)
         return
     end
 
@@ -31,22 +26,11 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     local oxygen = shipManager.oxygenSystem
 
     if not (oxygenSystem and oxygen and oxygenSystem:Powered()) then
-        battery.set_scaling_hidden_aug(
-            shipManager,
-            FIRE_EXTINGUISHER_AUG,
-            false,
-            0
-        )
+        battery.set_scaling_hidden_aug(shipManager, FIRE_EXTINGUISHER_AUG, false, 0)
         return
     end
 
-    local oxygenBatteryPow = oxygenSystem.iBatteryPower
-    local oxygenBatteryActive = oxygenBatteryPow > 0
+    local effectiveBatteryPow = battery.get_system_effective_battery_power(shipManager, "oxygen")
 
-    battery.set_scaling_hidden_aug(
-        shipManager,
-        FIRE_EXTINGUISHER_AUG,
-        oxygenBatteryActive,
-        oxygenBatteryPow
-    )
+    battery.set_scaling_hidden_aug(shipManager, FIRE_EXTINGUISHER_AUG, effectiveBatteryPow > 0, effectiveBatteryPow)
 end)

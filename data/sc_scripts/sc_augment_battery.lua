@@ -8,7 +8,7 @@ SOURCE CREDIT: MsBinaryLily
 ]]
 
 local vter = mods.multiverse.vter
-local helpers = mods.sc.helpers or require("mods.sc.helpers")
+local helpers = mods.sc.helpers
 
 mods.sc = mods.sc or {}
 mods.sc.battery = mods.sc.battery or {}
@@ -17,7 +17,7 @@ mods.sc.batteryAugments = mods.sc.batteryAugments or {}
 local battery = mods.sc.battery
 local batteryAugments = mods.sc.batteryAugments
 
-mods.sc.tag.register_augment_flag_tag("sc-battery", batteryAugments)
+mods.sc.tag.register_augment_tag("sc-battery", batteryAugments)
 
 local BATTERY_ID = Hyperspace.ShipSystem.NameToSystemId("battery")
 local ACTIVATION_RATE = 0.15
@@ -71,6 +71,18 @@ function battery.get_system_battery_power(shipManager, systemName)
     if not system then return 0 end
 
     return system.iBatteryPower
+end
+
+function battery.get_system_effective_battery_power(shipManager, systemName)
+    local system = helpers.get_system_by_name(shipManager, systemName)
+    if not system then return 0 end
+
+    local batteryPow = system.iBatteryPower
+    if batteryPow <= 0 then return 0 end
+
+    local activation = battery.get_system_activation(shipManager, systemName)
+
+    return math.floor(batteryPow * activation)
 end
 
 

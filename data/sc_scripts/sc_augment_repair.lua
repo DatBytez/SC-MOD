@@ -10,7 +10,7 @@ local HULL_HEAL_FORCE = true
 local LILY_SYSTEM_BRACERS_ID = Hyperspace.ShipSystem.NameToSystemId("lily_system_bracers")
 
 local vter = mods.multiverse.vter
-local helpers = mods.sc.helpers or require("mods.sc.helpers")
+local helpers = mods.sc.helpers
 
 local function get_system_state(system)
     if not system then return nil end
