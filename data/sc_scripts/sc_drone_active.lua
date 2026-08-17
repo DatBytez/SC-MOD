@@ -17,16 +17,8 @@ mods.sc = mods.sc or {}
 mods.sc.activeShield = mods.sc.activeShield or {}
 
 local activeDrones = mods.sc.activeShield
+
 local ACTIVE_SHIELD_DRONE_SPEED_MULTIPLIER = 2
-
-local function get_pop_location(shipManager)
-    local shieldSystem = shipManager.shieldSystem
-
-    if shieldSystem.superUpLoc then return shieldSystem.superUpLoc end
-    if shieldSystem.center then return shieldSystem.center end
-
-    return shipManager:GetRandomRoomCenter()
-end
 
 local function drone_has_active_shield_tag(drone)
     if not drone.blueprint then return false end
@@ -92,7 +84,7 @@ local function pop_all_super_shields(shipManager)
     local currentSuper = superPower.first
     if currentSuper <= 0 then return end
 
-    local popLocation = get_pop_location(shipManager)
+    local popLocation = shieldSystem.superUpLoc
 
     for i = 1, currentSuper do
         shieldSystem:CollisionReal(popLocation.x, popLocation.y, Hyperspace.Damage(), true)
