@@ -23,9 +23,8 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     end
 
     local oxygenSystem = helpers.get_system_by_name(shipManager, "oxygen")
-    local oxygen = shipManager.oxygenSystem
 
-    if not (oxygenSystem and oxygen and oxygenSystem:Powered()) then
+    if not (oxygenSystem and oxygenSystem:Powered()) then
         battery.set_scaling_hidden_aug(shipManager, FIRE_EXTINGUISHER_AUG, false, 0)
         return
     end

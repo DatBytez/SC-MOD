@@ -47,8 +47,7 @@ function battery.is_active(shipManager)
     if not helpers.ship_has_augment(shipManager, batteryAugments) then return false end
     if not helpers.ship_has_working_system(shipManager, BATTERY_ID) then return false end
 
-    local batterySystem = shipManager.batterySystem
-    return batterySystem and batterySystem.bTurnedOn
+    return shipManager.batterySystem.bTurnedOn
 end
 
 function battery.get_system_activation(shipManager, systemName)

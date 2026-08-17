@@ -19,10 +19,10 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     if not battery.is_active(shipManager) then return end
 
     local oxygenSystem = helpers.get_system_by_name(shipManager, "oxygen")
+
+    if not (oxygenSystem and oxygenSystem:Powered()) then return end
+
     local oxygen = shipManager.oxygenSystem
-
-    if not (oxygenSystem and oxygen and oxygenSystem:Powered()) then return end
-
     local oxygenBatteryPow = oxygenSystem.iBatteryPower
     if oxygenBatteryPow <= 0 then return end
 
@@ -38,8 +38,6 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     local scale = oxygenBatteryPow * oxygenSystemPow
     local extraFactor = activationTimer * O2_REFILL_FACTOR_PER_SCALE * scale
     local delta = refill * tick * extraFactor
-
-    if delta == 0 then return end
 
     local levels = oxygen.oxygenLevels
 

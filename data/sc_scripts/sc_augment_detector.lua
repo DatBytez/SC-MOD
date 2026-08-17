@@ -16,7 +16,7 @@ local helpers = mods.sc.helpers
 mods.sc.tag.register_augment_tag("sc-detector", detectorAugments)
 
 local function get_detector_strength(ship)
-    local sensors = ship and ship:GetSystem(7)
+    local sensors = ship:GetSystem(7)
 
     if not sensors
         or not helpers.ship_has_augment(ship, detectorAugments) then

@@ -25,13 +25,11 @@ local function handle_reduction_armor(ship, projectile, location, damage)
      if not helpers.ship_has_augment(ship, armorAugments) then return end
     if not helpers.ship_has_working_system(ship, BRACERS_ID) then return end
 
-    if not damage or damage.iDamage <= 0 then return end
+    if damage.iDamage <= 0 then return end
     if damage.bFriendlyFire and damage.ownerId == ship.iShipId then return end
 
     local bracers = ship:GetSystem(BRACERS_ID)
-    local bracersHP = bracers.healthState.first or 0
-
-    if bracersHP <= 0 then return end
+    local bracersHP = bracers.healthState.first
 
     local blockChance = math.min(1.0, bracersHP * BLOCK_CHANCE_PER_HP)
     if math.random() > blockChance then return end
@@ -51,14 +49,12 @@ end
 script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA, handle_reduction_armor)
 
 script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA_HIT, function(ship, projectile, location)
-    if not projectile then return end
-
     local pdata = userdata_table(projectile, "mods.mv.reductionArmor")
     local blockedDamage = pdata.blockedDamage or 0
 
-    if blockedDamage > 0 and ship:HasSystem(BRACERS_ID) then
+    if blockedDamage > 0 then
         local bracers = ship:GetSystem(BRACERS_ID)
-        if bracers and not bracers:CompletelyDestroyed() then
+        if not bracers:CompletelyDestroyed() then
             bracers.healthState.first = math.max(0, bracers.healthState.first - blockedDamage)
         end
     end

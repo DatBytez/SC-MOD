@@ -1,8 +1,7 @@
--- ------------------------
--- TERRAN SHIP REPAIR HULL
--- ------------------------
--- If a ship has TERRAN_SHIP, heal 1 hull when one of its completely
--- destroyed systems is repaired back above destroyed status.
+--[[
+DESCRIPTION: Heals 1 hull when a completely destroyed system is repaired.
+        - Requires the TERRAN_SHIP augment.
+]]
 
 local TERRAN_SHIP_AUG = "TERRAN_SHIP"
 local HULL_HEAL_AMOUNT = 1
@@ -12,50 +11,22 @@ local LILY_SYSTEM_BRACERS_ID = Hyperspace.ShipSystem.NameToSystemId("lily_system
 local vter = mods.multiverse.vter
 local helpers = mods.sc.helpers
 
-local function get_system_state(system)
-    if not system then return nil end
-
-    -- Attach the state to the actual system object so duplicate artillery/custom
-    -- systems do not collide with each other.
-    system.table.sc_terran_repair_hull = system.table.sc_terran_repair_hull or {}
-    return system.table.sc_terran_repair_hull
-end
-
-local function ship_hull_missing(ship)
-    if not (ship and ship.ship and ship.ship.hullIntegrity) then
-        return false
-    end
-
-    local hull = ship.ship.hullIntegrity
-    return (hull.first or 0) < (hull.second or 0)
-end
-
-local function system_is_completely_destroyed(system)
-    return system
-        and system.CompletelyDestroyed
-        and system:CompletelyDestroyed()
-end
-
-local function heal_hull(ship)
-    if ship_hull_missing(ship) and ship.DamageHull then
-        ship:DamageHull(-HULL_HEAL_AMOUNT, HULL_HEAL_FORCE)
-    end
-end
-
 local function update_system_state(ship, system)
-    if not (ship and system) then return end
+    if not system then return end
 
-    local state = get_system_state(system)
-    if not state then return end
-
-    local currentlyDestroyed = system_is_completely_destroyed(system)
+    system.table.sc_terran_repair_hull = system.table.sc_terran_repair_hull or {}
+    local state = system.table.sc_terran_repair_hull
+    local currentlyDestroyed = system:CompletelyDestroyed()
 
     if state.wasCompletelyDestroyed and not currentlyDestroyed then
         if helpers.ship_has_augment(ship, TERRAN_SHIP_AUG) then
-            heal_hull(ship)
+            local hull = ship.ship.hullIntegrity
+
+            if hull.first < hull.second then
+                ship:DamageHull(-HULL_HEAL_AMOUNT, HULL_HEAL_FORCE)
+            end
         end
 
-        -- Do not heal again until this system becomes completely destroyed again.
         state.wasCompletelyDestroyed = false
     elseif currentlyDestroyed then
         state.wasCompletelyDestroyed = true
@@ -63,24 +34,9 @@ local function update_system_state(ship, system)
 end
 
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
-    if not (ship and ship.vSystemList) then return end
-
-    -- If the ship is already destroyed, clear per-system flags so stale repair
-    -- states do not survive weird edge cases.
-    if ship.bDestroyed then
-        for system in vter(ship.vSystemList) do
-            if system and system.table then
-                system.table.sc_terran_repair_hull = nil
-            end
-        end
-        return
-    end
-
     for system in vter(ship.vSystemList) do
         update_system_state(ship, system)
     end
 
-    if LILY_SYSTEM_BRACERS_ID then
-        update_system_state(ship, ship:GetSystem(LILY_SYSTEM_BRACERS_ID))
-    end
+    update_system_state(ship, ship:GetSystem(LILY_SYSTEM_BRACERS_ID))
 end)
