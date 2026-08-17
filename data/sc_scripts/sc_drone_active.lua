@@ -7,8 +7,6 @@ TAG: <sc-active-shield/>
 SOURCE CREDIT: TNE_ACTIVE_DRONE_LUA.lua, Fusion drones.lua
 ]]
 
-mods.multiverse.droneTagParsers = mods.multiverse.droneTagParsers or {}
-
 local droneTagParsers = mods.multiverse.droneTagParsers
 local vter = mods.multiverse.vter
 local helpers = mods.sc.helpers
@@ -22,38 +20,17 @@ local ACTIVE_SHIELD_DRONE_SPEED_MULTIPLIER = 2
 
 local function drone_has_active_shield_tag(drone)
     if not drone.blueprint then return false end
-    return activeDrones[drone.blueprint.name] == true
+    return activeDrones[drone.blueprint.name]
 end
 
 local function drone_is_active_and_powered(drone)
-    if not drone_has_active_shield_tag(drone) then return false end
-    if drone.deployed ~= true then return false end
-    if drone.powered ~= true then return false end
-    if drone.bDead == true then return false end
-
-    return true
+    return drone_has_active_shield_tag(drone) and drone.deployed and drone.powered and not drone.bDead
 end
 
 local function boost_active_shield_space_drones(shipManager)
-    if ACTIVE_SHIELD_DRONE_SPEED_MULTIPLIER <= 1 then return end
-
-    local speedBoost = ACTIVE_SHIELD_DRONE_SPEED_MULTIPLIER - 1
-    local extraUpdates = math.floor(speedBoost)
-    if extraUpdates <= 0 then return end
-
     for drone in vter(shipManager.spaceDrones) do
-        if drone_has_active_shield_tag(drone) and drone.powered == true and drone.bDead ~= true then
-            -- Match the behavior used in drones.lua: manually accelerate drone
-            -- weapon cooldown, then run extra drone OnLoop updates so movement and
-            -- targeting/reaction logic also advances faster.
-            if drone.currentSpeed and drone.weaponCooldown >= 0 then
-                drone.weaponCooldown = drone.weaponCooldown - Hyperspace.FPS.SpeedFactor / 16 * speedBoost
-                if drone.weaponCooldown <= 0 then
-                    drone.weaponCooldown = -1
-                end
-            end
-
-            for _ = 1, extraUpdates do
+        if drone_has_active_shield_tag(drone) and drone.powered and not drone.bDead then
+            for _ = 1, (ACTIVE_SHIELD_DRONE_SPEED_MULTIPLIER - 1) do
                 drone:OnLoop()
             end
         end
@@ -61,9 +38,7 @@ local function boost_active_shield_space_drones(shipManager)
 end
 
 local function ship_has_incoming_enemy_projectile(shipId)
-    local projectiles = Hyperspace.App.world.space.projectiles
-
-    for projectile in vter(projectiles) do
+    for projectile in vter(Hyperspace.App.world.space.projectiles) do
         local projectileIsActive = projectile._targetable ~= false and not projectile.passedTarget
         local projectileIsEnemy = projectile.ownerId ~= shipId
         local projectileIsAtShip = projectile.currentSpace == shipId or projectile.destinationSpace == shipId
@@ -93,12 +68,6 @@ local function pop_all_super_shields(shipManager)
     superPower.first = 0
 end
 
-table.insert(droneTagParsers, function(droneNode)
-    if droneNode:first_node("sc-active-shield") then
-        activeDrones[droneNode:first_attribute("name"):value()] = true
-    end
-end)
-
 script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile, spacedrone)
     if not drone_has_active_shield_tag(spacedrone) then return end
 
@@ -122,10 +91,8 @@ end)
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     boost_active_shield_space_drones(shipManager)
 
-    local shipId = shipManager.iShipId
-
     if not helpers.ship_has_drone_matching(shipManager, drone_is_active_and_powered) then return end
-    if ship_has_incoming_enemy_projectile(shipId) then return end
+    if ship_has_incoming_enemy_projectile(shipManager.iShipId) then return end
 
     pop_all_super_shields(shipManager)
 end)
