@@ -2,8 +2,8 @@
 DESCRIPTION: Generic system-box button and timer framework.
         - Registered buttons attach to a player system box.
         - Handles mouse input, timer progress, active state, and button rendering.
-        - Registering scripts define visibility, readiness, duration, timer behavior,
-          visuals, tooltips, and what happens when the timer turns on or off.
+        - Registering scripts define visibility, readiness, duration, visuals,
+          tooltips, timer behavior, and activation/deactivation effects.
 ]]
 
 mods.sc.buttonTimer = mods.sc.buttonTimer or {}
@@ -13,11 +13,14 @@ local buttons = {}
 local buttonOrder = {}
 
 local function new_state()
-    return {
-        timer = 1,
-        active = false,
-        duration = 1
-    }
+    return {timer = 1, active = false, duration = 1}
+end
+
+local function reset_all_states()
+    for _, button in ipairs(buttonOrder) do
+        button.state[0] = new_state()
+        button.state[1] = new_state()
+    end
 end
 
 local function set_active(button, ship, shipSystem, active)
@@ -26,25 +29,10 @@ local function set_active(button, ship, shipSystem, active)
 
     state.active = active
 
-    if active then
-        if button.on_activate then
-            button.on_activate(ship, shipSystem, state)
-        end
-    elseif button.on_deactivate then
+    if active and button.on_activate then
+        button.on_activate(ship, shipSystem, state)
+    elseif not active and button.on_deactivate then
         button.on_deactivate(ship, shipSystem, state)
-    end
-end
-
-local function reset_state(button, ship, shipSystem)
-    local state = button.state[ship.iShipId]
-    local hadState = state.active or state.timer < 1
-
-    state.timer = 1
-    state.active = false
-    state.duration = button.get_duration(ship, shipSystem)
-
-    if hadState and button.on_reset then
-        button.on_reset(ship, shipSystem, state)
     end
 end
 
@@ -67,58 +55,57 @@ end
 function buttonTimer.activate(name, ship)
     local button = buttons[name]
     local shipSystem = ship:GetSystem(button.systemId)
-    if not shipSystem or not button.is_visible(ship, shipSystem) then return false end
+
+    if not shipSystem or not button.is_visible(ship, shipSystem) then
+        return false
+    end
 
     local state = button.state[ship.iShipId]
+
     if state.active or not button.is_ready(ship, shipSystem, state) then
         return false
     end
 
     state.duration = button.get_duration(ship, shipSystem)
     state.timer = 0
-    set_active(button, ship, shipSystem, true)
 
+    set_active(button, ship, shipSystem, true)
     return true
 end
 
-local function rebuild_button(button, systemBox, ship, shipSystem, visuals)
-    local activateButton = Hyperspace.Button()
+-- Is this really necessary?
+local function ensure_button_runtime(button, systemBox, ship)
+    local shipSystem = systemBox.pSystem
+    local visuals = button.get_visuals(ship, shipSystem)
+    local runtime = button.runtime
 
-    activateButton:OnInit(
-        visuals.buttonStyle,
-        Hyperspace.Point(button.x, button.y)
-    )
+    if runtime.systemBox ~= systemBox
+        or runtime.visuals.key ~= visuals.key then
 
-    activateButton.hitbox.x = button.hitbox.x
-    activateButton.hitbox.y = button.hitbox.y
-    activateButton.hitbox.w = button.hitbox.w
-    activateButton.hitbox.h = button.hitbox.h
+        local activateButton = Hyperspace.Button()
 
-    button.runtime.systemBox = systemBox
-    button.runtime.activateButton = activateButton
-    button.runtime.visuals = visuals
+        activateButton:OnInit(visuals.buttonStyle, Hyperspace.Point(button.x, button.y))
 
-    systemBox.table["sc_button_" .. button.name] = activateButton
+        activateButton.hitbox.x = button.hitbox.x
+        activateButton.hitbox.y = button.hitbox.y
+        activateButton.hitbox.w = button.hitbox.w
+        activateButton.hitbox.h = button.hitbox.h
 
-    button.runtime.buttonBase = Hyperspace.Resources:CreateImagePrimitiveString(
-        visuals.baseImage,
-        button.x,
-        button.y,
-        0,
-        Graphics.GL_Color(1, 1, 1, 1),
-        1,
-        false
-    )
+        systemBox.extend.xOffset = button.systemBoxOffset
+        systemBox.table["sc_button_" .. button.name] = activateButton
 
-    button.runtime.buttonCharging = Hyperspace.Resources:CreateImagePrimitiveString(
-        visuals.chargingImage,
-        button.x,
-        button.y,
-        0,
-        Graphics.GL_Color(1, 1, 1, 1),
-        1,
-        false
-    )
+        runtime.systemBox = systemBox
+        runtime.activateButton = activateButton
+        runtime.visuals = visuals
+
+        runtime.buttonBase = Hyperspace.Resources:CreateImagePrimitiveString(
+            visuals.baseImage, button.x, button.y, 0, Graphics.GL_Color(1, 1, 1, 1), 1, false)
+
+        runtime.buttonCharging = Hyperspace.Resources:CreateImagePrimitiveString(
+        visuals.chargingImage, button.x, button.y, 0, Graphics.GL_Color(1, 1, 1, 1), 1, false)
+    end
+
+    return runtime
 end
 
 local function button_matches_system_box(button, systemBox)
@@ -127,17 +114,11 @@ local function button_matches_system_box(button, systemBox)
 end
 
 script.on_internal_event(Defines.InternalEvents.CONSTRUCT_SYSTEM_BOX, function(systemBox)
+    local ship = Hyperspace.ships.player
+
     for _, button in ipairs(buttonOrder) do
         if button_matches_system_box(button, systemBox) then
-            systemBox.extend.xOffset = button.systemBoxOffset
-
-            rebuild_button(
-                button,
-                systemBox,
-                Hyperspace.ships.player,
-                systemBox.pSystem,
-                button.get_visuals(Hyperspace.ships.player, systemBox.pSystem)
-            )
+            ensure_button_runtime(button, systemBox, ship)
         end
     end
 end)
@@ -149,11 +130,10 @@ script.on_internal_event(Defines.InternalEvents.SYSTEM_BOX_MOUSE_MOVE, function(
         if button_matches_system_box(button, systemBox)
             and button.is_visible(ship, systemBox.pSystem) then
 
-            button.runtime.activateButton:MouseMove(
-                x - button.x,
-                y - button.y,
-                false
-            )
+            local activateButton =
+                ensure_button_runtime(button, systemBox, ship).activateButton
+
+            activateButton:MouseMove(x - button.x, y - button.y, false)
         end
     end
 
@@ -167,7 +147,8 @@ script.on_internal_event(Defines.InternalEvents.SYSTEM_BOX_MOUSE_CLICK, function
         if button_matches_system_box(button, systemBox)
             and button.is_visible(ship, systemBox.pSystem) then
 
-            local activateButton = button.runtime.activateButton
+            local activateButton =
+                ensure_button_runtime(button, systemBox, ship).activateButton
 
             if activateButton.bHover and activateButton.bActive then
                 buttonTimer.activate(button.name, ship)
@@ -178,42 +159,39 @@ script.on_internal_event(Defines.InternalEvents.SYSTEM_BOX_MOUSE_CLICK, function
     return Defines.Chain.CONTINUE
 end)
 
-script.on_init(function()
-    for _, button in ipairs(buttonOrder) do
-        button.state[0] = new_state()
-        button.state[1] = new_state()
-    end
-end)
+script.on_init(reset_all_states)
 
-script.on_internal_event(Defines.InternalEvents.JUMP_ARRIVE, function()
-    for _, button in ipairs(buttonOrder) do
-        button.state[0] = new_state()
-        button.state[1] = new_state()
-    end
-end)
+script.on_internal_event(Defines.InternalEvents.JUMP_ARRIVE, reset_all_states)
 
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
     for _, button in ipairs(buttonOrder) do
-        local shipSystem = ship:GetSystem(button.systemId)
         local state = button.state[ship.iShipId]
+        local shipSystem = ship:GetSystem(button.systemId)
 
         if not shipSystem then
             state.timer = 1
             state.active = false
+
         elseif not button.is_visible(ship, shipSystem) then
-            reset_state(button, ship, shipSystem)
+            local wasActive = state.active
+
+            state.timer = 1
+            state.active = false
+            state.duration = button.get_duration(ship, shipSystem)
+
+            if wasActive and button.on_reset then
+                button.on_reset(ship, shipSystem, state)
+            end
+
         else
             state.duration = button.get_duration(ship, shipSystem)
 
-            state.timer = math.max(
-                0,
-                math.min(
-                    1,
-                    state.timer
-                        + button.get_timer_rate(ship, shipSystem, state)
-                        * Hyperspace.FPS.SpeedFactor / 16
-                )
-            )
+            local timerRate =
+                button.get_timer_rate
+                and button.get_timer_rate(ship, shipSystem, state)
+                or 1 / state.duration
+
+            state.timer = math.max( 0, math.min(1, state.timer + timerRate * Hyperspace.FPS.SpeedFactor / 16))
 
             set_active(button, ship, shipSystem, state.timer < 1)
         end
@@ -226,22 +204,14 @@ local function render_button(button, systemBox)
 
     if not button.is_visible(ship, shipSystem) then return end
 
-    local visuals = button.get_visuals(ship, shipSystem)
-
-    if button.runtime.systemBox ~= systemBox
-        or button.runtime.visuals.key ~= visuals.key then
-
-        rebuild_button(button, systemBox, ship, shipSystem, visuals)
-    end
+    local runtime = ensure_button_runtime(button, systemBox, ship)
 
     local state = button.state[ship.iShipId]
-    local activateButton = button.runtime.activateButton
+    local activateButton = runtime.activateButton
 
     state.duration = button.get_duration(ship, shipSystem)
 
-    activateButton.bActive =
-        not state.active
-        and button.is_ready(ship, shipSystem, state)
+    activateButton.bActive = not state.active and button.is_ready(ship, shipSystem, state)
 
     if activateButton.bHover and button.get_tooltip then
         local tooltip = button.get_tooltip(ship, shipSystem, state)
@@ -252,22 +222,20 @@ local function render_button(button, systemBox)
         end
     end
 
-    Graphics.CSurface.GL_RenderPrimitive(button.runtime.buttonBase)
+    Graphics.CSurface.GL_RenderPrimitive(runtime.buttonBase)
 
     if state.active then
-        local mask = button.runtime.visuals.fillMask
+        local mask = runtime.visuals.fillMask
         local height = math.ceil(state.timer * mask.h)
 
         Graphics.CSurface.GL_SetStencilMode(Graphics.STENCIL_SET, 1, 1)
-        Graphics.CSurface.GL_DrawRect(
-            button.x + mask.x,
-            button.y - height + mask.bottomY,
-            mask.w,
-            height,
-            Graphics.GL_Color(1, 1, 1, 1)
-        )
+
+        Graphics.CSurface.GL_DrawRect(button.x + mask.x, button.y - height + mask.bottomY, mask.w, height, Graphics.GL_Color(1, 1, 1, 1))
+
         Graphics.CSurface.GL_SetStencilMode(Graphics.STENCIL_USE, 1, 1)
-        Graphics.CSurface.GL_RenderPrimitive(button.runtime.buttonCharging)
+
+        Graphics.CSurface.GL_RenderPrimitive(runtime.buttonCharging)
+
         Graphics.CSurface.GL_SetStencilMode(Graphics.STENCIL_IGNORE, 1, 1)
     else
         activateButton:OnRender()

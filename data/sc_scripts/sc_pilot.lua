@@ -132,8 +132,15 @@ end
 mods.sc.pilot.refresh_accuracy_bonus = refresh_accuracy_bonus
 
 local function get_pilot_button_visuals(ship, pilotingSystem)
-    local visualLevel = math.min(4, pilotingSystem:GetMaxPower())
-    local buttonStyle = "systemUI/button_cloaking" .. visualLevel
+    local visualLevel = math.min(
+        4,
+        math.floor(pilotingSystem:GetMaxPower())
+    )
+
+    local buttonStyle = string.format(
+        "systemUI/button_cloaking%d",
+        visualLevel
+    )
 
     return {
         key = visualLevel,

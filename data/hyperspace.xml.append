@@ -1786,7 +1786,7 @@
     <mod-append:script>data/sc_scripts/sc_projectile_scaling.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_radius_core.lua</mod-append:script>
 
-    <mod-append:script>data/sc_scripts/sc_pilot_ui.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_button_ui.lua</mod-append:script>
 
     <mod-append:script>data/sc_scripts/sc_pilot.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_firefill.lua</mod-append:script>
