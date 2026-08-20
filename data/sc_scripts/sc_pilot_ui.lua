@@ -1,319 +1,273 @@
 --[[
-DESCRIPTION: UI and activation state for the Terran pilot ability.
-        - Adds a cloaking-style activation button to the player piloting system.
-        - Effect duration increases with piloting system level.
-        - Heavy hacking reverses the active-effect timer.
-        - When the effect ends, piloting takes ion damage based on system level.
-        - Exposes activated state for sc_pilot.lua.
-DEPENDENCIES: sc_helpers.lua; sc_pilot.lua reads mods.sc_pilot_button.activated
+DESCRIPTION: Generic system-box button and timer framework.
+        - Registered buttons attach to a player system box.
+        - Handles mouse input, timer progress, active state, and button rendering.
+        - Registering scripts define visibility, readiness, duration, timer behavior,
+          visuals, tooltips, and what happens when the timer turns on or off.
 ]]
 
-local helpers = mods.sc.helpers
+mods.sc.buttonTimer = mods.sc.buttonTimer or {}
 
-local PILOT_AUGMENT = "TERRAN_SHIP_ARMOR_LIGHT"
-local PILOT_SYSTEM_ID = 6
+local buttonTimer = mods.sc.buttonTimer
+local buttons = {}
+local buttonOrder = {}
 
-local BUTTON_OFFSET_X = 34
-local BUTTON_OFFSET_Y = -50
-
-local ACTIVATION_TIME = 4.5
-local DURATION_BONUS_PER_LEVEL = 1.5
-local COOLDOWN_TIME = 1
-local COOLDOWN_BONUS_PER_LEVEL = 1
-
-local buttonBase
-local buttonCharging
-local playerPilotingSystemBox
-local currentButtonVisualLevel = 2
-
-local activationTimer = {
-    [0] = 1,
-    [1] = 1
-}
-
-local activated = {
-    [0] = false,
-    [1] = false
-}
-
-local wasActivated = {
-    [0] = false,
-    [1] = false
-}
-
-local currentEffectDuration = {
-    [0] = ACTIVATION_TIME,
-    [1] = ACTIVATION_TIME
-}
-
-mods.sc_pilot_button = mods.sc_pilot_button or {}
-mods.sc_pilot_button.activated = activated
-
-local function get_text(textId)
-    return Hyperspace.Text:GetText(textId)
+local function new_state()
+    return {
+        timer = 1,
+        active = false,
+        duration = 1
+    }
 end
 
-local function format_text(textId, value)
-    return string.gsub(get_text(textId), "\\1", tostring(value))
+local function set_active(button, ship, shipSystem, active)
+    local state = button.state[ship.iShipId]
+    if state.active == active then return end
+
+    state.active = active
+
+    if active then
+        if button.on_activate then
+            button.on_activate(ship, shipSystem, state)
+        end
+    elseif button.on_deactivate then
+        button.on_deactivate(ship, shipSystem, state)
+    end
 end
 
-local function has_pilot_augment(ship)
-    return helpers.ship_has_augment(ship, PILOT_AUGMENT)
+local function reset_state(button, ship, shipSystem)
+    local state = button.state[ship.iShipId]
+    local hadState = state.active or state.timer < 1
+
+    state.timer = 1
+    state.active = false
+    state.duration = button.get_duration(ship, shipSystem)
+
+    if hadState and button.on_reset then
+        button.on_reset(ship, shipSystem, state)
+    end
 end
 
-local function get_piloting_effect_duration(pilotingSystem)
-    return ACTIVATION_TIME
-        + (pilotingSystem:GetMaxPower() - 1) * DURATION_BONUS_PER_LEVEL
+function buttonTimer.register(name, button)
+    button.name = name
+    button.state = {
+        [0] = new_state(),
+        [1] = new_state()
+    }
+    button.runtime = {}
+
+    buttons[name] = button
+    buttonOrder[#buttonOrder + 1] = button
 end
 
-local function get_piloting_cooldown_penalty(pilotingSystem)
-    return COOLDOWN_TIME
-        + (pilotingSystem:GetMaxPower() - 1) * COOLDOWN_BONUS_PER_LEVEL
+function buttonTimer.is_active(name, shipId)
+    return buttons[name].state[shipId].active
 end
 
-local function get_piloting_visual_level(pilotingSystem)
-    return math.min(4, pilotingSystem:GetMaxPower())
+function buttonTimer.activate(name, ship)
+    local button = buttons[name]
+    local shipSystem = ship:GetSystem(button.systemId)
+    if not shipSystem or not button.is_visible(ship, shipSystem) then return false end
+
+    local state = button.state[ship.iShipId]
+    if state.active or not button.is_ready(ship, shipSystem, state) then
+        return false
+    end
+
+    state.duration = button.get_duration(ship, shipSystem)
+    state.timer = 0
+    set_active(button, ship, shipSystem, true)
+
+    return true
 end
 
-local function get_piloting_fill_mask(pilotingSystem)
-    local visualLevel = get_piloting_visual_level(pilotingSystem)
-    return 10, 66, 20, 19 + (visualLevel - 1) * 12
-end
-
-local function rebuild_button_visuals(visualLevel)
-    local buttonStyle = "systemUI/button_cloaking" .. visualLevel
-
-    buttonBase = Hyperspace.Resources:CreateImagePrimitiveString(
-        buttonStyle .. "_base.png",
-        BUTTON_OFFSET_X,
-        BUTTON_OFFSET_Y,
-        0,
-        Graphics.GL_Color(1, 1, 1, 1),
-        1,
-        false
-    )
-
-    buttonCharging = Hyperspace.Resources:CreateImagePrimitiveString(
-        buttonStyle .. "_charging_on.png",
-        BUTTON_OFFSET_X,
-        BUTTON_OFFSET_Y,
-        0,
-        Graphics.GL_Color(1, 1, 1, 1),
-        1,
-        false
-    )
-end
-
-local function rebuild_activate_button(systemBox, pilotingSystem)
-    local visualLevel = get_piloting_visual_level(pilotingSystem)
+local function rebuild_button(button, systemBox, ship, shipSystem, visuals)
     local activateButton = Hyperspace.Button()
 
     activateButton:OnInit(
-        "systemUI/button_cloaking" .. visualLevel,
-        Hyperspace.Point(BUTTON_OFFSET_X, BUTTON_OFFSET_Y)
+        visuals.buttonStyle,
+        Hyperspace.Point(button.x, button.y)
     )
 
-    activateButton.hitbox.x = 11
-    activateButton.hitbox.y = 36
-    activateButton.hitbox.w = 20
-    activateButton.hitbox.h = 30
+    activateButton.hitbox.x = button.hitbox.x
+    activateButton.hitbox.y = button.hitbox.y
+    activateButton.hitbox.w = button.hitbox.w
+    activateButton.hitbox.h = button.hitbox.h
 
-    systemBox.table.activateButton = activateButton
-    currentButtonVisualLevel = visualLevel
+    button.runtime.systemBox = systemBox
+    button.runtime.activateButton = activateButton
+    button.runtime.visuals = visuals
 
-    rebuild_button_visuals(visualLevel)
+    systemBox.table["sc_button_" .. button.name] = activateButton
+
+    button.runtime.buttonBase = Hyperspace.Resources:CreateImagePrimitiveString(
+        visuals.baseImage,
+        button.x,
+        button.y,
+        0,
+        Graphics.GL_Color(1, 1, 1, 1),
+        1,
+        false
+    )
+
+    button.runtime.buttonCharging = Hyperspace.Resources:CreateImagePrimitiveString(
+        visuals.chargingImage,
+        button.x,
+        button.y,
+        0,
+        Graphics.GL_Color(1, 1, 1, 1),
+        1,
+        false
+    )
 end
 
-local function refresh_button_style_if_needed(systemBox, pilotingSystem)
-    local visualLevel = get_piloting_visual_level(pilotingSystem)
-
-    if visualLevel ~= currentButtonVisualLevel then
-        rebuild_activate_button(systemBox, pilotingSystem)
-    end
-end
-
-local function is_piloting_box(systemBox)
+local function button_matches_system_box(button, systemBox)
     return systemBox.bPlayerUI
-        and systemBox.pSystem.iSystemType == PILOT_SYSTEM_ID
-end
-
-local function piloting_ready(pilotingSystem)
-    return not pilotingSystem:GetLocked()
-        and pilotingSystem:Functioning()
-        and pilotingSystem.iHackEffect <= 1
-end
-
-local function reset_pilot_state(shipId)
-    activationTimer[shipId] = 1
-    activated[shipId] = false
-    wasActivated[shipId] = false
-    currentEffectDuration[shipId] = ACTIVATION_TIME
-end
-
-local function reset_all_pilot_state()
-    reset_pilot_state(0)
-    reset_pilot_state(1)
+        and systemBox.pSystem.iSystemType == button.systemId
 end
 
 script.on_internal_event(Defines.InternalEvents.CONSTRUCT_SYSTEM_BOX, function(systemBox)
-    if not is_piloting_box(systemBox) then return end
+    for _, button in ipairs(buttonOrder) do
+        if button_matches_system_box(button, systemBox) then
+            systemBox.extend.xOffset = button.systemBoxOffset
 
-    systemBox.extend.xOffset = 54
-    playerPilotingSystemBox = systemBox
-
-    rebuild_activate_button(systemBox, systemBox.pSystem)
+            rebuild_button(
+                button,
+                systemBox,
+                Hyperspace.ships.player,
+                systemBox.pSystem,
+                button.get_visuals(Hyperspace.ships.player, systemBox.pSystem)
+            )
+        end
+    end
 end)
 
 script.on_internal_event(Defines.InternalEvents.SYSTEM_BOX_MOUSE_MOVE, function(systemBox, x, y)
-    if not is_piloting_box(systemBox) then
-        return Defines.Chain.CONTINUE
-    end
+    local ship = Hyperspace.ships.player
 
-    if not has_pilot_augment(Hyperspace.ships.player) then
-        return Defines.Chain.CONTINUE
-    end
+    for _, button in ipairs(buttonOrder) do
+        if button_matches_system_box(button, systemBox)
+            and button.is_visible(ship, systemBox.pSystem) then
 
-    systemBox.table.activateButton:MouseMove(
-        x - BUTTON_OFFSET_X,
-        y - BUTTON_OFFSET_Y,
-        false
-    )
+            button.runtime.activateButton:MouseMove(
+                x - button.x,
+                y - button.y,
+                false
+            )
+        end
+    end
 
     return Defines.Chain.CONTINUE
 end)
 
 script.on_internal_event(Defines.InternalEvents.SYSTEM_BOX_MOUSE_CLICK, function(systemBox)
-    if not is_piloting_box(systemBox) then
-        return Defines.Chain.CONTINUE
-    end
+    local ship = Hyperspace.ships.player
 
-    local shipManager = Hyperspace.ships.player
-    if not has_pilot_augment(shipManager) then
-        return Defines.Chain.CONTINUE
-    end
+    for _, button in ipairs(buttonOrder) do
+        if button_matches_system_box(button, systemBox)
+            and button.is_visible(ship, systemBox.pSystem) then
 
-    local activateButton = systemBox.table.activateButton
+            local activateButton = button.runtime.activateButton
 
-    if activateButton.bHover and activateButton.bActive then
-        activationTimer[shipManager.iShipId] = 0
-        activated[shipManager.iShipId] = true
+            if activateButton.bHover and activateButton.bActive then
+                buttonTimer.activate(button.name, ship)
+            end
+        end
     end
 
     return Defines.Chain.CONTINUE
 end)
 
 script.on_init(function()
-    reset_all_pilot_state()
-    currentButtonVisualLevel = 2
-    playerPilotingSystemBox = nil
-    rebuild_button_visuals(2)
+    for _, button in ipairs(buttonOrder) do
+        button.state[0] = new_state()
+        button.state[1] = new_state()
+    end
 end)
 
 script.on_internal_event(Defines.InternalEvents.JUMP_ARRIVE, function()
-    reset_all_pilot_state()
-    currentButtonVisualLevel = 2
+    for _, button in ipairs(buttonOrder) do
+        button.state[0] = new_state()
+        button.state[1] = new_state()
+    end
 end)
 
-script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
-    local shipId = shipManager.iShipId
+script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
+    for _, button in ipairs(buttonOrder) do
+        local shipSystem = ship:GetSystem(button.systemId)
+        local state = button.state[ship.iShipId]
 
-    if not has_pilot_augment(shipManager) then
-        reset_pilot_state(shipId)
-        return
+        if not shipSystem then
+            state.timer = 1
+            state.active = false
+        elseif not button.is_visible(ship, shipSystem) then
+            reset_state(button, ship, shipSystem)
+        else
+            state.duration = button.get_duration(ship, shipSystem)
+
+            state.timer = math.max(
+                0,
+                math.min(
+                    1,
+                    state.timer
+                        + button.get_timer_rate(ship, shipSystem, state)
+                        * Hyperspace.FPS.SpeedFactor / 16
+                )
+            )
+
+            set_active(button, ship, shipSystem, state.timer < 1)
+        end
     end
-
-    local pilotingSystem = shipManager:GetSystem(PILOT_SYSTEM_ID)
-
-    if shipId == 0 and playerPilotingSystemBox then
-        refresh_button_style_if_needed(playerPilotingSystemBox, pilotingSystem)
-    end
-
-    local effectDuration = get_piloting_effect_duration(pilotingSystem)
-    currentEffectDuration[shipId] = effectDuration
-
-    local timerRate = 1 / effectDuration
-    if pilotingSystem.iHackEffect > 1 then
-        timerRate = -timerRate
-    end
-
-    activationTimer[shipId] = math.max(
-        0,
-        math.min(
-            1,
-            activationTimer[shipId] + timerRate * Hyperspace.FPS.SpeedFactor / 16
-        )
-    )
-
-    activated[shipId] = activationTimer[shipId] < 1
-
-    if wasActivated[shipId] and not activated[shipId] then
-        local damage = Hyperspace.Damage()
-        damage.iIonDamage = get_piloting_cooldown_penalty(pilotingSystem)
-
-        shipManager:DamageArea(
-            shipManager:GetRoomCenter(pilotingSystem:GetRoomId()),
-            damage,
-            true
-        )
-    end
-
-    wasActivated[shipId] = activated[shipId]
 end)
 
-local function piloting_render(systemBox)
-    if not is_piloting_box(systemBox) then return end
+local function render_button(button, systemBox)
+    local ship = Hyperspace.ships.player
+    local shipSystem = systemBox.pSystem
 
-    local shipManager = Hyperspace.ships.player
-    if not has_pilot_augment(shipManager) then return end
+    if not button.is_visible(ship, shipSystem) then return end
 
-    local activateButton = systemBox.table.activateButton
-    local pilotingSystem = shipManager:GetSystem(PILOT_SYSTEM_ID)
-    local shipId = shipManager.iShipId
+    local visuals = button.get_visuals(ship, shipSystem)
+
+    if button.runtime.systemBox ~= systemBox
+        or button.runtime.visuals.key ~= visuals.key then
+
+        rebuild_button(button, systemBox, ship, shipSystem, visuals)
+    end
+
+    local state = button.state[ship.iShipId]
+    local activateButton = button.runtime.activateButton
+
+    state.duration = button.get_duration(ship, shipSystem)
 
     activateButton.bActive =
-        piloting_ready(pilotingSystem)
-        and pilotingSystem.bManned
-        and not activated[shipId]
+        not state.active
+        and button.is_ready(ship, shipSystem, state)
 
-    if activateButton.bHover
-        and not pilotingSystem:GetLocked()
-        and not activated[shipId] then
+    if activateButton.bHover and button.get_tooltip then
+        local tooltip = button.get_tooltip(ship, shipSystem, state)
 
-        if not pilotingSystem.bManned then
-            Hyperspace.Mouse.tooltip = get_text("tooltip_sc_pilot_manned")
-        else
-            local effectDuration = string.format(
-                "%.1f",
-                currentEffectDuration[shipId]
-            )
-
-            Hyperspace.Mouse.tooltip = format_text(
-                "tooltip_sc_pilot_ready",
-                effectDuration
-            )
+        if tooltip then
+            Hyperspace.Mouse.tooltip = tooltip
+            Hyperspace.Mouse.bForceTooltip = true
         end
-
-        Hyperspace.Mouse.bForceTooltip = true
     end
 
-    Graphics.CSurface.GL_RenderPrimitive(buttonBase)
+    Graphics.CSurface.GL_RenderPrimitive(button.runtime.buttonBase)
 
-    if activated[shipId] then
-        local maskX, maskBottomY, maskW, maskH =
-            get_piloting_fill_mask(pilotingSystem)
-
-        local height = math.ceil(activationTimer[shipId] * maskH)
+    if state.active then
+        local mask = button.runtime.visuals.fillMask
+        local height = math.ceil(state.timer * mask.h)
 
         Graphics.CSurface.GL_SetStencilMode(Graphics.STENCIL_SET, 1, 1)
         Graphics.CSurface.GL_DrawRect(
-            BUTTON_OFFSET_X + maskX,
-            BUTTON_OFFSET_Y - height + maskBottomY,
-            maskW,
+            button.x + mask.x,
+            button.y - height + mask.bottomY,
+            mask.w,
             height,
             Graphics.GL_Color(1, 1, 1, 1)
         )
         Graphics.CSurface.GL_SetStencilMode(Graphics.STENCIL_USE, 1, 1)
-        Graphics.CSurface.GL_RenderPrimitive(buttonCharging)
+        Graphics.CSurface.GL_RenderPrimitive(button.runtime.buttonCharging)
         Graphics.CSurface.GL_SetStencilMode(Graphics.STENCIL_IGNORE, 1, 1)
     else
         activateButton:OnRender()
@@ -325,5 +279,11 @@ script.on_render_event(
     function()
         return Defines.Chain.CONTINUE
     end,
-    piloting_render
+    function(systemBox)
+        for _, button in ipairs(buttonOrder) do
+            if button_matches_system_box(button, systemBox) then
+                render_button(button, systemBox)
+            end
+        end
+    end
 )
