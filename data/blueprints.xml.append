@@ -524,7 +524,8 @@
 	<accuracyMod>-40</accuracyMod>
 	<radius>60</radius>
 
-	<sc-chainstep fireThreshold="6" chainStep="3.0" maxSteps="2"/>
+	<sc-chainstep stat="fireThreshold" value="6"/>
+    <sc-chainstep stat="chainStep" value="3.0"/>
     <sc-chainstep stat="accuracyMod" value="45"/>
     <sc-chainstep stat="radius" value="-30"/>
     <sc-chainstep stat="breachChance" value="2"/>
@@ -620,7 +621,8 @@
 	<accuracyMod>-40</accuracyMod>
 	<radius>65</radius>
 
-	<sc-chainstep fireThreshold="8.5" chainStep="3.0" maxSteps="2"/>
+	<sc-chainstep stat="fireThreshold" value="8.5"/>
+    <sc-chainstep stat="chainStep" value="3.0"/>
     <sc-chainstep stat="accuracyMod" value="45"/>
     <sc-chainstep stat="radius" value="-20"/>
     <sc-chainstep stat="breachChance" value="2"/>
@@ -1587,7 +1589,8 @@
 	<sysDamage>0</sysDamage>
 	<breachChance>2</breachChance>
 	<cooldown>18</cooldown>
-	<sc-chainstep fireThreshold="6" chainStep="3.0"/>
+    <sc-chainstep stat="fireThreshold" value="6"/>
+    <sc-chainstep stat="chainStep" value="3.0"/>
 	<speed>1</speed> <!--<speed>10</speed>-->
 	<length>1</length> <!--<length>50</length>-->
 	<mv-aiCrewTarget>MOST_CREW</mv-aiCrewTarget>
@@ -1630,7 +1633,8 @@
 	<sysDamage>0</sysDamage>
 	<breachChance>2</breachChance>
 	<cooldown>10</cooldown>
-	<sc-chainstep fireThreshold="5" chainStep="2.5"/>
+	<sc-chainstep stat="fireThreshold" value="5"/>
+	<sc-chainstep stat="chainStep" value="2.5"/>
 	<speed>1</speed> <!--<speed>10</speed>-->
 	<length>1</length> <!--<length>50</length>-->
 	<mv-aiCrewTarget>MOST_CREW</mv-aiCrewTarget>
@@ -1910,8 +1914,10 @@
 	<speed>45</speed>
 	<power>3</power>
 	<cooldown>13</cooldown>
-	<sc-chainstep fireThreshold="4" chainStep="3" maxSteps="3"/>
-	<sc-chainstep stat="missileCost" base="4" value="-1"/>
+	<sc-chainstep stat="fireThreshold" value="4"/>
+    <sc-chainstep stat="chainStep" value="3"/>
+    <sc-chainstep stat="missileBase" value="4"/>
+    <sc-chainstep stat="missileCost" value="-1"/>
 	<sc-chainstep stat="radius" value="15"/>
 	<sc-halo/>
 	<cost>65</cost>

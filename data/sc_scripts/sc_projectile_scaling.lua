@@ -20,6 +20,9 @@ local SPECIAL_SCALING_STATS = {
     radius = true,
     shots = true,
     cooldown = true,
+    fireThreshold = true,
+    chainStep = true,
+    missileBase = true,
     missileCost = true
 }
 
@@ -29,16 +32,12 @@ function scaling.get_source_stat_entries(sourceName, weaponName)
     elseif sourceName == "charge" then
         return mods.sc.chargers[weaponName]
     elseif sourceName == "chainstep" then
-        local definition = mods.sc.chainstep[weaponName]
-
-        return definition
-            and definition.statBoosts
+        return mods.sc.chainstep[weaponName]
     end
 end
 
 function scaling.get_source_stat_entry(sourceName, weaponName, statName)
     local entries = scaling.get_source_stat_entries(sourceName, weaponName)
-
     if not entries then return nil end
 
     for _, entry in ipairs(entries) do
@@ -53,7 +52,6 @@ function scaling.get_level(projectile, sourceName)
     if not field then return nil end
 
     local storage = userdata_table(projectile, "mods.sc.projectileScaling")
-
     return storage[field]
 end
 
@@ -63,7 +61,6 @@ function scaling.apply_projectile_stats(projectile, weapon, sourceName, level, s
     for _, statBoost in ipairs(statBoosts) do
         local stat = statBoost.stat
         local value = statBoost.value
-
         local specialHandler = type(specialHandlers) == "table" and specialHandlers[stat]
 
         if specialHandler then

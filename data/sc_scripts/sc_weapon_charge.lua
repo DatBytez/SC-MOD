@@ -1,398 +1,115 @@
--- Test No. 4
+--[[
+DESCRIPTION: Applies shared stat scaling to tagged native Charge weapons.
+        - Limits volleys for weapons with a tagged shot count.
+        - Applies tagged Charge-based cooldown scaling while charging.
+TAG: <sc-charge stat="..." value="#"/>
+DEPENDENCIES: sc_tag.lua, sc_projectile_scaling.lua, Multiverse userdata_table, Multiverse vter
+]]
 
-local userdata_table =
-    mods.multiverse.userdata_table
-
+local userdata_table = mods.multiverse.userdata_table
 local vter = mods.multiverse.vter
+local scaling = mods.sc.scaling
 
-mods.multiverse.weaponTagParsers =
-    mods.multiverse.weaponTagParsers or {}
-
-local weaponTagParsers =
-    mods.multiverse.weaponTagParsers
-
-mods.sc = mods.sc or {}
 mods.sc.chargers = mods.sc.chargers or {}
-
 local chargers = mods.sc.chargers
 
-table.insert(
-    weaponTagParsers,
-    function(weaponNode)
-        local nameAttr =
-            weaponNode:first_attribute("name")
+mods.sc.tag.register("weapon", "sc-charge", chargers, "stat")
 
-        if not nameAttr then
-            return
-        end
-
-        local weaponName =
-            nameAttr:value()
-
-        local entries = {}
-
-        local tagNode =
-            weaponNode:first_node(
-                "sc-charge"
-            )
-
-        while tagNode do
-            local statAttr =
-                tagNode:first_attribute("stat")
-
-            local amountAttr =
-                tagNode:first_attribute("amount")
-
-            if statAttr then
-                table.insert(
-                    entries,
-                    {
-                        stat =
-                            statAttr:value(),
-
-                        amount =
-                            amountAttr
-                            and tonumber(
-                                amountAttr:value()
-                            )
-                            or 1
-                    }
-                )
-            end
-
-            tagNode =
-                tagNode:next_sibling(
-                    "sc-charge"
-                )
-        end
-
-        if #entries > 0 then
-            chargers[weaponName] = entries
-        end
-    end
-)
-
-local function get_stored_charge_boost(
-    weapon
-)
-    if not weapon then
-        return 0
-    end
-
-    local wdata =
-        userdata_table(
-            weapon,
-            "mods.sc.weaponStuff"
-        )
+local function get_stored_charge_level(weapon)
+    local wdata = userdata_table(weapon, "mods.sc.weaponStuff")
 
     if not wdata.chargeBurstActive then
-        local firedVolleyShots =
-            math.max(
-                0,
-                weapon.queuedProjectiles:size()
-                    + 1
-            )
-
-        wdata.chargeBurstBoost =
-            firedVolleyShots
-
-        wdata.chargeBurstActive =
-            true
+        wdata.chargeBurstLevel = weapon.queuedProjectiles:size()
+        wdata.chargeBurstActive = true
     end
 
-    return math.max(
-        0,
-        wdata.chargeBurstBoost or 0
-    )
+    return wdata.chargeBurstLevel
 end
 
-local function clear_stored_charge_boost_if_idle(
-    weapon
-)
-    if not weapon then
-        return
-    end
-
-    local wdata =
-        userdata_table(
-            weapon,
-            "mods.sc.weaponStuff"
-        )
-
-    if weapon.queuedProjectiles:size() <= 0
-        and (weapon.cooldown.first or 0) > 0 then
-
-        wdata.chargeBurstBoost = 0
-        wdata.chargeBurstActive = false
+local function clear_stored_charge_level_if_idle(weapon)
+    if weapon.queuedProjectiles:size() == 0 and weapon.cooldown.first > 0 then
+        userdata_table(weapon, "mods.sc.weaponStuff").chargeBurstActive = false
     end
 end
 
-local function get_effective_stored_charge_boost(
-    weapon
-)
-    return math.max(
-        0,
-        get_stored_charge_boost(weapon) - 1
-    )
-end
+local function apply_charge_shot_limit(weapon, shotLimit)
+    local wdata = userdata_table(weapon, "mods.sc.weaponStuff")
 
-local function get_charge_shot_amount(
-    statBoosts
-)
-    if not statBoosts then
-        return nil
-    end
+    wdata.chargeShotsFiredThisVolley = (wdata.chargeShotsFiredThisVolley or 0) + 1
 
-    for _, statBoost in ipairs(
-        statBoosts
-    ) do
-        if statBoost.stat == "shots" then
-            return statBoost.amount
-        end
-    end
-
-    return nil
-end
-
-function mods.sc.apply_charge_shot_limit(
-    weapon,
-    shotLimit
-)
-    if not weapon or not shotLimit then
-        return
-    end
-
-    local bp = weapon.blueprint
-    local name = bp and bp.name
-
-    if not name then
-        return
-    end
-
-    local allowedTotal =
-        math.max(
-            1,
-            math.floor(shotLimit)
-        )
-
-    local wdata =
-        userdata_table(
-            weapon,
-            "mods.sc.weaponStuff"
-        )
-
-    local key =
-        "chargeShotsFiredThisVolley_"
-        .. name
-
-    wdata[key] =
-        (wdata[key] or 0) + 1
-
-    if wdata[key] >= allowedTotal then
+    if wdata.chargeShotsFiredThisVolley >= shotLimit then
         weapon.queuedProjectiles:clear()
     end
 
     if weapon.queuedProjectiles:size() == 0 then
-        wdata[key] = 0
+        wdata.chargeShotsFiredThisVolley = 0
     end
 end
 
--- -------------
--- CHARGE STATS
--- -------------
-script.on_internal_event(
-    Defines.InternalEvents.PROJECTILE_FIRE,
-    function(projectile, weapon)
-        local statBoosts =
-            chargers[
-                weapon
-                and weapon.blueprint
-                and weapon.blueprint.name
-            ]
-
-        if not statBoosts then
-            return
-        end
-
-        local shotAmount =
-            get_charge_shot_amount(
-                statBoosts
-            )
-
-        if shotAmount then
-            mods.sc.apply_charge_shot_limit(
-                weapon,
-                shotAmount
-            )
-        end
-
-        local boost =
-            get_effective_stored_charge_boost(
-                weapon
-            )
-
-        local pdata =
-            userdata_table(
-                projectile,
-                "mods.sc.projectileScaling"
-            )
-
-        pdata.weaponName =
-            weapon.blueprint.name
-
-        pdata.hasCharge = true
-        pdata.chargeLevel = boost
-
-        mods.sc.scaling.apply_projectile_stats(
-            projectile,
-            weapon,
-            "charge",
-            boost
-        )
-    end
-)
-
-script.on_internal_event(
-    Defines.InternalEvents.SHIP_LOOP,
-    function(ship)
-        local weapons =
-            ship
-            and ship.weaponSystem
-            and ship.weaponSystem.weapons
-
-        if not weapons then
-            return
-        end
-
-        for weapon in vter(weapons) do
-            clear_stored_charge_boost_if_idle(
-                weapon
-            )
-
-            local statBoosts =
-                chargers[
-                    weapon
-                    and weapon.blueprint
-                    and weapon.blueprint.name
-                ]
-
-            if statBoosts then
-                for _, statBoost in ipairs(
-                    statBoosts
-                ) do
-                    if statBoost.stat
-                        == "cooldown" then
-
-                        mods.sc.apply_charge_cooldown_bonus(
-                            weapon,
-                            statBoost.amount or 1
-                        )
-
-                        break
-                    end
-                end
-            end
-        end
-    end
-)
-
--- -------------
--- CHARGE COOLDOWN
--- -------------
-local function get_charge_cooldown_rate(
-    weapon,
-    cdBoost
-)
-    local effectiveCharge =
-        math.max(
-            0,
-            weapon
-                and weapon.chargeLevel
-                or 0
-        )
-
-    if effectiveCharge <= 0
-        or not cdBoost
-        or cdBoost == 0 then
-
-        return 1
-    end
-
+local function get_charge_cooldown_rate(weapon, cdBoost)
     if cdBoost > 0 then
-        return 1
-            + effectiveCharge
-            * cdBoost
+        return 1 + weapon.chargeLevel * cdBoost
     end
 
-    return 1
-        / (
-            1
-            + effectiveCharge
-            * math.abs(cdBoost)
-        )
+    return 1 / (1 + weapon.chargeLevel * math.abs(cdBoost))
 end
 
-function mods.sc.apply_charge_cooldown_bonus(
-    weapon,
-    cdBoost
-)
-    if not weapon or cdBoost == nil then
+local function apply_charge_cooldown_bonus(weapon, cdBoost)
+    if weapon.chargeLevel == 0 or weapon.chargeLevel >= weapon.weaponVisual.iChargeLevels then
         return
     end
 
-    if weapon.chargeLevel == 0
-        or weapon.chargeLevel
-            >= weapon.weaponVisual.iChargeLevels then
-
-        return
-    end
-
-    local wdata =
-        userdata_table(
-            weapon,
-            "mods.sc.weaponStuff"
-        )
-
+    local wdata = userdata_table(weapon, "mods.sc.weaponStuff")
     local cdLast = wdata.cdLast
 
-    if cdLast
-        and weapon.cooldown.first > cdLast then
+    if cdLast and weapon.cooldown.first > cdLast then
+        local chargeUpdate = weapon.cooldown.first - cdLast
+        local rate = get_charge_cooldown_rate(weapon, cdBoost)
+        local chargeNew = weapon.cooldown.first - chargeUpdate + chargeUpdate * rate
 
-        local chargeUpdate =
-            weapon.cooldown.first - cdLast
+        if chargeNew >= weapon.cooldown.second then
+            weapon.chargeLevel = weapon.chargeLevel + 1
 
-        local rate =
-            get_charge_cooldown_rate(
-                weapon,
-                cdBoost
-            )
-
-        local chargeNew =
-            weapon.cooldown.first
-            - chargeUpdate
-            + chargeUpdate * rate
-
-        if chargeNew
-            >= weapon.cooldown.second then
-
-            weapon.chargeLevel =
-                weapon.chargeLevel + 1
-
-            if weapon.chargeLevel
-                == weapon.weaponVisual
-                    .iChargeLevels then
-
-                weapon.cooldown.first =
-                    weapon.cooldown.second
+            if weapon.chargeLevel == weapon.weaponVisual.iChargeLevels then
+                weapon.cooldown.first = weapon.cooldown.second
             else
                 weapon.cooldown.first = 0
             end
         else
-            weapon.cooldown.first =
-                chargeNew
+            weapon.cooldown.first = chargeNew
         end
     end
 
-    wdata.cdLast =
-        weapon.cooldown.first
+    wdata.cdLast = weapon.cooldown.first
 end
+
+script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projectile, weapon)
+    if not chargers[weapon.blueprint.name] then return end
+
+    local boost = get_stored_charge_level(weapon)
+    local pdata = userdata_table(projectile, "mods.sc.projectileScaling")
+
+    pdata.chargeLevel = boost
+
+    scaling.apply_projectile_stats(projectile, weapon, "charge", boost, {
+        shots = function(_projectile, currentWeapon, statBoost)
+            apply_charge_shot_limit(currentWeapon, statBoost.value)
+        end
+    })
+end)
+
+script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
+    if not ship.weaponSystem then return end
+
+    for weapon in vter(ship.weaponSystem.weapons) do
+        if chargers[weapon.blueprint.name] then
+            clear_stored_charge_level_if_idle(weapon)
+
+            local cooldown = scaling.get_source_stat_entry("charge", weapon.blueprint.name, "cooldown")
+
+            if cooldown then
+                apply_charge_cooldown_bonus(weapon, cooldown.value)
+            end
+        end
+    end
+end)
