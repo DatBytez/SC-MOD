@@ -16,8 +16,6 @@ local scaling = mods.sc.scaling
 mods.sc.radius = mods.sc.radius or {}
 local radius = mods.sc.radius
 
-local WEAPON_DATA_KEY = "mods.sc.weaponStuff"
-
 local SOURCE_ORDER = {
     "chain",
     "charge",
@@ -35,40 +33,17 @@ local projectileRadiusDeltas = radius.projectileRadiusDeltas
 
 local modifierRegistrationSerial = 0
 
-local function number_or_zero(value)
-    return tonumber(value) or 0
-end
-
-local function clamp(value)
-    return math.max(0, number_or_zero(value))
-end
-
 function radius.get_base_radius(weapon)
-    if not weapon then return 0 end
-
-    local weaponData =
-        userdata_table(weapon, WEAPON_DATA_KEY)
-
-    if type(weaponData.baseRadius) ~= "number" then
-        weaponData.baseRadius =
-            weapon.blueprint.radius
-            or weapon.radius
-            or 0
-    end
-
-    return weaponData.baseRadius
+    return weapon.blueprint.radius
 end
 
 local function get_live_level(weapon, sourceName)
     if sourceName == "chain" then
-        return math.max(
-            0,
-            number_or_zero(weapon.boostLevel)
-        )
+        return weapon.boostLevel
     elseif sourceName == "charge" then
         return math.max(
             0,
-            number_or_zero(weapon.chargeLevel) - 1
+            weapon.chargeLevel - 1
         )
     elseif sourceName == "chainstep" then
         local weaponData =
@@ -77,19 +52,10 @@ local function get_live_level(weapon, sourceName)
                 "mods.sc.chainstep"
             )
 
-        return math.max(
-            0,
-            math.floor(
-                number_or_zero(
-                    weaponData.firingLevel
-                    or weaponData.level
-                    or weapon.boostLevel
-                )
-            )
-        )
+        return weaponData.firingLevel
+            or weaponData.level
+            or weapon.boostLevel
     end
-
-    return 0
 end
 
 local function calculate_source_radius(
@@ -113,16 +79,12 @@ local function calculate_source_radius(
             if level ~= nil then
                 result =
                     result
-                    + math.max(
-                        0,
-                        number_or_zero(level)
-                    )
-                    * number_or_zero(entry.value)
+                    + level * entry.value
             end
         end
     end
 
-    return clamp(result)
+    return math.max(0, result)
 end
 
 local function sort_modifier_order()
@@ -196,7 +158,7 @@ function radius.apply_modifiers(
     startingRadius,
     baseRadius
 )
-    local result = clamp(startingRadius)
+    local result = math.max(0, startingRadius)
 
     for _, name in ipairs(modifierOrder) do
         local modifiedRadius =
@@ -208,7 +170,7 @@ function radius.apply_modifiers(
             )
 
         if type(modifiedRadius) == "number" then
-            result = clamp(modifiedRadius)
+            result = math.max(0, modifiedRadius)
         end
     end
 
@@ -362,7 +324,8 @@ function radius.get_projectile_radius(
     end
 
     result =
-        clamp(
+        math.max(
+            0,
             result
             or radius.get_base_radius(weapon)
         )
@@ -382,7 +345,7 @@ function radius.get_projectile_radius(
         end
     end
 
-    return clamp(result + totalDelta)
+    return math.max(0, result + totalDelta)
 end
 
 local function get_random_point_in_radius(
