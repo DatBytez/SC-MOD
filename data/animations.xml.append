@@ -369,7 +369,132 @@
 	<time>0.5</time>
 </anim>
 
-
+<!--
+*********************************************************************************************************
+            SC TARGET
+*********************************************************************************************************
+-->
+<animSheet name="sc_target" w="315" h="455" fw="35" fh="35">people/sc_target_base.png</animSheet>
+<anim name="sc_target_clone">
+	<sheet>sc_target</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.75</time>
+</anim>
+<anim name="sc_target_death_right">
+	<sheet>sc_target</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="sc_target_death_left">
+	<sheet>sc_target</sheet>
+	<desc length="7" x="2" y="0" />
+	<time>0.75</time>
+</anim>
+<anim name="sc_target_walk_down">
+	<sheet>sc_target</sheet>
+	<desc length="8" x="0" y="3" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_walk_right">
+	<sheet>sc_target</sheet>
+	<desc length="8" x="0" y="4" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_walk_up">
+	<sheet>sc_target</sheet>
+	<desc length="8" x="0" y="5" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_walk_left">
+	<sheet>sc_target</sheet>
+	<desc length="8" x="0" y="2" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_shoot_down">
+	<sheet>sc_target</sheet>
+	<desc length="3" x="0" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_shoot_right">
+	<sheet>sc_target</sheet>
+	<desc length="3" x="3" y="8" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_shoot_up">
+	<sheet>sc_target</sheet>
+	<desc length="3" x="0" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_shoot_left">
+	<sheet>sc_target</sheet>
+	<desc length="3" x="3" y="7" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_fire_down">
+	<sheet>sc_target</sheet>
+	<desc length="4" x="0" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_fire_right">
+	<sheet>sc_target</sheet>
+	<desc length="4" x="4" y="10" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_fire_up">
+	<sheet>sc_target</sheet>
+	<desc length="4" x="0" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_fire_left">
+	<sheet>sc_target</sheet>
+	<desc length="4" x="4" y="9" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_repair">
+	<sheet>sc_target</sheet>
+	<desc length="3" x="0" y="6" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_punch_up">
+	<sheet>sc_target</sheet>
+	<desc length="4" x="0" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_punch_down">
+	<sheet>sc_target</sheet>
+	<desc length="4" x="4" y="11" />
+	<time>1.0</time>
+</anim>
+<anim name="sc_target_teleport">
+	<sheet>sc_target</sheet>
+	<desc length="9" x="0" y="1" />
+	<time>0.5</time>
+</anim>
+<anim name="sc_target_type_right">
+	<sheet>sc_target</sheet>
+	<desc length="2" x="4" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="sc_target_type_left">
+	<sheet>sc_target</sheet>
+	<desc length="2" x="6" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="sc_target_type_up">
+	<sheet>sc_target</sheet>
+	<desc length="2" x="0" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="sc_target_type_down">
+	<sheet>sc_target</sheet>
+	<desc length="2" x="2" y="12" />
+	<time>0.75</time>
+</anim>
+<anim name="sc_target_portrait">
+	<sheet>sc_target</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
 <!-- 
 *********************************************************************************************************
      TERRAN MEDIC

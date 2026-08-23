@@ -350,10 +350,44 @@
 
 <!--
 *********************************************************************************************************
-  TERRAN CIVILIAN
+  SC TARGET
 *********************************************************************************************************
 -->
 <crew>
+	<race name="sc_target">
+		<animBase>human</animBase>
+		<maxHealth>1</maxHealth>
+	
+		<validTarget>false</validTarget>
+		<noAI>true</noAI>
+		<crewSlots>0</crewSlots>
+        <noSlot>true</noSlot>
+        <noClone>true</noClone>
+		<snapToSlot>false</snapToSlot>
+		<canMove>false</canMove>
+        <selectable>true</selectable>
+        <controllable>true</controllable>
+		<canShoot>false</canShoot>
+        <canFight>false</canFight>
+        <canPunch>false</canPunch>
+        <canRepair>false</canRepair>
+        <canSabotage>false</canSabotage>
+        <canMan>false</canMan>
+        <canSuffocate>false</canSuffocate>
+        <canBurn>false</canBurn>
+        <canTeleport>false</canTeleport>
+        <resistsMindControl>true</resistsMindControl>
+        <stunMultiplier>0</stunMultiplier>
+        <moveSpeedMultiplier>0</moveSpeedMultiplier>
+		<stunMultiplier>0</stunMultiplier>
+		<invulnerable>true</invulnerable>
+		<allDamageTakenMultiplier>0</allDamageTakenMultiplier>
+	</race>
+<!--
+*********************************************************************************************************
+  TERRAN CIVILIAN
+*********************************************************************************************************
+-->
 	<race name="terran_civilian">
 		<animBase>human</animBase>
 		<maxHealth>80</maxHealth>
@@ -1797,7 +1831,6 @@
     <mod-append:script>data/sc_scripts/sc_weapon_charge.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_paired.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_yamato.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_copy.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_irradiate.lua</mod-append:script>

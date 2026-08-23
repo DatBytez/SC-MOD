@@ -1,54 +1,17 @@
--- Irradiate chainstep effect scaling.
---
--- Weapons opt into this script with:
---
---     <sc-irradiate/>
---
--- Each newly struck beam tile receives one additional hidden impact selected
--- from the frozen chainstep level stored on the beam projectile.
---
--- Each hidden impact applies:
---     1. Bonus native erosion.
---     2. Bonus trueHealAmount crew damage in the struck room.
---
--- Chainstep level 0: SC_IRRADIATE_EROSION_BONUS_1
--- Chainstep level 1: SC_IRRADIATE_EROSION_BONUS_2
--- Chainstep level 2: SC_IRRADIATE_EROSION_BONUS_3
--- Chainstep level 3: SC_IRRADIATE_EROSION_BONUS_4
--- Chainstep level 4+: SC_IRRADIATE_EROSION_BONUS_5
+--[[
+DESCRIPTION: Applies additional Irradiate effects to each newly struck beam tile.
+        - Hits applies bonus erosion and crew damage effects from hidden blueprints.
+TAG: <sc-irradiate/>
+DEPENDENCIES: sc_tag.lua, sc_projectile_scaling.lua
+]]
 
-mods.sc = mods.sc or {}
-mods.sc.irradiate = mods.sc.irradiate or {}
-mods.sc.irradiateWeapons = mods.sc.irradiateWeapons or {}
+local scaling = mods.sc.scaling
+local irradiateWeapons = {}
 
-local irradiateWeapons = mods.sc.irradiateWeapons
-
-mods.sc.tag.register_flag_tag(
-    "sc-irradiate",
-    irradiateWeapons
-)
-
-local EFFECT_BLUEPRINT_BY_LEVEL = {
-    [0] = "SC_IRRADIATE_EROSION_BONUS_1",
-    [1] = "SC_IRRADIATE_EROSION_BONUS_2",
-    [2] = "SC_IRRADIATE_EROSION_BONUS_3",
-    [3] = "SC_IRRADIATE_EROSION_BONUS_4",
-    [4] = "SC_IRRADIATE_EROSION_BONUS_5"
-}
-
-local MAX_EFFECT_LEVEL = 4
+mods.sc.tag.register("weapon", "sc-irradiate", irradiateWeapons)
 
 local function get_room_center(shipId, location)
-    local roomId =
-        Hyperspace.ShipGraph
-            .GetShipInfo(shipId)
-            :GetSelectedRoom(
-                location.x,
-                location.y,
-                true
-            )
-
-    if roomId == -1 then
+    if Hyperspace.ShipGraph.GetShipInfo(shipId):GetSelectedRoom(location.x, location.y, true) == -1 then
         return nil
     end
 
@@ -58,122 +21,33 @@ local function get_room_center(shipId, location)
     )
 end
 
-local function get_effect_blueprint_name(projectile)
-    if not projectile
-        or not projectile.extend
-        or not projectile.extend.name then
+local function get_irradiate_blueprint_name(projectile)
+    if not irradiateWeapons[projectile.extend.name] then return nil end
 
-        return nil
-    end
-
-    local weaponName = projectile.extend.name
-
-    if not irradiateWeapons[weaponName] then
-        return nil
-    end
-
-    if not mods.sc.scaling
-        or not mods.sc.scaling.get_level then
-
-        return nil
-    end
-
-    local level =
-        mods.sc.scaling.get_level(
-            projectile,
-            "chainstep"
-        )
-
-    level = math.max(
-        0,
-        math.floor(tonumber(level) or 0)
-    )
-
-    level = math.min(
-        level,
-        MAX_EFFECT_LEVEL
-    )
-
-    return EFFECT_BLUEPRINT_BY_LEVEL[level]
+    local level = math.min(scaling.get_level(projectile, "chainstep"), 4)
+    return "SC_IRRADIATE_EROSION_BONUS_" .. level + 1
 end
 
-local function spawn_irradiate_impact(
-    shipManager,
-    projectile,
-    location,
-    blueprintName
-)
-    local target =
-        get_room_center(
-            shipManager.iShipId,
-            location
-        )
+local function spawn_irradiate_impact(shipManager, projectile, location, blueprintName)
+    local target = get_room_center(shipManager.iShipId, location)
+    if not target then return end
 
-    if not target then
-        return
-    end
+    local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint(blueprintName)
+    local spaceManager = Hyperspace.Global.GetInstance():GetCApp().world.space
 
-    local blueprint =
-        Hyperspace.Blueprints
-            :GetWeaponBlueprint(
-                blueprintName
-            )
-
-    if not blueprint then
-        return
-    end
-
-    local spaceManager =
-        Hyperspace.Global
-            .GetInstance()
-            :GetCApp()
-            .world
-            .space
-
-    spaceManager:CreateLaserBlast(
-        blueprint,
-        target,
-        shipManager.iShipId,
-        projectile.ownerId,
-        target,
-        shipManager.iShipId,
-        0
-    )
+    spaceManager:CreateLaserBlast(blueprint, target, shipManager.iShipId, projectile.ownerId, target, shipManager.iShipId, 0)
 end
 
-script.on_internal_event(
-    Defines.InternalEvents.DAMAGE_BEAM,
-    function(
-        shipManager,
-        projectile,
-        location,
-        damage,
-        realNewTile,
-        beamHitType
-    )
-        if not shipManager
-            or not projectile
-            or beamHitType == Defines.BeamHit.SAME_TILE then
-
-            return Defines.Chain.CONTINUE,
-                beamHitType
-        end
-
-        local blueprintName =
-            get_effect_blueprint_name(
-                projectile
-            )
-
-        if blueprintName then
-            spawn_irradiate_impact(
-                shipManager,
-                projectile,
-                location,
-                blueprintName
-            )
-        end
-
-        return Defines.Chain.CONTINUE,
-            beamHitType
+script.on_internal_event(Defines.InternalEvents.DAMAGE_BEAM, function(shipManager, projectile, location, _damage, _realNewTile, beamHitType)
+    if beamHitType == Defines.BeamHit.SAME_TILE then
+        return Defines.Chain.CONTINUE, beamHitType
     end
-)
+
+    local blueprintName = get_irradiate_blueprint_name(projectile)
+
+    if blueprintName then
+        spawn_irradiate_impact(shipManager, projectile, location, blueprintName)
+    end
+
+    return Defines.Chain.CONTINUE, beamHitType
+end)
