@@ -1,70 +1,27 @@
--- Test No. 4
-
 --[[
-This code is a reimplementation of TNE_CHAINSTEP_LUA.lua from TNE.
-
-Recommended XML pattern
------------------------
-
-Timing configuration:
-    <sc-chainstep fireThreshold="4" chainStep="4" maxSteps="3"/>
-
-Optional stat entries:
-    <sc-chainstep stat="missileCost" base="4" amount="-1"/>
-    <sc-chainstep stat="accuracyMod" amount="-45"/>
-    <sc-chainstep stat="radius" amount="30"/>
-    <sc-chainstep stat="breachChance" amount="2"/>
-    <sc-chainstep stat="shots" amount="1"/>
-
-The timing tag has at most three attributes.
-Each stat tag has two or three attributes.
-
-For missileCost:
-    base   = cost at chainstep level 0
-    amount = change per completed chainstep
-
-Weapons using Lua-controlled missileCost should normally use:
-    <missiles>0</missiles>
+DESCRIPTION: Implements SC Chainstep weapon behavior.
+        - Uses a configurable fire threshold, chainstep duration, and optional maximum steps.
+        - Stores the frozen chainstep level on each fired projectile for shared stat/radius scaling.
+        - Handles Chainstep shot-count scaling.
+        - Handles Chainstep variable missile cost, payment, selection checks, and tooltip text.
+TAG:
+        <sc-chainstep fireThreshold="#" chainStep="#" maxSteps="#"/>
+        <sc-chainstep stat="..." value="#"/>
+        <sc-chainstep stat="missileCost" base="#" value="#"/>
+DEPENDENCIES: sc_tag.lua, sc_projectile_scaling.lua, Multiverse userdata_table, Multiverse vter
 ]]
 
 local vter = mods.multiverse.vter
 local userdata_table = mods.multiverse.userdata_table
+local scaling = mods.sc.scaling
 
-mods.multiverse.weaponTagParsers =
-    mods.multiverse.weaponTagParsers or {}
-
-local weaponTagParsers =
-    mods.multiverse.weaponTagParsers
-
-mods.sc = mods.sc or {}
 mods.sc.chainstep = mods.sc.chainstep or {}
+local chainstepWeaponList = mods.sc.chainstep
 
-local chainstepWeaponList =
-    mods.sc.chainstep
-
-local scaling =
-    mods.sc.scaling
-
--- -----------------
--- XML PARSER
--- -----------------
-
-table.insert(weaponTagParsers, function(weaponNode)
-    local nameAttr =
-        weaponNode:first_attribute("name")
-
-    if not nameAttr then return end
-
-    local weaponName =
-        nameAttr:value()
-
-    local fireThreshold = nil
-    local chainStep = nil
-    local maxSteps = nil
-    local statBoosts = {}
-
-    local tagNode =
-        weaponNode:first_node("sc-chainstep")
+local function parse_chainstep(tagNode)
+    local data = {
+        statBoosts = {}
+    }
 
     while tagNode do
         local fireThresholdAttr =
@@ -73,69 +30,67 @@ table.insert(weaponTagParsers, function(weaponNode)
         local chainStepAttr =
             tagNode:first_attribute("chainStep")
 
-        local maxStepsAttr =
-            tagNode:first_attribute("maxSteps")
-
-        local statAttr =
-            tagNode:first_attribute("stat")
-
-        local amountAttr =
-            tagNode:first_attribute("amount")
-
-        local baseAttr =
-            tagNode:first_attribute("base")
-
         if fireThresholdAttr and chainStepAttr then
-            fireThreshold =
+            data.fireThreshold =
                 tonumber(fireThresholdAttr:value())
 
-            chainStep =
+            data.chainStep =
                 tonumber(chainStepAttr:value())
 
-            maxSteps =
+            local maxStepsAttr =
+                tagNode:first_attribute("maxSteps")
+
+            data.maxSteps =
                 maxStepsAttr
                 and tonumber(maxStepsAttr:value())
                 or nil
         end
 
+        local statAttr =
+            tagNode:first_attribute("stat")
+
         if statAttr then
-            table.insert(statBoosts, {
+            local entry = {
                 stat = statAttr:value(),
+                value = tonumber(
+                    tagNode:first_attribute("value"):value()
+                )
+            }
 
-                amount =
-                    amountAttr
-                    and tonumber(amountAttr:value())
-                    or 1,
+            local baseAttr =
+                tagNode:first_attribute("base")
 
-                base =
-                    baseAttr
-                    and tonumber(baseAttr:value())
-                    or nil
-            })
+            if baseAttr then
+                entry.base =
+                    tonumber(baseAttr:value())
+            end
+
+            table.insert(
+                data.statBoosts,
+                entry
+            )
         end
 
         tagNode =
             tagNode:next_sibling("sc-chainstep")
     end
 
-    if not fireThreshold
-        or not chainStep
-        or chainStep <= 0 then
+    if not data.fireThreshold
+        or not data.chainStep
+        or data.chainStep <= 0 then
 
-        return
+        return nil
     end
 
-    chainstepWeaponList[weaponName] = {
-        fireThreshold = fireThreshold,
-        chainStep = chainStep,
-        maxSteps = maxSteps,
-        statBoosts = statBoosts
-    }
-end)
+    return data
+end
 
--- -----------------
--- HELPERS
--- -----------------
+mods.sc.tag.register(
+    "weapon",
+    "sc-chainstep",
+    chainstepWeaponList,
+    parse_chainstep
+)
 
 local function get_chainstep_weapon(weapon)
     if not weapon or not weapon.blueprint then
@@ -151,11 +106,7 @@ local function get_chainstep_stat(
     chainWeapon,
     statName
 )
-    if not chainWeapon
-        or not chainWeapon.statBoosts then
-
-        return nil
-    end
+    if not chainWeapon then return nil end
 
     for _, statBoost in ipairs(
         chainWeapon.statBoosts
@@ -164,8 +115,6 @@ local function get_chainstep_stat(
             return statBoost
         end
     end
-
-    return nil
 end
 
 local function get_max_chainsteps(
@@ -181,74 +130,54 @@ local function get_max_chainsteps(
         )
     end
 
-    if weapon.blueprint
-        and weapon.blueprint.boostPower
-        and weapon.blueprint.boostPower.count then
+    local boostPower =
+        weapon.blueprint.boostPower
 
-        local boostCount =
-            weapon.blueprint.boostPower.count
-
-        if boostCount > 0 then
-            return boostCount
-        end
+    if boostPower and boostPower.count > 0 then
+        return boostPower.count
     end
 
-    if chainStep > 0 then
-        return math.max(
-            0,
-            math.floor(
-                math.max(
-                    weapon.cooldown.second
-                        - fireThreshold,
-                    0
-                ) / chainStep
-            )
+    return math.max(
+        0,
+        math.floor(
+            math.max(
+                weapon.cooldown.second
+                    - fireThreshold,
+                0
+            ) / chainStep
         )
-    end
-
-    return 0
+    )
 end
 
 local function get_chainstep_level(weapon)
-    if not weapon then return 0 end
-
-    local wdata = userdata_table(
-        weapon,
-        "mods.sc.chainstep"
-    )
+    local wdata =
+        userdata_table(
+            weapon,
+            "mods.sc.chainstep"
+        )
 
     return math.max(
         0,
         math.floor(
             wdata.level
-                or weapon.boostLevel
-                or 0
+            or weapon.boostLevel
+            or 0
         )
     )
 end
-
--- -----------------
--- CHAINSTEP SHOTS
--- -----------------
 
 local function apply_chainstep_shots(
     weapon,
     startingShots,
     boost
 )
-    if not weapon or not startingShots then
-        return
-    end
+    local name = weapon.blueprint.name
 
-    local bp = weapon.blueprint
-    local name = bp and bp.name
-
-    if not name then return end
-
-    local wdata = userdata_table(
-        weapon,
-        "mods.sc.chainstep"
-    )
+    local wdata =
+        userdata_table(
+            weapon,
+            "mods.sc.chainstep"
+        )
 
     local key =
         "shotsFiredThisVolley_" .. name
@@ -256,12 +185,9 @@ local function apply_chainstep_shots(
     wdata[key] =
         (wdata[key] or 0) + 1
 
-    local cap =
-        (bp and bp.shots) or 1
-
     local allowedTotal =
         math.min(
-            cap,
+            weapon.blueprint.shots or 1,
             startingShots - 1 + boost
         )
 
@@ -280,30 +206,74 @@ local function apply_chainstep_shots(
     end
 end
 
--- -----------------
--- CHAINSTEP LOGIC
--- -----------------
+local function calculate_missile_cost(
+    missileData,
+    level
+)
+    local baseCost =
+        tonumber(missileData.base) or 1
+
+    local value =
+        tonumber(missileData.value) or 0
+
+    return math.max(
+        1,
+        math.floor(
+            baseCost
+            + math.max(0, tonumber(level) or 0)
+            * value
+        )
+    )
+end
+
+local function can_pay_missile_cost(
+    ship,
+    missileData,
+    level
+)
+    return ship:GetMissileCount()
+        >= calculate_missile_cost(
+            missileData,
+            level
+        )
+end
+
+local function pay_missile_cost_once(
+    ship,
+    missileData,
+    level,
+    wdata
+)
+    if not missileData
+        or wdata.missilePaid then
+
+        return
+    end
+
+    ship:ModifyMissileCount(
+        -calculate_missile_cost(
+            missileData,
+            level
+        )
+    )
+
+    wdata.missilePaid = true
+end
 
 script.on_internal_event(
     Defines.InternalEvents.ON_TICK,
     function()
-        local weapons = {}
+        for shipId = 0, 1 do
+            local ship =
+                Hyperspace.ships(shipId)
 
-        pcall(function()
-            weapons[0] =
-                Hyperspace.ships.player
-                    .weaponSystem.weapons
-        end)
+            local weapons =
+                ship
+                and ship.weaponSystem
+                and ship.weaponSystem.weapons
 
-        pcall(function()
-            weapons[1] =
-                Hyperspace.ships.enemy
-                    .weaponSystem.weapons
-        end)
-
-        for i = 0, 1 do
-            if weapons[i] then
-                for weapon in vter(weapons[i]) do
+            if weapons then
+                for weapon in vter(weapons) do
                     local chainWeapon =
                         get_chainstep_weapon(weapon)
 
@@ -392,28 +362,24 @@ script.on_internal_event(
     end
 )
 
--- -----------------
--- MISSILE CHECK
--- -----------------
-
 script.on_internal_event(
     Defines.InternalEvents.SELECT_ARMAMENT_PRE,
     function(armamentSlot)
         local ship =
             Hyperspace.ships.player
 
-        if not ship
-            or not ship.weaponSystem
-            or not ship.weaponSystem.weapons then
+        local weapons =
+            ship
+            and ship.weaponSystem
+            and ship.weaponSystem.weapons
 
+        if not weapons then
             return Defines.Chain.CONTINUE,
                 armamentSlot
         end
 
         local weapon =
-            ship.weaponSystem.weapons[
-                armamentSlot
-            ]
+            weapons[armamentSlot]
 
         local chainWeapon =
             get_chainstep_weapon(weapon)
@@ -424,20 +390,12 @@ script.on_internal_event(
                 "missileCost"
             )
 
-        if not missileData then
-            return Defines.Chain.CONTINUE,
-                armamentSlot
-        end
-
-        local canPay =
-            scaling.can_pay_missile_cost(
+        if missileData
+            and not can_pay_missile_cost(
                 ship,
-                weapon,
-                "chainstep",
+                missileData,
                 get_chainstep_level(weapon)
-            )
-
-        if not canPay then
+            ) then
 
             return Defines.Chain.PREEMPT,
                 armamentSlot
@@ -448,24 +406,19 @@ script.on_internal_event(
     end
 )
 
--- -----------------
--- CHAINSTEP STATS
--- -----------------
-
 script.on_internal_event(
     Defines.InternalEvents.PROJECTILE_FIRE,
     function(projectile, weapon)
         local chainWeapon =
             get_chainstep_weapon(weapon)
 
-        if not chainWeapon then
-            return
-        end
+        if not chainWeapon then return end
 
-        local wdata = userdata_table(
-            weapon,
-            "mods.sc.chainstep"
-        )
+        local wdata =
+            userdata_table(
+                weapon,
+                "mods.sc.chainstep"
+            )
 
         if not wdata.volleyActive then
             wdata.volleyActive = true
@@ -475,8 +428,8 @@ script.on_internal_event(
                     0,
                     math.floor(
                         wdata.level
-                            or weapon.boostLevel
-                            or 0
+                        or weapon.boostLevel
+                        or 0
                     )
                 )
 
@@ -491,10 +444,11 @@ script.on_internal_event(
                 )
             )
 
-        local pdata = userdata_table(
-            projectile,
-            "mods.sc.projectileScaling"
-        )
+        local pdata =
+            userdata_table(
+                projectile,
+                "mods.sc.projectileScaling"
+            )
 
         pdata.weaponName =
             weapon.blueprint.name
@@ -509,14 +463,14 @@ script.on_internal_event(
             boost,
             {
                 shots = function(
-                    currentProjectile,
+                    _projectile,
                     currentWeapon,
                     statBoost,
                     level
                 )
                     apply_chainstep_shots(
                         currentWeapon,
-                        statBoost.amount or 1,
+                        statBoost.value,
                         level
                     )
                 end
@@ -524,23 +478,22 @@ script.on_internal_event(
         )
 
         if weapon.iShipId == 0 then
-            scaling.pay_missile_cost_once(
+            pay_missile_cost_once(
                 Hyperspace.ships.player,
-                weapon,
-                "chainstep",
+                get_chainstep_stat(
+                    chainWeapon,
+                    "missileCost"
+                ),
                 boost,
-                wdata,
-                "missilePaid"
+                wdata
             )
         end
     end
 )
 
--- -----------------
--- CHAINSTEP TOOLTIP
--- -----------------
-
-local function get_unique_player_weapon(weaponName)
+local function get_unique_player_weapon(
+    weaponName
+)
     local ship =
         Hyperspace.ships.player
 
@@ -549,16 +502,13 @@ local function get_unique_player_weapon(weaponName)
         and ship.weaponSystem
         and ship.weaponSystem.weapons
 
-    if not weapons then
-        return nil
-    end
+    if not weapons then return nil end
 
     local foundWeapon = nil
 
     for weapon in vter(weapons) do
-        if weapon
-            and weapon.blueprint
-            and weapon.blueprint.name == weaponName then
+        if weapon.blueprint.name
+            == weaponName then
 
             if foundWeapon then
                 return nil
@@ -571,15 +521,14 @@ local function get_unique_player_weapon(weaponName)
     return foundWeapon
 end
 
-local function get_tooltip_chainstep_level(weapon)
-    if not weapon then
-        return 0
-    end
-
-    local wdata = userdata_table(
-        weapon,
-        "mods.sc.chainstep"
-    )
+local function get_tooltip_chainstep_level(
+    weapon
+)
+    local wdata =
+        userdata_table(
+            weapon,
+            "mods.sc.chainstep"
+        )
 
     if wdata.volleyActive
         and wdata.firingLevel ~= nil then
@@ -594,8 +543,8 @@ local function get_tooltip_chainstep_level(weapon)
         0,
         math.floor(
             wdata.level
-                or weapon.boostLevel
-                or 0
+            or weapon.boostLevel
+            or 0
         )
     )
 end
@@ -604,9 +553,7 @@ script.on_internal_event(
     Defines.InternalEvents.WEAPON_STATBOX,
     function(bp, stats)
         local chainWeapon =
-            chainstepWeaponList[
-                bp and bp.name
-            ]
+            chainstepWeaponList[bp.name]
 
         local missileData =
             get_chainstep_stat(
@@ -614,9 +561,7 @@ script.on_internal_event(
                 "missileCost"
             )
 
-        if not missileData then
-            return
-        end
+        if not missileData then return end
 
         local baseCost =
             math.max(
@@ -626,8 +571,8 @@ script.on_internal_event(
                 )
             )
 
-        local amount =
-            missileData.amount or 0
+        local value =
+            missileData.value or 0
 
         local maxSteps =
             chainWeapon.maxSteps or 0
@@ -637,8 +582,7 @@ script.on_internal_event(
                 1,
                 math.floor(
                     baseCost
-                        + maxSteps
-                        * amount
+                    + maxSteps * value
                 )
             )
 
@@ -654,7 +598,7 @@ script.on_internal_event(
                 )
 
             local currentCost =
-                scaling.calculate_missile_cost(
+                calculate_missile_cost(
                     missileData,
                     chainLevel
                 )
@@ -681,7 +625,7 @@ script.on_internal_event(
                 .. tostring(baseCost)
                 .. "\n"
                 .. "Missile change per chainstep: "
-                .. tostring(amount)
+                .. tostring(value)
                 .. "\n"
                 .. "Minimum missile cost: "
                 .. tostring(minimumCost)

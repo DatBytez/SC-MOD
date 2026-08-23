@@ -4,7 +4,7 @@ DESCRIPTION: Terran pilot ability behavior and button definition.
         - Converts half of current dodge into projectile accuracy while active.
         - Reduces weapon radius and increases projectile speed from that accuracy bonus.
         - Applies the piloting ion penalty when the active timer finishes.
-DEPENDENCIES: sc_pilot_ui.lua, sc_helpers.lua, sc_projectile_scaling.lua
+DEPENDENCIES: sc_pilot_ui.lua, sc_helpers.lua, sc_radius_core.lua
 ]]
 
 mods.sc_accuracy = mods.sc_accuracy or {}
@@ -49,45 +49,76 @@ local function get_text(textId)
 end
 
 local function format_text(textId, value)
-    return string.gsub(get_text(textId), "\\1", tostring(value))
+    return string.gsub(
+        get_text(textId),
+        "\\1",
+        tostring(value)
+    )
 end
 
 local function has_pilot_augment(ship)
-    return helpers.ship_has_augment(ship, PILOT_AUGMENT)
+    return helpers.ship_has_augment(
+        ship,
+        PILOT_AUGMENT
+    )
 end
 
-local function get_piloting_effect_duration(pilotingSystem)
+local function get_piloting_effect_duration(
+    pilotingSystem
+)
     return ACTIVATION_TIME
-        + (pilotingSystem:GetMaxPower() - 1) * DURATION_BONUS_PER_LEVEL
+        + (pilotingSystem:GetMaxPower() - 1)
+        * DURATION_BONUS_PER_LEVEL
 end
 
-local function get_piloting_cooldown_penalty(pilotingSystem)
+local function get_piloting_cooldown_penalty(
+    pilotingSystem
+)
     return COOLDOWN_TIME
-        + (pilotingSystem:GetMaxPower() - 1) * COOLDOWN_BONUS_PER_LEVEL
+        + (pilotingSystem:GetMaxPower() - 1)
+        * COOLDOWN_BONUS_PER_LEVEL
 end
 
 local function pilot_effect_active(ship)
-    return buttonTimer.is_active(PILOT_BUTTON, ship.iShipId)
+    return buttonTimer.is_active(
+        PILOT_BUTTON,
+        ship.iShipId
+    )
         and has_pilot_augment(ship)
-        and ship:GetSystem(PILOT_SYSTEM_ID).bManned
+        and ship:GetSystem(
+            PILOT_SYSTEM_ID
+        ).bManned
 end
 
-local function update_accuracy_bonus_from_dodge(ship, dodge)
+local function update_accuracy_bonus_from_dodge(
+    ship,
+    dodge
+)
     local shipId = ship.iShipId
 
     if not pilot_effect_active(ship) then
-        mods.sc_accuracy.dodgeToAccuracy[shipId] = 0
+        mods.sc_accuracy.dodgeToAccuracy[
+            shipId
+        ] = 0
+
         return 0
     end
 
     local effectiveDodge = dodge or 0
 
-    if ship.cloakSystem and ship.cloakSystem.bTurnedOn then
-        effectiveDodge = effectiveDodge + 60
+    if ship.cloakSystem
+        and ship.cloakSystem.bTurnedOn then
+
+        effectiveDodge =
+            effectiveDodge + 60
     end
 
-    local removedAmount = math.floor(effectiveDodge / 2)
-    mods.sc_accuracy.dodgeToAccuracy[shipId] = removedAmount
+    local removedAmount =
+        math.floor(effectiveDodge / 2)
+
+    mods.sc_accuracy.dodgeToAccuracy[
+        shipId
+    ] = removedAmount
 
     return removedAmount
 end
@@ -99,154 +130,249 @@ local function refresh_accuracy_bonus(ship)
     local shipId = ship.iShipId
 
     if not pilot_effect_active(ship) then
-        mods.sc_accuracy.dodgeToAccuracy[shipId] = 0
+        mods.sc_accuracy.dodgeToAccuracy[
+            shipId
+        ] = 0
+
         return 0
     end
 
     if dodgeRefreshInProgress[shipId] then
-        return mods.sc_accuracy.dodgeToAccuracy[shipId] or 0
+        return mods.sc_accuracy
+            .dodgeToAccuracy[shipId]
+            or 0
     end
 
-    dodgeRefreshInProgress[shipId] = true
+    dodgeRefreshInProgress[shipId] =
+        true
 
-    local serialBefore = dodgeEventSerial[shipId] or 0
+    local serialBefore =
+        dodgeEventSerial[shipId] or 0
 
-    local success, dodge = pcall(function()
-        return ship:GetDodgeFactor()
-    end)
+    local success, dodge =
+        pcall(function()
+            return ship:GetDodgeFactor()
+        end)
 
-    dodgeRefreshInProgress[shipId] = false
+    dodgeRefreshInProgress[shipId] =
+        false
 
     -- GetDodgeFactor normally invokes GET_DODGE_FACTOR, which writes the
     -- exact event value. Use the returned dodge only if that event did not run.
     if success
         and type(dodge) == "number"
-        and (dodgeEventSerial[shipId] or 0) == serialBefore then
+        and (dodgeEventSerial[shipId] or 0)
+            == serialBefore then
 
-        update_accuracy_bonus_from_dodge(ship, dodge)
+        update_accuracy_bonus_from_dodge(
+            ship,
+            dodge
+        )
     end
 
-    return mods.sc_accuracy.dodgeToAccuracy[shipId] or 0
+    return mods.sc_accuracy
+        .dodgeToAccuracy[shipId]
+        or 0
 end
 
-mods.sc.pilot.refresh_accuracy_bonus = refresh_accuracy_bonus
+mods.sc.pilot.refresh_accuracy_bonus =
+    refresh_accuracy_bonus
 
-local function get_pilot_button_visuals(ship, pilotingSystem)
-    local visualLevel = math.min(
-        4,
-        math.floor(pilotingSystem:GetMaxPower())
-    )
+local function get_pilot_button_visuals(
+    ship,
+    pilotingSystem
+)
+    local visualLevel =
+        math.min(
+            4,
+            math.floor(
+                pilotingSystem:GetMaxPower()
+            )
+        )
 
-    local buttonStyle = string.format(
-        "systemUI/button_cloaking%d",
-        visualLevel
-    )
+    local buttonStyle =
+        string.format(
+            "systemUI/button_cloaking%d",
+            visualLevel
+        )
 
     return {
         key = visualLevel,
         buttonStyle = buttonStyle,
-        baseImage = buttonStyle .. "_base.png",
-        chargingImage = buttonStyle .. "_charging_on.png",
+        baseImage =
+            buttonStyle .. "_base.png",
+        chargingImage =
+            buttonStyle
+            .. "_charging_on.png",
         fillMask = {
             x = 10,
             bottomY = 66,
             w = 20,
-            h = 19 + (visualLevel - 1) * 12
+            h =
+                19
+                + (visualLevel - 1)
+                * 12
         }
     }
 end
 
-local function pilot_button_ready(ship, pilotingSystem)
+local function pilot_button_ready(
+    ship,
+    pilotingSystem
+)
     return not pilotingSystem:GetLocked()
         and pilotingSystem:Functioning()
         and pilotingSystem.iHackEffect <= 1
         and pilotingSystem.bManned
 end
 
-local function get_pilot_button_tooltip(ship, pilotingSystem, state)
-    if pilotingSystem:GetLocked() or state.active then return nil end
+local function get_pilot_button_tooltip(
+    ship,
+    pilotingSystem,
+    state
+)
+    if pilotingSystem:GetLocked()
+        or state.active then
+
+        return nil
+    end
 
     if not pilotingSystem.bManned then
-        return get_text("tooltip_sc_pilot_manned")
+        return get_text(
+            "tooltip_sc_pilot_manned"
+        )
     end
 
     return format_text(
         "tooltip_sc_pilot_ready",
-        string.format("%.1f", state.duration)
+        string.format(
+            "%.1f",
+            state.duration
+        )
     )
 end
 
-local function pilot_timer_rate(ship, pilotingSystem, state)
+local function pilot_timer_rate(
+    ship,
+    pilotingSystem,
+    state
+)
     local rate = 1 / state.duration
 
     if pilotingSystem.iHackEffect > 1 then
-        local hackingShip = Hyperspace.ships(1 - ship.iShipId)
-        local hackingLevel = hackingShip.hackingSystem:GetEffectivePower()
+        local hackingShip =
+            Hyperspace.ships(
+                1 - ship.iShipId
+            )
 
-        rate = rate * (
-            1 + hackingLevel * HACK_TIMER_SPEED_BONUS_PER_LEVEL
-        )
+        local hackingLevel =
+            hackingShip.hackingSystem
+                :GetEffectivePower()
+
+        rate =
+            rate
+            * (
+                1
+                + hackingLevel
+                * HACK_TIMER_SPEED_BONUS_PER_LEVEL
+            )
     end
 
     return rate
 end
 
 local function clear_pilot_accuracy(ship)
-    mods.sc_accuracy.dodgeToAccuracy[ship.iShipId] = 0
+    mods.sc_accuracy.dodgeToAccuracy[
+        ship.iShipId
+    ] = 0
 end
 
-local function finish_pilot_effect(ship, pilotingSystem)
+local function finish_pilot_effect(
+    ship,
+    pilotingSystem
+)
     clear_pilot_accuracy(ship)
 
     local damage = Hyperspace.Damage()
-    damage.iIonDamage = get_piloting_cooldown_penalty(pilotingSystem)
+
+    damage.iIonDamage =
+        get_piloting_cooldown_penalty(
+            pilotingSystem
+        )
 
     ship:DamageArea(
-        ship:GetRoomCenter(pilotingSystem:GetRoomId()),
+        ship:GetRoomCenter(
+            pilotingSystem:GetRoomId()
+        ),
         damage,
         true
     )
 end
 
-buttonTimer.register(PILOT_BUTTON, {
-    systemId = PILOT_SYSTEM_ID,
-    systemBoxOffset = 54,
+buttonTimer.register(
+    PILOT_BUTTON,
+    {
+        systemId = PILOT_SYSTEM_ID,
+        systemBoxOffset = 54,
 
-    x = BUTTON_OFFSET_X,
-    y = BUTTON_OFFSET_Y,
+        x = BUTTON_OFFSET_X,
+        y = BUTTON_OFFSET_Y,
 
-    hitbox = {
-        x = 11,
-        y = 36,
-        w = 20,
-        h = 30
-    },
+        hitbox = {
+            x = 11,
+            y = 36,
+            w = 20,
+            h = 30
+        },
 
-    is_visible = function(ship)
-        return has_pilot_augment(ship)
-    end,
+        is_visible = function(ship)
+            return has_pilot_augment(ship)
+        end,
 
-    is_ready = pilot_button_ready,
-    get_duration = function(ship, pilotingSystem)
-        return get_piloting_effect_duration(pilotingSystem)
-    end,
-    get_timer_rate = pilot_timer_rate,
-    get_visuals = get_pilot_button_visuals,
-    get_tooltip = get_pilot_button_tooltip,
+        is_ready =
+            pilot_button_ready,
 
-    on_activate = function(ship)
-        refresh_accuracy_bonus(ship)
-    end,
+        get_duration =
+            function(
+                ship,
+                pilotingSystem
+            )
+                return
+                    get_piloting_effect_duration(
+                        pilotingSystem
+                    )
+            end,
 
-    on_deactivate = finish_pilot_effect,
+        get_timer_rate =
+            pilot_timer_rate,
 
-    on_reset = function(ship)
-        clear_pilot_accuracy(ship)
-    end
-})
+        get_visuals =
+            get_pilot_button_visuals,
 
--- The shared scaling system uses this function for both live preview and
--- the fired projectile starting radius.
+        get_tooltip =
+            get_pilot_button_tooltip,
+
+        on_activate =
+            function(ship)
+                refresh_accuracy_bonus(
+                    ship
+                )
+            end,
+
+        on_deactivate =
+            finish_pilot_effect,
+
+        on_reset =
+            function(ship)
+                clear_pilot_accuracy(
+                    ship
+                )
+            end
+    }
+)
+
+-- Refresh the dodge-derived accuracy inside the modifier itself so Radius Core
+-- remains generic and does not need pilot-specific state handling.
 local function apply_pilot_radius_modifier(
     ship,
     weapon,
@@ -258,7 +384,7 @@ local function apply_pilot_radius_modifier(
     end
 
     local accuracyBonus =
-        mods.sc_accuracy.dodgeToAccuracy[ship.iShipId] or 0
+        refresh_accuracy_bonus(ship)
 
     if accuracyBonus <= 0 then
         return radius
@@ -266,13 +392,16 @@ local function apply_pilot_radius_modifier(
 
     return math.max(
         MIN_RADIUS,
-        radius - accuracyBonus * RADIUS_PER_ACCURACY
+        radius
+            - accuracyBonus
+            * RADIUS_PER_ACCURACY
     )
 end
 
-mods.sc.pilot.apply_radius_modifier = apply_pilot_radius_modifier
+mods.sc.pilot.apply_radius_modifier =
+    apply_pilot_radius_modifier
 
-mods.sc.scaling.register_weapon_radius_modifier(
+mods.sc.radius.register_modifier(
     "pilot_accuracy",
     apply_pilot_radius_modifier,
     100
@@ -281,28 +410,48 @@ mods.sc.scaling.register_weapon_radius_modifier(
 script.on_internal_event(
     Defines.InternalEvents.PROJECTILE_FIRE,
     function(projectile)
-        local ship = Hyperspace.ships(projectile.ownerId)
-        local shipId = projectile.ownerId
+        local ship =
+            Hyperspace.ships(
+                projectile.ownerId
+            )
+
+        local shipId =
+            projectile.ownerId
 
         if not pilot_effect_active(ship) then
-            mods.sc_accuracy.dodgeToAccuracy[shipId] = 0
+            mods.sc_accuracy
+                .dodgeToAccuracy[
+                    shipId
+                ] = 0
+
             return
         end
 
-        local accuracyBonus = refresh_accuracy_bonus(ship)
+        local accuracyBonus =
+            refresh_accuracy_bonus(ship)
 
-        projectile.extend.customDamage.accuracyMod =
-            projectile.extend.customDamage.accuracyMod + accuracyBonus
+        projectile.extend
+            .customDamage
+            .accuracyMod =
+            projectile.extend
+                .customDamage
+                .accuracyMod
+            + accuracyBonus
 
-        local speedMultiplier = 1 + accuracyBonus * 0.01
+        local speedMultiplier =
+            1 + accuracyBonus * 0.01
 
-        projectile.speed = Hyperspace.Pointf(
-            projectile.speed.x * speedMultiplier,
-            projectile.speed.y * speedMultiplier
-        )
+        projectile.speed =
+            Hyperspace.Pointf(
+                projectile.speed.x
+                    * speedMultiplier,
+                projectile.speed.y
+                    * speedMultiplier
+            )
 
         projectile.speed_magnitude =
-            projectile.speed_magnitude * speedMultiplier
+            projectile.speed_magnitude
+            * speedMultiplier
     end
 )
 
@@ -312,15 +461,26 @@ script.on_internal_event(
         local shipId = ship.iShipId
 
         dodgeEventSerial[shipId] =
-            (dodgeEventSerial[shipId] or 0) + 1
+            (dodgeEventSerial[shipId] or 0)
+            + 1
 
-        update_accuracy_bonus_from_dodge(ship, dodge)
+        update_accuracy_bonus_from_dodge(
+            ship,
+            dodge
+        )
 
-        return Defines.Chain.CONTINUE, dodge
+        return Defines.Chain.CONTINUE,
+            dodge
     end
 )
 
-script.on_internal_event(Defines.InternalEvents.JUMP_ARRIVE, function()
-    mods.sc_accuracy.dodgeToAccuracy[0] = 0
-    mods.sc_accuracy.dodgeToAccuracy[1] = 0
-end)
+script.on_internal_event(
+    Defines.InternalEvents.JUMP_ARRIVE,
+    function()
+        mods.sc_accuracy
+            .dodgeToAccuracy[0] = 0
+
+        mods.sc_accuracy
+            .dodgeToAccuracy[1] = 0
+    end
+)

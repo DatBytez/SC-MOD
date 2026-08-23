@@ -72,6 +72,7 @@ cloakProxyNoControl.duration = CLOAK_PROXY_BOOST_DURATION
 cloakProxyNoControl.priority = CLOAK_PROXY_BOOST_PRIORITY
 cloakProxyNoControl.realBoostId =
     Hyperspace.StatBoostDefinition.statBoostDefs:size()
+
 Hyperspace.StatBoostDefinition.statBoostDefs:push_back(
     cloakProxyNoControl
 )
@@ -91,6 +92,7 @@ cloakProxyNotTarget.duration = CLOAK_PROXY_BOOST_DURATION
 cloakProxyNotTarget.priority = CLOAK_PROXY_BOOST_PRIORITY
 cloakProxyNotTarget.realBoostId =
     Hyperspace.StatBoostDefinition.statBoostDefs:size()
+
 Hyperspace.StatBoostDefinition.statBoostDefs:push_back(
     cloakProxyNotTarget
 )
@@ -110,13 +112,18 @@ cloakProxyNoAi.duration = CLOAK_PROXY_BOOST_DURATION
 cloakProxyNoAi.priority = CLOAK_PROXY_BOOST_PRIORITY
 cloakProxyNoAi.realBoostId =
     Hyperspace.StatBoostDefinition.statBoostDefs:size()
+
 Hyperspace.StatBoostDefinition.statBoostDefs:push_back(
     cloakProxyNoAi
 )
 
-function targeting.register_source(name, strengthProvider)
+function targeting.register_source(
+    name,
+    strengthProvider
+)
     if type(name) ~= "string"
-        or type(strengthProvider) ~= "function" then
+        or type(strengthProvider)
+            ~= "function" then
 
         return false
     end
@@ -134,7 +141,10 @@ function targeting.unregister_source(name)
     return true
 end
 
-function targeting.get_source_strength(name, ship)
+function targeting.get_source_strength(
+    name,
+    ship
+)
     local provider = sources[name]
 
     if type(provider) ~= "function" then
@@ -151,9 +161,7 @@ function targeting.get_source_strength(name, ship)
 end
 
 function targeting.get_strength(ship)
-    if not ship then
-        return nil
-    end
+    if not ship then return nil end
 
     local strongest = nil
 
@@ -161,7 +169,10 @@ function targeting.get_strength(ship)
         local strength = provider(ship)
 
         if type(strength) == "number" then
-            strength = math.max(0, strength)
+            strength = math.max(
+                0,
+                strength
+            )
 
             if strongest == nil
                 or strength > strongest then
@@ -175,20 +186,28 @@ function targeting.get_strength(ship)
 end
 
 function targeting.is_active(ship)
-    return targeting.get_strength(ship) ~= nil
+    return targeting.get_strength(ship)
+        ~= nil
 end
 
-function targeting.has_effective_detection(ship)
-    local strength = targeting.get_strength(ship)
+function targeting.has_effective_detection(
+    ship
+)
+    local strength =
+        targeting.get_strength(ship)
 
     return type(strength) == "number"
         and strength > 0
 end
 
-local function crew_is_listed_invisible(crew)
+local function crew_is_listed_invisible(
+    crew
+)
     return crew
         and crew.species
-        and LIST_SC_CREW_INVISIBLE[crew.species] == true
+        and LIST_SC_CREW_INVISIBLE[
+            crew.species
+        ] == true
 end
 
 -- Invisible-crew detection is applied at the final VALID_TARGET calculation
@@ -197,24 +216,41 @@ end
 -- targetability when SC detection is no longer effective.
 script.on_internal_event(
     Defines.InternalEvents.CALCULATE_STAT_POST,
-    function(crew, stat, def, amount, value)
-        if stat ~= Hyperspace.CrewStat.VALID_TARGET
+    function(
+        crew,
+        stat,
+        def,
+        amount,
+        value
+    )
+        if stat
+                ~= Hyperspace.CrewStat
+                    .VALID_TARGET
             or value
-            or not crew_is_listed_invisible(crew) then
+            or not crew_is_listed_invisible(
+                crew
+            ) then
 
-            return Defines.Chain.CONTINUE, amount, value
+            return Defines.Chain.CONTINUE,
+                amount,
+                value
         end
 
-        local crewShipId = crew.iShipId
+        local crewShipId =
+            crew.iShipId
 
         if crewShipId ~= 0
             and crewShipId ~= 1 then
 
-            return Defines.Chain.CONTINUE, amount, value
+            return Defines.Chain.CONTINUE,
+                amount,
+                value
         end
 
         local detectingShip =
-            Hyperspace.ships(1 - crewShipId)
+            Hyperspace.ships(
+                1 - crewShipId
+            )
 
         if targeting.has_effective_detection(
             detectingShip
@@ -222,21 +258,29 @@ script.on_internal_event(
             value = true
         end
 
-        return Defines.Chain.CONTINUE, amount, value
+        return Defines.Chain.CONTINUE,
+            amount,
+            value
     end
 )
 
-function targeting.weapon_is_missile(weapon)
-    if not weapon or not weapon.blueprint then
+function targeting.weapon_is_missile(
+    weapon
+)
+    if not weapon
+        or not weapon.blueprint then
+
         return false
     end
 
-    local blueprint = weapon.blueprint
+    local blueprint =
+        weapon.blueprint
 
     return blueprint.typeName == "MISSILES"
         or blueprint.type == "MISSILE"
         or blueprint.type == 2
-        or blueprint.name == "TERRAN_MISSILE_HALO"
+        or blueprint.name
+            == "TERRAN_MISSILE_HALO"
 end
 
 function targeting.get_accuracy_bonus_for_strength(
@@ -251,7 +295,9 @@ function targeting.get_accuracy_bonus_for_strength(
         math.max(0, strength)
         * ACCURACY_PER_STRENGTH
 
-    if targeting.weapon_is_missile(weapon) then
+    if targeting.weapon_is_missile(
+        weapon
+    ) then
         accuracyBonus =
             accuracyBonus
             * MISSILE_ACCURACY_MULTIPLIER
@@ -260,11 +306,18 @@ function targeting.get_accuracy_bonus_for_strength(
     return math.ceil(accuracyBonus)
 end
 
-function targeting.get_accuracy_bonus(ship, weapon)
-    return targeting.get_accuracy_bonus_for_strength(
-        targeting.get_strength(ship),
-        weapon
-    )
+function targeting.get_accuracy_bonus(
+    ship,
+    weapon
+)
+    return
+        targeting
+            .get_accuracy_bonus_for_strength(
+                targeting.get_strength(
+                    ship
+                ),
+                weapon
+            )
 end
 
 function targeting.apply_radius_modifier(
@@ -291,8 +344,7 @@ function targeting.apply_radius_modifier(
     )
 end
 
--- Shared scaling loads before this file, so registration is immediate.
-mods.sc.scaling.register_weapon_radius_modifier(
+mods.sc.radius.register_modifier(
     "sc_targeting",
     targeting.apply_radius_modifier,
     200
@@ -304,14 +356,19 @@ local function cloak_proxy_is_alive(proxy)
         and not proxy:IsDead()
 end
 
-local function get_cloak_proxy_room(enemyShip)
+local function get_cloak_proxy_room(
+    enemyShip
+)
     if not enemyShip then
         return nil
     end
 
     if enemyShip.cloakSystem
-        and type(enemyShip.cloakSystem.roomId) == "number"
-        and enemyShip.cloakSystem.roomId >= 0 then
+        and type(
+            enemyShip.cloakSystem.roomId
+        ) == "number"
+        and enemyShip.cloakSystem.roomId
+            >= 0 then
 
         return enemyShip.cloakSystem.roomId
     end
@@ -320,43 +377,51 @@ local function get_cloak_proxy_room(enemyShip)
         enemyShip.ship
         and enemyShip.ship.vRoomList
 
-    if rooms and rooms:size() > 0 then
+    if rooms
+        and rooms:size() > 0 then
+
         return 0
     end
 
     return nil
 end
 
-local function apply_cloak_proxy_boosts(proxy)
-    if not proxy then
-        return
-    end
+local function apply_cloak_proxy_boosts(
+    proxy
+)
+    if not proxy then return end
 
     local boostManager =
-        Hyperspace.StatBoostManager.GetInstance()
+        Hyperspace.StatBoostManager
+            .GetInstance()
 
     boostManager:CreateTimedAugmentBoost(
-        Hyperspace.StatBoost(cloakProxyNoControl),
+        Hyperspace.StatBoost(
+            cloakProxyNoControl
+        ),
         proxy
     )
 
     boostManager:CreateTimedAugmentBoost(
-        Hyperspace.StatBoost(cloakProxyNotTarget),
+        Hyperspace.StatBoost(
+            cloakProxyNotTarget
+        ),
         proxy
     )
 
     boostManager:CreateTimedAugmentBoost(
-        Hyperspace.StatBoost(cloakProxyNoAi),
+        Hyperspace.StatBoost(
+            cloakProxyNoAi
+        ),
         proxy
     )
 end
 
 local function retire_cloak_proxy(shipId)
-    local proxy = cloakProxies[shipId]
+    local proxy =
+        cloakProxies[shipId]
 
-    if not proxy then
-        return
-    end
+    if not proxy then return end
 
     if cloak_proxy_is_alive(proxy) then
         proxy.health.first = 0
@@ -370,14 +435,17 @@ local function update_cloak_targeting_proxy(
     enemyShip,
     detectionActive
 )
-    if not ship then
-        return
-    end
+    if not ship then return end
 
     local shipId = ship.iShipId
-    local proxy = cloakProxies[shipId]
+    local proxy =
+        cloakProxies[shipId]
 
-    if proxy and not cloak_proxy_is_alive(proxy) then
+    if proxy
+        and not cloak_proxy_is_alive(
+            proxy
+        ) then
+
         cloakProxies[shipId] = nil
         proxy = nil
     end
@@ -385,7 +453,8 @@ local function update_cloak_targeting_proxy(
     local enemyCloaked =
         enemyShip
         and enemyShip.cloakSystem
-        and enemyShip.cloakSystem.bTurnedOn
+        and enemyShip.cloakSystem
+            .bTurnedOn
 
     if not detectionActive
         or not enemyCloaked then
@@ -395,7 +464,9 @@ local function update_cloak_targeting_proxy(
     end
 
     local roomId =
-        get_cloak_proxy_room(enemyShip)
+        get_cloak_proxy_room(
+            enemyShip
+        )
 
     if roomId == nil then
         retire_cloak_proxy(shipId)
@@ -410,22 +481,19 @@ local function update_cloak_targeting_proxy(
         false
     )
 
-    if proxy then
-        return
-    end
+    if proxy then return end
 
-    proxy = enemyShip:AddCrewMemberFromString(
-        CLOAK_PROXY_NAME,
-        CLOAK_PROXY_RACE,
-        true,
-        roomId,
-        true,
-        false
-    )
+    proxy =
+        enemyShip:AddCrewMemberFromString(
+            CLOAK_PROXY_NAME,
+            CLOAK_PROXY_RACE,
+            true,
+            roomId,
+            true,
+            false
+        )
 
-    if not proxy then
-        return
-    end
+    if not proxy then return end
 
     apply_cloak_proxy_boosts(proxy)
     cloakProxies[shipId] = proxy
@@ -438,26 +506,30 @@ targeting.update_cloak_targeting_proxy =
 script.on_internal_event(
     Defines.InternalEvents.SHIP_LOOP,
     function(ship)
-        if not ship then
-            return
-        end
+        if not ship then return end
 
         local targetingStrength =
-            targeting.get_strength(ship)
+            targeting.get_strength(
+                ship
+            )
 
         local enemyShip =
-            Hyperspace.ships(1 - ship.iShipId)
+            Hyperspace.ships(
+                1 - ship.iShipId
+            )
 
         update_cloak_targeting_proxy(
             ship,
             enemyShip,
-            type(targetingStrength) == "number"
+            type(targetingStrength)
+                == "number"
                 and targetingStrength > 0
         )
 
         if not ship.weaponSystem
             or not ship.weaponSystem.weapons
-            or ship.weaponSystem.iHackEffect >= 2 then
+            or ship.weaponSystem.iHackEffect
+                >= 2 then
 
             return
         end
@@ -468,7 +540,8 @@ script.on_internal_event(
 
         if not enemyShip
             or not enemyShip.cloakSystem
-            or not enemyShip.cloakSystem.bTurnedOn then
+            or not enemyShip.cloakSystem
+                .bTurnedOn then
 
             return
         end
@@ -505,19 +578,25 @@ script.on_internal_event(
                         == weapon.cooldown.first
                     and oldFirst < oldSecond
                     and weapon.chargeLevel
-                        < weapon.blueprint.chargeLevels then
+                        < weapon.blueprint
+                            .chargeLevels then
 
                     weapon.chargeLevel =
                         weapon.chargeLevel + 1
 
-                    weapon.weaponVisual.boostLevel = 0
-                    weapon.weaponVisual.boostAnim
+                    weapon.weaponVisual
+                        .boostLevel = 0
+
+                    weapon.weaponVisual
+                        .boostAnim
                         :SetCurrentFrame(0)
 
                     if weapon.chargeLevel
-                        < weapon.blueprint.chargeLevels then
+                        < weapon.blueprint
+                            .chargeLevels then
 
-                        weapon.cooldown.first = 0
+                        weapon.cooldown.first =
+                            0
                     end
                 else
                     weapon.subCooldown.first =
@@ -539,12 +618,12 @@ script.on_internal_event(
 script.on_internal_event(
     Defines.InternalEvents.PROJECTILE_FIRE,
     function(projectile, weapon)
-        if not projectile then
-            return
-        end
+        if not projectile then return end
 
         local ship =
-            Hyperspace.ships(projectile.ownerId)
+            Hyperspace.ships(
+                projectile.ownerId
+            )
 
         local accuracyBonus =
             targeting.get_accuracy_bonus(
@@ -554,10 +633,15 @@ script.on_internal_event(
 
         if accuracyBonus ~= nil
             and projectile.extend
-            and projectile.extend.customDamage then
+            and projectile.extend
+                .customDamage then
 
-            projectile.extend.customDamage.accuracyMod =
-                projectile.extend.customDamage.accuracyMod
+            projectile.extend
+                .customDamage
+                .accuracyMod =
+                projectile.extend
+                    .customDamage
+                    .accuracyMod
                 + accuracyBonus
         end
     end
