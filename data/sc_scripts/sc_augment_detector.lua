@@ -13,7 +13,7 @@ local detectorAugments = mods.sc.detectorAugments
 local targeting = mods.sc.targeting
 local helpers = mods.sc.helpers
 
-mods.sc.tag.register_augment_tag("sc-detector", detectorAugments)
+mods.sc.tag.register("augment", "sc-detector", detectorAugments)
 
 local function get_detector_strength(ship)
     local sensors = ship:GetSystem(7)

@@ -10,7 +10,7 @@ local battery = mods.sc.battery
 mods.sc.batteryFireAugments = mods.sc.batteryFireAugments or {}
 local fireAugments = mods.sc.batteryFireAugments
 
-mods.sc.tag.register_augment_tag("sc-battery-fire", fireAugments)
+mods.sc.tag.register("augment", "sc-battery-fire", fireAugments)
 
 local FIRE_EXTINGUISHER_AUG = "TERRAN_HIDDEN_FIRE_EXTINGUISHERS"
 

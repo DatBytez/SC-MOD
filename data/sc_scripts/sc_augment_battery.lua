@@ -17,7 +17,7 @@ mods.sc.batteryAugments = mods.sc.batteryAugments or {}
 local battery = mods.sc.battery
 local batteryAugments = mods.sc.batteryAugments
 
-mods.sc.tag.register_augment_tag("sc-battery", batteryAugments)
+mods.sc.tag.register("augment", "sc-battery", batteryAugments)
 
 local BATTERY_ID = Hyperspace.ShipSystem.NameToSystemId("battery")
 local ACTIVATION_RATE = 0.15

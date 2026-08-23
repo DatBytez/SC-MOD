@@ -1578,7 +1578,6 @@
 	<desc>...</desc>
 	<descriptionOverride id="weapon_TERRAN_BEAM_IRRADIATE_desc"></descriptionOverride>
 	<tooltipOverride id="weapon_TERRAN_BEAM_IRRADIATE_tooltip"></tooltipOverride>
-	<tooltip>tip_bio_weapon</tooltip>
 	<damage>1</damage>
 	<sc-irradiate/>
 	<bio-weapon/>
@@ -1622,7 +1621,6 @@
 	<desc>...</desc>
 	<descriptionOverride id="weapon_TERRAN_BEAM_IRRADIATE_LITE_desc"></descriptionOverride>
 	<tooltipOverride id="weapon_TERRAN_BEAM_IRRADIATE_LITE_tooltip"></tooltipOverride>
-	<tooltip>tip_bio_weapon</tooltip>
 	<damage>1</damage>
 	<sc-irradiate/>
 	<bio-weapon/>

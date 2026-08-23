@@ -10,7 +10,7 @@ local battery = mods.sc.battery
 mods.sc.batteryDodgeAugments = mods.sc.batteryDodgeAugments or {}
 local dodgeAugments = mods.sc.batteryDodgeAugments
 
-mods.sc.tag.register_augment_tag("sc-battery-dodge", dodgeAugments)
+mods.sc.tag.register("augment", "sc-battery-dodge", dodgeAugments)
 
 local PILOT_SYSTEM_ID = 6
 
