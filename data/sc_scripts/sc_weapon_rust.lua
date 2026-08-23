@@ -4,16 +4,12 @@ DESCRIPTION: Restricts tagged weapon hull and system damage to automated ships.
         - Applies to area-hit projectiles and beams entering a new room.
         - Adds rust-weapon information to the weapon stat box.
 TAG: <rust-weapon/>
-DEPENDENCIES: Multiverse weaponTagParsers
+DEPENDENCIES: sc_tag.lua
 ]]
 
 local rustWeapons = {}
 
-table.insert(mods.multiverse.weaponTagParsers, function(weaponNode)
-    if weaponNode:first_node("rust-weapon") then
-        rustWeapons[weaponNode:first_attribute("name"):value()] = true
-    end
-end)
+mods.sc.tag.register("weapon", "rust-weapon", rustWeapons)
 
 local function remove_non_automated_ship_damage(shipManager, projectile, damage)
     if not rustWeapons[projectile.extend.name] or shipManager.bAutomated then

@@ -4,16 +4,12 @@ DESCRIPTION: Fills every tile in a room with breaches when hit by a tagged weapo
         - Area-hit projectiles trigger on impact.
         - Adds breach-fill information to the weapon stat box.
 TAG: <sc-breachFill/>
-DEPENDENCIES: Multiverse weaponTagParsers
+DEPENDENCIES: sc_tag.lua
 ]]
 
 local breachFillWeapons = {}
 
-table.insert(mods.multiverse.weaponTagParsers, function(weaponNode)
-    if weaponNode:first_node("sc-breachFill") then
-        breachFillWeapons[weaponNode:first_attribute("name"):value()] = true
-    end
-end)
+mods.sc.tag.register("weapon", "sc-breachFill", breachFillWeapons)
 
 local function fill_room_breach(shipManager, projectile, location)
     if not breachFillWeapons[projectile.extend.name] then return end

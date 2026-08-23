@@ -20,13 +20,7 @@ local ENGINE_FLIP_VERTICAL = true
 local droneEngineImages = {}
 local enginePrimitives = {}
 
-table.insert(droneTagParsers, function(droneNode)
-    local engineNode = droneNode:first_node("sc-droneEngine")
-    if not engineNode then return end
-
-    droneEngineImages[droneNode:first_attribute("name"):value()] =
-        "ship/drones/" .. engineNode:value() .. ".png"
-end)
+mods.sc.tag.register("drone", "sc-droneEngine", droneEngineImages, "value")
 
 local function get_engine_primitive(imagePath)
     local primitive = enginePrimitives[imagePath]

@@ -1,11 +1,15 @@
 --[[
 DESCRIPTION: Heals 1 hull when a completely destroyed system is repaired.
-        - Requires the TERRAN_SHIP augment.
+TAG: <sc-repair/>
+DEPENDENCIES: sc_tag.lua
 ]]
+mods.sc.repairAugments = mods.sc.repairAugments or {}
 
-local TERRAN_SHIP_AUG = "TERRAN_SHIP"
+local repairAugments = mods.sc.repairAugments
+
+mods.sc.tag.register("augment", "sc-repair", repairAugments)
+
 local HULL_HEAL_AMOUNT = 1
-local HULL_HEAL_FORCE = true
 local LILY_SYSTEM_BRACERS_ID = Hyperspace.ShipSystem.NameToSystemId("lily_system_bracers")
 
 local vter = mods.multiverse.vter
@@ -19,11 +23,11 @@ local function update_system_state(ship, system)
     local currentlyDestroyed = system:CompletelyDestroyed()
 
     if state.wasCompletelyDestroyed and not currentlyDestroyed then
-        if helpers.ship_has_augment(ship, TERRAN_SHIP_AUG) then
+        if helpers.ship_has_augment(ship, repairAugments) then
             local hull = ship.ship.hullIntegrity
 
             if hull.first < hull.second then
-                ship:DamageHull(-HULL_HEAL_AMOUNT, HULL_HEAL_FORCE)
+                ship:DamageHull(-HULL_HEAL_AMOUNT, true)
             end
         end
 

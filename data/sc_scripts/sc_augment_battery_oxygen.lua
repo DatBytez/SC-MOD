@@ -10,7 +10,7 @@ local battery = mods.sc.battery
 mods.sc.batteryOxygenAugments = mods.sc.batteryOxygenAugments or {}
 local oxygenAugments = mods.sc.batteryOxygenAugments
 
-mods.sc.tag.register_augment_tag("sc-battery-oxygen", oxygenAugments)
+mods.sc.tag.register("augment", "sc-battery-oxygen", oxygenAugments)
 
 local O2_REFILL_FACTOR_PER_SCALE = 5.00
 

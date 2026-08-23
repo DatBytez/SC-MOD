@@ -4,16 +4,12 @@ DESCRIPTION: Restricts tagged weapon hull and system damage to organic ships.
         - Applies to area-hit projectiles and beams entering a new room.
         - Adds bio-weapon information to the weapon stat box.
 TAG: <bio-weapon/>
-DEPENDENCIES: Multiverse weaponTagParsers
+DEPENDENCIES: sc_tag.lua
 ]]
 
 local bioWeapons = {}
 
-table.insert(mods.multiverse.weaponTagParsers, function(weaponNode)
-    if weaponNode:first_node("bio-weapon") then
-        bioWeapons[weaponNode:first_attribute("name"):value()] = true
-    end
-end)
+mods.sc.tag.register("weapon", "bio-weapon", bioWeapons)
 
 local function remove_non_organic_ship_damage(shipManager, projectile, damage)
     if not bioWeapons[projectile.extend.name] or shipManager:HasAugmentation("ORGANIC") > 0 then

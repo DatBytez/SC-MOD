@@ -10,7 +10,7 @@ local battery = mods.sc.battery
 mods.sc.batteryFtlAugments = mods.sc.batteryFtlAugments or {}
 local ftlAugments = mods.sc.batteryFtlAugments
 
-mods.sc.tag.register_augment_tag("sc-battery-ftl", ftlAugments)
+mods.sc.tag.register("augment", "sc-battery-ftl", ftlAugments)
 
 local FTL_BOOSTER_AUG = "TERRAN_HIDDEN_FTL_BOOSTER"
 

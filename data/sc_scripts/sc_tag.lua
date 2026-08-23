@@ -14,37 +14,48 @@ local tag = mods.sc.tag
 
 local parserLists = {
     weapon = mods.multiverse.weaponTagParsers,
+    drone = mods.multiverse.droneTagParsers,
     augment = mods.multiverse.augmentTagParsers
 }
 
+local function get_value(tagNode)
+    local rawValue =
+        tagNode:first_attribute("value"):value()
+
+    return tonumber(rawValue) or rawValue
+end
+
 function tag.register(blueprintType, tagName, targetTable, dataType)
     table.insert(parserLists[blueprintType], function(blueprintNode)
-        local tagNode = blueprintNode:first_node(tagName)
-        if not tagNode then return end
+            local tagNode = blueprintNode:first_node(tagName)
 
-        local blueprintName = blueprintNode:first_attribute("name"):value()
+            if not tagNode then return end
 
-        if not dataType then
-            targetTable[blueprintName] = true
-            return
-        end
+            local blueprintName = blueprintNode:first_attribute("name"):value()
 
-        local entries = {}
-
-        while tagNode do
-            local amountAttr = tagNode:first_attribute("amount")
-
-            local entry = {amount = amountAttr and tonumber(amountAttr:value()) or 1}
-
-            if dataType ~= "amount" then
-                entry[dataType] = tagNode:first_attribute(dataType):value()
+            if not dataType then
+                targetTable[blueprintName] = true
+                return
             end
 
-            table.insert(entries, entry)
+            if dataType == "value" then
+                targetTable[blueprintName] = get_value(tagNode)
+                return
+            end
 
-            tagNode = tagNode:next_sibling(tagName)
+            local entries = {}
+
+            while tagNode do
+                local entry = {value = get_value(tagNode)}
+
+                entry[dataType] =tagNode:first_attribute(dataType):value()
+
+                table.insert(entries, entry)
+
+                tagNode =tagNode:next_sibling(tagName)
+            end
+
+            targetTable[blueprintName] = entries
         end
-
-        targetTable[blueprintName] = entries
-    end)
+    )
 end

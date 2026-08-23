@@ -18,15 +18,7 @@ local comsatTimers = {
     [1] = {}
 }
 
-table.insert(droneTagParsers, function(droneNode)
-    local tagNode = droneNode:first_node("sc-comsat")
-    if not tagNode then return end
-
-    local lifetime = tonumber(tagNode:value())
-    if not lifetime or lifetime <= 0 then return end
-
-    comsatDrones[droneNode:first_attribute("name"):value()] = lifetime
-end)
+mods.sc.tag.register("drone", "sc-comsat", comsatDrones, "value")
 
 local function drone_is_active_comsat(drone)
     return comsatDrones[drone.blueprint.name] ~= nil and drone.deployed and drone.powered and not drone.bDead

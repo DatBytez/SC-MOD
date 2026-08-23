@@ -16,11 +16,7 @@ mods.sc.activeShield = mods.sc.activeShield or {}
 
 local activeDrones = mods.sc.activeShield
 
-table.insert(droneTagParsers, function(droneNode)
-    if droneNode:first_node("sc-active-shield") then
-        activeDrones[droneNode:first_attribute("name"):value()] = true
-    end
-end)
+mods.sc.tag.register("drone", "sc-active-shield", activeDrones)
 
 local ACTIVE_SHIELD_DRONE_SPEED_MULTIPLIER = 2
 

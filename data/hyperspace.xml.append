@@ -728,6 +728,7 @@
 					<finishSound>decloak</finishSound>
 				</finishSounds>
 				<animSheet baseVisible="false">terran_ghost_cloaked</animSheet>
+				<animBase>human</animBase>
 				<validTarget>false</validTarget>
 			</temporaryEffect>
 		</powerEffect>

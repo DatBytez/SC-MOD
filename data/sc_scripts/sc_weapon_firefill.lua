@@ -4,16 +4,12 @@ DESCRIPTION: Fills every tile in a room with fire when hit by a tagged weapon.
         - Area-hit projectiles trigger on impact.
         - Adds fire-fill information to the weapon stat box.
 TAG: <sc-fireFill/>
-DEPENDENCIES: Multiverse weaponTagParsers
+DEPENDENCIES: sc_tag.lua
 ]]
 
 local fireFillWeapons = {}
 
-table.insert(mods.multiverse.weaponTagParsers, function(weaponNode)
-    if weaponNode:first_node("sc-fireFill") then
-        fireFillWeapons[weaponNode:first_attribute("name"):value()] = true
-    end
-end)
+mods.sc.tag.register("weapon", "sc-fireFill", fireFillWeapons)
 
 local function fill_room_fire(shipManager, projectile, location)
     if not fireFillWeapons[projectile.extend.name] then return end

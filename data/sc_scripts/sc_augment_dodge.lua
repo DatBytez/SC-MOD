@@ -10,7 +10,7 @@ local helpers = mods.sc.helpers
 
 local dodgeAugments = mods.sc.dodgeAugments
 
-mods.sc.tag.register("augment", "sc-dodge", dodgeAugments, "amount")
+mods.sc.tag.register("augment", "sc-dodge", dodgeAugments, "value")
 
 local function get_sc_dodge_amount(ship)
     local total = 0

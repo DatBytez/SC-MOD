@@ -1,7 +1,7 @@
 --[[
 DESCRIPTION: Modify Lily's System Bracers to act as full ship plating.
 		- Chance (bracers health * 40%) to Negate damage to hull and systems.
-DEPENDENCIES: lily_system_bracers
+DEPENDENCIES: lily_system_bracers, sc_tag.lua, sc_helpers.lua, multiverse_userdata_table.lua, multiverse_damage_messages.lua
 SOURCE CREDIT: MsBinaryLily
 ]]
 
@@ -16,7 +16,7 @@ local helpers = mods.sc.helpers
 
 local armorAugments = mods.sc.armorAugments
 
-mods.sc.tag.register_augment_tag("sc-armor", armorAugments)
+mods.sc.tag.register("augment", "sc-armor", armorAugments)
 
 local BRACERS_ID = Hyperspace.ShipSystem.NameToSystemId("lily_system_bracers")
 local BLOCK_CHANCE_PER_HP = 0.40

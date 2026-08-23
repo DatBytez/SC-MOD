@@ -54,7 +54,7 @@
     <cost>60</cost>
     <rarity>4</rarity>
     <stackable>false</stackable>
-    <sc-upgrade system="battery" amount="2"/>
+    <sc-upgrade system="battery" value="2"/>
     <sc-battery/>
     <sc-battery-dodge/>
     <sc-battery-oxygen/>
@@ -69,7 +69,7 @@
 	<rarity>3</rarity>
 	<stackable>false</stackable>
 	<sc-armor/>
-	<sc-dodge amount="+2"/>
+	<sc-dodge value="2"/>
 </augBlueprint>
 
 <augBlueprint name="TERRAN_SHIP_ARMOR_MEDIUM">
@@ -78,9 +78,9 @@
 	<cost>70</cost>
 	<rarity>3</rarity>
 	<stackable>false</stackable>
-	<sc-upgrade system="lily_system_bracers" amount="1"/>
+	<sc-upgrade system="lily_system_bracers" value="1"/>
 	<sc-armor/>
-	<sc-dodge amount="-1"/>
+	<sc-dodge value="-1"/>
 </augBlueprint>
 
 <augBlueprint name="TERRAN_SHIP_ARMOR_HEAVY">
@@ -89,9 +89,9 @@
 	<cost>80</cost>
 	<rarity>4</rarity>
 	<stackable>false</stackable>
-	<sc-upgrade system="lily_system_bracers" amount="2"/>
+	<sc-upgrade system="lily_system_bracers" value="2"/>
 	<sc-armor/>
-	<sc-dodge amount="-2"/>
+	<sc-dodge value="-2"/>
 </augBlueprint>
 
 <augBlueprint name="SC_DETECTOR">
@@ -100,7 +100,7 @@
 	<cost>70</cost>
 	<rarity>4</rarity>
 	<stackable>false</stackable>
-	<sc-upgrade system="sensors" amount="2"/>
+	<sc-upgrade system="sensors" value="2"/>
 	<sc-detector/>
 </augBlueprint>
 
@@ -124,7 +124,7 @@
 	<persDamage>1</persDamage>
 	<sp>0</sp>
 	<shots>2</shots>
-	<sc-chain stat="shots" amount="1"/>
+	<sc-chain stat="shots" value="1"/>
 	<power>1</power>
 	<cooldown>9</cooldown>
 	<boost>
@@ -133,8 +133,8 @@
 		<count>5</count>
 	</boost>
 	<radius>5</radius>
-    <sc-chain stat="accuracyMod" amount="-5"/>
-	<sc-chain stat="radius" amount="10"/>
+    <sc-chain stat="accuracyMod" value="-5"/>
+	<sc-chain stat="radius" value="10"/>
 	<fireChance>1</fireChance>
 	<breachChance>0</breachChance>
 	<cost>45</cost>
@@ -175,7 +175,7 @@
 	<persDamage>1</persDamage>
 	<sp>0</sp>
 	<shots>3</shots>
-	<sc-chain stat="shots" amount="1"/>
+	<sc-chain stat="shots" value="1"/>
 	<power>2</power>
 	<cooldown>11.5</cooldown>
 	<boost>
@@ -183,9 +183,9 @@
 		<amount>1.4</amount>
 		<count>5</count>
 	</boost>	
-	<sc-chain stat="accuracyMod" amount="-5"/>
+	<sc-chain stat="accuracyMod" value="-5"/>
 	<radius>10</radius>
-	<sc-chain stat="radius" amount="10"/>
+	<sc-chain stat="radius" value="10"/>
 	<fireChance>1</fireChance>
 	<breachChance>0</breachChance>
 	<cost>65</cost>
@@ -225,7 +225,7 @@
 	<persDamage>1</persDamage>
 	<sp>0</sp>
 	<shots>4</shots>
-	<sc-chain stat="shots" amount="2"/>
+	<sc-chain stat="shots" value="2"/>
 	<power>3</power>	
 	<cooldown>14</cooldown>
 	<boost>
@@ -234,9 +234,9 @@
 		<count>5</count>
 	</boost>
 	<accuracyMod>-5</accuracyMod>
-	<sc-chain stat="accuracyMod" amount="-5"/>
+	<sc-chain stat="accuracyMod" value="-5"/>
 	<radius>20</radius>
-	<sc-chain stat="radius" amount="10"/>
+	<sc-chain stat="radius" value="10"/>
 	<fireChance>1</fireChance>
 	<breachChance>0</breachChance>
 	<cost>85</cost>
@@ -282,10 +282,10 @@
 	<fireChance>1</fireChance>
 	<breachChance>0</breachChance>
 	<shots>2</shots>
-	<sc-chain stat="shots" amount="2"/>
-	<sc-chain stat="stunChance" amount="1"/>
-	<sc-chain stat="accuracyMod" amount="-5"/>
-	<sc-chain stat="radius" amount="8"/>
+	<sc-chain stat="shots" value="2"/>
+	<sc-chain stat="stunChance" value="1"/>
+	<sc-chain stat="accuracyMod" value="-5"/>
+	<sc-chain stat="radius" value="8"/>
 	<power>2</power>	
 	<cooldown>10</cooldown>
 	<boost>
@@ -332,7 +332,7 @@
 	<persDamage>2</persDamage>
 	<sp>0</sp>
 	<shots>3</shots>
-	<sc-chain stat="shots" amount="3"/>
+	<sc-chain stat="shots" value="3"/>
 	<power>4</power>
 	<cooldown>14</cooldown>
 	<boost>
@@ -341,12 +341,12 @@
 		<count>3</count>
 	</boost>	
 	<accuracyMod>-5</accuracyMod>	
-	<sc-chain stat="accuracyMod" amount="-5"/>
+	<sc-chain stat="accuracyMod" value="-5"/>
 	<radius>30</radius>
-	<sc-chain stat="radius" amount="8"/>
+	<sc-chain stat="radius" value="8"/>
 	<fireChance>1</fireChance>
 	<breachChance>0</breachChance>
-    <sc-chain stat="stunChance" amount="1"/>
+    <sc-chain stat="stunChance" value="1"/>
 	<cost>90</cost>
 	<rarity>3</rarity>
 	<bp>2</bp>
@@ -388,12 +388,12 @@
 	<chargeLevels>2</chargeLevels>
 	<power>1</power>	
 	<cooldown>5.0</cooldown>
-	<sc-charge stat="cooldown" amount="-0.25"/>
+	<sc-charge stat="cooldown" value="-0.25"/>
 	<accuracyMod>-30</accuracyMod>
-    <sc-charge stat="accuracyMod" amount="30"/>
+    <sc-charge stat="accuracyMod" value="30"/>
 	<radius>45</radius>
-	<sc-charge stat="radius" amount="-20"/>
-    <sc-charge stat="breachChance" amount="1"/>
+	<sc-charge stat="radius" value="-20"/>
+    <sc-charge stat="breachChance" value="1"/>
 	<sc_battery group="terran_battery"/>
 	<simultaneousFire>true</simultaneousFire>
 	<cost>50</cost>
@@ -432,12 +432,12 @@
 	<chargeLevels>3</chargeLevels>	
 	<power>2</power>
 	<cooldown>3.5</cooldown>
-	<sc-charge stat="cooldown" amount="-0.25"/>	
+	<sc-charge stat="cooldown" value="-0.25"/>	
 	<accuracyMod>-40</accuracyMod>
-    <sc-charge stat="accuracyMod" amount="20"/>	
+    <sc-charge stat="accuracyMod" value="20"/>	
 	<radius>65</radius>
-	<sc-charge stat="radius" amount="-30"/>	
-    <sc-charge stat="breachChance" amount="1"/>
+	<sc-charge stat="radius" value="-30"/>	
+    <sc-charge stat="breachChance" value="1"/>
 	<sc_battery group="terran_battery"/>
 	<simultaneousFire>true</simultaneousFire>
 	<cost>70</cost>
@@ -476,12 +476,12 @@
 	<chargeLevels>4</chargeLevels>
 	<power>3</power>	
 	<cooldown>2.5</cooldown>	
-	<sc-charge stat="cooldown" amount="-0.25"/>	
+	<sc-charge stat="cooldown" value="-0.25"/>	
 	<accuracyMod>-45</accuracyMod>
-    <sc-charge stat="accuracyMod" amount="15"/>
+    <sc-charge stat="accuracyMod" value="15"/>
 	<radius>65</radius>
-	<sc-charge stat="radius" amount="-20"/>
-    <sc-charge stat="breachChance" amount="1"/>
+	<sc-charge stat="radius" value="-20"/>
+    <sc-charge stat="breachChance" value="1"/>
 	<sc_battery group="terran_battery"/>
 	<simultaneousFire>true</simultaneousFire>
 	<cost>95</cost>
@@ -524,9 +524,9 @@
 	<radius>60</radius>
 
 	<sc-chainstep fireThreshold="6" chainStep="3.0" maxSteps="2"/>
-    <sc-chainstep stat="accuracyMod" amount="45"/>
-    <sc-chainstep stat="radius" amount="-30"/>
-    <sc-chainstep stat="breachChance" amount="2"/>
+    <sc-chainstep stat="accuracyMod" value="45"/>
+    <sc-chainstep stat="radius" value="-30"/>
+    <sc-chainstep stat="breachChance" value="2"/>
 	<boost>
 		<type>cooldown</type>
 		<amount>1.0</amount>
@@ -573,11 +573,11 @@
 	<accuracyMod>-40</accuracyMod>
 	<radius>60</radius>
 
-	<sc-charge stat="shots" amount="1"/>
-	<sc-charge stat="cooldown" amount="0.75"/>	
-    <sc-charge stat="accuracyMod" amount="45"/>	
-	<sc-charge stat="radius" amount="-30"/>	
-    <sc-charge stat="breachChance" amount="2"/>
+	<sc-charge stat="shots" value="1"/>
+	<sc-charge stat="cooldown" value="0.75"/>	
+    <sc-charge stat="accuracyMod" value="45"/>	
+	<sc-charge stat="radius" value="-30"/>	
+    <sc-charge stat="breachChance" value="2"/>
 
 	<sc_battery group="terran_battery"/>
 	<simultaneousFire>true</simultaneousFire>
@@ -620,9 +620,9 @@
 	<radius>65</radius>
 
 	<sc-chainstep fireThreshold="8.5" chainStep="3.0" maxSteps="2"/>
-    <sc-chainstep stat="accuracyMod" amount="45"/>
-    <sc-chainstep stat="radius" amount="-20"/>
-    <sc-chainstep stat="breachChance" amount="2"/>
+    <sc-chainstep stat="accuracyMod" value="45"/>
+    <sc-chainstep stat="radius" value="-20"/>
+    <sc-chainstep stat="breachChance" value="2"/>
 	<boost>
 		<type>cooldown</type>
 		<amount>1.0</amount>
@@ -665,15 +665,15 @@
 	<damage>2</damage>
 	<shots>2</shots>
 	<chargeLevels>3</chargeLevels>
-	<sc-charge stat="shots" amount="2"/>
+	<sc-charge stat="shots" value="2"/>
 	<power>3</power>	
 	<cooldown>8.5</cooldown>	
-	<sc-charge stat="cooldown" amount="0.75"/>	
+	<sc-charge stat="cooldown" value="0.75"/>	
 	<accuracyMod>-40</accuracyMod>
-    <sc-charge stat="accuracyMod" amount="45"/>
+    <sc-charge stat="accuracyMod" value="45"/>
 	<radius>65</radius>
-	<sc-charge stat="radius" amount="-20"/>
-    <sc-charge stat="breachChance" amount="2"/>
+	<sc-charge stat="radius" value="-20"/>
+    <sc-charge stat="breachChance" value="2"/>
 	<sc_battery group="terran_battery"/>
 	<simultaneousFire>true</simultaneousFire>
 	<cost>95</cost>
@@ -1494,7 +1494,7 @@
 	<fireChance>4</fireChance>
 	<explosion>terran_yamato_hit</explosion>
 	<shots>5</shots>
-	<sc-chain-artillery stat="shots" amount="0" />
+	<sc-chain-artillery stat="shots" value="0" />
 	<accuracyMod>40</accuracyMod>
 	<simultaneousFire>true</simultaneousFire>
 	<speed>25</speed>
@@ -1909,8 +1909,8 @@
 	<power>3</power>
 	<cooldown>13</cooldown>
 	<sc-chainstep fireThreshold="4" chainStep="3" maxSteps="3"/>
-	<sc-chainstep stat="missileCost" base="4" amount="-1"/>
-	<sc-chainstep stat="radius" amount="15"/>
+	<sc-chainstep stat="missileCost" base="4" value="-1"/>
+	<sc-chainstep stat="radius" value="15"/>
 	<cost>65</cost>
 	<rarity>4</rarity>
 	<explosion>explosion_random</explosion>
@@ -2268,7 +2268,7 @@ TERRAN_GOLIATH-->
 	<!--<weaponBlueprint>DRONE_LASER</weaponBlueprint>-->
 	<iconImage>defense</iconImage>
 	<rarity>0</rarity>
-	<sc-droneEngine>drone_engine</sc-droneEngine>
+	<sc-droneEngine value="drone_engine"/>
 </droneBlueprint>
 </FTL>
 <!-- 
@@ -2490,7 +2490,7 @@ TERRAN_GOLIATH-->
 	<cost>60</cost>
 	<sc-active-shield/>				
 	<droneImage>terran_defense_1</droneImage>
-	<sc-droneEngine>matrix_engine_1</sc-droneEngine>			
+	<sc-droneEngine value="matrix_engine_1"/>			
 	<weaponBlueprint>TERRAN_DEFENSE_1</weaponBlueprint>					
 	<iconImage>defense</iconImage>					 
 	<rarity>3</rarity>					
@@ -2518,7 +2518,7 @@ TERRAN_GOLIATH-->
 	<cost>80</cost>
 	<sc-active-shield/>				
 	<droneImage>terran_defense_2</droneImage>
-	<sc-droneEngine>matrix_engine_2</sc-droneEngine>				
+	<sc-droneEngine value="matrix_engine_2"/>				
 	<weaponBlueprint>TERRAN_DEFENSE_2</weaponBlueprint>					
 	<iconImage>defense</iconImage>					
 	<rarity>4</rarity>					
@@ -2546,7 +2546,7 @@ TERRAN_GOLIATH-->
 	<cost>140</cost>
 	<sc-active-shield/>			
 	<droneImage>terran_defense_3</droneImage>
-	<sc-droneEngine>matrix_engine_3</sc-droneEngine>			
+	<sc-droneEngine value="matrix_engine_3"/>			
 	<weaponBlueprint>TERRAN_DEFENSE_3</weaponBlueprint>					
 	<iconImage>defense</iconImage>					
 	<rarity>5</rarity>					
@@ -2600,7 +2600,7 @@ TERRAN_GOLIATH-->
     <speed>15</speed>
     <cost>50</cost>
     <rarity>3</rarity>
-    <sc-comsat>5</sc-comsat>
+    <sc-comsat value="5"/>
 	
     <droneImage>terran_comsat</droneImage>
     <weaponBlueprint>TERRAN_COMSAT_PROJECTILE</weaponBlueprint>
