@@ -1,7 +1,7 @@
 --[[
 DESCRIPTION: Tagged augments modify ship dodge based on effective Engines power.
         - Applies the configured dodge amount per effective Engines power.
-TAG: <sc-dodge amount="#"/>
+TAG: <sc-dodge value="#"/>
 ]]
 
 mods.sc = mods.sc or {}
@@ -15,8 +15,8 @@ mods.sc.tag.register("augment", "sc-dodge", dodgeAugments, "value")
 local function get_sc_dodge_amount(ship)
     local total = 0
 
-    for augName, dodgeEntries in pairs(dodgeAugments) do
-        total = total + dodgeEntries[1].amount * ship:HasAugmentation(augName)
+    for augName, value in pairs(dodgeAugments) do
+        total = total + value * ship:HasAugmentation(augName)
     end
 
     return total

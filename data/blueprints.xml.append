@@ -46,6 +46,7 @@
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<stackable>false</stackable>
+	<sc-repair/>
 </augBlueprint>
 
 <augBlueprint name="TERRAN_WRAITH_BATTERY">

@@ -7,7 +7,6 @@ TAG: <sc-active-shield/>
 SOURCE CREDIT: TNE_ACTIVE_DRONE_LUA.lua, Fusion drones.lua
 ]]
 
-local droneTagParsers = mods.multiverse.droneTagParsers
 local vter = mods.multiverse.vter
 local helpers = mods.sc.helpers
 

@@ -7,7 +7,6 @@ TAG: <sc-comsat>15</sc-comsat>
 DEPENDENCIES: sc_targeting_core.lua, sc_helpers.lua
 ]]
 
-local droneTagParsers = mods.multiverse.droneTagParsers
 local vter = mods.multiverse.vter
 local helpers = mods.sc.helpers
 local targeting = mods.sc.targeting

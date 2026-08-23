@@ -6,7 +6,6 @@ DESCRIPTION: Draws engine overlays for active space drones.
 TAG: <sc-droneEngine>matrix_engine_1</sc-droneEngine>
 ]]
 
-local droneTagParsers = mods.multiverse.droneTagParsers
 local vter = mods.multiverse.vter
 
 local DEFAULT_ENGINE_IMAGE = "ship/drones/sc_drone_engine.png"
@@ -57,7 +56,8 @@ script.on_render_event(Defines.RenderEvents.SHIP_ENGINES, function() end, functi
             and spacedrone.powered
             and not spacedrone.bDead then
 
-            local imagePath = droneEngineImages[spacedrone.blueprint.name] or DEFAULT_ENGINE_IMAGE
+            local engineImage = droneEngineImages[spacedrone.blueprint.name]
+            local imagePath = engineImage and "ship/drones/" .. engineImage .. ".png" or DEFAULT_ENGINE_IMAGE
             render_engine(spacedrone, get_engine_primitive(imagePath))
         end
     end

@@ -1,9 +1,9 @@
 --[[
-DESCRIPTION: Registers reusable SC XML tag parsers for weapon and augment blueprints.
+DESCRIPTION: Registers reusable SC XML tag parsers for weapon, drone, and augment blueprints.
         - Omit dataType for boolean flag tags.
-        - "stat" stores repeated {stat, amount} entries.
-        - "system" stores repeated {system, amount} entries.
-        - "amount" stores repeated {amount} entries.
+        - "value" stores a single numeric or string value.
+        - "stat" stores repeated {stat, value} entries.
+        - "system" stores repeated {system, value} entries.
 DEPENDENCIES: Multiverse tag-data-init.lua loads before this file; tag-data-read.lua loads after it.
 ]]
 
