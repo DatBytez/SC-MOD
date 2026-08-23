@@ -365,8 +365,8 @@
         <noClone>true</noClone>
 		<snapToSlot>false</snapToSlot>
 		<canMove>false</canMove>
-        <selectable>true</selectable>
-        <controllable>true</controllable>
+        <selectable>false</selectable>
+        <controllable>false</controllable>
 		<canShoot>false</canShoot>
         <canFight>false</canFight>
         <canPunch>false</canPunch>
@@ -377,9 +377,7 @@
         <canBurn>false</canBurn>
         <canTeleport>false</canTeleport>
         <resistsMindControl>true</resistsMindControl>
-        <stunMultiplier>0</stunMultiplier>
         <moveSpeedMultiplier>0</moveSpeedMultiplier>
-		<stunMultiplier>0</stunMultiplier>
 		<invulnerable>true</invulnerable>
 		<allDamageTakenMultiplier>0</allDamageTakenMultiplier>
 	</race>
