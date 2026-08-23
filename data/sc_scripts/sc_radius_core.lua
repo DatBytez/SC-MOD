@@ -22,14 +22,9 @@ local SOURCE_ORDER = {
     "chainstep"
 }
 
-radius.modifiers = radius.modifiers or {}
-radius.modifierOrder = radius.modifierOrder or {}
-radius.projectileRadiusDeltas =
-    radius.projectileRadiusDeltas or {}
-
-local modifiers = radius.modifiers
-local modifierOrder = radius.modifierOrder
-local projectileRadiusDeltas = radius.projectileRadiusDeltas
+local modifiers = {}
+local modifierOrder = {}
+local projectileRadiusDeltas = {}
 
 local modifierRegistrationSerial = 0
 
@@ -40,7 +35,6 @@ local function get_live_level(weapon, sourceName)
         return math.max(0, weapon.chargeLevel - 1)
     elseif sourceName == "chainstep" then
         local weaponData = userdata_table(weapon, "mods.sc.chainstep")
-
         return weaponData.firingLevel or weaponData.level or weapon.boostLevel
     end
 end
@@ -60,19 +54,16 @@ local function calculate_source_radius(weaponName, baseRadius, getLevel)
 end
 
 local function sort_modifier_order()
-    table.sort(
-        modifierOrder,
-        function(leftName, rightName)
-            local left = modifiers[leftName]
-            local right = modifiers[rightName]
+    table.sort(modifierOrder, function(leftName, rightName)
+        local left = modifiers[leftName]
+        local right = modifiers[rightName]
 
-            if left.priority == right.priority then
-                return left.serial < right.serial
-            end
-
-            return left.priority < right.priority
+        if left.priority == right.priority then
+            return left.serial < right.serial
         end
-    )
+
+        return left.priority < right.priority
+    end)
 end
 
 function radius.register_modifier(name, func, priority)
@@ -80,7 +71,6 @@ function radius.register_modifier(name, func, priority)
 
     if not entry then
         modifierRegistrationSerial = modifierRegistrationSerial + 1
-
         entry = {serial = modifierRegistrationSerial}
 
         modifiers[name] = entry
@@ -93,24 +83,7 @@ function radius.register_modifier(name, func, priority)
     sort_modifier_order()
 end
 
-function radius.unregister_modifier(name)
-    if not modifiers[name] then
-        return false
-    end
-
-    modifiers[name] = nil
-
-    for index = #modifierOrder, 1, -1 do
-        if modifierOrder[index] == name then
-            table.remove(modifierOrder, index)
-            break
-        end
-    end
-
-    return true
-end
-
-function radius.apply_modifiers(ship, weapon, startingRadius, baseRadius)
+local function apply_modifiers(ship, weapon, startingRadius, baseRadius)
     local result = math.max(0, startingRadius)
 
     for _, name in ipairs(modifierOrder) do
@@ -120,26 +93,23 @@ function radius.apply_modifiers(ship, weapon, startingRadius, baseRadius)
     return result
 end
 
-function radius.get_weapon_preview_radius(ship, weapon)
+local function get_weapon_preview_radius(ship, weapon)
     local baseRadius = weapon.blueprint.radius
-
     local scalingRadius = calculate_source_radius(weapon.blueprint.name, baseRadius, function(sourceName)
-                return get_live_level(weapon, sourceName)
-            end)
+        return get_live_level(weapon, sourceName)
+    end)
 
-    return radius.apply_modifiers(ship, weapon, scalingRadius, baseRadius)
+    return apply_modifiers(ship, weapon, scalingRadius, baseRadius)
 end
 
-function radius.get_projectile_starting_radius(projectile, weapon)
+local function get_projectile_starting_radius(projectile, weapon)
     local baseRadius = weapon.blueprint.radius
-
-    local scalingRadius = calculate_source_radius(weapon.blueprint.name,baseRadius,function(sourceName)
-                return scaling.get_level(projectile, sourceName)
-            end)
+    local scalingRadius = calculate_source_radius(weapon.blueprint.name, baseRadius, function(sourceName)
+        return scaling.get_level(projectile, sourceName)
+    end)
 
     local ship = Hyperspace.ships(projectile.ownerId)
-
-    return radius.apply_modifiers(ship, weapon, scalingRadius, baseRadius)
+    return apply_modifiers(ship, weapon, scalingRadius, baseRadius)
 end
 
 function radius.register_projectile_radius_delta(name, func)
@@ -151,64 +121,37 @@ function radius.register_projectile_radius_delta(name, func)
     return true
 end
 
-function radius.unregister_projectile_radius_delta(name)
-    if projectileRadiusDeltas[name] == nil then
-        return false
-    end
-
-    projectileRadiusDeltas[name] = nil
-    return true
-end
-
-function radius.get_projectile_radius(ship, projectile, weapon, startingRadius)
-    local result = startingRadius
-
-    if type(result) ~= "number" then
-        result = radius.get_weapon_preview_radius(ship, weapon)
-    end
-
-    result = math.max(0, result or weapon.blueprint.radius)
-
+local function get_projectile_radius(ship, projectile, weapon, startingRadius)
     local totalDelta = 0
 
     for _, func in pairs(projectileRadiusDeltas) do
-        local delta = func(ship, projectile, weapon)
-
-        if type(delta) == "number" then
-            totalDelta = totalDelta + delta
-        end
+        totalDelta = totalDelta + func(ship, projectile, weapon)
     end
 
-    return math.max(0, result + totalDelta)
+    return math.max(0, startingRadius + totalDelta)
 end
 
 local function get_random_point_in_radius(center, spread)
     local distance = spread * math.sqrt(math.random())
-
     local angle = math.random() * 2 * math.pi
 
     return Hyperspace.Pointf(center.x + distance * math.cos(angle), center.y + distance * math.sin(angle))
 end
 
-radius.get_random_point_in_radius = get_random_point_in_radius
-
 local function refresh_ship_weapon_radii(ship)
     local weapons = ship and ship.weaponSystem and ship.weaponSystem.weapons
-
     if not weapons then return end
 
     for weapon in vter(weapons) do
-        local previewRadius = radius.get_weapon_preview_radius(ship, weapon)
-
-        weapon.radius = previewRadius
+        weapon.radius = get_weapon_preview_radius(ship, weapon)
     end
 end
 
-radius.refresh_ship_weapon_radii = refresh_ship_weapon_radii
-
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, refresh_ship_weapon_radii)
 
-script.on_render_event(Defines.RenderEvents.MOUSE_CONTROL, function()
+script.on_render_event(
+    Defines.RenderEvents.MOUSE_CONTROL,
+    function()
         local playerShip = Hyperspace.ships.player
 
         if playerShip then
@@ -225,15 +168,12 @@ local function apply_projectile_radius(projectile, weapon)
     if not projectile.target then return end
 
     local ship = Hyperspace.ships(projectile.ownerId)
-
-    local startingRadius = radius.get_projectile_starting_radius(projectile, weapon)
-
-    local finalRadius = radius.get_projectile_radius(ship, projectile, weapon, startingRadius)
+    local startingRadius = get_projectile_starting_radius(projectile, weapon)
+    local finalRadius = get_projectile_radius(ship, projectile, weapon, startingRadius)
 
     if finalRadius <= 0 then return end
 
     local targetCenter = Hyperspace.Pointf(projectile.target.x, projectile.target.y)
-
     projectile.target = get_random_point_in_radius(targetCenter, finalRadius)
 end
 
