@@ -1884,10 +1884,11 @@
 </weaponBlueprint>
 
 
-
-
-
-
+<!-- 
+*********************************************************************************************************
+  TERRAN_MISSILE_HALO
+*********************************************************************************************************
+-->
 <weaponBlueprint name="TERRAN_MISSILE_HALO">
 	<type>BURST</type>
 	<flavorType id="weapon_TERRAN_MISSILE_HALO_flavorType"/>
@@ -1912,6 +1913,7 @@
 	<sc-chainstep fireThreshold="4" chainStep="3" maxSteps="3"/>
 	<sc-chainstep stat="missileCost" base="4" value="-1"/>
 	<sc-chainstep stat="radius" value="15"/>
+	<sc-halo/>
 	<cost>65</cost>
 	<rarity>4</rarity>
 	<explosion>explosion_random</explosion>

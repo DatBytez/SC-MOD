@@ -3,7 +3,7 @@ DESCRIPTION: Draws engine overlays for active space drones.
         - Tagged drones use the engine image named by <sc-droneEngine>.
         - Untagged drones use the default SC drone engine image.
         - Engines render only for deployed, powered, living drones in the current ship space.
-TAG: <sc-droneEngine>matrix_engine_1</sc-droneEngine>
+TAG: <sc-droneEngine value="#"/>
 ]]
 
 local vter = mods.multiverse.vter

@@ -3,7 +3,7 @@ DESCRIPTION: Comsat drones provide temporary detector-style targeting while depl
         - Tagged drones use Sensors effective power as targeting strength.
         - Tagged drones self-destruct after the lifetime defined by <sc-comsat>.
         - Hides the scan projectile in flight while preserving its impact animation.
-TAG: <sc-comsat>15</sc-comsat>
+TAG: <sc-comsat value="#"/>
 DEPENDENCIES: sc_targeting_core.lua, sc_helpers.lua
 ]]
 

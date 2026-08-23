@@ -1,121 +1,66 @@
 --[[
-////////////////////
-IMPORTS AND UTIL
-////////////////////
-]]--
+DESCRIPTION: Restricts tagged weapon hull and system damage by target ship type.
+        - Bio weapons can damage organic ships.
+        - Rust weapons can damage automated ships.
+        - Adds matching filter information to the weapon stat box.
+TAGS: <bio-weapon/>, <rust-weapon/>
+DEPENDENCIES: sc_tag.lua
+]]
 
--- Make tag tables local
-local weaponTagParsers = mods.multiverse.weaponTagParsers
+local bioWeapons = {}
+local rustWeapons = {}
 
---[[
-////////////////////
-DATA & PARSER
-////////////////////
-]]--
+mods.sc.tag.register("weapon", "bio-weapon", bioWeapons)
+mods.sc.tag.register("weapon", "rust-weapon", rustWeapons)
 
-local targetFilteredWeapons = {}
-
-local function get_weapon_filter_data(weaponName)
-    if not targetFilteredWeapons[weaponName] then
-        targetFilteredWeapons[weaponName] = {
-            bio = false,
-            rust = false
-        }
-    end
-
-    return targetFilteredWeapons[weaponName]
+local function target_matches_weapon_filter(shipManager, weaponName)
+    return (bioWeapons[weaponName] and shipManager:HasAugmentation("ORGANIC") > 0)
+        or (rustWeapons[weaponName] and shipManager.bAutomated)
 end
 
-table.insert(weaponTagParsers, function(weaponNode)
-    local nameAttr = weaponNode:first_attribute("name")
-    if not nameAttr then return end
+local function remove_filtered_ship_damage(shipManager, projectile, damage)
+    local weaponName = projectile.extend.name
 
-    local weaponName = nameAttr:value()
-    local filterData = nil
+    if not bioWeapons[weaponName] and not rustWeapons[weaponName] then return end
+    if target_matches_weapon_filter(shipManager, weaponName) then return end
 
-    if weaponNode:first_node("bio-weapon") then
-        filterData = get_weapon_filter_data(weaponName)
-        filterData.bio = true
-    end
-
-    if weaponNode:first_node("rust-weapon") then
-        filterData = get_weapon_filter_data(weaponName)
-        filterData.rust = true
-    end
-end)
-
---[[
-////////////////////
-LOGIC
-////////////////////
-]]--
-
-local function get_projectile_filter_data(projectile)
-    if not projectile or not projectile.extend then return nil end
-    return targetFilteredWeapons[projectile.extend.name]
-end
-
-local function target_is_organic(shipManager)
-    return shipManager and shipManager:HasAugmentation("ORGANIC") > 0
-end
-
-local function target_is_automated(shipManager)
-    return shipManager and shipManager.bAutomated == true
-end
-
-local function target_matches_any_weapon_filter(shipManager, filterData)
-    if not filterData then return true end
-
-    if filterData.bio and target_is_organic(shipManager) then
-        return true
-    end
-
-    if filterData.rust and target_is_automated(shipManager) then
-        return true
-    end
-
-    return false
-end
-
-local function remove_filtered_ship_damage(shipManager, projectile, location, damage)
-    local filterData = get_projectile_filter_data(projectile)
-    if not filterData then return end
-    if target_matches_any_weapon_filter(shipManager, filterData) then return end
-    if not damage then return end
-
-    if damage.iDamage and damage.iDamage > 0 then
+    if damage.iDamage > 0 then
         damage.iDamage = 0
     end
 
-    if damage.iSystemDamage and damage.iSystemDamage > 0 then
+    if damage.iSystemDamage > 0 then
         damage.iSystemDamage = 0
     end
 end
 
-script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA, function(shipManager, projectile, location, damage, forceHit, shipFriendlyFire)
-    remove_filtered_ship_damage(shipManager, projectile, location, damage)
-end)
-
-script.on_internal_event(Defines.InternalEvents.DAMAGE_BEAM, function(shipManager, projectile, location, damage, realNewTile, beamHitType)
-    if beamHitType == Defines.BeamHit.NEW_ROOM then
-        remove_filtered_ship_damage(shipManager, projectile, location, damage)
+script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA, function(shipManager, projectile, _location, damage)
+        remove_filtered_ship_damage(shipManager, projectile, damage)
     end
-end)
+)
 
--- Add info to stats
+script.on_internal_event(Defines.InternalEvents.DAMAGE_BEAM, function(shipManager, projectile, _location, damage, _realNewTile, beamHitType)
+        if beamHitType == Defines.BeamHit.NEW_ROOM then
+            remove_filtered_ship_damage(shipManager, projectile, damage)
+        end
+    end
+)
+
 script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(bp, stats)
-    local filterData = targetFilteredWeapons[bp.name]
-    if not filterData then return end
+        local hasBio = bioWeapons[bp.name]
+        local hasRust = rustWeapons[bp.name]
 
-    local text = stats
+        if not hasBio and not hasRust then return end
 
-    if filterData.bio then
-        text = text.."\n\n"..Hyperspace.Text:GetText("stat_bio_weapon")
+        local text = stats
+
+        if hasBio then
+            text = text .. "\n\n" .. Hyperspace.Text:GetText("stat_bio_weapon")
+        end
+
+        if hasRust then
+            text = text .. "\n\n" .. Hyperspace.Text:GetText("stat_rust_weapon")
+        end
+
+        return Defines.Chain.CONTINUE, text
     end
-
-    if filterData.rust then
-        text = text.."\n\n"..Hyperspace.Text:GetText("stat_rust_weapon")
-    end
-
-    return Defines.Chain.CONTINUE, text
-end)
+)
