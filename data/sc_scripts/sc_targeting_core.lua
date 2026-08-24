@@ -17,12 +17,13 @@ local MISSILE_ACCURACY_MULTIPLIER = 2
 local RADIUS_REDUCTION_PER_ACCURACY = 4
 local CLOAK_CHARGE_PER_STRENGTH = 0.25
 
-local LIST_SC_CREW_INVISIBLE = {
-    terran_ghost = true
-}
-
 local sources = {}
 local cloakProxies = {}
+local invisibleCrew = {}
+
+for crew in vter(Hyperspace.Blueprints:GetBlueprintList("LIST_CREW_INVISIBLE")) do
+    invisibleCrew[crew] = true
+end
 
 function targeting.register_source(name, strengthProvider)
     sources[name] = strengthProvider
@@ -45,7 +46,7 @@ local function get_strength(ship)
 end
 
 script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(crew, stat, _def, amount, value)
-    if stat ~= Hyperspace.CrewStat.VALID_TARGET or value or not LIST_SC_CREW_INVISIBLE[crew.species] then
+    if stat ~= Hyperspace.CrewStat.VALID_TARGET or value or not invisibleCrew[crew.species] then
         return Defines.Chain.CONTINUE, amount, value
     end
 
