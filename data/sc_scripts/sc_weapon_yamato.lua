@@ -52,69 +52,99 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(_proje
 end)
 
 -- ARTILLERY COOLDOWN
-local yamatoCooldownByPower = {
-    [1] = 10,
-    [2] = 20,
-    [3] = 30,
-    [4] = 40
+-- ------------------------
+-- YAMATO ARTILLERY COOLDOWN
+-- ------------------------
+
+-- FTL artillery scaling:
+-- Power 1 = base × 1.25
+-- Power 2 = base × 1.00
+-- Power 3 = base × 0.75
+-- Power 4 = base × 0.50
+--
+-- These values produce a final cooldown of ~25 seconds
+-- at every artillery power level.
+local yamatoBaseCooldownByPower = {
+    [1] = 20,
+    [2] = 25,
+    [3] = 25 / 0.75,
+    [4] = 50
 }
+
+local POWER_INCREASE_CHARGE_MULT = 0.80
 
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
     for artillery in vter(ship.artillerySystems) do
         local weapon = artillery.projectileFactory
 
-        if weapon.blueprint.name == "ARTILLERY_YAMATO_LASER" then
-            local power = artillery.powerState.first
-            local targetCooldown = yamatoCooldownByPower[power]
+        if weapon
+        and weapon.blueprint
+        and weapon.blueprint.name == "ARTILLERY_YAMATO_LASER" then
 
-            if power > 0 and targetCooldown then
-                local artilleryData = userdata_table(
+            local power = artillery.powerState.first
+            local targetBase = yamatoBaseCooldownByPower[power]
+
+            if power > 0 and targetBase then
+                local data = userdata_table(
                     artillery,
                     "mods.sc.yamatoCooldown"
                 )
 
-                -- Preserve charge percentage when artillery power changes.
-                if artilleryData.lastPower ~= power then
-                    local oldCooldown =
-                        artilleryData.lastCooldown
-                        or weapon.cooldown.second
+                -- Keep Yamato at approximately 25 seconds
+                -- regardless of artillery power.
+                weapon.blueprint.cooldown = targetBase
 
-                    local chargePercent = 0
-
-                    if oldCooldown > 0 then
-                        chargePercent = math.max(
-                            0,
-                            math.min(
-                                1,
-                                weapon.cooldown.first / oldCooldown
-                            )
-                        )
-                    end
-
-                    weapon.cooldown.second = targetCooldown
-                    weapon.cooldown.first =
-                        targetCooldown * chargePercent
-
-                    artilleryData.lastPower = power
-                    artilleryData.lastCooldown = targetCooldown
-                else
-                    -- Keep the displayed/full cooldown at our chosen value.
-                    weapon.cooldown.second = targetCooldown
+                -- Initialize power tracking.
+                if data.lastPower == nil then
+                    data.lastPower = power
                 end
 
-                -- Counteract FTL's built-in artillery power scaling.
-                if weapon.cooldown.first ~= weapon.cooldown.second then
-                    local powerScale = -0.25 * (power - 2)
+                -- ------------------------
+                -- POWER INCREASE
+                -- ------------------------
+                if power > data.lastPower then
 
-                    weapon.cooldown.first = math.max(
-                        0,
-                        math.min(
-                            weapon.cooldown.second,
-                            weapon.cooldown.first
-                                + powerScale
-                                * Hyperspace.FPS.SpeedFactor / 16
+                    -- Reduce accumulated charge by 20%.
+                    weapon.cooldown.first =
+                        weapon.cooldown.first
+                        * POWER_INCREASE_CHARGE_MULT
+
+                    -- Save the existing ion state so our temporary
+                    -- ion effect does not erase legitimate ion damage.
+                    data.originalIonCount =
+                        artillery.iLockCount
+
+                    -- Apply at least one point of temporary ion lock.
+                    artillery.iLockCount =
+                        math.max(
+                            1,
+                            artillery.iLockCount
                         )
-                    )
+
+                    -- Keep it ionized for one full loop before restoring.
+                    data.artificialIonActive = true
+                end
+
+                data.lastPower = power
+
+                -- ------------------------
+                -- TEMPORARY ION RESTORE
+                -- ------------------------
+
+                -- First loop after applying ion:
+                -- leave the artillery ionized.
+                if data.artificialIonActive then
+                    data.artificialIonActive = false
+                    data.restoreIonNextLoop = true
+
+                -- Following loop:
+                -- restore whatever ion count existed before our effect.
+                elseif data.restoreIonNextLoop then
+                    artillery.iLockCount =
+                        data.originalIonCount or 0
+
+                    data.originalIonCount = nil
+                    data.restoreIonNextLoop = false
                 end
             end
         end
