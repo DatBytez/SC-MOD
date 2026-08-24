@@ -107,6 +107,10 @@
 <!--
 ********************            CREW LISTS            *******************
 -->
+<blueprintList name="LIST_CREW_INVISIBLE">
+	<name>terran_ghost</name>
+</blueprintList>
+
 <blueprintList name="TERRAN_LIST_CREW_ALL">
 	<name>terran_civilian</name>
 	<name>terran_firebat</name>

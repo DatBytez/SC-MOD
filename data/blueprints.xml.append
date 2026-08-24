@@ -1900,11 +1900,13 @@
 *********************************************************************************************************
 -->
 <crewBlueprint name="sc_target">
-	<desc id="crew_SC_TARGET_DESC"></desc>
-	<cost>100</cost>
-	<title id="crew_SC_TARGET_NAME"></title>
-	<short id="crew_SC_TARGET_SHORT"></short>
+	<!--<desc id="crew_SC_TARGET_desc"></desc>
+	<title id="crew_SC_TARGET_name"></title>
+	<short id="crew_SC_TARGET_short"></short>-->
 	<rarity>0</rarity>
+	<powerList>
+		<power></power>
+	</powerList>
 </crewBlueprint>
 <!-- 
 *********************************************************************************************************

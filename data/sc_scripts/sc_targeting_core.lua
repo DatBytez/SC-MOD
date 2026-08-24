@@ -2,8 +2,7 @@
 DESCRIPTION: Shared targeting effects for Detector-style sources.
         - Adds projectile accuracy and reduces weapon targeting radius.
         - Allows weapon charging while the opposing ship is cloaked.
-        - Preserves targeting against cloaked ships through an inert sc_target crew proxy.
-        - Makes specifically listed invisible enemy crew targetable.
+        - Makes listed invisible enemy crew targetable.
 DEPENDENCIES: sc_radius_core.lua, Multiverse vter, Multiverse time_increment
 ]]
 
@@ -81,14 +80,12 @@ local function get_accuracy_bonus(ship, weapon)
     return math.ceil(accuracyBonus)
 end
 
-local function apply_radius_modifier(ship, weapon, radius)
+mods.sc.radius.register_modifier("sc_targeting", function(ship, weapon, radius)
     local accuracyBonus = get_accuracy_bonus(ship, weapon)
     if accuracyBonus == nil then return radius end
 
     return math.max(0, radius - accuracyBonus * RADIUS_REDUCTION_PER_ACCURACY)
-end
-
-mods.sc.radius.register_modifier("sc_targeting", apply_radius_modifier, 200)
+end, 200)
 
 local function retire_cloak_proxy(shipId)
     local proxy = cloakProxies[shipId]
@@ -109,10 +106,7 @@ local function update_cloak_targeting_proxy(shipId, enemyShip, detectionActive)
         proxy = nil
     end
 
-    if not detectionActive
-        or not enemyShip
-        or not enemyShip.cloakSystem
-        or not enemyShip.cloakSystem.bTurnedOn then
+    if not detectionActive or not enemyShip or not enemyShip.cloakSystem or not enemyShip.cloakSystem.bTurnedOn then
 
         retire_cloak_proxy(shipId)
         return
@@ -126,11 +120,9 @@ local function update_cloak_targeting_proxy(shipId, enemyShip, detectionActive)
     end
 
     enemyShip.ship:SetRoomBlackout(roomId, false)
-
     if proxy then return end
 
-    proxy = enemyShip:AddCrewMemberFromString("Targeting System", "sc_target", true, roomId, true, false)
-
+    proxy = enemyShip:AddCrewMemberFromString("Detector", "sc_target", true, roomId, true, false)
     if not proxy then return end
 
     cloakProxies[shipId] = proxy
@@ -140,11 +132,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
     local targetingStrength = get_strength(ship)
     local enemyShip = Hyperspace.ships(1 - ship.iShipId)
 
-    update_cloak_targeting_proxy(
-        ship.iShipId,
-        enemyShip,
-        targetingStrength ~= nil and targetingStrength > 0
-    )
+    update_cloak_targeting_proxy(ship.iShipId, enemyShip, targetingStrength ~= nil and targetingStrength > 0)
 
     if not ship.weaponSystem or ship.weaponSystem.iHackEffect >= 2 then return end
     if targetingStrength == nil then return end
@@ -157,13 +145,8 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
 
             local oldFirst = weapon.cooldown.first
 
-            weapon.cooldown.first = math.min(
-                weapon.cooldown.first
-                    + targetingStrength
-                    * CLOAK_CHARGE_PER_STRENGTH
-                    * time_increment(),
-                weapon.cooldown.second
-            )
+            weapon.cooldown.first = math.min(weapon.cooldown.first + targetingStrength 
+            * CLOAK_CHARGE_PER_STRENGTH * time_increment(), weapon.cooldown.second)
 
             if weapon.cooldown.second == weapon.cooldown.first
                 and oldFirst < weapon.cooldown.second
@@ -177,10 +160,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
                     weapon.cooldown.first = 0
                 end
             else
-                weapon.subCooldown.first = math.min(
-                    weapon.subCooldown.first + time_increment(),
-                    weapon.subCooldown.second
-                )
+                weapon.subCooldown.first = math.min(weapon.subCooldown.first + time_increment(), weapon.subCooldown.second)
             end
         end
     end
@@ -190,6 +170,14 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
     local accuracyBonus = get_accuracy_bonus(Hyperspace.ships(projectile.ownerId), weapon)
     if accuracyBonus == nil then return end
 
-    projectile.extend.customDamage.accuracyMod =
-        projectile.extend.customDamage.accuracyMod + accuracyBonus
+    projectile.extend.customDamage.accuracyMod = projectile.extend.customDamage.accuracyMod + accuracyBonus
 end)
+
+script.on_render_event(Defines.RenderEvents.CREW_MEMBER_HEALTH, function(crew)
+        if crew.species == "sc_target" then
+            return Defines.Chain.PREEMPT
+        end
+
+        return Defines.Chain.CONTINUE
+    end,
+    function() end)
