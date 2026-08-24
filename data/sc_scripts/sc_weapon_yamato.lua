@@ -51,19 +51,71 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(_proje
     end
 end)
 
--- SOURCE: Arc Fishing.lua
--- TODO: Still charges a little while enemy is in stealth. I kinda do not mind.
+-- ARTILLERY COOLDOWN
+local yamatoCooldownByPower = {
+    [1] = 10,
+    [2] = 20,
+    [3] = 30,
+    [4] = 40
+}
+
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
     for artillery in vter(ship.artillerySystems) do
         local weapon = artillery.projectileFactory
 
         if weapon.blueprint.name == "ARTILLERY_YAMATO_LASER" then
             local power = artillery.powerState.first
+            local targetCooldown = yamatoCooldownByPower[power]
 
-            if power > 0 and weapon.cooldown.first ~= weapon.cooldown.second then
-                local powerScale = -0.25 * (power - 2)
+            if power > 0 and targetCooldown then
+                local artilleryData = userdata_table(
+                    artillery,
+                    "mods.sc.yamatoCooldown"
+                )
 
-                weapon.cooldown.first = math.max(0, weapon.cooldown.first + powerScale * Hyperspace.FPS.SpeedFactor / 16)
+                -- Preserve charge percentage when artillery power changes.
+                if artilleryData.lastPower ~= power then
+                    local oldCooldown =
+                        artilleryData.lastCooldown
+                        or weapon.cooldown.second
+
+                    local chargePercent = 0
+
+                    if oldCooldown > 0 then
+                        chargePercent = math.max(
+                            0,
+                            math.min(
+                                1,
+                                weapon.cooldown.first / oldCooldown
+                            )
+                        )
+                    end
+
+                    weapon.cooldown.second = targetCooldown
+                    weapon.cooldown.first =
+                        targetCooldown * chargePercent
+
+                    artilleryData.lastPower = power
+                    artilleryData.lastCooldown = targetCooldown
+                else
+                    -- Keep the displayed/full cooldown at our chosen value.
+                    weapon.cooldown.second = targetCooldown
+                end
+
+                -- Counteract FTL's built-in artillery power scaling.
+                if weapon.cooldown.first ~= weapon.cooldown.second then
+                    local powerScale = -0.25 * (power - 2)
+
+                    weapon.cooldown.first = math.max(
+                        0,
+                        math.min(
+                            weapon.cooldown.second,
+                            weapon.cooldown.first
+                                + powerScale
+                                * Hyperspace.FPS.SpeedFactor / 16
+                        )
+                    )
+                end
             end
         end
     end
