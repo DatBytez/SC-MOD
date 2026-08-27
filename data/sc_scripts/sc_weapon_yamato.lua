@@ -1,23 +1,16 @@
 --[[
-DESCRIPTION: Scales the Yamato artillery weapon based on the artillery system's installed level.
-        - Level 1: 2 shots, 20 second base cooldown.
+DESCRIPTION: Scales the Yamato artillery weapon based on the artillery system's level.
         - Each additional artillery system level adds 1 shot and 5 seconds base cooldown.
-        - Artillery power is left entirely to FTL's normal cooldown scaling.
 TAG: <sc-artillery-level stat="shots" value="#"/>
-DEPENDENCIES: sc_tag.lua, Multiverse userdata_table, Multiverse vter
+DEPENDENCIES: sc_tag.lua, sc_projectile_scaling.lua, Multiverse vter
 ]]
 
-local userdata_table = mods.multiverse.userdata_table
 local vter = mods.multiverse.vter
+local scaling = mods.sc.scaling
 
 local artilleryLevel = {}
 
-mods.sc.tag.register(
-    "weapon",
-    "sc-artillery-level",
-    artilleryLevel,
-    "stat"
-)
+mods.sc.tag.register("weapon",  "sc-artillery-level",  artilleryLevel,  "stat")
 
 local function get_matching_artillery(ship, weapon)
     for artillery in vter(ship.artillerySystems) do
@@ -31,41 +24,17 @@ end
 -- ARTILLERY LEVEL SHOTS
 -- ------------------------
 
-local function apply_artillery_level_shots(
-    weapon,
-    startingShots,
-    artillery
-)
-    local weaponData =
-        userdata_table(
-            weapon,
-            "mods.sc.weaponStuff"
-        )
+local function apply_artillery_level_shots(weapon, startingShots, artillery)
 
-    weaponData.shotsFiredThisVolley =
-        (weaponData.shotsFiredThisVolley or 0) + 1
-
-    -- healthState.second represents the installed/max system level.
-    --
-    -- Level 1 = startingShots
-    -- Level 2 = startingShots + 1
-    -- Level 3 = startingShots + 2
-    -- Level 4 = startingShots + 3
     local systemLevel = artillery.healthState.second
 
-    local allowedTotal =
-        math.min(
-            weapon.blueprint.shots,
-            startingShots + systemLevel - 1
-        )
+    local allowedTotal = math.min(weapon.blueprint.shots, startingShots + systemLevel - 1)
 
-    if weaponData.shotsFiredThisVolley >= allowedTotal then
-        weapon.queuedProjectiles:clear()
-    end
-
-    if weapon.queuedProjectiles:size() == 0 then
-        weaponData.shotsFiredThisVolley = 0
-    end
+    scaling.apply_shot_limit(
+        weapon,
+        "artilleryShotsFiredThisVolley",
+        allowedTotal
+    )
 end
 
 script.on_internal_event(

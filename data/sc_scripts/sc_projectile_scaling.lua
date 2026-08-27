@@ -55,6 +55,20 @@ function scaling.get_level(projectile, sourceName)
     return storage[field]
 end
 
+function scaling.apply_shot_limit(weapon, counterKey, allowedTotal)
+    local weaponData = userdata_table(weapon, "mods.sc.weaponStuff")
+
+    weaponData[counterKey] = (weaponData[counterKey] or 0) + 1
+
+    if weaponData[counterKey] >= allowedTotal then
+        weapon.queuedProjectiles:clear()
+    end
+
+    if weapon.queuedProjectiles:size() == 0 then
+        weaponData[counterKey] = 0
+    end
+end
+
 function scaling.apply_projectile_stats(projectile, weapon, sourceName, level, specialHandlers)
     local statBoosts = scaling.get_source_stat_entries(sourceName, weapon.blueprint.name)
 
