@@ -1398,7 +1398,7 @@
 	<fireChance>4</fireChance>
 	<explosion>terran_yamato_hit</explosion>
 	<shots>5</shots>
-	<sc-chain-artillery stat="shots" value="2" />
+	<sc-artillery-level stat="shots" value="2"/>
 	<accuracyMod>40</accuracyMod>
 	<simultaneousFire>true</simultaneousFire>
 	<speed>25</speed>

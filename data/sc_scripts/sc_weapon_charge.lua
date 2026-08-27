@@ -32,20 +32,6 @@ local function clear_stored_charge_level_if_idle(weapon)
     end
 end
 
-local function apply_charge_shot_limit(weapon, shotLimit)
-    local wdata = userdata_table(weapon, "mods.sc.weaponStuff")
-
-    wdata.chargeShotsFiredThisVolley = (wdata.chargeShotsFiredThisVolley or 0) + 1
-
-    if wdata.chargeShotsFiredThisVolley >= shotLimit then
-        weapon.queuedProjectiles:clear()
-    end
-
-    if weapon.queuedProjectiles:size() == 0 then
-        wdata.chargeShotsFiredThisVolley = 0
-    end
-end
-
 local function get_charge_cooldown_rate(weapon, cdBoost)
     if cdBoost > 0 then
         return 1 + weapon.chargeLevel * cdBoost
@@ -93,7 +79,7 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
 
     scaling.apply_projectile_stats(projectile, weapon, "charge", boost, {
         shots = function(_projectile, currentWeapon, statBoost)
-            apply_charge_shot_limit(currentWeapon, statBoost.value)
+            scaling.apply_shot_limit(currentWeapon, "chargeShotsFiredThisVolley", statBoost.value)
         end
     })
 end)

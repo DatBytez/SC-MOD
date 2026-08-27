@@ -14,22 +14,9 @@ local chainers = mods.sc.chainers
 mods.sc.tag.register("weapon", "sc-chain", chainers, "stat")
 
 local function apply_warmup_chain_shots(weapon, startingShots)
-    local name = weapon.blueprint.name
-    local wdata = userdata_table(weapon, "mods.sc.weaponStuff")
-    local key = "shotsFiredThisVolley_" .. name
+    local allowedTotal = math.min(weapon.blueprint.shots, startingShots - 1 + math.max(0, weapon.boostLevel))
 
-    wdata[key] = (wdata[key] or 0) + 1
-
-    local boost = math.max(0, weapon.boostLevel)
-    local allowedTotal = math.min(weapon.blueprint.shots, startingShots - 1 + boost)
-
-    if wdata[key] >= allowedTotal then
-        weapon.queuedProjectiles:clear()
-    end
-
-    if weapon.queuedProjectiles:size() == 0 then
-        wdata[key] = 0
-    end
+    scaling.apply_shot_limit(weapon, "shotsFiredThisVolley_" .. weapon.blueprint.name, allowedTotal)
 end
 
 script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projectile, weapon)
