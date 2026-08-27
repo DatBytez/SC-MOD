@@ -1399,6 +1399,7 @@
 	<explosion>terran_yamato_hit</explosion>
 	<shots>5</shots>
 	<sc-artillery-level stat="shots" value="2"/>
+	<sc-artillery-level stat="cooldown" value="5"/>
 	<accuracyMod>40</accuracyMod>
 	<simultaneousFire>true</simultaneousFire>
 	<speed>25</speed>

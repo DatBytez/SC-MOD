@@ -1816,7 +1816,7 @@
     <mod-append:script>data/aa_scripts/weapons/smash.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_tag.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_helpers.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_projectile_scaling.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_scaling.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_radius_core.lua</mod-append:script>
 
     <mod-append:script>data/sc_scripts/sc_button_ui.lua</mod-append:script>
@@ -1828,7 +1828,7 @@
     <mod-append:script>data/sc_scripts/sc_weapon_chain.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_charge.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_paired.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_yamato.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_artillery.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_irradiate.lua</mod-append:script>

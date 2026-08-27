@@ -16,7 +16,7 @@ mods.sc.tag.register("weapon", "sc-chain", chainers, "stat")
 local function apply_warmup_chain_shots(weapon, startingShots)
     local allowedTotal = math.min(weapon.blueprint.shots, startingShots - 1 + math.max(0, weapon.boostLevel))
 
-    scaling.apply_shot_limit(weapon, "shotsFiredThisVolley_" .. weapon.blueprint.name, allowedTotal)
+    scaling.apply_shot_limit(weapon, "chainShotsFiredThisVolley", allowedTotal)
 end
 
 script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projectile, weapon)
