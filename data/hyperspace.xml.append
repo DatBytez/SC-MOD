@@ -1301,11 +1301,6 @@
         <crewBlueprint>terran_pod</crewBlueprint>
         <tooltipName>Terran Boarding Pod</tooltipName>
     </drone>
-	<!--
-    <drone name="TERRAN_POD_BOARDER">
-        <crewBlueprint>human</crewBlueprint>
-        <tooltipName>Terran Marine</tooltipName>
-    </drone>-->
 </drones>
 
 <ships hideFirstShipPage="true">
@@ -1325,7 +1320,7 @@
 		<empty/>
 		<empty/>
 	</shipOrder>
-	</ships>
+</ships>
 
 	<mod:findLike type="ships">
 		<mod-append:ship name="PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER" b="false" c="false" />
@@ -1340,12 +1335,10 @@
 					<clonebay/>
 					<medbay/>
 				</exclusivityGroup>
-
 				<exclusivityGroup>
 					<drones/>
 					<hacking/>
-				</exclusivityGroup>
-				
+				</exclusivityGroup>				
 				<exclusivityGroup>
 					<shields/>
 					<lily_system_bracers/>
@@ -1367,12 +1360,10 @@
 					<clonebay/>
 					<medbay/>
 				</exclusivityGroup>
-
 				<exclusivityGroup>
 					<drones/>
 					<hacking/>
 				</exclusivityGroup>
-				
 				<exclusivityGroup>
 					<shields/>
 					<lily_system_bracers/>
@@ -1851,7 +1842,9 @@
     <mod-append:script>data/sc_scripts/sc_drone_goliath.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv_ai.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_drone_pod.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_pod_core.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_pod_launch.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_pod_transport.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_comsat.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_active.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>

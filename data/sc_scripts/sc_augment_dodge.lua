@@ -53,6 +53,6 @@ script.on_internal_event(
             bonus = 0
         end
 
-        return 0, dodge + bonus
+        return Defines.Chain.CONTINUE, math.max(0, dodge + bonus)
     end
 )

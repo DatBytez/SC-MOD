@@ -1,3 +1,13 @@
+--[[
+DESCRIPTION: Allows tagged augments to extend the maximum upgrade level of ship systems.
+        - Reads one or more <sc-upgrade> entries from augment blueprints.
+        - Enforces each system's normal cap plus the active augment bonus.
+        - Temporarily hides bonus levels while the upgrade tab is open so levels beyond the normal cap can be purchased through the native upgrade UI.
+        - Draws purchased and available bonus subsystem boxes and restores hidden levels when leaving the upgrade screen.
+TAG: <sc-upgrade system="SYSTEM_NAME" value="#"/>
+DEPENDENCIES: sc_tag.lua
+]]
+
 mods.sc = mods.sc or {}
 mods.sc.augmentUpgrades = mods.sc.augmentUpgrades or {}
 mods.sc.system_caps = mods.sc.system_caps or {}
