@@ -386,8 +386,8 @@
 	<tooltip id="weapon_TERRAN_LASER_BATTERY_1_tooltip"/>
 	<damage>1</damage>	
 	<shots>1</shots>
+	<power>1</power>
 	<chargeLevels>2</chargeLevels>
-	<power>1</power>	
 	<cooldown>5.0</cooldown>
 	<sc-charge stat="cooldown" value="-0.25"/>
 	<accuracyMod>-30</accuracyMod>
@@ -1397,6 +1397,7 @@
 	<ion>1</ion>
 	<fireChance>4</fireChance>
 	<explosion>terran_yamato_hit</explosion>
+	<shots>10</shots>
 	<shots>5</shots>
 	<sc-artillery-level stat="shots" value="2"/>
 	<sc-artillery-level stat="cooldown" value="5"/>
@@ -2645,7 +2646,7 @@ TERRAN_GOLIATH-->
 	<droneSlots>3</droneSlots>
 	<weaponList missiles="2" count="4">
 		<weapon name="TERRAN_LASER_BATTERY_1" />
-		<weapon name="TERRAN_LASER_BATTERY_1" />
+		<weapon name="TERRAN_LASER_BATTERY_2" />
 	</weaponList>
 	<droneList drones="4" count="3">
 		<drone name="TERRAN_SCV" />
