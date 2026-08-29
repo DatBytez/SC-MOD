@@ -473,7 +473,7 @@
 	<damage>1</damage>
 	<shots>1</shots>
 	<chargeLevels>4</chargeLevels>
-	<power>3</power>	
+	<power>4</power>	
 	<cooldown>2.5</cooldown>	
 	<sc-charge stat="cooldown" value="-0.25"/>	
 	<accuracyMod>-45</accuracyMod>

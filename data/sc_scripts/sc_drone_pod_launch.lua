@@ -3,6 +3,7 @@ DESCRIPTION: Controls Terran Drop Pod deployment and outbound crew transport.
         - TERRAN_POD is deployable only when eligible crew are in Drone Control and a hostile target ship is present.
         - LAUNCH selects every eligible crew member in Drone Control and fires one independent transport projectile for each.
         - Crew are removed from the source ship only after their transport projectile is successfully created.
+        - The temporary pod crew-drone is retired after launching without taking health damage.
 DEPENDENCIES: sc_drone_pod_core.lua, Multiverse userdata_table
 ]]
 
@@ -147,6 +148,15 @@ local function launch_transport_projectile(podCrew, ownerShip, targetShip)
     )
 end
 
+local function remove_pod_crew(podCrew)
+    pcall(function()
+        podCrew:EmptySlot()
+    end)
+
+    podCrew:SetCloneReady(false)
+    podCrew:SetOutOfGame()
+end
+
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, update_pod_deployment_guard)
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
@@ -192,4 +202,6 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
             end
         end
     end
+
+    remove_pod_crew(podCrew)
 end)

@@ -1189,10 +1189,8 @@
         <crewSlots>0</crewSlots>
         <noSlot>true</noSlot>
         <noClone>true</noClone>
-
-        <selectable>true</selectable>
-        <controllable>true</controllable>
-
+		<controllable>false</controllable>
+		<selectable>false</selectable>
         <canFight>false</canFight>
         <canPunch>false</canPunch>
         <canRepair>false</canRepair>
@@ -1230,7 +1228,7 @@
            <!-- <powerSounds>
                 <powerSound>customCrewDroneLaunch</powerSound>
             </powerSounds>-->
-            <selfHealth>-999.0</selfHealth>
+            <!--<selfHealth>-999.0</selfHealth>-->
         </powerEffect>
     </race>
 </crew>
@@ -1254,15 +1252,12 @@
     <radius>0</radius>
     <speed>18</speed>
 
-    <!-- Keep it interceptable like a physical boarding pod. -->
-    <drone_targetable>1</drone_targetable>
+    <drone_targetable>0</drone_targetable>
 
     <cooldown>0</cooldown>
     <power>0</power>
     <cost>0</cost>
     <rarity>0</rarity>
-
-    <!-- Temporary travel art for this functionality test. -->
     <image>missile_1</image>
     <explosion>explosion_random</explosion>
 </weaponBlueprint>
