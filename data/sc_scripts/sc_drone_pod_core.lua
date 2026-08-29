@@ -1,7 +1,14 @@
 --[[
-DESCRIPTION: Shared state and crew transport utilities for the Terran Drop Pod drone.
-        - Snapshots transported crew state before the original CrewMember is retired.
-        - Recreates transported crew while preserving name, health, appearance, skills, and power state.
+DESCRIPTION: Shared state for the immediate-hidden Terran Boarding Pod transport.
+        - Keeps the actual CrewMember object; no snapshot/recreate path.
+        - Hides arbitrary crew by temporarily replacing every live animation
+          texture strip with a transparent texture.
+        - While hidden, the passenger is rooted, non-combatant, non-targetable,
+          AI-disabled, silenced, and protected from damage.
+        - Once native teleport-out has begun, hidden passengers can be temporarily
+          mind controlled so the destination ship's AI treats them as allied.
+        - The crew's species, room/slot ownership data, health, skills, powers,
+          appearance choices, and userdata are not recreated.
 DEPENDENCIES: Multiverse userdata_table
 ]]
 
@@ -11,305 +18,413 @@ mods.sc_drone_pod = mods.sc_drone_pod or {}
 local pod = mods.sc_drone_pod
 
 local POD_USERDATA = "mods.sc.dronePod"
+local BLANK_TEXTURE_PATH = "people/sc_pod_hidden.png"
 
 pod.nextTransportId = pod.nextTransportId or 0
 pod.activeTransports = pod.activeTransports or {}
 pod.returnableBoarders = pod.returnableBoarders or {}
+pod.debugLines = pod.debugLines or {}
+pod.blankCrewTexture =
+    pod.blankCrewTexture
+    or Hyperspace.Resources:GetImageId(BLANK_TEXTURE_PATH)
 
-local function snapshot_crew_powers(crew)
-    local snapshots = {}
-    local powers = crew and crew.extend and crew.extend.crewPowers
+function pod.debug_line(text)
+    pod.debugLines[#pod.debugLines + 1] = tostring(text)
 
-    if not powers then return snapshots end
-
-    for i = 0, powers:size() - 1 do
-        local power = powers[i]
-
-        if power then
-            local cooldownCurrent = power.powerCooldown and power.powerCooldown.first or 0
-            local cooldownTotal = power.powerCooldown and power.powerCooldown.second or 0
-            local cooldownFraction = 1
-
-            if cooldownTotal > 0 then
-                cooldownFraction = math.max(0, math.min(1, cooldownCurrent / cooldownTotal))
-            end
-
-            snapshots[#snapshots + 1] = {
-                index = i,
-                name = power.def and power.def.name or nil,
-                cooldownCurrent = cooldownCurrent,
-                cooldownFraction = cooldownFraction,
-                chargesCurrent = power.powerCharges and power.powerCharges.first or nil
-            }
-        end
-    end
-
-    return snapshots
-end
-
-local function find_matching_power(crew, savedPower)
-    local powers = crew and crew.extend and crew.extend.crewPowers
-    if not powers or not savedPower then return nil end
-
-    if savedPower.index ~= nil
-        and savedPower.index >= 0
-        and savedPower.index < powers:size() then
-
-        local indexedPower = powers[savedPower.index]
-
-        if indexedPower then
-            local indexedName = indexedPower.def and indexedPower.def.name or nil
-
-            if savedPower.name == nil or savedPower.name == indexedName then
-                return indexedPower
-            end
-        end
-    end
-
-    if savedPower.name ~= nil then
-        for i = 0, powers:size() - 1 do
-            local power = powers[i]
-
-            if power and power.def and power.def.name == savedPower.name then
-                return power
-            end
-        end
-    end
-
-    return nil
-end
-
-local function restore_crew_powers(crew, savedPowers)
-    if not crew or not savedPowers then return end
-
-    for _, savedPower in ipairs(savedPowers) do
-        local power = find_matching_power(crew, savedPower)
-
-        if power then
-            pcall(function()
-                local newCooldownTotal = power.powerCooldown.second
-
-                if newCooldownTotal and newCooldownTotal > 0 then
-                    power.powerCooldown.first = newCooldownTotal * savedPower.cooldownFraction
-                elseif savedPower.cooldownCurrent ~= nil then
-                    power.powerCooldown.first = savedPower.cooldownCurrent
-                end
-
-                if savedPower.chargesCurrent ~= nil and power.powerCharges then
-                    local newChargesTotal = power.powerCharges.second
-
-                    if newChargesTotal ~= nil and newChargesTotal >= 0 then
-                        power.powerCharges.first = math.max(
-                            0,
-                            math.min(savedPower.chargesCurrent, newChargesTotal)
-                        )
-                    else
-                        power.powerCharges.first = savedPower.chargesCurrent
-                    end
-                end
-            end)
-        end
+    while #pod.debugLines > 22 do
+        table.remove(pod.debugLines, 1)
     end
 end
 
-local function snapshot_crew_appearance(crew)
-    local appearance = {
-        colorChoices = {},
-        layerColors = {}
-    }
-
-    if not crew then return appearance end
+local function slot_text(crew)
+    local result = "?"
 
     pcall(function()
-        if crew.blueprint and crew.blueprint.colorChoices then
-            for i = 0, crew.blueprint.colorChoices:size() - 1 do
-                appearance.colorChoices[#appearance.colorChoices + 1] = crew.blueprint.colorChoices[i]
-            end
-        end
-
-        if crew.crewAnim and crew.crewAnim.layerColors then
-            for i = 0, crew.crewAnim.layerColors:size() - 1 do
-                local color = crew.crewAnim.layerColors[i]
-
-                appearance.layerColors[#appearance.layerColors + 1] = {
-                    r = color.r,
-                    g = color.g,
-                    b = color.b,
-                    a = color.a
-                }
-            end
-        end
+        result =
+            tostring(crew.currentSlot.roomId)
+            .. ":"
+            .. tostring(crew.currentSlot.slotId)
     end)
 
-    return appearance
+    return result
 end
 
-local function restore_crew_appearance(crew, appearance)
-    if not crew or not appearance then return end
-
-    pcall(function()
-        if crew.blueprint
-            and crew.blueprint.colorChoices
-            and appearance.colorChoices then
-
-            crew.blueprint.colorChoices:clear()
-
-            for _, choice in ipairs(appearance.colorChoices) do
-                crew.blueprint.colorChoices:push_back(choice)
-            end
-        end
-
-        if crew.crewAnim
-            and crew.crewAnim.layerColors
-            and appearance.layerColors then
-
-            crew.crewAnim.layerColors:clear()
-
-            for _, color in ipairs(appearance.layerColors) do
-                crew.crewAnim.layerColors:push_back(
-                    Graphics.GL_Color(color.r, color.g, color.b, color.a)
-                )
-            end
-        end
-    end)
-end
-
-local function snapshot_crew_skills(crew)
-    local skills = {}
-
-    if not crew or not crew.blueprint or not crew.blueprint.skillLevel then
-        return skills
+function pod.describe_crew(prefix, crew)
+    if not crew then
+        pod.debug_line(prefix .. " crew=nil")
+        return
     end
 
-    pcall(function()
-        local skillCount = math.min(6, crew.blueprint.skillLevel:size())
+    local data = userdata_table(crew, POD_USERDATA)
+    local customTele =
+        crew.extend
+        and crew.extend.customTele
+        or nil
 
-        for skillId = 0, skillCount - 1 do
-            local skillPair = crew.blueprint.skillLevel[skillId]
+    pod.debug_line(
+        prefix
+        .. " cur=" .. tostring(crew.currentShipId)
+        .. " room=" .. tostring(crew.iRoomId)
+        .. " slot=" .. slot_text(crew)
+        .. " hidden=" .. tostring(data.podHidden == true)
+        .. " mc=" .. tostring(crew.bMindControlled == true)
+        .. " tele="
+        .. tostring(customTele and customTele.shipId or "nil")
+        .. "/"
+        .. tostring(customTele and customTele.teleporting or "nil")
+    )
+end
 
-            skills[#skills + 1] = {
-                id = skillId,
-                progress = skillPair.first
-            }
+local function save_visual_state(crew, data)
+    if not crew
+        or not crew.crewAnim
+        or data.visualSaved then
+        return
+    end
+
+    data.savedBaseStrip = crew.crewAnim.baseStrip
+    data.savedColorStrip = crew.crewAnim.colorStrip
+    data.savedLayerStrips = {}
+
+    if crew.crewAnim.layerStrips then
+        for i = 0, crew.crewAnim.layerStrips:size() - 1 do
+            data.savedLayerStrips[#data.savedLayerStrips + 1] =
+                crew.crewAnim.layerStrips[i]
         end
-    end)
+    end
 
-    return skills
+    data.visualSaved = true
 end
 
-local function restore_crew_skills(crew, savedSkills)
-    if not crew or not savedSkills then return end
+local function set_blank_layer_strips(crew, data)
+    if not crew
+        or not crew.crewAnim
+        or not crew.crewAnim.layerStrips then
+        return
+    end
 
-    pcall(function()
-        for _, savedSkill in ipairs(savedSkills) do
-            crew:SetSkillProgress(savedSkill.id, savedSkill.progress)
-        end
-    end)
+    local count =
+        data.savedLayerStrips
+        and #data.savedLayerStrips
+        or crew.crewAnim.layerStrips:size()
+
+    crew.crewAnim.layerStrips:clear()
+
+    for _ = 1, count do
+        crew.crewAnim.layerStrips:push_back(
+            pod.blankCrewTexture
+        )
+    end
 end
 
-function pod.snapshot_crew(crew)
-    if not crew then return nil end
-
-    local health = crew.health
-
-    return {
-        name = crew:GetName(),
-        species = crew:GetSpecies(),
-        health = health and health.first or nil,
-        powers = snapshot_crew_powers(crew),
-        appearance = snapshot_crew_appearance(crew),
-        skills = snapshot_crew_skills(crew)
-    }
-end
-
-function pod.create_transport_payload(crew, sourceShipId, targetShipId)
-    pod.nextTransportId = pod.nextTransportId + 1
-
-    local payload = {
-        transportId = pod.nextTransportId,
-        sourceShipId = sourceShipId,
-        sourceRoomId = crew.iRoomId,
-        targetShipId = targetShipId,
-        snapshot = pod.snapshot_crew(crew)
-    }
-
-    pod.activeTransports[payload.transportId] = payload
-    return payload
-end
-
-function pod.remove_original_crew(crew, transportId)
-    if not crew then return false end
-
-    local crewData = userdata_table(crew, POD_USERDATA)
-    crewData.inTransit = true
-    crewData.transportId = transportId
-
-    local emptySlotOk = pcall(function()
-        crew:EmptySlot()
-    end)
-
-    if not emptySlotOk then
-        crewData.inTransit = false
-        crewData.transportId = nil
+function pod.apply_hidden_visual(crew)
+    if not crew
+        or not crew.crewAnim
+        or not pod.blankCrewTexture then
         return false
     end
 
-    crew:SetCloneReady(false)
-    crew:SetOutOfGame()
+    local data = userdata_table(crew, POD_USERDATA)
+
+    save_visual_state(crew, data)
+
+    crew.crewAnim.baseStrip =
+        pod.blankCrewTexture
+
+    crew.crewAnim.colorStrip =
+        pod.blankCrewTexture
+
+    set_blank_layer_strips(crew, data)
 
     return true
 end
 
-function pod.recreate_crew(payload, shipManager, roomId)
-    if not payload or not payload.snapshot or not shipManager then return nil end
+function pod.restore_visual(crew)
+    if not crew
+        or not crew.crewAnim then
+        return
+    end
 
-    local snapshot = payload.snapshot
-    local intruder = payload.sourceShipId ~= shipManager.iShipId
+    local data = userdata_table(crew, POD_USERDATA)
 
-    local spawnOk, spawnResult = pcall(function()
-        return shipManager:AddCrewMemberFromString(
-            snapshot.name,
-            snapshot.species,
-            intruder,
-            roomId,
-            true,
+    if not data.visualSaved then
+        return
+    end
+
+    crew.crewAnim.baseStrip =
+        data.savedBaseStrip
+
+    crew.crewAnim.colorStrip =
+        data.savedColorStrip
+
+    if crew.crewAnim.layerStrips then
+        crew.crewAnim.layerStrips:clear()
+
+        for _, texture in ipairs(
+            data.savedLayerStrips or {}
+        ) do
+            crew.crewAnim.layerStrips:push_back(
+                texture
+            )
+        end
+    end
+
+    data.savedBaseStrip = nil
+    data.savedColorStrip = nil
+    data.savedLayerStrips = nil
+    data.visualSaved = false
+end
+
+local function hide_mind_control_icon(crew, data)
+    if not crew
+        or not crew.mindControlled
+        or not pod.blankCrewTexture then
+        return
+    end
+
+    if not data.mindControlIconSaved then
+        data.savedMindControlAnimationStrip =
+            crew.mindControlled.animationStrip
+
+        data.mindControlIconSaved = true
+    end
+
+    crew.mindControlled.animationStrip =
+        pod.blankCrewTexture
+end
+
+local function restore_mind_control_icon(crew, data)
+    if not crew
+        or not crew.mindControlled
+        or not data.mindControlIconSaved then
+        return
+    end
+
+    crew.mindControlled.animationStrip =
+        data.savedMindControlAnimationStrip
+
+    data.savedMindControlAnimationStrip = nil
+    data.mindControlIconSaved = false
+end
+
+function pod.set_hidden_mind_control(crew, enabled)
+    if not crew then
+        return
+    end
+
+    local data =
+        userdata_table(
+            crew,
+            POD_USERDATA
+        )
+
+    if enabled then
+        if not data.podMindControlSaved then
+            data.originalMindControlled =
+                crew.bMindControlled == true
+
+            data.podMindControlSaved = true
+        end
+
+        crew.bMindControlled = true
+        data.podMindControlled = true
+
+        -- The mind-control status icon is a separate CrewMember Animation
+        -- rather than part of crew.crewAnim. Blank that animation's texture
+        -- while the hidden passenger is temporarily mind controlled.
+        hide_mind_control_icon(
+            crew,
+            data
+        )
+
+    else
+        restore_mind_control_icon(
+            crew,
+            data
+        )
+
+        if data.podMindControlSaved then
+            crew.bMindControlled =
+                data.originalMindControlled == true
+        end
+
+        data.originalMindControlled = nil
+        data.podMindControlSaved = false
+        data.podMindControlled = false
+    end
+end
+
+function pod.set_hidden(crew, hidden, transportId)
+    if not crew then
+        return
+    end
+
+    local data = userdata_table(crew, POD_USERDATA)
+
+    data.podHidden = hidden == true
+
+    if hidden then
+        data.transportId = transportId
+        pod.apply_hidden_visual(crew)
+    else
+        pod.set_hidden_mind_control(
+            crew,
             false
         )
-    end)
 
-    if not spawnOk then return nil end
+        pod.restore_visual(crew)
+        data.transportId = nil
+    end
+end
 
-    local newCrew = spawnResult
-    if not newCrew then return nil end
+function pod.create_transport_payload(
+    crew,
+    projectile,
+    sourceShipId,
+    sourceRoomId,
+    targetShipId,
+    targetRoomId,
+    targetPosition
+)
+    pod.nextTransportId =
+        pod.nextTransportId + 1
 
-    restore_crew_appearance(newCrew, snapshot.appearance)
-    restore_crew_skills(newCrew, snapshot.skills)
-    restore_crew_powers(newCrew, snapshot.powers)
+    local payload = {
+        transportId = pod.nextTransportId,
+        crew = crew,
+        projectile = projectile,
 
-    if snapshot.health ~= nil then
-        pcall(function()
-            local currentHealth = newCrew:GetIntegerHealth()
-            local targetHealth = math.max(1, snapshot.health)
-            local healthDelta = targetHealth - currentHealth
+        sourceShipId = sourceShipId,
+        sourceRoomId = sourceRoomId,
 
-            if math.abs(healthDelta) > 0.001 then
-                newCrew:DirectModifyHealth(healthDelta)
+        targetShipId = targetShipId,
+        targetRoomId = targetRoomId,
+        targetPosition = targetPosition,
+
+        state = "outbound",
+        impact = false,
+        actualImpactRoomId = nil,
+        cancelRequested = false,
+        outboundLimboLogged = false
+    }
+
+    pod.activeTransports[payload.transportId] =
+        payload
+
+    return payload
+end
+
+function pod.ship_contains_reference(shipId, crew)
+    local shipManager =
+        Hyperspace.Global.GetInstance()
+            :GetShipManager(shipId)
+
+    if not shipManager
+        or not shipManager.vCrewList
+        or not crew then
+        return false
+    end
+
+    for i = 0, shipManager.vCrewList:size() - 1 do
+        if shipManager.vCrewList[i] == crew then
+            return true
+        end
+    end
+
+    return false
+end
+
+function pod.returned_vector_contains(returned, crew)
+    if not returned or not crew then
+        return false
+    end
+
+    for i = 0, returned:size() - 1 do
+        if returned[i] == crew then
+            return true
+        end
+    end
+
+    return false
+end
+
+-- Keep the visual blank even if another crew animation update rebuilds its
+-- texture strips while the passenger is waiting inside the pod.
+script.on_render_event(
+    Defines.RenderEvents.CREW_MEMBER_HEALTH,
+
+    function(crew)
+        if not crew then
+            return
+        end
+
+        local data = userdata_table(crew, POD_USERDATA)
+
+        if data.podHidden then
+            pod.apply_hidden_visual(crew)
+
+            if data.podMindControlled then
+                hide_mind_control_icon(
+                    crew,
+                    data
+                )
             end
-        end)
+        elseif data.visualSaved then
+            pod.restore_visual(crew)
+        end
+    end,
+
+    function()
     end
+)
 
-    return newCrew
-end
+-- A hidden passenger is logically inside the boarding pod rather than actively
+-- occupying either ship. Keep the actual CrewMember registered on the target
+-- ship, but disable gameplay interactions until its missile arrives.
+script.on_internal_event(
+    Defines.InternalEvents.CALCULATE_STAT_POST,
+    function(crew, stat, def, amount, value)
+        if not crew then
+            return Defines.Chain.CONTINUE,
+                amount,
+                value
+        end
 
-function pod.return_transport_to_source(transportId)
-    local payload = pod.activeTransports[transportId]
-    if not payload then return end
+        local data = userdata_table(crew, POD_USERDATA)
 
-    local sourceShip = Hyperspace.Global.GetInstance():GetShipManager(payload.sourceShipId)
+        if not data.podHidden then
+            return Defines.Chain.CONTINUE,
+                amount,
+                value
+        end
 
-    if sourceShip then
-        pod.recreate_crew(payload, sourceShip, payload.sourceRoomId)
+        if stat == Hyperspace.CrewStat.CAN_MOVE
+            or stat == Hyperspace.CrewStat.CAN_FIGHT
+            or stat == Hyperspace.CrewStat.CAN_REPAIR
+            or stat == Hyperspace.CrewStat.CAN_SABOTAGE
+            or stat == Hyperspace.CrewStat.CAN_MAN
+            or stat == Hyperspace.CrewStat.VALID_TARGET
+            or stat == Hyperspace.CrewStat.CAN_SUFFOCATE
+            or stat == Hyperspace.CrewStat.CAN_BURN then
+
+            value = false
+
+        elseif stat == Hyperspace.CrewStat.NO_AI
+            or stat == Hyperspace.CrewStat.SILENCED then
+
+            value = true
+
+        elseif stat == Hyperspace.CrewStat.ALL_DAMAGE_TAKEN_MULTIPLIER
+            or stat == Hyperspace.CrewStat.DAMAGE_ENEMIES_AMOUNT
+            or stat == Hyperspace.CrewStat.HEAL_CREW_AMOUNT
+            or stat == Hyperspace.CrewStat.BONUS_POWER
+            or stat == Hyperspace.CrewStat.POWER_DRAIN then
+
+            amount = 0
+        end
+
+        return Defines.Chain.CONTINUE,
+            amount,
+            value
     end
-
-    pod.activeTransports[transportId] = nil
-end
+)
