@@ -1228,7 +1228,6 @@
            <!-- <powerSounds>
                 <powerSound>customCrewDroneLaunch</powerSound>
             </powerSounds>-->
-            <!--<selfHealth>-999.0</selfHealth>-->
         </powerEffect>
     </race>
 </crew>
@@ -1837,9 +1836,9 @@
     <mod-append:script>data/sc_scripts/sc_drone_goliath.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv_ai.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_drone_pod_core.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_drone_pod_launch.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_drone_pod_transport.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_crew_copy.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_crew_return.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_pod.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_comsat.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_active.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
