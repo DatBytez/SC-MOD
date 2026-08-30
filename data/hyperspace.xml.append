@@ -1226,7 +1226,7 @@
             <tooltip>Automatically activates when the custom crew drone is deployed.</tooltip>
             <cooldownColor r="255" g="120" b="40"/>
            <!-- <powerSounds>
-                <powerSound>customCrewDroneLaunch</powerSound>
+                <powerSound>terran_pod_launch</powerSound>
             </powerSounds>-->
 			<selfHealth>-999.0</selfHealth>
         </powerEffect>

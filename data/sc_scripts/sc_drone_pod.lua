@@ -1,11 +1,7 @@
 --[[
 DESCRIPTION: Controls Terran Drop Pod deployment and crew transport.
         - TERRAN_POD is deployable only when eligible crew are in Drone Control and a hostile target ship is present.
-        - LAUNCH fires one TERRAN_POD_PROJECTILE for each eligible crew member in Drone Control.
         - Crew are snapshotted and retired when their projectile launches, then recreated when it reaches the target.
-        - Crew carried by a destroyed projectile are killed through FTL's normal crew-death handling so cloning can apply.
-        - In-flight crew are abandoned without being returned or killed when the source ship jumps away.
-        - The temporary pod crew-drone is removed by the LAUNCH power's native selfHealth effect.
 DEPENDENCIES: sc_crew_copy.lua, Multiverse userdata_table
 ]]
 
@@ -16,11 +12,8 @@ mods.sc_drone_pod = mods.sc_drone_pod or {}
 local pod = mods.sc_drone_pod
 
 local POD_SPECIES = "terran_pod"
---local LAUNCH_POWER = "LAUNCH"
 local POD_PROJECTILE_BLUEPRINT = "TERRAN_POD_PROJECTILE"
 local POD_DRONE_BLUEPRINT = "TERRAN_POD"
---local POD_USERDATA = "mods.sc.dronePod"
---local POD_BLOCK_DESTROYED_TIMER = 0.1
 
 pod.nextTransportId = pod.nextTransportId or 0
 pod.activeTransports = pod.activeTransports or {}
@@ -193,7 +186,7 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
             local payload = create_transport_payload(payloadCrew)
 
             if payload then
-                userdata_table(projectile, mods.sc.dronePod).transportId = payload.transportId
+                userdata_table(projectile, "mods.sc.dronePod").transportId = payload.transportId
 
                 if not crew_copy.retire(payloadCrew) then
                     pod.activeTransports[payload.transportId] = nil
@@ -210,7 +203,7 @@ script.on_internal_event(
             return Defines.Chain.CONTINUE
         end
 
-        local transportId = userdata_table(projectile, mods.sc.dronePod).transportId
+        local transportId = userdata_table(projectile, "mods.sc.dronePod").transportId
         local payload = transportId and pod.activeTransports[transportId] or nil
 
         if not payload then return Defines.Chain.CONTINUE end
@@ -238,7 +231,7 @@ script.on_internal_event(
             return Defines.Chain.CONTINUE
         end
 
-        local transportId = userdata_table(projectile, mods.sc.dronePod).transportId
+        local transportId = userdata_table(projectile, "mods.sc.dronePod").transportId
 
         if transportId
             and pod.activeTransports[transportId]
