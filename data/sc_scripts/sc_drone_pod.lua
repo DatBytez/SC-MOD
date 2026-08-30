@@ -5,7 +5,7 @@ DESCRIPTION: Controls Terran Drop Pod deployment and crew transport.
         - Crew are snapshotted and retired when their projectile launches, then recreated when it reaches the target.
         - Crew carried by a destroyed projectile are killed through FTL's normal crew-death handling so cloning can apply.
         - In-flight crew are abandoned without being returned or killed when the source ship jumps away.
-        - The temporary pod crew-drone is retired after launching without taking health damage.
+        - The temporary pod crew-drone is removed by the LAUNCH power's native selfHealth effect.
 DEPENDENCIES: sc_crew_copy.lua, Multiverse userdata_table
 ]]
 
@@ -179,15 +179,6 @@ local function kill_transport_crew(transportId)
     end
 end
 
-local function remove_pod_crew(podCrew)
-    pcall(function()
-        podCrew:EmptySlot()
-    end)
-
-    podCrew:SetCloneReady(false)
-    podCrew:SetOutOfGame()
-end
-
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, update_pod_deployment_guard)
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
@@ -223,8 +214,6 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
             end
         end
     end
-
-    remove_pod_crew(podCrew)
 end)
 
 script.on_internal_event(

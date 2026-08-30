@@ -1,6 +1,6 @@
 --[[
 DESCRIPTION: Provides reusable helpers for copying and moving crew between ships.
-        - Snapshots crew name, species, ownership, location, health, appearance, skills, and power state.
+        - Snapshots crew identity, sex, ownership, location, health, death count, appearance, skills, and power state.
         - Recreates a new CrewMember from a saved snapshot.
         - Can retire the original CrewMember after releasing its occupied room slot.
         - Can copy a crew without removing the original or move it with restoration fallback.
@@ -14,7 +14,7 @@ local crew_copy = mods.sc.crew_copy
 
 local function snapshot_crew_powers(crew)
     local snapshots = {}
-    local powers = crew and crew.extend and crew.extend.crewPowers
+    local powers = crew.extend and crew.extend.crewPowers
 
     if not powers then return snapshots end
 
@@ -44,8 +44,8 @@ local function snapshot_crew_powers(crew)
 end
 
 local function find_matching_power(crew, savedPower)
-    local powers = crew and crew.extend and crew.extend.crewPowers
-    if not powers or not savedPower then return nil end
+    local powers = crew.extend and crew.extend.crewPowers
+    if not powers then return nil end
 
     if savedPower.index ~= nil
         and savedPower.index >= 0
@@ -76,8 +76,6 @@ local function find_matching_power(crew, savedPower)
 end
 
 local function restore_crew_powers(crew, savedPowers)
-    if not crew or not savedPowers then return end
-
     for _, savedPower in ipairs(savedPowers) do
         local power = find_matching_power(crew, savedPower)
 
@@ -87,7 +85,7 @@ local function restore_crew_powers(crew, savedPowers)
 
                 if newCooldownTotal and newCooldownTotal > 0 then
                     power.powerCooldown.first = newCooldownTotal * savedPower.cooldownFraction
-                elseif savedPower.cooldownCurrent ~= nil then
+                else
                     power.powerCooldown.first = savedPower.cooldownCurrent
                 end
 
@@ -114,8 +112,6 @@ local function snapshot_crew_appearance(crew)
         layerColors = {}
     }
 
-    if not crew then return appearance end
-
     pcall(function()
         if crew.blueprint and crew.blueprint.colorChoices then
             for i = 0, crew.blueprint.colorChoices:size() - 1 do
@@ -141,13 +137,8 @@ local function snapshot_crew_appearance(crew)
 end
 
 local function restore_crew_appearance(crew, appearance)
-    if not crew or not appearance then return end
-
     pcall(function()
-        if crew.blueprint
-            and crew.blueprint.colorChoices
-            and appearance.colorChoices then
-
+        if crew.blueprint and crew.blueprint.colorChoices then
             crew.blueprint.colorChoices:clear()
 
             for _, choice in ipairs(appearance.colorChoices) do
@@ -155,10 +146,7 @@ local function restore_crew_appearance(crew, appearance)
             end
         end
 
-        if crew.crewAnim
-            and crew.crewAnim.layerColors
-            and appearance.layerColors then
-
+        if crew.crewAnim and crew.crewAnim.layerColors then
             crew.crewAnim.layerColors:clear()
 
             for _, color in ipairs(appearance.layerColors) do
@@ -172,20 +160,15 @@ end
 
 local function snapshot_crew_skills(crew)
     local skills = {}
+    local skillLevels = crew.blueprint and crew.blueprint.skillLevel
 
-    if not crew or not crew.blueprint or not crew.blueprint.skillLevel then
-        return skills
-    end
+    if not skillLevels then return skills end
 
     pcall(function()
-        local skillCount = math.min(6, crew.blueprint.skillLevel:size())
-
-        for skillId = 0, skillCount - 1 do
-            local skillPair = crew.blueprint.skillLevel[skillId]
-
+        for skillId = 0, math.min(6, skillLevels:size()) - 1 do
             skills[#skills + 1] = {
                 id = skillId,
-                progress = skillPair.first
+                progress = skillLevels[skillId].first
             }
         end
     end)
@@ -194,8 +177,6 @@ local function snapshot_crew_skills(crew)
 end
 
 local function restore_crew_skills(crew, savedSkills)
-    if not crew or not savedSkills then return end
-
     pcall(function()
         for _, savedSkill in ipairs(savedSkills) do
             crew:SetSkillProgress(savedSkill.id, savedSkill.progress)
@@ -206,15 +187,20 @@ end
 function crew_copy.snapshot(crew)
     if not crew then return nil end
 
-    local health = crew.health
+    local male = nil
+    if crew.blueprint then
+        male = crew.blueprint.male
+    end
 
     return {
         name = crew:GetName(),
         species = crew:GetSpecies(),
+        male = male,
         ownerShipId = crew.iShipId,
         currentShipId = crew.currentShipId,
         roomId = crew.iRoomId,
-        health = health and health.first or nil,
+        health = crew.health and crew.health.first or nil,
+        deathNumber = crew.iDeathNumber,
         powers = snapshot_crew_powers(crew),
         appearance = snapshot_crew_appearance(crew),
         skills = snapshot_crew_skills(crew)
@@ -239,9 +225,21 @@ function crew_copy.recreate(snapshot, shipManager, roomId)
 
     if not spawnOk or not newCrew then return nil end
 
+    if snapshot.male ~= nil then
+        pcall(function()
+            newCrew:SetSex(snapshot.male)
+        end)
+    end
+
     restore_crew_appearance(newCrew, snapshot.appearance)
     restore_crew_skills(newCrew, snapshot.skills)
     restore_crew_powers(newCrew, snapshot.powers)
+
+    if snapshot.deathNumber ~= nil then
+        pcall(function()
+            newCrew:SetDeathNumber(snapshot.deathNumber)
+        end)
+    end
 
     if snapshot.health ~= nil then
         pcall(function()
@@ -272,7 +270,10 @@ function crew_copy.retire(crew)
 end
 
 function crew_copy.copy(crew, shipManager, roomId)
-    return crew_copy.recreate(crew_copy.snapshot(crew), shipManager, roomId)
+    local snapshot = crew_copy.snapshot(crew)
+    if not snapshot then return nil end
+
+    return crew_copy.recreate(snapshot, shipManager, roomId)
 end
 
 function crew_copy.move(crew, shipManager, roomId)

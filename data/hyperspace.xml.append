@@ -1228,6 +1228,7 @@
            <!-- <powerSounds>
                 <powerSound>customCrewDroneLaunch</powerSound>
             </powerSounds>-->
+			<selfHealth>-999.0</selfHealth>
         </powerEffect>
     </race>
 </crew>
