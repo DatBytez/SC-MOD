@@ -29,27 +29,34 @@ local function get_drone_room_id(shipManager)
     local droneSystem = shipManager.droneSystem
     if not droneSystem then return nil end
 
-    local roomId = droneSystem.roomId
-    if roomId < 0 then return nil end
+    local ok, roomId = pcall(function()
+        return droneSystem.roomId
+    end)
+
+    if not ok or roomId == nil or roomId < 0 then return nil end
 
     return roomId
 end
 
-local function is_payload_crew(crew, ownerShip, droneRoomId)
-    return crew.iShipId == ownerShip.iShipId
+local function is_payload_crew(crew, ownerShip, podCrew, droneRoomId)
+    return crew
+        and crew ~= podCrew
+        and crew.iShipId == ownerShip.iShipId
+        and crew.currentShipId == ownerShip.iShipId
         and crew.iRoomId == droneRoomId
+        and crew:IsCrew()
         and not crew:IsDrone()
         and not crew.bDead
         and not crew.bOutOfGame
 end
 
-local function find_payload_crew(ownerShip, droneRoomId)
+local function find_payload_crew(ownerShip, podCrew, droneRoomId)
     local crewList = ownerShip.vCrewList
 
     for i = 0, crewList:size() - 1 do
         local crew = crewList[i]
 
-        if is_payload_crew(crew, ownerShip, droneRoomId) then
+        if is_payload_crew(crew, ownerShip, podCrew, droneRoomId) then
             return crew
         end
     end
@@ -57,14 +64,14 @@ local function find_payload_crew(ownerShip, droneRoomId)
     return nil
 end
 
-local function find_payload_crews(ownerShip, droneRoomId)
+local function find_payload_crews(ownerShip, podCrew, droneRoomId)
     local payloadCrews = {}
     local crewList = ownerShip.vCrewList
 
     for i = 0, crewList:size() - 1 do
         local crew = crewList[i]
 
-        if is_payload_crew(crew, ownerShip, droneRoomId) then
+        if is_payload_crew(crew, ownerShip, podCrew, droneRoomId) then
             payloadCrews[#payloadCrews + 1] = crew
         end
     end
@@ -89,18 +96,20 @@ local function update_pod_deployment_guard(shipManager)
     if shipManager.iShipId ~= 0 then return end
 
     local droneSystem = shipManager.droneSystem
-    if not droneSystem then return end
+    if not droneSystem or not droneSystem.drones then return end
 
     local droneRoomId = get_drone_room_id(shipManager)
     local payloadReady = droneRoomId ~= nil
-        and find_payload_crew(shipManager, droneRoomId) ~= nil
+        and find_payload_crew(shipManager, nil, droneRoomId) ~= nil
 
     local podReady = payloadReady and get_hostile_target_ship(shipManager.iShipId) ~= nil
 
     for i = 0, droneSystem.drones:size() - 1 do
         local drone = droneSystem.drones[i]
 
-        if drone.blueprint.name == POD_DRONE_BLUEPRINT
+        if drone
+            and drone.blueprint
+            and drone.blueprint.name == POD_DRONE_BLUEPRINT
             and not drone.bDead
             and not drone.deployed
             and not drone.powered then
@@ -157,7 +166,9 @@ local function kill_transport_crew(transportId)
     pod.activeTransports[transportId] = nil
 
     local snapshot = payload.snapshot
-    local sourceShip = Hyperspace.Global.GetInstance():GetShipManager(snapshot.currentShipId)
+    local sourceShip = snapshot
+        and Hyperspace.Global.GetInstance():GetShipManager(snapshot.currentShipId)
+        or nil
 
     if not sourceShip or sourceShip.bDestroyed then return end
 
@@ -191,7 +202,7 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
     local droneRoomId = get_drone_room_id(ownerShip)
     if droneRoomId == nil then return end
 
-    local payloadCrews = find_payload_crews(ownerShip, droneRoomId)
+    local payloadCrews = find_payload_crews(ownerShip, podCrew, droneRoomId)
     if #payloadCrews == 0 then return end
 
     local targetShip = get_hostile_target_ship(podCrew.iShipId)
@@ -219,6 +230,10 @@ end)
 script.on_internal_event(
     Defines.InternalEvents.DAMAGE_AREA_HIT,
     function(shipManager, projectile, location)
+        if not projectile or not projectile.extend then
+            return Defines.Chain.CONTINUE
+        end
+
         if projectile.extend.name ~= POD_PROJECTILE_BLUEPRINT then
             return Defines.Chain.CONTINUE
         end
@@ -232,7 +247,7 @@ script.on_internal_event(
             .GetShipInfo(shipManager.iShipId)
             :GetSelectedRoom(location.x, location.y, true)
 
-        if roomId < 0 then
+        if roomId == nil or roomId < 0 then
             return Defines.Chain.CONTINUE
         end
 
@@ -247,6 +262,10 @@ script.on_internal_event(
 script.on_internal_event(
     Defines.InternalEvents.PROJECTILE_UPDATE_POST,
     function(projectile)
+        if not projectile or not projectile.extend then
+            return Defines.Chain.CONTINUE
+        end
+
         if projectile.extend.name ~= POD_PROJECTILE_BLUEPRINT then
             return Defines.Chain.CONTINUE
         end

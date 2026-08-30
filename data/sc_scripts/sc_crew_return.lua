@@ -1,15 +1,21 @@
 --[[
 DESCRIPTION: Returns player-owned crew from the enemy ship whenever that ship is non-hostile.
         - Returns crew to a random room containing an exterior airlock when possible.
-DEPENDENCIES: sc_crew_copy.lua
+        - Uses Hyperspace custom teleportation to preserve the existing CrewMember instead of copying it.
+        - Temporarily allows teleportation for returning crew so non-teleportable species can still be recalled.
+DEPENDENCIES: None
 ]]
 
-local crew_copy = mods.sc.crew_copy
+local returningCrew = setmetatable({}, {__mode = "k"})
 
 local function get_random_room_id(shipManager)
     local location = shipManager:GetRandomRoomCenter()
 
-    return Hyperspace.ShipGraph.GetShipInfo(shipManager.iShipId):GetSelectedRoom(location.x, location.y, false)
+    return Hyperspace.ShipGraph.GetShipInfo(shipManager.iShipId):GetSelectedRoom(
+        location.x,
+        location.y,
+        false
+    )
 end
 
 local function get_airlock_room_ids(shipManager)
@@ -36,8 +42,31 @@ local function get_airlock_room_ids(shipManager)
     return roomIds
 end
 
+script.on_internal_event(
+    Defines.InternalEvents.CALCULATE_STAT_POST,
+    function(crew, stat, def, amount, value)
+        if returningCrew[crew] and stat == Hyperspace.CrewStat.CAN_TELEPORT then
+            value = true
+        end
+
+        return Defines.Chain.CONTINUE, amount, value
+    end
+)
+
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     if shipManager.iShipId ~= 0 then return end
+
+    for crew in pairs(returningCrew) do
+        if crew.bDead
+            or crew.currentShipId == 0
+            or (
+                not crew.extend.customTele.teleporting
+                and crew.extend.customTele.shipId == -1
+            ) then
+
+            returningCrew[crew] = nil
+        end
+    end
 
     local enemyShip = Hyperspace.Global.GetInstance():GetShipManager(1)
 
@@ -48,34 +77,29 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
         return
     end
 
-    local returningCrew = {}
+    local airlockRoomIds = get_airlock_room_ids(shipManager)
 
     for i = 0, enemyShip.vCrewList:size() - 1 do
         local crew = enemyShip.vCrewList[i]
 
         if crew.iShipId == 0
             and not crew:IsDrone()
+            and not crew.bDead
+            and not returningCrew[crew]
             and ((not crew.deathTimer) or not crew.deathTimer:Running()) then
 
-            returningCrew[#returningCrew + 1] = crew
-        end
-    end
+            local roomId = nil
 
-    if #returningCrew == 0 then return end
+            if #airlockRoomIds > 0 then
+                roomId = airlockRoomIds[math.random(#airlockRoomIds)]
+            else
+                roomId = get_random_room_id(shipManager)
+            end
 
-    local airlockRoomIds = get_airlock_room_ids(shipManager)
-
-    for _, crew in ipairs(returningCrew) do
-        local roomId = nil
-
-        if #airlockRoomIds > 0 then
-            roomId = airlockRoomIds[math.random(#airlockRoomIds)]
-        else
-            roomId = get_random_room_id(shipManager)
-        end
-
-        if roomId ~= nil and roomId >= 0 then
-            crew_copy.move(crew, shipManager, roomId)
+            if roomId ~= nil and roomId >= 0 then
+                returningCrew[crew] = true
+                crew.extend:InitiateTeleport(0, roomId, -1)
+            end
         end
     end
 end)
