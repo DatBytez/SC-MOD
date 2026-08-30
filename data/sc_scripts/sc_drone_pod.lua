@@ -3,7 +3,8 @@ DESCRIPTION: Controls Terran Drop Pod deployment and crew transport.
         - TERRAN_POD is deployable only when eligible crew are in Drone Control and a hostile target ship is present.
         - LAUNCH fires one TERRAN_POD_PROJECTILE for each eligible crew member in Drone Control.
         - Crew are snapshotted and retired when their projectile launches, then recreated when it reaches the target.
-        - In-flight crew are recreated on the source ship if their projectile dies or the source ship jumps.
+        - Crew carried by a destroyed projectile are killed through FTL's normal crew-death handling so cloning can apply.
+        - In-flight crew are abandoned without being returned or killed when the source ship jumps away.
         - The temporary pod crew-drone is retired after launching without taking health damage.
 DEPENDENCIES: sc_crew_copy.lua, Multiverse userdata_table
 ]]
@@ -24,11 +25,12 @@ local POD_BLOCK_DESTROYED_TIMER = 0.1
 pod.nextTransportId = pod.nextTransportId or 0
 pod.activeTransports = pod.activeTransports or {}
 
-local function get_drone_room_id(ownerShip)
-    if not ownerShip or not ownerShip.droneSystem then return nil end
+local function get_drone_room_id(shipManager)
+    local droneSystem = shipManager.droneSystem
+    if not droneSystem then return nil end
 
     local ok, roomId = pcall(function()
-        return ownerShip.droneSystem.roomId
+        return droneSystem.roomId
     end)
 
     if not ok or roomId == nil or roomId < 0 then return nil end
@@ -36,23 +38,25 @@ local function get_drone_room_id(ownerShip)
     return roomId
 end
 
+local function is_payload_crew(crew, ownerShip, podCrew, droneRoomId)
+    return crew
+        and crew ~= podCrew
+        and crew.iShipId == ownerShip.iShipId
+        and crew.currentShipId == ownerShip.iShipId
+        and crew.iRoomId == droneRoomId
+        and crew:IsCrew()
+        and not crew:IsDrone()
+        and not crew.bDead
+        and not crew.bOutOfGame
+end
+
 local function find_payload_crew(ownerShip, podCrew, droneRoomId)
     local crewList = ownerShip.vCrewList
-    if not crewList then return nil end
 
     for i = 0, crewList:size() - 1 do
         local crew = crewList[i]
 
-        if crew
-            and crew ~= podCrew
-            and crew.iShipId == ownerShip.iShipId
-            and crew.currentShipId == ownerShip.iShipId
-            and crew.iRoomId == droneRoomId
-            and crew:IsCrew()
-            and not crew:IsDrone()
-            and not crew.bDead
-            and not crew.bOutOfGame then
-
+        if is_payload_crew(crew, ownerShip, podCrew, droneRoomId) then
             return crew
         end
     end
@@ -64,21 +68,10 @@ local function find_payload_crews(ownerShip, podCrew, droneRoomId)
     local payloadCrews = {}
     local crewList = ownerShip.vCrewList
 
-    if not crewList then return payloadCrews end
-
     for i = 0, crewList:size() - 1 do
         local crew = crewList[i]
 
-        if crew
-            and crew ~= podCrew
-            and crew.iShipId == ownerShip.iShipId
-            and crew.currentShipId == ownerShip.iShipId
-            and crew.iRoomId == droneRoomId
-            and crew:IsCrew()
-            and not crew:IsDrone()
-            and not crew.bDead
-            and not crew.bOutOfGame then
-
+        if is_payload_crew(crew, ownerShip, podCrew, droneRoomId) then
             payloadCrews[#payloadCrews + 1] = crew
         end
     end
@@ -86,16 +79,17 @@ local function find_payload_crews(ownerShip, podCrew, droneRoomId)
     return payloadCrews
 end
 
-local function has_hostile_target_ship()
-    local enemyShip = Hyperspace.Global.GetInstance():GetShipManager(1)
+local function get_hostile_target_ship(sourceShipId)
+    local targetShip = Hyperspace.Global.GetInstance():GetShipManager(1 - sourceShipId)
 
-    if not enemyShip
-        or enemyShip.bDestroyed
-        or not enemyShip._targetable then
-        return false
+    if not targetShip
+        or targetShip.bDestroyed
+        or not targetShip._targetable
+        or not targetShip._targetable.hostile then
+        return nil
     end
 
-    return enemyShip._targetable.hostile
+    return targetShip
 end
 
 local function update_pod_deployment_guard(shipManager)
@@ -105,13 +99,10 @@ local function update_pod_deployment_guard(shipManager)
     if not droneSystem or not droneSystem.drones then return end
 
     local droneRoomId = get_drone_room_id(shipManager)
-    local payloadReady = false
+    local payloadReady = droneRoomId ~= nil
+        and find_payload_crew(shipManager, nil, droneRoomId) ~= nil
 
-    if droneRoomId ~= nil then
-        payloadReady = find_payload_crew(shipManager, nil, droneRoomId) ~= nil
-    end
-
-    local podReady = payloadReady and has_hostile_target_ship()
+    local podReady = payloadReady and get_hostile_target_ship(shipManager.iShipId) ~= nil
 
     for i = 0, droneSystem.drones:size() - 1 do
         local drone = droneSystem.drones[i]
@@ -168,20 +159,24 @@ local function create_transport_payload(crew)
     return payload
 end
 
-local function return_transport_to_source(transportId)
+local function kill_transport_crew(transportId)
     local payload = pod.activeTransports[transportId]
     if not payload then return end
+
+    pod.activeTransports[transportId] = nil
 
     local snapshot = payload.snapshot
     local sourceShip = snapshot
         and Hyperspace.Global.GetInstance():GetShipManager(snapshot.currentShipId)
         or nil
 
-    if sourceShip then
-        crew_copy.recreate(snapshot, sourceShip, snapshot.roomId)
-    end
+    if not sourceShip or sourceShip.bDestroyed then return end
 
-    pod.activeTransports[transportId] = nil
+    local crew = crew_copy.recreate(snapshot, sourceShip, snapshot.roomId)
+
+    if crew then
+        crew:Kill(false)
+    end
 end
 
 local function remove_pod_crew(podCrew)
@@ -210,15 +205,8 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
     local payloadCrews = find_payload_crews(ownerShip, podCrew, droneRoomId)
     if #payloadCrews == 0 then return end
 
-    local targetShipId = 1 - podCrew.iShipId
-    local targetShip = Hyperspace.Global.GetInstance():GetShipManager(targetShipId)
-
-    if not targetShip
-        or targetShip.bDestroyed
-        or not targetShip._targetable
-        or not targetShip._targetable.hostile then
-        return
-    end
+    local targetShip = get_hostile_target_ship(podCrew.iShipId)
+    if not targetShip then return end
 
     for _, payloadCrew in ipairs(payloadCrews) do
         local projectile = launch_transport_projectile(podCrew, ownerShip, targetShip)
@@ -227,11 +215,7 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
             local payload = create_transport_payload(payloadCrew)
 
             if payload then
-                local podData = userdata_table(projectile, POD_USERDATA)
-
-                podData.launchedByPod = true
-                podData.transportId = payload.transportId
-                podData.delivered = false
+                userdata_table(projectile, POD_USERDATA).transportId = payload.transportId
 
                 if not crew_copy.retire(payloadCrew) then
                     pod.activeTransports[payload.transportId] = nil
@@ -254,13 +238,9 @@ script.on_internal_event(
             return Defines.Chain.CONTINUE
         end
 
-        local podData = userdata_table(projectile, POD_USERDATA)
+        local transportId = userdata_table(projectile, POD_USERDATA).transportId
+        local payload = transportId and pod.activeTransports[transportId] or nil
 
-        if not podData.launchedByPod or podData.delivered then
-            return Defines.Chain.CONTINUE
-        end
-
-        local payload = podData.transportId and pod.activeTransports[podData.transportId] or nil
         if not payload then return Defines.Chain.CONTINUE end
 
         local roomId = Hyperspace.ShipGraph
@@ -271,11 +251,8 @@ script.on_internal_event(
             return Defines.Chain.CONTINUE
         end
 
-        local newCrew = crew_copy.recreate(payload.snapshot, shipManager, roomId)
-
-        if newCrew then
-            podData.delivered = true
-            pod.activeTransports[payload.transportId] = nil
+        if crew_copy.recreate(payload.snapshot, shipManager, roomId) then
+            pod.activeTransports[transportId] = nil
         end
 
         return Defines.Chain.CONTINUE
@@ -293,14 +270,13 @@ script.on_internal_event(
             return Defines.Chain.CONTINUE
         end
 
-        local podData = userdata_table(projectile, POD_USERDATA)
+        local transportId = userdata_table(projectile, POD_USERDATA).transportId
 
-        if not podData.launchedByPod or podData.delivered then
-            return Defines.Chain.CONTINUE
-        end
+        if transportId
+            and pod.activeTransports[transportId]
+            and projectile:Dead() then
 
-        if projectile:Dead() and podData.transportId then
-            return_transport_to_source(podData.transportId)
+            kill_transport_crew(transportId)
         end
 
         return Defines.Chain.CONTINUE
@@ -308,13 +284,7 @@ script.on_internal_event(
 )
 
 script.on_internal_event(Defines.InternalEvents.JUMP_LEAVE, function()
-    local transportIds = {}
-
-    for transportId in pairs(pod.activeTransports) do
-        transportIds[#transportIds + 1] = transportId
-    end
-
-    for _, transportId in ipairs(transportIds) do
-        return_transport_to_source(transportId)
-    end
+    -- The ship has left while these crew are still in transit. Forget the
+    -- transports so projectile cleanup cannot return or kill the crew later.
+    pod.activeTransports = {}
 end)

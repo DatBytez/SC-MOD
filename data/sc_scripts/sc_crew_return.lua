@@ -1,8 +1,6 @@
 --[[
-DESCRIPTION: Returns player-owned crew from the enemy ship whenever that ship is present and non-hostile.
-        - Operates on friendly crew regardless of how they reached the enemy ship.
-        - Moves crew back to the player ship using the shared crew-copy system.
-        - Does not return crew from a destroyed ship.
+DESCRIPTION: Returns player-owned crew from the enemy ship whenever that ship is non-hostile.
+        - Returns crew to a random room containing an exterior airlock when possible.
 DEPENDENCIES: sc_crew_copy.lua
 ]]
 
@@ -11,9 +9,31 @@ local crew_copy = mods.sc.crew_copy
 local function get_random_room_id(shipManager)
     local location = shipManager:GetRandomRoomCenter()
 
-    return Hyperspace.ShipGraph
-        .GetShipInfo(shipManager.iShipId)
-        :GetSelectedRoom(location.x, location.y, false)
+    return Hyperspace.ShipGraph.GetShipInfo(shipManager.iShipId):GetSelectedRoom(location.x, location.y, false)
+end
+
+local function get_airlock_room_ids(shipManager)
+    local roomIds = {}
+    local seenRooms = {}
+    local airlocks = shipManager.ship.vOuterAirlocks
+
+    for i = 0, airlocks:size() - 1 do
+        local door = airlocks[i]
+        local roomId = nil
+
+        if door.iRoom1 < 0 then
+            roomId = door.iRoom2
+        elseif door.iRoom2 < 0 then
+            roomId = door.iRoom1
+        end
+
+        if roomId ~= nil and roomId >= 0 and not seenRooms[roomId] then
+            seenRooms[roomId] = true
+            roomIds[#roomIds + 1] = roomId
+        end
+    end
+
+    return roomIds
 end
 
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
@@ -28,19 +48,14 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
         return
     end
 
-    local crewList = enemyShip.vCrewList
-    if not crewList then return end
-
     local returningCrew = {}
 
-    -- Build the list before moving anyone so modifying crew state does not
-    -- affect iteration over the enemy ship's crew vector.
-    for i = 0, crewList:size() - 1 do
-        local crew = crewList[i]
+    for i = 0, enemyShip.vCrewList:size() - 1 do
+        local crew = enemyShip.vCrewList[i]
 
         if crew
-            and crew.iShipId == shipManager.iShipId
-            and crew.currentShipId == enemyShip.iShipId
+            and crew.iShipId == 0
+            and crew.currentShipId == 1
             and crew:IsCrew()
             and not crew:IsDrone()
             and not crew.bDead
@@ -51,8 +66,18 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
         end
     end
 
+    if #returningCrew == 0 then return end
+
+    local airlockRoomIds = get_airlock_room_ids(shipManager)
+
     for _, crew in ipairs(returningCrew) do
-        local roomId = get_random_room_id(shipManager)
+        local roomId = nil
+
+        if #airlockRoomIds > 0 then
+            roomId = airlockRoomIds[math.random(#airlockRoomIds)]
+        else
+            roomId = get_random_room_id(shipManager)
+        end
 
         if roomId ~= nil and roomId >= 0 then
             crew_copy.move(crew, shipManager, roomId)
