@@ -16,11 +16,11 @@ mods.sc_drone_pod = mods.sc_drone_pod or {}
 local pod = mods.sc_drone_pod
 
 local POD_SPECIES = "terran_pod"
-local LAUNCH_POWER = "LAUNCH"
+--local LAUNCH_POWER = "LAUNCH"
 local POD_PROJECTILE_BLUEPRINT = "TERRAN_POD_PROJECTILE"
 local POD_DRONE_BLUEPRINT = "TERRAN_POD"
-local POD_USERDATA = "mods.sc.dronePod"
-local POD_BLOCK_DESTROYED_TIMER = 0.1
+--local POD_USERDATA = "mods.sc.dronePod"
+--local POD_BLOCK_DESTROYED_TIMER = 0.1
 
 pod.nextTransportId = pod.nextTransportId or 0
 pod.activeTransports = pod.activeTransports or {}
@@ -105,7 +105,7 @@ local function update_pod_deployment_guard(shipManager)
             and not drone.deployed
             and not drone.powered then
 
-            local desiredTimer = podReady and 0 or POD_BLOCK_DESTROYED_TIMER
+            local desiredTimer = podReady and 0 or 0.1
 
             if math.abs(drone.destroyedTimer - desiredTimer) > 0.0001 then
                 drone.destroyedTimer = desiredTimer
@@ -137,7 +137,6 @@ end
 
 local function create_transport_payload(crew)
     local snapshot = crew_copy.snapshot(crew)
-    if not snapshot then return nil end
 
     pod.nextTransportId = pod.nextTransportId + 1
 
@@ -152,7 +151,6 @@ end
 
 local function kill_transport_crew(transportId)
     local payload = pod.activeTransports[transportId]
-    if not payload then return end
 
     pod.activeTransports[transportId] = nil
 
@@ -171,7 +169,7 @@ end
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, update_pod_deployment_guard)
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
-    if power.def.name ~= LAUNCH_POWER then return end
+    if power.def.name ~= "LAUNCH" then return end
 
     local podCrew = power.crew
     if not podCrew or podCrew:GetSpecies() ~= POD_SPECIES then return end
@@ -195,7 +193,7 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
             local payload = create_transport_payload(payloadCrew)
 
             if payload then
-                userdata_table(projectile, POD_USERDATA).transportId = payload.transportId
+                userdata_table(projectile, mods.sc.dronePod).transportId = payload.transportId
 
                 if not crew_copy.retire(payloadCrew) then
                     pod.activeTransports[payload.transportId] = nil
@@ -212,7 +210,7 @@ script.on_internal_event(
             return Defines.Chain.CONTINUE
         end
 
-        local transportId = userdata_table(projectile, POD_USERDATA).transportId
+        local transportId = userdata_table(projectile, mods.sc.dronePod).transportId
         local payload = transportId and pod.activeTransports[transportId] or nil
 
         if not payload then return Defines.Chain.CONTINUE end
@@ -240,7 +238,7 @@ script.on_internal_event(
             return Defines.Chain.CONTINUE
         end
 
-        local transportId = userdata_table(projectile, POD_USERDATA).transportId
+        local transportId = userdata_table(projectile, mods.sc.dronePod).transportId
 
         if transportId
             and pod.activeTransports[transportId]
