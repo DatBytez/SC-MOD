@@ -2,8 +2,6 @@
 DESCRIPTION: Provides reusable helpers for copying and moving crew between ships.
         - Snapshots crew identity, sex, ownership, location, health, death count, appearance, skills, and power state.
         - Recreates a new CrewMember from a saved snapshot.
-        - Can retire the original CrewMember after releasing its occupied room slot.
-        - Can copy a crew without removing the original or move it with restoration fallback.
 DEPENDENCIES: None
 ]]
 
@@ -48,7 +46,6 @@ local function find_matching_power(crew, savedPower)
     if not powers then return nil end
 
     if savedPower.index ~= nil
-        and savedPower.index >= 0
         and savedPower.index < powers:size() then
 
         local indexedPower = powers[savedPower.index]
@@ -255,8 +252,6 @@ function crew_copy.recreate(snapshot, shipManager, roomId)
 end
 
 function crew_copy.retire(crew)
-    if not crew then return false end
-
     local emptySlotOk = pcall(function()
         crew:EmptySlot()
     end)
@@ -271,7 +266,6 @@ end
 
 function crew_copy.copy(crew, shipManager, roomId)
     local snapshot = crew_copy.snapshot(crew)
-    if not snapshot then return nil end
 
     return crew_copy.recreate(snapshot, shipManager, roomId)
 end

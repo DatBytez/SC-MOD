@@ -1,9 +1,6 @@
 --[[
 DESCRIPTION: Returns player-owned crew from the enemy ship whenever that ship is non-hostile.
         - Returns crew to a random room containing an exterior airlock when possible.
-        - Falls back to a random player-ship room if no exterior airlock room exists.
-        - Uses the shared crew-copy system to recreate returning crew on the player ship.
-        - Ignores dead and out-of-game CrewMembers left behind in the enemy crew vector.
 DEPENDENCIES: sc_crew_copy.lua
 ]]
 
@@ -12,11 +9,7 @@ local crew_copy = mods.sc.crew_copy
 local function get_random_room_id(shipManager)
     local location = shipManager:GetRandomRoomCenter()
 
-    return Hyperspace.ShipGraph.GetShipInfo(shipManager.iShipId):GetSelectedRoom(
-        location.x,
-        location.y,
-        false
-    )
+    return Hyperspace.ShipGraph.GetShipInfo(shipManager.iShipId):GetSelectedRoom(location.x, location.y, false)
 end
 
 local function get_airlock_room_ids(shipManager)
@@ -57,22 +50,16 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
 
     local returningCrew = {}
 
-    -- Build the list before moving anyone because crew_copy.move() retires
-    -- the original CrewMember and recreates it on the player ship.
     for i = 0, enemyShip.vCrewList:size() - 1 do
         local crew = enemyShip.vCrewList[i]
 
         if crew.iShipId == 0
             and not crew:IsDrone()
-            and not crew.bDead
-            and not crew.bOutOfGame
             and ((not crew.deathTimer) or not crew.deathTimer:Running()) then
 
             returningCrew[#returningCrew + 1] = crew
         end
     end
-
-    if #returningCrew == 0 then return end
 
     local airlockRoomIds = get_airlock_room_ids(shipManager)
 
@@ -85,8 +72,6 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
             roomId = get_random_room_id(shipManager)
         end
 
-        if roomId ~= nil and roomId >= 0 then
             crew_copy.move(crew, shipManager, roomId)
-        end
     end
 end)
