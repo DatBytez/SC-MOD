@@ -2174,7 +2174,7 @@ TERRAN_GOLIATH-->
 
 <!-- *****************	TERRAN_GOLIATH_T	****************** -->
 <droneBlueprint name="TERRAN_GOLIATH_T">
-	<!--<target>ALL</target>-->
+	<target>ALL</target> 
 	<!--<target>LASERS</target>-->
 	<type>DEFENSE</type>
 	<tip>tip_defense</tip>
@@ -2183,14 +2183,11 @@ TERRAN_GOLIATH-->
 	<desc id="NOYB"></desc>
 	<power>1</power>
 	<cooldown>1000</cooldown>
-	<!-- cooldown for shooting at asteroids/missiles, in ms -->
 	<dodge>0</dodge>
 	<speed>5</speed>
-	<!-- fly faster -->
 	<cost>0</cost>
 	<droneImage>terran_goliath_t</droneImage>
 	<weaponBlueprint>GEMINI_HULL_1</weaponBlueprint>
-	<!--<weaponBlueprint>DRONE_LASER</weaponBlueprint>-->
 	<iconImage>defense</iconImage>
 	<rarity>0</rarity>
 	<sc-droneEngine value="drone_engine"/>
