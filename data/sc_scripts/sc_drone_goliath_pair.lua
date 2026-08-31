@@ -1,11 +1,11 @@
 --[[
 DESCRIPTION: Manages pairing between Terran Goliath crew-drones and their companion turrets.
-        - Collects active terran_goliath crew-drones.
+        - Collects active terran_goliath crew-drones for either active ship.
         - Creates one TERRAN_GOLIATH_T companion turret for each unpaired Goliath.
         - Restores valid pair state after loading.
         - Adopts eligible unmarked turrets for old-save compatibility.
         - Removes duplicate, orphaned, and retired companion turrets.
-        - Publishes the current crew/turret pairs through mods.sc.goliath.activePairs.
+        - Publishes current crew/turret pairs separately for ship IDs 0 and 1.
 DEPENDENCIES: sc_drone_goliath_core.lua
 ]]
 
@@ -26,12 +26,9 @@ local function collect_active_goliaths(shipManager)
 
             if goliath.is_active_goliath(crew, shipManager) then
                 local crewId = crew.extend.selfId
-
                 table.insert(crews, crew)
                 crewsById[crewId] = crew
             else
-                -- Allow this crew-drone object to receive a new turret if it
-                -- is deployed again later.
                 crewState.companionInitialized = false
             end
         end
@@ -57,7 +54,6 @@ end
 local function distance_squared(pointA, pointB)
     local x = pointA.x - pointB.x
     local y = pointA.y - pointB.y
-
     return x * x + y * y
 end
 
@@ -88,17 +84,11 @@ local function retire_turret(defenseDrone)
         goliath.TURRET_STATE_KEY
     )
 
-    -- Keep the turret marked as managed/retired until the engine removes it.
-    -- Clearing the pairing first can turn a lingering turret into an
-    -- unmarked turret that another Goliath is allowed to adopt.
     state.managed = true
     state.retired = true
 
     defenseDrone.bFire = false
     defenseDrone.powered = false
-
-    -- false means that this is a permanent deletion rather than a destroyed
-    -- inventory drone waiting to be rebuilt.
     defenseDrone:SetDestroyed(true, false)
 end
 
@@ -117,7 +107,6 @@ local function spawn_companion_turret(
             .. goliath.FOLLOW_DRONE_BLUEPRINT
             .. "."
         )
-
         return nil
     end
 
@@ -150,12 +139,10 @@ local function spawn_companion_turret(
             drone.gun_image_off,
             angle
         )
-
         goliath.set_cached_image_rotation(
             drone.gun_image_charging,
             angle
         )
-
         goliath.set_cached_image_rotation(
             drone.gun_image_on,
             angle
@@ -181,7 +168,6 @@ local function spawn_companion_turret(
             .. ": "
             .. tostring(defenseDrone)
         )
-
         return nil
     end
 
@@ -230,16 +216,12 @@ function goliath.remove_all_turrets(
                 goliath.TURRET_STATE_KEY
             )
 
-            -- Keep it permanently excluded from pairing while the engine
-            -- finishes deleting it.
             turretState.managed = true
             turretState.retired = true
 
             defenseDrone.bFire = false
             defenseDrone.powered = false
             defenseDrone:SetPowered(false)
-
-            -- Permanent deletion: do not leave a rebuildable inventory drone.
             defenseDrone:SetDestroyed(
                 true,
                 false
@@ -247,7 +229,10 @@ function goliath.remove_all_turrets(
         end
     end
 
-    goliath.activePairs = {}
+    goliath.set_active_pairs(
+        shipManager,
+        {}
+    )
 end
 
 function goliath.synchronize_pairs(
@@ -276,8 +261,6 @@ function goliath.synchronize_pairs(
                 or nil
 
             if turretState.retired then
-                -- A deletion may take until the engine finishes this frame.
-                -- Never allow a retired turret back into the pairing pool.
                 table.insert(
                     duplicateOrOrphanedTurrets,
                     drone
@@ -310,12 +293,10 @@ function goliath.synchronize_pairs(
 
                     if candidateDistance
                         < currentDistance then
-
                         table.insert(
                             duplicateOrOrphanedTurrets,
                             current
                         )
-
                         managedLiveByCrewId[
                             turretState.crewId
                         ] = drone
@@ -327,14 +308,11 @@ function goliath.synchronize_pairs(
                     end
                 end
             elseif turretState.managed then
-                -- This turret's recorded Goliath is no longer active.
                 table.insert(
                     duplicateOrOrphanedTurrets,
                     drone
                 )
             else
-                -- Only genuinely unmarked turrets may be adopted. A turret
-                -- managed by another Goliath is never eligible.
                 table.insert(
                     unmarkedLiveTurrets,
                     drone
@@ -346,8 +324,6 @@ function goliath.synchronize_pairs(
     local usedDroneIds = {}
     local newPairs = {}
 
-    -- Reserve all existing valid pairs before processing unpaired Goliaths.
-    -- This prevents one Goliath from briefly taking another Goliath's turret.
     for _, drone in pairs(
         managedLiveByCrewId
     ) do
@@ -366,13 +342,11 @@ function goliath.synchronize_pairs(
             managedLiveByCrewId[crewId]
 
         if defenseDrone then
-            -- Refresh the crew-side state after loading a save.
             mark_turret_pair(
                 defenseDrone,
                 crew
             )
         elseif not crewState.companionInitialized then
-            -- Adoption is only used for old saves or transition testing.
             defenseDrone =
                 find_nearest_unclaimed_turret(
                     crew,
@@ -394,9 +368,6 @@ function goliath.synchronize_pairs(
             end
         end
 
-        -- No destruction respawn occurs here. Projectile destruction is
-        -- prevented by DRONE_COLLISION. A missing managed turret cannot
-        -- claim another Goliath's turret or create a replacement.
         if defenseDrone then
             usedDroneIds[defenseDrone.selfId] =
                 true
@@ -429,5 +400,8 @@ function goliath.synchronize_pairs(
         end
     end
 
-    goliath.activePairs = newPairs
+    goliath.set_active_pairs(
+        shipManager,
+        newPairs
+    )
 end

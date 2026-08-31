@@ -1,11 +1,8 @@
 --[[
 DESCRIPTION: Shared core helpers and state for the Terran Goliath crew-drone system.
-        - Defines shared Goliath and turret identifiers.
         - Tracks Goliath movement and idle facing.
-        - Detects incoming hostile projectiles.
-        - Synchronizes companion-turret power with the Goliath legs.
         - Positions companion turrets with their connected Goliath.
-        - Provides shared ship, turret, and render helpers.
+        - Synchronizes companion-turret power with the Goliath legs.
 DEPENDENCIES: Multiverse vter, userdata_table
 ]]
 
@@ -27,7 +24,52 @@ local FOLLOW_OFFSET_X = 3
 local FOLLOW_OFFSET_Y = 0
 local MOVEMENT_EPSILON = 0.2
 
-goliath.activePairs = goliath.activePairs or {}
+goliath.activePairsByShip =
+    goliath.activePairsByShip or {
+        [0] = {},
+        [1] = {}
+    }
+
+function goliath.get_ship_manager(shipId)
+    if shipId == 0 then
+        return Hyperspace.ships.player
+    elseif shipId == 1 then
+        return Hyperspace.ships.enemy
+    end
+
+    return nil
+end
+
+function goliath.get_active_pairs(shipManager)
+    if not shipManager then
+        return {}
+    end
+
+    local shipId = shipManager.iShipId
+
+    if not goliath.activePairsByShip[shipId] then
+        goliath.activePairsByShip[shipId] = {}
+    end
+
+    return goliath.activePairsByShip[shipId]
+end
+
+function goliath.set_active_pairs(
+    shipManager,
+    pairs
+)
+    if not shipManager then
+        return
+    end
+
+    goliath.activePairsByShip[
+        shipManager.iShipId
+    ] = pairs or {}
+end
+
+function goliath.clear_active_pairs(shipId)
+    goliath.activePairsByShip[shipId] = {}
+end
 
 function goliath.error_print(message)
     print("[GOLIATH ERROR] " .. tostring(message))
@@ -184,12 +226,7 @@ function goliath.update_turret_power_from_legs(
         legs_are_operational(crew)
 
     if shouldBePowered then
-        -- The companion does not consume separate drone-system power.
         defenseDrone.powerRequired = 0
-
-        -- Reassert deployment and power when recovering from a stun or from
-        -- the legs being switched off. SetInstantPowered is wrapped because
-        -- older Hyperspace builds may not expose it to Lua.
         defenseDrone:SetDeployed(true)
         defenseDrone:SetPowered(true)
 

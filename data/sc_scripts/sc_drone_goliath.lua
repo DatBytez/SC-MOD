@@ -1,10 +1,10 @@
 --[[
 DESCRIPTION: Runtime event controller for the Terran Goliath crew-drone system.
-        - Synchronizes Goliath/turret pairs during gameplay.
+        - Synchronizes Goliath/turret pairs for both active ships.
         - Keeps companion turrets positioned and powered with their Goliath legs.
         - Allows native defense-drone firing only while hostile projectiles are incoming.
         - Prevents projectile damage to paired turrets and transfers 45 damage to the connected legs instead.
-        - Removes companion turrets when the player ship is destroyed.
+        - Removes companion turrets when either active ship is destroyed.
 DEPENDENCIES: sc_drone_goliath_core.lua, sc_drone_goliath_pair.lua
 ]]
 
@@ -19,55 +19,75 @@ local function damage_connected_legs(crew)
     )
 end
 
-script.on_internal_event(
-    Defines.InternalEvents.ON_TICK,
-    function()
-        local shipManager =
-            Hyperspace.ships.player
-
-        if not shipManager then
-            goliath.activePairs = {}
-            return
-        end
-
-        if goliath.ship_is_destroyed(
+local function update_ship_goliaths(
+    shipManager
+)
+    if goliath.ship_is_destroyed(
+        shipManager
+    ) then
+        goliath.remove_all_turrets(
             shipManager
-        ) then
-            goliath.remove_all_turrets(
-                shipManager
-            )
+        )
+        return
+    end
 
-            return
-        end
+    goliath.synchronize_pairs(
+        shipManager
+    )
 
-        goliath.synchronize_pairs(
+    local incomingProjectile =
+        goliath.has_incoming_hostile_projectile(
             shipManager
         )
 
-        local incomingProjectile =
-            goliath.has_incoming_hostile_projectile(
-                shipManager
-            )
+    for _, pair in pairs(
+        goliath.get_active_pairs(
+            shipManager
+        )
+    ) do
+        goliath.position_turret_with_crew(
+            pair.crew,
+            pair.drone
+        )
 
-        for _, pair in pairs(goliath.activePairs) do
-            goliath.position_turret_with_crew(
+        local turretPowered =
+            goliath.update_turret_power_from_legs(
                 pair.crew,
                 pair.drone
             )
 
-            local turretPowered =
-                goliath.update_turret_power_from_legs(
-                    pair.crew,
-                    pair.drone
-                )
+        goliath.get_facing_state(pair.crew)
 
-            goliath.get_facing_state(pair.crew)
+        if not turretPowered
+            or not incomingProjectile then
+            pair.drone.bFire = false
+        end
+    end
+end
 
-            if not turretPowered
-                or not incomingProjectile then
+script.on_internal_event(
+    Defines.InternalEvents.ON_TICK,
+    function()
+        local playerShip =
+            goliath.get_ship_manager(0)
 
-                pair.drone.bFire = false
-            end
+        if playerShip then
+            update_ship_goliaths(
+                playerShip
+            )
+        else
+            goliath.clear_active_pairs(0)
+        end
+
+        local otherShip =
+            goliath.get_ship_manager(1)
+
+        if otherShip then
+            update_ship_goliaths(
+                otherShip
+            )
+        else
+            goliath.clear_active_pairs(1)
         end
     end
 )
@@ -79,7 +99,9 @@ script.on_internal_event(
         projectile
     )
         local shipManager =
-            Hyperspace.ships.player
+            goliath.get_ship_manager(
+                defenseDrone.currentSpace
+            )
 
         if not shipManager
             or not goliath.is_live_goliath_turret(
@@ -117,8 +139,6 @@ script.on_internal_event(
 
         damage_connected_legs(crew)
 
-        -- PREEMPT prevents the normal collision damage from being applied
-        -- to the turret. The projectile keeps its normal collision response.
         return Defines.Chain.PREEMPT
     end
 )
@@ -126,11 +146,9 @@ script.on_internal_event(
 script.on_internal_event(
     Defines.InternalEvents.SHIP_LOOP,
     function(shipManager)
-        if shipManager.iShipId == 0
-            and goliath.ship_is_destroyed(
-                shipManager
-            ) then
-
+        if goliath.ship_is_destroyed(
+            shipManager
+        ) then
             goliath.remove_all_turrets(
                 shipManager
             )

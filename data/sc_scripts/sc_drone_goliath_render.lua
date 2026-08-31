@@ -1,6 +1,7 @@
 --[[
 DESCRIPTION: Render handling for the Terran Goliath crew-drone system.
         - Forces idle companion-turret facing to follow the connected Goliath's movement direction.
+        - Supports Goliaths on both the player and the one other active ship.
         - Leaves native defense-drone targeting untouched while hostile projectiles are incoming.
         - Rotates the turret's native cached gun images with its idle facing.
         - Repositions the Goliath's native health bar to clear the attached turret.
@@ -9,8 +10,6 @@ DEPENDENCIES: sc_drone_goliath_core.lua, sc_drone_goliath_pair.lua
 
 local goliath = mods.sc.goliath
 
--- Moves the native crew health bar relative to the Goliath legs.
--- Negative Y moves the bar upward to clear the attached turret.
 local HEALTH_BAR_OFFSET_X = 1
 local HEALTH_BAR_OFFSET_Y = -8
 
@@ -61,12 +60,10 @@ local function force_native_idle_facing(
         defenseDrone.gun_image_off,
         angle
     )
-
     goliath.set_cached_image_rotation(
         defenseDrone.gun_image_charging,
         angle
     )
-
     goliath.set_cached_image_rotation(
         defenseDrone.gun_image_on,
         angle
@@ -75,20 +72,22 @@ local function force_native_idle_facing(
     defenseDrone.bFire = false
 end
 
-local function apply_all_native_facing()
+local function apply_all_native_facing(
+    shipManager
+)
     local success, errorMessage = pcall(function()
-        local shipManager =
-            Hyperspace.ships.player
-
         if not shipManager
             or goliath.ship_is_destroyed(
                 shipManager
             ) then
-
             return
         end
 
-        for _, pair in pairs(goliath.activePairs) do
+        for _, pair in pairs(
+            goliath.get_active_pairs(
+                shipManager
+            )
+        ) do
             force_native_idle_facing(
                 shipManager,
                 pair.crew,
@@ -99,7 +98,6 @@ local function apply_all_native_facing()
 
     if not success
         and errorMessage ~= lastRenderError then
-
         lastRenderError = errorMessage
 
         goliath.error_print(
@@ -109,9 +107,6 @@ local function apply_all_native_facing()
     end
 end
 
--- Move only the native health overlay for Goliath crew drones. The render
--- event wraps CrewMember:OnRenderHealth(), so the matrix translation affects
--- the health bar without moving the crew sprite or attached turret.
 script.on_render_event(
     Defines.RenderEvents.CREW_MEMBER_HEALTH,
     function(crew)
@@ -135,7 +130,9 @@ script.on_render_event(
 script.on_render_event(
     Defines.RenderEvents.LAYER_PLAYER,
     function()
-        apply_all_native_facing()
+        apply_all_native_facing(
+            goliath.get_ship_manager(0)
+        )
     end,
     function() end
 )
@@ -143,8 +140,15 @@ script.on_render_event(
 script.on_render_event(
     Defines.RenderEvents.SHIP,
     function(ship)
-        if ship.iShipId == 0 then
-            apply_all_native_facing()
+        local shipManager =
+            goliath.get_ship_manager(
+                ship.iShipId
+            )
+
+        if shipManager then
+            apply_all_native_facing(
+                shipManager
+            )
         end
     end,
     function() end
