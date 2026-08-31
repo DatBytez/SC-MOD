@@ -76,7 +76,9 @@ script.on_internal_event(
         local otherShip =
             goliath.get_ship_manager(1)
 
-        if otherShip then
+        if otherShip
+            and otherShip._targetable
+            and otherShip._targetable.hostile then
             update_ship_goliaths(
                 otherShip
             )

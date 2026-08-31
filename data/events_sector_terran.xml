@@ -89,7 +89,7 @@
 
 <event name="EVENT_TERRAN_BATTLECRUISER_A">
 	<text>Aaaaa! Scary ship!</text>
-	<ship load="TERRAN_SHIP_BATTLECRUISER_A" hostile="true"/>
+	<ship load="TERRAN_SHIP_BATTLECRUISER_A" hostile="false"/>
 </event>
 
 <ship name="TERRAN_SHIP_VESSEL_A" auto_blueprint="TERRAN_SHIP_VESSEL_A">
@@ -387,7 +387,7 @@
     <autoReward level="MED">standard</autoReward>
 </event>
 <event name="SC_ESCAPE_TERRAN">
-    <text>The Terran ship escaped.</text>
+    <text>The Terran ship is attempting to escape.</text>
 </event>
 <event name="SC_GOTAWAY_TERRAN">
     <text>The Terran ship got away.</text>

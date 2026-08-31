@@ -3,14 +3,14 @@
 <FTL>
 
 <blueprintList name="TERRAN_DRONES_STANDARD">
-	<name>TERRAN_SCV</name>
+	<!--<name>TERRAN_SCV</name>
 	<name>TERRAN_SPIDER_1</name>
 	<name>TERRAN_SPIDER_2</name>
 	<name>TERRAN_SPIDER_3</name>
 	<name>TERRAN_DEFENSE_1</name>
 	<name>TERRAN_DEFENSE_2</name>
 	<name>TERRAN_DEFENSE_3</name>
-	<name>TERRAN_POD</name>
+	<name>TERRAN_POD</name>-->
 	<name>TERRAN_GOLIATH</name>
 </blueprintList>
 
@@ -18,10 +18,10 @@
 </blueprintList>
 
 <blueprintList name="TERRAN_DRONES_INTERNAL">
-	<name>TERRAN_SCV</name>
+	<!--<name>TERRAN_SCV</name>
 	<name>TERRAN_SPIDER_1</name>
 	<name>TERRAN_SPIDER_2</name>
-	<name>TERRAN_SPIDER_3</name>
+	<name>TERRAN_SPIDER_3</name>-->
 	<name>TERRAN_GOLIATH</name>
 </blueprintList>
 
@@ -168,7 +168,7 @@
 </blueprintList>
 <blueprintList name="LIST_TERRAN_SHIPS_PATROL">
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
-	<name>TERRAN_SHIP_WRAITH_A</name>
+	<!--<name>TERRAN_SHIP_WRAITH_A</name>
 	<name>TERRAN_SHIP_WRAITH_B</name>
 	<name>TERRAN_SHIP_WRAITH_C</name>
 	<name>TERRAN_SHIP_WRAITH_D</name>
@@ -177,43 +177,44 @@
 	<name>TERRAN_SHIP_VESSEL_C</name>
 	<name>TERRAN_SHIP_VESSEL_D</name>
 	<name>TERRAN_SHIP_VALKYRIE_A</name>
-	<name>TERRAN_SHIP_VALKYRIE_B</name>
+	<name>TERRAN_SHIP_VALKYRIE_B</name>-->
 </blueprintList>
 <blueprintList name="LIST_TERRAN_SHIPS_SCOUT">
-	<name>TERRAN_SHIP_WRAITH_A</name>
+	<!--<name>TERRAN_SHIP_WRAITH_A</name>
 	<name>TERRAN_SHIP_WRAITH_A</name>
 	<name>TERRAN_SHIP_WRAITH_A</name>
 	<name>TERRAN_SHIP_WRAITH_B</name>
 	<name>TERRAN_SHIP_WRAITH_C</name>
-	<name>TERRAN_SHIP_VESSEL_A</name>
+	<name>TERRAN_SHIP_VESSEL_A</name>-->
+	<name>TERRAN_SHIP_BATTLECRUISER_A</name> <!-- REMOVE ME-->
 </blueprintList>
 <blueprintList name="LIST_TERRAN_SHIPS_ASSAULT">
-	<name>TERRAN_SHIP_WRAITH_C</name>
+	<!--<name>TERRAN_SHIP_WRAITH_C</name>
 	<name>TERRAN_SHIP_WRAITH_D</name>
-	<name>TERRAN_SHIP_WRAITH_D</name>
+	<name>TERRAN_SHIP_WRAITH_D</name>-->
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
-	<name>TERRAN_SHIP_VALKYRIE_A</name>
-	<name>TERRAN_SHIP_VALKYRIE_B</name>
+	<!--<name>TERRAN_SHIP_VALKYRIE_A</name>
+	<name>TERRAN_SHIP_VALKYRIE_B</name>-->
 </blueprintList>
 <blueprintList name="LIST_TERRAN_SHIPS_AMBUSH">
-	<name>TERRAN_SHIP_WRAITH_B</name>
+	<!--<name>TERRAN_SHIP_WRAITH_B</name>
 	<name>TERRAN_SHIP_WRAITH_C</name>
-	<name>TERRAN_SHIP_WRAITH_D</name>
+	<name>TERRAN_SHIP_WRAITH_D</name>-->
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
-	<name>TERRAN_SHIP_VALKYRIE_A</name>
-	<name>TERRAN_SHIP_VALKYRIE_B</name>
+	<!--<name>TERRAN_SHIP_VALKYRIE_A</name>
+	<name>TERRAN_SHIP_VALKYRIE_B</name>-->
 </blueprintList>
 <blueprintList name="LIST_TERRAN_SHIPS_NON_AMBUSH">
-	<name>TERRAN_SHIP_WRAITH_B</name>
+	<!--<name>TERRAN_SHIP_WRAITH_B</name>
 	<name>TERRAN_SHIP_WRAITH_C</name>
-	<name>TERRAN_SHIP_WRAITH_D</name>
+	<name>TERRAN_SHIP_WRAITH_D</name>-->
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
-	<name>TERRAN_SHIP_VALKYRIE_A</name>
-	<name>TERRAN_SHIP_VALKYRIE_B</name>
+	<!--<name>TERRAN_SHIP_VALKYRIE_A</name>
+	<name>TERRAN_SHIP_VALKYRIE_B</name>-->
 </blueprintList>
 <blueprintList name="LIST_TERRAN_SHIPS_TRANSPORT">
 	<name>TERRAN_SHIP_VESSEL_A</name>
@@ -498,7 +499,7 @@
 	<maxSector>8</maxSector>
 	<systemList>
 		<artillery power="2" max="5" room="0" start="false" weapon="ARTILLERY_FED" />
-		<cloaking power="1" max="1" room="2" start="false" />
+		<!--<cloaking power="1" max="1" room="2" start="false" />-->
 		<doors power="1" max="3" room="3" start="true" />
 		<drones power="2" max="6" room="8" start="true" />
 		<engines power="1" max="3" room="7" start="true" />
@@ -744,7 +745,7 @@
 		<pilot power="1" max="3" room="1" start="true" />
 		<sensors power="1" max="1" room="0" start="false" />
 		<lily_system_bracers power="2" max="4" room="6" start="true" />
-		<weapons power="1" max="5" room="13" start="false" />
+		<weapons power="1" max="5" room="13" start="true" />
 	</systemList>
 	<weaponSlots>2</weaponSlots>
 	<droneSlots>1</droneSlots>
@@ -771,7 +772,7 @@
 		<drones power="1" max="1" room="0" start="true" />
 		<oxygen power="1" max="1" room="5" start="true" />
 		<sensors power="1" max="1" room="4" start="true" />
-		<shields power="1" max="1" room="3" start="true" />
+		<lily_system_bracers power="1" max="1" room="3" start="true" />
 	</systemList>
 	<weaponSlots>0</weaponSlots>
 	<droneSlots>4</droneSlots>
@@ -796,12 +797,12 @@
 		<drones power="1" max="10" room="2" start="true" />
 		<hacking power="1" max="3" room="5" start="false" />
 		<oxygen power="1" max="3" room="6" start="true" />
-		<shields power="1" max="5" room="3" start="true" />
+		<lily_system_bracers power="1" max="5" room="3" start="true" />
 	</systemList>
 	<weaponSlots>0</weaponSlots>
 	<droneSlots>6</droneSlots>
 	<weaponList missiles="6" count="0" />
-	<droneList drones="6" count="6" load="BLUELIST_DRONES_REPAIR_CREW" />
+	<droneList drones="6" count="6" load="TERRAN_DRONES_INTERNAL" />
 	<health amount="10" />
 	<maxPower amount="10" />
 	<crewCount amount="2" max="4" class="human" />
@@ -823,12 +824,12 @@
 		<medbay power="1" max="1" room="0" start="true" />
 		<mind power="1" max="1" room="4" start="true" />
 		<oxygen power="1" max="1" room="10" start="true" />
-		<shields power="1" max="1" room="2" start="true" />
+		<lily_system_bracers power="1" max="1" room="2" start="true" />
 	</systemList>
 	<weaponSlots>0</weaponSlots>
 	<droneSlots>2</droneSlots>
 	<weaponList missiles="0" count="0" />
-	<droneList drones="4" count="2" load="BLUELIST_DRONES_REPAIR_CREW" />
+	<droneList drones="4" count="2" load="TERRAN_DRONES_DEFENSE" />
 	<health amount="10" />
 	<maxPower amount="8" />
 	<crewCount amount="2" max="4" class="human" />
@@ -847,7 +848,7 @@
 		<drones power="1" max="1" room="0" start="true" />
 		<medbay power="1" max="1" room="5" start="true" />
 		<oxygen power="1" max="1" room="1" start="true" />
-		<shields power="1" max="1" room="7" start="true" />
+		<lily_system_bracers power="1" max="1" room="7" start="true" />
 		<teleporter power="1" max="3" room="3" start="true" />
 	</systemList>
 	<weaponSlots>0</weaponSlots>
@@ -875,7 +876,7 @@
 		<drones power="2" max="6" room="3" start="true" />
 		<hacking power="1" max="3" room="1" start="true" />
 		<oxygen power="1" max="3" room="5" start="true" />
-		<shields power="1" max="4" room="2" start="true" />
+		<lily_system_bracers power="1" max="4" room="2" start="true" />
 	</systemList>
 	<weaponSlots>0</weaponSlots>
 	<droneSlots>3</droneSlots>
@@ -900,7 +901,7 @@
 		<drones power="1" max="4" room="2" start="true" />
 		<medbay power="1" max="3" room="1" start="false" />
 		<oxygen power="1" max="3" room="7" start="true" />
-		<shields power="1" max="3" room="4" start="true" />
+		<lily_system_bracers power="1" max="3" room="4" start="true" />
 		<teleporter power="1" max="3" room="5" start="false" />
 		<weapons power="1" max="1" room="0" start="true" />
 	</systemList>
