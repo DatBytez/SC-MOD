@@ -1902,13 +1902,7 @@
 *********************************************************************************************************
 -->
 <crewBlueprint name="sc_target">
-	<!--<desc id="crew_SC_TARGET_desc"></desc>
-	<title id="crew_SC_TARGET_name"></title>
-	<short id="crew_SC_TARGET_short"></short>-->
-	<rarity>0</rarity>
-	<powerList>
-		<power></power>
-	</powerList>
+	<powerList/>
 </crewBlueprint>
 <!-- 
 *********************************************************************************************************

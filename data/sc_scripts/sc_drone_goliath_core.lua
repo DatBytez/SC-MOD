@@ -41,34 +41,18 @@ function goliath.get_ship_manager(shipId)
 end
 
 function goliath.get_active_pairs(shipManager)
-    if not shipManager then
-        return {}
-    end
-
-    local shipId = shipManager.iShipId
-
-    if not goliath.activePairsByShip[shipId] then
-        goliath.activePairsByShip[shipId] = {}
-    end
-
-    return goliath.activePairsByShip[shipId]
+    return goliath.activePairsByShip[
+        shipManager.iShipId
+    ]
 end
 
 function goliath.set_active_pairs(
     shipManager,
     pairs
 )
-    if not shipManager then
-        return
-    end
-
     goliath.activePairsByShip[
         shipManager.iShipId
-    ] = pairs or {}
-end
-
-function goliath.clear_active_pairs(shipId)
-    goliath.activePairsByShip[shipId] = {}
+    ] = pairs
 end
 
 function goliath.error_print(message)
@@ -81,16 +65,9 @@ function goliath.is_active_goliath(crew, shipManager)
         and crew.currentShipId == shipManager.iShipId
 end
 
-function goliath.is_goliath_turret(drone, shipManager)
-    return drone
-        and drone.blueprint
-        and drone.blueprint.name == goliath.FOLLOW_DRONE_BLUEPRINT
-        and drone.blueprint.typeName == "DEFENSE"
-        and drone.currentSpace == shipManager.iShipId
-end
-
 function goliath.is_live_goliath_turret(drone, shipManager)
-    return goliath.is_goliath_turret(drone, shipManager)
+    return drone.blueprint.name == goliath.FOLLOW_DRONE_BLUEPRINT
+        and drone.currentSpace == shipManager.iShipId
         and drone.deployed
         and not drone.bDead
 end
@@ -197,25 +174,9 @@ function goliath.has_incoming_hostile_projectile(
 end
 
 local function legs_are_operational(crew)
-    if not crew or crew.bDead then
-        return false
-    end
-
     -- Functional() follows the actual TERRAN_GOLIATH device power state.
-    local functional = false
-
-    local success, result = pcall(function()
-        return crew:Functional()
-    end)
-
-    if success then
-        functional = result
-    end
-
-    local stunTime = crew.fStunTime or 0
-
-    return functional
-        and stunTime <= 0
+    return crew:Functional()
+        and crew.fStunTime <= 0
 end
 
 function goliath.update_turret_power_from_legs(
@@ -230,10 +191,7 @@ function goliath.update_turret_power_from_legs(
         defenseDrone:SetDeployed(true)
         defenseDrone:SetPowered(true)
 
-        pcall(function()
-            defenseDrone:SetInstantPowered()
-        end)
-
+        defenseDrone:SetInstantPowered()
         defenseDrone.powered = true
     else
         defenseDrone:SetPowered(false)

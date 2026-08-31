@@ -13,12 +13,6 @@ local goliath = mods.sc.goliath
 
 local TURRET_HIT_DAMAGE = 45
 
-local function damage_connected_legs(crew)
-    crew:DirectModifyHealth(
-        -TURRET_HIT_DAMAGE
-    )
-end
-
 local function update_ship_goliaths(
     shipManager
 )
@@ -76,7 +70,7 @@ script.on_internal_event(
                 playerShip
             )
         else
-            goliath.clear_active_pairs(0)
+            goliath.activePairsByShip[0] = {}
         end
 
         local otherShip =
@@ -87,7 +81,7 @@ script.on_internal_event(
                 otherShip
             )
         else
-            goliath.clear_active_pairs(1)
+            goliath.activePairsByShip[1] = {}
         end
     end
 )
@@ -137,21 +131,10 @@ script.on_internal_event(
             return Defines.Chain.CONTINUE
         end
 
-        damage_connected_legs(crew)
+        crew:DirectModifyHealth(
+            -TURRET_HIT_DAMAGE
+        )
 
         return Defines.Chain.PREEMPT
-    end
-)
-
-script.on_internal_event(
-    Defines.InternalEvents.SHIP_LOOP,
-    function(shipManager)
-        if goliath.ship_is_destroyed(
-            shipManager
-        ) then
-            goliath.remove_all_turrets(
-                shipManager
-            )
-        end
     end
 )

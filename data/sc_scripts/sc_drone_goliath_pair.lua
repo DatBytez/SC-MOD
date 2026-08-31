@@ -2,8 +2,7 @@
 DESCRIPTION: Manages pairing between Terran Goliath crew-drones and their companion turrets.
         - Collects active terran_goliath crew-drones for either active ship.
         - Creates one TERRAN_GOLIATH_T companion turret for each unpaired Goliath.
-        - Restores valid pair state after loading.
-        - Adopts eligible unmarked turrets for old-save compatibility.
+        - Reuses valid managed pair state when available after loading.
         - Removes duplicate, orphaned, and retired companion turrets.
         - Publishes current crew/turret pairs separately for ship IDs 0 and 1.
 DEPENDENCIES: sc_drone_goliath_core.lua
@@ -49,12 +48,6 @@ function goliath.find_active_goliath_by_id(
     end
 
     return nil
-end
-
-local function distance_squared(pointA, pointB)
-    local x = pointA.x - pointB.x
-    local y = pointA.y - pointB.y
-    return x * x + y * y
 end
 
 local function mark_turret_pair(
@@ -174,33 +167,6 @@ local function spawn_companion_turret(
     return defenseDrone
 end
 
-local function find_nearest_unclaimed_turret(
-    crew,
-    liveTurrets,
-    usedDroneIds
-)
-    local crewPosition = crew:GetLocation()
-    local nearestDrone = nil
-    local nearestDistance = nil
-
-    for _, drone in ipairs(liveTurrets) do
-        if not usedDroneIds[drone.selfId] then
-            local distance = distance_squared(
-                crewPosition,
-                drone.currentLocation
-            )
-
-            if nearestDistance == nil
-                or distance < nearestDistance then
-                nearestDrone = drone
-                nearestDistance = distance
-            end
-        end
-    end
-
-    return nearestDrone
-end
-
 function goliath.remove_all_turrets(
     shipManager
 )
@@ -242,7 +208,6 @@ function goliath.synchronize_pairs(
         collect_active_goliaths(shipManager)
 
     local managedLiveByCrewId = {}
-    local unmarkedLiveTurrets = {}
     local duplicateOrOrphanedTurrets = {}
 
     for drone in vter(shipManager.spaceDrones) do
@@ -307,28 +272,16 @@ function goliath.synchronize_pairs(
                         )
                     end
                 end
-            elseif turretState.managed then
-                table.insert(
-                    duplicateOrOrphanedTurrets,
-                    drone
-                )
             else
                 table.insert(
-                    unmarkedLiveTurrets,
+                    duplicateOrOrphanedTurrets,
                     drone
                 )
             end
         end
     end
 
-    local usedDroneIds = {}
     local newPairs = {}
-
-    for _, drone in pairs(
-        managedLiveByCrewId
-    ) do
-        usedDroneIds[drone.selfId] = true
-    end
 
     for _, crew in ipairs(crews) do
         local crewId = crew.extend.selfId
@@ -348,30 +301,13 @@ function goliath.synchronize_pairs(
             )
         elseif not crewState.companionInitialized then
             defenseDrone =
-                find_nearest_unclaimed_turret(
-                    crew,
-                    unmarkedLiveTurrets,
-                    usedDroneIds
-                )
-
-            if defenseDrone then
-                mark_turret_pair(
-                    defenseDrone,
+                spawn_companion_turret(
+                    shipManager,
                     crew
                 )
-            else
-                defenseDrone =
-                    spawn_companion_turret(
-                        shipManager,
-                        crew
-                    )
-            end
         end
 
         if defenseDrone then
-            usedDroneIds[defenseDrone.selfId] =
-                true
-
             goliath.position_turret_with_crew(
                 crew,
                 defenseDrone
@@ -392,12 +328,7 @@ function goliath.synchronize_pairs(
     for _, drone in ipairs(
         duplicateOrOrphanedTurrets
     ) do
-        if goliath.is_live_goliath_turret(
-            drone,
-            shipManager
-        ) then
-            retire_turret(drone)
-        end
+        retire_turret(drone)
     end
 
     goliath.set_active_pairs(
