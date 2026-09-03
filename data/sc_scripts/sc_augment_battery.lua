@@ -1,7 +1,6 @@
 --[[
 DESCRIPTION: Shared battery framework for tag-driven battery augments.
         - Tracks activation state per battery-powered room.
-        - Provides shared helpers for modular battery effects.
         - Renders battery-powered room visuals.
 TAG: <sc-battery/>
 SOURCE CREDIT: MsBinaryLily
@@ -24,9 +23,11 @@ local ACTIVATION_RATE = 0.15
 
 local batteryState = {}
 local activeHiddenAugs = {}
-local scalingHiddenAugCounts = {}
 
-local augmentManager = Hyperspace.CustomAugmentManager.GetInstance()
+local scalingHiddenAugCounts = {
+    TERRAN_HIDDEN_FIRE_EXTINGUISHERS = 3,
+    TERRAN_HIDDEN_FTL_BOOSTER = 9
+}
 
 
 -- ============================================================================

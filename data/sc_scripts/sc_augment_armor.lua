@@ -49,6 +49,8 @@ end
 script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA, handle_reduction_armor)
 
 script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA_HIT, function(ship, projectile, location)
+    if not projectile then return end
+    
     local pdata = userdata_table(projectile, "mods.mv.reductionArmor")
     local blockedDamage = pdata.blockedDamage or 0
 

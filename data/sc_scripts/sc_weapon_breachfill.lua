@@ -12,6 +12,7 @@ local breachFillWeapons = {}
 mods.sc.tag.register("weapon", "sc-breachFill", breachFillWeapons)
 
 local function fill_room_breach(shipManager, projectile, location)
+    if not projectile then return end
     if not breachFillWeapons[projectile.extend.name] then return end
 
     local shipGraph = Hyperspace.ShipGraph.GetShipInfo(shipManager.iShipId)

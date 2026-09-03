@@ -12,6 +12,7 @@ local fireFillWeapons = {}
 mods.sc.tag.register("weapon", "sc-fireFill", fireFillWeapons)
 
 local function fill_room_fire(shipManager, projectile, location)
+    if not projectile then return end
     if not fireFillWeapons[projectile.extend.name] then return end
 
     local shipGraph = Hyperspace.ShipGraph.GetShipInfo(shipManager.iShipId)

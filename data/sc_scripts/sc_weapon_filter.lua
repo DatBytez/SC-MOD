@@ -19,6 +19,8 @@ local function target_matches_weapon_filter(shipManager, weaponName)
 end
 
 local function remove_filtered_ship_damage(shipManager, projectile, damage)
+    if not projectile then return end
+    
     local weaponName = projectile.extend.name
 
     if not bioWeapons[weaponName] and not rustWeapons[weaponName] then return end

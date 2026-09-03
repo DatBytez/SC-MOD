@@ -197,9 +197,8 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
 end)
 
 script.on_internal_event(
-    Defines.InternalEvents.DAMAGE_AREA_HIT,
-    function(shipManager, projectile, location)
-        if projectile.extend.name ~= POD_PROJECTILE_BLUEPRINT then
+    Defines.InternalEvents.DAMAGE_AREA_HIT, function(shipManager, projectile, location)
+        if not projectile or projectile.extend.name ~= POD_PROJECTILE_BLUEPRINT then
             return Defines.Chain.CONTINUE
         end
 
