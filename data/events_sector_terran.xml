@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <FTL>
+	<!-- *****************  TERRAN FILLER  ****************** -->
+
+<event name="SC_TERRAN_EMPTY">
+    <text>The area around this beacon is quiet. Nothing of interest appears on your sensors.</text>
+</event>
  <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     SHIP EVENT DEFINITIONS (PRIMARILY FOR TESTING)
