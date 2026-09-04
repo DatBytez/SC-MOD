@@ -62,8 +62,7 @@ end
 script.on_internal_event(
     Defines.InternalEvents.ON_TICK,
     function()
-        local playerShip =
-            goliath.get_ship_manager(0)
+        local playerShip = goliath.get_ship_manager(0)
 
         if playerShip then
             update_ship_goliaths(
@@ -73,15 +72,10 @@ script.on_internal_event(
             goliath.activePairsByShip[0] = {}
         end
 
-        local otherShip =
-            goliath.get_ship_manager(1)
+        local otherShip = goliath.get_ship_manager(1)
 
-        if otherShip
-            and otherShip._targetable
-            and otherShip._targetable.hostile then
-            update_ship_goliaths(
-                otherShip
-            )
+        if otherShip then
+            update_ship_goliaths(otherShip)
         else
             goliath.activePairsByShip[1] = {}
         end

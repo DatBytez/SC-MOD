@@ -43,7 +43,6 @@ local function copy_custom_damage(src, dst)
     if not srcDamage or not dstDamage then return end
 
     dstDamage.def = srcDamage.def
-    dstDamage.sourceShipId = srcDamage.sourceShipId
     dstDamage.accuracyMod = srcDamage.accuracyMod
     dstDamage.droneAccuracyMod = srcDamage.droneAccuracyMod
 end

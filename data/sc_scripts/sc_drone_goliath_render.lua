@@ -127,26 +127,8 @@ script.on_render_event(
     end
 )
 
-script.on_render_event(
-    Defines.RenderEvents.SHIP,
-    function(ship)
-        local shipManager =
-            goliath.get_ship_manager(
-                ship.iShipId
-            )
-
-        if ship.iShipId == 0 then
-            apply_all_native_facing(
-                shipManager
-            )
-        elseif ship.iShipId == 1
-            and shipManager
-            and shipManager._targetable
-            and shipManager._targetable.hostile then
-            apply_all_native_facing(
-                shipManager
-            )
-        end
+script.on_render_event(Defines.RenderEvents.SHIP, function(ship)
+        apply_all_native_facing(goliath.get_ship_manager(ship.iShipId))
     end,
     function() end
 )
