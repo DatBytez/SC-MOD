@@ -111,17 +111,7 @@ function battery.set_hidden_aug(shipManager, augName, shouldEnable)
 end
 
 local function get_scaling_hidden_aug_count(augName)
-    local count = scalingHiddenAugCounts[augName]
-    if count ~= nil then return count end
-
-    count = 0
-
-    while augmentManager:GetAugmentDefinition(augName .. "_" .. (count + 1)) do
-        count = count + 1
-    end
-
-    scalingHiddenAugCounts[augName] = count
-    return count
+    return scalingHiddenAugCounts[augName] or 0
 end
 
 function battery.clear_scaling_hidden_aug(shipManager, augName)
