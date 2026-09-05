@@ -1831,7 +1831,7 @@
     <mod-append:script>data/sc_scripts/sc_augment_detector.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_armor.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
-    <!--<mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>-->
+    <mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_repair.lua</mod-append:script>
 
     <mod-append:script>data/sc_scripts/sc_drone_goliath_core.lua</mod-append:script>
