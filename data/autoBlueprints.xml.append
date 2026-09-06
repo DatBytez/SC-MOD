@@ -3,25 +3,26 @@
 <FTL>
 
 <blueprintList name="TERRAN_DRONES_STANDARD">
-	<!--<name>TERRAN_SCV</name>
+	<name>TERRAN_SCV</name>
 	<name>TERRAN_SPIDER_1</name>
 	<name>TERRAN_SPIDER_2</name>
 	<name>TERRAN_SPIDER_3</name>
 	<name>TERRAN_DEFENSE_1</name>
 	<name>TERRAN_DEFENSE_2</name>
 	<name>TERRAN_DEFENSE_3</name>
-	<name>TERRAN_POD</name>-->
 	<name>TERRAN_GOLIATH</name>
+	<!--<name>TERRAN_POD</name>
+	<name>TERRAN_COMSAT</name>-->
 </blueprintList>
 
 <blueprintList name="TERRAN_DRONES_COMBAT">
 </blueprintList>
 
 <blueprintList name="TERRAN_DRONES_INTERNAL">
-	<!--<name>TERRAN_SCV</name>
+	<name>TERRAN_SCV</name>
 	<name>TERRAN_SPIDER_1</name>
 	<name>TERRAN_SPIDER_2</name>
-	<name>TERRAN_SPIDER_3</name>-->
+	<name>TERRAN_SPIDER_3</name>
 	<name>TERRAN_GOLIATH</name>
 </blueprintList>
 
@@ -168,7 +169,7 @@
 </blueprintList>
 <blueprintList name="LIST_TERRAN_SHIPS_PATROL">
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
-	<!--<name>TERRAN_SHIP_WRAITH_A</name>
+	<name>TERRAN_SHIP_WRAITH_A</name>
 	<name>TERRAN_SHIP_WRAITH_B</name>
 	<name>TERRAN_SHIP_WRAITH_C</name>
 	<name>TERRAN_SHIP_WRAITH_D</name>
@@ -177,44 +178,43 @@
 	<name>TERRAN_SHIP_VESSEL_C</name>
 	<name>TERRAN_SHIP_VESSEL_D</name>
 	<name>TERRAN_SHIP_VALKYRIE_A</name>
-	<name>TERRAN_SHIP_VALKYRIE_B</name>-->
+	<name>TERRAN_SHIP_VALKYRIE_B</name>
 </blueprintList>
 <blueprintList name="LIST_TERRAN_SHIPS_SCOUT">
-	<!--<name>TERRAN_SHIP_WRAITH_A</name>
+	<name>TERRAN_SHIP_WRAITH_A</name>
 	<name>TERRAN_SHIP_WRAITH_A</name>
 	<name>TERRAN_SHIP_WRAITH_A</name>
 	<name>TERRAN_SHIP_WRAITH_B</name>
 	<name>TERRAN_SHIP_WRAITH_C</name>
-	<name>TERRAN_SHIP_VESSEL_A</name>-->
-	<name>TERRAN_SHIP_BATTLECRUISER_A</name> <!-- REMOVE ME-->
+	<name>TERRAN_SHIP_VESSEL_A</name>
 </blueprintList>
 <blueprintList name="LIST_TERRAN_SHIPS_ASSAULT">
-	<!--<name>TERRAN_SHIP_WRAITH_C</name>
+	<name>TERRAN_SHIP_WRAITH_C</name>
 	<name>TERRAN_SHIP_WRAITH_D</name>
-	<name>TERRAN_SHIP_WRAITH_D</name>-->
+	<name>TERRAN_SHIP_WRAITH_D</name>
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
-	<!--<name>TERRAN_SHIP_VALKYRIE_A</name>
-	<name>TERRAN_SHIP_VALKYRIE_B</name>-->
+	<name>TERRAN_SHIP_VALKYRIE_A</name>
+	<name>TERRAN_SHIP_VALKYRIE_B</name>
 </blueprintList>
 <blueprintList name="LIST_TERRAN_SHIPS_AMBUSH">
-	<!--<name>TERRAN_SHIP_WRAITH_B</name>
+	<name>TERRAN_SHIP_WRAITH_B</name>
 	<name>TERRAN_SHIP_WRAITH_C</name>
-	<name>TERRAN_SHIP_WRAITH_D</name>-->
+	<name>TERRAN_SHIP_WRAITH_D</name>
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
-	<!--<name>TERRAN_SHIP_VALKYRIE_A</name>
-	<name>TERRAN_SHIP_VALKYRIE_B</name>-->
+	<name>TERRAN_SHIP_VALKYRIE_A</name>
+	<name>TERRAN_SHIP_VALKYRIE_B</name>
 </blueprintList>
 <blueprintList name="LIST_TERRAN_SHIPS_NON_AMBUSH">
-	<!--<name>TERRAN_SHIP_WRAITH_B</name>
+	<name>TERRAN_SHIP_WRAITH_B</name>
 	<name>TERRAN_SHIP_WRAITH_C</name>
-	<name>TERRAN_SHIP_WRAITH_D</name>-->
+	<name>TERRAN_SHIP_WRAITH_D</name>
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
-	<!--<name>TERRAN_SHIP_VALKYRIE_A</name>
-	<name>TERRAN_SHIP_VALKYRIE_B</name>-->
+	<name>TERRAN_SHIP_VALKYRIE_A</name>
+	<name>TERRAN_SHIP_VALKYRIE_B</name>
 </blueprintList>
 <blueprintList name="LIST_TERRAN_SHIPS_TRANSPORT">
 	<name>TERRAN_SHIP_VESSEL_A</name>
@@ -346,7 +346,7 @@
 </blueprintList>
 
 <shipBlueprint name="SHIP_TERRAN_WRAITH_ELITE" layout="SHIP_TERRAN_WRAITH_ELITE" img="SHIP_TERRAN_WRAITH_ELITE">
-	<class>Terran Scout</class>
+	<class id="text_TERRAN_SCOUT_class"/>
 	<minSector>1</minSector>
 	<maxSector>6</maxSector>
 	<systemList>
@@ -373,7 +373,7 @@
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_WRAITH_A" layout="TERRAN_SHIP_WRAITH_A" img="TERRAN_SHIP_WRAITH_A">
-	<class>Squadron Class</class>
+	<class id="text_TERRAN_SCOUT_class"/>
 	<minSector>1</minSector>
 	<maxSector>5</maxSector>
 	<systemList>
@@ -399,7 +399,7 @@
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_WRAITH_B" layout="TERRAN_SHIP_WRAITH_B" img="TERRAN_SHIP_WRAITH_B">
-	<class>Squadron Class</class>
+	<class id="text_TERRAN_SQUADRON_class"/>
 	<minSector>1</minSector>
 	<maxSector>6</maxSector>
 	<systemList>
@@ -426,7 +426,7 @@
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_WRAITH_C" layout="TERRAN_SHIP_WRAITH_C" img="TERRAN_SHIP_WRAITH_C">
-	<class>Squadron Class</class>
+	<class id="text_TERRAN_SQUADRON_class"/>
 	<minSector>2</minSector>
 	<maxSector>7</maxSector>
 	<systemList>
@@ -453,7 +453,7 @@
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_WRAITH_D" layout="TERRAN_SHIP_WRAITH_D" img="TERRAN_SHIP_WRAITH_D">
-	<class>Squadron Class</class>
+	<class id="text_TERRAN_SQUADRON_class"/>
 	<minSector>4</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
@@ -494,7 +494,7 @@
 </blueprintList>
 
 <shipBlueprint name="TERRAN_SHIP_BATTLECRUISER_A" layout="TERRAN_SHIP_BATTLECRUISER_A" img="TERRAN_SHIP_BATTLECRUISER_A">
-	<class>Battlecruiser</class>
+	<class id="text_TERRAN_BATTLECRUISER_class"/>
 	<minSector>3</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
@@ -533,7 +533,7 @@
 </blueprintList>
 
 <shipBlueprint name="TERRAN_SHIP_VESSEL_A" layout="TERRAN_SHIP_VESSEL_A" img="TERRAN_SHIP_VESSEL_A">
-	<class>Science Vessel</class>
+	<class id="text_TERRAN_SCIENCE_class"/>
 	<minSector>1</minSector>
 	<maxSector>6</maxSector>
 	<systemList>
@@ -561,7 +561,7 @@
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_VESSEL_B" layout="TERRAN_SHIP_VESSEL_B" img="TERRAN_SHIP_VESSEL_B">
-	<class>Science Vessel</class>
+	<class id="text_TERRAN_SCIENCE_class"/>
 	<minSector>2</minSector>
 	<maxSector>7</maxSector>
 	<systemList>
@@ -590,7 +590,7 @@
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_VESSEL_C" layout="TERRAN_SHIP_VESSEL_C" img="TERRAN_SHIP_VESSEL_C">
-	<class>Science Vessel</class>
+	<class id="text_TERRAN_SCIENCE_class"/>
 	<minSector>2</minSector>
 	<maxSector>7</maxSector>
 	<systemList>
@@ -619,7 +619,7 @@
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_VESSEL_D" layout="TERRAN_SHIP_VESSEL_D" img="TERRAN_SHIP_VESSEL_D">
-	<class>Science Vessel</class>
+	<class id="text_TERRAN_SCIENCE_class"/>
 	<minSector>4</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
@@ -658,7 +658,7 @@
 	<name>terran_firebat</name>
 </blueprintList>
 <shipBlueprint name="TERRAN_SHIP_DROPSHIP" layout="TERRAN_SHIP_DROPSHIP" img="TERRAN_SHIP_DROPSHIP">
-	<class>Transport</class>
+	<class id="text_TERRAN_TRANSPORT_class"/>
 	<minSector>1</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
@@ -699,7 +699,7 @@
 </blueprintList>
 
 <shipBlueprint name="TERRAN_SHIP_VALKYRIE_A" layout="TERRAN_SHIP_VALKYRIE_A" img="TERRAN_SHIP_VALKYRIE_A">
-	<class>Missile Frigate</class>
+	<class id="text_TERRAN_ASSAULT_class"/>
 	<minSector>1</minSector>
 	<maxSector>6</maxSector>
 	<systemList>
@@ -728,7 +728,7 @@
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_VALKYRIE_B" layout="TERRAN_SHIP_VALKYRIE_B" img="TERRAN_SHIP_VALKYRIE_B">
-	<class>Missile Frigate</class>
+	<class id="text_TERRAN_ASSAULT_class"/>
 	<minSector>3</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
@@ -762,7 +762,7 @@
 <!-- ********** TERRAN STORE SHIPS ********** -->
 
 <shipBlueprint name="TERRAN_SHIP_COMMAND" layout="TERRAN_SHIP_COMMAND" img="TERRAN_SHIP_COMMAND">
-	<class id="text_TERRAN_BUILDING_class">Building</class>
+	<class id="text_TERRAN_BUILDING_class"/>
 	<minSector>1</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
@@ -787,7 +787,7 @@
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_FACTORY" layout="TERRAN_SHIP_FACTORY" img="TERRAN_SHIP_FACTORY">
-	<class id="text_TERRAN_BUILDING_class">Building</class>
+	<class id="text_TERRAN_BUILDING_class"/>
 	<minSector>1</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
@@ -812,7 +812,7 @@
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_SCIENCE" layout="TERRAN_SHIP_SCIENCE" img="TERRAN_SHIP_SCIENCE">
-	<class id="text_TERRAN_BUILDING_class">Building</class>
+	<class id="text_TERRAN_BUILDING_class"/>
 	<minSector>1</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
@@ -839,7 +839,7 @@
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_BARRACKS" layout="TERRAN_SHIP_BARRACKS" img="TERRAN_SHIP_BARRACKS">
-	<class id="text_TERRAN_BUILDING_class">Building</class>
+	<class id="text_TERRAN_BUILDING_class"/>
 	<minSector>1</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
@@ -864,7 +864,7 @@
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_ENGINEERING" layout="TERRAN_SHIP_ENGINEERING" img="TERRAN_SHIP_ENGINEERING">
-	<class id="text_TERRAN_BUILDING_class">Building</class>
+	<class id="text_TERRAN_BUILDING_class"/>
 	<minSector>1</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
@@ -891,7 +891,7 @@
 </shipBlueprint>
 
 <shipBlueprint name="TERRAN_SHIP_STARPORT" layout="TERRAN_SHIP_STARPORT" img="TERRAN_SHIP_STARPORT">
-	<class id="text_TERRAN_BUILDING_class">Building</class>
+	<class id="text_TERRAN_BUILDING_class"/>
 	<minSector>1</minSector>
 	<maxSector>8</maxSector>
 	<systemList>

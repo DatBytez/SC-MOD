@@ -25,7 +25,7 @@ local function get_irradiate_blueprint_name(projectile)
     if not irradiateWeapons[projectile.extend.name] then return nil end
 
     local level = math.min(scaling.get_level(projectile, "chainstep"), 4)
-    return "SC_IRRADIATE_EROSION_BONUS_" .. level + 1
+    return "TERRAN_IRRADIATE_EROSION_" .. level + 1
 end
 
 local function spawn_irradiate_impact(shipManager, projectile, location, blueprintName)

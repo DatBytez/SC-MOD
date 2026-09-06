@@ -21,8 +21,8 @@
 -->
 <systemBlueprint name="lily_system_bracers">
     <type>doors</type>
-    <title id="system_lily_system_bracers_NAME"></title>
-    <desc id="system_lily_system_bracers_DESC"></desc>
+    <title id="system_lily_system_bracers_NAME"/>
+    <desc id="system_lily_system_bracers_DESC"/>
     <startPower>1</startPower>
     <maxPower>5</maxPower>
     <rarity>2</rarity>
@@ -41,8 +41,8 @@
 **********************************************************************************************************************
 -->
 <augBlueprint name="TERRAN_SHIP">
-	<title id="NOYB"></title>
-	<desc id="NOYB"></desc>
+	<title id="NOYB"/>
+	<desc id="NOYB"/>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<stackable>false</stackable>
@@ -50,8 +50,8 @@
 </augBlueprint>
 
 <augBlueprint name="TERRAN_WRAITH_BATTERY">
-    <title id="aug_TERRAN_WRAITH_BATTERY_NAME"></title>
-    <desc id="aug_TERRAN_WRAITH_BATTERY_DESC"></desc>
+    <title id="aug_TERRAN_WRAITH_BATTERY_NAME"/>
+    <desc id="aug_TERRAN_WRAITH_BATTERY_DESC"/>
     <cost>60</cost>
     <rarity>4</rarity>
     <stackable>false</stackable>
@@ -64,8 +64,8 @@
 </augBlueprint>
 
 <augBlueprint name="TERRAN_SHIP_ARMOR_LIGHT">
-	<title id="aug_TERRAN_SHIP_ARMOR_LIGHT_NAME"></title>
-	<desc id="aug_TERRAN_SHIP_ARMOR_LIGHT_DESC"></desc>
+	<title id="aug_TERRAN_SHIP_ARMOR_LIGHT_NAME"/>
+	<desc id="aug_TERRAN_SHIP_ARMOR_LIGHT_DESC"/>
 	<cost>60</cost>
 	<rarity>3</rarity>
 	<stackable>false</stackable>
@@ -74,8 +74,8 @@
 </augBlueprint>
 
 <augBlueprint name="TERRAN_SHIP_ARMOR_MEDIUM">
-	<title id="aug_TERRAN_SHIP_ARMOR_MEDIUM_NAME"></title>
-	<desc id="aug_TERRAN_SHIP_ARMOR_MEDIUM_DESC"></desc>
+	<title id="aug_TERRAN_SHIP_ARMOR_MEDIUM_NAME"/>
+	<desc id="aug_TERRAN_SHIP_ARMOR_MEDIUM_DESC"/>
 	<cost>70</cost>
 	<rarity>3</rarity>
 	<stackable>false</stackable>
@@ -85,8 +85,8 @@
 </augBlueprint>
 
 <augBlueprint name="TERRAN_SHIP_ARMOR_HEAVY">
-	<title id="aug_TERRAN_SHIP_ARMOR_HEAVY_NAME"></title>
-	<desc id="aug_TERRAN_SHIP_ARMOR_HEAVY_DESC"></desc>
+	<title id="aug_TERRAN_SHIP_ARMOR_HEAVY_NAME"/>
+	<desc id="aug_TERRAN_SHIP_ARMOR_HEAVY_DESC"/>
 	<cost>80</cost>
 	<rarity>4</rarity>
 	<stackable>false</stackable>
@@ -96,8 +96,8 @@
 </augBlueprint>
 
 <augBlueprint name="SC_DETECTOR">
-	<title id="aug_SC_DETECTOR_NAME"></title>
-	<desc id="aug_SC_DETECTOR_DESC"></desc>
+	<title id="aug_SC_DETECTOR_NAME"/>
+	<desc id="aug_SC_DETECTOR_DESC"/>
 	<cost>70</cost>
 	<rarity>4</rarity>
 	<stackable>false</stackable>
@@ -1479,11 +1479,11 @@
 	<type>BEAM</type>
 	<flavorType>Pinpoint</flavorType>
 	<tip>tip_focus</tip>
-	<title id="weapon_TERRAN_BEAM_IRRADIATE_title"></title>
-	<short id="weapon_TERRAN_BEAM_IRRADIATE_short"></short>
-	<desc>...</desc>
-	<descriptionOverride id="weapon_TERRAN_BEAM_IRRADIATE_desc"></descriptionOverride>
-	<tooltipOverride id="weapon_TERRAN_BEAM_IRRADIATE_tooltip"></tooltipOverride>
+	<title id="weapon_TERRAN_BEAM_IRRADIATE_title"/>
+	<short id="weapon_TERRAN_BEAM_IRRADIATE_short"/>
+	<desc id="NOYB"/>
+	<descriptionOverride id="weapon_TERRAN_BEAM_IRRADIATE_desc"/>
+	<tooltipOverride id="weapon_TERRAN_BEAM_IRRADIATE_tooltip"/>
 	<damage>1</damage>
 	<sc-irradiate/>
 	<bio-weapon/>
@@ -1523,11 +1523,11 @@
 	<type>BEAM</type>
 	<flavorType>Pinpoint</flavorType>
 	<tip>tip_focus</tip>
-	<title id="weapon_TERRAN_BEAM_IRRADIATE_LITE_title"></title>
-	<short id="weapon_TERRAN_BEAM_IRRADIATE_LITE_short"></short>
-	<desc>...</desc>
-	<descriptionOverride id="weapon_TERRAN_BEAM_IRRADIATE_LITE_desc"></descriptionOverride>
-	<tooltipOverride id="weapon_TERRAN_BEAM_IRRADIATE_LITE_tooltip"></tooltipOverride>
+	<title id="weapon_TERRAN_BEAM_IRRADIATE_LITE_title"/>
+	<short id="weapon_TERRAN_BEAM_IRRADIATE_LITE_short"/>
+	<desc id="NOYB"/>
+	<descriptionOverride id="weapon_TERRAN_BEAM_IRRADIATE_LITE_desc"/>
+	<tooltipOverride id="weapon_TERRAN_BEAM_IRRADIATE_LITE_tooltip"/>
 	<damage>1</damage>
 	<sc-irradiate/>
 	<bio-weapon/>
@@ -1565,12 +1565,11 @@
 
 <!-- Irradiate Erosion Effects -->
 
-<weaponBlueprint name="SC_IRRADIATE_EROSION_BONUS_1">
+<weaponBlueprint name="TERRAN_IRRADIATE_EROSION_1">
     <type>LASER</type>
-    <title>Hidden Irradiate Effect 1</title>
-    <short>Hidden Irradiate Effect 1</short>
-    <desc>Hidden Irradiate chainstep effect.</desc>
-    <tooltip>Hidden Irradiate chainstep effect.</tooltip>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 
 	<sp>0</sp>
     <damage>0</damage>
@@ -1610,12 +1609,11 @@
     </statBoosts>
 </weaponBlueprint>
 
-<weaponBlueprint name="SC_IRRADIATE_EROSION_BONUS_2">
+<weaponBlueprint name="TERRAN_IRRADIATE_EROSION_2">
     <type>LASER</type>
-    <title>Hidden Irradiate Effect 2</title>
-    <short>Hidden Irradiate Effect 2</short>
-    <desc>Hidden Irradiate chainstep effect.</desc>
-    <tooltip>Hidden Irradiate chainstep effect.</tooltip>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 
     <sp>0</sp>
     <damage>0</damage>
@@ -1655,12 +1653,11 @@
     </statBoosts>
 </weaponBlueprint>
 
-<weaponBlueprint name="SC_IRRADIATE_EROSION_BONUS_3">
+<weaponBlueprint name="TERRAN_IRRADIATE_EROSION_3">
     <type>LASER</type>
-    <title>Hidden Irradiate Effect 3</title>
-    <short>Hidden Irradiate Effect 3</short>
-    <desc>Hidden Irradiate chainstep effect.</desc>
-    <tooltip>Hidden Irradiate chainstep effect.</tooltip>
+    <title id="NOYB"/>
+    <short id="NOYB"/>
+    <desc id="NOYB"/>
 
     <sp>0</sp>
     <damage>0</damage>
@@ -1700,12 +1697,11 @@
     </statBoosts>
 </weaponBlueprint>
 
-<weaponBlueprint name="SC_IRRADIATE_EROSION_BONUS_4">
+<weaponBlueprint name="TERRAN_IRRADIATE_EROSION_4">
     <type>LASER</type>
-    <title>Hidden Irradiate Effect 4</title>
-    <short>Hidden Irradiate Effect 4</short>
-    <desc>Hidden Irradiate chainstep effect.</desc>
-    <tooltip>Hidden Irradiate chainstep effect.</tooltip>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 
     <sp>0</sp>
     <damage>0</damage>
@@ -1745,12 +1741,11 @@
     </statBoosts>
 </weaponBlueprint>
 
-<weaponBlueprint name="SC_IRRADIATE_EROSION_BONUS_5">
+<weaponBlueprint name="TERRAN_IRRADIATE_EROSION_5">
     <type>LASER</type>
-    <title>Hidden Irradiate Effect 5</title>
-    <short>Hidden Irradiate Effect 5</short>
-    <desc>Hidden Irradiate chainstep effect.</desc>
-    <tooltip>Hidden Irradiate chainstep effect.</tooltip>
+    <title id="NOYB"/>
+    <short id="NOYB"/>
+    <desc id="NOYB"/>
 
     <sp>0</sp>
     <damage>0</damage>
@@ -1798,14 +1793,14 @@
 -->
 <weaponBlueprint name="TERRAN_MISSILE_HALO">
 	<type>BURST</type>
-	<flavorType id="weapon_TERRAN_MISSILE_HALO_flavorType"/>
+	<flavorType>Missile</flavorType>
 	<drone_targetable>1</drone_targetable>
 	<title id="weapon_TERRAN_MISSILE_HALO_title"/>
 	<tip>tip_charge</tip>
 	<short id="weapon_TERRAN_MISSILE_HALO_short"/>
 	<desc id="weapon_TERRAN_MISSILE_HALO_desc"/>
 	<tooltip id="weapon_TERRAN_MISSILE_HALO_tooltip"/>
-	<radius>35</radius>  <!-- was 34-->
+	<radius>35</radius>
 	<accuracyMod>100</accuracyMod>
 	<missiles>0</missiles>
 	<damage>1</damage>
@@ -1851,7 +1846,7 @@
 
 <weaponBlueprint name="TERRAN_MISSILE_LONGBOLT">
 	<type>BURST</type>
-	<flavorType id="weapon_TERRAN_MISSILE_LONGBOLT_flavorType"/>
+	<flavorType>Missile</flavorType>
 	<drone_targetable>1</drone_targetable>
 	<title id="weapon_TERRAN_MISSILE_LONGBOLT_title"/>
 	<tip>tip_charge</tip>
@@ -1902,6 +1897,9 @@
 *********************************************************************************************************
 -->
 <crewBlueprint name="sc_target">
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<powerList/>
 </crewBlueprint>
 <!-- 
@@ -1910,10 +1908,10 @@
 *********************************************************************************************************
 -->
 <crewBlueprint name="terran_marine">
-	<desc id="crew_TERRAN_MARINE_DESC"></desc>
+	<desc id="crew_TERRAN_MARINE_DESC"/>
+	<title id="crew_TERRAN_MARINE_NAME"/>
+	<short id="crew_TERRAN_MARINE_SHORT"/>
 	<cost>65</cost>
-	<title id="crew_TERRAN_MARINE_NAME"></title>
-	<short id="crew_TERRAN_MARINE_SHORT"></short>
 	<rarity>1</rarity>
 	<powerList>
 		<power>Active Ability: Stimpack&#xD;&#xD;
@@ -1938,10 +1936,10 @@
 *********************************************************************************************************
 -->
 <crewBlueprint name="terran_medic">
-	<desc id="crew_TERRAN_MEDIC_DESC"></desc>
+	<desc id="crew_TERRAN_MEDIC_DESC"/>
+	<title id="crew_TERRAN_MEDIC_NAME"/>
+	<short id="crew_TERRAN_MEDIC_SHORT"/>
 	<cost>65</cost>
-	<title id="crew_TERRAN_MEDIC_NAME"></title>
-	<short id="crew_TERRAN_MEDIC_SHORT"></short>
 	<rarity>2</rarity>
 	<powerList>
 		<power>Active Ability: Flashbang&#xD;&#xD;
@@ -1968,10 +1966,10 @@
 *********************************************************************************************************
 -->
 <crewBlueprint name="terran_firebat">
-	<desc id="crew_TERRAN_FIREBAT_DESC"></desc>
+	<desc id="crew_TERRAN_FIREBAT_DESC"/>
+	<title id="crew_TERRAN_FIREBAT_NAME"/>
+	<short id="crew_TERRAN_FIREBAT_SHORT"/>
 	<cost>65</cost>
-	<title id="crew_TERRAN_FIREBAT_NAME"></title>
-	<short id="crew_TERRAN_FIREBAT_SHORT"></short>
 	<rarity>4</rarity>
 	<powerList>
 		<power>Active Ability: Stimpack&#xD;&#xD;
@@ -1996,10 +1994,10 @@
 *********************************************************************************************************
 -->
 <crewBlueprint name="terran_ghost">
-	<desc id="crew_TERRAN_GHOST_DESC"></desc>
+	<desc id="crew_TERRAN_GHOST_DESC"/>
+	<title id="crew_TERRAN_GHOST_NAME"/>
+	<short id="crew_TERRAN_GHOST_SHORT"/>
 	<cost>65</cost>
-	<title id="crew_TERRAN_GHOST_NAME"></title>
-	<short id="crew_TERRAN_GHOST_SHORT"></short>
 	<rarity>5</rarity>
 	<powerList>
 		<power>Active Ability: Cloak&#xD;&#xD;
@@ -2025,10 +2023,10 @@
 *********************************************************************************************************
 -->
 <crewBlueprint name="terran_civilian">
-	<desc id="crew_TERRAN_CIVILIAN_DESC"></desc>
+	<desc id="crew_TERRAN_CIVILIAN_DESC"/>
+	<title id="crew_TERRAN_CIVILIAN_NAME"/>
+	<short id="crew_TERRAN_CIVILIAN_SHORT"/>
 	<cost>35</cost>
-	<title id="crew_TERRAN_CIVILIAN_NAME"></title>
-	<short id="crew_TERRAN_CIVILIAN_SHORT"></short>
 	<rarity>1</rarity>
 	<powerList>
 		<power></power>
@@ -2052,9 +2050,9 @@
 **********************************************************************************************************************
 -->
 <crewBlueprint name="terran_scv">
-	<title id="NOYB"></title>
-	<short id="NOYB"></short>
-	<desc id="NOYB"></desc>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -2086,9 +2084,9 @@
 	<iconImage>battle</iconImage>
 </droneBlueprint>
 <crewBlueprint name="terran_scv_hull">
-	<title id="NOYB"></title>
-	<short id="NOYB"></short>
-	<desc id="NOYB"></desc>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -2098,9 +2096,9 @@
 <droneBlueprint name="TERRAN_SCV_HULL">
 	<type>SHIP_REPAIR</type>
 	<tip>tip_crew</tip>
-	<title id="NOYB"></title>
-	<short id="NOYB"></short>
-	<desc id="NOYB"></desc>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<power>1</power>
 	<cooldown>1000</cooldown>
 	<!-- Doesn't effect repair drone -->
@@ -2115,9 +2113,9 @@
 	<iconImage>Srepair</iconImage>
 </droneBlueprint>
 <crewBlueprint name="terran_scv_hull">
-	<title id="NOYB"></title>
-	<short id="NOYB"></short>
-	<desc id="NOYB"></desc>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -2132,9 +2130,9 @@ TERRAN_GOLIATH-->
 <FTL>
 <!-- *****************	TERRAN_GOLIATH	****************** -->
 <crewBlueprint name="terran_goliath">
-	<title id="NOYB"></title>
-	<short id="NOYB"></short>
-	<desc id="NOYB"></desc>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -2145,9 +2143,9 @@ TERRAN_GOLIATH-->
 	<type>BATTLE</type>
 	<locked>1</locked><!-- Don't know what this does, but MV drones have it -->
 	<tip>tip_crew</tip>
-	<title id="drone_TERRAN_GOLIATH_NAME"></title>
-	<short id="drone_TERRAN_GOLIATH_SHORT"></short>
-	<desc id="drone_TERRAN_GOLIATH_DESC"></desc>
+	<title id="drone_TERRAN_GOLIATH_NAME"/>
+	<short id="drone_TERRAN_GOLIATH_SHORT"/>
+	<desc id="drone_TERRAN_GOLIATH_DESC"/>
 	<power>1</power>
 	<cost>80</cost>
 	<rarity>4</rarity>
@@ -2160,9 +2158,9 @@ TERRAN_GOLIATH-->
 	<!--<target>LASERS</target>-->
 	<type>DEFENSE</type>
 	<tip>tip_defense</tip>
-	<title id="NOYB"></title>
-	<short id="NOYB"></short>
-	<desc id="NOYB"></desc>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<power>1</power>
 	<cooldown>1000</cooldown>
 	<dodge>0</dodge>
@@ -2184,9 +2182,9 @@ TERRAN_GOLIATH-->
 	TERRAN_SPIDER_1
 	****************** -->
 <crewBlueprint name="terran_spider_1">
-	<title id="NOYB"></title>
-	<short id="NOYB"></short>
-	<desc id="NOYB"></desc>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -2208,9 +2206,9 @@ TERRAN_GOLIATH-->
 <droneBlueprint name="TERRAN_SPIDER_1">
 	<type>BATTLE</type>
 	<tip>tip_crew</tip>
-	<title id="drone_TERRAN_SPIDER_1_NAME"></title>
-	<short id="drone_TERRAN_SPIDER_1_SHORT"></short>
-	<desc id="drone_TERRAN_SPIDER_1_DESC"></desc>
+	<title id="drone_TERRAN_SPIDER_1_NAME"/>
+	<short id="drone_TERRAN_SPIDER_1_SHORT"/>
+	<desc id="drone_TERRAN_SPIDER_1_DESC"/>
 	<power>1</power>
 	<cost>35</cost>
 	<rarity>1</rarity>
@@ -2221,9 +2219,9 @@ TERRAN_GOLIATH-->
 	TERRAN_SPIDER_2
 	****************** -->
 <crewBlueprint name="terran_spider_2">
-	<title id="NOYB"></title>
-	<short id="NOYB"></short>
-	<desc id="NOYB"></desc>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -2245,9 +2243,9 @@ TERRAN_GOLIATH-->
 <droneBlueprint name="TERRAN_SPIDER_2">
 	<type>BATTLE</type>
 	<tip>tip_crew</tip>
-	<title id="drone_TERRAN_SPIDER_2_NAME"></title>
-	<short id="drone_TERRAN_SPIDER_2_SHORT"></short>
-	<desc id="drone_TERRAN_SPIDER_2_DESC"></desc>
+	<title id="drone_TERRAN_SPIDER_2_NAME"/>
+	<short id="drone_TERRAN_SPIDER_2_SHORT"/>
+	<desc id="drone_TERRAN_SPIDER_2_DESC"/>
 	<power>2</power>
 	<cost>45</cost>
 	<rarity>2</rarity>
@@ -2258,9 +2256,9 @@ TERRAN_GOLIATH-->
 	TERRAN_SPIDER_3
 	****************** -->
 <crewBlueprint name="terran_spider_3">
-	<title id="NOYB"></title>
-	<short id="NOYB"></short>
-	<desc id="NOYB"></desc>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -2282,9 +2280,9 @@ TERRAN_GOLIATH-->
 <droneBlueprint name="TERRAN_SPIDER_3">
 	<type>BATTLE</type>
 	<tip>tip_crew</tip>
-	<title id="drone_TERRAN_SPIDER_3_NAME"></title>
-	<short id="drone_TERRAN_SPIDER_3_SHORT"></short>
-	<desc id="drone_TERRAN_SPIDER_3_DESC"></desc>
+	<title id="drone_TERRAN_SPIDER_3_NAME"/>
+	<short id="drone_TERRAN_SPIDER_3_SHORT"/>
+	<desc id="drone_TERRAN_SPIDER_3_DESC"/>
 	<power>3</power>
 	<cost>55</cost>
 	<rarity>3</rarity>
@@ -2295,9 +2293,9 @@ TERRAN_GOLIATH-->
 	TERRAN_SPIDER_SET
 	****************** -->
 <crewBlueprint name="terran_spider_set">
-	<title id="crew_TERRAN_SPIDER_SET_NAME"></title>
-	<short id="crew_TERRAN_SPIDER_SET_SHORT"></short>
-	<desc id="crew_TERRAN_SPIDER_SET_DESC"></desc>
+	<title id="crew_TERRAN_SPIDER_SET_NAME"/>
+	<short id="crew_TERRAN_SPIDER_SET_SHORT"/>
+	<desc id="crew_TERRAN_SPIDER_SET_DESC"/>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -2319,9 +2317,9 @@ TERRAN_GOLIATH-->
 <droneBlueprint name="TERRAN_SPIDER_SET">
 	<type>BATTLE</type>
 	<tip>tip_crew</tip>
-	<title id="NOYB"></title>
-	<short id="NOYB"></short>
-	<desc id="NOYB"></desc>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<power>1</power>
 	<cost>55</cost>
 	<bp>3</bp>
@@ -2333,9 +2331,9 @@ TERRAN_GOLIATH-->
 	TERRAN_SPIDER_MINE
 	****************** -->
 <crewBlueprint name="terran_spider_mine">
-	<title id="crew_TERRAN_SPIDER_MINE_NAME"></title>
-	<short id="crew_TERRAN_SPIDER_MINE_SHORT"></short>
-	<desc id="crew_TERRAN_SPIDER_MINE_DESC"></desc>
+	<title id="crew_TERRAN_SPIDER_MINE_NAME"/>
+	<short id="crew_TERRAN_SPIDER_MINE_SHORT"/>
+	<desc id="crew_TERRAN_SPIDER_MINE_DESC"/>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -2357,9 +2355,9 @@ TERRAN_GOLIATH-->
 <droneBlueprint name="TERRAN_SPIDER_MINE">
 	<type>BATTLE</type>
 	<tip>tip_crew</tip>
-	<title id="NOYB"></title>
-	<short id="NOYB"></short>
-	<desc id="NOYB"></desc>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<power>1</power>
 	<cost>0</cost>
 	<bp>3</bp>
@@ -2374,7 +2372,9 @@ TERRAN_GOLIATH-->
 -->
 <weaponBlueprint name="TERRAN_DEFENSE_1">
 	<type>LASER</type>
-	<title id="weapon_TERRAN_DEFENSE_1_title"></title>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<rarity>0</rarity>
 	<launchSounds>
 		<sound>shieldDroneActivate</sound>
@@ -2384,9 +2384,9 @@ TERRAN_GOLIATH-->
 	<type>DEFENSE</type>					
 	<target>LASERS</target>					
 	<tip>tip_defense</tip>					
-	<title id="drone_TERRAN_DEFENSE_1_NAME"></title>					
-	<short id="drone_TERRAN_DEFENSE_1_SHORT"></short>					
-	<desc id="drone_TERRAN_DEFENSE_1_DESC"></desc>					
+	<title id="drone_TERRAN_DEFENSE_1_NAME"/>
+	<short id="drone_TERRAN_DEFENSE_1_SHORT"/>
+	<desc id="drone_TERRAN_DEFENSE_1_DESC"/>
 	<power>2</power>					
 	<cooldown>2000</cooldown><!-- was 1500-->					
 	<dodge>100</dodge>					
@@ -2402,7 +2402,9 @@ TERRAN_GOLIATH-->
 						
 <weaponBlueprint name="TERRAN_DEFENSE_2">		
 	<type>LASER</type>
-	<title id="weapon_TERRAN_DEFENSE_2_title"></title>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<rarity>0</rarity>
 	<launchSounds>
 		<sound>shieldDroneActivate</sound>
@@ -2412,9 +2414,9 @@ TERRAN_GOLIATH-->
 	<type>DEFENSE</type>					
 	<target>LASERS</target>					
 	<tip>tip_defense</tip>					
-	<title id="drone_TERRAN_DEFENSE_2_NAME"></title>					
-	<short id="drone_TERRAN_DEFENSE_2_SHORT"></short>					
-	<desc id="drone_TERRAN_DEFENSE_2_DESC"></desc>					
+	<title id="drone_TERRAN_DEFENSE_2_NAME"/>
+	<short id="drone_TERRAN_DEFENSE_2_SHORT"/>
+	<desc id="drone_TERRAN_DEFENSE_2_DESC"/>
 	<power>3</power>					
 	<cooldown>1500</cooldown>					
 	<dodge>100</dodge>					
@@ -2430,7 +2432,9 @@ TERRAN_GOLIATH-->
 
 <weaponBlueprint name="TERRAN_DEFENSE_3">
 	<type>LASER</type>		
-	<title id="weapon_TERRAN_DEFENSE_3_title"></title>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 	<rarity>0</rarity>
 	<launchSounds>
 		<sound>shieldDroneActivate</sound>
@@ -2440,9 +2444,9 @@ TERRAN_GOLIATH-->
 	<type>DEFENSE</type>					
 	<target>LASERS</target>					
 	<tip>tip_defense</tip>					
-	<title id="drone_TERRAN_DEFENSE_3_NAME"></title>					
-	<short id="drone_TERRAN_DEFENSE_3_SHORT"></short>					
-	<desc id="drone_TERRAN_DEFENSE_3_DESC"></desc>					
+	<title id="drone_TERRAN_DEFENSE_3_NAME"/>					
+	<short id="drone_TERRAN_DEFENSE_3_SHORT"/>					
+	<desc id="drone_TERRAN_DEFENSE_3_DESC"/>					
 	<power>4</power>					
 	<cooldown>1000</cooldown>					
 	<dodge>100</dodge>					
@@ -2463,10 +2467,9 @@ TERRAN_GOLIATH-->
 -->
 <weaponBlueprint name="TERRAN_COMSAT_PROJECTILE">
     <type>LASER</type>
-    <title>Terran Comsat Scan Pulse</title>
-    <short>Comsat Pulse</short>
-    <desc>Hidden scan pulse used by the Terran Comsat.</desc>
-    <tooltip>Hidden scan pulse used by the Terran Comsat.</tooltip>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
 
     <damage>0</damage>
     <sysDamage>0</sysDamage>
@@ -2494,9 +2497,9 @@ TERRAN_GOLIATH-->
 <droneBlueprint name="TERRAN_COMSAT">
     <type>COMBAT</type>
     <tip>tip_combat</tip>
-    <title>Terran Comsat</title>
-    <short>Comsat</short>
-    <desc>Terran communications and sensor drone. While deployed, powered, and intact, it provides Detector-style targeting support using the ship's Sensors power.</desc>
+    <title id="drone_TERRAN_COMSAT_NAME"/>
+    <short id="drone_TERRAN_COMSAT_SHORT"/>
+    <desc id="drone_TERRAN_COMSAT_DESC"/>
 
     <power>2</power>
     <cooldown>1000</cooldown>
@@ -2517,9 +2520,9 @@ TERRAN_GOLIATH-->
 -->
 
 <crewBlueprint name="terran_pod">
-    <title>Terran Boarding Pod</title>
-    <short>Boarding Pod</short>
-    <desc>...</desc>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
     <cost>0</cost>
     <rarity>0</rarity>
     <powerList>
@@ -2531,9 +2534,9 @@ TERRAN_GOLIATH-->
     <type>BATTLE</type>
     <locked>1</locked>
     <tip>tip_crew</tip>
-    <title>Terran Boarding Pod</title>
-    <short>Boarding Pod</short>
-    <desc>[[NEED CREWPOD DESCRIPTION]]</desc>
+    <title id="drone_TERRAN_POD_NAME"/>
+    <short id="drone_TERRAN_POD_SHORT"/>
+    <desc id="drone_TERRAN_POD_DESC"/>
     <power>1</power>
     <cost>30</cost>
     <rarity>2</rarity>
@@ -2542,11 +2545,9 @@ TERRAN_GOLIATH-->
 
 <weaponBlueprint name="TERRAN_POD_PROJECTILE">
     <type>MISSILES</type>
-    <title>Terran Boarding Pod Projectile</title>
-    <short>Boarding Pod</short>
-    <desc>Hidden projectile used by the Terran Boarding Pod.</desc>
-    <tooltip>Hidden projectile used by the Terran Boarding Pod.</tooltip>
-
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
     <damage>0</damage>
     <missiles>0</missiles>
     <shots>1</shots>
@@ -2569,9 +2570,9 @@ TERRAN_GOLIATH-->
 	TERRAN_BATTLECRUISER
 	====================-->
 <shipBlueprint name="PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER" layout="SHIP_PLAYER_TERRAN_BATTLECRUISER" img="terran_battlecruiser">
-    <class  id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_class"></class>
-    <name id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_name"></name>
-    <desc id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_desc"></desc>
+    <class  id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_class"/>
+    <name id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_name"/>
+    <desc id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_desc"/>
 	<systemList>
 		<artillery max="4" power="1" room="0" start="true" weapon="ARTILLERY_YAMATO_LASER" img="sc_room_artillery_1" />
 		<lily_system_bracers power="2" room="18" start="true" />
@@ -2644,9 +2645,9 @@ TERRAN_GOLIATH-->
 	TERRAN_WRAITH
 	====================-->
 <shipBlueprint name="PLAYER_SHIP_PLAYER_TERRAN_WRAITH" layout="SHIP_PLAYER_TERRAN_WRAITH" img="terran_wraith">
-    <class id="text_PLAYER_SHIP_TERRAN_WRAITH_class"></class>
-    <name id="text_PLAYER_SHIP_TERRAN_WRAITH_name"></name>
-    <desc id="text_PLAYER_SHIP_TERRAN_WRAITH_desc"></desc>
+    <class id="text_PLAYER_SHIP_TERRAN_WRAITH_class"/>
+    <name id="text_PLAYER_SHIP_TERRAN_WRAITH_name"/>
+    <desc id="text_PLAYER_SHIP_TERRAN_WRAITH_desc"/>
 	<systemList>
 		<battery power="1" room="5" start="true" img="terran_computer_d" />
 		<cloaking power="1" room="9" start="true" img="terran_computer_t" />
@@ -2720,9 +2721,9 @@ TERRAN_GOLIATH-->
      TERRAN_VESSEL
      ====================-->
 <shipBlueprint name="PLAYER_SHIP_PLAYER_TERRAN_VESSEL" layout="SHIP_PLAYER_TERRAN_VESSEL" img="terran_vessel">
-	<class id="text_PLAYER_SHIP_TERRAN_VESSEL_class"></class>
-	<name id="text_PLAYER_SHIP_TERRAN_VESSEL_name"></name>
-	<desc id="text_PLAYER_SHIP_TERRAN_VESSEL_desc"></desc>
+	<class id="text_PLAYER_SHIP_TERRAN_VESSEL_class"/>
+	<name id="text_PLAYER_SHIP_TERRAN_VESSEL_name"/>
+	<desc id="text_PLAYER_SHIP_TERRAN_VESSEL_desc"/>
 <systemList>
 		<lily_system_bracers max="3"power="2" room="1" start="true" img="invisible" />
 		<battery power="1" room="5" start="false" img="invisible" />
@@ -2804,9 +2805,9 @@ TERRAN_GOLIATH-->
      TERRAN_VALKYRIE
      ====================-->
 <shipBlueprint name="PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE" layout="TERRAN_PLAYER_SHIP_VALKYRIE" img="TERRAN_PLAYER_SHIP_VALKYRIE">
-	<class id="text_PLAYER_SHIP_TERRAN_VALKYRIE_class"></class>
-	<name id="text_PLAYER_SHIP_TERRAN_VALKYRIE_name"></name>
-	<desc id="text_PLAYER_SHIP_TERRAN_VALKYRIE_desc"></desc>
+	<class id="text_PLAYER_SHIP_TERRAN_VALKYRIE_class"/>
+	<name id="text_PLAYER_SHIP_TERRAN_VALKYRIE_name"/>
+	<desc id="text_PLAYER_SHIP_TERRAN_VALKYRIE_desc"/>
 	<systemList>
 		<battery power="1" room="3" start="false" img="invisible" />
 		<cloaking power="1" room="12" start="false" img="invisible" />

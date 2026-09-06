@@ -10,19 +10,21 @@
 <text name="text_PLAYER_SHIP_TERRAN_WRAITH_name">Wraith</text>
 <text name="text_PLAYER_SHIP_TERRAN_WRAITH_desc">The Wraith is a Terran space superiority fighter known for it's maneuverability and cloaking technology.</text>
 
-<text name="text_PLAYER_SHIP_TERRAN_VESSEL_class">Scout</text>
-<text name="text_PLAYER_SHIP_TERRAN_VESSEL_name">Science Vessel</text>
+<text name="text_PLAYER_SHIP_TERRAN_VESSEL_class">Science</text>
+<text name="text_PLAYER_SHIP_TERRAN_VESSEL_name">Vessel</text>
 <text name="text_PLAYER_SHIP_TERRAN_VESSEL_desc">[NEED SCIENCE VESSEL DESCRIPTION]</text>
 
 <text name="text_PLAYER_SHIP_TERRAN_VALKYRIE_class">Assault</text>
-<text name="text_PLAYER_SHIP_TERRAN_VALKYRIE_name">Terran Valkyrie</text>
+<text name="text_PLAYER_SHIP_TERRAN_VALKYRIE_name">Valkyrie</text>
 <text name="text_PLAYER_SHIP_TERRAN_VALKYRIE_desc">[[NEED VALKYRIE DESCRIPTION HERE]]</text>
 
 <!-- ENEMY SHIP CLASSES -->
-<text name="text_SHIP_TERRAN_WRAITH_class">Scout</text>
-<text name="text_SHIP_TERRAN_BATTLECRUISER_class">Battlecruiser</text>	
-<text name="text_SHIP_TERRAN_VESSEL_class">Scout</text>
-<text name="text_SHIP_TERRAN_VALKYRIE_class">Assault</text>
+<text name="text_TERRAN_SCOUT_class">Scout</text>
+<text name="text_TERRAN_SQUADRON_class">Squadron</text>
+<text name="text_TERRAN_BATTLECRUISER_class">Battlecruiser</text>	
+<text name="text_TERRAN_SCIENCE_class">Science</text>
+<text name="text_TERRAN_TRANSPORT_class">Transport</text>
+<text name="text_TERRAN_ASSAULT_class">Assault</text>
 <text name="text_TERRAN_BUILDING_class">Building</text>
 
 <!-- TERRAN BURST LASER -->
@@ -245,6 +247,14 @@ When paired the main weapon provides power and amunition to the weapon on it's r
 <text name="drone_TERRAN_SPIDER_MINE_NAME">Terran Spider Mine</text>
 <text name="drone_TERRAN_SPIDER_MINE_SHORT">Spider Mine</text>
 <text name="drone_TERRAN_SPIDER_MINE_DESC">Mines will automatically seek out targets and detonate when an enemy is nearby. Redeploying a mine will make it controllable again.</text>
+
+<text name="drone_TERRAN_COMSAT_NAME">Terran Comsat</text>
+<text name="drone_TERRAN_COMSAT_SHORT">Comsat</text>
+<text name="drone_TERRAN_COMSAT_DESC">Terran communications and sensor sweep. While active, it provides Detector-style targeting support based on Sensors power.</text>
+
+<text name="drone_TERRAN_POD_NAME">Terran Boarding Pod</text>
+<text name="drone_TERRAN_POD_SHORT">Boarding Pod</text >
+<text name="drone_TERRAN_POD_DESC">Transports crew to enemy ships in boarding pods.</text>
 
 <!-- TERRAN CREW -->
 <text name="crew_TERRAN_MARINE_NAME">Terran Marine</text>
