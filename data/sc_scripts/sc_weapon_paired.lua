@@ -2,11 +2,19 @@
 DESCRIPTION: Pairs adjacent tagged weapons so the left weapon performs the attack for both slots.
         - Builds non-overlapping pairs from left to right using matching <sc_paired> groups.
         - Requires the primary/left weapon to be powered.
-        - Replaces the secondary/right weapon with its "_PAIRED" target blueprint while the pair is valid.
-        - Restores the original secondary weapon when the pair is no longer valid.
-        - Uses the secondary weapon's target and launch point for a copied projectile fired by the primary weapon.
-        - Kills the secondary weapon's own projectiles so damage is only applied by the primary and its copy.
+        - The secondary/right weapon remains in place; no weapon blueprint swapping is performed.
+        - When a pair is first formed, both weapons' cooldowns are reset to 0.
+        - The secondary/right weapon's cooldown is matched to the primary/left weapon.
+        - The primary/left weapon fires normally and creates a copied projectile from the secondary/right weapon's launch point.
+        - The copied projectile chooses its target in this order:
+            1. The secondary/right weapon's currently selected target, if exposed.
+            2. The most recently killed/removed secondary projectile target this combat.
+            3. The primary/left weapon's projectile target.
+        - Kills the secondary/right weapon's own projectiles so damage is only applied by the primary and its copy.
         - Forces secondary autofire off while paired.
+        - Keeps the secondary/right weapon below full charge and clears queued projectiles to prevent secondary firing.
+        - The secondary/right weapon's missile spend is forced to 0 while paired.
+        - Restores the secondary/right weapon's original powered state when the pair is no longer valid.
 TAG: <sc_paired group="GROUP"/>
 DEPENDENCIES: sc_tag.lua, Multiverse userdata_table, Multiverse vter
 ]]
@@ -15,24 +23,50 @@ local vter = mods.multiverse.vter
 local userdata_table = mods.multiverse.userdata_table
 
 local pairedGroupById = {}
-local targetCoordinatesByShip = {}
-local destinationSpaceByShip = {}
+local removedProjectileTargetsByShip = {}
+local removedProjectileDestinationsByShip = {}
 
-local TARGET_SUFFIX = "_PAIRED"
+-- Keep the secondary just below full charge so target data can remain assigned
+-- without letting the secondary weapon enter its actual fire/sound path.
+local SECONDARY_FULL_CHARGE_BUFFER = 0.10
 
 local function parse_paired_group(tagNode, weaponNode)
     local groupAttr = tagNode:first_attribute("group")
     local groupId = groupAttr and groupAttr:value() or "default"
-    local weaponName = weaponNode:first_attribute("name"):value()
-
-    pairedGroupById[weaponName .. TARGET_SUFFIX] = groupId
-
     return groupId
 end
 
 mods.sc.tag.register("weapon", "sc_paired", pairedGroupById, parse_paired_group)
 
+local function run_has_started()
+    return Hyperspace.App
+        and Hyperspace.App.world
+        and Hyperspace.App.world.bStartedGame
+end
+
+local function reset_combat_target_cache()
+    removedProjectileTargetsByShip = {}
+    removedProjectileDestinationsByShip = {}
+end
+
+script.on_game_event("START_BEACON", false, function()
+    reset_combat_target_cache()
+end)
+
+script.on_game_event("START_BEACON_EXPLAIN", false, function()
+    reset_combat_target_cache()
+end)
+
+script.on_internal_event(Defines.InternalEvents.JUMP_ARRIVE, function(shipManager)
+    if shipManager and shipManager.iShipId == 0 then
+        reset_combat_target_cache()
+    end
+end)
+
 local function pointf_from_point(point)
+    if not point then return nil end
+    if point.x == nil or point.y == nil then return nil end
+
     return Hyperspace.Pointf(point.x, point.y)
 end
 
@@ -43,25 +77,20 @@ local function copy_custom_damage(src, dst)
     if not srcDamage or not dstDamage then return end
 
     dstDamage.def = srcDamage.def
+    dstDamage.sourceShipId = srcDamage.sourceShipId
     dstDamage.accuracyMod = srcDamage.accuracyMod
     dstDamage.droneAccuracyMod = srcDamage.droneAccuracyMod
 end
 
-local function string_ends_with(value, suffix)
-    return string.sub(value, -#suffix) == suffix
-end
-
-local function get_original_name_from_target_name(weaponName)
-    if not string_ends_with(weaponName, TARGET_SUFFIX) then return nil end
-
-    return string.sub(weaponName, 1, #weaponName - #TARGET_SUFFIX)
-end
-
 local function get_weapon_group(weapon)
+    if not weapon or not weapon.blueprint then return nil end
+
     return pairedGroupById[weapon.blueprint.name]
 end
 
 local function get_weapon_slot(weapon)
+    if not weapon then return nil end
+
     local ship = Hyperspace.ships(weapon.iShipId)
     if not ship or not ship.weaponSystem then return nil end
 
@@ -89,9 +118,11 @@ end
 
 local function build_valid_pair_slots(shipManager)
     local pairSlots = {}
-    if not shipManager.weaponSystem then return pairSlots end
+    if not shipManager or not shipManager.weaponSystem then return pairSlots end
 
     local weapons = shipManager.weaponSystem.weapons
+    if not weapons then return pairSlots end
+
     local i = 0
 
     while i <= weapons:size() - 2 do
@@ -119,7 +150,7 @@ local function build_valid_pair_slots(shipManager)
 end
 
 local function get_weapon_sprite_point(weapon, offsetX, offsetY)
-    if not weapon.weaponVisual or not weapon.mount then return nil end
+    if not weapon or not weapon.weaponVisual or not weapon.mount then return nil end
 
     local shipManager = Hyperspace.ships(weapon.iShipId)
     if not shipManager or not shipManager.ship then return nil end
@@ -147,7 +178,7 @@ local function get_weapon_sprite_point(weapon, offsetX, offsetY)
 end
 
 local function get_predicted_weapon_launch_point(weapon)
-    if not weapon.weaponVisual then return nil end
+    if not weapon or not weapon.weaponVisual then return nil end
 
     local weaponAnim = weapon.weaponVisual
 
@@ -162,43 +193,109 @@ local function get_predicted_weapon_launch_point(weapon)
     return nil
 end
 
-local function store_projectile_data(projectile, weapon, weaponSlot)
-    local shipId = weapon.iShipId
+local function vector_size(vector)
+    if not vector then return 0 end
 
-    targetCoordinatesByShip[shipId] = targetCoordinatesByShip[shipId] or {}
-    destinationSpaceByShip[shipId] = destinationSpaceByShip[shipId] or {}
+    local ok, size = pcall(function()
+        return vector:size()
+    end)
 
-    targetCoordinatesByShip[shipId][weaponSlot] = pointf_from_point(projectile.target)
-    destinationSpaceByShip[shipId][weaponSlot] = projectile.destinationSpace
+    if not ok or not size then return 0 end
+
+    return size
 end
 
-local function get_copy_launch_point(projectile, rightWeapon)
-    local predictedRightLaunchPoint = get_predicted_weapon_launch_point(rightWeapon)
+local function vector_point(vector, index)
+    if not vector then return nil end
+    if vector_size(vector) <= index then return nil end
 
-    if predictedRightLaunchPoint then
-        return pointf_from_point(predictedRightLaunchPoint)
+    local ok, point = pcall(function()
+        return vector[index]
+    end)
+
+    if not ok then return nil end
+
+    return pointf_from_point(point)
+end
+
+local function weapon_has_selected_target(weapon)
+    if not weapon then return false end
+
+    if weapon.fireWhenReady then return true end
+    if weapon.targetId and weapon.targetId >= 0 then return true end
+
+    return false
+end
+
+local function get_selected_weapon_target_point(weapon)
+    if not weapon_has_selected_target(weapon) then return nil end
+
+    local lastTargets = weapon.lastTargets
+    if not lastTargets then return nil end
+
+    -- For normal weapons, the first stored point appears to be the selected target.
+    return vector_point(lastTargets, 0)
+end
+
+local function store_removed_secondary_projectile_target(projectile, weaponSlot, shipId)
+    if not projectile or weaponSlot == nil or shipId == nil then return end
+
+    removedProjectileTargetsByShip[shipId] = removedProjectileTargetsByShip[shipId] or {}
+    removedProjectileDestinationsByShip[shipId] = removedProjectileDestinationsByShip[shipId] or {}
+
+    removedProjectileTargetsByShip[shipId][weaponSlot] = pointf_from_point(projectile.target)
+    removedProjectileDestinationsByShip[shipId][weaponSlot] = projectile.destinationSpace
+end
+
+local function get_removed_projectile_target(shipId, weaponSlot)
+    local shipTargets = removedProjectileTargetsByShip[shipId]
+    if not shipTargets then return nil end
+
+    return shipTargets[weaponSlot]
+end
+
+local function get_removed_projectile_destination(shipId, weaponSlot)
+    local shipDestinations = removedProjectileDestinationsByShip[shipId]
+    if not shipDestinations then return nil end
+
+    return shipDestinations[weaponSlot]
+end
+
+local function get_copy_launch_point(projectile, secondaryWeapon)
+    local predictedSecondaryLaunchPoint = get_predicted_weapon_launch_point(secondaryWeapon)
+
+    if predictedSecondaryLaunchPoint then
+        return pointf_from_point(predictedSecondaryLaunchPoint)
     end
 
     return pointf_from_point(projectile.position)
 end
 
-local function get_copy_target_point(projectile, leftWeapon, rightSlot)
-    local shipTargets = targetCoordinatesByShip[leftWeapon.iShipId]
-    local rightSlotTarget = shipTargets and shipTargets[rightSlot]
+local function get_copy_target_point(projectile, primaryWeapon, secondaryWeapon, secondarySlot)
+    local selectedSecondaryTarget = get_selected_weapon_target_point(secondaryWeapon)
 
-    if rightSlotTarget then
-        return pointf_from_point(rightSlotTarget)
+    if selectedSecondaryTarget then
+        return selectedSecondaryTarget
+    end
+
+    local removedSecondaryTarget = get_removed_projectile_target(primaryWeapon.iShipId, secondarySlot)
+
+    if removedSecondaryTarget then
+        return pointf_from_point(removedSecondaryTarget)
     end
 
     return pointf_from_point(projectile.target)
 end
 
-local function get_copy_destination_space(projectile, leftWeapon, rightSlot)
-    local shipDestinations = destinationSpaceByShip[leftWeapon.iShipId]
-    local rightSlotDestination = shipDestinations and shipDestinations[rightSlot]
+local function get_copy_destination_space(projectile, primaryWeapon, secondaryWeapon, secondarySlot)
+    if get_selected_weapon_target_point(secondaryWeapon) then
+        return projectile.destinationSpace
+    end
 
-    if rightSlotDestination ~= nil then
-        return rightSlotDestination
+    local removedSecondaryDestination = get_removed_projectile_destination(primaryWeapon.iShipId, secondarySlot)
+
+    if removedSecondaryDestination ~= nil then
+        return removedSecondaryDestination
     end
 
     return projectile.destinationSpace
@@ -236,13 +333,13 @@ local function copy_beam_state(src, dst, copyLaunchPoint, copyTargetPoint, copyD
     dst.start_heading = src.start_heading
 end
 
-local function create_paired_projectile_copy(projectile, leftWeapon, rightWeapon, rightSlot)
+local function create_paired_projectile_copy(projectile, primaryWeapon, secondaryWeapon, secondarySlot)
     local spaceManager = Hyperspace.App.world.space
-    local blueprint = leftWeapon.blueprint
+    local blueprint = primaryWeapon.blueprint
     local typeName = blueprint.typeName
-    local copyLaunchPoint = get_copy_launch_point(projectile, rightWeapon)
-    local copyTargetPoint = get_copy_target_point(projectile, leftWeapon, rightSlot)
-    local copyDestinationSpace = get_copy_destination_space(projectile, leftWeapon, rightSlot)
+    local copyLaunchPoint = get_copy_launch_point(projectile, secondaryWeapon)
+    local copyTargetPoint = get_copy_target_point(projectile, primaryWeapon, secondaryWeapon, secondarySlot)
+    local copyDestinationSpace = get_copy_destination_space(projectile, primaryWeapon, secondaryWeapon, secondarySlot)
 
     if typeName == "BEAM" then
         local beam = spaceManager:CreateBeam(
@@ -302,6 +399,8 @@ local function create_paired_projectile_copy(projectile, leftWeapon, rightWeapon
 end
 
 local function clear_weapon_projectiles(weapon)
+    if not weapon or not weapon.queuedProjectiles then return end
+
     for queuedProjectile in vter(weapon.queuedProjectiles) do
         queuedProjectile:Kill()
     end
@@ -309,120 +408,206 @@ local function clear_weapon_projectiles(weapon)
     weapon.queuedProjectiles:clear()
 end
 
-local function add_weapon_by_name(weaponName)
-    local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint(weaponName)
+local function hold_secondary_below_full_charge(secondaryWeapon)
+    if not secondaryWeapon or not secondaryWeapon.cooldown then return end
 
-    if not blueprint then
-        print("SC PAIRED ERROR | Missing weapon blueprint: " .. tostring(weaponName))
-        return false
+    local maxCharge = secondaryWeapon.cooldown.second
+    if not maxCharge then return end
+
+    local cappedCharge = maxCharge - SECONDARY_FULL_CHARGE_BUFFER
+    if cappedCharge < 0 then
+        cappedCharge = 0
     end
 
-    Hyperspace.App.gui.equipScreen:AddWeapon(blueprint, true, false)
-    return true
-end
-
-local function get_weapon_names_from_slot(shipManager, startSlot)
-    local weaponNames = {}
-    local weapons = shipManager.weaponSystem.weapons
-
-    for i = startSlot, weapons:size() - 1 do
-        table.insert(weaponNames, weapons[i].blueprint.name)
-    end
-
-    return weaponNames
-end
-
-local function remove_weapons_from_slot_to_end(shipManager, startSlot)
-    local weapons = shipManager.weaponSystem.weapons
-
-    while weapons:size() > startSlot do
-        shipManager.weaponSystem:RemoveWeapon(startSlot)
+    if secondaryWeapon.cooldown.first > cappedCharge then
+        secondaryWeapon.cooldown.first = cappedCharge
     end
 end
 
-local function replace_weapon_in_slot(shipManager, weaponSlot, newWeaponName)
-    local weapons = shipManager.weaponSystem.weapons
+local function suppress_secondary_fire_request(secondaryWeapon)
+    if not secondaryWeapon then return end
 
-    if weaponSlot < 0 or weaponSlot >= weapons:size() then return false end
+    secondaryWeapon.autoFiring = false
 
-    if not Hyperspace.Blueprints:GetWeaponBlueprint(newWeaponName) then
-        print("SC PAIRED ERROR | Cannot replace weapon with missing blueprint: " .. tostring(newWeaponName))
-        return false
-    end
-
-    local tailWeaponNames = get_weapon_names_from_slot(shipManager, weaponSlot)
-    tailWeaponNames[1] = newWeaponName
-
-    remove_weapons_from_slot_to_end(shipManager, weaponSlot)
-
-    for _, weaponName in ipairs(tailWeaponNames) do
-        add_weapon_by_name(weaponName)
-    end
-
-    return true
+    -- Leave fireWhenReady/targetId/lastTargets intact when possible, because
+    -- those fields provide the selected target for the copied projectile.
+    -- Prevent actual firing by keeping the secondary just below full charge
+    -- and clearing queued projectiles as a fallback.
+    hold_secondary_below_full_charge(secondaryWeapon)
+    clear_weapon_projectiles(secondaryWeapon)
 end
 
-local function restore_unpaired_target_weapons(shipManager)
+local function get_power_override_data(weapon)
+    if not weapon then return nil end
+
+    return userdata_table(weapon, "mods.sc.paired_weapon_power_override")
+end
+
+local function try_get_field(object, fieldName)
+    local ok, value = pcall(function()
+        return object[fieldName]
+    end)
+
+    if not ok then return nil end
+
+    return value
+end
+
+local function try_set_field(object, fieldName, value)
+    local ok = pcall(function()
+        object[fieldName] = value
+    end)
+
+    return ok
+end
+
+local SECONDARY_POWER_FIELD_CANDIDATES = {
+    "powerRequired",
+    "requiredPower",
+    "iRequiredPower",
+    "powerRequirement",
+    "iPowerRequired"
+}
+
+local function reset_weapon_cooldown(weapon)
+    if not weapon or not weapon.cooldown then return end
+
+    weapon.cooldown.first = 0
+
+    if weapon.chargeLevel ~= nil then
+        weapon.chargeLevel = 0
+    end
+
+    clear_weapon_projectiles(weapon)
+end
+
+local function reset_pair_cooldowns_on_initial_pair(pairData)
+    if not pairData or not pairData.secondaryWeapon then return end
+
+    local data = get_power_override_data(pairData.secondaryWeapon)
+    if not data then return end
+
+    if data.isPaired then return end
+
+    data.isPaired = true
+
+    reset_weapon_cooldown(pairData.primaryWeapon)
+    reset_weapon_cooldown(pairData.secondaryWeapon)
+end
+
+local function set_secondary_power_requirement_zero(secondaryWeapon)
+    if not secondaryWeapon then return end
+
+    local data = get_power_override_data(secondaryWeapon)
+    if not data then return end
+
+    if data.originalPowered == nil then
+        data.originalPowered = secondaryWeapon.powered
+    end
+
+    data.modifiedFields = data.modifiedFields or {}
+
+    for _, fieldName in ipairs(SECONDARY_POWER_FIELD_CANDIDATES) do
+        local currentValue = try_get_field(secondaryWeapon, fieldName)
+
+        if type(currentValue) == "number" then
+            if data.modifiedFields[fieldName] == nil then
+                data.modifiedFields[fieldName] = currentValue
+            end
+
+            try_set_field(secondaryWeapon, fieldName, 0)
+        end
+    end
+end
+
+local function set_secondary_missile_spend_zero(secondaryWeapon)
+    if not secondaryWeapon then return end
+
+    local data = get_power_override_data(secondaryWeapon)
+    if not data then return end
+
+    local currentSpend = try_get_field(secondaryWeapon, "iSpendMissile")
+
+    if type(currentSpend) == "number" then
+        if data.originalMissileSpend == nil then
+            data.originalMissileSpend = currentSpend
+        end
+
+        try_set_field(secondaryWeapon, "iSpendMissile", 0)
+    end
+end
+
+local function restore_secondary_power_requirement(weapon)
+    if not weapon then return end
+
+    local data = get_power_override_data(weapon)
+    if not data then return end
+
+    if data.modifiedFields then
+        for fieldName, originalValue in pairs(data.modifiedFields) do
+            try_set_field(weapon, fieldName, originalValue)
+        end
+    end
+
+    if data.originalMissileSpend ~= nil then
+        try_set_field(weapon, "iSpendMissile", data.originalMissileSpend)
+    end
+
+    if data.originalPowered ~= nil then
+        weapon.powered = data.originalPowered
+    end
+
+    data.modifiedFields = {}
+    data.originalPowered = nil
+    data.originalMissileSpend = nil
+    data.isPaired = false
+end
+
+local function restore_unpaired_power_overrides(shipManager, pairSlots)
+    if not shipManager or not shipManager.weaponSystem then return end
+
     local weapons = shipManager.weaponSystem.weapons
-    local pairSlots = build_valid_pair_slots(shipManager)
+    if not weapons then return end
 
     for i = 0, weapons:size() - 1 do
         local weapon = weapons[i]
-        local originalWeaponName =
-            get_original_name_from_target_name(weapon.blueprint.name)
+        local pairData = pairSlots and pairSlots[i]
 
-        if originalWeaponName then
-            local pairData = pairSlots[i]
-
-            if not pairData or pairData.secondarySlot ~= i then
-                if Hyperspace.Blueprints:GetWeaponBlueprint(originalWeaponName) then
-                    return replace_weapon_in_slot(shipManager, i, originalWeaponName)
-                end
-            end
+        if weapon and (not pairData or pairData.secondarySlot ~= i) then
+            restore_secondary_power_requirement(weapon)
         end
     end
-
-    return false
 end
 
-local function replace_paired_secondary_weapons(shipManager)
+local function sync_secondary_cooldown_to_primary(primaryWeapon, secondaryWeapon)
+    if not primaryWeapon or not secondaryWeapon then return end
+    if not primaryWeapon.cooldown or not secondaryWeapon.cooldown then return end
+
+    secondaryWeapon.cooldown.first = primaryWeapon.cooldown.first
+    secondaryWeapon.cooldown.second = primaryWeapon.cooldown.second
+
+    if primaryWeapon.chargeLevel ~= nil and secondaryWeapon.chargeLevel ~= nil then
+        secondaryWeapon.chargeLevel = primaryWeapon.chargeLevel
+    end
+end
+
+local function maintain_paired_secondary_weapons(shipManager)
     local weapons = shipManager.weaponSystem.weapons
     local pairSlots = build_valid_pair_slots(shipManager)
+
+    restore_unpaired_power_overrides(shipManager, pairSlots)
+
     local i = 0
 
     while i <= weapons:size() - 2 do
         local pairData = pairSlots[i]
 
         if pairData and pairData.primarySlot == i then
-            local rightWeaponName = pairData.secondaryWeapon.blueprint.name
-
-            if not string_ends_with(rightWeaponName, TARGET_SUFFIX) then
-                local targetWeaponName = rightWeaponName .. TARGET_SUFFIX
-
-                if Hyperspace.Blueprints:GetWeaponBlueprint(targetWeaponName) then
-                    return replace_weapon_in_slot(shipManager, pairData.secondarySlot, targetWeaponName)
-                end
-            end
-
-            i = i + 2
-        else
-            i = i + 1
-        end
-    end
-
-    return false
-end
-
-local function disable_all_paired_secondary_autofire(shipManager)
-    local weapons = shipManager.weaponSystem.weapons
-    local pairSlots = build_valid_pair_slots(shipManager)
-    local i = 0
-
-    while i <= weapons:size() - 2 do
-        local pairData = pairSlots[i]
-
-        if pairData and pairData.primarySlot == i then
-            pairData.secondaryWeapon.autoFiring = false
+            reset_pair_cooldowns_on_initial_pair(pairData)
+            set_secondary_power_requirement_zero(pairData.secondaryWeapon)
+            set_secondary_missile_spend_zero(pairData.secondaryWeapon)
+            sync_secondary_cooldown_to_primary(pairData.primaryWeapon, pairData.secondaryWeapon)
+            suppress_secondary_fire_request(pairData.secondaryWeapon)
             i = i + 2
         else
             i = i + 1
@@ -431,26 +616,22 @@ local function disable_all_paired_secondary_autofire(shipManager)
 end
 
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
-    if not Hyperspace.App or not Hyperspace.App.world or not Hyperspace.App.world.bStartedGame then return end
-    if shipManager.iShipId ~= 0 or not shipManager.weaponSystem then return end
+    if not run_has_started() then return end
+    if not shipManager or shipManager.iShipId ~= 0 or not shipManager.weaponSystem then return end
 
-    if restore_unpaired_target_weapons(shipManager) then return end
-    if replace_paired_secondary_weapons(shipManager) then return end
-
-    disable_all_paired_secondary_autofire(shipManager)
+    maintain_paired_secondary_weapons(shipManager)
 end)
 
 script.on_internal_event(
     Defines.InternalEvents.PROJECTILE_FIRE,
     function(projectile, weapon)
-        if not Hyperspace.App or not Hyperspace.App.world or not Hyperspace.App.world.bStartedGame then return end
+        if not run_has_started() then return end
+        if not projectile or not weapon then return end
         if userdata_table(projectile, "mods.sc.paired_weapons").isPairedCopy then return end
         if not get_weapon_group(weapon) then return end
 
         local weaponSlot = get_weapon_slot(weapon)
         if weaponSlot == nil then return end
-
-        store_projectile_data(projectile, weapon, weaponSlot)
 
         local ship = Hyperspace.ships(weapon.iShipId)
         if not ship then return end
@@ -459,13 +640,22 @@ script.on_internal_event(
         if not pairData then return end
 
         if pairData.secondarySlot == weaponSlot then
+            store_removed_secondary_projectile_target(projectile, weaponSlot, weapon.iShipId)
+            set_secondary_missile_spend_zero(weapon)
             projectile:Kill()
             clear_weapon_projectiles(weapon)
+            suppress_secondary_fire_request(weapon)
             return
         end
 
-        create_paired_projectile_copy(projectile, weapon, pairData.secondaryWeapon, pairData.secondarySlot)
+        create_paired_projectile_copy(
+            projectile,
+            pairData.primaryWeapon,
+            pairData.secondaryWeapon,
+            pairData.secondarySlot
+        )
 
         clear_weapon_projectiles(pairData.secondaryWeapon)
+        sync_secondary_cooldown_to_primary(pairData.primaryWeapon, pairData.secondaryWeapon)
     end
 )

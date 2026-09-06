@@ -1918,8 +1918,7 @@
 	<cost>65</cost>
 	<rarity>1</rarity>
 	<powerList>
-		<power>Active Ability: Stimpack&#xD;&#xD;
-		 -Double rate of fire and increase movement speed.</power>
+		<power id="crew_TERRAN_POWER_STIMPACK"/>
 	</powerList>
 	<colorList>
 		<layer>
@@ -1946,10 +1945,8 @@
 	<cost>65</cost>
 	<rarity>2</rarity>
 	<powerList>
-		<power>Active Ability: Flashbang&#xD;&#xD;
-		 -Stun nearby enemies.</power>
-		<power>Ability: Heal&#xD;&#xD;
-		 -Heal nearby friendly troops.</power>
+		<power id="crew_TERRAN_POWER_FLASHBANG"/>
+		<power id="crew_TERRAN_POWER_HEAL"/>
 	</powerList>
 	<colorList>
 		<layer>
@@ -1976,8 +1973,7 @@
 	<cost>65</cost>
 	<rarity>4</rarity>
 	<powerList>
-		<power>Active Ability: Stimpack&#xD;&#xD;
-		 -Double rate of fire and increase movement speed.</power>
+		<power id="crew_TERRAN_POWER_STIMPACK"/>
 	</powerList>
 	<colorList>
 		<layer>
@@ -2004,8 +2000,7 @@
 	<cost>65</cost>
 	<rarity>5</rarity>
 	<powerList>
-		<power>Active Ability: Cloak&#xD;&#xD;
-		 -Untargetable by enemies except by detectors.</power>
+		<power id="crew_TERRAN_POWER_CLOAK"/>
 	</powerList>
 	<colorList>
 		<layer>
@@ -2655,7 +2650,7 @@ TERRAN_GOLIATH-->
 	<systemList>
 		<battery power="1" room="5" start="true" img="terran_computer_d" />
 		<cloaking power="1" room="9" start="true" img="terran_computer_t" />
-		<lily_system_bracers max="3" power="1" room="8" start="true" img="terran_computer_t" />
+		<lily_system_bracers power="1" room="8" start="true" img="terran_computer_t" />
 		<clonebay power="3" room="3" start="true">
 			<slot>
 				<direction>left</direction>
@@ -2729,7 +2724,7 @@ TERRAN_GOLIATH-->
 	<name id="text_PLAYER_SHIP_TERRAN_VESSEL_name"/>
 	<desc id="text_PLAYER_SHIP_TERRAN_VESSEL_desc"/>
 <systemList>
-		<lily_system_bracers max="3"power="2" room="1" start="true" img="invisible" />
+		<lily_system_bracers power="1" room="1" start="true" img="invisible" />
 		<battery power="1" room="5" start="false" img="invisible" />
 		<cloaking power="1" room="12" start="false" img="invisible" />
 		<clonebay power="1" room="8" start="false">
@@ -2853,7 +2848,7 @@ TERRAN_GOLIATH-->
 				<number>1</number>
 			</slot>
 		</sensors>
-		<lily_system_bracers max="3" power="2" room="6" start="true" img="invisible" />
+		<lily_system_bracers power="2" room="6" start="true" img="invisible" />
 		<shields power="3" room="6" start="false" img="invisible">
 			<slot>
 				<direction>right</direction>

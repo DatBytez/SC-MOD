@@ -305,6 +305,12 @@ When paired the main weapon provides power and amunition to the weapon on it's r
 <text name="crew_TERRAN_SPIDER_MINE_SHORT">Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_MINE_DESC">[[Need crew_TERRAN_SPIDER_MINE_DESC]]</text>
 
+<!-- TERRAN CREW ABILITIES -->
+<text name="crew_TERRAN_POWER_STIMPACK">Active Ability: Stimpack&#xD;&#xD;-Double rate of fire and increase movement speed.</text>
+<text name="crew_TERRAN_POWER_FLASHBANG">Active Ability: Flashbang&#xD;&#xD;-Stun nearby enemies.</text>
+<text name="crew_TERRAN_POWER_HEAL">Ability: Heal&#xD;&#xD;-Heal nearby friendly troops.</text>
+<text name="crew_TERRAN_POWER_CLOAK">Active Ability: Cloak&#xD;&#xD;-Untargetable by enemies except by detectors.</text>
+
 <!-- TERRAN AUGMENTS -->
 <text name="system_lily_system_bracers_NAME">System Bracers</text>
 <text name="system_lily_system_bracers_DESC">Passively protects your systems from damage, redirecting system damage towards itself instead (As long as it isn't destroyed itself).</text>
