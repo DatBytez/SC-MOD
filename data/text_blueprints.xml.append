@@ -253,7 +253,7 @@ When paired the main weapon provides power and amunition to the weapon on it's r
 <text name="drone_TERRAN_COMSAT_DESC">Terran communications and sensor sweep. While active, it provides Detector-style targeting support based on Sensors power.</text>
 
 <text name="drone_TERRAN_POD_NAME">Terran Boarding Pod</text>
-<text name="drone_TERRAN_POD_SHORT">Boarding Pod</text >
+<text name="drone_TERRAN_POD_SHORT">Boarding Pod</text>
 <text name="drone_TERRAN_POD_DESC">Transports crew to enemy ships in boarding pods.</text>
 
 <!-- TERRAN CREW -->

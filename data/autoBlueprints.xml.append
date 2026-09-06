@@ -868,9 +868,9 @@
 	<minSector>1</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
-		<artillery power="1" max="4" room="6" start="false" weapon="TERRAN_LASER_BATTERY_HEAVY_OLD_2" />
-		<artillery power="1" max="4" room="8" start="false" weapon="TERRAN_LASER_BATTERY_HEAVY_OLD_2" />
-		<artillery power="1" max="4" room="7" start="false" weapon="TERRAN_LASER_BATTERY_HEAVY_OLD_2" />
+		<artillery power="1" max="4" room="6" start="false" weapon="TERRAN_LASER_BATTERY_HEAVY_2" />
+		<artillery power="1" max="4" room="8" start="false" weapon="TERRAN_LASER_BATTERY_HEAVY_2" />
+		<artillery power="1" max="4" room="7" start="false" weapon="TERRAN_LASER_BATTERY_HEAVY_2" />
 		<clonebay power="1" max="3" room="4" start="true" />
 		<doors power="1" max="3" room="0" start="true" />
 		<drones power="2" max="6" room="3" start="true" />
