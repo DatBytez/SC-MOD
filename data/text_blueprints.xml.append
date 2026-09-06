@@ -260,7 +260,8 @@ When paired the main weapon provides power and amunition to the weapon on it's r
 <text name="crew_TERRAN_MARINE_NAME">Terran Marine</text>
 <text name="crew_TERRAN_MARINE_SHORT">Marine</text>
 <text name="crew_TERRAN_MARINE_DESC">Basic Terran soldier equipped with powered armor and a rapid-fire C-14 rifle.  
-Powered Armor Stats:
+
+    Powered Armor Stats:
 -Minor fire and damage resistance
 -Resistant to suffocation|
 -Reduced movement speed.</text>
@@ -268,7 +269,8 @@ Powered Armor Stats:
 <text name="crew_TERRAN_MEDIC_NAME">Terran Medic</text>
 <text name="crew_TERRAN_MEDIC_SHORT">Medic</text>
 <text name="crew_TERRAN_MEDIC_DESC">Terran field medic trained to supress enemy forces and keep infantry alive in combat zones.
-Powered Armor Stats:
+
+    Powered Armor Stats:
 -Minor fire and damage resistance
 -Resistant to suffocation
 -Reduced movement speed.</text>
@@ -276,7 +278,8 @@ Powered Armor Stats:
 <text name="crew_TERRAN_FIREBAT_NAME">Terran Firebat</text>
 <text name="crew_TERRAN_FIREBAT_SHORT">Firebat</text>
 <text name="crew_TERRAN_FIREBAT_DESC">Flame-wielding shock trooper built for close combat and clearing out enemy infantry.
-Powered Armor Stats:
+
+    Powered Armor Stats:
 -Immune to fire damage
 -Minor damage resistance
 -Resistant to suffocation
@@ -285,7 +288,8 @@ Powered Armor Stats:
 <text name="crew_TERRAN_GHOST_NAME">Terran Ghost</text>
 <text name="crew_TERRAN_GHOST_SHORT">Ghost</text>
 <text name="crew_TERRAN_GHOST_DESC">Cloaked specialist skilled in sabotage, psionics, and high-value target elimination.
-Hostile Environment Suit Stats:
+
+    Hostile Environment Suit Stats:
 -Resistant to suffocation
 -Increased movement speed.</text>
 

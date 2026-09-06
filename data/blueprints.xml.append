@@ -24,15 +24,19 @@
     <title id="system_lily_system_bracers_NAME"/>
     <desc id="system_lily_system_bracers_DESC"/>
     <startPower>1</startPower>
-    <maxPower>5</maxPower>
+    <maxPower>8</maxPower>
     <rarity>2</rarity>
     <upgradeCost>
         <level>30</level>
         <level>50</level>
-        <level>80</level>
+        <level>30</level>
+        <level>40</level>
+		<level>50</level>
+        <level>70</level>
         <level>100</level>
+        <level>110</level>
     </upgradeCost>
-    <cost>100</cost>
+    <cost>110</cost>
 </systemBlueprint>
 
 <!-- 
@@ -2626,7 +2630,7 @@ TERRAN_GOLIATH-->
 	<droneSlots>3</droneSlots>
 	<weaponList missiles="2" count="4">
 		<weapon name="TERRAN_LASER_BATTERY_1" />
-		<weapon name="TERRAN_LASER_BATTERY_2" />
+		<weapon name="TERRAN_LASER_BATTERY_1" />
 	</weaponList>
 	<droneList drones="4" count="3">
 		<drone name="TERRAN_SCV" />
