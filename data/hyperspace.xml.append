@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FTL>
-
+<!-- NEW TEST -->
 <advancedCrewTooltips enabled="true" ally="false" enemy="false" rounding="2"/>
 <eventTooltips enabled="true"/>
 <showNumericalWeaponCooldown enabled="true"/>
