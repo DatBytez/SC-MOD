@@ -133,6 +133,34 @@ When paired the main weapon provides power and amunition to the weapon on it's r
 <text name="weapon_GEMINI_MISSILES_SYS_PAIRED_desc">[Paired] A light missile system that excels when its versatility is utilized properly.</text>
 <text name="weapon_GEMINI_MISSILES_SYS_PAIRED_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
 
+<!-- GEMINI MISSILES MK III -->
+<text name="weapon_GEMINI_MISSILES_BREACH_3_title">Terran Gemini Missiles Mk III - Breach</text>
+<text name="weapon_GEMINI_MISSILES_BREACH_3_short">Gemini Breach III</text>
+<text name="weapon_GEMINI_MISSILES_BREACH_3_desc">[[GEMINI_BREACH_3 Needs Description]]</text>
+<text name="weapon_GEMINI_MISSILES_BREACH_3_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles.</text>
+<text name="weapon_GEMINI_MISSILES_BREACH_3_PAIRED_title">Terran Gemini Missiles Mk III - Paired</text>
+<text name="weapon_GEMINI_MISSILES_BREACH_3_PAIRED_short">Gemini III [Paired] (Breach)</text>
+<text name="weapon_GEMINI_MISSILES_BREACH_3_PAIRED_desc">[[GEMINI_BREACH_3_PAIRED Needs Description]]</text>
+<text name="weapon_GEMINI_MISSILES_BREACH_3_PAIRED_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles.</text>
+
+<text name="weapon_GEMINI_MISSILES_FIRE_3_title">Terran Gemini Missiles Mk III - Hellfire</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_3_short">Gemini Fire III</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_3_desc">[[GEMINI_FIRE_3 Needs Description]]</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_3_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles.</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_3_PAIRED_title">Terran Gemini Missiles Mk III - Paired</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_3_PAIRED_short">Gemini III [Paired] (Fire)</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_3_PAIRED_desc">[[GEMINI_FIRE_3_PAIRED Needs Description]]</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_3_PAIRED_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles.</text>
+
+<text name="weapon_GEMINI_MISSILES_ION_3_title">Terran Gemini Missiles Mk III - Ion</text>
+<text name="weapon_GEMINI_MISSILES_ION_3_short">Gemini Ion III</text>
+<text name="weapon_GEMINI_MISSILES_ION_3_desc">[[GEMINI_ION_3 Needs Description]]</text>
+<text name="weapon_GEMINI_MISSILES_ION_3_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles.</text>
+<text name="weapon_GEMINI_MISSILES_ION_3_PAIRED_title">Terran Gemini Missiles Mk III - Paired</text>
+<text name="weapon_GEMINI_MISSILES_ION_3_PAIRED_short">Gemini III [Paired] (Ion)</text>
+<text name="weapon_GEMINI_MISSILES_ION_3_PAIRED_desc">[[GEMINI_ION_3_PAIRED Needs Description]]</text>
+<text name="weapon_GEMINI_MISSILES_ION_3_PAIRED_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles.</text>
+
 <!-- YAMATO CANNON -->
 <text name="weapon_ARTILLERY_YAMATO_LASER_title">Terran Yamato Cannon</text>
 <text name="weapon_ARTILLERY_YAMATO_LASER_short">Yamato Cannon</text>
@@ -156,6 +184,16 @@ When paired the main weapon provides power and amunition to the weapon on it's r
 <text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_short">Irradiate Lite</text>
 <text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_desc">[[Need Irradiate Lite Description]]</text>
 <text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_tooltip">Applies an erosion effect for every tile hit. Also does 5 hp/s damage for 25 seconds to any crew hit.</text>
+
+<text name="weapon_TERRAN_MISSILE_HALO_title">Terran Halo Missile</text>
+<text name="weapon_TERRAN_MISSILE_HALO_short">Halo</text>
+<text name="weapon_TERRAN_MISSILE_HALO_desc">[[TERRAN_MISSILE_HALO Needs Description]]</text>
+<text name="weapon_TERRAN_MISSILE_HALO_tooltip">[[TERRAN_MISSILE_HALO Needs Tooltip]]</text>
+
+<text name="weapon_TERRAN_MISSILE_LONGBOLT_title">Terran Longbolt Missile</text>
+<text name="weapon_TERRAN_MISSILE_LONGBOLT_short">Longbolt</text>
+<text name="weapon_TERRAN_MISSILE_LONGBOLT_desc">[[TERRAN_MISSILE_LONGBOLT Needs Description]]</text>
+<text name="weapon_TERRAN_MISSILE_LONGBOLT_tooltip">[[TERRAN_MISSILE_LONGBOLT Needs Tooltip]]</text>
 
 <!-- TERRAN DEFENSE MATRIX -->
 <text name="weapon_TERRAN_DEFENSE_1_title">Terran Defense Matrix I</text>
@@ -182,6 +220,10 @@ When paired the main weapon provides power and amunition to the weapon on it's r
 <text name="drone_TERRAN_SCV_HULL_NAME">Terran SCV Hull</text>
 <text name="drone_TERRAN_SCV_HULL_SHORT">SCV Hull</text>
 <text name="drone_TERRAN_SCV_HULL_DESC">Automatically repairs 3-5 damage to your hull. SCV is consumed once it finishes.</text>
+
+<text name="drone_TERRAN_GOLIATH_NAME">Terran Goliath</text>
+<text name="drone_TERRAN_GOLIATH_SHORT">Goliath</text>
+<text name="drone_TERRAN_GOLIATH_DESC">[[TERRAN_GOLIATH Needs Description]]</text>
 
 <!-- TERRAN SPIDER MINE -->
 <text name="drone_TERRAN_SPIDER_1_NAME">Terran Spider Mine Qt.1</text>
