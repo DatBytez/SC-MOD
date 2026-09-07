@@ -48,13 +48,12 @@ local SYSTEM_BASE_CAP_FALLBACKS = {
     reactor = 25
 }
 
-local MAX_LEVEL_TEST_SYSTEMS = {
+local TEST_SYSTEMS = {
     lily_system_bracers = true
 }
 
-local originalMaxLevels = {}
-local upgradeTabActive = false
-local updatingSystemLevels = false
+local nativeMaxLevels = {}
+local applyingSystemLimits = false
 
 local function normalize_system_name(system)
     if type(system) == "number" then
@@ -75,9 +74,10 @@ function mods.sc.system_caps.get_cap(system)
         return 0
     end
 
+    local fallback = SYSTEM_BASE_CAP_FALLBACKS[systemName] or 0
+
     if systemName == "reactor" then
         local playerShip = Hyperspace.ships and Hyperspace.ships.player
-        local fallback = SYSTEM_BASE_CAP_FALLBACKS.reactor
 
         if playerShip and playerShip.myBlueprint and playerShip.myBlueprint.blueprintName then
             local definition = Hyperspace.CustomShipSelect.GetInstance():GetDefinition(playerShip.myBlueprint.blueprintName)
@@ -89,7 +89,6 @@ function mods.sc.system_caps.get_cap(system)
         return fallback
     end
 
-    local fallback = SYSTEM_BASE_CAP_FALLBACKS[systemName] or 0
     local rawCap = Hyperspace.playerVariables[systemName .. "_cap"]
 
     if rawCap == nil or rawCap < 0 or (rawCap == 0 and fallback > 0) then
@@ -103,79 +102,105 @@ function mods.sc.system_caps.get_cap(system)
     return rawCap
 end
 
-local function get_native_max_level(ship, systemName, sys)
-    local nativeMax = 0
-
-    if sys and sys.maxLevel and sys.maxLevel > nativeMax then
-        nativeMax = sys.maxLevel
-    end
-
-    if sys then
-        local currentMax = sys:GetMaxPower() or 0
-        if currentMax > nativeMax then
-            nativeMax = currentMax
-        end
-    end
-
-    local rawCap = Hyperspace.playerVariables[systemName .. "_cap"]
-    if rawCap and rawCap > nativeMax then
-        nativeMax = rawCap
-    end
-
-    local fallback = SYSTEM_BASE_CAP_FALLBACKS[systemName] or 0
-    if fallback > nativeMax then
-        nativeMax = fallback
-    end
-
-    return nativeMax
-end
-
-local function remember_original_max_level(ship, systemName, sys)
-    if not ship or not systemName or not sys then return end
-
-    local shipId = ship.iShipId or 0
-    originalMaxLevels[shipId] = originalMaxLevels[shipId] or {}
-
-    local nativeMax = get_native_max_level(ship, systemName, sys)
-    local storedMax = originalMaxLevels[shipId][systemName] or 0
-
-    if nativeMax > storedMax then
-        originalMaxLevels[shipId][systemName] = nativeMax
-    end
-end
-
-local function get_original_max_level(ship, systemName, sys)
-    remember_original_max_level(ship, systemName, sys)
-
-    local shipId = ship and ship.iShipId or 0
-    return originalMaxLevels[shipId] and originalMaxLevels[shipId][systemName] or nil
-end
-
-local function get_desired_system_upgrades(ship)
-    local desired = {}
-    if not ship then return desired end
-
-    for augName, upgrades in pairs(augmentUpgrades) do
-        local count = ship:HasAugmentation(augName) or 0
-        if count > 0 then
-            for _, upgrade in ipairs(upgrades) do
-                if upgrade.system and (upgrade.value or 0) > 0 then
-                    desired[upgrade.system] = (desired[upgrade.system] or 0) + upgrade.value * count
-                end
-            end
-        end
-    end
-
-    return desired
+local function get_system_id(systemName)
+    if not systemName then return -1 end
+    return Hyperspace.ShipSystem.NameToSystemId(systemName)
 end
 
 local function get_system(ship, systemName)
     if not ship or not systemName then return nil end
 
-    local systemId = Hyperspace.ShipSystem.NameToSystemId(systemName)
+    local systemId = get_system_id(systemName)
+    if systemId < 0 then return nil end
     if not ship:HasSystem(systemId) then return nil end
 
     return ship:GetSystem(systemId)
+end
+
+local function get_blueprint_max_power(ship, systemName)
+    if not ship or not systemName then return 0 end
+
+    local systemId = get_system_id(systemName)
+    if systemId < 0 then return 0 end
+
+    local maxPower = 0
+
+    pcall(function()
+        if ship.myBlueprint and ship.myBlueprint.systemInfo then
+            local systemInfo = ship.myBlueprint.systemInfo[systemId]
+            if systemInfo and systemInfo.maxPower and systemInfo.maxPower > maxPower then
+                maxPower = systemInfo.maxPower
+            end
+        end
+    end)
+
+    pcall(function()
+        if ship.myBlueprint and ship.myBlueprint.blueprintName then
+            local definition = Hyperspace.CustomShipSelect.GetInstance():GetDefinition(ship.myBlueprint.blueprintName)
+            if definition and definition.systemInfo then
+                local systemInfo = definition.systemInfo[systemId]
+                if systemInfo and systemInfo.maxPower and systemInfo.maxPower > maxPower then
+                    maxPower = systemInfo.maxPower
+                end
+            end
+        end
+    end)
+
+    return maxPower
+end
+
+local function remember_native_max_level(ship, systemName, sys)
+    if not ship or not systemName or not sys then return end
+
+    local shipId = ship.iShipId or 0
+    nativeMaxLevels[shipId] = nativeMaxLevels[shipId] or {}
+
+    local nativeMax = 0
+    local currentMax = sys:GetMaxPower() or 0
+    local rawCap = Hyperspace.playerVariables[systemName .. "_cap"]
+    local fallback = SYSTEM_BASE_CAP_FALLBACKS[systemName] or 0
+    local blueprintMax = get_blueprint_max_power(ship, systemName)
+
+    if sys.maxLevel and sys.maxLevel > nativeMax then nativeMax = sys.maxLevel end
+    if currentMax > nativeMax then nativeMax = currentMax end
+    if rawCap and rawCap > nativeMax then nativeMax = rawCap end
+    if fallback > nativeMax then nativeMax = fallback end
+    if blueprintMax > nativeMax then nativeMax = blueprintMax end
+
+    local storedMax = nativeMaxLevels[shipId][systemName] or 0
+    if nativeMax > storedMax then
+        nativeMaxLevels[shipId][systemName] = nativeMax
+    end
+end
+
+local function get_native_max_level(ship, systemName, sys)
+    remember_native_max_level(ship, systemName, sys)
+
+    local shipId = ship and ship.iShipId or 0
+    if nativeMaxLevels[shipId] then
+        return nativeMaxLevels[shipId][systemName] or 0
+    end
+
+    return 0
+end
+
+local function get_augment_upgrade_bonuses(ship)
+    local bonuses = {}
+    if not ship then return bonuses end
+
+    for augName, upgrades in pairs(augmentUpgrades) do
+        local count = ship:HasAugmentation(augName) or 0
+        if count > 0 then
+            for _, upgrade in ipairs(upgrades) do
+                local amount = upgrade.value or upgrade.amount or 0
+                if upgrade.system and amount > 0 then
+                    bonuses[upgrade.system] = (bonuses[upgrade.system] or 0) + amount * count
+                end
+            end
+        end
+    end
+
+    return bonuses
 end
 
 local function get_effective_max_level(systemName, bonus)
@@ -185,141 +210,98 @@ local function get_effective_max_level(systemName, bonus)
     return baseCap + (bonus or 0)
 end
 
-local function safe_call(func)
-    pcall(func)
-end
-
-local function clear_temp_power_cap(sys)
-    safe_call(function()
-        sys.iTempPowerCap = -1
-    end)
-end
-
-local function check_max_power(sys)
-    safe_call(function()
-        sys:CheckMaxPower()
-    end)
-end
-
-local function set_system_max_level(sys, maxLevel)
+local function set_max_level(sys, maxLevel)
     if not sys or not maxLevel or maxLevel <= 0 then return end
-
-    safe_call(function()
-        sys.maxLevel = maxLevel
-    end)
+    sys.maxLevel = maxLevel
 end
 
-local function restore_system_max_level(ship, systemName)
-    local sys = get_system(ship, systemName)
-    if not sys then return end
-
-    local originalMax = get_original_max_level(ship, systemName, sys)
-    if not originalMax or originalMax <= 0 then return end
-
-    clear_temp_power_cap(sys)
-    set_system_max_level(sys, originalMax)
-    check_max_power(sys)
-end
-
-local function clamp_purchased_levels(ship, systemName, bonus)
+local function clamp_purchased_level(ship, systemName, bonus)
     local sys = get_system(ship, systemName)
     if not sys then return end
 
     local effectiveMax = get_effective_max_level(systemName, bonus)
     if effectiveMax <= 0 then return end
-
-    remember_original_max_level(ship, systemName, sys)
 
     local currentMax = sys:GetMaxPower() or 0
     local excess = currentMax - effectiveMax
 
     if excess <= 0 then return end
 
-    set_system_max_level(sys, effectiveMax)
-    check_max_power(sys)
-
     for i = 1, excess do
         sys:UpgradeSystem(-1)
     end
-
-    check_max_power(sys)
 end
 
-local function apply_upgrade_screen_max_level(ship, systemName, bonus)
-    local sys = get_system(ship, systemName)
-    if not sys then return end
-
-    local effectiveMax = get_effective_max_level(systemName, bonus)
-    if effectiveMax <= 0 then return end
-
-    remember_original_max_level(ship, systemName, sys)
-    clear_temp_power_cap(sys)
-    set_system_max_level(sys, effectiveMax)
-    check_max_power(sys)
-    clamp_purchased_levels(ship, systemName, bonus)
-end
-
-local function enforce_upgrade_screen_max_levels(ship)
+local function apply_upgrade_screen_limits(ship)
     if not ship or ship.iShipId ~= 0 then return end
-    if updatingSystemLevels then return end
+    if applyingSystemLimits then return end
 
-    updatingSystemLevels = true
+    applyingSystemLimits = true
 
-    local desired = get_desired_system_upgrades(ship)
+    local bonuses = get_augment_upgrade_bonuses(ship)
 
-    for systemName in pairs(MAX_LEVEL_TEST_SYSTEMS) do
-        apply_upgrade_screen_max_level(ship, systemName, desired[systemName] or 0)
+    for systemName in pairs(TEST_SYSTEMS) do
+        local sys = get_system(ship, systemName)
+        if sys then
+            local effectiveMax = get_effective_max_level(systemName, bonuses[systemName] or 0)
+            if effectiveMax > 0 then
+                remember_native_max_level(ship, systemName, sys)
+                set_max_level(sys, effectiveMax)
+                clamp_purchased_level(ship, systemName, bonuses[systemName] or 0)
+            end
+        end
     end
 
-    upgradeTabActive = true
-    updatingSystemLevels = false
+    applyingSystemLimits = false
 end
 
-local function enforce_normal_screen_limits(ship)
+local function restore_native_limits(ship)
     if not ship or ship.iShipId ~= 0 then return end
-    if updatingSystemLevels then return end
+    if applyingSystemLimits then return end
 
-    updatingSystemLevels = true
+    applyingSystemLimits = true
 
-    local desired = get_desired_system_upgrades(ship)
+    local bonuses = get_augment_upgrade_bonuses(ship)
 
-    for systemName in pairs(MAX_LEVEL_TEST_SYSTEMS) do
-        clamp_purchased_levels(ship, systemName, desired[systemName] or 0)
-        restore_system_max_level(ship, systemName)
+    for systemName in pairs(TEST_SYSTEMS) do
+        local sys = get_system(ship, systemName)
+        if sys then
+            remember_native_max_level(ship, systemName, sys)
+            clamp_purchased_level(ship, systemName, bonuses[systemName] or 0)
+
+            local nativeMax = get_native_max_level(ship, systemName, sys)
+            if nativeMax > 0 then
+                set_max_level(sys, nativeMax)
+            end
+        end
     end
 
-    upgradeTabActive = false
-    updatingSystemLevels = false
+    applyingSystemLimits = false
 end
 
-script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
-    if upgradeTabActive then
-        enforce_upgrade_screen_max_levels(ship)
+local function handle_tabbed_window(currentTab)
+    local ship = Hyperspace.ships.player
+    if not ship then return end
+
+    if tostring(currentTab) == "upgrades" then
+        apply_upgrade_screen_limits(ship)
     else
-        enforce_normal_screen_limits(ship)
+        restore_native_limits(ship)
     end
-end)
+end
 
 script.on_render_event(
     Defines.RenderEvents.TABBED_WINDOW,
-    function(currentTab)
-        local ship = Hyperspace.ships.player
-        if not ship then return end
-
-        if tostring(currentTab) == "upgrades" then
-            enforce_upgrade_screen_max_levels(ship)
-        else
-            enforce_normal_screen_limits(ship)
-        end
-    end,
-    function(currentTab)
-        local ship = Hyperspace.ships.player
-        if not ship then return end
-
-        if tostring(currentTab) == "upgrades" then
-            enforce_upgrade_screen_max_levels(ship)
-        else
-            enforce_normal_screen_limits(ship)
-        end
-    end
+    handle_tabbed_window,
+    handle_tabbed_window
 )
+
+local function restore_player_native_limits()
+    local ship = Hyperspace.ships.player
+    if not ship then return end
+
+    restore_native_limits(ship)
+end
+
+script.on_internal_event(Defines.InternalEvents.TABBED_WINDOW_CONFIRM, restore_player_native_limits)
+script.on_internal_event(Defines.InternalEvents.TABBED_WINDOW_UNDO, restore_player_native_limits)
