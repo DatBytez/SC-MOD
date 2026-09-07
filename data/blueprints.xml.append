@@ -610,7 +610,26 @@
 
 <!-- ===============     GEMINI MISSILES     =============== -->
 <FTL>
-	 <weaponBlueprint name="GEMINI_BREACH_1">
+<weaponBlueprint name="GEMINI_PAIRED">
+	<type>MISSILES</type>
+	<tip>tip_missiles</tip>
+    <title>Gemini Paired</title>
+    <short>Gemini Paired</short>
+    <desc>Paired targeting shell.</desc>
+    <tooltip>Paired targeting shell.</tooltip>
+    <damage>0</damage>
+    <shots>1</shots>
+    <sp>0</sp>
+    <fireChance>0</fireChance>
+    <breachChance>0</breachChance>
+    <stunChance>0</stunChance>
+    <cooldown>1</cooldown>
+    <power>0</power>
+    <missiles>0</missiles>
+    <speed>10</speed>
+</weaponBlueprint>
+
+<weaponBlueprint name="GEMINI_BREACH_1">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
 	<title id="weapon_GEMINI_MISSILES_BREACH_title"/>

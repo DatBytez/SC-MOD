@@ -2,7 +2,7 @@
 DESCRIPTION: Pairs adjacent tagged weapons so the left weapon performs the attack for both slots.
         - Builds non-overlapping pairs from left to right using matching <sc_paired> groups.
         - Requires the primary/left weapon to be powered.
-        - The secondary/right weapon remains in place; no weapon blueprint swapping is performed.
+        - The secondary/right weapon temporarily uses a paired secondary blueprint while paired.
         - When a pair is first formed, both weapons' cooldowns are reset to 0.
         - The secondary/right weapon's cooldown is matched to the primary/left weapon.
         - The primary/left weapon fires normally and creates a copied projectile from the secondary/right weapon's launch point.
@@ -11,29 +11,23 @@ DESCRIPTION: Pairs adjacent tagged weapons so the left weapon performs the attac
             2. The most recently killed/removed secondary projectile target this combat.
             3. The primary/left weapon's projectile target.
         - Kills the secondary/right weapon's own projectiles so damage is only applied by the primary and its copy.
-        - Forces secondary autofire off while paired.
-        - Keeps the secondary/right weapon below full charge and clears queued projectiles to prevent secondary firing.
-        - The secondary/right weapon's missile spend is forced to 0 while paired.
-        - Can temporarily point the secondary/right weapon at NAME_PAIRED to use a zero-missile secondary blueprint.
-        - Restores the secondary/right weapon's original powered state when the pair is no longer valid.
+        - Restores the secondary/right weapon's original blueprint and powered state when the pair is no longer valid.
 TAG: <sc_paired group="GROUP"/>
-DEPENDENCIES: sc_tag.lua, Multiverse userdata_table, Multiverse vter
+DEPENDENCIES: sc_tag.lua, Multiverse userdata_table
 ]]
 
-local vter = mods.multiverse.vter
 local userdata_table = mods.multiverse.userdata_table
 
 local pairedGroupById = {}
 local removedProjectileTargetsByShip = {}
 local removedProjectileDestinationsByShip = {}
 
--- Optional alternate blueprint for paired secondary weapons.
--- Create NAME_PAIRED as a clone of NAME with <missiles>0</missiles> and ideally <power>0</power>.
-local SECONDARY_BLUEPRINT_SUFFIX = "_PAIRED"
+-- One generic harmless targeting shell for every paired secondary weapon.
+-- This blueprint should have <power>0</power>, <missiles>0</missiles>, and harmless/no damage.
+local GENERIC_SECONDARY_BLUEPRINT = "GEMINI_PAIRED"
 
--- Keep the secondary just below full charge so target data can remain assigned
--- without letting the secondary weapon enter its actual fire/sound path.
-local SECONDARY_FULL_CHARGE_BUFFER = 0.10
+-- Fallback if the generic blueprint does not exist.
+local SECONDARY_BLUEPRINT_SUFFIX = "_PAIRED"
 
 local function parse_paired_group(tagNode, weaponNode)
     local groupAttr = tagNode:first_attribute("group")
@@ -41,6 +35,7 @@ local function parse_paired_group(tagNode, weaponNode)
     local weaponName = weaponNode:first_attribute("name"):value()
 
     pairedGroupById[weaponName .. SECONDARY_BLUEPRINT_SUFFIX] = groupId
+    pairedGroupById[GENERIC_SECONDARY_BLUEPRINT] = groupId
 
     return groupId
 end
@@ -75,7 +70,6 @@ end)
 local function pointf_from_point(point)
     if not point then return nil end
     if point.x == nil or point.y == nil then return nil end
-
     return Hyperspace.Pointf(point.x, point.y)
 end
 
@@ -93,7 +87,6 @@ end
 
 local function get_weapon_group(weapon)
     if not weapon or not weapon.blueprint then return nil end
-
     return pairedGroupById[weapon.blueprint.name]
 end
 
@@ -210,7 +203,6 @@ local function vector_size(vector)
     end)
 
     if not ok or not size then return 0 end
-
     return size
 end
 
@@ -223,27 +215,19 @@ local function vector_point(vector, index)
     end)
 
     if not ok then return nil end
-
     return pointf_from_point(point)
 end
 
 local function weapon_has_selected_target(weapon)
     if not weapon then return false end
-
     if weapon.fireWhenReady then return true end
     if weapon.targetId and weapon.targetId >= 0 then return true end
-
     return false
 end
 
 local function get_selected_weapon_target_point(weapon)
     if not weapon_has_selected_target(weapon) then return nil end
-
-    local lastTargets = weapon.lastTargets
-    if not lastTargets then return nil end
-
-    -- For normal weapons, the first stored point appears to be the selected target.
-    return vector_point(lastTargets, 0)
+    return vector_point(weapon.lastTargets, 0)
 end
 
 local function store_removed_secondary_projectile_target(projectile, weaponSlot, shipId)
@@ -259,14 +243,12 @@ end
 local function get_removed_projectile_target(shipId, weaponSlot)
     local shipTargets = removedProjectileTargetsByShip[shipId]
     if not shipTargets then return nil end
-
     return shipTargets[weaponSlot]
 end
 
 local function get_removed_projectile_destination(shipId, weaponSlot)
     local shipDestinations = removedProjectileDestinationsByShip[shipId]
     if not shipDestinations then return nil end
-
     return shipDestinations[weaponSlot]
 end
 
@@ -409,74 +391,13 @@ end
 
 local function clear_weapon_projectiles(weapon)
     if not weapon or not weapon.queuedProjectiles then return end
-
-    for queuedProjectile in vter(weapon.queuedProjectiles) do
-        queuedProjectile:Kill()
-    end
-
     weapon.queuedProjectiles:clear()
 end
 
-local function hold_secondary_below_full_charge(secondaryWeapon)
-    if not secondaryWeapon or not secondaryWeapon.cooldown then return end
-
-    local maxCharge = secondaryWeapon.cooldown.second
-    if not maxCharge then return end
-
-    local cappedCharge = maxCharge - SECONDARY_FULL_CHARGE_BUFFER
-    if cappedCharge < 0 then
-        cappedCharge = 0
-    end
-
-    if secondaryWeapon.cooldown.first > cappedCharge then
-        secondaryWeapon.cooldown.first = cappedCharge
-    end
-end
-
-local function suppress_secondary_fire_request(secondaryWeapon)
-    if not secondaryWeapon then return end
-
-    secondaryWeapon.autoFiring = false
-
-    -- Leave fireWhenReady/targetId/lastTargets intact when possible, because
-    -- those fields provide the selected target for the copied projectile.
-    -- Prevent actual firing by keeping the secondary just below full charge
-    -- and clearing queued projectiles as a fallback.
-    hold_secondary_below_full_charge(secondaryWeapon)
-    clear_weapon_projectiles(secondaryWeapon)
-end
-
-local function get_power_override_data(weapon)
+local function get_pair_state_data(weapon)
     if not weapon then return nil end
-
-    return userdata_table(weapon, "mods.sc.paired_weapon_power_override")
+    return userdata_table(weapon, "mods.sc.paired_weapon_state")
 end
-
-local function try_get_field(object, fieldName)
-    local ok, value = pcall(function()
-        return object[fieldName]
-    end)
-
-    if not ok then return nil end
-
-    return value
-end
-
-local function try_set_field(object, fieldName, value)
-    local ok = pcall(function()
-        object[fieldName] = value
-    end)
-
-    return ok
-end
-
-local SECONDARY_POWER_FIELD_CANDIDATES = {
-    "powerRequired",
-    "requiredPower",
-    "iRequiredPower",
-    "powerRequirement",
-    "iPowerRequired"
-}
 
 local function reset_weapon_cooldown(weapon)
     if not weapon or not weapon.cooldown then return end
@@ -493,9 +414,8 @@ end
 local function reset_pair_cooldowns_on_initial_pair(pairData)
     if not pairData or not pairData.secondaryWeapon then return end
 
-    local data = get_power_override_data(pairData.secondaryWeapon)
+    local data = get_pair_state_data(pairData.secondaryWeapon)
     if not data then return end
-
     if data.isPaired then return end
 
     data.isPaired = true
@@ -504,136 +424,75 @@ local function reset_pair_cooldowns_on_initial_pair(pairData)
     reset_weapon_cooldown(pairData.secondaryWeapon)
 end
 
-local function set_secondary_power_requirement_zero(secondaryWeapon)
-    if not secondaryWeapon then return end
+local function get_fallback_paired_blueprint_name(weapon)
+    if not weapon or not weapon.blueprint or not weapon.blueprint.name then return nil end
 
-    local data = get_power_override_data(secondaryWeapon)
-    if not data then return end
-
-    if data.originalPowered == nil then
-        data.originalPowered = secondaryWeapon.powered
-    end
-
-    data.modifiedFields = data.modifiedFields or {}
-
-    for _, fieldName in ipairs(SECONDARY_POWER_FIELD_CANDIDATES) do
-        local currentValue = try_get_field(secondaryWeapon, fieldName)
-
-        if type(currentValue) == "number" then
-            if data.modifiedFields[fieldName] == nil then
-                data.modifiedFields[fieldName] = currentValue
-            end
-
-            try_set_field(secondaryWeapon, fieldName, 0)
-        end
-    end
-end
-
-local function set_secondary_missile_spend_zero(secondaryWeapon)
-    if not secondaryWeapon then return end
-
-    local data = get_power_override_data(secondaryWeapon)
-    if not data then return end
-
-    local currentSpend = try_get_field(secondaryWeapon, "iSpendMissile")
-
-    if type(currentSpend) == "number" then
-        if data.originalMissileSpend == nil then
-            data.originalMissileSpend = currentSpend
-        end
-
-        try_set_field(secondaryWeapon, "iSpendMissile", 0)
-    end
-end
-
-local function get_base_secondary_weapon_name(secondaryWeapon)
-    if not secondaryWeapon or not secondaryWeapon.blueprint then return nil end
-
-    local weaponName = secondaryWeapon.blueprint.name
-    if not weaponName then return nil end
+    local weaponName = weapon.blueprint.name
 
     if string.sub(weaponName, -#SECONDARY_BLUEPRINT_SUFFIX) == SECONDARY_BLUEPRINT_SUFFIX then
-        return string.sub(weaponName, 1, #weaponName - #SECONDARY_BLUEPRINT_SUFFIX)
+        return weaponName
     end
 
-    return weaponName
+    return weaponName .. SECONDARY_BLUEPRINT_SUFFIX
+end
+
+local function get_paired_secondary_blueprint(secondaryWeapon)
+    if GENERIC_SECONDARY_BLUEPRINT then
+        local genericBlueprint = Hyperspace.Blueprints:GetWeaponBlueprint(GENERIC_SECONDARY_BLUEPRINT)
+
+        if genericBlueprint then
+            return genericBlueprint
+        end
+    end
+
+    local fallbackName = get_fallback_paired_blueprint_name(secondaryWeapon)
+    if fallbackName then
+        return Hyperspace.Blueprints:GetWeaponBlueprint(fallbackName)
+    end
+
+    return nil
 end
 
 local function set_secondary_to_paired_blueprint(secondaryWeapon)
     if not secondaryWeapon or not secondaryWeapon.blueprint then return end
 
-    local data = get_power_override_data(secondaryWeapon)
+    local data = get_pair_state_data(secondaryWeapon)
     if not data then return end
 
     if data.originalBlueprint == nil then
         data.originalBlueprint = secondaryWeapon.blueprint
-        data.originalBlueprintName = secondaryWeapon.blueprint.name
     end
 
-    local baseWeaponName = data.originalBlueprintName or get_base_secondary_weapon_name(secondaryWeapon)
-    if not baseWeaponName then return end
-
-    local pairedBlueprintName = baseWeaponName .. SECONDARY_BLUEPRINT_SUFFIX
-    local pairedBlueprint = Hyperspace.Blueprints:GetWeaponBlueprint(pairedBlueprintName)
-
-    if not pairedBlueprint then
-        if not data.missingPairedBlueprintPrinted then
-            print("SC PAIRED WARNING | Missing paired secondary blueprint: " .. tostring(pairedBlueprintName))
-            data.missingPairedBlueprintPrinted = true
-        end
-
-        return
+    if data.originalPowered == nil then
+        data.originalPowered = secondaryWeapon.powered
     end
 
-    -- This swaps only the ProjectileFactory's blueprint pointer. It does not
-    -- remove/re-add weapons or globally mutate the original blueprint's missiles.
+    local pairedBlueprint = get_paired_secondary_blueprint(secondaryWeapon)
+    if not pairedBlueprint then return end
+
     secondaryWeapon.blueprint = pairedBlueprint
 end
 
-local function restore_secondary_blueprint(weapon)
+local function restore_secondary_state(weapon)
     if not weapon then return end
 
-    local data = get_power_override_data(weapon)
+    local data = get_pair_state_data(weapon)
     if not data then return end
 
     if data.originalBlueprint ~= nil then
         weapon.blueprint = data.originalBlueprint
     end
 
-    data.originalBlueprint = nil
-    data.originalBlueprintName = nil
-    data.missingPairedBlueprintPrinted = nil
-end
-
-local function restore_secondary_power_requirement(weapon)
-    if not weapon then return end
-
-    local data = get_power_override_data(weapon)
-    if not data then return end
-
-    if data.modifiedFields then
-        for fieldName, originalValue in pairs(data.modifiedFields) do
-            try_set_field(weapon, fieldName, originalValue)
-        end
-    end
-
-    if data.originalMissileSpend ~= nil then
-        try_set_field(weapon, "iSpendMissile", data.originalMissileSpend)
-    end
-
-    restore_secondary_blueprint(weapon)
-
     if data.originalPowered ~= nil then
         weapon.powered = data.originalPowered
     end
 
-    data.modifiedFields = {}
+    data.originalBlueprint = nil
     data.originalPowered = nil
-    data.originalMissileSpend = nil
     data.isPaired = false
 end
 
-local function restore_unpaired_power_overrides(shipManager, pairSlots)
+local function restore_unpaired_secondary_states(shipManager, pairSlots)
     if not shipManager or not shipManager.weaponSystem then return end
 
     local weapons = shipManager.weaponSystem.weapons
@@ -644,7 +503,7 @@ local function restore_unpaired_power_overrides(shipManager, pairSlots)
         local pairData = pairSlots and pairSlots[i]
 
         if weapon and (not pairData or pairData.secondarySlot ~= i) then
-            restore_secondary_power_requirement(weapon)
+            restore_secondary_state(weapon)
         end
     end
 end
@@ -665,7 +524,7 @@ local function maintain_paired_secondary_weapons(shipManager)
     local weapons = shipManager.weaponSystem.weapons
     local pairSlots = build_valid_pair_slots(shipManager)
 
-    restore_unpaired_power_overrides(shipManager, pairSlots)
+    restore_unpaired_secondary_states(shipManager, pairSlots)
 
     local i = 0
 
@@ -674,11 +533,8 @@ local function maintain_paired_secondary_weapons(shipManager)
 
         if pairData and pairData.primarySlot == i then
             reset_pair_cooldowns_on_initial_pair(pairData)
-            set_secondary_power_requirement_zero(pairData.secondaryWeapon)
             set_secondary_to_paired_blueprint(pairData.secondaryWeapon)
-            set_secondary_missile_spend_zero(pairData.secondaryWeapon)
             sync_secondary_cooldown_to_primary(pairData.primaryWeapon, pairData.secondaryWeapon)
-            suppress_secondary_fire_request(pairData.secondaryWeapon)
             i = i + 2
         else
             i = i + 1
@@ -712,11 +568,8 @@ script.on_internal_event(
 
         if pairData.secondarySlot == weaponSlot then
             store_removed_secondary_projectile_target(projectile, weaponSlot, weapon.iShipId)
-            set_secondary_to_paired_blueprint(weapon)
-            set_secondary_missile_spend_zero(weapon)
             projectile:Kill()
             clear_weapon_projectiles(weapon)
-            suppress_secondary_fire_request(weapon)
             return
         end
 
