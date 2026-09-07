@@ -23,18 +23,14 @@ local removedProjectileTargetsByShip = {}
 local removedProjectileDestinationsByShip = {}
 
 -- One generic harmless targeting shell for every paired secondary weapon.
--- This blueprint should have <power>0</power>, <missiles>0</missiles>, and harmless/no damage.
+-- This blueprint must exist. It should have <power>0</power>, <missiles>0</missiles>,
+-- and harmless/no damage.
 local GENERIC_SECONDARY_BLUEPRINT = "GEMINI_PAIRED"
-
--- Fallback if the generic blueprint does not exist.
-local SECONDARY_BLUEPRINT_SUFFIX = "_PAIRED"
 
 local function parse_paired_group(tagNode, weaponNode)
     local groupAttr = tagNode:first_attribute("group")
     local groupId = groupAttr and groupAttr:value() or "default"
-    local weaponName = weaponNode:first_attribute("name"):value()
 
-    pairedGroupById[weaponName .. SECONDARY_BLUEPRINT_SUFFIX] = groupId
     pairedGroupById[GENERIC_SECONDARY_BLUEPRINT] = groupId
 
     return groupId
@@ -424,33 +420,8 @@ local function reset_pair_cooldowns_on_initial_pair(pairData)
     reset_weapon_cooldown(pairData.secondaryWeapon)
 end
 
-local function get_fallback_paired_blueprint_name(weapon)
-    if not weapon or not weapon.blueprint or not weapon.blueprint.name then return nil end
-
-    local weaponName = weapon.blueprint.name
-
-    if string.sub(weaponName, -#SECONDARY_BLUEPRINT_SUFFIX) == SECONDARY_BLUEPRINT_SUFFIX then
-        return weaponName
-    end
-
-    return weaponName .. SECONDARY_BLUEPRINT_SUFFIX
-end
-
-local function get_paired_secondary_blueprint(secondaryWeapon)
-    if GENERIC_SECONDARY_BLUEPRINT then
-        local genericBlueprint = Hyperspace.Blueprints:GetWeaponBlueprint(GENERIC_SECONDARY_BLUEPRINT)
-
-        if genericBlueprint then
-            return genericBlueprint
-        end
-    end
-
-    local fallbackName = get_fallback_paired_blueprint_name(secondaryWeapon)
-    if fallbackName then
-        return Hyperspace.Blueprints:GetWeaponBlueprint(fallbackName)
-    end
-
-    return nil
+local function get_paired_secondary_blueprint()
+    return Hyperspace.Blueprints:GetWeaponBlueprint(GENERIC_SECONDARY_BLUEPRINT)
 end
 
 local function set_secondary_to_paired_blueprint(secondaryWeapon)
@@ -467,8 +438,11 @@ local function set_secondary_to_paired_blueprint(secondaryWeapon)
         data.originalPowered = secondaryWeapon.powered
     end
 
-    local pairedBlueprint = get_paired_secondary_blueprint(secondaryWeapon)
-    if not pairedBlueprint then return end
+    local pairedBlueprint = get_paired_secondary_blueprint()
+    if not pairedBlueprint then
+        print("SC PAIRED ERROR | Missing generic paired secondary blueprint: " .. tostring(GENERIC_SECONDARY_BLUEPRINT))
+        return
+    end
 
     secondaryWeapon.blueprint = pairedBlueprint
 end
