@@ -617,7 +617,6 @@
     <short>Gemini Paired</short>
     <desc>Paired targeting shell.</desc>
     <tooltip>Paired targeting shell.</tooltip>
-	<sc_paired group="gemini_lv1"/>
 	<shots>1</shots>
 	<cooldown>200.0</cooldown>
 	<power>0</power>

@@ -17,6 +17,7 @@ DESCRIPTION: Pairs adjacent tagged weapons so the left weapon performs the attac
         - The secondary/right weapon's missile spend is forced to 0 while paired.
         - Uses one generic zero-missile paired blueprint instead of per-weapon NAME_PAIRED blueprints.
         - Restores the secondary/right weapon's original powered state when the pair is no longer valid.
+        - Restores paired secondary weapons when an equipment/store/focus window is open.
 TAG: <sc_paired group="GROUP"/>
 DEPENDENCIES: sc_tag.lua, Multiverse userdata_table, Multiverse vter
 ]]
@@ -642,8 +643,22 @@ local function restore_secondary_blueprint(weapon)
     data.missingPairedBlueprintPrinted = nil
 end
 
+local function weapon_has_active_pair_restore_state(weapon)
+    if not weapon then return false end
+
+    local data = get_power_override_data(weapon)
+    if not data then return false end
+
+    return data.isPaired == true
+        or data.originalBlueprint ~= nil
+        or data.originalPowered ~= nil
+        or data.originalMissileSpend ~= nil
+        or data.pairSignature ~= nil
+end
+
 local function restore_secondary_power_requirement(weapon)
     if not weapon then return end
+    if not weapon_has_active_pair_restore_state(weapon) then return end
 
     local data = get_power_override_data(weapon)
     if not data then return end
@@ -667,7 +682,7 @@ local function restore_secondary_power_requirement(weapon)
     -- This is only called for weapons that are no longer the secondary member
     -- of a valid pair, so reset the old pair's cooldowns here.
     -- Important: this must happen after the original blueprint is restored,
-    -- otherwise the secondary can be reset using the tiny paired-blueprint cooldown.
+    -- otherwise the secondary can be reset using the paired-blueprint cooldown.
     reset_stored_pair_cooldowns(data, weapon)
 
     data.modifiedFields = {}
@@ -707,6 +722,82 @@ local function sync_secondary_cooldown_to_primary(primaryWeapon, secondaryWeapon
     end
 end
 
+local function restore_all_paired_secondary_states(shipManager)
+    if not shipManager or not shipManager.weaponSystem then return end
+
+    local weapons = shipManager.weaponSystem.weapons
+    if not weapons then return end
+
+    for i = 0, weapons:size() - 1 do
+        restore_secondary_power_requirement(weapons[i])
+    end
+end
+
+local function safe_object_is_open(object)
+    if not object then return false end
+
+    return try_get_field(object, "bOpen") == true
+end
+
+local function vector_has_open_window(vector)
+    if not vector then return false end
+
+    local ok, result = pcall(function()
+        for window in vter(vector) do
+            if safe_object_is_open(window) then
+                return true
+            end
+        end
+
+        return false
+    end)
+
+    return ok and result == true
+end
+
+local function list_has_open_window(list)
+    if type(list) ~= "table" then return false end
+
+    for _, window in ipairs(list) do
+        if safe_object_is_open(window) then
+            return true
+        end
+    end
+
+    return false
+end
+
+local function player_has_open_management_screen()
+    if not Hyperspace.App or not Hyperspace.App.gui then return false end
+
+    local gui = Hyperspace.App.gui
+
+    -- Equipment, stores, upgrade tabs, crew manifest, and custom tab windows
+    -- are FocusWindow-style screens. If one is open, restore paired weapon
+    -- pointers before the player can move, sell, or otherwise persist them.
+    if vector_has_open_window(try_get_field(gui, "focusWindows")) then return true end
+
+    local directWindowNames = {
+        "equipScreen",
+        "crewScreen",
+        "upgradeScreen",
+        "storeScreen",
+        "starMap",
+        "menuBox"
+    }
+
+    for _, windowName in ipairs(directWindowNames) do
+        if safe_object_is_open(try_get_field(gui, windowName)) then
+            return true
+        end
+    end
+
+    if vector_has_open_window(try_get_field(gui, "storeScreens")) then return true end
+    if list_has_open_window(try_get_field(gui, "storeScreens")) then return true end
+
+    return false
+end
+
 local function maintain_paired_secondary_weapons(shipManager)
     local weapons = shipManager.weaponSystem.weapons
     local pairSlots = build_valid_pair_slots(shipManager)
@@ -737,7 +828,22 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     if not run_has_started() then return end
     if not shipManager or shipManager.iShipId ~= 0 or not shipManager.weaponSystem then return end
 
+    if player_has_open_management_screen() then
+        restore_all_paired_secondary_states(shipManager)
+        return
+    end
+
     maintain_paired_secondary_weapons(shipManager)
+end)
+
+script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
+    if not run_has_started() then return end
+    if not player_has_open_management_screen() then return end
+
+    local shipManager = Hyperspace.ships(0)
+    if not shipManager or not shipManager.weaponSystem then return end
+
+    restore_all_paired_secondary_states(shipManager)
 end)
 
 script.on_internal_event(
