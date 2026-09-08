@@ -3,6 +3,7 @@ DESCRIPTION: Pairs adjacent tagged weapons so the left weapon performs the attac
         - Builds non-overlapping pairs from left to right using matching <sc_paired> groups.
         - Requires the primary/left weapon to be powered.
         - The secondary/right weapon temporarily points at one generic paired blueprint while paired.
+        - A weapon that is already powered will not be converted into a secondary until it is unpowered.
         - When a pair is first formed, both weapons' cooldowns are reset to 0.
         - When a pair is broken or changed, the previous pair's cooldowns are reset to 0.
         - The secondary/right weapon's cooldown is matched to the primary/left weapon.
@@ -37,6 +38,10 @@ local GENERIC_SECONDARY_BLUEPRINT = "GEMINI_PAIRED"
 -- Keep the secondary just below full charge so target data can remain assigned
 -- without letting the secondary weapon enter its actual fire/sound path.
 local SECONDARY_FULL_CHARGE_BUFFER = 0.10
+
+-- Do not convert a weapon that is already spending weapon-system power.
+-- This avoids the generic blueprint hiding the original weapon's consumed power.
+local REQUIRE_UNPOWERED_SECONDARY_BEFORE_PAIRING = true
 
 local function parse_paired_group(tagNode, weaponNode)
     local groupAttr = tagNode:first_attribute("group")
@@ -137,10 +142,28 @@ local function get_weapon_slot(weapon)
     return nil
 end
 
+local function secondary_can_become_paired(secondaryWeapon)
+    if not REQUIRE_UNPOWERED_SECONDARY_BEFORE_PAIRING then return true end
+    if not secondaryWeapon then return false end
+
+    local data = get_power_override_data(secondaryWeapon)
+
+    -- If it is already paired, keep allowing the existing pair to remain valid.
+    if data and data.isPaired then return true end
+
+    -- If this is a normal weapon that is already powered, do not convert it
+    -- into the generic zero-power shell. The old power can otherwise remain
+    -- reserved invisibly by the weapon system.
+    if secondaryWeapon.powered then return false end
+
+    return true
+end
+
 local function primary_matches_secondary(primaryWeapon, secondaryWeapon)
     if not primaryWeapon or not secondaryWeapon then return false end
     if not primaryWeapon.blueprint or not secondaryWeapon.blueprint then return false end
     if not primaryWeapon.powered then return false end
+    if not secondary_can_become_paired(secondaryWeapon) then return false end
 
     local primaryGroup = get_weapon_group(primaryWeapon)
     if not primaryGroup then return false end
