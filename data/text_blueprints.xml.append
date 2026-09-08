@@ -307,8 +307,8 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
     -Double rate of fire and increase movement speed.</text>
 
 <text name="ability_TERRAN_FLASHBANG_BUTTON">FLASHBANG</text>
-<tooltip name="ability_TERRAN_FLASHBANG_TOOLTIP">[COOLDOWN:30s]
-	Fire A-13 grenade launcher to stun enemies.</tooltip>    
+<text name="ability_TERRAN_FLASHBANG_TOOLTIP">[COOLDOWN:30s]
+	Fire A-13 grenade launcher to stun enemies.</text>    
 <text name="crew_TERRAN_POWER_FLASHBANG">Active Ability: Flashbang
     -Stun nearby enemies.</text>
 

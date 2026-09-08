@@ -13,12 +13,359 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
+<FTL>
 
-	<!-- 
-*********************************************************************************************************
-  TERRAN SYSTEMS
-*********************************************************************************************************
+<!-- 
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+												   ESSENTIAL SYSTEMS
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 -->
+<FTL>
+<systemBlueprint name="weapons">
+	<type>weapons</type>
+	<title>Weapon Control</title>
+	<desc>Powers all of the ship's weapons. Upgrading lets you power more weapons.</desc>
+	<startPower>2</startPower>
+	<rarity>1</rarity>
+	<maxPower>8</maxPower>
+	<upgradeCost>
+		<level>45</level> <!--2-->
+		<level>30</level>
+		<level>45</level> <!--4-->
+		<level>60</level>
+		<level>85</level> <!--6-->
+		<level>100</level>
+		<level>110</level> <!--8-->
+		<level>120</level>
+		<level>130</level>  <!--10-->
+		<level>140</level>
+		<level>160</level>  <!--12-->
+		<level>180</level>
+		<level>200</level>  <!--14-->
+		<level>220</level>
+		<level>240</level>  <!--16-->
+	</upgradeCost>
+	<cost>50</cost>
+</systemBlueprint>
+
+<systemBlueprint name="shields">
+	<type>shields</type>
+	<title>Shields</title>
+	<desc>Powers your shields. Each additional barrier can block one shot.</desc>
+	<startPower>2</startPower>
+	<maxPower>16</maxPower>
+	<rarity>1</rarity>
+	<upgradeCost>
+		<level>100</level> <!--even-->
+		<level>20</level>
+		<level>50</level> <!--even-->
+		<level>30</level>
+		<level>90</level> <!--even-->
+		<level>60</level>
+		<level>150</level> <!--even-->
+		<!--end of normally purchaseable shields-->
+		<level>70</level>
+		<level>180</level> <!--even-->
+		<level>70</level>
+		<level>180</level> <!--even-->
+		<level>70</level>
+		<level>180</level> <!--even-->
+		<level>70</level>
+		<level>180</level> <!--even-->
+		<level>200</level>
+	</upgradeCost>
+	<cost>125</cost>
+</systemBlueprint>
+
+<systemBlueprint name="engines">
+	<type>engines</type>
+	<title>Engines</title>
+	<desc>Powers the FTL drive and allows the ship to dodge. Upgrading improves dodge chance and the rate that your FTL drive charges.</desc>
+	<startPower>2</startPower>
+	<maxPower>8</maxPower>
+	<rarity>1</rarity>
+	<upgradeCost>
+		<level>15</level>
+		<level>25</level>
+		<level>40</level>
+		<level>60</level>
+		<level>65</level>
+		<level>80</level>
+		<level>100</level>
+	</upgradeCost>
+	<cost>1</cost>
+</systemBlueprint>
+
+<systemBlueprint name="oxygen">
+	<type>oxygen</type>
+	<title>Life Support</title>
+	<desc>Refills the oxygen in the ship. Upgrading increases the rate of refill.</desc>
+	<startPower>1</startPower>
+	<maxPower>3</maxPower>
+	<rarity>1</rarity>
+	<upgradeCost>
+		<level>25</level>
+		<level>35</level>
+		<level>65</level>
+	</upgradeCost>
+	<cost>35</cost>
+</systemBlueprint>
+
+<systemBlueprint name="teleporter">
+	<type>teleporter</type>
+	<title>Crew Teleporter</title>
+	<desc>Allows you to send your crew-members to board enemy vessels.</desc>
+	<startPower>1</startPower>
+	<maxPower>3</maxPower>
+	<rarity>1</rarity>
+	<upgradeCost>
+		<level>35</level>
+		<level>60</level>
+		<level>9999</level>
+	</upgradeCost>
+	<cost>90</cost>
+	<locked>1</locked>
+</systemBlueprint>
+
+<systemBlueprint name="medbay">
+	<type>medbay</type>
+	<title>Medbay</title>
+	<desc>Heals all crew-members within the Medbay room. Upgrading increases healing speed.</desc>
+	<startPower>1</startPower>
+	<maxPower>3</maxPower>
+	<rarity>1</rarity>
+	<upgradeCost>
+		<level>40</level>
+		<level>55</level>
+		<level>200</level>
+	</upgradeCost>
+	<cost>50</cost>
+</systemBlueprint>
+
+<systemBlueprint name="clonebay">
+	<type>clonebay</type>
+	<title>Clone Bay</title>
+	<desc>Automatically clones dead crew with skill penalty. Taking advantage of micro-cloning, crew heals partially every jump. Jump heal is passive and requires no power.</desc>
+	<startPower>1</startPower>
+	<maxPower>3</maxPower>
+	<rarity>1</rarity>
+	<upgradeCost>
+		<level>40</level>
+		<level>55</level>
+		<level>200</level>
+	</upgradeCost>
+	<cost>55</cost>
+</systemBlueprint>
+
+<!-- 
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+END OF ESSENTIAL SYSTEMS
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+-->
+</FTL>
+
+
+<!-- 
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+												   AUXILIARY SYSTEMS
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+-->
+<FTL>
+<systemBlueprint name="drones">
+	<type>drones</type>
+	<title>Drone Control</title>
+	<desc>Powers all of the ship's drones. Drones are automated robots that perform tasks like attacking enemy ships or repairing systems.</desc>
+	<startPower>2</startPower>
+	<maxPower>15</maxPower>
+	<rarity>1</rarity>
+	<upgradeCost>
+		<level>20</level>	<!--2--> <!--included by default-->
+		<level>25</level>
+		<level>30</level>	<!--4-->
+		<level>40</level>
+		<level>50</level>
+		<level>60</level>
+		<level>70</level>	<!--8-->
+		<level>105</level>
+		<level>110</level>  <!--10-->
+		<level>115</level>
+		<level>120</level>  <!--12-->
+		<level>130</level>
+		<level>140</level>  <!--14-->
+		<level>150</level>
+		<level>160</level>
+		<level>170</level>
+		<level>180</level>
+		<level>190</level>
+		<level>200</level>
+	</upgradeCost>
+	<cost>45</cost>
+</systemBlueprint>
+
+<systemBlueprint name="cloaking">
+	<type>cloaking</type>
+	<title>Cloaking</title>
+	<desc>Cloaks the ship, adding 60 to your evasion and preventing the enemy ship from locking on with their weapons. [Level 3 is installed in the storage menu]</desc>
+	<startPower>1</startPower>
+	<maxPower>3</maxPower>
+	<rarity>1</rarity>
+	<upgradeCost>
+		<level>55</level>
+		<level>9999</level>
+		<level>9999</level>
+		<level>9999</level>
+	</upgradeCost>
+	<cost>170</cost>
+	<locked>1</locked>
+</systemBlueprint>
+
+<systemBlueprint name="hacking">
+	<type>hacking</type>
+	<title>Hacking</title>
+	<desc>Targets a single system, locking its doors, and granting the ability to temporarily disable or disrupt it. Requires drone part to launch.</desc>
+	<startPower>1</startPower>
+	<maxPower>3</maxPower>
+	<rarity>1</rarity>
+	<upgradeCost>
+		<level>40</level> <!-- level 2 -->
+		<level>70</level> <!-- level 3 -->
+	</upgradeCost>
+	<cost>110</cost>
+</systemBlueprint>
+
+<systemBlueprint name="mind">
+	<type>mind</type>
+	<title>Mind Control</title>
+	<desc>Temporarily turn enemies into allies, allowing you to control them and take advantage of their effects.</desc>
+	<startPower>1</startPower>
+	<maxPower>3</maxPower>
+	<rarity>1</rarity>
+	<upgradeCost>
+		<level>30</level>
+		<level>55</level>
+		<level>90</level>
+	</upgradeCost>
+	<cost>65</cost>
+	<locked>1</locked>
+</systemBlueprint>
+
+<systemBlueprint name="artillery">
+	<type>artillery</type>
+	<title>Artillery Beam</title>
+	<desc>Powers a slow, high-powered beam that pierces all shields and does one damage per room hit. More power means faster cooldown.</desc>
+	<startPower>2</startPower>
+	<maxPower>5</maxPower>
+	<rarity>0</rarity>
+	<upgradeCost>
+		<level>35</level>
+		<level>55</level>
+		<level>80</level>
+		<level>120</level>
+		<level>999</level>
+		<level>999</level>
+	</upgradeCost>
+	<cost>150</cost>
+</systemBlueprint>
+
+<systemBlueprint name="temporal">
+	<type>temporal</type>
+	<title>Temporal Manipulator</title>
+	<desc>Changes the rate of time in one room. Upgrading increases duration and time dilation strength.</desc>
+	<startPower>1</startPower>
+	<maxPower>3</maxPower>
+	<rarity>0</rarity>
+	<upgradeCost>
+		<level>40</level> <!-- level 2 -->
+		<level>80</level> <!-- level 3 -->
+		<level>120</level> <!-- imaginary level 4 -->
+	</upgradeCost>
+	<cost>80</cost>
+</systemBlueprint>
+
+<!-- 
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+END OF AUXILIARY SYSTEMS
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+-->
+</FTL>
+
+
+<!-- 
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+												   SUBSYSTEMS
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+-->
+<FTL>
+<systemBlueprint name="pilot">
+	<type>pilot</type>
+	<title>Piloting</title>
+	<desc>Allows the ship to make FTL jumps and dodge when piloted. Upgrading adds auto-pilot that allows some evasion even without a pilot.</desc>
+	<startPower>1</startPower>
+	<maxPower>8</maxPower>
+	<rarity>1</rarity>
+	<upgradeCost>
+		<level>25</level>
+		<level>35</level>
+		<level>45</level>
+		<level>55</level>
+	</upgradeCost>
+	<cost>35</cost>
+</systemBlueprint>
+
+<systemBlueprint name="sensors">
+	<type>sensors</type>
+	<title>Sensors</title>
+	<desc>Reveals the interior of your ship and gives information about enemy ships.</desc>
+	<startPower>1</startPower>
+	<maxPower>8</maxPower>
+	<rarity>1</rarity>
+	<upgradeCost>
+		<level>20</level>
+		<level>30</level>
+		<level>30</level>
+		<level>30</level>
+	</upgradeCost>
+	<cost>30</cost>
+</systemBlueprint>
+
+<systemBlueprint name="doors">
+	<type>doors</type>
+	<title>Door System</title>
+	<desc>Allows remote opening and closing of doors. Upgrades to Blast Doors that impede fire spread and intruder movement.</desc>
+	<startPower>1</startPower>
+	<maxPower>8</maxPower>
+	<rarity>1</rarity>
+	<upgradeCost>
+		<level>40</level>
+		<level>55</level>
+		<level>999</level>
+		<level>999</level>
+	</upgradeCost>
+	<cost>40</cost>
+</systemBlueprint>
+
+<systemBlueprint name="battery">
+	<type>battery</type>
+	<title>Backup Battery</title>
+	<desc>Provides a 30 second power boost to your Reactor. Upgrading increases the boost amount.</desc>
+	<startPower>1</startPower>
+	<maxPower>8</maxPower>
+	<rarity>1</rarity>
+	<upgradeCost>
+		<level>55</level>
+		<level>75</level>
+		<level>85</level>
+		<level>105</level>
+	</upgradeCost>
+	<cost>45</cost>
+</systemBlueprint>
+
 <systemBlueprint name="lily_system_bracers">
     <type>doors</type>
     <title id="system_lily_system_bracers_NAME"/>
@@ -38,6 +385,11 @@
     </upgradeCost>
     <cost>110</cost>
 </systemBlueprint>
+<!-- 
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+END OF SUBSYSTEMS
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+-->
 
 <!-- 
 **********************************************************************************************************************
