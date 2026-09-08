@@ -519,9 +519,8 @@
 				<minHealth>16</minHealth>
 			</req>
 			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
-			<buttonText>STIMPACK</buttonText>
-			<tooltip>[DURATION:10s -15HP]&#xD;&#xD;
-				Increased damage and movement speed.</tooltip>
+			<buttonText id="ability_TERRAN_STIMPACK_BUTTON"/>
+			<tooltip id="ability_TERRAN_STIMPACK_TOOLTIP"/>
 			<cooldownColor r="171" g="223" b="195" />
 			<selfHealth>-15</selfHealth>
 			<temporaryEffect>
@@ -611,9 +610,8 @@
 			</req>
 			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
 			<friendlyFire>false</friendlyFire>
-			<buttonText>FLASHBANG</buttonText>
-			<tooltip>[COOLDOWN:30s]&#xD;&#xD;
-				Fire A-13 grenade launcher to stun enemies.</tooltip>
+			<buttonText id="ability_TERRAN_FLASHBANG_BUTTON"/>
+			<tooltip id="ability_TERRAN_FLASHBANG_TOOLTIP"/>
 			<cooldownColor r="255" g="78" b="69" />
 			<effectAnim>explosion_big1_heal</effectAnim>
 			<stun>10</stun>
@@ -749,9 +747,8 @@
 			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
 			<jumpCooldown>full</jumpCooldown>
 			<onHotkey>always</onHotkey>
-			<buttonText>CLOAK</buttonText>
-			<tooltip>[COOLDOWN:30s DURATION:15s]&#xD;&#xD;
-				Cannot be targeted by enemies.</tooltip>
+			<buttonText id="ability_TERRAN_CLOAK_BUTTON"/>
+			<tooltip id="ability_TERRAN_CLOAK_TOOLTIP"/>
 			<cooldownColor r="38" g="130" b="152" />
 			<temporaryEffect>
 				<duration>15</duration>
@@ -808,10 +805,8 @@
 		</deathSounds>
 		<powerEffect name="LAUNCH_REPAIR">
 			<cooldown>0.5</cooldown>
-			<!--<activateWhenReady enemiesOnly="true">true</activateWhenReady>-->
-			<buttonText>REPAIR HULL</buttonText>
-			<tooltip>[READY]&#xD;&#xD;
-				Repair a portion of the ships hull at the cost of an SCV.</tooltip>
+			<buttonText id="ability_TERRAN_SCV_REPAIR_HULL_BUTTON"/>
+			<tooltip id="ability_TERRAN_SCV_REPAIR_HULL_TOOLTIP"/>
 			<cooldownColor r="255" g="78" b="69" />
 			<effectAnim>explosion_big1_heal</effectAnim>
 			<transformRace health="0" deathSound="false">terran_scv_hull</transformRace>
@@ -1043,9 +1038,8 @@
 		<!--<hasCustomDeathAnimation>true</hasCustomDeathAnimation>-->
 		
 		<powerEffect name="Set-Mine">
-			<buttonText>SET-MINE</buttonText>
-			<tooltip>[READY]&#xD;&#xD;
-			Click to arm Spider Mine</tooltip>
+			<buttonText id="ability_TERRAN_SPIDER_SET_MINE_BUTTON"/>
+			<tooltip id="ability_TERRAN_SPIDER_SET_MINE_TOOLTIP"/>
 			<hideCooldown>true</hideCooldown>
 			<cooldown>0.1</cooldown>
 			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
@@ -1093,9 +1087,8 @@
 		</deathSounds>
 		
 		<powerEffect name="Redeploy-Mine">
-			<buttonText>REDEPLOY-MINE</buttonText>
-			<tooltip>[READY]&#xD;&#xD;
-			Click to redeploy Spider Mines</tooltip>
+			<buttonText id="ability_TERRAN_SPIDER_REDEPLOY_BUTTON"/>
+			<tooltip id="ability_TERRAN_SPIDER_REDEPLOY_TOOLTIP"/>
 			<hideCooldown>true</hideCooldown>
 			<cooldown>0.1</cooldown>
 			<onHotkey>always</onHotkey>
@@ -1206,7 +1199,6 @@
         <fireDamageMultiplier>0</fireDamageMultiplier>
         <moveSpeedMultiplier>1</moveSpeedMultiplier>
 
-        <!-- Uses the animation names defined in animations.xml.append. -->
         <animBase>mantis</animBase>
         <animSheet>terran_pod</animSheet>
 
@@ -1222,8 +1214,8 @@
             <cooldown>0</cooldown>
             <jumpCooldown>full</jumpCooldown>
             <activateWhenReady enemiesOnly="false">true</activateWhenReady>
-            <buttonText>LAUNCH</buttonText>
-            <tooltip>Automatically activates when the custom crew drone is deployed.</tooltip>
+			<buttonText id="NOYB"/>
+			<tooltip id="NOYB"/>
             <cooldownColor r="255" g="120" b="40"/>
            <!-- <powerSounds>
                 <powerSound>terran_pod_launch</powerSound>

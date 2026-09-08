@@ -136,10 +136,10 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 <text name="weapon_GEMINI_MISSILES_SYS_1_desc">A light missile system that excels when its versatility is utilized properly.</text>
 <text name="weapon_GEMINI_MISSILES_SYS_1_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
 
-<text name="weapon_GEMINI_MISSILES_SYS_2_PAIRED_title">Gemini Missiles Mk II - Anti-System</text>
-<text name="weapon_GEMINI_MISSILES_SYS_2_PAIRED_short">Gemini Anti-Sys II</text>
-<text name="weapon_GEMINI_MISSILES_SYS_2_PAIRED_desc">A light missile system that excels when its versatility is utilized properly.</text>
-<text name="weapon_GEMINI_MISSILES_SYS_2_PAIRED_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
+<text name="weapon_GEMINI_MISSILES_SYS_2_title">Gemini Missiles Mk II - Anti-System</text>
+<text name="weapon_GEMINI_MISSILES_SYS_2_short">Gemini Anti-Sys II</text>
+<text name="weapon_GEMINI_MISSILES_SYS_2_desc">A light missile system that excels when its versatility is utilized properly.</text>
+<text name="weapon_GEMINI_MISSILES_SYS_2_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
 
 <!-- GEMINI MISSILES MK III -->
 <text name="weapon_GEMINI_MISSILES_BREACH_3_title">Gemini Missiles Mk III - Breach</text>
@@ -300,10 +300,41 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 <text name="crew_TERRAN_SPIDER_MINE_DESC">[[Need crew_TERRAN_SPIDER_MINE_DESC]]</text>
 
 <!-- TERRAN CREW ABILITIES -->
-<text name="crew_TERRAN_POWER_STIMPACK">Active Ability: Stimpack&#xD;&#xD;-Double rate of fire and increase movement speed.</text>
-<text name="crew_TERRAN_POWER_FLASHBANG">Active Ability: Flashbang&#xD;&#xD;-Stun nearby enemies.</text>
-<text name="crew_TERRAN_POWER_HEAL">Ability: Heal&#xD;&#xD;-Heal nearby friendly troops.</text>
-<text name="crew_TERRAN_POWER_CLOAK">Active Ability: Cloak&#xD;&#xD;-Untargetable by enemies except by detectors.</text>
+<text name="ability_TERRAN_STIMPACK_BUTTON">STIMPACK</text>
+<text name="ability_TERRAN_STIMPACK_TOOLTIP">[DURATION:10s -15HP]
+	Increased damage and movement speed.</text>
+<text name="crew_TERRAN_POWER_STIMPACK">Active Ability: Stimpack
+    -Double rate of fire and increase movement speed.</text>
+
+<text name="ability_TERRAN_FLASHBANG_BUTTON">FLASHBANG</text>
+<tooltip name="ability_TERRAN_FLASHBANG_TOOLTIP">[COOLDOWN:30s]
+	Fire A-13 grenade launcher to stun enemies.</tooltip>    
+<text name="crew_TERRAN_POWER_FLASHBANG">Active Ability: Flashbang
+    -Stun nearby enemies.</text>
+
+<text name="crew_TERRAN_POWER_HEAL">Ability: Heal
+    -Heal nearby friendly troops.</text>
+
+<text name="ability_TERRAN_CLOAK_BUTTON">CLOAK</text>
+<text name="ability_TERRAN_CLOAK_TOOLTIP">[COOLDOWN:30s DURATION:15s]
+	Cannot be targeted by enemies.</text>
+<text name="crew_TERRAN_POWER_CLOAK">Active Ability: Cloak
+    -Untargetable by enemies except by detectors.</text>
+
+<text name="ability_TERRAN_SCV_REPAIR_HULL_BUTTON">REPAIR HULL</text>
+<text name="ability_TERRAN_SCV_REPAIR_HULL_TOOLTIP">[READY]
+	Repair a portion of the ships hull at the cost of an SCV.</text>
+
+<text name="ability_TERRAN_SPIDER_SET_MINE_BUTTON">SET-MINE</text>
+<text name="ability_TERRAN_SPIDER_SET_MINE_TOOLTIP">[READY]
+	Click to arm Spider Mine</text>    
+<text name="ability_TERRAN_SPIDER_REDEPLOY_BUTTON">REDEPLOY-MINE</text>
+<text name="ability_TERRAN_SPIDER_REDEPLOY_TOOLTIP">[READY]
+	Click to redeploy Spider Mines</text>
+
+    <!-- UNUSED -->
+<text name="ability_TERRAN_POD_LAUNCH_BUTTON">LAUNCH</text>
+<text name="ability_TERRAN_POD_LAUNCH_TOOLTIP">Automatically activates when the custom crew drone is deployed.</text>
 
 <!-- TERRAN AUGMENTS -->
 <text name="system_lily_system_bracers_NAME">System Bracers</text>
