@@ -1,40 +1,29 @@
 --[[
-DESCRIPTION: Minimal paired missile-cost diagnostic.
+DESCRIPTION: Minimal beam-fire diagnostic.
     Diagnostic only; gameplay logic does not depend on this file.
 
 PURPOSE:
-    Check whether missile spend is being pulled from ProjectileFactory.iSpendMissile
-    or from WeaponBlueprint.missiles.
+    Test which hooks can identify when beam weapons are firing or actively hitting.
+    Expected console output:
+        FRIENDLY BEAM (source)
+        ENEMY BEAM (source)
+
+NOTES:
+    - FRIENDLY means projectile ownerId == 0.
+    - ENEMY means projectile ownerId == 1.
+    - DAMAGE_BEAM is a reactive source: it confirms a beam is interacting with a ship,
+      but it may occur after the first beam damage step has begun.
 ]]
 
-mods.sc_paired_missile_debug = mods.sc_paired_missile_debug or {}
-local debug = mods.sc_paired_missile_debug
+mods.sc_beam_debug = mods.sc_beam_debug or {}
+local debug = mods.sc_beam_debug
 
-local SCREEN_X = 45
-local SCREEN_Y = 105
-local LINE_HEIGHT = 16
-local MAX_LINES = 8
-local MAX_WEAPON_SLOTS = 4
-
-debug.lines = debug.lines or {}
-debug.lastMissiles = nil
-debug.frame = 0
+debug.seen = debug.seen or {}
 
 local function run_has_started()
     return Hyperspace.App
         and Hyperspace.App.world
         and Hyperspace.App.world.bStartedGame
-end
-
-local function add_line(text)
-    local line = tostring(text)
-    print("SC MISSILE DEBUG | " .. line)
-
-    table.insert(debug.lines, line)
-
-    while #debug.lines > MAX_LINES do
-        table.remove(debug.lines, 1)
-    end
 end
 
 local function safe_get(root, key)
@@ -45,167 +34,136 @@ local function safe_get(root, key)
     end)
 
     if not ok then return nil end
-
     return value
 end
 
-local function safe_set(root, key, value)
-    if root == nil then return false end
+local function safe_projectile_type(projectile)
+    if not projectile then return nil end
 
-    local ok = pcall(function()
-        root[key] = value
+    local ok, value = pcall(function()
+        return projectile:GetType()
     end)
 
-    return ok
+    if not ok then return nil end
+    return value
 end
 
-local function safe_size(vector)
-    if not vector then return 0 end
+local function safe_drone_owner_id(drone)
+    if not drone then return nil end
 
-    local ok, size = pcall(function()
-        return vector:size()
+    local ok, ownerId = pcall(function()
+        return drone:GetOwnerId()
     end)
 
-    if not ok then return 0 end
-
-    return size or 0
+    if not ok then return nil end
+    return ownerId
 end
 
-local function get_player_ship()
-    return Hyperspace.ships and Hyperspace.ships.player
-end
-
-local function get_player_missiles()
-    local ship = get_player_ship()
-    if not ship then return nil end
-
-    local ok, count = pcall(function()
-        return ship:GetMissileCount()
-    end)
-
-    if ok then return count end
-
-    return nil
+local function get_projectile_name(projectile)
+    local extend = safe_get(projectile, "extend")
+    return safe_get(extend, "name") or "UNKNOWN_PROJECTILE"
 end
 
 local function get_weapon_name(weapon)
     local blueprint = safe_get(weapon, "blueprint")
-    return safe_get(blueprint, "name") or "UNKNOWN"
+    return safe_get(blueprint, "name") or "UNKNOWN_WEAPON"
 end
 
-local function get_weapon_slot(weapon)
-    local ship = get_player_ship()
-    if not ship or not ship.weaponSystem then return nil end
+local function get_owner_id(projectile, weapon, drone, shipManager)
+    local ownerId = safe_get(projectile, "ownerId")
 
-    local weapons = ship.weaponSystem.weapons
-
-    for i = 0, weapons:size() - 1 do
-        if weapons[i] == weapon then return i end
+    if ownerId == nil then
+        ownerId = safe_get(weapon, "iShipId")
     end
 
-    return nil
-end
-
-local function weapon_line(slot, weapon)
-    local blueprint = safe_get(weapon, "blueprint")
-    local queuedProjectiles = safe_get(weapon, "queuedProjectiles")
-    local cooldown = safe_get(weapon, "cooldown")
-    local cooldownFirst = cooldown and safe_get(cooldown, "first") or nil
-    local cooldownSecond = cooldown and safe_get(cooldown, "second") or nil
-
-    return string.format(
-        "S%d %s | pwr=%s | iSpend=%s | bp=%s | q=%d | cd=%.1f/%.1f | ready=%s",
-        slot + 1,
-        get_weapon_name(weapon),
-        tostring(safe_get(weapon, "powered")),
-        tostring(safe_get(weapon, "iSpendMissile")),
-        tostring(blueprint and safe_get(blueprint, "missiles") or nil),
-        safe_size(queuedProjectiles),
-        tonumber(cooldownFirst) or 0,
-        tonumber(cooldownSecond) or 0,
-        tostring(safe_get(weapon, "fireWhenReady"))
-    )
-end
-
-local function watch_missile_count()
-    local missiles = get_player_missiles()
-
-    if debug.lastMissiles == nil then
-        debug.lastMissiles = missiles
-        add_line("Initial missiles=" .. tostring(missiles))
-        return
+    if ownerId == nil then
+        ownerId = safe_drone_owner_id(drone)
     end
 
-    if missiles ~= debug.lastMissiles then
-        add_line("MISSILES " .. tostring(debug.lastMissiles) .. " -> " .. tostring(missiles))
-        debug.lastMissiles = missiles
+    -- DAMAGE_BEAM fallback: if a beam is hitting player ship 0, assume enemy owner;
+    -- if hitting enemy ship 1, assume friendly owner.
+    if ownerId == nil and shipManager and shipManager.iShipId ~= nil then
+        ownerId = 1 - shipManager.iShipId
     end
+
+    return tonumber(ownerId)
 end
 
-script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projectile, weapon)
-    if not run_has_started() or not weapon then return end
+local function get_beam_side(projectile, weapon, drone, shipManager)
+    local ownerId = get_owner_id(projectile, weapon, drone, shipManager)
 
-    local slot = get_weapon_slot(weapon)
-    local blueprint = safe_get(weapon, "blueprint")
+    if ownerId == 0 then return "FRIENDLY" end
+    if ownerId == 1 then return "ENEMY" end
 
-    add_line(
-        "FIRE S"
-            .. tostring(slot and (slot + 1) or "?")
-            .. " "
-            .. get_weapon_name(weapon)
-            .. " missiles="
-            .. tostring(get_player_missiles())
-            .. " iSpend="
-            .. tostring(safe_get(weapon, "iSpendMissile"))
-            .. " bp="
-            .. tostring(blueprint and safe_get(blueprint, "missiles") or nil)
-    )
-end)
+    return "UNKNOWN"
+end
 
-script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
+local function log_beam(source, projectile, weapon, drone, shipManager)
     if not run_has_started() then return end
-    if not shipManager or shipManager.iShipId ~= 0 then return end
 
-    debug.frame = debug.frame + 1
-    if debug.frame % 2 == 0 then
-        watch_missile_count()
+    local side = get_beam_side(projectile, weapon, drone, shipManager)
+    local weaponName = weapon and get_weapon_name(weapon) or get_projectile_name(projectile)
+    local projectileKey = tostring(projectile or weapon or drone or "no-object")
+    local key = source .. "|" .. side .. "|" .. weaponName .. "|" .. projectileKey
+
+    -- DAMAGE_BEAM can fire repeatedly while the same beam crosses tiles/rooms.
+    -- Keep one print per source/projectile so the console stays readable.
+    if debug.seen[key] then return end
+    debug.seen[key] = true
+
+    print(side .. " BEAM (" .. source .. ")")
+end
+
+local function weapon_is_beam_by_blueprint_type(weapon)
+    local blueprint = safe_get(weapon, "blueprint")
+    return safe_get(blueprint, "typeName") == "BEAM"
+end
+
+local function projectile_is_beam_by_type(projectile)
+    return safe_projectile_type(projectile) == 5
+end
+
+local function beam_hit_is_new_tile_or_room(beamHitType)
+    return beamHitType == Defines.BeamHit.NEW_TILE
+        or beamHitType == Defines.BeamHit.NEW_ROOM
+end
+
+-- Source 1: Weapon blueprint typeName.
+-- This should catch normal weapon/projectile firing as early as PROJECTILE_FIRE.
+script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projectile, weapon)
+    if weapon_is_beam_by_blueprint_type(weapon) then
+        log_beam("projectile-fire-weapon-type", projectile, weapon, nil, nil)
     end
+
+    return Defines.Chain.CONTINUE
 end)
 
-script.on_render_event(
-    Defines.RenderEvents.MOUSE_CONTROL,
-
-    function()
-        return Defines.Chain.CONTINUE
-    end,
-
-    function()
-        if not run_has_started() then return end
-
-        local y = SCREEN_Y
-        Graphics.freetype.easy_print(0, SCREEN_X, y, "SC Missile Cost Probe")
-        y = y + LINE_HEIGHT
-        Graphics.freetype.easy_print(0, SCREEN_X, y, "Missiles: " .. tostring(get_player_missiles()))
-        y = y + LINE_HEIGHT
-
-        local ship = get_player_ship()
-        if ship and ship.weaponSystem then
-            local weapons = ship.weaponSystem.weapons
-            local maxSlot = math.min(weapons:size() - 1, MAX_WEAPON_SLOTS - 1)
-
-            for i = 0, maxSlot do
-                Graphics.freetype.easy_print(0, SCREEN_X, y, weapon_line(i, weapons[i]))
-                y = y + LINE_HEIGHT
-            end
-        end
-
-        y = y + LINE_HEIGHT
-        Graphics.freetype.easy_print(0, SCREEN_X, y, "Recent:")
-        y = y + LINE_HEIGHT
-
-        for _, line in ipairs(debug.lines) do
-            Graphics.freetype.easy_print(0, SCREEN_X, y, line)
-            y = y + LINE_HEIGHT
-        end
+-- Source 2: Projectile:GetType() == 5.
+-- Fusion scripts use projectile:GetType() == 5 as a beam check.
+script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projectile, weapon)
+    if projectile_is_beam_by_type(projectile) then
+        log_beam("projectile-fire-projectile-type-5", projectile, weapon, nil, nil)
     end
-)
+
+    return Defines.Chain.CONTINUE
+end)
+
+-- Source 3: Drone-fire projectile type.
+-- This helps test whether beam drones bypass normal weapon-based PROJECTILE_FIRE checks.
+script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile, drone)
+    if projectile_is_beam_by_type(projectile) then
+        log_beam("drone-fire-projectile-type-5", projectile, nil, drone, nil)
+    end
+
+    return Defines.Chain.CONTINUE
+end)
+
+-- Source 4: DAMAGE_BEAM.
+-- This is not a pure firing detector; it confirms an active beam hit on a ship.
+script.on_internal_event(Defines.InternalEvents.DAMAGE_BEAM, function(shipManager, projectile, location, damage, realNewTile, beamHitType)
+    if projectile_is_beam_by_type(projectile) and beam_hit_is_new_tile_or_room(beamHitType) then
+        log_beam("damage-beam-new-tile-room", projectile, nil, nil, shipManager)
+    end
+
+    return Defines.Chain.CONTINUE, beamHitType
+end)
