@@ -1,8 +1,8 @@
 --[[
-DESCRIPTION: Applies augment-driven increases to player system upgrade caps.
+DESCRIPTION: Increases systems maximum based on augment upgrades.
+        - Requires system max to be increased in blueprints.
         - Adds bonuses from installed augments with the <sc-upgrade> tag.
         - Handles multiple artillery system instances? Untested.
-        - Exposes base-cap lookup through mods.sc.system_caps.get_cap.
 TAG: <sc-upgrade system="SYSTEM_NAME" value="#"/>
 DEPENDENCIES: sc_tag.lua, Multiverse vter
 ]]
@@ -11,10 +11,8 @@ local vter = mods.multiverse.vter
 
 mods.sc = mods.sc or {}
 mods.sc.augmentUpgrades = mods.sc.augmentUpgrades or {}
-mods.sc.system_caps = mods.sc.system_caps or {}
 
 local augmentUpgrades = mods.sc.augmentUpgrades
-local systemCaps = mods.sc.system_caps
 
 local ARTILLERY_ID = 11
 local CAP_CHECK_INTERVAL = 15
@@ -40,33 +38,13 @@ local SYSTEMS = {
     lily_system_bracers = {baseCap = 3}
 }
 
-local baseCapsById = {}
 local capCheckCounter = 0
-
-for _, systemData in pairs(SYSTEMS) do
-    if systemData.systemId then
-        baseCapsById[systemData.systemId] = systemData.baseCap
-    end
-end
 
 mods.sc.tag.register("augment", "sc-upgrade", augmentUpgrades, "system")
 
 local function system_id_from_name(systemName)
     local systemId = Hyperspace.ShipSystem.NameToSystemId(systemName)
     return systemId >= 0 and systemId or nil
-end
-
-function systemCaps.get_cap(system)
-    if type(system) == "number" then
-        return baseCapsById[system] or 0
-    end
-    if type(system) ~= "string" then return 0 end
-
-    local systemData = SYSTEMS[system]
-    if systemData then return systemData.baseCap end
-
-    local systemId = system_id_from_name(system)
-    return (systemId and baseCapsById[systemId]) or 0
 end
 
 local function get_active_upgrade_bonus(ship, systemName)
@@ -139,9 +117,5 @@ script.on_render_event(Defines.RenderEvents.TABBED_WINDOW, handle_upgrade_tab, h
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
     if ship.iShipId ~= 0 then return end
 
-    capCheckCounter = capCheckCounter + 1
-    if capCheckCounter < CAP_CHECK_INTERVAL then return end
-
-    capCheckCounter = 0
     apply_all_effective_max(ship)
 end)
