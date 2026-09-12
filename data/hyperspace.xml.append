@@ -599,7 +599,7 @@
 		</passiveStatBoosts>
 		
 		<!-- ACTIVATED ABILITIES -->
-		<powerEffect name="Flashbang">
+		<powerEffect name="FLASHBANG">
 			<cooldown>30</cooldown>
 			<jumpCooldown>full</jumpCooldown>
 			<powerSounds>
