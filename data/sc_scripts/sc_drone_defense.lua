@@ -3,6 +3,7 @@ DESCRIPTION: Active shield drones replace their fired projectile with a temporar
         - Tagged drones add a super shield at their location when they fire.
         - Active shield space drones receive additional movement and reaction updates.
         - Tagged drones create a defensive super shield when an enemy beam fires.
+        - Beam defense uses the active drone's real weapon cooldown.
         - Clears all super shields while an active shield drone is deployed and no enemy projectiles or beams are incoming.
 TAG: <sc-active-shield/>
 SOURCE CREDIT: TNE_ACTIVE_DRONE_LUA.lua, Fusion drones.lua
@@ -20,14 +21,8 @@ mods.sc.tag.register("drone", "sc-active-shield", activeDrones)
 
 local ACTIVE_SHIELD_DRONE_SPEED_MULTIPLIER = 2
 local BEAM_DANGER_DURATION = 1.5
-local BEAM_SHIELD_COOLDOWN = 0.25
 
 local beamDangerTimer = {
-    [0] = 0,
-    [1] = 0
-}
-
-local beamShieldCooldown = {
     [0] = 0,
     [1] = 0
 }
@@ -131,10 +126,25 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
 
     beamDangerTimer[targetShipId] = BEAM_DANGER_DURATION
 
-    if beamShieldCooldown[targetShipId] <= 0 then
-        local shieldLocation = shipManager.shieldSystem.superUpLoc
-        shipManager.shieldSystem:AddSuperShield(Hyperspace.Point(shieldLocation.x, shieldLocation.y))
-        beamShieldCooldown[targetShipId] = BEAM_SHIELD_COOLDOWN
+    local defenseDrone = nil
+
+    for drone in vter(shipManager.spaceDrones) do
+        if drone_is_active_and_powered(drone) and (drone.weaponCooldown or 0) <= 0 then
+            defenseDrone = drone
+            break
+        end
+    end
+
+    if not defenseDrone then
+        return Defines.Chain.CONTINUE
+    end
+
+    local shieldLocation = shipManager.shieldSystem.superUpLoc
+    shipManager.shieldSystem:AddSuperShield(Hyperspace.Point(shieldLocation.x, shieldLocation.y))
+
+    local cooldown = defenseDrone:GetWeaponCooldown()
+    if cooldown and cooldown > 0 then
+        defenseDrone.weaponCooldown = cooldown
     end
 
     return Defines.Chain.CONTINUE
@@ -147,7 +157,6 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     local frameTime = Hyperspace.FPS.SpeedFactor / 16
 
     beamDangerTimer[shipId] = math.max(0, (beamDangerTimer[shipId] or 0) - frameTime)
-    beamShieldCooldown[shipId] = math.max(0, (beamShieldCooldown[shipId] or 0) - frameTime)
 
     if not helpers.ship_has_drone_matching(shipManager, drone_is_active_and_powered) then return end
     if ship_has_incoming_enemy_projectile(shipId) then return end

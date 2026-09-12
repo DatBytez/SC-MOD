@@ -2511,7 +2511,7 @@ TERRAN_GOLIATH-->
 	<short id="drone_TERRAN_DEFENSE_1_SHORT"/>
 	<desc id="drone_TERRAN_DEFENSE_1_DESC"/>
 	<power>2</power>					
-	<cooldown>2000</cooldown><!-- was 1500-->					
+	<cooldown>2000</cooldown><!-- was 1500/2000-->					
 	<dodge>100</dodge>					
 	<speed>20</speed>					
 	<cost>60</cost>
@@ -2541,7 +2541,7 @@ TERRAN_GOLIATH-->
 	<short id="drone_TERRAN_DEFENSE_2_SHORT"/>
 	<desc id="drone_TERRAN_DEFENSE_2_DESC"/>
 	<power>3</power>					
-	<cooldown>1500</cooldown>					
+	<cooldown>1500</cooldown><!-- was 1500 -->
 	<dodge>100</dodge>					
 	<speed>20</speed>					
 	<cost>80</cost>
@@ -2571,7 +2571,7 @@ TERRAN_GOLIATH-->
 	<short id="drone_TERRAN_DEFENSE_3_SHORT"/>					
 	<desc id="drone_TERRAN_DEFENSE_3_DESC"/>					
 	<power>4</power>					
-	<cooldown>1000</cooldown>					
+	<cooldown>1000</cooldown><!-- was 1000 -->					
 	<dodge>100</dodge>					
 	<speed>20</speed>					
 	<cost>140</cost>

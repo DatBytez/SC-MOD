@@ -504,7 +504,7 @@
 		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 		<!-- ACTIVATED ABILITIES -->
 		<powerEffect name="Stimpack">
-			<cooldown>0</cooldown>
+			<cooldown>0.1</cooldown>
 			<jumpCooldown>full</jumpCooldown>
 			<powerSounds>
 				<powerSound>ability_stimpack1</powerSound>
@@ -521,11 +521,11 @@
 			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
 			<buttonText id="ability_TERRAN_STIMPACK_BUTTON"/>
 			<tooltip id="ability_TERRAN_STIMPACK_TOOLTIP"/>
-			<cooldownColor r="171" g="223" b="195" />
+			<cooldownColor r="80" g="220" b="80" />
 			<selfHealth>-15</selfHealth>
 			<temporaryEffect>
 				<duration>10</duration>
-				<cooldownColor r="215" g="126" b="195" />
+				<cooldownColor r="240" g="210" b="50" />
 				<moveSpeedMultiplier>1.6</moveSpeedMultiplier>
 				<damageMultiplier>1.8</damageMultiplier>
 				<shootTimer min="250" max="325" />
