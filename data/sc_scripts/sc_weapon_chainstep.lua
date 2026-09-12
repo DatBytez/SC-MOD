@@ -84,6 +84,10 @@ script.on_internal_event(Defines.InternalEvents.SELECT_ARMAMENT_PRE, function(ar
     local weaponName = weapon.blueprint.name
     local missileCost = scaling.get_source_stat_entry("chainstep", weaponName, "missileCost")
 
+    if ship:GetMissileCount() < weapon.blueprint.missiles then
+        return Defines.Chain.CONTINUE, armamentSlot
+    end
+
     if weapon.powered and missileCost and ship:GetMissileCount() < calculate_missile_cost(weaponName, get_chainstep_level(weapon)) then
         return Defines.Chain.PREEMPT, armamentSlot
     end

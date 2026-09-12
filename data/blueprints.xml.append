@@ -1930,7 +1930,7 @@ END OF SUBSYSTEMS
 	<tooltip id="weapon_TERRAN_MISSILE_HALO_tooltip"/>
 	<radius>35</radius>
 	<accuracyMod>100</accuracyMod>
-	<missiles>0</missiles>
+	<missiles>1</missiles>
 	<damage>1</damage>
 	<shots>4</shots>
 	<sp>5</sp>
