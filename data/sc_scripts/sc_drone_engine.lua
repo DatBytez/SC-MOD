@@ -2,7 +2,6 @@
 DESCRIPTION: Draws engine overlays for active space drones.
         - Tagged drones use the engine image named by <sc-droneEngine>.
         - Untagged drones use the default SC drone engine image.
-        - Engines render only for deployed, powered, living drones in the current ship space.
 TAG: <sc-droneEngine value="#"/>
 ]]
 
@@ -18,6 +17,10 @@ local ENGINE_FLIP_VERTICAL = true
 
 local droneEngineImages = {}
 local enginePrimitives = {}
+
+local DISABLED_DRONE_TYPES = {
+    BOARDER = true,
+}
 
 mods.sc.tag.register("drone", "sc-droneEngine", droneEngineImages, "value")
 
@@ -54,7 +57,8 @@ script.on_render_event(Defines.RenderEvents.SHIP_ENGINES, function() end, functi
         if spacedrone.currentSpace == ship.iShipId
             and spacedrone.deployed
             and spacedrone.powered
-            and not spacedrone.bDead then
+            and not spacedrone.bDead
+            and not DISABLED_DRONE_TYPES[string.upper(spacedrone.blueprint.typeName or "")] then
 
             local engineImage = droneEngineImages[spacedrone.blueprint.name]
             local imagePath = engineImage and "ship/drones/" .. engineImage .. ".png" or DEFAULT_ENGINE_IMAGE
