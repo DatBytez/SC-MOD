@@ -306,14 +306,20 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 <text name="crew_TERRAN_POWER_STIMPACK">Active Ability: Stimpack
     -Double rate of fire and increase movement speed.</text>
 
+<text name="crew_TERRAN_POWER_HEAL">Ability: Heal
+    -Heal nearby friendly troops.</text>
+
 <text name="ability_TERRAN_OPTICAL_FLARE_BUTTON">OPTICAL FLARE</text>
 <text name="ability_TERRAN_OPTICAL_FLARE_TOOLTIP">[COOLDOWN:30s]
 	Fire an optical flare to stun enemies.</text>
 <text name="crew_TERRAN_POWER_OPTICAL_FLARE">Active Ability: Optical Flare
     -Stun nearby enemies.</text>
 
-<text name="crew_TERRAN_POWER_HEAL">Ability: Heal
-    -Heal nearby friendly troops.</text>
+<text name="ability_TERRAN_RESTORATION_BUTTON">RESTORATION</text>
+<text name="ability_TERRAN_RESTORATION_TOOLTIP">[COOLDOWN:30s]
+	Restore nearby friendly troops.</text>
+<text name="crew_TERRAN_POWER_RESTORATION">Active Ability: Restoration
+    -Restore nearby friendly troops, clensing them of negative effects.</text>
 
 <text name="ability_TERRAN_CLOAK_BUTTON">CLOAK</text>
 <text name="ability_TERRAN_CLOAK_TOOLTIP">[COOLDOWN:30s DURATION:15s]

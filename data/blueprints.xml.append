@@ -2069,7 +2069,54 @@ END OF SUBSYSTEMS
 	<cost>65</cost>
 	<rarity>2</rarity>
 	<powerList>
+		<power id="crew_TERRAN_POWER_HEAL"/>
+	</powerList>
+	<colorList>
+		<layer>
+			<!--<color r="244" g="4" b="4" a="1.0" />-->
+			<color r="12" g="72" b="204" a="1.0" />
+			<color r="44" g="180" b="148" a="1.0" />
+			<!--<color r="136" g="64" b="156" a="1.0" />-->
+			<color r="248" g="140" b="20" a="1.0" />
+			<color r="112" g="48" b="20" a="1.0" />
+			<!--<color r="204" g="224" b="208" a="1.0" />-->
+			<!--<color r="252" g="252" b="56" a="1.0" />-->
+		</layer>
+	</colorList>
+</crewBlueprint>
+
+<crewBlueprint name="terran_medic_1">
+	<desc id="crew_TERRAN_MEDIC_DESC"/>
+	<title id="crew_TERRAN_MEDIC_NAME"/>
+	<short id="crew_TERRAN_MEDIC_SHORT"/>
+	<cost>65</cost>
+	<rarity>2</rarity>
+	<powerList>
 		<power id="crew_TERRAN_POWER_OPTICAL_FLARE"/>
+		<power id="crew_TERRAN_POWER_HEAL"/>
+	</powerList>
+	<colorList>
+		<layer>
+			<color r="244" g="4" b="4" a="1.0" />
+			<color r="12" g="72" b="204" a="1.0" />
+			<color r="44" g="180" b="148" a="1.0" />
+			<color r="136" g="64" b="156" a="1.0" />
+			<color r="248" g="140" b="20" a="1.0" />
+			<color r="112" g="48" b="20" a="1.0" />
+			<color r="204" g="224" b="208" a="1.0" />
+			<color r="252" g="252" b="56" a="1.0" />
+		</layer>
+	</colorList>
+</crewBlueprint>
+
+<crewBlueprint name="terran_medic_2">
+	<desc id="crew_TERRAN_MEDIC_DESC"/>
+	<title id="crew_TERRAN_MEDIC_NAME"/>
+	<short id="crew_TERRAN_MEDIC_SHORT"/>
+	<cost>65</cost>
+	<rarity>2</rarity>
+	<powerList>
+		<power id="crew_TERRAN_POWER_RESTORATION"/>
 		<power id="crew_TERRAN_POWER_HEAL"/>
 	</powerList>
 	<colorList>

@@ -598,6 +598,68 @@
 			</statBoost>
 		</passiveStatBoosts>
 		
+		<powerEffect load="Repair"/>
+	</race>
+
+	<race name="terran_medic_1">
+		<animBase>human</animBase>
+		<maxHealth>120</maxHealth>
+		<canFight>false</canFight>
+		<canSabotage>false</canSabotage>
+		<deathSounds>
+			<deathSound>terran_medic_death</deathSound>
+		</deathSounds>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+		<skills>
+			<piloting req="15" />
+			<engines req="15" />
+			<shields req="55" />
+			<weapons req="65" />
+			<repair req="18" />
+			<combat req="8" />
+		</skills>
+		<!-- POWERED ARMOR -->
+		<suffocationModifier>0.2</suffocationModifier>
+		<fireDamageMultiplier>0.8</fireDamageMultiplier>
+		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
+		<damageTakenMultiplier>0.8</damageTakenMultiplier>
+
+		<!-- STATIC ABILITIES -->
+		 <fireRepairMultiplier>1.4</fireRepairMultiplier>
+
+		<passiveStatBoosts>
+			<statBoost name="trueHealAmount">
+				<boostType>FLAT</boostType>
+				<amount>2</amount>
+				<shipTarget>CURRENT_ROOM</shipTarget>
+				<crewTarget>ALLIES</crewTarget>
+				<droneTarget>CREW</droneTarget>
+				<affectsSelf>false</affectsSelf>
+				<priority>0</priority>
+			</statBoost>
+
+			<statBoost name="trueHealAmount">
+				<boostType>FLAT</boostType>
+				<amount>2</amount>
+				<shipTarget>CURRENT_ROOM</shipTarget>
+				<crewTarget>ALLIES</crewTarget>
+				<droneTarget>DRONES</droneTarget>
+				<affectsSelf>false</affectsSelf>
+				<priority>0</priority>
+				<whiteList>
+					<terran_scv/>
+					<terran_goliath/>
+					<terran_spider_mine/>
+				</whiteList>
+			</statBoost>
+		</passiveStatBoosts>
+		
 		<!-- ACTIVATED ABILITIES -->
 		<powerEffect name="OPTICAL_FLARE">
 			<cooldown>30</cooldown>
@@ -615,6 +677,81 @@
 			<cooldownColor r="255" g="78" b="69" />
 			<effectAnim>explosion_big1_heal</effectAnim>
 			<stun>10</stun>
+		</powerEffect>
+		<powerEffect load="Repair"/>
+	</race>
+
+	<race name="terran_medic_2">
+		<animBase>human</animBase>
+		<maxHealth>120</maxHealth>
+		<canFight>false</canFight>
+		<canSabotage>false</canSabotage>
+		<deathSounds>
+			<deathSound>terran_medic_death</deathSound>
+		</deathSounds>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+		<skills>
+			<piloting req="15" />
+			<engines req="15" />
+			<shields req="55" />
+			<weapons req="65" />
+			<repair req="18" />
+			<combat req="8" />
+		</skills>
+		<!-- POWERED ARMOR -->
+		<suffocationModifier>0.2</suffocationModifier>
+		<fireDamageMultiplier>0.8</fireDamageMultiplier>
+		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
+		<damageTakenMultiplier>0.8</damageTakenMultiplier>
+
+		<!-- STATIC ABILITIES -->
+		 <fireRepairMultiplier>1.4</fireRepairMultiplier>
+
+		<passiveStatBoosts>
+			<statBoost name="trueHealAmount">
+				<boostType>FLAT</boostType>
+				<amount>2</amount>
+				<shipTarget>CURRENT_ROOM</shipTarget>
+				<crewTarget>ALLIES</crewTarget>
+				<droneTarget>CREW</droneTarget>
+				<affectsSelf>false</affectsSelf>
+				<priority>0</priority>
+			</statBoost>
+
+			<statBoost name="trueHealAmount">
+				<boostType>FLAT</boostType>
+				<amount>2</amount>
+				<shipTarget>CURRENT_ROOM</shipTarget>
+				<crewTarget>ALLIES</crewTarget>
+				<droneTarget>DRONES</droneTarget>
+				<affectsSelf>false</affectsSelf>
+				<priority>0</priority>
+				<whiteList>
+					<terran_scv/>
+					<terran_goliath/>
+					<terran_spider_mine/>
+				</whiteList>
+			</statBoost>
+		</passiveStatBoosts>
+		
+		<!-- ACTIVATED ABILITIES -->
+		<powerEffect name="RESTORATION">
+			<cooldown>30</cooldown>
+			<jumpCooldown>full</jumpCooldown>
+			<powerSounds>
+				<powerSound>ability_optical_flare</powerSound>
+				<!--<powerSound>ability_restoration</powerSound>-->
+			</powerSounds>
+			<buttonText id="ability_TERRAN_RESTORATION_BUTTON"/>
+			<tooltip id="ability_TERRAN_RESTORATION_TOOLTIP"/>
+			<cooldownColor r="255" g="78" b="69" />
+			<effectAnim>explosion_big1_heal</effectAnim>
 		</powerEffect>
 		<powerEffect load="Repair"/>
 	</race>
@@ -1802,6 +1939,7 @@
 	<mod-append:script>data/sc_scripts/sc_drone_goliath_render.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv_ai.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_crew_ability_restoration.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_flare.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_copy.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_return.lua</mod-append:script>
