@@ -162,7 +162,7 @@ end
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, update_pod_deployment_guard)
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
-    if power.def.name ~= "LAUNCH" then return end
+    if power.def.name ~= "SC_LAUNCH" then return end
 
     local podCrew = power.crew
     if not podCrew or podCrew:GetSpecies() ~= POD_SPECIES then return end

@@ -18,7 +18,7 @@ script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(cr
 end)
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, ship)
-    if power.def.name ~= "RESTORATION" then
+    if power.def.name ~= "SC_RESTORATION" then
         return Defines.Chain.CONTINUE
     end
 

@@ -9,7 +9,7 @@ local spawn_temp_drone = mods.multiverse.spawn_temp_drone
 local REPAIR_DRONE_BLUEPRINT = Hyperspace.Blueprints:GetDroneBlueprint("TERRAN_SCV_HULL")
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
-    if power.def.name ~= "LAUNCH_REPAIR" then return end
+    if power.def.name ~= "SC_LAUNCH_REPAIR" then return end
 
     local crew = power.crew
     local ship = Hyperspace.Global.GetInstance():GetShipManager(crew.iShipId)

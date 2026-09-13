@@ -1,5 +1,5 @@
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, ship)
-    if power.def.name ~= "OPTICAL_FLARE" then
+    if power.def.name ~= "SC_OPTICAL_FLARE" then
         return Defines.Chain.CONTINUE
     end
 

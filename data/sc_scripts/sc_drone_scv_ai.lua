@@ -7,7 +7,7 @@ DEPENDENCIES: Multiverse vter; sc_drone_scv.lua
 local vter = mods.multiverse.vter
 
 local SCV_RACE = "terran_scv"
-local SCV_REPAIR_POWER = "LAUNCH_REPAIR"
+local SCV_REPAIR_POWER = "SC_LAUNCH_REPAIR"
 local ENEMY_HULL_THRESHOLD = 5
 
 local repairUsedBelowThreshold = false
