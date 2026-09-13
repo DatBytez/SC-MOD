@@ -2282,16 +2282,6 @@ END OF SUBSYSTEMS
 	<rarity>0</rarity>
 	<iconImage>Srepair</iconImage>
 </droneBlueprint>
-<crewBlueprint name="terran_scv_hull">
-	<title id="NOYB"/>
-	<short id="NOYB"/>
-	<desc id="NOYB"/>
-	<cost>0</cost>
-	<rarity>0</rarity>
-	<powerList>
-		<power>DRONE</power>
-	</powerList>
-</crewBlueprint>
 <!-- 
 **********************************************************************************************************************
            TERRAN_GOLIATH

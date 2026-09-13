@@ -243,7 +243,7 @@
 <augments>
     <aug name="TERRAN_SHIP_ARMOR_LIGHT">
         <statBoosts>
-            <statBoost name="repairSpeed">
+			<statBoost name="repairSpeed" save="SC_ARMOR_BRACERS_REPAIR">
                 <boostType>MULT</boostType>
                 <shipTarget>ORIGINAL_SHIP</shipTarget>
                 <crewTarget>ALLIES</crewTarget>
@@ -260,35 +260,13 @@
 	
     <aug name="TERRAN_SHIP_ARMOR_MEDIUM">
         <statBoosts>
-            <statBoost name="repairSpeed">
-                <boostType>MULT</boostType>
-                <shipTarget>ORIGINAL_SHIP</shipTarget>
-                <crewTarget>ALLIES</crewTarget>
-                <droneTarget>ALL</droneTarget>
-                <amount>2</amount>
-                <priority>0</priority>
-                <systemRoomTarget>ALL</systemRoomTarget>
-                <systemList>
-                    <lily_system_bracers/>
-                </systemList>
-            </statBoost>
+			<statBoost load="SC_ARMOR_BRACERS_REPAIR"/>
         </statBoosts>
     </aug>
 	
     <aug name="TERRAN_SHIP_ARMOR_HEAVY">
         <statBoosts>
-            <statBoost name="repairSpeed">
-                <boostType>MULT</boostType>
-                <shipTarget>ORIGINAL_SHIP</shipTarget>
-                <crewTarget>ALLIES</crewTarget>
-                <droneTarget>ALL</droneTarget>
-                <amount>2</amount>
-                <priority>0</priority>
-                <systemRoomTarget>ALL</systemRoomTarget>
-                <systemList>
-                    <lily_system_bracers/>
-                </systemList>
-            </statBoost>
+			<statBoost load="SC_ARMOR_BRACERS_REPAIR"/>
         </statBoosts>
     </aug>
 	
@@ -415,7 +393,7 @@
 		<repairSpeed>1.4</repairSpeed>
 		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 		
-		<powerEffect name="Repair">
+		<powerEffect name="SC_REPAIR">
 			<req type="player">
 				<extraConditions type="or">
 					<repairingBreach>true</repairingBreach>
@@ -437,30 +415,6 @@
 			<effectAnim>sc_repair</effectAnim>
 			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
 		</powerEffect>
-		
-		<!--
-		<powerEffect name="Repair_Breach">
-			<req type="player">
-				<extraConditions type="and">
-					<repairingBreach>true</repairingBreach>
-				</extraConditions>
-			</req>
-			<req type="enemy">
-				<extraConditions type="and">
-					<repairingBreach>true</repairingBreach>
-				</extraConditions>
-			</req>
-			<cooldown>1.5</cooldown>
-			<jumpCooldown>full</jumpCooldown>
-			<hideCooldown>true</hideCooldown>   
-			<hideButton>true</hideButton>
-			<onHotkey>never</onHotkey>
-			<sortOrder>999</sortOrder>
-			<animFrame followCrew="true">-1</animFrame>
-			<effectAnim>sc_repair</effectAnim>
-			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
-		</powerEffect>
-		-->
 	</race>
 
 	<!-- 
@@ -503,7 +457,7 @@
 		<!-- STATIC ABILITIES -->
 		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 		<!-- ACTIVATED ABILITIES -->
-		<powerEffect name="Stimpack">
+		<powerEffect name="SC_STIMPACK">
 			<cooldown>0.1</cooldown>
 			<jumpCooldown>full</jumpCooldown>
 			<powerSounds>
@@ -532,7 +486,7 @@
 				<punchTimer min="250" max="325" />
 			</temporaryEffect>
 		</powerEffect>
-		<powerEffect load="Repair"/>
+		<powerEffect load="SC_REPAIR"/>
 	</race>
 	<!-- 
 *********************************************************************************************************
@@ -598,7 +552,7 @@
 			</statBoost>
 		</passiveStatBoosts>
 		
-		<powerEffect load="Repair"/>
+		<powerEffect load="SC_REPAIR"/>
 	</race>
 
 	<race name="terran_medic_1">
@@ -640,7 +594,7 @@
 		</passiveStatBoosts>
 		
 		<!-- ACTIVATED ABILITIES -->
-		<powerEffect name="OPTICAL_FLARE">
+		<powerEffect name="SC_OPTICAL_FLARE">
 			<cooldown>30</cooldown>
 			<jumpCooldown>full</jumpCooldown>
 			<powerSounds>
@@ -657,7 +611,7 @@
 			<effectAnim>explosion_big1_heal</effectAnim>
 			<stun>10</stun>
 		</powerEffect>
-		<powerEffect load="Repair"/>
+		<powerEffect load="SC_REPAIR"/>
 	</race>
 
 	<race name="terran_medic_2">
@@ -699,7 +653,7 @@
 		</passiveStatBoosts>
 		
 		<!-- ACTIVATED ABILITIES -->
-		<powerEffect name="RESTORATION">
+		<powerEffect name="SC_RESTORATION">
 			<cooldown>30</cooldown>
 			<jumpCooldown>full</jumpCooldown>
 			<powerSounds>
@@ -711,7 +665,7 @@
 			<cooldownColor r="255" g="78" b="69" />
 			<effectAnim>explosion_big1_heal</effectAnim>
 		</powerEffect>
-		<powerEffect load="Repair"/>
+		<powerEffect load="SC_REPAIR"/>
 	</race>
 	<!-- 
 *********************************************************************************************************
@@ -762,7 +716,7 @@
 			<persDamage>1</persDamage>
 			<friendlyFire>true</friendlyFire>
 		</deathEffect>
-		<powerEffect name="Flamethrower">
+		<powerEffect name="SC_FLAMETHROWER">
 			<cooldown>4</cooldown>
 			<hideCooldown>true</hideCooldown>
 			<hideButton>true</hideButton>
@@ -785,8 +739,8 @@
 			<friendlyFire>true</friendlyFire>
 			<fireChance>100</fireChance>
 		</powerEffect>
-		<powerEffect load="Repair"/>
-		<powerEffect load="Stimpack"/>
+		<powerEffect load="SC_REPAIR"/>
+		<powerEffect load="SC_STIMPACK"/>
 	</race>
 	<!-- 
 *********************************************************************************************************
@@ -830,8 +784,8 @@
 		<sabotageSpeedMultiplier>1.5</sabotageSpeedMultiplier>
 		<rangedDamageMultiplier>3.5</rangedDamageMultiplier>
 		<shootTimer min="1500" max="1800" />
-		<powerEffect load="Repair"/>
-		<powerEffect name="Cloak">
+		<powerEffect load="SC_REPAIR"/>
+		<powerEffect name="SC_CLOAK">
 			<cooldown>30</cooldown>
 			<powerSounds>
 				<powerSound>cloak</powerSound>
@@ -898,7 +852,7 @@
 		<deathSounds>
 			<deathSound>terran_scv_death</deathSound>
 		</deathSounds>
-		<powerEffect name="LAUNCH_REPAIR">
+		<powerEffect name="SC_LAUNCH_REPAIR">
 			<cooldown>0.5</cooldown>
 			<buttonText id="ability_TERRAN_SCV_REPAIR_HULL_BUTTON"/>
 			<tooltip id="ability_TERRAN_SCV_REPAIR_HULL_TOOLTIP"/>
@@ -907,7 +861,7 @@
 			<transformRace health="0" deathSound="false">terran_scv_hull</transformRace>
 			<selfHealth>-999.0</selfHealth>
 		</powerEffect>
-		<powerEffect load="Repair"/>
+		<powerEffect load="SC_REPAIR"/>
 	</race>
 	<!-- *************
 	TERRAN_SCV_HULL
@@ -920,7 +874,7 @@
 		<deathSounds>
 			<deathSound>terran_scv_launch</deathSound>
 		</deathSounds>
-		<powerEffect name="Swap">
+		<powerEffect name="SC_SWAP">
 			<cooldown>0</cooldown>
 			<req type="enemy">
 				<minHealth>100</minHealth>
@@ -931,7 +885,7 @@
 			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
 			<transformRace>terran_scv</transformRace>
 		</powerEffect>
-		<powerEffect name="Die">
+		<powerEffect name="SC_DIE">
 			<cooldown>0</cooldown>
 			<req type="enemy">
 				<maxHealth>50</maxHealth>
@@ -1006,7 +960,7 @@
 		<moveSpeedMultiplier>2.0</moveSpeedMultiplier>
 		<droneMoveFromManningSlot>true</droneMoveFromManningSlot>
 		<animBase>human</animBase>
-		<powerEffect name="Set-Mine">
+		<powerEffect name="SC_SET_MINE">
 			<hideCooldown>true</hideCooldown>
 			<hideButton>true</hideButton> 
 			<cooldown>0.1</cooldown>
@@ -1047,7 +1001,7 @@
 		<moveSpeedMultiplier>2.0</moveSpeedMultiplier>
 		<droneMoveFromManningSlot>true</droneMoveFromManningSlot>
 		<animBase>human</animBase>
-		<powerEffect name="Set-Mine">
+		<powerEffect name="SC_SET_MINE">
 			<hideCooldown>true</hideCooldown>
 			<hideButton>true</hideButton> 
 			<cooldown>0.1</cooldown>
@@ -1088,7 +1042,7 @@
 		<moveSpeedMultiplier>2.0</moveSpeedMultiplier>
 		<droneMoveFromManningSlot>true</droneMoveFromManningSlot>
 		<animBase>human</animBase>
-		<powerEffect name="Set-Mine">
+		<powerEffect name="SC_SET_MINE">
 			<hideCooldown>true</hideCooldown>
 			<hideButton>true</hideButton> 
 			<cooldown>0.1</cooldown>
@@ -1131,7 +1085,7 @@
 
 		<!--<hasCustomDeathAnimation>true</hasCustomDeathAnimation>-->
 		
-		<powerEffect name="Set-Mine">
+		<powerEffect name="SC_SET_MINE">
 			<buttonText id="ability_TERRAN_SPIDER_SET_MINE_BUTTON"/>
 			<tooltip id="ability_TERRAN_SPIDER_SET_MINE_TOOLTIP"/>
 			<hideCooldown>true</hideCooldown>
@@ -1180,7 +1134,7 @@
 			<deathSound>terran_spider_death</deathSound>
 		</deathSounds>
 		
-		<powerEffect name="Redeploy-Mine">
+		<powerEffect name="SC_REDEPLOY_MINE">
 			<buttonText id="ability_TERRAN_SPIDER_REDEPLOY_BUTTON"/>
 			<tooltip id="ability_TERRAN_SPIDER_REDEPLOY_TOOLTIP"/>
 			<hideCooldown>true</hideCooldown>
@@ -1202,7 +1156,7 @@
 
 		</powerEffect>
 	
-		<powerEffect name="Armed">
+		<powerEffect name="SC_ARMED">
 
 			<hideCooldown>true</hideCooldown>
 			<hideButton>true</hideButton>
@@ -1235,7 +1189,7 @@
 
 		</powerEffect>
 		
-		<powerEffect name="Self-Destruct">
+		<powerEffect name="SC_SELF_DESTRUCT">
 			<hideCooldown>true</hideCooldown>
 			<hideButton>true</hideButton> 
 			
@@ -1304,7 +1258,7 @@
             <returnToDroneRoom/>
         </droneAI>
 
-        <powerEffect name="LAUNCH">
+		<powerEffect name="SC_LAUNCH">
             <cooldown>0</cooldown>
             <jumpCooldown>full</jumpCooldown>
             <activateWhenReady enemiesOnly="false">true</activateWhenReady>
