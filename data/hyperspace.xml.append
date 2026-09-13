@@ -635,8 +635,8 @@
 		 <fireRepairMultiplier>1.4</fireRepairMultiplier>
 
 		<passiveStatBoosts>
-			<statBoost load="SC_MEDIC_HEAL_CREW"/>
-			<statBoost load="SC_MEDIC_HEAL_DRONES"/>
+			<statBoost load="Heal-Crew"/>
+			<statBoost load="Heal-Drones"/>
 		</passiveStatBoosts>
 		
 		<!-- ACTIVATED ABILITIES -->
@@ -694,8 +694,8 @@
 		 <fireRepairMultiplier>1.4</fireRepairMultiplier>
 
 		<passiveStatBoosts>
-			<statBoost load="SC_MEDIC_HEAL_CREW"/>
-			<statBoost load="SC_MEDIC_HEAL_DRONES"/>
+			<statBoost load="Heal-Crew"/>
+			<statBoost load="Heal-Drones"/>
 		</passiveStatBoosts>
 		
 		<!-- ACTIVATED ABILITIES -->
@@ -963,7 +963,6 @@
 		<stunMultiplier>0.25</stunMultiplier>
 		<canTeleport>false</canTeleport>
 		<resistsMindControl>true</resistsMindControl>
-		<noClone>true</noClone>
 		<controllable>true</controllable>
 		<droneAI>
 			<fightAI/>
