@@ -657,8 +657,8 @@
 			<cooldown>30</cooldown>
 			<jumpCooldown>full</jumpCooldown>
 			<powerSounds>
-				<powerSound>ability_optical_flare</powerSound>
-				<!--<powerSound>ability_restoration</powerSound>-->
+				<powerSound>ability_restoration1</powerSound>
+				<powerSound>ability_restoration2</powerSound>
 			</powerSounds>
 			<buttonText id="ability_TERRAN_RESTORATION_BUTTON"/>
 			<tooltip id="ability_TERRAN_RESTORATION_TOOLTIP"/>

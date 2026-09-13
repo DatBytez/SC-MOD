@@ -25,6 +25,8 @@
 	<!-- Crew Ability Sounds -->
 	<ability_stimpack1 volume="4">crew/ability_stimpack1.wav</ability_stimpack1>
 	<ability_stimpack2 volume="4">crew/ability_stimpack2.wav</ability_stimpack2>
+	<ability_restoration1 volume="4">crew/ability_restoration1.wav</ability_restoration1>
+	<ability_restoration2 volume="4">crew/ability_restoration2.wav</ability_restoration2>
 	<ability_optical_flare volume="6">crew/ability_optical_flare.wav</ability_optical_flare>
 	<ability_heal volume="4">crew/ability_heal.wav</ability_heal>
 	<ability_repair1 volume="4">crew/terran_scv_repair1.wav</ability_repair1>
@@ -47,10 +49,11 @@
 	<weapon_40mm_fire volume="5">ship/weapon_40mm_fire.wav</weapon_40mm_fire>
 	<weapon_burst_fire volume="5">ship/weapon_burst_fire.wav</weapon_burst_fire>
 	<weapon_gemini_fire volume="5">ship/weapon_gemini_fire.wav</weapon_gemini_fire>
-	<weapon_gemini_target volume="3">ship/weapon_gemini_target.wav</weapon_gemini_target>
-	<!--<weapon_laser_hit1 volume="5">ship/weapon_laser_hit1.wav</weapon_laser_hit1>
+	<weapon_gemini_target volume="3">ship/weapon_gemini_target.wav</weapon_gemini_target><!-- Unused? -->
+	<weapon_halo_fire volume="5">ship/weapon_halo_fire.wav</weapon_halo_fire>
+	<weapon_laser_hit1 volume="5">ship/weapon_laser_hit1.wav</weapon_laser_hit1>
 	<weapon_laser_hit2 volume="5">ship/weapon_laser_hit2.wav</weapon_laser_hit2>
-	<weapon_laser_hit3 volume="5">ship/weapon_laser_hit3.wav</weapon_laser_hit3>-->
+	<weapon_laser_hit3 volume="5">ship/weapon_laser_hit3.wav</weapon_laser_hit3>
 	
 </FTL>
 
