@@ -572,7 +572,7 @@
 		 <fireRepairMultiplier>1.4</fireRepairMultiplier>
 
 		<passiveStatBoosts>
-			<statBoost name="trueHealAmount">
+			<statBoost name="trueHealAmount" save="Heal-Crew">
 				<boostType>FLAT</boostType>
 				<amount>2</amount>
 				<shipTarget>CURRENT_ROOM</shipTarget>
@@ -582,7 +582,7 @@
 				<priority>0</priority>
 			</statBoost>
 
-			<statBoost name="trueHealAmount">
+			<statBoost name="trueHealAmount" save="Heal-Drones">
 				<boostType>FLAT</boostType>
 				<amount>2</amount>
 				<shipTarget>CURRENT_ROOM</shipTarget>
@@ -603,6 +603,7 @@
 
 	<race name="terran_medic_1">
 		<animBase>human</animBase>
+		<animSheet>terran_medic</animSheet>
 		<maxHealth>120</maxHealth>
 		<canFight>false</canFight>
 		<canSabotage>false</canSabotage>
@@ -634,30 +635,8 @@
 		 <fireRepairMultiplier>1.4</fireRepairMultiplier>
 
 		<passiveStatBoosts>
-			<statBoost name="trueHealAmount">
-				<boostType>FLAT</boostType>
-				<amount>2</amount>
-				<shipTarget>CURRENT_ROOM</shipTarget>
-				<crewTarget>ALLIES</crewTarget>
-				<droneTarget>CREW</droneTarget>
-				<affectsSelf>false</affectsSelf>
-				<priority>0</priority>
-			</statBoost>
-
-			<statBoost name="trueHealAmount">
-				<boostType>FLAT</boostType>
-				<amount>2</amount>
-				<shipTarget>CURRENT_ROOM</shipTarget>
-				<crewTarget>ALLIES</crewTarget>
-				<droneTarget>DRONES</droneTarget>
-				<affectsSelf>false</affectsSelf>
-				<priority>0</priority>
-				<whiteList>
-					<terran_scv/>
-					<terran_goliath/>
-					<terran_spider_mine/>
-				</whiteList>
-			</statBoost>
+			<statBoost load="SC_MEDIC_HEAL_CREW"/>
+			<statBoost load="SC_MEDIC_HEAL_DRONES"/>
 		</passiveStatBoosts>
 		
 		<!-- ACTIVATED ABILITIES -->
@@ -683,6 +662,7 @@
 
 	<race name="terran_medic_2">
 		<animBase>human</animBase>
+		<animSheet>terran_medic</animSheet>
 		<maxHealth>120</maxHealth>
 		<canFight>false</canFight>
 		<canSabotage>false</canSabotage>
@@ -714,30 +694,8 @@
 		 <fireRepairMultiplier>1.4</fireRepairMultiplier>
 
 		<passiveStatBoosts>
-			<statBoost name="trueHealAmount">
-				<boostType>FLAT</boostType>
-				<amount>2</amount>
-				<shipTarget>CURRENT_ROOM</shipTarget>
-				<crewTarget>ALLIES</crewTarget>
-				<droneTarget>CREW</droneTarget>
-				<affectsSelf>false</affectsSelf>
-				<priority>0</priority>
-			</statBoost>
-
-			<statBoost name="trueHealAmount">
-				<boostType>FLAT</boostType>
-				<amount>2</amount>
-				<shipTarget>CURRENT_ROOM</shipTarget>
-				<crewTarget>ALLIES</crewTarget>
-				<droneTarget>DRONES</droneTarget>
-				<affectsSelf>false</affectsSelf>
-				<priority>0</priority>
-				<whiteList>
-					<terran_scv/>
-					<terran_goliath/>
-					<terran_spider_mine/>
-				</whiteList>
-			</statBoost>
+			<statBoost load="SC_MEDIC_HEAL_CREW"/>
+			<statBoost load="SC_MEDIC_HEAL_DRONES"/>
 		</passiveStatBoosts>
 		
 		<!-- ACTIVATED ABILITIES -->

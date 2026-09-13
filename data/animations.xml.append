@@ -623,7 +623,8 @@
 	<time>1</time>
 </anim>
 
-<!-- Optical Flare -->
+
+<!--
 <animSheet name="terran_medic_1" w="315" h="455" fw="35" fh="35">people/terran_medic_base.png</animSheet>
 <anim name="terran_medic_1_clone">
 	<sheet>terran_medic</sheet>
@@ -746,7 +747,7 @@
 	<time>1</time>
 </anim>
 
-<!-- Restoration -->
+
 <animSheet name="terran_medic_2" w="315" h="455" fw="35" fh="35">people/terran_medic_2_base.png</animSheet>
 <anim name="terran_medic_2_clone">			<sheet>terran_medic</sheet>	<desc length="9" x="0" y="1" />	<time>0.75</time></anim>
 <anim name="terran_medic_2_death_right">	<sheet>terran_medic</sheet>	<desc length="9" x="0" y="0" />	<time>0.75</time></anim>
