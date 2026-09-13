@@ -502,9 +502,9 @@ END OF SUBSYSTEMS
 		<sound>weapon_25mm_fire1</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<sound>weapon_laser_hit1</sound>
+		<!--<sound>weapon_laser_hit1</sound>
 		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>
+		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -553,9 +553,9 @@ END OF SUBSYSTEMS
 		<sound>weapon_25mm_fire1</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<sound>weapon_laser_hit1</sound>
+		<!--<sound>weapon_laser_hit1</sound>
 		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>
+		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -604,9 +604,9 @@ END OF SUBSYSTEMS
 		<sound>weapon_25mm_fire1</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<sound>weapon_laser_hit1</sound>
+		<!--<sound>weapon_laser_hit1</sound>
 		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>
+		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -658,9 +658,9 @@ END OF SUBSYSTEMS
 		<sound>weapon_40mm_fire</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<sound>weapon_laser_hit1</sound>
+		<!--<sound>weapon_laser_hit1</sound>
 		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>
+		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -711,9 +711,9 @@ END OF SUBSYSTEMS
 		<sound>weapon_40mm_fire</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<sound>weapon_laser_hit1</sound>
+		<!--<sound>weapon_laser_hit1</sound>
 		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>
+		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -758,9 +758,9 @@ END OF SUBSYSTEMS
 		<sound>weapon_burst_fire</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<sound>weapon_laser_hit1</sound>
+		<!--<sound>weapon_laser_hit1</sound>
 		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>
+		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -801,9 +801,9 @@ END OF SUBSYSTEMS
 		<sound>weapon_burst_fire</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<sound>weapon_laser_hit1</sound>
+		<!--<sound>weapon_laser_hit1</sound>
 		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>
+		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -844,9 +844,9 @@ END OF SUBSYSTEMS
 		<sound>weapon_burst_fire</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<sound>weapon_laser_hit1</sound>
+		<!--<sound>weapon_laser_hit1</sound>
 		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>
+		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -894,9 +894,9 @@ END OF SUBSYSTEMS
 		<sound>weapon_burst_fire</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<sound>weapon_laser_hit1</sound>
+		<!--<sound>weapon_laser_hit1</sound>
 		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>
+		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -942,9 +942,9 @@ END OF SUBSYSTEMS
 		<sound>weapon_burst_fire</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<sound>weapon_laser_hit1</sound>
+		<!--<sound>weapon_laser_hit1</sound>
 		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>
+		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -2069,7 +2069,7 @@ END OF SUBSYSTEMS
 	<cost>65</cost>
 	<rarity>2</rarity>
 	<powerList>
-		<power id="crew_TERRAN_POWER_FLASHBANG"/>
+		<power id="crew_TERRAN_POWER_OPTICAL_FLARE"/>
 		<power id="crew_TERRAN_POWER_HEAL"/>
 	</powerList>
 	<colorList>

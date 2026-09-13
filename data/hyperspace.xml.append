@@ -599,19 +599,19 @@
 		</passiveStatBoosts>
 		
 		<!-- ACTIVATED ABILITIES -->
-		<powerEffect name="FLASHBANG">
+		<powerEffect name="OPTICAL_FLARE">
 			<cooldown>30</cooldown>
 			<jumpCooldown>full</jumpCooldown>
 			<powerSounds>
-				<powerSound>ability_flashbang</powerSound>
+				<powerSound>ability_optical_flare</powerSound>
 			</powerSounds>
 			<req type="enemy">
 				<enemyInRoom />
 			</req>
 			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
 			<friendlyFire>false</friendlyFire>
-			<buttonText id="ability_TERRAN_FLASHBANG_BUTTON"/>
-			<tooltip id="ability_TERRAN_FLASHBANG_TOOLTIP"/>
+			<buttonText id="ability_TERRAN_OPTICAL_FLARE_BUTTON"/>
+			<tooltip id="ability_TERRAN_OPTICAL_FLARE_TOOLTIP"/>
 			<cooldownColor r="255" g="78" b="69" />
 			<effectAnim>explosion_big1_heal</effectAnim>
 			<stun>10</stun>
@@ -1802,7 +1802,7 @@
 	<mod-append:script>data/sc_scripts/sc_drone_goliath_render.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv_ai.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_crew_flashbang.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_crew_ability_flare.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_copy.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_return.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_pod.lua</mod-append:script>
@@ -1811,6 +1811,6 @@
     <mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
 
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
+    <!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>-->
 </mod:findLike>
 </FTL>

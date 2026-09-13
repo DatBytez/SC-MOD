@@ -1,12 +1,7 @@
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, ship)
-    if power.def.name ~= FLASHBANG_NAME then
+    if power.def.name ~= "OPTICAL_FLARE" then
         return Defines.Chain.CONTINUE
     end
-
-    local damage = power:GetPowerDamage()
-
-print("FLASHBANG DAMAGE:", damage)
-print("FLASHBANG STUN:", damage.iStun)
 
     for i = 0, ship.vCrewList:size() - 1 do
         local crew = ship.vCrewList[i]

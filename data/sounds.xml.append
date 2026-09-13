@@ -25,7 +25,7 @@
 	<!-- Crew Ability Sounds -->
 	<ability_stimpack1 volume="4">crew/ability_stimpack1.wav</ability_stimpack1>
 	<ability_stimpack2 volume="4">crew/ability_stimpack2.wav</ability_stimpack2>
-	<ability_flashbang volume="6">crew/ability_flashbang.wav</ability_flashbang>
+	<ability_optical_flare volume="6">crew/ability_optical_flare.wav</ability_optical_flare>
 	<ability_heal volume="4">crew/ability_heal.wav</ability_heal>
 	<ability_repair1 volume="4">crew/terran_scv_repair1.wav</ability_repair1>
 	<ability_repair2 volume="4">crew/terran_scv_repair2.wav</ability_repair2>
@@ -33,10 +33,10 @@
 	<ability_repair4 volume="4">crew/terran_scv_repair4.wav</ability_repair4>
 	<ability_repair5 volume="4">crew/terran_scv_repair5.wav</ability_repair5>
 	<!-- Drone Sounds -->
-	<terran_matrix_activate volume="6">drone/terran_matrix_activate.wav</terran_matrix_activate>
-	<terran_defense_activate volume="6">drone/terran_matrix_activate.wav</terran_defense_activate>
-	<terran_scv_hull_repair1 volume="6">drone/terran_scv_hull_repair1.wav</terran_scv_hull_repair1>	
-	<terran_scv_hull_repair2 volume="6">drone/terran_scv_hull_repair2.wav</terran_scv_hull_repair2>
+	<terran_matrix_activate volume="6">drones/terran_matrix_activate.wav</terran_matrix_activate>
+	<terran_defense_activate volume="6">drones/terran_matrix_activate.wav</terran_defense_activate>
+	<terran_scv_hull_repair1 volume="6">drones/terran_scv_hull_repair1.wav</terran_scv_hull_repair1>	
+	<terran_scv_hull_repair2 volume="6">drones/terran_scv_hull_repair2.wav</terran_scv_hull_repair2>
 	<!-- Weapoon Sounds -->
 	<weapon_yamato_launch volume="7">ship/weapon_yamato_launch.wav</weapon_yamato_launch>
 	<weapon_yamato_hit1 volume="6">ship/weapon_yamato_hit1.wav</weapon_yamato_hit1>
@@ -48,9 +48,9 @@
 	<weapon_burst_fire volume="5">ship/weapon_burst_fire.wav</weapon_burst_fire>
 	<weapon_gemini_fire volume="5">ship/weapon_gemini_fire.wav</weapon_gemini_fire>
 	<weapon_gemini_target volume="3">ship/weapon_gemini_target.wav</weapon_gemini_target>
-	<weapon_laser_hit1 volume="5">ship/weapon_laser_hit1.wav</weapon_laser_hit1>
+	<!--<weapon_laser_hit1 volume="5">ship/weapon_laser_hit1.wav</weapon_laser_hit1>
 	<weapon_laser_hit2 volume="5">ship/weapon_laser_hit2.wav</weapon_laser_hit2>
-	<weapon_laser_hit3 volume="5">ship/weapon_laser_hit3.wav</weapon_laser_hit3>
+	<weapon_laser_hit3 volume="5">ship/weapon_laser_hit3.wav</weapon_laser_hit3>-->
 	
 </FTL>
 
