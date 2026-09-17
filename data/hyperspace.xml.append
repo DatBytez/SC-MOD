@@ -456,6 +456,44 @@
 		<damageTakenMultiplier>0.8</damageTakenMultiplier>
 		<!-- STATIC ABILITIES -->
 		<fireRepairMultiplier>1.4</fireRepairMultiplier>
+		<powerEffect load="SC_REPAIR"/>
+	</race>
+
+	<race name="terran_marine_1">
+		<animBase>human</animBase>
+		<animSheet>terran_marine</animSheet>
+		<maxHealth>80</maxHealth>
+		<rangedDamageMultiplier>1.5</rangedDamageMultiplier>
+		<canPunch>false</canPunch>
+		<deathSounds>
+			<deathSound>terran_marine_death</deathSound>
+			<deathSound>terran_marine_death2</deathSound>
+		</deathSounds>
+		<shootingSounds>
+			<shootingSound>terran_marine_attack</shootingSound>
+		</shootingSounds>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+		<skills>
+			<piloting req="15" />
+			<engines req="15" />
+			<shields req="55" />
+			<weapons req="65" />
+			<repair req="18" />
+			<combat req="8" />
+		</skills>
+		<!-- POWERED ARMOR -->
+		<suffocationModifier>0.2</suffocationModifier>
+		<fireDamageMultiplier>0.8</fireDamageMultiplier>
+		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
+		<damageTakenMultiplier>0.8</damageTakenMultiplier>
+		<!-- STATIC ABILITIES -->
+		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 		<!-- ACTIVATED ABILITIES -->
 		<powerEffect name="SC_STIMPACK">
 			<cooldown>0.1</cooldown>
@@ -607,7 +645,7 @@
 			<friendlyFire>false</friendlyFire>
 			<buttonText id="ability_TERRAN_OPTICAL_FLARE_BUTTON"/>
 			<tooltip id="ability_TERRAN_OPTICAL_FLARE_TOOLTIP"/>
-			<cooldownColor r="255" g="78" b="69" />
+			<cooldownColor r="240" g="210" b="50" />
 			<effectAnim>explosion_big1_heal</effectAnim>
 			<stun>10</stun>
 		</powerEffect>
@@ -662,7 +700,7 @@
 			</powerSounds>
 			<buttonText id="ability_TERRAN_RESTORATION_BUTTON"/>
 			<tooltip id="ability_TERRAN_RESTORATION_TOOLTIP"/>
-			<cooldownColor r="255" g="78" b="69" />
+			<cooldownColor r="240" g="210" b="50" />
 			<effectAnim>explosion_big1_heal</effectAnim>
 		</powerEffect>
 		<powerEffect load="SC_REPAIR"/>
@@ -740,6 +778,54 @@
 			<fireChance>100</fireChance>
 		</powerEffect>
 		<powerEffect load="SC_REPAIR"/>
+	</race>
+
+	<race name="terran_firebat_1">
+		<animBase>human</animBase>
+		<maxHealth>100</maxHealth>
+		<rangedDamageMultiplier>1.5</rangedDamageMultiplier>
+		<canPunch>false</canPunch>
+		<shootingSounds>
+			<shootingSound>terran_firebat_attack1</shootingSound>
+			<shootingSound>terran_firebat_attack2</shootingSound>
+		</shootingSounds>
+		<deathSounds>
+			<deathSound>terran_firebat_death</deathSound>
+			<deathSound>terran_firebat_death2</deathSound>
+			<deathSound>terran_firebat_death3</deathSound>
+		</deathSounds>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+		<skills>
+			<piloting req="15" />
+			<engines req="15" />
+			<shields req="55" />
+			<weapons req="65" />
+			<repair req="18" />
+			<combat req="8" />
+		</skills>
+		<!-- POWERED ARMOR -->
+		<suffocationModifier>0.2</suffocationModifier>
+		<fireDamageMultiplier>0.8</fireDamageMultiplier>
+		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
+		<damageTakenMultiplier>0.8</damageTakenMultiplier>
+		<!-- STATIC ABILITIES -->
+		<canBurn>false</canBurn>
+		<hasDeathExplosion>true</hasDeathExplosion>
+		<hasCustomDeathAnimation>true</hasCustomDeathAnimation>
+		<fireRepairMultiplier>2.2</fireRepairMultiplier>
+		<deathEffect>
+			<fireChance>100</fireChance>
+			<persDamage>1</persDamage>
+			<friendlyFire>true</friendlyFire>
+		</deathEffect>
+		<powerEffect load="SC_FLAMETHROWER"/>
+		<powerEffect load="SC_REPAIR"/>
 		<powerEffect load="SC_STIMPACK"/>
 	</race>
 	<!-- 
@@ -748,6 +834,46 @@
 *********************************************************************************************************
 -->
 	<race name="terran_ghost">
+		<animBase>human</animBase>
+		<maxHealth>90</maxHealth>
+		<canPunch>false</canPunch>
+		<deathSounds>
+			<deathSound>terran_ghost_death</deathSound>
+		</deathSounds>
+		<shootingSounds>
+			<shootingSound>terran_ghost_attack</shootingSound>
+		</shootingSounds>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+		<skills>
+			<piloting req="10" />
+			<engines req="10" />
+			<shields req="36" />
+			<weapons req="43" />
+			<repair req="12" />
+			<combat req="5" />
+		</skills>
+		<!-- POWERED ARMOR -->
+		<suffocationModifier>0.2</suffocationModifier>
+		<fireDamageMultiplier>0.9</fireDamageMultiplier>
+		<moveSpeedMultiplier>1.2</moveSpeedMultiplier>
+		<!-- STATIC ABILITIES -->
+		<isTelepathic>true</isTelepathic>
+		<resistsMindControl>true</resistsMindControl>
+		<repairSpeed>1.5</repairSpeed>
+		<fireRepairMultiplier>1.6</fireRepairMultiplier>
+		<sabotageSpeedMultiplier>1.5</sabotageSpeedMultiplier>
+		<rangedDamageMultiplier>3.5</rangedDamageMultiplier>
+		<shootTimer min="1500" max="1800" />
+		<powerEffect load="SC_REPAIR"/>
+	</race>
+
+	<race name="terran_ghost_1">
 		<animBase>human</animBase>
 		<maxHealth>90</maxHealth>
 		<canPunch>false</canPunch>
@@ -1827,6 +1953,7 @@
     <mod-append:script>data/sc_scripts/sc_weapon_artillery.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapion_size.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_irradiate.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_halo.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_emp.lua</mod-append:script>

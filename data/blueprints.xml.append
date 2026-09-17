@@ -1526,9 +1526,9 @@ END OF SUBSYSTEMS
 	<fireChance>4</fireChance>
 	<explosion>terran_yamato_hit</explosion>
 	<shots>10</shots>
-	<shots>5</shots>
 	<sc-artillery-level stat="shots" value="2"/>
 	<sc-artillery-level stat="cooldown" value="5"/>
+	<sc-projectile-scale value="0.10"/>
 	<accuracyMod>40</accuracyMod>
 	<simultaneousFire>true</simultaneousFire>
 	<speed>25</speed>
@@ -2039,6 +2039,27 @@ END OF SUBSYSTEMS
 	<desc id="crew_TERRAN_MARINE_DESC"/>
 	<title id="crew_TERRAN_MARINE_NAME"/>
 	<short id="crew_TERRAN_MARINE_SHORT"/>
+	<cost>55</cost>
+	<rarity>1</rarity>
+	<powerList/>
+	<colorList>
+		<layer>
+			<color r="244" g="4" b="4" a="1.0" />
+			<color r="12" g="72" b="204" a="1.0" />
+			<color r="44" g="180" b="148" a="1.0" />
+			<color r="136" g="64" b="156" a="1.0" />
+			<color r="248" g="140" b="20" a="1.0" />
+			<color r="112" g="48" b="20" a="1.0" />
+			<color r="204" g="224" b="208" a="1.0" />
+			<color r="252" g="252" b="56" a="1.0" />
+		</layer>
+	</colorList>
+</crewBlueprint>
+
+<crewBlueprint name="terran_marine_1">
+	<desc id="crew_TERRAN_MARINE_DESC"/>
+	<title id="crew_TERRAN_MARINE_NAME"/>
+	<short id="crew_TERRAN_MARINE_SHORT"/>
 	<cost>65</cost>
 	<rarity>1</rarity>
 	<powerList>
@@ -2066,21 +2087,21 @@ END OF SUBSYSTEMS
 	<desc id="crew_TERRAN_MEDIC_DESC"/>
 	<title id="crew_TERRAN_MEDIC_NAME"/>
 	<short id="crew_TERRAN_MEDIC_SHORT"/>
-	<cost>65</cost>
+	<cost>55</cost>
 	<rarity>2</rarity>
 	<powerList>
 		<power id="crew_TERRAN_POWER_HEAL"/>
 	</powerList>
 	<colorList>
 		<layer>
-			<!--<color r="244" g="4" b="4" a="1.0" />-->
+			<color r="244" g="4" b="4" a="1.0" />
 			<color r="12" g="72" b="204" a="1.0" />
 			<color r="44" g="180" b="148" a="1.0" />
-			<!--<color r="136" g="64" b="156" a="1.0" />-->
+			<color r="136" g="64" b="156" a="1.0" />
 			<color r="248" g="140" b="20" a="1.0" />
 			<color r="112" g="48" b="20" a="1.0" />
-			<!--<color r="204" g="224" b="208" a="1.0" />-->
-			<!--<color r="252" g="252" b="56" a="1.0" />-->
+			<color r="204" g="224" b="208" a="1.0" />
+			<color r="252" g="252" b="56" a="1.0" />
 		</layer>
 	</colorList>
 </crewBlueprint>
@@ -2090,7 +2111,7 @@ END OF SUBSYSTEMS
 	<title id="crew_TERRAN_MEDIC_NAME"/>
 	<short id="crew_TERRAN_MEDIC_SHORT"/>
 	<cost>65</cost>
-	<rarity>2</rarity>
+	<rarity>3</rarity>
 	<powerList>
 		<power id="crew_TERRAN_POWER_OPTICAL_FLARE"/>
 		<power id="crew_TERRAN_POWER_HEAL"/>
@@ -2114,7 +2135,7 @@ END OF SUBSYSTEMS
 	<title id="crew_TERRAN_MEDIC_NAME"/>
 	<short id="crew_TERRAN_MEDIC_SHORT"/>
 	<cost>65</cost>
-	<rarity>2</rarity>
+	<rarity>3</rarity>
 	<powerList>
 		<power id="crew_TERRAN_POWER_RESTORATION"/>
 		<power id="crew_TERRAN_POWER_HEAL"/>
@@ -2143,6 +2164,27 @@ END OF SUBSYSTEMS
 	<short id="crew_TERRAN_FIREBAT_SHORT"/>
 	<cost>65</cost>
 	<rarity>4</rarity>
+	<powerList/>
+	<colorList>
+		<layer>
+			<color r="244" g="4" b="4" a="1.0" />
+			<color r="12" g="72" b="204" a="1.0" />
+			<color r="44" g="180" b="148" a="1.0" />
+			<color r="136" g="64" b="156" a="1.0" />
+			<color r="248" g="140" b="20" a="1.0" />
+			<color r="112" g="48" b="20" a="1.0" />
+			<color r="204" g="224" b="208" a="1.0" />
+			<color r="252" g="252" b="56" a="1.0" />
+		</layer>
+	</colorList>
+</crewBlueprint>
+
+<crewBlueprint name="terran_firebat_1">
+	<desc id="crew_TERRAN_FIREBAT_DESC"/>
+	<title id="crew_TERRAN_FIREBAT_NAME"/>
+	<short id="crew_TERRAN_FIREBAT_SHORT"/>
+	<cost>75</cost>
+	<rarity>5</rarity>
 	<powerList>
 		<power id="crew_TERRAN_POWER_STIMPACK"/>
 	</powerList>
@@ -2169,6 +2211,27 @@ END OF SUBSYSTEMS
 	<title id="crew_TERRAN_GHOST_NAME"/>
 	<short id="crew_TERRAN_GHOST_SHORT"/>
 	<cost>65</cost>
+	<rarity>4</rarity>
+	<powerList/>
+	<colorList>
+		<layer>
+			<color r="244" g="4" b="4" a="1.0" />
+			<color r="12" g="72" b="204" a="1.0" />
+			<color r="44" g="180" b="148" a="1.0" />
+			<color r="136" g="64" b="156" a="1.0" />
+			<color r="248" g="140" b="20" a="1.0" />
+			<color r="112" g="48" b="20" a="1.0" />
+			<color r="204" g="224" b="208" a="1.0" />
+			<color r="252" g="252" b="56" a="1.0" />
+		</layer>
+	</colorList>
+</crewBlueprint>
+
+<crewBlueprint name="terran_ghost_1">
+	<desc id="crew_TERRAN_GHOST_DESC"/>
+	<title id="crew_TERRAN_GHOST_NAME"/>
+	<short id="crew_TERRAN_GHOST_SHORT"/>
+	<cost>75</cost>
 	<rarity>5</rarity>
 	<powerList>
 		<power id="crew_TERRAN_POWER_CLOAK"/>

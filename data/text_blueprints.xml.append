@@ -255,29 +255,29 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 <text name="crew_TERRAN_MARINE_SHORT">Marine</text>
 <text name="crew_TERRAN_MARINE_DESC">Basic Terran soldier equipped with powered armor and a rapid-fire C-14 rifle.  
 
-    Powered Armor Stats:
--Minor fire and damage resistance
--Resistant to suffocation|
--Reduced movement speed.</text>
+Powered Armor:
+ Minor fire and damage resistance
+ Resistant to suffocation|
+ Reduced movement speed.</text>
 
 <text name="crew_TERRAN_MEDIC_NAME">Terran Medic</text>
 <text name="crew_TERRAN_MEDIC_SHORT">Medic</text>
 <text name="crew_TERRAN_MEDIC_DESC">Terran field medic trained to supress enemy forces and keep infantry alive in combat zones.
 
-    Powered Armor Stats:
--Minor fire and damage resistance
--Resistant to suffocation
--Reduced movement speed.</text>
+Powered Armor:
+ Minor fire and damage resistance
+ Resistant to suffocation
+ Reduced movement speed.</text>
 
 <text name="crew_TERRAN_FIREBAT_NAME">Terran Firebat</text>
 <text name="crew_TERRAN_FIREBAT_SHORT">Firebat</text>
 <text name="crew_TERRAN_FIREBAT_DESC">Flame-wielding shock trooper built for close combat and clearing out enemy infantry.
 
-    Powered Armor Stats:
--Immune to fire damage
--Minor damage resistance
--Resistant to suffocation
--Reduced movement speed.</text>
+Powered Armor:
+ Immune to fire damage
+ Minor damage resistance
+ Resistant to suffocation
+ Reduced movement speed.</text>
 
 <text name="crew_TERRAN_GHOST_NAME">Terran Ghost</text>
 <text name="crew_TERRAN_GHOST_SHORT">Ghost</text>
@@ -312,20 +312,20 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 <text name="ability_TERRAN_OPTICAL_FLARE_BUTTON">OPTICAL FLARE</text>
 <text name="ability_TERRAN_OPTICAL_FLARE_TOOLTIP">[COOLDOWN:30s]
 	Fire an optical flare to stun enemies.</text>
-<text name="crew_TERRAN_POWER_OPTICAL_FLARE">Active Ability: Optical Flare
-    -Stun nearby enemies.</text>
+<text name="crew_TERRAN_POWER_OPTICAL_FLARE">Ability: [Optical Flare]
+    Stun nearby enemies.</text>
 
 <text name="ability_TERRAN_RESTORATION_BUTTON">RESTORATION</text>
 <text name="ability_TERRAN_RESTORATION_TOOLTIP">[COOLDOWN:30s]
 	Restore nearby friendly troops.</text>
-<text name="crew_TERRAN_POWER_RESTORATION">Active Ability: Restoration
-    -Restore nearby friendly troops, clensing them of negative effects.</text>
+<text name="crew_TERRAN_POWER_RESTORATION">Ability: [Restoration]
+    Restore nearby friendly troops, clensing them of negative effects.</text>
 
 <text name="ability_TERRAN_CLOAK_BUTTON">CLOAK</text>
 <text name="ability_TERRAN_CLOAK_TOOLTIP">[COOLDOWN:30s DURATION:15s]
 	Cannot be targeted by enemies.</text>
-<text name="crew_TERRAN_POWER_CLOAK">Active Ability: Cloak
-    -Untargetable by enemies except by detectors.</text>
+<text name="crew_TERRAN_POWER_CLOAK">Ability: [Cloak]
+    Untargetable by enemies except by detectors.</text>
 
 <text name="ability_TERRAN_SCV_REPAIR_HULL_BUTTON">REPAIR HULL</text>
 <text name="ability_TERRAN_SCV_REPAIR_HULL_TOOLTIP">[READY]
