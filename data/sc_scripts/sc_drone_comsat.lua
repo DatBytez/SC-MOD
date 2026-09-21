@@ -2,8 +2,9 @@
 DESCRIPTION: Comsat drones provide temporary detector-style targeting while deployed.
         - Tagged drones use Sensors effective power as targeting strength.
         - Tagged drones self-destruct after the lifetime defined by <sc-comsat>.
-        - Native combat-drone movement and firing are disabled by setting the drone blueprint <speed> to 0.
-        - A separate Lua timer creates the Comsat scan hit animation at a random enemy room.
+        - The Comsat is intended to use the DEFENSE drone type so it can deploy on the friendly side without an enemy ship.
+        - Native defense-drone shots are blocked.
+        - A separate Lua timer creates the Comsat scan hit animation at a random enemy room when an enemy ship is present.
 TAG: <sc-comsat value="#"/>
 DEPENDENCIES: sc_targeting_core.lua, sc_helpers.lua
 ]]
@@ -28,8 +29,14 @@ local scanTimers = {
 
 mods.sc.tag.register("drone", "sc-comsat", comsatDrones, "value")
 
+local function drone_is_comsat(drone)
+    return drone
+        and drone.blueprint
+        and comsatDrones[drone.blueprint.name] ~= nil
+end
+
 local function drone_is_active_comsat(drone)
-    return comsatDrones[drone.blueprint.name] ~= nil
+    return drone_is_comsat(drone)
         and drone.deployed
         and drone.powered
         and not drone.bDead
@@ -46,7 +53,7 @@ end
 
 local function create_comsat_scan(shipId)
     local targetShip = Hyperspace.ships(1 - shipId)
-    if not targetShip or targetShip.bDestroyed then return end
+    if not targetShip or targetShip.bDestroyed then return false end
 
     local roomCenter = targetShip:GetRandomRoomCenter()
     local target = Hyperspace.Pointf(roomCenter.x, roomCenter.y)
@@ -62,14 +69,15 @@ local function create_comsat_scan(shipId)
     )
 
     scan.death_animation:Start(false)
+
+    return true
 end
 
 local function update_comsat_scan(shipId, drone)
     local droneId = drone.selfId
     local remaining = (scanTimers[shipId][droneId] or 0) - Hyperspace.FPS.SpeedFactor / 16
 
-    if remaining <= 0 then
-        create_comsat_scan(shipId)
+    if remaining <= 0 and create_comsat_scan(shipId) then
         remaining = SCAN_INTERVAL
     end
 
@@ -137,4 +145,12 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
             end
         end
     end
+end)
+
+script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile, spacedrone)
+    if drone_is_comsat(spacedrone) then
+        return Defines.Chain.PREEMPT
+    end
+
+    return Defines.Chain.CONTINUE
 end)

@@ -2716,20 +2716,23 @@ TERRAN_GOLIATH-->
 </weaponBlueprint>
 
 <droneBlueprint name="TERRAN_COMSAT">
-    <type>COMBAT</type>
+    <!--<type>COMBAT</type>-->
     <tip>tip_combat</tip>
     <title id="drone_TERRAN_COMSAT_NAME"/>
     <short id="drone_TERRAN_COMSAT_SHORT"/>
     <desc id="drone_TERRAN_COMSAT_DESC"/>
 
     <power>2</power>
-    <cooldown>1</cooldown>
     <dodge>0</dodge>
-    <speed>0</speed>
     <cost>50</cost>
     <rarity>3</rarity>
     <sc-comsat value="20"/>
 	<sc-droneEngine value="drone_engine"/>
+
+	<type>DEFENSE</type>
+	<level>1</level>
+	<cooldown>15000</cooldown>
+	<speed>5</speed>
 	
     <droneImage>terran_comsat</droneImage>
     <weaponBlueprint>TERRAN_COMSAT_PROJECTILE</weaponBlueprint>
@@ -2852,6 +2855,7 @@ TERRAN_GOLIATH-->
 	</weaponList>
 	<droneList drones="4" count="3">
 		<drone name="TERRAN_SCV" />
+		<drone name="TERRAN_COMSAT" />
 	</droneList>
 	<health amount="30" />
 	<maxPower amount="8" />
