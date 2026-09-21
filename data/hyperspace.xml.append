@@ -1953,7 +1953,7 @@
     <mod-append:script>data/sc_scripts/sc_weapon_artillery.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapion_size.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_size.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_irradiate.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_halo.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_emp.lua</mod-append:script>

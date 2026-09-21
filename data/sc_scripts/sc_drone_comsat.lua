@@ -32,6 +32,17 @@ local function get_comsat_strength(ship)
     return sensors:GetEffectivePower()
 end
 
+local function hide_comsat_drone(drone)
+    drone.drone_image_off:SetScale(0, 0)
+    drone.drone_image_charging:SetScale(0, 0)
+    drone.drone_image_on:SetScale(0, 0)
+    drone.engine_image:SetScale(0, 0)
+
+    if drone.weapon_animation then
+        drone.weapon_animation.fScale = 0
+    end
+end
+
 targeting.register_source("sc_comsat", get_comsat_strength)
 
 local function reset_comsat_timers()
@@ -80,6 +91,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
     for drone in vter(ship.droneSystem.drones) do
         local lifetime = comsatDrones[drone.blueprint.name]
         if lifetime then
+            hide_comsat_drone(drone)
             update_comsat_lifetime(shipTimers, drone, lifetime)
         end
     end

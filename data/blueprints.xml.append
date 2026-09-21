@@ -2710,11 +2710,9 @@ TERRAN_GOLIATH-->
     <cost>0</cost>
     <rarity>0</rarity>
 
-    <!-- Rendered invisible by sc_drone_comsat.lua. -->
     <image>laser_light2</image>
 
-    <!-- Temporary standard impact effect. -->
-    <explosion>explosion_random</explosion>
+    <explosion>terran_comsat_hit</explosion>
 </weaponBlueprint>
 
 <droneBlueprint name="TERRAN_COMSAT">
@@ -2725,12 +2723,13 @@ TERRAN_GOLIATH-->
     <desc id="drone_TERRAN_COMSAT_DESC"/>
 
     <power>2</power>
-    <cooldown>1000</cooldown>
+    <cooldown>1</cooldown>
     <dodge>0</dodge>
     <speed>15</speed>
     <cost>50</cost>
     <rarity>3</rarity>
-    <sc-comsat value="5"/>
+    <sc-comsat value="20"/>
+	<sc-droneEngine value="drone_engine"/>
 	
     <droneImage>terran_comsat</droneImage>
     <weaponBlueprint>TERRAN_COMSAT_PROJECTILE</weaponBlueprint>
@@ -2779,7 +2778,7 @@ TERRAN_GOLIATH-->
     <speed>18</speed>
     <drone_targetable>1</drone_targetable>
     <rarity>0</rarity>
-    <image>missile_1</image>
+    <image>terran_pod_projectile</image>
     <explosion>explosion_random</explosion>
 </weaponBlueprint>
 
