@@ -2701,7 +2701,7 @@ TERRAN_GOLIATH-->
     <sp>10</sp>
     <shots>1</shots>
 
-    <cooldown>5</cooldown>
+    <cooldown>2</cooldown>
     <speed>20</speed>
     <accuracyMod>100</accuracyMod>
     <radius>0</radius>
@@ -2725,11 +2725,11 @@ TERRAN_GOLIATH-->
     <power>2</power>
     <cooldown>1</cooldown>
     <dodge>0</dodge>
-    <speed>15</speed>
+    <speed>0</speed>
     <cost>50</cost>
     <rarity>3</rarity>
     <sc-comsat value="20"/>
-	<!--<sc-droneEngine value="drone_engine"/>-->
+	<sc-droneEngine value="drone_engine"/>
 	
     <droneImage>terran_comsat</droneImage>
     <weaponBlueprint>TERRAN_COMSAT_PROJECTILE</weaponBlueprint>

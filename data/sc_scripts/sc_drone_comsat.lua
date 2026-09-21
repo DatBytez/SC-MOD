@@ -2,8 +2,8 @@
 DESCRIPTION: Comsat drones provide temporary detector-style targeting while deployed.
         - Tagged drones use Sensors effective power as targeting strength.
         - Tagged drones self-destruct after the lifetime defined by <sc-comsat>.
-        - Native combat-drone firing is disabled separately from the scan timer.
-        - A separate Lua timer creates the scan projectile at the enemy ship.
+        - Native combat-drone movement and firing are disabled by setting the drone blueprint <speed> to 0.
+        - A separate Lua timer creates the Comsat scan hit animation at a random enemy room.
 TAG: <sc-comsat value="#"/>
 DEPENDENCIES: sc_targeting_core.lua, sc_helpers.lua
 ]]
@@ -13,7 +13,8 @@ local helpers = mods.sc.helpers
 local targeting = mods.sc.targeting
 
 local SCAN_BLUEPRINT = "TERRAN_COMSAT_PROJECTILE"
-local SCAN_INTERVAL = Hyperspace.Blueprints:GetWeaponBlueprint(SCAN_BLUEPRINT).cooldown
+local scanBlueprint = Hyperspace.Blueprints:GetWeaponBlueprint(SCAN_BLUEPRINT)
+local SCAN_INTERVAL = scanBlueprint.cooldown
 
 local comsatDrones = {}
 local comsatTimers = {
@@ -27,14 +28,8 @@ local scanTimers = {
 
 mods.sc.tag.register("drone", "sc-comsat", comsatDrones, "value")
 
-local function drone_is_comsat(drone)
-    return drone
-        and drone.blueprint
-        and comsatDrones[drone.blueprint.name] ~= nil
-end
-
 local function drone_is_active_comsat(drone)
-    return drone_is_comsat(drone)
+    return comsatDrones[drone.blueprint.name] ~= nil
         and drone.deployed
         and drone.powered
         and not drone.bDead
@@ -49,45 +44,32 @@ local function get_comsat_strength(ship)
     return sensors:GetEffectivePower()
 end
 
-local function disable_native_comsat_fire(drone)
-    drone.bDisrupted = true
-    drone.bFire = false
-end
+local function create_comsat_scan(shipId)
+    local targetShip = Hyperspace.ships(1 - shipId)
+    if not targetShip or targetShip.bDestroyed then return end
 
-local function create_comsat_scan(drone, targetShip)
-    local target
+    local roomCenter = targetShip:GetRandomRoomCenter()
+    local target = Hyperspace.Pointf(roomCenter.x, roomCenter.y)
 
-    if drone:HasTarget() then
-        target = Hyperspace.Pointf(drone.targetLocation.x, drone.targetLocation.y)
-    else
-        target = targetShip:GetRandomRoomCenter()
-    end
-
-    local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint(SCAN_BLUEPRINT)
-
-    Hyperspace.App.world.space:CreateLaserBlast(
-        blueprint,
+    local scan = Hyperspace.App.world.space:CreateLaserBlast(
+        scanBlueprint,
         target,
         targetShip.iShipId,
-        drone.iShipId,
+        shipId,
         target,
         targetShip.iShipId,
         0
     )
+
+    scan.death_animation:Start(false)
 end
 
-local function update_comsat_scan(ship, drone)
-    local shipId = ship.iShipId
+local function update_comsat_scan(shipId, drone)
     local droneId = drone.selfId
-    local remaining = (scanTimers[shipId][droneId] or SCAN_INTERVAL) - Hyperspace.FPS.SpeedFactor / 16
+    local remaining = (scanTimers[shipId][droneId] or 0) - Hyperspace.FPS.SpeedFactor / 16
 
     if remaining <= 0 then
-        local targetShip = Hyperspace.ships(1 - shipId)
-
-        if targetShip and not targetShip.bDestroyed then
-            create_comsat_scan(drone, targetShip)
-        end
-
+        create_comsat_scan(shipId)
         remaining = SCAN_INTERVAL
     end
 
@@ -136,12 +118,6 @@ script.on_internal_event(Defines.InternalEvents.JUMP_ARRIVE, function()
     reset_comsat_timers()
 end)
 
-script.on_internal_event(Defines.InternalEvents.CONSTRUCT_SPACEDRONE, function(drone)
-    if drone_is_comsat(drone) then
-        disable_native_comsat_fire(drone)
-    end
-end)
-
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
     if not ship.droneSystem then return end
 
@@ -152,22 +128,13 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
         local lifetime = comsatDrones[drone.blueprint.name]
 
         if lifetime then
-            disable_native_comsat_fire(drone)
             update_comsat_lifetime(shipTimers, drone, lifetime)
 
             if drone_is_active_comsat(drone) then
-                update_comsat_scan(ship, drone)
+                update_comsat_scan(shipId, drone)
             else
                 scanTimers[shipId][drone.selfId] = nil
             end
         end
     end
-end)
-
-script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile, spacedrone)
-    if drone_is_comsat(spacedrone) then
-        return Defines.Chain.PREEMPT
-    end
-
-    return Defines.Chain.CONTINUE
 end)
