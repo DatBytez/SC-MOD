@@ -2729,7 +2729,7 @@ TERRAN_GOLIATH-->
     <cost>50</cost>
     <rarity>3</rarity>
     <sc-comsat value="20"/>
-	<sc-droneEngine value="drone_engine"/>
+	<!--<sc-droneEngine value="drone_engine"/>-->
 	
     <droneImage>terran_comsat</droneImage>
     <weaponBlueprint>TERRAN_COMSAT_PROJECTILE</weaponBlueprint>

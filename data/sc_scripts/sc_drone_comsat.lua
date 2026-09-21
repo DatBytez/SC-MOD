@@ -2,7 +2,8 @@
 DESCRIPTION: Comsat drones provide temporary detector-style targeting while deployed.
         - Tagged drones use Sensors effective power as targeting strength.
         - Tagged drones self-destruct after the lifetime defined by <sc-comsat>.
-        - Hides the scan projectile in flight while preserving its impact animation.
+        - Uses the drone's native weapon cooldown as the scan timer.
+        - Removes the fired scan projectile and creates its hit animation directly at the target location.
 TAG: <sc-comsat value="#"/>
 DEPENDENCIES: sc_targeting_core.lua, sc_helpers.lua
 ]]
@@ -32,15 +33,26 @@ local function get_comsat_strength(ship)
     return sensors:GetEffectivePower()
 end
 
-local function hide_comsat_drone(drone)
-    drone.drone_image_off:SetScale(0, 0)
-    drone.drone_image_charging:SetScale(0, 0)
-    drone.drone_image_on:SetScale(0, 0)
-    drone.engine_image:SetScale(0, 0)
+local function create_comsat_hit(projectile)
+    local target = Hyperspace.Pointf(projectile.target.x, projectile.target.y)
+    local targetSpace = projectile.destinationSpace
+    local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint("TERRAN_COMSAT_PROJECTILE")
 
-    if drone.weapon_animation then
-        drone.weapon_animation.fScale = 0
+    local hit = Hyperspace.App.world.space:CreateLaserBlast(
+        blueprint,
+        target,
+        targetSpace,
+        projectile.ownerId,
+        target,
+        targetSpace,
+        0
+    )
+
+    if hit.flight_animation then
+        hit.flight_animation.fScale = 0
     end
+
+    hit.death_animation:Start(false)
 end
 
 targeting.register_source("sc_comsat", get_comsat_strength)
@@ -91,7 +103,6 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
     for drone in vter(ship.droneSystem.drones) do
         local lifetime = comsatDrones[drone.blueprint.name]
         if lifetime then
-            hide_comsat_drone(drone)
             update_comsat_lifetime(shipTimers, drone, lifetime)
         end
     end
@@ -100,7 +111,8 @@ end)
 script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile, spacedrone)
     if not comsatDrones[spacedrone.blueprint.name] then return end
 
-    if projectile.flight_animation then
-        projectile.flight_animation.fScale = 0
-    end
+    create_comsat_hit(projectile)
+    projectile:Kill()
+
+    return Defines.Chain.CONTINUE
 end)
