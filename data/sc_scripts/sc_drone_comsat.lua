@@ -1,12 +1,13 @@
 --[[
 DESCRIPTION: Comsat drones provide temporary detector-style targeting while deployed.
         - Tagged drones use Sensors effective power as targeting strength.
+        - Tagged drones temporarily add 2 levels to the Sensors system while active.
         - Tagged drones self-destruct after the lifetime defined by <sc-comsat>.
         - The Comsat is intended to use the DEFENSE drone type so it can deploy on the friendly side without an enemy ship.
         - Native defense-drone shots are blocked.
         - A separate Lua timer creates the Comsat scan hit animation at a random enemy room when an enemy ship is present.
 TAG: <sc-comsat value="#"/>
-DEPENDENCIES: sc_targeting_core.lua, sc_helpers.lua
+DEPENDENCIES: sc_targeting_core.lua, sc_helpers.lua, sc_augment_upgrade.lua
 ]]
 
 local vter = mods.multiverse.vter
@@ -14,6 +15,8 @@ local helpers = mods.sc.helpers
 local targeting = mods.sc.targeting
 
 local SCAN_BLUEPRINT = "TERRAN_COMSAT_PROJECTILE"
+local SENSOR_POWER_BONUS = 2
+
 local scanBlueprint = Hyperspace.Blueprints:GetWeaponBlueprint(SCAN_BLUEPRINT)
 local SCAN_INTERVAL = scanBlueprint.cooldown
 
@@ -25,6 +28,10 @@ local comsatTimers = {
 local scanTimers = {
     [0] = {},
     [1] = {}
+}
+local sensorBoostApplied = {
+    [0] = 0,
+    [1] = 0
 }
 
 mods.sc.tag.register("drone", "sc-comsat", comsatDrones, "value")
@@ -42,14 +49,26 @@ local function drone_is_active_comsat(drone)
         and not drone.bDead
 end
 
+local function ship_has_active_comsat(ship)
+    return helpers.ship_has_drone_matching(ship, drone_is_active_comsat)
+end
+
 local function get_comsat_strength(ship)
-    if not helpers.ship_has_drone_matching(ship, drone_is_active_comsat) then return nil end
+    if not ship_has_active_comsat(ship) then return nil end
 
     local sensors = ship:GetSystem(7)
     if not sensors then return nil end
 
     return sensors:GetEffectivePower()
 end
+
+mods.sc.register_system_max_bonus("sc_comsat", function(ship, systemName)
+    if systemName == "sensors" and ship_has_active_comsat(ship) then
+        return SENSOR_POWER_BONUS
+    end
+
+    return 0
+end)
 
 local function create_comsat_scan(shipId)
     local targetShip = Hyperspace.ships(1 - shipId)
@@ -82,6 +101,40 @@ local function update_comsat_scan(shipId, drone)
     end
 
     scanTimers[shipId][droneId] = remaining
+end
+
+local function remove_sensor_boost(shipId)
+    local applied = sensorBoostApplied[shipId]
+    if applied <= 0 then return end
+
+    local ship = Hyperspace.ships(shipId)
+    local sensors = ship and ship:GetSystem(7)
+
+    if sensors then
+        for _ = 1, applied do
+            sensors:UpgradeSystem(-1)
+        end
+    end
+
+    sensorBoostApplied[shipId] = 0
+end
+
+local function update_sensor_boost(ship)
+    local shipId = ship.iShipId
+    local sensors = ship:GetSystem(7)
+
+    if not sensors or not ship_has_active_comsat(ship) then
+        remove_sensor_boost(shipId)
+        return
+    end
+
+    while sensorBoostApplied[shipId] < SENSOR_POWER_BONUS do
+        if not sensors:UpgradeSystem(1) then
+            break
+        end
+
+        sensorBoostApplied[shipId] = sensorBoostApplied[shipId] + 1
+    end
 end
 
 targeting.register_source("sc_comsat", get_comsat_strength)
@@ -120,14 +173,23 @@ local function update_comsat_lifetime(shipTimers, drone, lifetime)
     end
 end
 
-script.on_init(reset_comsat_timers)
+script.on_init(function()
+    reset_comsat_timers()
+    sensorBoostApplied[0] = 0
+    sensorBoostApplied[1] = 0
+end)
 
 script.on_internal_event(Defines.InternalEvents.JUMP_ARRIVE, function()
+    remove_sensor_boost(0)
+    remove_sensor_boost(1)
     reset_comsat_timers()
 end)
 
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
-    if not ship.droneSystem then return end
+    if not ship.droneSystem then
+        remove_sensor_boost(ship.iShipId)
+        return
+    end
 
     local shipId = ship.iShipId
     local shipTimers = comsatTimers[shipId]
@@ -145,6 +207,8 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
             end
         end
     end
+
+    update_sensor_boost(ship)
 end)
 
 script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile, spacedrone)
