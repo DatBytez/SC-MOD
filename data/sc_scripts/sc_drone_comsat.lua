@@ -1,13 +1,14 @@
 --[[
 DESCRIPTION: Comsat drones provide temporary detector-style targeting while deployed.
         - Tagged drones use Sensors effective power as targeting strength.
-        - Tagged drones temporarily add 2 levels to the Sensors system while active.
+        - Active Comsats provide 2 temporary bonus power to Sensors.
+        - The Comsat's own bonus is tracked so it is applied once and removed once.
         - Tagged drones self-destruct after the lifetime defined by <sc-comsat>.
-        - The Comsat is intended to use the DEFENSE drone type so it can deploy on the friendly side without an enemy ship.
+        - The Comsat uses the DEFENSE drone type so it can deploy on the friendly side without an enemy ship.
         - Native defense-drone shots are blocked.
         - A separate Lua timer creates the Comsat scan hit animation at a random enemy room when an enemy ship is present.
 TAG: <sc-comsat value="#"/>
-DEPENDENCIES: sc_targeting_core.lua, sc_helpers.lua, sc_augment_upgrade.lua
+DEPENDENCIES: sc_targeting_core.lua, sc_helpers.lua
 ]]
 
 local vter = mods.multiverse.vter
@@ -29,9 +30,23 @@ local scanTimers = {
     [0] = {},
     [1] = {}
 }
-local sensorBoostApplied = {
+local sensorBonusApplied = {
     [0] = 0,
     [1] = 0
+}
+local sensorBonusBase = {
+    [0] = nil,
+    [1] = nil
+}
+local lastBonusAction = {
+    [0] = "None",
+    [1] = "None"
+}
+
+mods.sc.comsatDebug = {
+    sensorBonusApplied = sensorBonusApplied,
+    sensorBonusBase = sensorBonusBase,
+    lastBonusAction = lastBonusAction
 }
 
 mods.sc.tag.register("drone", "sc-comsat", comsatDrones, "value")
@@ -50,7 +65,9 @@ local function drone_is_active_comsat(drone)
 end
 
 local function ship_has_active_comsat(ship)
-    return helpers.ship_has_drone_matching(ship, drone_is_active_comsat)
+    return ship
+        and ship.droneSystem
+        and helpers.ship_has_drone_matching(ship, drone_is_active_comsat)
 end
 
 local function get_comsat_strength(ship)
@@ -62,13 +79,72 @@ local function get_comsat_strength(ship)
     return sensors:GetEffectivePower()
 end
 
-mods.sc.register_system_max_bonus("sc_comsat", function(ship, systemName)
-    if systemName == "sensors" and ship_has_active_comsat(ship) then
-        return SENSOR_POWER_BONUS
+local function update_sensor_bonus(ship)
+    local shipId = ship.iShipId
+    local sensors = ship:GetSystem(7)
+
+    if not sensors then
+        sensorBonusApplied[shipId] = 0
+        sensorBonusBase[shipId] = nil
+        return
     end
 
-    return 0
-end)
+    local wanted = ship_has_active_comsat(ship) and SENSOR_POWER_BONUS or 0
+    local current = sensorBonusApplied[shipId] or 0
+    local diff = wanted - current
+
+    if diff == 0 then return end
+
+    local before = sensors.iBonusPower
+
+    if current == 0 and wanted > 0 then
+        sensorBonusBase[shipId] = before
+    end
+
+    sensors.iBonusPower = math.max(0, before + diff)
+    sensorBonusApplied[shipId] = wanted
+
+    if diff > 0 then
+        lastBonusAction[shipId] = string.format(
+            "Applied +%d (%d -> %d)",
+            diff,
+            before,
+            sensors.iBonusPower
+        )
+    else
+        lastBonusAction[shipId] = string.format(
+            "Removed %d (%d -> %d)",
+            -diff,
+            before,
+            sensors.iBonusPower
+        )
+    end
+
+    if wanted == 0 then
+        sensorBonusBase[shipId] = nil
+    end
+end
+
+local function remove_sensor_bonus(shipId)
+    local ship = Hyperspace.ships(shipId)
+    local sensors = ship and ship:GetSystem(7)
+    local applied = sensorBonusApplied[shipId] or 0
+
+    if sensors and applied ~= 0 then
+        local before = sensors.iBonusPower
+        sensors.iBonusPower = math.max(0, before - applied)
+
+        lastBonusAction[shipId] = string.format(
+            "Removed %d (%d -> %d)",
+            applied,
+            before,
+            sensors.iBonusPower
+        )
+    end
+
+    sensorBonusApplied[shipId] = 0
+    sensorBonusBase[shipId] = nil
+end
 
 local function create_comsat_scan(shipId)
     local targetShip = Hyperspace.ships(1 - shipId)
@@ -101,40 +177,6 @@ local function update_comsat_scan(shipId, drone)
     end
 
     scanTimers[shipId][droneId] = remaining
-end
-
-local function remove_sensor_boost(shipId)
-    local applied = sensorBoostApplied[shipId]
-    if applied <= 0 then return end
-
-    local ship = Hyperspace.ships(shipId)
-    local sensors = ship and ship:GetSystem(7)
-
-    if sensors then
-        for _ = 1, applied do
-            sensors:UpgradeSystem(-1)
-        end
-    end
-
-    sensorBoostApplied[shipId] = 0
-end
-
-local function update_sensor_boost(ship)
-    local shipId = ship.iShipId
-    local sensors = ship:GetSystem(7)
-
-    if not sensors or not ship_has_active_comsat(ship) then
-        remove_sensor_boost(shipId)
-        return
-    end
-
-    while sensorBoostApplied[shipId] < SENSOR_POWER_BONUS do
-        if not sensors:UpgradeSystem(1) then
-            break
-        end
-
-        sensorBoostApplied[shipId] = sensorBoostApplied[shipId] + 1
-    end
 end
 
 targeting.register_source("sc_comsat", get_comsat_strength)
@@ -175,40 +217,43 @@ end
 
 script.on_init(function()
     reset_comsat_timers()
-    sensorBoostApplied[0] = 0
-    sensorBoostApplied[1] = 0
+
+    sensorBonusApplied[0] = 0
+    sensorBonusApplied[1] = 0
+    sensorBonusBase[0] = nil
+    sensorBonusBase[1] = nil
+    lastBonusAction[0] = "None"
+    lastBonusAction[1] = "None"
 end)
 
 script.on_internal_event(Defines.InternalEvents.JUMP_ARRIVE, function()
-    remove_sensor_boost(0)
-    remove_sensor_boost(1)
+    remove_sensor_bonus(0)
+    remove_sensor_bonus(1)
     reset_comsat_timers()
 end)
 
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
-    if not ship.droneSystem then
-        remove_sensor_boost(ship.iShipId)
-        return
-    end
-
     local shipId = ship.iShipId
-    local shipTimers = comsatTimers[shipId]
 
-    for drone in vter(ship.droneSystem.drones) do
-        local lifetime = comsatDrones[drone.blueprint.name]
+    if ship.droneSystem then
+        local shipTimers = comsatTimers[shipId]
 
-        if lifetime then
-            update_comsat_lifetime(shipTimers, drone, lifetime)
+        for drone in vter(ship.droneSystem.drones) do
+            local lifetime = comsatDrones[drone.blueprint.name]
 
-            if drone_is_active_comsat(drone) then
-                update_comsat_scan(shipId, drone)
-            else
-                scanTimers[shipId][drone.selfId] = nil
+            if lifetime then
+                update_comsat_lifetime(shipTimers, drone, lifetime)
+
+                if drone_is_active_comsat(drone) then
+                    update_comsat_scan(shipId, drone)
+                else
+                    scanTimers[shipId][drone.selfId] = nil
+                end
             end
         end
     end
 
-    update_sensor_boost(ship)
+    update_sensor_bonus(ship)
 end)
 
 script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile, spacedrone)

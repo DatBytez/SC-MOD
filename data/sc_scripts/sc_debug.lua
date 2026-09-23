@@ -1,169 +1,153 @@
 --[[
-DESCRIPTION: Minimal beam-fire diagnostic.
+DESCRIPTION: Fixed on-screen Comsat / Sensors diagnostic.
     Diagnostic only; gameplay logic does not depend on this file.
 
 PURPOSE:
-    Test which hooks can identify when beam weapons are firing or actively hitting.
-    Expected console output:
-        FRIENDLY BEAM (source)
-        ENEMY BEAM (source)
-
-NOTES:
-    - FRIENDLY means projectile ownerId == 0.
-    - ENEMY means projectile ownerId == 1.
-    - DAMAGE_BEAM is a reactive source: it confirms a beam is interacting with a ship,
-      but it may occur after the first beam damage step has begun.
+    Display the current Sensors and Comsat state in one fixed panel.
+    Values update in place instead of scrolling through console output.
 ]]
 
-mods.sc_beam_debug = mods.sc_beam_debug or {}
-local debug = mods.sc_beam_debug
+local vter = mods.multiverse.vter
 
-debug.seen = debug.seen or {}
+local COMSAT_NAME = "TERRAN_COMSAT"
+local SENSORS_ID = 7
 
-local function run_has_started()
-    return Hyperspace.App
-        and Hyperspace.App.world
-        and Hyperspace.App.world.bStartedGame
+local PANEL_X = 20
+local PANEL_Y = 235
+local PANEL_W = 410
+local PANEL_H = 225
+
+local TEXT_X = PANEL_X + 10
+local TEXT_Y = PANEL_Y + 8
+local LINE_HEIGHT = 20
+local FONT = 10
+
+local function yes_no(value)
+    return value and "YES" or "NO"
 end
 
-local function safe_get(root, key)
-    if root == nil then return nil end
+local function get_comsat_state(ship)
+    if not ship or not ship.droneSystem then
+        return 0, 0
+    end
 
-    local ok, value = pcall(function()
-        return root[key]
-    end)
+    local count = 0
+    local activeCount = 0
 
-    if not ok then return nil end
+    for drone in vter(ship.droneSystem.drones) do
+        if drone.blueprint and drone.blueprint.name == COMSAT_NAME then
+            count = count + 1
+
+            if drone.deployed
+                and drone.powered
+                and not drone.bDead then
+
+                activeCount = activeCount + 1
+            end
+        end
+    end
+
+    return count, activeCount
+end
+
+local function get_debug_value(name, shipId, default)
+    local debug = mods.sc and mods.sc.comsatDebug
+    local values = debug and debug[name]
+
+    if not values then return default end
+
+    local value = values[shipId]
+    if value == nil then return default end
+
     return value
 end
 
-local function safe_projectile_type(projectile)
-    if not projectile then return nil end
-
-    local ok, value = pcall(function()
-        return projectile:GetType()
-    end)
-
-    if not ok then return nil end
-    return value
+local function draw_line(line, text)
+    Graphics.freetype.easy_print(
+        FONT,
+        TEXT_X,
+        TEXT_Y + line * LINE_HEIGHT,
+        text
+    )
 end
 
-local function safe_drone_owner_id(drone)
-    if not drone then return nil end
-
-    local ok, ownerId = pcall(function()
-        return drone:GetOwnerId()
-    end)
-
-    if not ok then return nil end
-    return ownerId
-end
-
-local function get_projectile_name(projectile)
-    local extend = safe_get(projectile, "extend")
-    return safe_get(extend, "name") or "UNKNOWN_PROJECTILE"
-end
-
-local function get_weapon_name(weapon)
-    local blueprint = safe_get(weapon, "blueprint")
-    return safe_get(blueprint, "name") or "UNKNOWN_WEAPON"
-end
-
-local function get_owner_id(projectile, weapon, drone, shipManager)
-    local ownerId = safe_get(projectile, "ownerId")
-
-    if ownerId == nil then
-        ownerId = safe_get(weapon, "iShipId")
+local function draw_panel()
+    if not Hyperspace.App
+        or not Hyperspace.App.world
+        or not Hyperspace.App.world.bStartedGame then
+        return
     end
 
-    if ownerId == nil then
-        ownerId = safe_drone_owner_id(drone)
-    end
+    local ship = Hyperspace.ships.player
+    if not ship then return end
 
-    -- DAMAGE_BEAM fallback: if a beam is hitting player ship 0, assume enemy owner;
-    -- if hitting enemy ship 1, assume friendly owner.
-    if ownerId == nil and shipManager and shipManager.iShipId ~= nil then
-        ownerId = 1 - shipManager.iShipId
-    end
+    local sensors = ship:GetSystem(SENSORS_ID)
+    if not sensors then return end
 
-    return tonumber(ownerId)
+    local comsatCount, activeCount = get_comsat_state(ship)
+    local trackedBonus = get_debug_value("sensorBonusApplied", 0, 0)
+    local baseBonus = get_debug_value("sensorBonusBase", 0, "N/A")
+    local lastAction = get_debug_value("lastBonusAction", 0, "None")
+
+    Graphics.CSurface.GL_PushMatrix()
+    Graphics.CSurface.GL_LoadIdentity()
+
+    Graphics.CSurface.GL_DrawRect(
+        PANEL_X,
+        PANEL_Y,
+        PANEL_W,
+        PANEL_H,
+        Graphics.GL_Color(0, 0, 0, 0.82)
+    )
+
+    Graphics.CSurface.GL_SetColor(Graphics.GL_Color(1, 1, 1, 1))
+
+    draw_line(0, "COMSAT SENSOR DEBUG")
+    draw_line(1, string.format(
+        "Comsat: %d   Active: %s   Active Count: %d",
+        comsatCount,
+        yes_no(activeCount > 0),
+        activeCount
+    ))
+    draw_line(2, string.format(
+        "Installed Level: %d   User Power: %d",
+        sensors.powerState.second,
+        sensors.powerState.first
+    ))
+    draw_line(3, string.format(
+        "Effective Power: %d   Bonus Power: %d",
+        sensors:GetEffectivePower(),
+        sensors.iBonusPower
+    ))
+    draw_line(4, string.format(
+        "Last Bonus Power: %d   Battery Power: %d",
+        sensors.iLastBonusPower,
+        sensors.iBatteryPower
+    ))
+    draw_line(5, string.format(
+        "Tracked Comsat Bonus: %d   Base At Activation: %s",
+        trackedBonus,
+        tostring(baseBonus)
+    ))
+    draw_line(6, string.format(
+        "GetMaxPower: %d   maxLevel: %d",
+        sensors:GetMaxPower(),
+        sensors.maxLevel
+    ))
+    draw_line(7, string.format(
+        "Health: %d/%d   Last User Power: %d",
+        sensors.healthState.first,
+        sensors.healthState.second,
+        sensors.lastUserPower
+    ))
+    draw_line(8, "Last Action:")
+    draw_line(9, tostring(lastAction))
+
+    Graphics.CSurface.GL_PopMatrix()
 end
 
-local function get_beam_side(projectile, weapon, drone, shipManager)
-    local ownerId = get_owner_id(projectile, weapon, drone, shipManager)
-
-    if ownerId == 0 then return "FRIENDLY" end
-    if ownerId == 1 then return "ENEMY" end
-
-    return "UNKNOWN"
-end
-
-local function log_beam(source, projectile, weapon, drone, shipManager)
-    if not run_has_started() then return end
-
-    local side = get_beam_side(projectile, weapon, drone, shipManager)
-    local weaponName = weapon and get_weapon_name(weapon) or get_projectile_name(projectile)
-    local projectileKey = tostring(projectile or weapon or drone or "no-object")
-    local key = source .. "|" .. side .. "|" .. weaponName .. "|" .. projectileKey
-
-    -- DAMAGE_BEAM can fire repeatedly while the same beam crosses tiles/rooms.
-    -- Keep one print per source/projectile so the console stays readable.
-    if debug.seen[key] then return end
-    debug.seen[key] = true
-
-    print(side .. " BEAM (" .. source .. ")")
-end
-
-local function weapon_is_beam_by_blueprint_type(weapon)
-    local blueprint = safe_get(weapon, "blueprint")
-    return safe_get(blueprint, "typeName") == "BEAM"
-end
-
-local function projectile_is_beam_by_type(projectile)
-    return safe_projectile_type(projectile) == 5
-end
-
-local function beam_hit_is_new_tile_or_room(beamHitType)
-    return beamHitType == Defines.BeamHit.NEW_TILE
-        or beamHitType == Defines.BeamHit.NEW_ROOM
-end
-
--- Source 1: Weapon blueprint typeName.
--- This should catch normal weapon/projectile firing as early as PROJECTILE_FIRE.
-script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projectile, weapon)
-    if weapon_is_beam_by_blueprint_type(weapon) then
-        log_beam("projectile-fire-weapon-type", projectile, weapon, nil, nil)
-    end
-
-    return Defines.Chain.CONTINUE
-end)
-
--- Source 2: Projectile:GetType() == 5.
--- Fusion scripts use projectile:GetType() == 5 as a beam check.
-script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projectile, weapon)
-    if projectile_is_beam_by_type(projectile) then
-        log_beam("projectile-fire-projectile-type-5", projectile, weapon, nil, nil)
-    end
-
-    return Defines.Chain.CONTINUE
-end)
-
--- Source 3: Drone-fire projectile type.
--- This helps test whether beam drones bypass normal weapon-based PROJECTILE_FIRE checks.
-script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile, drone)
-    if projectile_is_beam_by_type(projectile) then
-        log_beam("drone-fire-projectile-type-5", projectile, nil, drone, nil)
-    end
-
-    return Defines.Chain.CONTINUE
-end)
-
--- Source 4: DAMAGE_BEAM.
--- This is not a pure firing detector; it confirms an active beam hit on a ship.
-script.on_internal_event(Defines.InternalEvents.DAMAGE_BEAM, function(shipManager, projectile, location, damage, realNewTile, beamHitType)
-    if projectile_is_beam_by_type(projectile) and beam_hit_is_new_tile_or_room(beamHitType) then
-        log_beam("damage-beam-new-tile-room", projectile, nil, nil, shipManager)
-    end
-
-    return Defines.Chain.CONTINUE, beamHitType
-end)
+script.on_render_event(
+    Defines.RenderEvents.MOUSE_CONTROL,
+    draw_panel,
+    function() end
+)
