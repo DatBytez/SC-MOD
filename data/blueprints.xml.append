@@ -2716,7 +2716,6 @@ TERRAN_GOLIATH-->
 </weaponBlueprint>
 
 <droneBlueprint name="TERRAN_COMSAT">
-    <!--<type>COMBAT</type>-->
     <tip>tip_combat</tip>
     <title id="drone_TERRAN_COMSAT_NAME"/>
     <short id="drone_TERRAN_COMSAT_SHORT"/>
@@ -2726,7 +2725,7 @@ TERRAN_GOLIATH-->
     <dodge>0</dodge>
     <cost>50</cost>
     <rarity>3</rarity>
-    <sc-comsat value="20"/>
+    <sc-comsat value="6"/>
 	<sc-droneEngine value="drone_engine"/>
 
 	<type>DEFENSE</type>

@@ -2,7 +2,6 @@
 DESCRIPTION: Increases systems maximum based on augment upgrades.
         - Requires system max to be increased in blueprints.
         - Adds bonuses from installed augments with the <sc-upgrade> tag.
-        - Supports temporary maximum bonuses registered by other SC scripts.
         - Handles multiple artillery system instances? Untested.
 TAG: <sc-upgrade system="SYSTEM_NAME" value="#"/>
 DEPENDENCIES: sc_tag.lua, Multiverse vter
@@ -12,10 +11,8 @@ local vter = mods.multiverse.vter
 
 mods.sc = mods.sc or {}
 mods.sc.augmentUpgrades = mods.sc.augmentUpgrades or {}
-mods.sc.systemMaxBonusProviders = mods.sc.systemMaxBonusProviders or {}
 
 local augmentUpgrades = mods.sc.augmentUpgrades
-local systemMaxBonusProviders = mods.sc.systemMaxBonusProviders
 
 local ARTILLERY_ID = 11
 local CAP_CHECK_INTERVAL = 15
@@ -45,10 +42,6 @@ local capCheckCounter = 0
 
 mods.sc.tag.register("augment", "sc-upgrade", augmentUpgrades, "system")
 
-function mods.sc.register_system_max_bonus(name, provider)
-    systemMaxBonusProviders[name] = provider
-end
-
 local function system_id_from_name(systemName)
     local systemId = Hyperspace.ShipSystem.NameToSystemId(systemName)
     return systemId >= 0 and systemId or nil
@@ -72,20 +65,6 @@ local function get_active_upgrade_bonus(ship, systemName)
     return bonus
 end
 
-local function get_active_temporary_bonus(ship, systemName)
-    local bonus = 0
-
-    for _, provider in pairs(systemMaxBonusProviders) do
-        local amount = provider(ship, systemName)
-
-        if amount then
-            bonus = bonus + amount
-        end
-    end
-
-    return bonus
-end
-
 local function apply_max_to_system(system, effectiveMax)
     if system.maxLevel ~= effectiveMax then
         system.maxLevel = effectiveMax
@@ -98,9 +77,7 @@ local function apply_max_to_system(system, effectiveMax)
 end
 
 local function apply_effective_max(ship, systemName, systemData)
-    local effectiveMax = systemData.baseCap
-        + get_active_upgrade_bonus(ship, systemName)
-        + get_active_temporary_bonus(ship, systemName)
+    local effectiveMax = systemData.baseCap + get_active_upgrade_bonus(ship, systemName)
 
     if systemData.systemId == ARTILLERY_ID and ship.artillerySystems then
         local foundArtillery = false

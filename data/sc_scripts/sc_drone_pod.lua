@@ -117,15 +117,21 @@ local function launch_transport_projectile(podCrew, ownerShip, targetShip)
     local targetPosition = targetShip:GetRandomRoomCenter()
     local heading = sourceShipId == 0 and 0 or 180
 
-    return Hyperspace.App.world.space:CreateMissile(
-        blueprint,
-        sourcePosition,
-        sourceShipId,
-        sourceShipId,
-        targetPosition,
-        targetShipId,
-        heading
-    )
+    local projectile = Hyperspace.App.world.space:CreateMissile(
+            blueprint,
+            sourcePosition,
+            sourceShipId,
+            sourceShipId,
+            targetPosition,
+            targetShipId,
+            heading
+        )
+
+    if projectile then
+        projectile.damage.crystalShard = true
+    end
+
+    return projectile
 end
 
 local function create_transport_payload(crew)

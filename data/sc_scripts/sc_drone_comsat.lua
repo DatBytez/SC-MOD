@@ -2,7 +2,7 @@
 DESCRIPTION: Comsat drones provide temporary detector-style targeting while deployed.
         - Tagged drones use Sensors effective power as targeting strength.
         - Active Comsats provide 2 temporary bonus power to Sensors.
-        - The Comsat's own bonus is tracked so it is applied once and removed once.
+        - Drone parts spent deploying a Comsat are refunded after deployment.
         - Tagged drones self-destruct after the lifetime defined by <sc-comsat>.
         - The Comsat uses the DEFENSE drone type so it can deploy on the friendly side without an enemy ship.
         - Native defense-drone shots are blocked.
@@ -30,23 +30,13 @@ local scanTimers = {
     [0] = {},
     [1] = {}
 }
+local comsatWasDeployed = {
+    [0] = {},
+    [1] = {}
+}
 local sensorBonusApplied = {
     [0] = 0,
     [1] = 0
-}
-local sensorBonusBase = {
-    [0] = nil,
-    [1] = nil
-}
-local lastBonusAction = {
-    [0] = "None",
-    [1] = "None"
-}
-
-mods.sc.comsatDebug = {
-    sensorBonusApplied = sensorBonusApplied,
-    sensorBonusBase = sensorBonusBase,
-    lastBonusAction = lastBonusAction
 }
 
 mods.sc.tag.register("drone", "sc-comsat", comsatDrones, "value")
@@ -85,65 +75,47 @@ local function update_sensor_bonus(ship)
 
     if not sensors then
         sensorBonusApplied[shipId] = 0
-        sensorBonusBase[shipId] = nil
         return
     end
 
     local wanted = ship_has_active_comsat(ship) and SENSOR_POWER_BONUS or 0
-    local current = sensorBonusApplied[shipId] or 0
+    local current = sensorBonusApplied[shipId]
     local diff = wanted - current
 
-    if diff == 0 then return end
-
-    local before = sensors.iBonusPower
-
-    if current == 0 and wanted > 0 then
-        sensorBonusBase[shipId] = before
-    end
-
-    sensors.iBonusPower = math.max(0, before + diff)
-    sensorBonusApplied[shipId] = wanted
-
-    if diff > 0 then
-        lastBonusAction[shipId] = string.format(
-            "Applied +%d (%d -> %d)",
-            diff,
-            before,
-            sensors.iBonusPower
-        )
-    else
-        lastBonusAction[shipId] = string.format(
-            "Removed %d (%d -> %d)",
-            -diff,
-            before,
-            sensors.iBonusPower
-        )
-    end
-
-    if wanted == 0 then
-        sensorBonusBase[shipId] = nil
+    if diff ~= 0 then
+        sensors.iBonusPower = math.max(0, sensors.iBonusPower + diff)
+        sensorBonusApplied[shipId] = wanted
     end
 end
 
 local function remove_sensor_bonus(shipId)
     local ship = Hyperspace.ships(shipId)
     local sensors = ship and ship:GetSystem(7)
-    local applied = sensorBonusApplied[shipId] or 0
+    local applied = sensorBonusApplied[shipId]
 
     if sensors and applied ~= 0 then
-        local before = sensors.iBonusPower
-        sensors.iBonusPower = math.max(0, before - applied)
-
-        lastBonusAction[shipId] = string.format(
-            "Removed %d (%d -> %d)",
-            applied,
-            before,
-            sensors.iBonusPower
-        )
+        sensors.iBonusPower = math.max(0, sensors.iBonusPower - applied)
     end
 
     sensorBonusApplied[shipId] = 0
-    sensorBonusBase[shipId] = nil
+end
+
+local function update_comsat_refund(ship, drone)
+    local shipId = ship.iShipId
+    local droneId = drone.selfId
+    local deployed = drone.deployed and not drone.bDead
+    local wasDeployed = comsatWasDeployed[shipId][droneId]
+
+    if wasDeployed == nil then
+        comsatWasDeployed[shipId][droneId] = deployed
+        return
+    end
+
+    if deployed and not wasDeployed then
+        ship:ModifyDroneCount(1)
+    end
+
+    comsatWasDeployed[shipId][droneId] = deployed
 end
 
 local function create_comsat_scan(shipId)
@@ -181,11 +153,13 @@ end
 
 targeting.register_source("sc_comsat", get_comsat_strength)
 
-local function reset_comsat_timers()
+local function reset_comsat_state()
     comsatTimers[0] = {}
     comsatTimers[1] = {}
     scanTimers[0] = {}
     scanTimers[1] = {}
+    comsatWasDeployed[0] = {}
+    comsatWasDeployed[1] = {}
 end
 
 local function update_comsat_lifetime(shipTimers, drone, lifetime)
@@ -211,25 +185,20 @@ local function update_comsat_lifetime(shipTimers, drone, lifetime)
     shipTimers[droneId] = remaining
 
     if remaining <= 0 then
-        drone:SetDestroyed(true, false)
+        drone:SetDestroyed(true, true)
     end
 end
 
 script.on_init(function()
-    reset_comsat_timers()
-
+    reset_comsat_state()
     sensorBonusApplied[0] = 0
     sensorBonusApplied[1] = 0
-    sensorBonusBase[0] = nil
-    sensorBonusBase[1] = nil
-    lastBonusAction[0] = "None"
-    lastBonusAction[1] = "None"
 end)
 
 script.on_internal_event(Defines.InternalEvents.JUMP_ARRIVE, function()
     remove_sensor_bonus(0)
     remove_sensor_bonus(1)
-    reset_comsat_timers()
+    reset_comsat_state()
 end)
 
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
@@ -242,6 +211,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
             local lifetime = comsatDrones[drone.blueprint.name]
 
             if lifetime then
+                update_comsat_refund(ship, drone)
                 update_comsat_lifetime(shipTimers, drone, lifetime)
 
                 if drone_is_active_comsat(drone) then
