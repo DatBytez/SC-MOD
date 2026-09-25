@@ -782,6 +782,7 @@
 
 	<race name="terran_firebat_1">
 		<animBase>human</animBase>
+		<animSheet>terran_firebat</animSheet>
 		<maxHealth>100</maxHealth>
 		<rangedDamageMultiplier>1.5</rangedDamageMultiplier>
 		<canPunch>false</canPunch>
@@ -875,6 +876,7 @@
 
 	<race name="terran_ghost_1">
 		<animBase>human</animBase>
+		<animSheet>terran_ghost</animSheet>
 		<maxHealth>90</maxHealth>
 		<canPunch>false</canPunch>
 		<deathSounds>

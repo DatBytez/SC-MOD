@@ -196,6 +196,7 @@ function crew_copy.snapshot(crew)
         ownerShipId = crew.iShipId,
         currentShipId = crew.currentShipId,
         roomId = crew.iRoomId,
+        savedPosition = crew:GetSavedPosition(),
         health = crew.health and crew.health.first or nil,
         deathNumber = crew.iDeathNumber,
         powers = snapshot_crew_powers(crew),
@@ -225,6 +226,12 @@ function crew_copy.recreate(snapshot, shipManager, roomId)
     if snapshot.male ~= nil then
         pcall(function()
             newCrew:SetSex(snapshot.male)
+        end)
+    end
+
+    if snapshot.savedPosition then
+        pcall(function()
+            newCrew:SetSavePosition(snapshot.savedPosition)
         end)
     end
 

@@ -2935,7 +2935,7 @@ TERRAN_GOLIATH-->
 	</droneList>
 	<health amount="30" />
 	<maxPower amount="6" />
-	<crewCount amount="1" class="terran_ghost" />
+	<crewCount amount="1" class="terran_ghost_1" />
 	<crewCount amount="1" class="terran_civilian" />
 	<aug name="TERRAN_WRAITH_BATTERY" />
 	<aug name="TERRAN_SHIP_ARMOR_LIGHT" />
