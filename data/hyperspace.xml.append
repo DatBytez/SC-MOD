@@ -980,9 +980,9 @@
 		<shootTimer min="1500" max="1800" />
 		<powerEffect load="SC_REPAIR"/>
 		<powerEffect name="SC_LOCKDOWN">
-			<cooldown>30</cooldown>
+			<cooldown>3</cooldown>
 			<powerSounds>
-				<powerSound>weapon_gemini_target</powerSound>
+				<powerSound>weapon_target</powerSound>
 			</powerSounds>
 			<jumpCooldown>full</jumpCooldown>
 			<onHotkey>always</onHotkey>

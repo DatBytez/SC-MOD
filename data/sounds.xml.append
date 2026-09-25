@@ -50,7 +50,7 @@
 	<weapon_40mm_fire volume="5">ship/weapon_40mm_fire.wav</weapon_40mm_fire>
 	<weapon_burst_fire volume="5">ship/weapon_burst_fire.wav</weapon_burst_fire>
 	<weapon_gemini_fire volume="5">ship/weapon_gemini_fire.wav</weapon_gemini_fire>
-	<weapon_gemini_target volume="3">ship/weapon_gemini_target.wav</weapon_gemini_target><!-- Unused? -->
+	<weapon_target volume="4">ship/weapon_target.wav</weapon_target>
 	<weapon_halo_fire volume="5">ship/weapon_halo_fire.wav</weapon_halo_fire>
 	<weapon_laser_hit1 volume="5">ship/weapon_laser_hit1.wav</weapon_laser_hit1>
 	<weapon_laser_hit2 volume="5">ship/weapon_laser_hit2.wav</weapon_laser_hit2>

@@ -2,6 +2,7 @@
 DESCRIPTION: Implements the Terran Ghost Lockdown ability.
         - Activating SC_LOCKDOWN enters targeting mode.
         - Clicking a room on the enemy ship fires one TERRAN_LOCKDOWN_PROJECTILE.
+        - Right-clicking cancels targeting.
         - Targeting ends immediately after the projectile is fired.
 ]]
 
@@ -32,6 +33,7 @@ end
 local function clear_lockdown()
     lockdownActive = false
     lockdownCrew = nil
+    Hyperspace.Mouse.bHideMouse = false
 end
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
@@ -68,19 +70,74 @@ script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
     crewControl.selectedCrew:clear()
 
     Hyperspace.Mouse.animateDoor = 0
+    Hyperspace.Mouse.bHideMouse = true
 end)
 
-script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function()
+script.on_render_event(Defines.RenderEvents.MOUSE_CONTROL, function()
+    if not lockdownActive then return end
+
+    local mousePosition = Hyperspace.Mouse.position
+    local enemyShip = Hyperspace.ships.enemy
+    local validTarget = false
+
+    if enemyShip then
+        local targetPosition = convert_mouse_to_enemy_position(mousePosition)
+        local roomId = get_room_at_location(enemyShip, targetPosition)
+
+        validTarget = roomId >= 0
+    end
+
+    local crosshair = Hyperspace.Resources:GetImageId(
+        "mouse/mouse_crosshairs2_1.png"
+    )
+
+    local target
+
+    if validTarget then
+        target = Hyperspace.Resources:GetImageId(
+            "mouse/mouse_crosshairs.png"
+        )
+    else
+        target = Hyperspace.Resources:GetImageId(
+            "mouse/mouse_crosshairs_valid.png"
+        )
+    end
+
+    Graphics.CSurface.GL_BlitPixelImage(
+        crosshair,
+        mousePosition.x,
+        mousePosition.y,
+        32,
+        32,
+        0,
+        Graphics.GL_Color(1, 1, 1, 1),
+        false
+    )
+
+    Graphics.CSurface.GL_BlitPixelImage(
+        target,
+        mousePosition.x,
+        mousePosition.y,
+        32,
+        32,
+        0,
+        Graphics.GL_Color(1, 1, 1, 1),
+        false
+    )
+end, function() end)
+
+script.on_internal_event(Defines.InternalEvents.ON_MOUSE_R_BUTTON_DOWN, function()
     if not lockdownActive then
         return Defines.Chain.CONTINUE
     end
 
-    local commandGui = Hyperspace.App.gui
+    clear_lockdown()
 
-    if commandGui.bPaused
-        or commandGui.event_pause
-        or commandGui.menu_pause then
+    return Defines.Chain.CONTINUE
+end)
 
+script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function()
+    if not lockdownActive then
         return Defines.Chain.CONTINUE
     end
 
@@ -120,7 +177,7 @@ script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function
 
     local heading = sourceShipId == 0 and 0 or 180
 
-    Hyperspace.App.world.space:CreateMissile(
+    local projectile = Hyperspace.App.world.space:CreateMissile(
         blueprint,
         sourcePosition,
         sourceShipId,
@@ -129,6 +186,10 @@ script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function
         enemyShip.iShipId,
         heading
     )
+
+    if projectile then
+        projectile.damage.crystalShard = true
+    end
 
     clear_lockdown()
 

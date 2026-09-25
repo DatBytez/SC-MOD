@@ -2363,7 +2363,7 @@ END OF SUBSYSTEMS
 	<cost>50</cost>
 	<bp>5</bp>
 	<droneImage>terran_scv_hull</droneImage>
-	<image>weapons/laser_light2_strip4.png</image>
+	<image>weapons/laser_light2_strip4.png</image> <!-- TODO: Check to see if this does anything -->
 	<rarity>0</rarity>
 	<iconImage>Srepair</iconImage>
 </droneBlueprint>
@@ -2818,21 +2818,20 @@ TERRAN_GOLIATH-->
 	<desc id="NOYB"/>
 	<rarity>0</rarity>
 	<launchSounds>
-		<sound>shieldDroneActivate</sound>
+		<sound>weapon_gemini_fire</sound>
 	</launchSounds>
-
+	<hitShipSounds>
+		<sound>ability_lockdown</sound>
+	</hitShipSounds>
 	<damage>0</damage>
     <sysDamage>0</sysDamage>
     <persDamage>0</persDamage>
-    <ion>10</ion>
     <sp>10</sp>
     <shots>1</shots>
-
     <speed>20</speed>
     <accuracyMod>100</accuracyMod>
-
-
-    <image>laser_light2</image>
+	<mv-hack duration="6"/>
+    <image>missile_1</image>
 </weaponBlueprint>	
 
 <!-- 
