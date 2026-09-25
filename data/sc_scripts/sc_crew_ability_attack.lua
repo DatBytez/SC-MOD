@@ -1,17 +1,35 @@
 --[[
-DESCRIPTION: Implements the Terran Ghost Lockdown ability.
-        - Activating SC_LOCKDOWN enters targeting mode.
-        - Clicking a room on the enemy ship fires one TERRAN_LOCKDOWN_PROJECTILE.
+DESCRIPTION: Implements reusable targeted projectile crew abilities.
+        - Powers with the <sc-attack projectile="..."/> tag enter targeting mode when activated.
+        - Clicking a room on the enemy ship fires the configured projectile.
         - Right-clicking cancels targeting.
         - Targeting ends immediately after the projectile is fired.
+TAG: <sc-attack projectile="WEAPON_BLUEPRINT"/>
+DEPENDENCIES: sc_tag.lua
 ]]
 
-local LOCKDOWN_POWER = "SC_LOCKDOWN"
-local LOCKDOWN_CREW = "terran_ghost_2"
-local LOCKDOWN_PROJECTILE = "TERRAN_LOCKDOWN_PROJECTILE"
+mods.sc.crewAttackProjectiles = mods.sc.crewAttackProjectiles or {}
 
-local lockdownActive = false
-local lockdownCrew = nil
+local attackProjectiles = mods.sc.crewAttackProjectiles
+
+local attackActive = false
+local attackCrew = nil
+local attackProjectile = nil
+
+local function parse_attack_projectile(tagNode)
+    local projectileAttr = tagNode:first_attribute("projectile")
+
+    if not projectileAttr then return nil end
+
+    return projectileAttr:value()
+end
+
+mods.sc.tag.register(
+    "power",
+    "sc-attack",
+    attackProjectiles,
+    parse_attack_projectile
+)
 
 local function get_room_at_location(ship, location)
     return Hyperspace.ShipGraph
@@ -30,38 +48,42 @@ local function convert_mouse_to_enemy_position(mousePosition)
     )
 end
 
-local function clear_lockdown()
-    lockdownActive = false
-    lockdownCrew = nil
+local function clear_attack()
+    attackActive = false
+    attackCrew = nil
+    attackProjectile = nil
     Hyperspace.Mouse.bHideMouse = false
 end
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
-    if power.def.name ~= LOCKDOWN_POWER then
+    local projectileName = attackProjectiles[power.def.name]
+
+    if not projectileName then
         return Defines.Chain.CONTINUE
     end
 
-    if not power.crew or power.crew.species ~= LOCKDOWN_CREW then
+    if not power.crew then
         return Defines.Chain.CONTINUE
     end
 
-    lockdownActive = true
-    lockdownCrew = power.crew
+    attackActive = true
+    attackCrew = power.crew
+    attackProjectile = projectileName
 
     return Defines.Chain.CONTINUE
 end)
 
 script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
-    if not lockdownActive then return end
+    if not attackActive then return end
 
     if not Hyperspace.App.world.bStartedGame
         or Hyperspace.App.menu.shipBuilder.bOpen
-        or not lockdownCrew
-        or lockdownCrew.bDead
-        or lockdownCrew.bOutOfGame
-        or lockdownCrew.bMindControlled then
+        or not attackCrew
+        or attackCrew.bDead
+        or attackCrew.bOutOfGame
+        or attackCrew.bMindControlled then
 
-        clear_lockdown()
+        clear_attack()
         return
     end
 
@@ -74,7 +96,7 @@ script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
 end)
 
 script.on_render_event(Defines.RenderEvents.MOUSE_CONTROL, function()
-    if not lockdownActive then return end
+    if not attackActive then return end
 
     local mousePosition = Hyperspace.Mouse.position
     local enemyShip = Hyperspace.ships.enemy
@@ -127,17 +149,17 @@ script.on_render_event(Defines.RenderEvents.MOUSE_CONTROL, function()
 end, function() end)
 
 script.on_internal_event(Defines.InternalEvents.ON_MOUSE_R_BUTTON_DOWN, function()
-    if not lockdownActive then
+    if not attackActive then
         return Defines.Chain.CONTINUE
     end
 
-    clear_lockdown()
+    clear_attack()
 
     return Defines.Chain.CONTINUE
 end)
 
 script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function()
-    if not lockdownActive then
+    if not attackActive then
         return Defines.Chain.CONTINUE
     end
 
@@ -156,18 +178,19 @@ script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function
         return Defines.Chain.CONTINUE
     end
 
-    local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint(LOCKDOWN_PROJECTILE)
+    local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint(attackProjectile)
 
     if not blueprint then
-        clear_lockdown()
+        clear_attack()
         return Defines.Chain.CONTINUE
     end
 
-    local sourceShipId = lockdownCrew.currentShipId
+    local sourceShipId = attackCrew.currentShipId
+    local sourceOffset = sourceShipId == 0 and 40 or -40
 
     local sourcePosition = Hyperspace.Pointf(
-        lockdownCrew.x,
-        lockdownCrew.y
+        attackCrew.x + sourceOffset,
+        attackCrew.y
     )
 
     local target = Hyperspace.Pointf(
@@ -181,7 +204,7 @@ script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function
         blueprint,
         sourcePosition,
         sourceShipId,
-        lockdownCrew.iShipId,
+        attackCrew.iShipId,
         target,
         enemyShip.iShipId,
         heading
@@ -191,7 +214,7 @@ script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function
         projectile.damage.crystalShard = true
     end
 
-    clear_lockdown()
+    clear_attack()
 
     return Defines.Chain.CONTINUE
 end)

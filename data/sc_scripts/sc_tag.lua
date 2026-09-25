@@ -16,7 +16,8 @@ local tag = mods.sc.tag
 local parserLists = {
     weapon = mods.multiverse.weaponTagParsers,
     drone = mods.multiverse.droneTagParsers,
-    augment = mods.multiverse.augmentTagParsers
+    augment = mods.multiverse.augmentTagParsers,
+    power = mods.multiverse.powerTagParsers
 }
 
 local function get_value(tagNode)

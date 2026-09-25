@@ -163,3 +163,4 @@ WEAPON AND DRONE TAGS
 mods.multiverse.weaponTagParsers = {}
 mods.multiverse.droneTagParsers = {}
 mods.multiverse.augmentTagParsers = {}
+mods.multiverse.powerTagParsers = {}
