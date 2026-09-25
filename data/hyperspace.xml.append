@@ -981,7 +981,7 @@
 		<powerEffect load="SC_REPAIR"/>
 		<powerEffect name="SC_LOCKDOWN">
 			<sc-shoot projectile="TERRAN_LOCKDOWN_PROJECTILE"/>
-			<sc-resource cost="missiles" amount="1"/>
+			<sc-cost resource="missiles" amount="1"/>
 			<cooldown>3</cooldown>
 			<powerSounds>
 				<powerSound>weapon_target</powerSound>

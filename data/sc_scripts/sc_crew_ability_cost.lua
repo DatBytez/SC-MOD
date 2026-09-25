@@ -1,8 +1,10 @@
 --[[
 DESCRIPTION: Implements reusable resource costs for crew abilities.
-        - Powers with the <sc-cost resource="..." amount="#"/> tag require the configured resource.
-        - The resource is reserved when the power activates.
-        - Other ability scripts may commit or refund the reserved cost.
+        - Powers with <sc-cost resource="..." amount="#"/> tags require the configured resources.
+        - Multiple costs may be assigned to the same power.
+        - Repeated costs for the same resource are combined when checking affordability.
+        - Resources are reserved when the power activates.
+        - Other ability scripts may commit or refund the reserved costs.
         - Supported resources are missiles, drones, fuel, and scrap.
 TAG: <sc-cost resource="missiles" amount="#"/>
 DEPENDENCIES: sc_tag.lua
@@ -19,15 +21,29 @@ local POWER_READY = 1
 local POWER_NOT_READY_CHARGES = 22
 
 local function parse_power_cost(tagNode)
-    local resourceAttr = tagNode:first_attribute("resource")
-    local amountAttr = tagNode:first_attribute("amount")
+    local costs = {}
 
-    if not resourceAttr or not amountAttr then return nil end
+    while tagNode do
+        local resourceAttr = tagNode:first_attribute("resource")
+        local amountAttr = tagNode:first_attribute("amount")
 
-    return {
-        resource = resourceAttr:value(),
-        amount = tonumber(amountAttr:value())
-    }
+        if resourceAttr and amountAttr then
+            local amount = tonumber(amountAttr:value())
+
+            if amount then
+                table.insert(costs, {
+                    resource = resourceAttr:value(),
+                    amount = amount
+                })
+            end
+        end
+
+        tagNode = tagNode:next_sibling("sc-cost")
+    end
+
+    if #costs == 0 then return nil end
+
+    return costs
 end
 
 mods.sc.tag.register(
@@ -91,6 +107,17 @@ local function modify_resource_count(ship, resourceName, amount)
     return false
 end
 
+local function get_total_costs(costData)
+    local totals = {}
+
+    for _, entry in ipairs(costData) do
+        totals[entry.resource] =
+            (totals[entry.resource] or 0) + entry.amount
+    end
+
+    return totals
+end
+
 function cost.can_pay(power)
     local costData = powerCosts[power.def.name]
 
@@ -104,16 +131,20 @@ function cost.can_pay(power)
         return false
     end
 
-    local resourceCount = get_resource_count(
-        ship,
-        costData.resource
-    )
+    local totals = get_total_costs(costData)
 
-    if resourceCount == nil then
-        return false
+    for resourceName, amount in pairs(totals) do
+        local resourceCount = get_resource_count(
+            ship,
+            resourceName
+        )
+
+        if resourceCount == nil or resourceCount < amount then
+            return false
+        end
     end
 
-    return resourceCount >= costData.amount
+    return true
 end
 
 function cost.reserve(power)
@@ -133,18 +164,21 @@ function cost.reserve(power)
         return false
     end
 
-    if not modify_resource_count(
-        ship,
-        costData.resource,
-        -costData.amount
-    ) then
-        return false
+    local totals = get_total_costs(costData)
+
+    for resourceName, amount in pairs(totals) do
+        if not modify_resource_count(
+            ship,
+            resourceName,
+            -amount
+        ) then
+            return false
+        end
     end
 
     reservations[power] = {
         ship = ship,
-        resource = costData.resource,
-        amount = costData.amount
+        costs = totals
     }
 
     return true
@@ -159,11 +193,13 @@ function cost.refund(power)
 
     if not reservation then return end
 
-    modify_resource_count(
-        reservation.ship,
-        reservation.resource,
-        reservation.amount
-    )
+    for resourceName, amount in pairs(reservation.costs) do
+        modify_resource_count(
+            reservation.ship,
+            resourceName,
+            amount
+        )
+    end
 
     reservations[power] = nil
 end
