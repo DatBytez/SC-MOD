@@ -107,25 +107,31 @@ local function update_pod_deployment_guard(shipManager)
     end
 end
 
-local function launch_transport_projectile(podCrew, ownerShip, targetShip)
+local function launch_transport_projectile(payloadCrew, ownerShip, targetShip)
     local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint(POD_PROJECTILE_BLUEPRINT)
     if not blueprint then return nil end
 
-    local sourceShipId = podCrew.iShipId
+    local sourceShipId = payloadCrew.iShipId
     local targetShipId = targetShip.iShipId
-    local sourcePosition = ownerShip:GetRoomCenter(podCrew.iRoomId)
+
+    local sourceSlot = payloadCrew.currentSlot
+    local slotPosition = Hyperspace.ShipGraph
+        .GetShipInfo(sourceShipId)
+        :GetSlotWorldPosition(sourceSlot.slotId, sourceSlot.roomId)
+
+    local sourcePosition = Hyperspace.Pointf(slotPosition.x, slotPosition.y)
     local targetPosition = targetShip:GetRandomRoomCenter()
     local heading = sourceShipId == 0 and 0 or 180
 
     local projectile = Hyperspace.App.world.space:CreateMissile(
-            blueprint,
-            sourcePosition,
-            sourceShipId,
-            sourceShipId,
-            targetPosition,
-            targetShipId,
-            heading
-        )
+        blueprint,
+        sourcePosition,
+        sourceShipId,
+        sourceShipId,
+        targetPosition,
+        targetShipId,
+        heading
+    )
 
     if projectile then
         projectile.damage.crystalShard = true
@@ -186,7 +192,7 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
     if not targetShip then return end
 
     for _, payloadCrew in ipairs(payloadCrews) do
-        local projectile = launch_transport_projectile(podCrew, ownerShip, targetShip)
+        local projectile = launch_transport_projectile(payloadCrew, ownerShip, targetShip)
 
         if projectile then
             local payload = create_transport_payload(payloadCrew)

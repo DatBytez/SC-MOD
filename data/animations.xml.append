@@ -674,9 +674,9 @@
 <anim name="terran_goliath_walk_down">		<sheet>terran_goliath</sheet>	<desc length="10" x="0" y="2" />	<time>1.0</time></anim>
 <anim name="terran_goliath_walk_right">		<sheet>terran_goliath</sheet>	<desc length="10" x="0" y="3" />	<time>1.0</time></anim>
 <anim name="terran_goliath_walk_up">		<sheet>terran_goliath</sheet>	<desc length="10" x="0" y="4" />	<time>1.0</time></anim>
-<anim name="terran_goliath_walk_left">		<sheet>terran_goliath</sheet>	<desc length="10" x="0" y="0" />	<time>1.0</time></anim>
+<anim name="terran_goliath_walk_left">		<sheet>terran_goliath</sheet>	<desc length="10" x="0" y="1" />	<time>1.0</time></anim>
 <anim name="terran_goliath_shoot_down">		<sheet>terran_goliath</sheet>	<desc length="2" x="2" y="0" />	<time>1.0</time></anim>
-<anim name="terran_goliath_shoot_right">		<sheet>terran_goliath</sheet>	<desc length="1" x="0" y="1" />	<time>1.0</time></anim>
+<anim name="terran_goliath_shoot_right">	<sheet>terran_goliath</sheet>	<desc length="1" x="0" y="1" />	<time>1.0</time></anim>
 <anim name="terran_goliath_shoot_up">		<sheet>terran_goliath</sheet>	<desc length="2" x="4" y="0" />	<time>1.0</time></anim>
 <anim name="terran_goliath_shoot_left">		<sheet>terran_goliath</sheet>	<desc length="1" x="0" y="3" />	<time>1.0</time></anim>
 <anim name="terran_goliath_fire_down">		<sheet>terran_goliath</sheet>	<desc length="1" x="0" y="2" />	<time>1.0</time></anim>
