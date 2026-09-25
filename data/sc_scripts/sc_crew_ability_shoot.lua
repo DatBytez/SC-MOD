@@ -1,22 +1,22 @@
 --[[
 DESCRIPTION: Implements reusable targeted projectile crew abilities.
-        - Powers with the <sc-attack projectile="..."/> tag enter targeting mode when activated.
+        - Powers with the <sc-shoot projectile="..."/> tag enter targeting mode when activated.
         - Clicking a room on the enemy ship fires the configured projectile.
         - Right-clicking cancels targeting.
         - Targeting ends immediately after the projectile is fired.
-TAG: <sc-attack projectile="WEAPON_BLUEPRINT"/>
+TAG: <sc-shoot projectile="WEAPON_BLUEPRINT"/>
 DEPENDENCIES: sc_tag.lua
 ]]
 
-mods.sc.crewAttackProjectiles = mods.sc.crewAttackProjectiles or {}
+mods.sc.crewShootProjectiles = mods.sc.crewShootProjectiles or {}
 
-local attackProjectiles = mods.sc.crewAttackProjectiles
+local shootProjectiles = mods.sc.crewShootProjectiles
 
-local attackActive = false
-local attackCrew = nil
-local attackProjectile = nil
+local shootActive = false
+local shootCrew = nil
+local shootProjectile = nil
 
-local function parse_attack_projectile(tagNode)
+local function parse_shoot_projectile(tagNode)
     local projectileAttr = tagNode:first_attribute("projectile")
 
     if not projectileAttr then return nil end
@@ -26,9 +26,9 @@ end
 
 mods.sc.tag.register(
     "power",
-    "sc-attack",
-    attackProjectiles,
-    parse_attack_projectile
+    "sc-shoot",
+    shootProjectiles,
+    parse_shoot_projectile
 )
 
 local function get_room_at_location(ship, location)
@@ -48,15 +48,15 @@ local function convert_mouse_to_enemy_position(mousePosition)
     )
 end
 
-local function clear_attack()
-    attackActive = false
-    attackCrew = nil
-    attackProjectile = nil
+local function clear_shoot()
+    shootActive = false
+    shootCrew = nil
+    shootProjectile = nil
     Hyperspace.Mouse.bHideMouse = false
 end
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
-    local projectileName = attackProjectiles[power.def.name]
+    local projectileName = shootProjectiles[power.def.name]
 
     if not projectileName then
         return Defines.Chain.CONTINUE
@@ -66,24 +66,24 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
         return Defines.Chain.CONTINUE
     end
 
-    attackActive = true
-    attackCrew = power.crew
-    attackProjectile = projectileName
+    shootActive = true
+    shootCrew = power.crew
+    shootProjectile = projectileName
 
     return Defines.Chain.CONTINUE
 end)
 
 script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
-    if not attackActive then return end
+    if not shootActive then return end
 
     if not Hyperspace.App.world.bStartedGame
         or Hyperspace.App.menu.shipBuilder.bOpen
-        or not attackCrew
-        or attackCrew.bDead
-        or attackCrew.bOutOfGame
-        or attackCrew.bMindControlled then
+        or not shootCrew
+        or shootCrew.bDead
+        or shootCrew.bOutOfGame
+        or shootCrew.bMindControlled then
 
-        clear_attack()
+        clear_shoot()
         return
     end
 
@@ -96,7 +96,7 @@ script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
 end)
 
 script.on_render_event(Defines.RenderEvents.MOUSE_CONTROL, function()
-    if not attackActive then return end
+    if not shootActive then return end
 
     local mousePosition = Hyperspace.Mouse.position
     local enemyShip = Hyperspace.ships.enemy
@@ -149,17 +149,17 @@ script.on_render_event(Defines.RenderEvents.MOUSE_CONTROL, function()
 end, function() end)
 
 script.on_internal_event(Defines.InternalEvents.ON_MOUSE_R_BUTTON_DOWN, function()
-    if not attackActive then
+    if not shootActive then
         return Defines.Chain.CONTINUE
     end
 
-    clear_attack()
+    clear_shoot()
 
     return Defines.Chain.CONTINUE
 end)
 
 script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function()
-    if not attackActive then
+    if not shootActive then
         return Defines.Chain.CONTINUE
     end
 
@@ -178,19 +178,19 @@ script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function
         return Defines.Chain.CONTINUE
     end
 
-    local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint(attackProjectile)
+    local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint(shootProjectile)
 
     if not blueprint then
-        clear_attack()
+        clear_shoot()
         return Defines.Chain.CONTINUE
     end
 
-    local sourceShipId = attackCrew.currentShipId
+    local sourceShipId = shootCrew.currentShipId
     local sourceOffset = sourceShipId == 0 and 40 or -40
 
     local sourcePosition = Hyperspace.Pointf(
-        attackCrew.x + sourceOffset,
-        attackCrew.y
+        shootCrew.x + sourceOffset,
+        shootCrew.y
     )
 
     local target = Hyperspace.Pointf(
@@ -204,7 +204,7 @@ script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function
         blueprint,
         sourcePosition,
         sourceShipId,
-        attackCrew.iShipId,
+        shootCrew.iShipId,
         target,
         enemyShip.iShipId,
         heading
@@ -214,7 +214,7 @@ script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function
         projectile.damage.crystalShard = true
     end
 
-    clear_attack()
+    clear_shoot()
 
     return Defines.Chain.CONTINUE
 end)
