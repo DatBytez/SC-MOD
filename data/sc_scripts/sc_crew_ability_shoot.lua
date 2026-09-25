@@ -4,17 +4,22 @@ DESCRIPTION: Implements reusable targeted projectile crew abilities.
         - Clicking a room on the enemy ship fires the configured projectile.
         - Right-clicking cancels targeting.
         - Targeting ends immediately after the projectile is fired.
+        - Resource costs are refunded if targeting is canceled.
 TAG: <sc-shoot projectile="WEAPON_BLUEPRINT"/>
-DEPENDENCIES: sc_tag.lua
+DEPENDENCIES: sc_tag.lua, sc_crew_ability_cost.lua
 ]]
 
 mods.sc.crewShootProjectiles = mods.sc.crewShootProjectiles or {}
 
 local shootProjectiles = mods.sc.crewShootProjectiles
+local cost = mods.sc.cost
 
 local shootActive = false
 local shootCrew = nil
+local shootPower = nil
 local shootProjectile = nil
+
+local POWER_NOT_READY_ACTIVATED = 2
 
 local function parse_shoot_projectile(tagNode)
     local projectileAttr = tagNode:first_attribute("projectile")
@@ -48,12 +53,25 @@ local function convert_mouse_to_enemy_position(mousePosition)
     )
 end
 
-local function clear_shoot()
+local function clear_shoot(refundResource)
+    if refundResource and shootPower then
+        cost.refund(shootPower)
+    end
+
     shootActive = false
     shootCrew = nil
+    shootPower = nil
     shootProjectile = nil
     Hyperspace.Mouse.bHideMouse = false
 end
+
+script.on_internal_event(Defines.InternalEvents.POWER_READY, function(power, powerState)
+    if shootActive and power == shootPower then
+        powerState = POWER_NOT_READY_ACTIVATED
+    end
+
+    return Defines.Chain.CONTINUE, powerState
+end)
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
     local projectileName = shootProjectiles[power.def.name]
@@ -68,7 +86,10 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
 
     shootActive = true
     shootCrew = power.crew
+    shootPower = power
     shootProjectile = projectileName
+
+    power.powerCooldown.first = power.powerCooldown.second
 
     return Defines.Chain.CONTINUE
 end)
@@ -83,9 +104,12 @@ script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
         or shootCrew.bOutOfGame
         or shootCrew.bMindControlled then
 
-        clear_shoot()
+        clear_shoot(true)
         return
     end
+
+    shootPower.powerCooldown.first =
+        shootPower.powerCooldown.second
 
     local crewControl = Hyperspace.App.gui.crewControl
     crewControl.potentialSelectedCrew:clear()
@@ -153,7 +177,7 @@ script.on_internal_event(Defines.InternalEvents.ON_MOUSE_R_BUTTON_DOWN, function
         return Defines.Chain.CONTINUE
     end
 
-    clear_shoot()
+    clear_shoot(true)
 
     return Defines.Chain.CONTINUE
 end)
@@ -181,7 +205,7 @@ script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function
     local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint(shootProjectile)
 
     if not blueprint then
-        clear_shoot()
+        clear_shoot(true)
         return Defines.Chain.CONTINUE
     end
 
@@ -210,11 +234,17 @@ script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function
         heading
     )
 
-    if projectile then
-        projectile.damage.crystalShard = true
+    if not projectile then
+        clear_shoot(true)
+        return Defines.Chain.CONTINUE
     end
 
-    clear_shoot()
+    projectile.damage.crystalShard = true
+
+    cost.commit(shootPower)
+    shootPower.powerCooldown.first = 0
+
+    clear_shoot(false)
 
     return Defines.Chain.CONTINUE
 end)

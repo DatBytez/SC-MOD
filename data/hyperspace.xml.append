@@ -981,6 +981,7 @@
 		<powerEffect load="SC_REPAIR"/>
 		<powerEffect name="SC_LOCKDOWN">
 			<sc-shoot projectile="TERRAN_LOCKDOWN_PROJECTILE"/>
+			<sc-resource cost="missiles" amount="1"/>
 			<cooldown>3</cooldown>
 			<powerSounds>
 				<powerSound>weapon_target</powerSound>
@@ -2032,6 +2033,7 @@
 	<mod-append:script>data/sc_scripts/sc_drone_goliath_render.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv_ai.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_crew_ability_cost.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_shoot.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_restoration.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_flare.lua</mod-append:script>
