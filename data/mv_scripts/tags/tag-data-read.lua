@@ -34,19 +34,25 @@ script.on_load(function()
             blueprintNode = blueprintNode:next_sibling("augBlueprint")
         end
 
-        local raceNode = root:first_node("race")
-        while raceNode do
-            local powerNode = raceNode:first_node("powerEffect")
+        local crewNode = root:first_node("crew")
+        while crewNode do
+            local raceNode = crewNode:first_node("race")
 
-            while powerNode do
-                for _, powerTagParser in ipairs(powerTagParsers) do
-                    powerTagParser(powerNode)
+            while raceNode do
+                local powerNode = raceNode:first_node("powerEffect")
+
+                while powerNode do
+                    for _, powerTagParser in ipairs(powerTagParsers) do
+                        powerTagParser(powerNode)
+                    end
+
+                    powerNode = powerNode:next_sibling("powerEffect")
                 end
 
-                powerNode = powerNode:next_sibling("powerEffect")
+                raceNode = raceNode:next_sibling("race")
             end
 
-            raceNode = raceNode:next_sibling("race")
+            crewNode = crewNode:next_sibling("crew")
         end
 
         doc:clear()
