@@ -836,7 +836,7 @@
 -->
 	<race name="terran_ghost">
 		<animBase>human</animBase>
-		<maxHealth>90</maxHealth>
+		<maxHealth>70</maxHealth>
 		<canPunch>false</canPunch>
 		<deathSounds>
 			<deathSound>terran_ghost_death</deathSound>
@@ -926,6 +926,73 @@
 			<onHotkey>always</onHotkey>
 			<buttonText id="ability_TERRAN_CLOAK_BUTTON"/>
 			<tooltip id="ability_TERRAN_CLOAK_TOOLTIP"/>
+			<cooldownColor r="38" g="130" b="152" />
+			<temporaryEffect>
+				<duration>15</duration>
+				<cooldownColor r="198" g="198" b="198" />
+				<finishSounds>
+					<finishSound>decloak</finishSound>
+				</finishSounds>
+				<animSheet baseVisible="false">terran_ghost_cloaked</animSheet>
+				<animBase>human</animBase>
+				<validTarget>false</validTarget>
+			</temporaryEffect>
+		</powerEffect>
+	</race>
+
+	<race name="terran_ghost_2">
+		<animBase>human</animBase>
+		<animSheet>terran_ghost</animSheet>
+		<maxHealth>90</maxHealth>
+		<canPunch>false</canPunch>
+		<deathSounds>
+			<deathSound>terran_ghost_death</deathSound>
+		</deathSounds>
+		<shootingSounds>
+			<shootingSound>terran_ghost_attack</shootingSound>
+		</shootingSounds>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+		<skills>
+			<piloting req="10" />
+			<engines req="10" />
+			<shields req="36" />
+			<weapons req="43" />
+			<repair req="12" />
+			<combat req="5" />
+		</skills>
+		<!-- POWERED ARMOR -->
+		<suffocationModifier>0.2</suffocationModifier>
+		<fireDamageMultiplier>0.9</fireDamageMultiplier>
+		<moveSpeedMultiplier>1.2</moveSpeedMultiplier>
+		<!-- STATIC ABILITIES -->
+		<isTelepathic>true</isTelepathic>
+		<resistsMindControl>true</resistsMindControl>
+		<repairSpeed>1.5</repairSpeed>
+		<fireRepairMultiplier>1.6</fireRepairMultiplier>
+		<sabotageSpeedMultiplier>1.5</sabotageSpeedMultiplier>
+		<rangedDamageMultiplier>3.5</rangedDamageMultiplier>
+		<shootTimer min="1500" max="1800" />
+		<powerEffect load="SC_REPAIR"/>
+		<powerEffect name="SC_LOCKDOWN">
+			<cooldown>30</cooldown>
+			<powerSounds>
+				<powerSound>cloak</powerSound>
+				<!--<powerSound>lockdown</powerSound>-->
+			</powerSounds>
+			<req type="enemy">
+				<enemyInRoom />
+			</req>
+			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
+			<jumpCooldown>full</jumpCooldown>
+			<onHotkey>always</onHotkey>
+			<buttonText id="ability_TERRAN_LOCKDOWN_BUTTON"/>
+			<tooltip id="ability_TERRAN_LOCKDOWN_TOOLTIP"/>
 			<cooldownColor r="38" g="130" b="152" />
 			<temporaryEffect>
 				<duration>15</duration>

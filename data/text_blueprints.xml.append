@@ -327,6 +327,13 @@ Powered Armor:
 <text name="crew_TERRAN_POWER_CLOAK">Ability: [Cloak]
     Untargetable by enemies except by detectors.</text>
 
+<text name="ability_TERRAN_LOCKDOWN_BUTTON">LOCKDOWN</text>
+<text name="ability_TERRAN_LOCKDOWN_TOOLTIP">[COOLDOWN:30s DURATION:15s]
+	Fires a lockdown missile at designated target.</text>
+<text name="crew_TERRAN_POWER_LOCKDOWN">Ability: [Lockdown]
+    locks down the enemy system for a short period.</text>
+
+
 <text name="ability_TERRAN_SCV_REPAIR_HULL_BUTTON">REPAIR HULL</text>
 <text name="ability_TERRAN_SCV_REPAIR_HULL_TOOLTIP">[READY]
 	Repair a portion of the ships hull at the cost of an SCV.</text>

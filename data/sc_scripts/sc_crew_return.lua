@@ -54,7 +54,10 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
         local crew = enemyShip.vCrewList[i]
 
         if crew.iShipId == 0
+            and crew.currentShipId == enemyShip.iShipId
             and not crew:IsDrone()
+            and not crew.bDead
+            and not crew.bOutOfGame
             and ((not crew.deathTimer) or not crew.deathTimer:Running()) then
 
             returningCrew[#returningCrew + 1] = crew

@@ -2250,6 +2250,28 @@ END OF SUBSYSTEMS
 	</colorList>
 </crewBlueprint>
 
+<crewBlueprint name="terran_ghost_2">
+	<desc id="crew_TERRAN_GHOST_DESC"/>
+	<title id="crew_TERRAN_GHOST_NAME"/>
+	<short id="crew_TERRAN_GHOST_SHORT"/>
+	<cost>75</cost>
+	<rarity>5</rarity>
+	<powerList>
+		<power id="crew_TERRAN_POWER_CLOAK"/>
+	</powerList>
+	<colorList>
+		<layer>
+			<color r="244" g="4" b="4" a="1.0" />
+			<color r="12" g="72" b="204" a="1.0" />
+			<color r="44" g="180" b="148" a="1.0" />
+			<color r="136" g="64" b="156" a="1.0" />
+			<color r="248" g="140" b="20" a="1.0" />
+			<color r="112" g="48" b="20" a="1.0" />
+			<color r="204" g="224" b="208" a="1.0" />
+			<color r="252" g="252" b="56" a="1.0" />
+		</layer>
+	</colorList>
+</crewBlueprint>
 <!--
 *********************************************************************************************************
      TERRAN_CIVILIAN
@@ -2593,7 +2615,7 @@ TERRAN_GOLIATH-->
            TERRAN_DEFENSE
 **********************************************************************************************************************
 -->
-<weaponBlueprint name="TERRAN_DEFENSE_1">
+<weaponBlueprint name="TERRAN_DEFENSE_PROJECTILE">
 	<type>LASER</type>
 	<title id="NOYB"/>
 	<short id="NOYB"/>
@@ -2605,24 +2627,24 @@ TERRAN_GOLIATH-->
 </weaponBlueprint>						
 <droneBlueprint name="TERRAN_DEFENSE_1">						
 	<type>DEFENSE</type>					
-	<target>LASERS</target>					
+	<target>ALL</target>					
 	<tip>tip_defense</tip>					
 	<title id="drone_TERRAN_DEFENSE_1_NAME"/>
 	<short id="drone_TERRAN_DEFENSE_1_SHORT"/>
 	<desc id="drone_TERRAN_DEFENSE_1_DESC"/>
 	<power>2</power>					
 	<cooldown>2000</cooldown><!-- was 1500/2000-->					
-	<dodge>100</dodge>					
+	<dodge>10</dodge>					
 	<speed>20</speed>					
 	<cost>60</cost>
 	<sc-active-shield/>				
 	<droneImage>terran_defense_1</droneImage>
 	<sc-droneEngine value="matrix_engine_1"/>			
-	<weaponBlueprint>TERRAN_DEFENSE_1</weaponBlueprint>					
+	<weaponBlueprint>TERRAN_DEFENSE_PROJECTILE</weaponBlueprint>					
 	<iconImage>defense</iconImage>					 
 	<rarity>3</rarity>					
 </droneBlueprint>						
-						
+<!--
 <weaponBlueprint name="TERRAN_DEFENSE_2">		
 	<type>LASER</type>
 	<title id="NOYB"/>
@@ -2632,27 +2654,28 @@ TERRAN_GOLIATH-->
 	<launchSounds>
 		<sound>shieldDroneActivate</sound>
 	</launchSounds>				
-</weaponBlueprint>					
+</weaponBlueprint>
+-->		
 <droneBlueprint name="TERRAN_DEFENSE_2">						
 	<type>DEFENSE</type>					
-	<target>LASERS</target>					
+	<target>ALL</target>					
 	<tip>tip_defense</tip>					
 	<title id="drone_TERRAN_DEFENSE_2_NAME"/>
 	<short id="drone_TERRAN_DEFENSE_2_SHORT"/>
 	<desc id="drone_TERRAN_DEFENSE_2_DESC"/>
 	<power>3</power>					
 	<cooldown>1500</cooldown><!-- was 1500 -->
-	<dodge>100</dodge>					
+	<dodge>10</dodge>					
 	<speed>20</speed>					
 	<cost>80</cost>
 	<sc-active-shield/>				
 	<droneImage>terran_defense_2</droneImage>
 	<sc-droneEngine value="matrix_engine_2"/>				
-	<weaponBlueprint>TERRAN_DEFENSE_2</weaponBlueprint>					
+	<weaponBlueprint>TERRAN_DEFENSE_PROJECTILE</weaponBlueprint>					
 	<iconImage>defense</iconImage>					
 	<rarity>4</rarity>					
 </droneBlueprint>			
-
+<!--
 <weaponBlueprint name="TERRAN_DEFENSE_3">
 	<type>LASER</type>		
 	<title id="NOYB"/>
@@ -2662,23 +2685,24 @@ TERRAN_GOLIATH-->
 	<launchSounds>
 		<sound>shieldDroneActivate</sound>
 	</launchSounds>				
-</weaponBlueprint>						
+</weaponBlueprint>		
+-->				
 <droneBlueprint name="TERRAN_DEFENSE_3">						
 	<type>DEFENSE</type>					
-	<target>LASERS</target>					
+	<target>ALL</target>					
 	<tip>tip_defense</tip>					
 	<title id="drone_TERRAN_DEFENSE_3_NAME"/>					
 	<short id="drone_TERRAN_DEFENSE_3_SHORT"/>					
 	<desc id="drone_TERRAN_DEFENSE_3_DESC"/>					
 	<power>4</power>					
 	<cooldown>1000</cooldown><!-- was 1000 -->					
-	<dodge>100</dodge>					
+	<dodge>10</dodge>					
 	<speed>20</speed>					
 	<cost>140</cost>
 	<sc-active-shield/>			
 	<droneImage>terran_defense_3</droneImage>
 	<sc-droneEngine value="matrix_engine_3"/>			
-	<weaponBlueprint>TERRAN_DEFENSE_3</weaponBlueprint>					
+	<weaponBlueprint>TERRAN_DEFENSE_PROJECTILE</weaponBlueprint>					
 	<iconImage>defense</iconImage>					
 	<rarity>5</rarity>					
 </droneBlueprint>	
@@ -2715,28 +2739,25 @@ TERRAN_GOLIATH-->
     <explosion>terran_comsat_hit</explosion>
 </weaponBlueprint>
 
-<droneBlueprint name="TERRAN_COMSAT">
-    <tip>tip_combat</tip>
+<droneBlueprint name="TERRAN_COMSAT">						
+	<type>DEFENSE</type>					
+	<target>LASERS</target> <!-- NONE? -->
+	<tip>tip_defense</tip>					
     <title id="drone_TERRAN_COMSAT_NAME"/>
     <short id="drone_TERRAN_COMSAT_SHORT"/>
     <desc id="drone_TERRAN_COMSAT_DESC"/>
-
-    <power>2</power>
-    <dodge>0</dodge>
-    <cost>50</cost>
-    <rarity>3</rarity>
+	<power>2</power>					
+	<cooldown>2000</cooldown><!-- was 1500/2000-->					
+	<dodge>10</dodge>					
+	<speed>5</speed>					
+	<cost>50</cost>			
+	<droneImage>terran_comsat</droneImage>
     <sc-comsat value="6"/>
-	<sc-droneEngine value="drone_engine"/>
-
-	<type>DEFENSE</type>
-	<level>1</level>
-	<cooldown>15000</cooldown>
-	<speed>5</speed>
-	
-    <droneImage>terran_comsat</droneImage>
-    <weaponBlueprint>TERRAN_COMSAT_PROJECTILE</weaponBlueprint>
-    <iconImage>combat</iconImage>
-</droneBlueprint>
+	<sc-droneEngine value="drone_engine"/>		
+	<weaponBlueprint>TERRAN_COMSAT_PROJECTILE</weaponBlueprint>					
+	<iconImage>defense</iconImage>					 
+	<rarity>3</rarity>					
+</droneBlueprint>	
 <!-- 
 **********************************************************************************************************************
            TERRAN_POD
@@ -2761,7 +2782,7 @@ TERRAN_GOLIATH-->
     <title id="drone_TERRAN_POD_NAME"/>
     <short id="drone_TERRAN_POD_SHORT"/>
     <desc id="drone_TERRAN_POD_DESC"/>
-    <power>1</power>
+    <power>0</power>
     <cost>30</cost>
     <rarity>2</rarity>
     <iconImage>custom_crew_drone</iconImage>
@@ -2772,6 +2793,7 @@ TERRAN_GOLIATH-->
 	<title id="NOYB"/>
 	<short id="NOYB"/>
 	<desc id="NOYB"/>
+	<droneAccuracyMod>-100</droneAccuracyMod>
     <damage>0</damage>
     <missiles>0</missiles>
     <shots>1</shots>
@@ -2783,6 +2805,35 @@ TERRAN_GOLIATH-->
     <image>terran_pod_projectile</image>
     <explosion>explosion_random</explosion>
 </weaponBlueprint>
+
+<!-- 
+**********************************************************************************************************************
+           TERRAN_LOCKDOWN
+**********************************************************************************************************************
+-->
+<weaponBlueprint name="TERRAN_LOCKDOWN_PROJECTILE">
+	<type>LASER</type>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>shieldDroneActivate</sound>
+	</launchSounds>
+
+	<damage>0</damage>
+    <sysDamage>0</sysDamage>
+    <persDamage>0</persDamage>
+    <ion>10</ion>
+    <sp>10</sp>
+    <shots>1</shots>
+
+    <speed>20</speed>
+    <accuracyMod>100</accuracyMod>
+
+
+    <image>laser_light2</image>
+</weaponBlueprint>	
 
 <!-- 
 *********************************************************************************************************

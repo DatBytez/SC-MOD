@@ -255,6 +255,24 @@ script.on_internal_event(
     end
 )
 
+--script.on_internal_event(
+--    Defines.InternalEvents.DRONE_COLLISION,
+--   function(drone, projectile, damage, response)
+--        if not projectile
+--            or projectile.extend.name ~= POD_PROJECTILE_BLUEPRINT then
+--            return Defines.Chain.CONTINUE
+--        end
+
+--        if drone:GetOwnerId() ~= 1 - projectile.ownerId then
+--            return Defines.Chain.CONTINUE
+--        end
+
+--        response.collision_type = 0
+
+--        return Defines.Chain.PREEMPT
+--    end
+--)
+
 script.on_internal_event(Defines.InternalEvents.JUMP_LEAVE, function()
     pod.activeTransports = {}
 end)
