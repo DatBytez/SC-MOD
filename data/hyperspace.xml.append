@@ -982,28 +982,13 @@
 		<powerEffect name="SC_LOCKDOWN">
 			<cooldown>30</cooldown>
 			<powerSounds>
-				<powerSound>cloak</powerSound>
-				<!--<powerSound>lockdown</powerSound>-->
+				<powerSound>weapon_gemini_target</powerSound>
 			</powerSounds>
-			<req type="enemy">
-				<enemyInRoom />
-			</req>
-			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
 			<jumpCooldown>full</jumpCooldown>
 			<onHotkey>always</onHotkey>
 			<buttonText id="ability_TERRAN_LOCKDOWN_BUTTON"/>
 			<tooltip id="ability_TERRAN_LOCKDOWN_TOOLTIP"/>
 			<cooldownColor r="38" g="130" b="152" />
-			<temporaryEffect>
-				<duration>15</duration>
-				<cooldownColor r="198" g="198" b="198" />
-				<finishSounds>
-					<finishSound>decloak</finishSound>
-				</finishSounds>
-				<animSheet baseVisible="false">terran_ghost_cloaked</animSheet>
-				<animBase>human</animBase>
-				<validTarget>false</validTarget>
-			</temporaryEffect>
 		</powerEffect>
 	</race>
 	<!--
@@ -2046,6 +2031,7 @@
 	<mod-append:script>data/sc_scripts/sc_drone_goliath_render.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv_ai.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_crew_ability_lockdown.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_restoration.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_flare.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_copy.lua</mod-append:script>

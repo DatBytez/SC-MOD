@@ -34,6 +34,7 @@
 	<ability_repair3 volume="4">crew/terran_scv_repair3.wav</ability_repair3>
 	<ability_repair4 volume="4">crew/terran_scv_repair4.wav</ability_repair4>
 	<ability_repair5 volume="4">crew/terran_scv_repair5.wav</ability_repair5>
+	<ability_lockdown volume="4">crew/ability_lockdown.wav</ability_lockdown>
 	<!-- Drone Sounds -->
 	<terran_matrix_activate volume="6">drones/terran_matrix_activate.wav</terran_matrix_activate>
 	<terran_defense_activate volume="6">drones/terran_matrix_activate.wav</terran_defense_activate>

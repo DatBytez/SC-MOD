@@ -2257,7 +2257,7 @@ END OF SUBSYSTEMS
 	<cost>75</cost>
 	<rarity>5</rarity>
 	<powerList>
-		<power id="crew_TERRAN_POWER_CLOAK"/>
+		<power id="crew_TERRAN_POWER_LOCKDOWN"/>
 	</powerList>
 	<colorList>
 		<layer>
@@ -2812,7 +2812,7 @@ TERRAN_GOLIATH-->
 **********************************************************************************************************************
 -->
 <weaponBlueprint name="TERRAN_LOCKDOWN_PROJECTILE">
-	<type>LASER</type>
+	<type>MISSILE</type>
 	<title id="NOYB"/>
 	<short id="NOYB"/>
 	<desc id="NOYB"/>
