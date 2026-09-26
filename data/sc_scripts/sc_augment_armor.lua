@@ -22,6 +22,7 @@ mods.sc.tag.register("augment", "sc-armor", armorAugments)
 
 local BRACERS_ID = Hyperspace.ShipSystem.NameToSystemId("lily_system_bracers")
 local BLOCK_CHANCE_PER_HP = 0.40
+local MAX_HOOK_PRIORITY = 2147483647
 
 local overflowSystemDamageInProgress = {
     [0] = false,
@@ -55,7 +56,7 @@ local function damage_is_self_friendly_fire(ship, damage)
 end
 
 local function show_negated_message(ship, location)
-    if not location then return end
+    if not ship or not location then return end
 
     create_damage_message(
         ship.iShipId,
@@ -74,7 +75,7 @@ end
 
 local function handle_hull_damage(ship, location, damage)
     if not ship or not damage then return end
-    if damage.iDamage <= 0 then return end
+    if not damage.iDamage or damage.iDamage <= 0 then return end
     if damage_is_self_friendly_fire(ship, damage) then return end
 
     local bracers = get_working_bracers(ship)
@@ -104,7 +105,13 @@ end
 
 script.on_internal_event(
     Defines.InternalEvents.DAMAGE_AREA,
-    handle_hull_damage
+    function(ship, projectile, location, damage, forceHit, shipFriendlyFire)
+        handle_hull_damage(
+            ship,
+            location,
+            damage
+        )
+    end
 )
 
 script.on_internal_event(
@@ -210,5 +217,5 @@ script.on_internal_event(
 
         return Defines.Chain.PREEMPT, 0
     end,
-    2147483647
+    MAX_HOOK_PRIORITY
 )
