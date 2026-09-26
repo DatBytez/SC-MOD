@@ -248,7 +248,7 @@
                 <shipTarget>ORIGINAL_SHIP</shipTarget>
                 <crewTarget>ALLIES</crewTarget>
                 <droneTarget>ALL</droneTarget>
-                <amount>2</amount>
+                <amount>1.5</amount>
                 <priority>0</priority>
                 <systemRoomTarget>ALL</systemRoomTarget>
                 <systemList>

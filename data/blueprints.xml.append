@@ -436,7 +436,7 @@ END OF SUBSYSTEMS
 	<cost>70</cost>
 	<rarity>3</rarity>
 	<stackable>false</stackable>
-	<sc-upgrade system="lily_system_bracers" value="1"/>
+	<sc-upgrade system="lily_system_bracers" value="2"/>
 	<sc-armor/>
 	<sc-dodge value="-1"/>
 </augBlueprint>
@@ -447,7 +447,7 @@ END OF SUBSYSTEMS
 	<cost>80</cost>
 	<rarity>4</rarity>
 	<stackable>false</stackable>
-	<sc-upgrade system="lily_system_bracers" value="2"/>
+	<sc-upgrade system="lily_system_bracers" value="3"/>
 	<sc-armor/>
 	<sc-dodge value="-2"/>
 </augBlueprint>
@@ -645,10 +645,10 @@ END OF SUBSYSTEMS
 	<sc-chain stat="accuracyMod" value="-5"/>
 	<sc-chain stat="radius" value="8"/>
 	<power>2</power>	
-	<cooldown>10</cooldown>
+	<cooldown>12.5</cooldown>
 	<boost>
 		<type>cooldown</type>
-		<amount>1.0</amount>
+		<amount>1.5</amount>
 		<count>3</count>
 	</boost>
 
@@ -745,15 +745,15 @@ END OF SUBSYSTEMS
 	<shots>1</shots>
 	<power>1</power>
 	<chargeLevels>2</chargeLevels>
-	<cooldown>5.0</cooldown>
-	<sc-charge stat="cooldown" value="-0.25"/>
-	<accuracyMod>-30</accuracyMod>
-    <sc-charge stat="accuracyMod" value="30"/>
+	<cooldown>5.5</cooldown>
+	<sc-charge stat="cooldown" value="-0.45"/>
+	<accuracyMod>-25</accuracyMod>
+    <sc-charge stat="accuracyMod" value="25"/>
 	<radius>45</radius>
 	<sc-charge stat="radius" value="-20"/>
     <sc-charge stat="breachChance" value="1"/>
 	<simultaneousFire>true</simultaneousFire>
-	<cost>50</cost>
+	<cost>55</cost>
 	<rarity>1</rarity>
 	<launchSounds>
 		<sound>weapon_burst_fire</sound>
@@ -788,10 +788,10 @@ END OF SUBSYSTEMS
 	<shots>1</shots>
 	<chargeLevels>3</chargeLevels>	
 	<power>2</power>
-	<cooldown>3.5</cooldown>
+	<cooldown>4.0</cooldown>
 	<sc-charge stat="cooldown" value="-0.25"/>	
-	<accuracyMod>-40</accuracyMod>
-    <sc-charge stat="accuracyMod" value="20"/>	
+	<accuracyMod>-30</accuracyMod>
+    <sc-charge stat="accuracyMod" value="25"/>	
 	<radius>65</radius>
 	<sc-charge stat="radius" value="-30"/>	
     <sc-charge stat="breachChance" value="1"/>
@@ -830,11 +830,11 @@ END OF SUBSYSTEMS
 	<damage>1</damage>
 	<shots>1</shots>
 	<chargeLevels>4</chargeLevels>
-	<power>4</power>	
-	<cooldown>2.5</cooldown>	
-	<sc-charge stat="cooldown" value="-0.25"/>	
-	<accuracyMod>-45</accuracyMod>
-    <sc-charge stat="accuracyMod" value="15"/>
+	<power>3</power>	
+	<cooldown>3.0</cooldown>	
+	<sc-charge stat="cooldown" value="-0.12"/>	
+	<accuracyMod>-30</accuracyMod>
+    <sc-charge stat="accuracyMod" value="20"/>
 	<radius>65</radius>
 	<sc-charge stat="radius" value="-20"/>
     <sc-charge stat="breachChance" value="1"/>
@@ -875,22 +875,21 @@ END OF SUBSYSTEMS
 	<power>2</power>
 	<cooldown>12.0</cooldown>
 
-	<accuracyMod>-40</accuracyMod>
+	<accuracyMod>-30</accuracyMod>
 	<radius>60</radius>
-
 	<sc-chainstep stat="fireThreshold" value="6"/>
-    <sc-chainstep stat="chainStep" value="3.0"/>
-    <sc-chainstep stat="accuracyMod" value="45"/>
-    <sc-chainstep stat="radius" value="-30"/>
+    <sc-chainstep stat="chainStep" value="1.0"/>
+    <sc-chainstep stat="accuracyMod" value="15"/>
+    <sc-chainstep stat="radius" value="-10"/>
     <sc-chainstep stat="breachChance" value="2"/>
 	<boost>
 		<type>cooldown</type>
-		<amount>1.0</amount>
-		<count>3</count>
+		<amount>0</amount>
+		<count>6</count>
 	</boost>
 	<simultaneousFire>true</simultaneousFire>
-	<cost>70</cost>
-	<rarity>2</rarity>
+	<cost>60</cost>
+	<rarity>1</rarity>
 	<launchSounds>
 		<sound>weapon_burst_fire</sound>
 	</launchSounds>
@@ -922,23 +921,23 @@ END OF SUBSYSTEMS
 	<tooltip id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_tooltip"/>
 	<damage>2</damage>
 	<shots>2</shots>
-	<power>3</power>	
-	<cooldown>13.5</cooldown>
-	<accuracyMod>-40</accuracyMod>
+	<power>2</power>	
+	<cooldown>16.</cooldown>
+	<accuracyMod>-30</accuracyMod>
 	<radius>65</radius>
-	<sc-chainstep stat="fireThreshold" value="8.5"/>
-    <sc-chainstep stat="chainStep" value="3.0"/>
-    <sc-chainstep stat="accuracyMod" value="45"/>
-    <sc-chainstep stat="radius" value="-20"/>
+	<sc-chainstep stat="fireThreshold" value="10"/>
+    <sc-chainstep stat="chainStep" value="1.0"/>
+    <sc-chainstep stat="accuracyMod" value="15"/>
+    <sc-chainstep stat="radius" value="-10"/>
     <sc-chainstep stat="breachChance" value="2"/>
 	<boost>
 		<type>cooldown</type>
-		<amount>1.0</amount>
-		<count>3</count>
+		<amount>0</amount>
+		<count>6</count>
 	</boost>
 	<simultaneousFire>true</simultaneousFire>
-	<cost>95</cost>
-	<rarity>4</rarity>
+	<cost>85</cost>
+	<rarity>3</rarity>
 	<launchSounds>
 		<sound>weapon_burst_fire</sound>
 	</launchSounds>
@@ -976,7 +975,7 @@ END OF SUBSYSTEMS
 	<cost>40</cost>
 	<rarity>0</rarity>
 	<launchSounds>
-		<sound>weapon_gemini_target</sound>
+		<sound>weapon_target</sound>
 	</launchSounds>
 	<weaponArt>terran_missile_1</weaponArt> 
 </weaponBlueprint>
@@ -2400,7 +2399,7 @@ TERRAN_GOLIATH-->
 
 <!-- *****************	TERRAN_GOLIATH_T	****************** -->
 <droneBlueprint name="TERRAN_GOLIATH_T">
-	<target>ALL</target> 
+	<target>MISSILES</target> 
 	<!--<target>LASERS</target>-->
 	<type>DEFENSE</type>
 	<tip>tip_defense</tip>

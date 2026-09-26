@@ -72,7 +72,7 @@ end
 script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projectile, weapon)
     if not chargers[weapon.blueprint.name] then return end
 
-    local boost = get_stored_charge_level(weapon)
+    local boost = get_stored_charge_level(weapon) - 1
     local pdata = userdata_table(projectile, "mods.sc.projectileScaling")
 
     pdata.chargeLevel = boost
