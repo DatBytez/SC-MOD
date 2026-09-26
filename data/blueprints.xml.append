@@ -371,17 +371,18 @@ END OF AUXILIARY SYSTEMS
     <title id="system_lily_system_bracers_NAME"/>
     <desc id="system_lily_system_bracers_DESC"/>
     <startPower>1</startPower>
-    <maxPower>8</maxPower>
+    <maxPower>10</maxPower>
     <rarity>2</rarity>
     <upgradeCost>
         <level>30</level>
-        <level>50</level>
-        <level>30</level>
         <level>40</level>
-		<level>50</level>
-        <level>70</level>
-        <level>100</level>
+        <level>50</level>
+        <level>65</level>
+		<level>85</level>
+        <level>95</level>
         <level>110</level>
+        <level>100</level>
+        <level>100</level>
     </upgradeCost>
     <cost>110</cost>
 </systemBlueprint>
@@ -2910,7 +2911,7 @@ TERRAN_GOLIATH-->
 	<maxPower amount="8" />
 	<crewCount amount="1" class="terran_civilian" />
 	<crewCount amount="1" class="terran_marine" />
-	<crewCount amount="1" class="terran_medic" />
+	<crewCount amount="1" class="terran_medic_1" />
 	<crewCount amount="1" class="terran_marine" />
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
 	<!--<mv-mapImage>map_icon_mup_mvfed_a</mv-mapImage>-->
