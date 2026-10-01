@@ -19,7 +19,7 @@ local function get_stored_charge_level(weapon)
     local wdata = userdata_table(weapon, "mods.sc.weaponStuff")
 
     if not wdata.chargeBurstActive then
-        wdata.chargeBurstLevel = weapon.queuedProjectiles:size()
+        wdata.chargeBurstLevel = weapon.queuedProjectiles:size() + 1
         wdata.chargeBurstActive = true
     end
 

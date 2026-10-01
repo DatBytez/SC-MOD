@@ -2391,7 +2391,7 @@ TERRAN_GOLIATH-->
 	<title id="drone_TERRAN_GOLIATH_NAME"/>
 	<short id="drone_TERRAN_GOLIATH_SHORT"/>
 	<desc id="drone_TERRAN_GOLIATH_DESC"/>
-	<power>1</power>
+	<power>3</power>
 	<cost>80</cost>
 	<rarity>4</rarity>
 	<iconImage>battle</iconImage>
