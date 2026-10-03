@@ -582,11 +582,7 @@
 				<droneTarget>DRONES</droneTarget>
 				<affectsSelf>false</affectsSelf>
 				<priority>0</priority>
-				<whiteList>
-					<terran_scv/>
-					<terran_goliath/>
-					<terran_spider_mine/>
-				</whiteList>
+				<whiteList load="SC_LIST_CREW_DRONES"/>
 			</statBoost>
 		</passiveStatBoosts>
 		
@@ -647,7 +643,7 @@
 			<tooltip id="ability_TERRAN_OPTICAL_FLARE_TOOLTIP"/>
 			<cooldownColor r="240" g="210" b="50" />
 			<effectAnim>explosion_big1_heal</effectAnim>
-			<stun>10</stun>
+			<sc-flare value="10"/>
 		</powerEffect>
 		<powerEffect load="SC_REPAIR"/>
 	</race>
@@ -2022,6 +2018,7 @@
 
 	<mod-append:script>data/sc_scripts/sc_targeting_core.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_detector.lua</mod-append:script>
+    <mod-append:script>data/scripts_lily/lily_system_bracers.lua</mod-append:script>	
     <mod-append:script>data/sc_scripts/sc_augment_armor.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>

@@ -21,7 +21,7 @@ local sources = {}
 local cloakProxies = {}
 local invisibleCrew = {}
 
-for crew in vter(Hyperspace.Blueprints:GetBlueprintList("LIST_CREW_INVISIBLE")) do
+for crew in vter(Hyperspace.Blueprints:GetBlueprintList("SC_LIST_CREW_INVISIBLE")) do
     invisibleCrew[crew] = true
 end
 
