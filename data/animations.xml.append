@@ -691,7 +691,9 @@
 <anim name="terran_goliath_type_left">		<sheet>terran_goliath</sheet>	<desc length="1" x="0" y="3" />	<time>0.75</time></anim>
 <anim name="terran_goliath_type_up">		<sheet>terran_goliath</sheet>	<desc length="1" x="0" y="0" />	<time>0.75</time></anim>
 <anim name="terran_goliath_type_down">		<sheet>terran_goliath</sheet>	<desc length="1" x="0" y="2" />	<time>0.75</time></anim>
-<anim name="terran_goliath_portrait">		<sheet>terran_goliath</sheet>	<desc length="1" x="0" y="4" />	<time>1</time></anim>
+<anim name="terran_goliath_portrait">		<sheet>terran_goliath</sheet>	<desc length="1" x="0" y="0" />	<time>1</time></anim>
+<anim name="terran_goliath_crewLaser">		<sheet>terran_goliath</sheet>	<desc length="1" x="0" y="0"/>	<time>0.5</time>
+</anim>
 
 <!--
 *********************************************************************************************************
