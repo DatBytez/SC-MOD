@@ -1,6 +1,6 @@
 --[[
 DESCRIPTION: Render handling for the Terran Goliath crew-drone system.
-        - Forces idle companion-turret facing to follow the connected Goliath's movement direction.
+        - Forces idle companion-turret facing to follow the connected Goliath's native animation direction.
         - Supports Goliaths on both the player and the one other active ship.
         - Leaves native defense-drone targeting untouched while hostile projectiles are incoming.
         - Draws the visible Goliath turret from terran_goliath_turret.png with pixel-aligned positioning and centered matrix rotation.

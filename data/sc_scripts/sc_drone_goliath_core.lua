@@ -1,6 +1,6 @@
 --[[
 DESCRIPTION: Shared core helpers and state for the Terran Goliath crew-drone system.
-        - Tracks Goliath movement and idle facing.
+        - Tracks Goliath facing from the crew's native animation direction.
         - Positions companion turrets with their connected Goliath.
         - Synchronizes companion-turret power with the Goliath legs.
 DEPENDENCIES: Multiverse vter, userdata_table
@@ -22,7 +22,6 @@ goliath.TURRET_STATE_KEY = "mods.sc.goliathTurretCompanion"
 
 local FOLLOW_OFFSET_X = 3
 local FOLLOW_OFFSET_Y = 0
-local MOVEMENT_EPSILON = 0.2
 
 goliath.activePairsByShip =
     goliath.activePairsByShip or {
@@ -72,19 +71,24 @@ function goliath.is_live_goliath_turret(drone, shipManager)
         and not drone.bDead
 end
 
-local function direction_angle(directionX, directionY)
-    -- RIGHT = 0
-    -- DOWN  = 90
-    -- LEFT  = 180
-    -- UP    = 270
-    if directionX > 0 then
-        return 0
-    elseif directionY > 0 then
+local function crew_direction_angle(direction)
+    -- CrewAnimation.direction:
+    -- UP    = 0
+    -- LEFT  = 1
+    -- DOWN  = 2
+    -- RIGHT = 3
+    --
+    -- The native defense-drone aiming axis is opposite the crew-facing
+    -- conversion used by the manually rendered turret. Apply the 180-degree
+    -- correction here so native projectile targeting can keep its own angle.
+    if direction == 0 then
         return 90
-    elseif directionX < 0 then
-        return 180
-    else
+    elseif direction == 1 then
+        return 0
+    elseif direction == 2 then
         return 270
+    else
+        return 180
     end
 end
 
@@ -94,43 +98,10 @@ function goliath.get_facing_state(crew)
         goliath.CREW_STATE_KEY
     )
 
-    local position = crew:GetLocation()
-
-    if not state.initialized then
-        state.initialized = true
-
-        state.lastX = position.x
-        state.lastY = position.y
-
-        state.directionX = 0
-        state.directionY = 1
-        state.idleAngle = direction_angle(0, 1)
-
-        return state
-    end
-
-    local movementX = position.x - state.lastX
-    local movementY = position.y - state.lastY
-
-    state.lastX = position.x
-    state.lastY = position.y
-
-    if math.abs(movementX) > MOVEMENT_EPSILON
-        or math.abs(movementY) > MOVEMENT_EPSILON then
-
-        if math.abs(movementX) >= math.abs(movementY) then
-            state.directionX = movementX > 0 and 1 or -1
-            state.directionY = 0
-        else
-            state.directionX = 0
-            state.directionY = movementY > 0 and 1 or -1
-        end
-
-        state.idleAngle = direction_angle(
-            state.directionX,
-            state.directionY
+    state.idleAngle =
+        crew_direction_angle(
+            crew.crewAnim.direction
         )
-    end
 
     return state
 end
