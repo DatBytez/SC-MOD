@@ -1990,6 +1990,7 @@
     <mod-append:script>data/aa_scripts/weapons/smash.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_tag.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_helpers.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_system_descriptions.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_scaling.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_radius_core.lua</mod-append:script>
 
@@ -2045,6 +2046,8 @@
     <mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
 
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
-    <!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>-->
+    <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
+	
+    <mod-append:script>data/sc_scripts/test_scaling.lua</mod-append:script>
 </mod:findLike>
 </FTL>

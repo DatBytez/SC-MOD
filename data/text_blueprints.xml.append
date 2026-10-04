@@ -397,3 +397,6 @@ PENALTY: Evasion -2% per engine level</text>
 UPGRADE: Sensors +1 (+1 max level)
 
 DETECTOR: Projectiles +2.5% accuracy per sensor level. Missiles gain double that.</text>
+
+<text name="tooltip_sc_sensors_level_5">Improves Terran detector targeting bonuses.</text>
+<text name="tooltip_sc_sensors_level_6">Improves Terran detector targeting bonuses.</text>
