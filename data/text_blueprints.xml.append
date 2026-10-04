@@ -168,8 +168,8 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 <!-- EMP MISSILES -->
 <text name="weapon_EMP_MISSILE_title">Terran EMP Missile</text>
 <text name="weapon_EMP_MISSILE_short">EMP</text>
-<text name="weapon_EMP_MISSILE_desc">[need emp description].</text>
-<text name="weapon_EMP_MISSILE_tooltip">Fires 1 missile; does 2 ion damage; pierces all shields.</text>
+<text name="weapon_EMP_MISSILE_desc">Electromagnetic pulse missile that breaches shields and ionizes systems.</text>
+<text name="weapon_EMP_MISSILE_tooltip">Fires 1 missile; does 2 ion damage to target and 1 to adjacent rooms; pierces all shields.</text>
 
 <!-- TERRAN IRRADIATE -->
 <text name="weapon_TERRAN_BEAM_IRRADIATE_title">Terran Irradiate</text>
@@ -185,7 +185,7 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 
 <text name="weapon_TERRAN_MISSILE_HALO_title">Terran Halo Missile</text>
 <text name="weapon_TERRAN_MISSILE_HALO_short">Halo</text>
-<text name="weapon_TERRAN_MISSILE_HALO_desc">Fires salvos of High Altitude Long Operating cluster rockets</text>
+<text name="weapon_TERRAN_MISSILE_HALO_desc">Fires salvos of High Altitude Long Operating cluster rockets. Missile costs and accuracy are reduced with each charge.</text>
 <text name="weapon_TERRAN_MISSILE_HALO_tooltip">Fires 8 missiles; accuracy and missile cost are reduced for each charge level.</text>
 
 <text name="weapon_TERRAN_MISSILE_LONGBOLT_title">Terran Longbolt Missile</text>
@@ -221,7 +221,7 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 
 <text name="drone_TERRAN_GOLIATH_NAME">Terran Goliath</text>
 <text name="drone_TERRAN_GOLIATH_SHORT">Goliath</text>
-<text name="drone_TERRAN_GOLIATH_DESC">The goliath combat walker is a terran one-man all-terrain combat walker primarily used to support marine forces.</text>
+<text name="drone_TERRAN_GOLIATH_DESC">The goliath combat walker is a terran one-man all-terrain combat walker primarily used as support to defend against enemy missile and drone attacks.</text>
 
 <!-- TERRAN SPIDER MINE -->
 <text name="drone_TERRAN_SPIDER_1_NAME">Terran Spider Mine Qt.1</text>

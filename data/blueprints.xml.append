@@ -2399,8 +2399,7 @@ TERRAN_GOLIATH-->
 
 <!-- *****************	TERRAN_GOLIATH_T	****************** -->
 <droneBlueprint name="TERRAN_GOLIATH_T">
-	<target>MISSILES</target> 
-	<!--<target>LASERS</target>-->
+	<target>SOLID</target>
 	<type>DEFENSE</type>
 	<tip>tip_defense</tip>
 	<title id="NOYB"/>
