@@ -2028,7 +2028,10 @@
 	<mod-append:script>data/sc_scripts/sc_drone_goliath_pair.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_goliath.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_goliath_render.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
+
+	<mod-append:script>data/sc_scripts/sc_crew_projectile.lua</mod-append:script>
+    
+	<mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv_ai.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_cost.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_shoot.lua</mod-append:script>
