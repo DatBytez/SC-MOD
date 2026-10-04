@@ -4,19 +4,21 @@
 
 <text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_class">Battlecruiser</text>
 <text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_name">Battlecruiser</text>
-<text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_desc">The Terran Battlecruiser stands as the pinnacle of Dominion naval engineering, an orbital fortress bristling with weapons and armored to The Terran Battlecruiser is the pinnacle of Dominion naval power, an orbital fortress built for long campaigns, combining overwhelming firepower with near-impenetrable defenses.</text>
+<text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_desc">The Battlecruiser is a type of Terran capital ship employed in the Koprulu sector.</text>
+<!--<text name="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_desc">The Terran Battlecruiser stands as the pinnacle of Dominion naval engineering, an orbital fortress bristling with weapons and armored to The Terran Battlecruiser is the pinnacle of Dominion naval power, an orbital fortress built for long campaigns, combining overwhelming firepower with near-impenetrable defenses.</text>-->
 
 <text name="text_PLAYER_SHIP_TERRAN_WRAITH_class">Scout</text>
 <text name="text_PLAYER_SHIP_TERRAN_WRAITH_name">Wraith</text>
-<text name="text_PLAYER_SHIP_TERRAN_WRAITH_desc">The Wraith is a Terran space superiority fighter known for it's maneuverability and cloaking technology.</text>
+<text name="text_PLAYER_SHIP_TERRAN_WRAITH_desc">The Wraith is a Terran space superiority fighter used extensively in the Koprulu sector.</text>
+<!--<text name="text_PLAYER_SHIP_TERRAN_WRAITH_desc">The Wraith is a Terran space superiority fighter known for it's maneuverability and cloaking technology.</text>-->
 
 <text name="text_PLAYER_SHIP_TERRAN_VESSEL_class">Science</text>
 <text name="text_PLAYER_SHIP_TERRAN_VESSEL_name">Vessel</text>
-<text name="text_PLAYER_SHIP_TERRAN_VESSEL_desc">[NEED SCIENCE VESSEL DESCRIPTION]</text>
+<text name="text_PLAYER_SHIP_TERRAN_VESSEL_desc">The Science Vessel is a type of Terran starship used for general exploration and scientific research purposes.</text>
 
 <text name="text_PLAYER_SHIP_TERRAN_VALKYRIE_class">Assault</text>
 <text name="text_PLAYER_SHIP_TERRAN_VALKYRIE_name">Valkyrie</text>
-<text name="text_PLAYER_SHIP_TERRAN_VALKYRIE_desc">[[NEED VALKYRIE DESCRIPTION HERE]]</text>
+<text name="text_PLAYER_SHIP_TERRAN_VALKYRIE_desc">The Valkyrie missile frigate is a United Earth Directorate designed anti-fighter spacecraft.</text>
 
 <!-- ENEMY SHIP CLASSES -->
 <text name="text_TERRAN_SCOUT_class">Scout</text>
@@ -161,7 +163,7 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 <text name="weapon_ARTILLERY_YAMATO_LASER_title">Terran Yamato Cannon</text>
 <text name="weapon_ARTILLERY_YAMATO_LASER_short">Yamato Cannon</text>
 <text name="weapon_ARTILLERY_YAMATO_LASER_desc">A powerful weapon that focuses a nuclear explosion into a beam using magnetic fields.</text>
-<text name="weapon_ARTILLERY_YAMATO_LASER_tooltip">Terran Yamato Cannon</text>
+<text name="weapon_ARTILLERY_YAMATO_LASER_tooltip">Deals hull damage to target room and system damage to all adjacent rooms. Charges slower when not fully powered.</text>
 
 <!-- EMP MISSILES -->
 <text name="weapon_EMP_MISSILE_title">Terran EMP Missile</text>
@@ -172,19 +174,19 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 <!-- TERRAN IRRADIATE -->
 <text name="weapon_TERRAN_BEAM_IRRADIATE_title">Terran Irradiate</text>
 <text name="weapon_TERRAN_BEAM_IRRADIATE_short">Irradiate</text>
-<text name="weapon_TERRAN_BEAM_IRRADIATE_desc">[[Need Irradiate Description]]</text>
-<text name="weapon_TERRAN_BEAM_IRRADIATE_tooltip">Applies an erosion effect for every tile hit. Also does 5 hp/s damage for 25 seconds to any crew hit.</text>
+<text name="weapon_TERRAN_BEAM_IRRADIATE_desc">A high-energy stream of radioactive particles developed from technologies in nuclear waste disposal.</text>
+<text name="weapon_TERRAN_BEAM_IRRADIATE_tooltip">Applies an erosion effect on targeted tile. Also does 5 hp/s damage for 25 seconds to any crew hit.</text>
 
 <!-- TERRAN IRRADIATE LITE -->
 <text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_title">Terran Irradiate Lite</text>
 <text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_short">Irradiate Lite</text>
-<text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_desc">[[Need Irradiate Lite Description]]</text>
+<text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_desc">A modified version of the Irradiate weapon with reduced power and range.</text>
 <text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_tooltip">Applies an erosion effect for every tile hit. Also does 5 hp/s damage for 25 seconds to any crew hit.</text>
 
 <text name="weapon_TERRAN_MISSILE_HALO_title">Terran Halo Missile</text>
 <text name="weapon_TERRAN_MISSILE_HALO_short">Halo</text>
-<text name="weapon_TERRAN_MISSILE_HALO_desc">[[TERRAN_MISSILE_HALO Needs Description]]</text>
-<text name="weapon_TERRAN_MISSILE_HALO_tooltip">[[TERRAN_MISSILE_HALO Needs Tooltip]]</text>
+<text name="weapon_TERRAN_MISSILE_HALO_desc">Fires salvos of High Altitude Long Operating cluster rockets</text>
+<text name="weapon_TERRAN_MISSILE_HALO_tooltip">Fires 8 missiles; accuracy and missile cost are reduced for each charge level.</text>
 
 <text name="weapon_TERRAN_MISSILE_LONGBOLT_title">Terran Longbolt Missile</text>
 <text name="weapon_TERRAN_MISSILE_LONGBOLT_short">Longbolt</text>
@@ -198,20 +200,20 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 
 <text name="drone_TERRAN_DEFENSE_1_NAME">Terran Defense Matrix Mk I</text>
 <text name="drone_TERRAN_DEFENSE_1_SHORT">Matrix.I</text>
-<text name="drone_TERRAN_DEFENSE_1_DESC">[[Terran Defense 1 DESC]]</text>
+<text name="drone_TERRAN_DEFENSE_1_DESC">The defensive matrix is a temporary deflection field designed to function as a form of terran energy shield technology.</text>
 
 <text name="drone_TERRAN_DEFENSE_2_NAME">Terran Defense Matrix Mk II</text>
 <text name="drone_TERRAN_DEFENSE_2_SHORT">Matrix.II</text>
-<text name="drone_TERRAN_DEFENSE_2_DESC">[[Terran Defense 2 DESC]]</text>
+<text name="drone_TERRAN_DEFENSE_2_DESC">The defensive matrix is a temporary deflection field designed to function as a form of terran energy shield technology.</text>
 
 <text name="drone_TERRAN_DEFENSE_3_NAME">Terran Defense Matrix Mk III</text>
 <text name="drone_TERRAN_DEFENSE_3_SHORT">Matrix.III</text>
-<text name="drone_TERRAN_DEFENSE_3_DESC">[[Terran Defense 3 DESC]]</text>
+<text name="drone_TERRAN_DEFENSE_3_DESC">The defensive matrix is a temporary deflection field designed to function as a form of terran energy shield technology.</text>
 
 <!-- TERRAN SCV -->
 <text name="drone_TERRAN_SCV_NAME">Terran SCV</text>
 <text name="drone_TERRAN_SCV_SHORT">SCV</text>
-<text name="drone_TERRAN_SCV_DESC">-= TODO:NEED SCV DESCRIPTION HERE =-</text>
+<text name="drone_TERRAN_SCV_DESC">The T-280 space construction vehicle (or SCV) is a type of terran general-purpose engineering vehicle.</text>
 
 <text name="drone_TERRAN_SCV_HULL_NAME">Terran SCV Hull</text>
 <text name="drone_TERRAN_SCV_HULL_SHORT">SCV Hull</text>
@@ -219,7 +221,7 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 
 <text name="drone_TERRAN_GOLIATH_NAME">Terran Goliath</text>
 <text name="drone_TERRAN_GOLIATH_SHORT">Goliath</text>
-<text name="drone_TERRAN_GOLIATH_DESC">[[TERRAN_GOLIATH Needs Description]]</text>
+<text name="drone_TERRAN_GOLIATH_DESC">The goliath combat walker is a terran one-man all-terrain combat walker primarily used to support marine forces.</text>
 
 <!-- TERRAN SPIDER MINE -->
 <text name="drone_TERRAN_SPIDER_1_NAME">Terran Spider Mine Qt.1</text>
@@ -293,11 +295,11 @@ Powered Armor:
 
 <text name="crew_TERRAN_SPIDER_SET_NAME">Terran Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_SET_SHORT">Spider Mine</text>
-<text name="crew_TERRAN_SPIDER_SET_DESC">[[Need terran_spider_set Description]][CREW]</text>
+<text name="crew_TERRAN_SPIDER_SET_DESC">The 52-QDMM spider mine is a type of terran self-propelled, area-denial ordnance.[CREW]</text>
 
 <text name="crew_TERRAN_SPIDER_MINE_NAME">Terran Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_MINE_SHORT">Spider Mine</text>
-<text name="crew_TERRAN_SPIDER_MINE_DESC">[[Need crew_TERRAN_SPIDER_MINE_DESC]]</text>
+<text name="crew_TERRAN_SPIDER_MINE_DESC">The 52-QDMM spider mine is a type of terran self-propelled, area-denial ordnance.</text>
 
 <!-- TERRAN CREW ABILITIES -->
 <text name="ability_TERRAN_STIMPACK_BUTTON">STIMPACK</text>
@@ -390,13 +392,18 @@ UPGRADE: System Bracers (+2 max level)
 
 PENALTY: Evasion -2% per engine level</text>
 
-<text name="aug_SC_DETECTOR_NAME">Advanced Sensor Suite</text>
+<text name="aug_SC_DETECTOR_NAME">Detector</text>
 <!-- Protoss could be called Advanced Sensor Array, Zerg could be something biological -->
 <text name="aug_SC_DETECTOR_DESC">Advanced sensors allow this ship to track enemy targets more effectively. For each active level of sensors, weapons will charge while enemies are cloaked at a cumulative 25% speed.
     
-UPGRADE: Sensors +1 (+1 max level)
+UPGRADE: Sensors (+2 max level)
 
 DETECTOR: Projectiles +2.5% accuracy per sensor level. Missiles gain double that.</text>
 
-<text name="tooltip_sc_sensors_level_5">Improves Terran detector targeting bonuses.</text>
-<text name="tooltip_sc_sensors_level_6">Improves Terran detector targeting bonuses.</text>
+<text name="tooltip_sc_sensors_level_5">Improves detector targeting bonuses.</text>
+<text name="tooltip_sc_sensors_level_6">Improves detector targeting bonuses.</text>
+
+<text name="tooltip_sc_yamato_artillery_level_1">Damage x2 — 25 sec cooldown</text>
+<text name="tooltip_sc_yamato_artillery_level_2">Damage x3 — 25 sec cooldown</text>
+<text name="tooltip_sc_yamato_artillery_level_3">Damage x4 — 22.5 sec cooldown</text>
+<text name="tooltip_sc_yamato_artillery_level_4">Damage x5 — 17.5 sec cooldown</text>

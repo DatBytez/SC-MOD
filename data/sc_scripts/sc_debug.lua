@@ -3,42 +3,52 @@ DESCRIPTION: Fixed on-screen ranged crew combat diagnostic.
     Diagnostic only; gameplay logic does not depend on this file.
 
 PURPOSE:
-    CrewAnimation.fDamageDone is consumed during CrewMember::OnLoop before
-    CREW_LOOP is exposed to Lua, so this diagnostic instead observes:
+    Detect crew health loss by sampling the global CrewMemberFactory once per
+    completed game tick, then test which attacker -> target relationship is
+    actually exposed to Lua.
 
-    1. Actual CrewMember health decreases.
-    2. The attacking crew's crewTarget.
-    3. Whether crewTarget directly compares equal to the damaged CrewMember.
-    4. Whether crewTarget:GetPosition() matches the damaged CrewMember position.
-    5. Live ranged-combat animation state and target coordinates.
+    Established data used:
+        Hyperspace.CrewFactory.crewMembers
+        crew.extend.selfId
+        crew.health.first
+        crew.crewTarget
+        crew.crewAnim.status
+        crew.crewAnim.target
 
-    Direct equality and position matching are intentionally kept as separate
-    tests. Neither is used as a fallback for the other.
+    Experimental target tests:
+        TEST 1: crew.crewTarget == victim
+        TEST 2: crew.crewTarget:GetPosition() == victim:GetPosition()
+
+    TEST 2 is protected with pcall only because CrewTarget method exposure to
+    Lua has not yet been established. It is diagnostic code, not a fallback.
 ]]
 
 local vter = mods.multiverse.vter
 
 mods.sc = mods.sc or {}
 mods.sc.crewHitDebug = {
+    tickCount = 0,
+    crewCount = 0,
     damageEvents = 0,
+    rangedAttackers = 0,
     lastDamage = nil,
-    lastRangedAttack = nil,
+    lastRanged = nil,
     recentDamage = {}
 }
 
 local debug = mods.sc.crewHitDebug
+local healthById = {}
 
 local PANEL_X = 20
 local PANEL_Y = 235
-local PANEL_W = 800
-local PANEL_H = 410
+local PANEL_W = 820
+local PANEL_H = 430
 
 local TEXT_X = PANEL_X + 10
 local TEXT_Y = PANEL_Y + 8
 local LINE_HEIGHT = 20
 local FONT = 10
 
-local STATE_KEY = "mods.sc.crewHitDebugState"
 local MAX_RECENT_DAMAGE = 4
 
 local function draw_line(line, text)
@@ -62,11 +72,15 @@ local function point_text(point)
     )
 end
 
-local function get_crew_target_position(crewTarget)
-    if not crewTarget then
-        return nil, false
-    end
+local function get_crew_id(crew)
+    return crew.extend.selfId
+end
 
+local function get_crew_name(crew)
+    return crew:GetName()
+end
+
+local function get_crew_target_position(crewTarget)
     local success, position = pcall(function()
         return crewTarget:GetPosition()
     end)
@@ -79,183 +93,88 @@ local function get_crew_target_position(crewTarget)
 end
 
 local function get_crew_target_is_crew(crewTarget)
-    if not crewTarget then
-        return "N/A"
-    end
-
     local success, result = pcall(function()
         return crewTarget:IsCrew()
     end)
 
     if success then
-        return tostring(result)
+        return tostring(result), true
     end
 
-    return "ERROR"
+    return "ERROR", false
 end
 
-local function get_target_matches(attacker)
-    local result = {
-        directMatch = "NONE",
-        positionMatch = "NONE",
-        targetPosition = nil,
-        targetPositionCall = false
-    }
-
-    if not attacker.crewTarget then
-        return result
-    end
-
-    local shipManager =
-        Hyperspace.Global.GetInstance():GetShipManager(attacker.currentShipId)
-
-    if not shipManager then
-        return result
-    end
-
-    result.targetPosition, result.targetPositionCall =
-        get_crew_target_position(attacker.crewTarget)
-
+local function find_attackers_for_victim(victim)
+    local directNames = {}
     local positionNames = {}
-
-    for candidate in vter(shipManager.vCrewList) do
-        -- TEST 1:
-        -- Does CrewTarget compare directly to the CrewMember it represents?
-        if attacker.crewTarget == candidate then
-            result.directMatch = candidate:GetName()
-        end
-
-        -- TEST 2:
-        -- Does CrewTarget:GetPosition() resolve to the CrewMember position?
-        if result.targetPosition then
-            local candidatePosition = candidate:GetPosition()
-
-            if candidatePosition.x == result.targetPosition.x
-                and candidatePosition.y == result.targetPosition.y then
-
-                table.insert(
-                    positionNames,
-                    candidate:GetName()
-                )
-            end
-        end
-    end
-
-    if #positionNames > 0 then
-        result.positionMatch = table.concat(positionNames, ", ")
-    end
-
-    return result
-end
-
-local function update_last_ranged_attack(crew)
-    local crewAnimation = crew.crewAnim
-
-    if not crew.bFighting
-        or not crew.crewTarget
-        or crewAnimation.status ~= 7 then
-        return
-    end
-
-    local targetMatches = get_target_matches(crew)
-
-    debug.lastRangedAttack = {
-        attacker = crew:GetName(),
-        race = crewAnimation.race,
-        ownerShip = crew.iShipId,
-        currentShip = crew.currentShipId,
-        status = crewAnimation.status,
-        fDamageDone = crewAnimation.fDamageDone,
-        animationTarget = crewAnimation.target,
-        targetIsCrew = get_crew_target_is_crew(crew.crewTarget),
-        targetPosition = targetMatches.targetPosition,
-        targetPositionCall = targetMatches.targetPositionCall,
-        directMatch = targetMatches.directMatch,
-        positionMatch = targetMatches.positionMatch
-    }
-end
-
-local function find_attackers_targeting(victim)
-    local result = {
-        directAttackers = {},
-        positionAttackers = {}
-    }
-
-    local shipManager =
-        Hyperspace.Global.GetInstance():GetShipManager(victim.currentShipId)
-
-    if not shipManager then
-        return result
-    end
+    local positionMethodAvailable = false
 
     local victimPosition = victim:GetPosition()
 
-    for attacker in vter(shipManager.vCrewList) do
+    for attacker in vter(Hyperspace.CrewFactory.crewMembers) do
         if attacker ~= victim
-            and attacker.bFighting
-            and attacker.crewTarget then
+            and attacker.crewTarget
+            and attacker.crewAnim
+            and attacker.bFighting then
 
             -- TEST 1:
-            -- Direct CrewTarget -> CrewMember equality.
+            -- Does CrewTarget directly compare equal to the CrewMember?
             if attacker.crewTarget == victim then
                 table.insert(
-                    result.directAttackers,
-                    attacker:GetName()
+                    directNames,
+                    get_crew_name(attacker)
                 )
             end
 
             -- TEST 2:
-            -- CrewTarget position -> damaged CrewMember position.
-            local targetPosition =
+            -- Does CrewTarget:GetPosition() identify the damaged CrewMember?
+            local targetPosition, available =
                 get_crew_target_position(attacker.crewTarget)
 
-            if targetPosition
-                and targetPosition.x == victimPosition.x
-                and targetPosition.y == victimPosition.y then
+            if available then
+                positionMethodAvailable = true
 
-                table.insert(
-                    result.positionAttackers,
-                    attacker:GetName()
-                )
+                if targetPosition.x == victimPosition.x
+                    and targetPosition.y == victimPosition.y then
+
+                    table.insert(
+                        positionNames,
+                        get_crew_name(attacker)
+                    )
+                end
             end
         end
     end
 
-    return result
+    return {
+        direct = #directNames > 0
+            and table.concat(directNames, ", ")
+            or "NONE",
+
+        position = #positionNames > 0
+            and table.concat(positionNames, ", ")
+            or "NONE",
+
+        positionMethodAvailable = positionMethodAvailable
+    }
 end
 
-local function record_damage(crew, oldHealth, newHealth)
-    local attackers = find_attackers_targeting(crew)
-
-    local directAttackers = "NONE"
-    if #attackers.directAttackers > 0 then
-        directAttackers = table.concat(
-            attackers.directAttackers,
-            ", "
-        )
-    end
-
-    local positionAttackers = "NONE"
-    if #attackers.positionAttackers > 0 then
-        positionAttackers = table.concat(
-            attackers.positionAttackers,
-            ", "
-        )
-    end
+local function record_damage(victim, oldHealth, newHealth)
+    local attackers = find_attackers_for_victim(victim)
 
     local event = {
-        victim = crew:GetName(),
-        race = crew.crewAnim and crew.crewAnim.race or "N/A",
-        ownerShip = crew.iShipId,
-        currentShip = crew.currentShipId,
-        position = crew:GetPosition(),
+        victim = get_crew_name(victim),
+        victimId = get_crew_id(victim),
+        race = victim.crewAnim and victim.crewAnim.race or "N/A",
+        ownerShip = victim.iShipId,
+        currentShip = victim.currentShipId,
+        position = victim:GetPosition(),
         oldHealth = oldHealth,
         newHealth = newHealth,
         damage = oldHealth - newHealth,
-        lastDamageTimer = crew.lastDamageTimer,
-        lastHealthChange = crew.lastHealthChange,
-        directAttackers = directAttackers,
-        positionAttackers = positionAttackers
+        directAttackers = attackers.direct,
+        positionAttackers = attackers.position,
+        positionMethodAvailable = attackers.positionMethodAvailable
     }
 
     debug.damageEvents = debug.damageEvents + 1
@@ -265,10 +184,11 @@ local function record_damage(crew, oldHealth, newHealth)
         debug.recentDamage,
         1,
         string.format(
-            "%s   %.2f -> %.2f   Damage: %.2f",
+            "%s [%d]   %.2f -> %.2f   Damage %.2f",
             event.victim,
-            oldHealth,
-            newHealth,
+            event.victimId,
+            event.oldHealth,
+            event.newHealth,
             event.damage
         )
     )
@@ -278,30 +198,84 @@ local function record_damage(crew, oldHealth, newHealth)
     end
 end
 
-script.on_internal_event(
-    Defines.InternalEvents.CREW_LOOP,
-    function(crew)
-        local state = userdata_table(crew, STATE_KEY)
-        local currentHealth = crew.health.first
+local function sample_ranged_attackers()
+    local rangedCount = 0
+    local lastRanged = nil
 
-        if state.lastHealth == nil then
-            state.lastHealth = currentHealth
-        elseif currentHealth < state.lastHealth then
-            record_damage(
-                crew,
-                state.lastHealth,
-                currentHealth
-            )
+    for crew in vter(Hyperspace.CrewFactory.crewMembers) do
+        if crew.crewAnim
+            and crew.bFighting
+            and crew.crewTarget
+            and crew.crewAnim.status == 7 then
 
-            state.lastHealth = currentHealth
-        elseif currentHealth ~= state.lastHealth then
-            state.lastHealth = currentHealth
-        end
+            rangedCount = rangedCount + 1
 
-        if crew.crewAnim then
-            update_last_ranged_attack(crew)
+            local targetPosition, positionAvailable =
+                get_crew_target_position(crew.crewTarget)
+
+            local targetIsCrew, isCrewAvailable =
+                get_crew_target_is_crew(crew.crewTarget)
+
+            lastRanged = {
+                attacker = get_crew_name(crew),
+                attackerId = get_crew_id(crew),
+                race = crew.crewAnim.race,
+                ownerShip = crew.iShipId,
+                currentShip = crew.currentShipId,
+                animationTarget = crew.crewAnim.target,
+                targetPosition = targetPosition,
+                positionAvailable = positionAvailable,
+                targetIsCrew = targetIsCrew,
+                isCrewAvailable = isCrewAvailable
+            }
         end
     end
+
+    debug.rangedAttackers = rangedCount
+
+    if lastRanged then
+        debug.lastRanged = lastRanged
+    end
+end
+
+local function sample_crew()
+    if not Hyperspace.App
+        or not Hyperspace.App.world
+        or not Hyperspace.App.world.bStartedGame then
+        return
+    end
+
+    debug.tickCount = debug.tickCount + 1
+
+    local crewCount = 0
+
+    for crew in vter(Hyperspace.CrewFactory.crewMembers) do
+        crewCount = crewCount + 1
+
+        local crewId = get_crew_id(crew)
+        local currentHealth = crew.health.first
+        local previousHealth = healthById[crewId]
+
+        if previousHealth ~= nil
+            and currentHealth < previousHealth then
+
+            record_damage(
+                crew,
+                previousHealth,
+                currentHealth
+            )
+        end
+
+        healthById[crewId] = currentHealth
+    end
+
+    debug.crewCount = crewCount
+    sample_ranged_attackers()
+end
+
+script.on_internal_event(
+    Defines.InternalEvents.ON_TICK,
+    sample_crew
 )
 
 local function draw_panel()
@@ -327,26 +301,40 @@ local function draw_panel()
     )
 
     draw_line(0, "CREW HIT DEBUG")
+
     draw_line(
         1,
-        "Crew health decreases detected: "
-        .. tostring(debug.damageEvents)
+        string.format(
+            "ON_TICK samples: %d   CrewFactory crew: %d   Damage events: %d",
+            debug.tickCount,
+            debug.crewCount,
+            debug.damageEvents
+        )
+    )
+
+    draw_line(
+        2,
+        "Ranged attackers currently observed (status 7): "
+        .. tostring(debug.rangedAttackers)
     )
 
     local damage = debug.lastDamage
 
+    draw_line(4, "LAST CREW HEALTH DECREASE")
+
     if damage then
         draw_line(
-            2,
+            5,
             string.format(
-                "Last damaged: %s   Race: %s",
+                "Victim: %s   ID: %d   Race: %s",
                 damage.victim,
+                damage.victimId,
                 tostring(damage.race)
             )
         )
 
         draw_line(
-            3,
+            6,
             string.format(
                 "Health: %.2f -> %.2f   Damage: %.2f",
                 damage.oldHealth,
@@ -356,7 +344,7 @@ local function draw_panel()
         )
 
         draw_line(
-            4,
+            7,
             string.format(
                 "Owner Ship: %s   Current Ship: %s   Position: %s",
                 tostring(damage.ownerShip),
@@ -366,93 +354,77 @@ local function draw_panel()
         )
 
         draw_line(
-            5,
-            string.format(
-                "lastDamageTimer: %.3f   lastHealthChange: %.3f",
-                damage.lastDamageTimer,
-                damage.lastHealthChange
-            )
-        )
-
-        draw_line(
-            6,
-            "TEST 1 - Direct attacker(s): "
+            8,
+            "TEST 1 - crewTarget == victim: "
             .. damage.directAttackers
         )
 
         draw_line(
-            7,
-            "TEST 2 - Position attacker(s): "
-            .. damage.positionAttackers
+            9,
+            string.format(
+                "TEST 2 - CrewTarget position: %s   Method available: %s",
+                damage.positionAttackers,
+                tostring(damage.positionMethodAvailable)
+            )
         )
     else
         draw_line(
-            3,
-            "Waiting for a CrewMember health decrease..."
+            5,
+            "Waiting for CrewFactory health sampling to observe damage..."
         )
     end
 
-    local attack = debug.lastRangedAttack
+    draw_line(11, "LAST OBSERVED STATUS-7 RANGED ATTACKER")
 
-    draw_line(9, "LAST OBSERVED RANGED ATTACK STATE")
+    local ranged = debug.lastRanged
 
-    if attack then
-        draw_line(
-            10,
-            string.format(
-                "Attacker: %s   Race: %s   Status: %s",
-                attack.attacker,
-                tostring(attack.race),
-                tostring(attack.status)
-            )
-        )
-
-        draw_line(
-            11,
-            string.format(
-                "Owner Ship: %s   Current Ship: %s   fDamageDone at CREW_LOOP: %.3f",
-                tostring(attack.ownerShip),
-                tostring(attack.currentShip),
-                attack.fDamageDone
-            )
-        )
-
+    if ranged then
         draw_line(
             12,
-            "crewAnim.target: "
-            .. point_text(attack.animationTarget)
+            string.format(
+                "Attacker: %s   ID: %d   Race: %s",
+                ranged.attacker,
+                ranged.attackerId,
+                tostring(ranged.race)
+            )
         )
 
         draw_line(
             13,
             string.format(
-                "crewTarget:IsCrew(): %s   GetPosition call: %s",
-                attack.targetIsCrew,
-                tostring(attack.targetPositionCall)
+                "Owner Ship: %s   Current Ship: %s",
+                tostring(ranged.ownerShip),
+                tostring(ranged.currentShip)
             )
         )
 
         draw_line(
             14,
-            "crewTarget position: "
-            .. point_text(attack.targetPosition)
+            "crewAnim.target: "
+            .. point_text(ranged.animationTarget)
         )
 
         draw_line(
             15,
-            "TEST 1 - Direct CrewMember match: "
-            .. attack.directMatch
+            string.format(
+                "crewTarget:GetPosition(): %s   Available: %s",
+                point_text(ranged.targetPosition),
+                tostring(ranged.positionAvailable)
+            )
         )
 
         draw_line(
             16,
-            "TEST 2 - Position CrewMember match: "
-            .. attack.positionMatch
+            string.format(
+                "crewTarget:IsCrew(): %s   Available: %s",
+                ranged.targetIsCrew,
+                tostring(ranged.isCrewAvailable)
+            )
         )
     else
         draw_line(
-            10,
-            "Waiting to observe crewAnim.status == 7 while fighting..."
+            12,
+            "No status-7 ranged attacker has been observed yet."
         )
     end
 

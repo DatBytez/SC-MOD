@@ -1,26 +1,57 @@
 --[[
-TEST: Goliath turret CachedImage scaling
+TEST: Goliath turret CachedImage replacement + primitive rebuild
 
 Purpose:
-    Force every TERRAN_GOLIATH_T native defense-drone image to scale 0
-    so we can verify whether CachedImage:SetScale(0, 0) reliably hides
-    the turret.
+    Test whether a native TERRAN_GOLIATH_T space-drone image can be hidden by:
+        1. Replacing the CachedImage texture with effects/invisible.png
+        2. Rebuilding the CachedImage's render primitive
 
-Note:
-    TERRAN_GOLIATH_T also has <sc-droneEngine value="drone_engine"/>.
-    That separate overlay is drawn by sc_drone_engine.lua and may remain
-    visible even if this test successfully hides the native turret.
+Reason:
+    CachedImage stores both image/texture data and a CachedPrimitive.
+    SetImage() alone did not visibly change the Goliath turret, so this test
+    explicitly rebuilds the primitive after the image change.
+
+This does not alter deployment, power, targeting, position, or collision.
 ]]
 
 local vter = mods.multiverse.vter
 
 local GOLIATH_TURRET = "TERRAN_GOLIATH_T"
+local INVISIBLE_IMAGE = "effects/invisible.png"
 
-local function set_scale_zero(image)
-    if image then
-        pcall(function()
-            image:SetScale(0, 0)
-        end)
+local applied = {}
+
+local function replace_image(image)
+    image:SetImage(INVISIBLE_IMAGE)
+    image:CreatePrimitive()
+end
+
+local function try_hide_goliath_turret(drone)
+    if applied[drone.selfId] then
+        return
+    end
+
+    local success, errorMessage = pcall(function()
+        replace_image(drone.drone_image)
+        replace_image(drone.gun_image_off)
+        replace_image(drone.gun_image_charging)
+        replace_image(drone.gun_image_on)
+        replace_image(drone.engine_image)
+    end)
+
+    if success then
+        applied[drone.selfId] = true
+        print(
+            "[GOLIATH IMAGE TEST] Applied invisible image and rebuilt primitives to turret "
+            .. tostring(drone.selfId)
+        )
+    else
+        print(
+            "[GOLIATH IMAGE TEST] Waiting/retrying turret "
+            .. tostring(drone.selfId)
+            .. ": "
+            .. tostring(errorMessage)
+        )
     end
 end
 
@@ -35,12 +66,7 @@ local function hide_goliath_turrets()
         if drone
             and drone.blueprint
             and drone.blueprint.name == GOLIATH_TURRET then
-
-            set_scale_zero(drone.drone_image)
-            set_scale_zero(drone.gun_image_off)
-            set_scale_zero(drone.gun_image_charging)
-            set_scale_zero(drone.gun_image_on)
-            set_scale_zero(drone.engine_image)
+            try_hide_goliath_turret(drone)
         end
     end
 end
@@ -48,12 +74,4 @@ end
 script.on_internal_event(
     Defines.InternalEvents.ON_TICK,
     hide_goliath_turrets
-)
-
-script.on_render_event(
-    Defines.RenderEvents.SHIP,
-    function()
-        hide_goliath_turrets()
-    end,
-    function() end
 )
