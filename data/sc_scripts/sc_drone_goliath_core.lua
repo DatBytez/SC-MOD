@@ -3,6 +3,7 @@ DESCRIPTION: Shared core helpers and state for the Terran Goliath crew-drone sys
         - Tracks Goliath facing from the crew's native animation direction.
         - Positions companion turrets with their connected Goliath.
         - Synchronizes companion-turret power with the Goliath legs.
+        - Detects hostile drones and projectiles present in a ship's space.
 DEPENDENCIES: Multiverse vter, userdata_table
 ]]
 
@@ -122,7 +123,7 @@ function goliath.set_cached_image_rotation(
     end)
 end
 
-function goliath.has_incoming_hostile_projectile(
+function goliath.has_hostile_defense_target(
     shipManager
 )
     local spaceManager = Hyperspace.App.world.space
@@ -131,11 +132,22 @@ function goliath.has_incoming_hostile_projectile(
         return false
     end
 
+    local shipId = shipManager.iShipId
+
+    for drone in vter(spaceManager.drones) do
+        if drone
+            and drone.currentSpace == shipId
+            and drone:GetOwnerId() ~= shipId
+            and drone.deployed
+            and not drone.bDead then
+            return true
+        end
+    end
+
     for projectile in vter(spaceManager.projectiles) do
         if projectile
-            and projectile.ownerId ~= shipManager.iShipId
-            and projectile.destinationSpace == shipManager.iShipId
-            and projectile.currentSpace == shipManager.iShipId
+            and projectile.ownerId ~= shipId
+            and projectile.currentSpace == shipId
             and projectile.lifespan > 0 then
             return true
         end

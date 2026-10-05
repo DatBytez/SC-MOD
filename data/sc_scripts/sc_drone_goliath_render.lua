@@ -2,7 +2,7 @@
 DESCRIPTION: Render handling for the Terran Goliath crew-drone system.
         - Forces idle companion-turret facing to follow the connected Goliath's native animation direction.
         - Supports Goliaths on both the player and the one other active ship.
-        - Leaves native defense-drone targeting untouched while hostile projectiles are incoming.
+        - Leaves native defense-drone targeting untouched while a hostile drone or projectile is present in allied space.
         - Draws the visible Goliath turret from terran_goliath_turret.png with pixel-aligned positioning and centered matrix rotation.
         - Draws the turret during the connected crew's health-render pass so its visibility follows the Goliath legs.
         - Repositions the Goliath's native health bar to clear the attached turret.
@@ -131,7 +131,7 @@ local function force_native_idle_facing(
 
     local state = goliath.get_facing_state(crew)
 
-    if goliath.has_incoming_hostile_projectile(
+    if goliath.has_hostile_defense_target(
         shipManager
     ) then
         return

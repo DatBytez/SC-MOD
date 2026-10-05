@@ -2,7 +2,7 @@
 DESCRIPTION: Runtime event controller for the Terran Goliath crew-drone system.
         - Synchronizes Goliath/turret pairs for both active ships.
         - Keeps companion turrets positioned and powered with their Goliath legs.
-        - Allows native defense-drone firing only while hostile projectiles are incoming.
+        - Allows native defense-drone targeting and firing while a hostile drone or projectile is present in allied space.
         - Prevents projectile damage to paired turrets and transfers 45 damage to the connected legs instead.
         - Removes companion turrets when either active ship is destroyed.
 DEPENDENCIES: sc_drone_goliath_core.lua, sc_drone_goliath_pair.lua
@@ -29,8 +29,8 @@ local function update_ship_goliaths(
         shipManager
     )
 
-    local incomingProjectile =
-        goliath.has_incoming_hostile_projectile(
+    local hostileDefenseTarget =
+        goliath.has_hostile_defense_target(
             shipManager
         )
 
@@ -53,7 +53,7 @@ local function update_ship_goliaths(
         goliath.get_facing_state(pair.crew)
 
         if not turretPowered
-            or not incomingProjectile then
+            or not hostileDefenseTarget then
             pair.drone.bFire = false
         end
     end

@@ -3063,8 +3063,6 @@ TERRAN_GOLIATH-->
 	</weaponList>
 	<droneList drones="10" count="3">
 		<drone name="TERRAN_DEFENSE_1" />
-		<drone name="TERRAN_DEFENSE_2" />
-		<drone name="TERRAN_DEFENSE_3" />
 	</droneList>
 	<health amount="30" />
 	<maxPower amount="10" />
@@ -3141,9 +3139,8 @@ TERRAN_GOLIATH-->
 	</systemList>
 	<weaponSlots>4</weaponSlots>
 	<droneSlots>2</droneSlots>
-	<weaponList missiles="20" count="4">
+	<weaponList missiles="25" count="4">
 		<weapon name="TERRAN_MISSILE_HALO" />
-		<weapon name="MISSILES_BURST" />
 	</weaponList>
 	<droneList drones="5" count="2">
 		<drone name="TERRAN_GOLIATH" />
