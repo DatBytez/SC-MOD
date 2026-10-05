@@ -9,7 +9,6 @@ DEPENDENCIES: sc_tag.lua, sc_projectile_scaling.lua, Multiverse userdata_table, 
 
 local userdata_table = mods.multiverse.userdata_table
 local vter = mods.multiverse.vter
-local string_replace = mods.multiverse.string_replace
 local scaling = mods.sc.scaling
 
 mods.sc.chainstep = mods.sc.chainstep or {}
@@ -120,60 +119,48 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
     end
 end)
 
-local function get_unique_player_weapon(weaponName)
-    if not Hyperspace.ships.player.weaponSystem then return nil end
-
-    local foundWeapon
-
-    for weapon in vter(Hyperspace.ships.player.weaponSystem.weapons) do
-        if weapon.blueprint.name == weaponName then
-            if foundWeapon then return nil end
-            foundWeapon = weapon
-        end
+script.on_internal_event(Defines.InternalEvents.WEAPON_RENDERBOX, function(weapon, _, _, firstLine, secondLine, thirdLine)
+    local missileCost = scaling.get_source_stat_entry("chainstep", weapon.blueprint.name, "missileCost")
+    if not missileCost then
+        return Defines.Chain.CONTINUE, firstLine, secondLine, thirdLine
     end
 
-    return foundWeapon
-end
+    local currentCost = calculate_missile_cost(weapon.blueprint.name, weapon.boostLevel)
+        + math.floor(weapon.blueprint.missiles)
 
-local function get_tooltip_chainstep_level(weapon)
-    local wdata = userdata_table(weapon, "mods.sc.chainstep")
-    return wdata.firingLevel or wdata.level or weapon.boostLevel
-end
+    secondLine = "Missile cost: " .. currentCost
+
+    return Defines.Chain.CONTINUE, firstLine, secondLine, thirdLine
+end)
 
 script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(blueprint, stats)
     local missileCost = scaling.get_source_stat_entry("chainstep", blueprint.name, "missileCost")
     if not missileCost then return end
 
     local vanillaMissileCost =
-        string_replace(
-            Hyperspace.Text:GetText("ammo_consumption"),
+        Hyperspace.Text:GetText("stat_resources_missiles")
+
+    vanillaMissileCost =
+        vanillaMissileCost:gsub(
             "\\1",
-            blueprint.missiles
+            tostring(math.floor(blueprint.missiles))
         )
 
-    stats = stats:gsub(vanillaMissileCost .. "\n", "")
-
     local baseCost = get_stat_value(blueprint.name, "missileBase")
-    local value = missileCost.value
     local fireThreshold = get_stat_value(blueprint.name, "fireThreshold")
     local chainStep = get_stat_value(blueprint.name, "chainStep")
     local maxSteps = math.ceil((blueprint.cooldown - fireThreshold) / chainStep)
     local minimumCost = calculate_missile_cost(blueprint.name, maxSteps)
-    local weapon = get_unique_player_weapon(blueprint.name)
+    local blueprintCost = math.floor(blueprint.missiles)
+    local missileStats =
+        "Base missile cost: " .. (baseCost + blueprintCost)
+        .. "\nMissile cost per step: " .. missileCost.value
+        .. "\nMinimum missile cost: " .. (minimumCost + blueprintCost)
 
-    if weapon then
-        local currentCost = calculate_missile_cost(blueprint.name, get_tooltip_chainstep_level(weapon))
-        local discounted = math.max(0, baseCost - currentCost)
-
-        stats = stats
-            .. "\n\nCurrent missile cost: " .. (currentCost + 1)
-            .. "\nMissiles discounted: " .. discounted
-    else
-        stats = stats
-            .. "\n\nBase missile cost: " .. baseCost
-            .. "\nMissile change per chainstep: " .. value
-            .. "\nMinimum missile cost: " .. minimumCost
-    end
+    stats = stats:gsub(
+        vanillaMissileCost .. "\n",
+        missileStats .. "\n"
+    )
 
     return Defines.Chain.CONTINUE, stats
 end)
