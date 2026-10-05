@@ -9,6 +9,7 @@ DEPENDENCIES: sc_tag.lua, sc_projectile_scaling.lua, Multiverse userdata_table, 
 
 local userdata_table = mods.multiverse.userdata_table
 local vter = mods.multiverse.vter
+local string_replace = mods.multiverse.string_replace
 local scaling = mods.sc.scaling
 
 mods.sc.chainstep = mods.sc.chainstep or {}
@@ -28,7 +29,7 @@ end
 local function calculate_missile_cost(weaponName, level)
     local baseCost = get_stat_value(weaponName, "missileBase")
     local value = get_stat_value(weaponName, "missileCost")
-    return math.max(1, math.floor(baseCost + level * value)) 
+    return math.max(0, math.floor(baseCost + level * value)) 
 end
 
 local function update_chainstep_weapon(weapon)
@@ -139,20 +140,29 @@ local function get_tooltip_chainstep_level(weapon)
     return wdata.firingLevel or wdata.level or weapon.boostLevel
 end
 
-script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(bp, stats)
-    local missileCost = scaling.get_source_stat_entry("chainstep", bp.name, "missileCost")
+script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(blueprint, stats)
+    local missileCost = scaling.get_source_stat_entry("chainstep", blueprint.name, "missileCost")
     if not missileCost then return end
 
-    local baseCost = get_stat_value(bp.name, "missileBase")
+    local vanillaMissileCost =
+        string_replace(
+            Hyperspace.Text:GetText("ammo_consumption"),
+            "\\1",
+            blueprint.missiles
+        )
+
+    stats = stats:gsub(vanillaMissileCost .. "\n", "")
+
+    local baseCost = get_stat_value(blueprint.name, "missileBase")
     local value = missileCost.value
-    local fireThreshold = get_stat_value(bp.name, "fireThreshold")
-    local chainStep = get_stat_value(bp.name, "chainStep")
-    local maxSteps = math.ceil((bp.cooldown - fireThreshold) / chainStep)
-    local minimumCost = calculate_missile_cost(bp.name, maxSteps)
-    local weapon = get_unique_player_weapon(bp.name)
+    local fireThreshold = get_stat_value(blueprint.name, "fireThreshold")
+    local chainStep = get_stat_value(blueprint.name, "chainStep")
+    local maxSteps = math.ceil((blueprint.cooldown - fireThreshold) / chainStep)
+    local minimumCost = calculate_missile_cost(blueprint.name, maxSteps)
+    local weapon = get_unique_player_weapon(blueprint.name)
 
     if weapon then
-        local currentCost = calculate_missile_cost(bp.name, get_tooltip_chainstep_level(weapon))
+        local currentCost = calculate_missile_cost(blueprint.name, get_tooltip_chainstep_level(weapon))
         local discounted = math.max(0, baseCost - currentCost)
 
         stats = stats
