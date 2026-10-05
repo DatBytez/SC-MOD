@@ -156,7 +156,7 @@ script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(bp, sta
         local discounted = math.max(0, baseCost - currentCost)
 
         stats = stats
-            .. "\n\nCurrent missile cost: " .. currentCost
+            .. "\n\nCurrent missile cost: " .. (currentCost + 1)
             .. "\nMissiles discounted: " .. discounted
     else
         stats = stats

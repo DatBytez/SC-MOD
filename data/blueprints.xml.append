@@ -1942,7 +1942,7 @@ END OF SUBSYSTEMS
 	<cooldown>13</cooldown>
 	<sc-chainstep stat="fireThreshold" value="4"/>
     <sc-chainstep stat="chainStep" value="3"/>
-    <sc-chainstep stat="missileBase" value="4"/>
+    <sc-chainstep stat="missileBase" value="3"/>
     <sc-chainstep stat="missileCost" value="-1"/>
 	<sc-chainstep stat="radius" value="15"/>
 	<sc-halo/>
