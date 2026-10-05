@@ -120,6 +120,9 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
 end)
 
 script.on_internal_event(Defines.InternalEvents.WEAPON_RENDERBOX, function(weapon, _, _, firstLine, secondLine, thirdLine)
+    local fireThreshold = get_stat_value(blueprint.name, "fireThreshold")
+    local chainStep = get_stat_value(blueprint.name, "chainStep")
+    local maxSteps = math.ceil((blueprint.cooldown - fireThreshold) / chainStep)
     local missileCost = scaling.get_source_stat_entry("chainstep", weapon.blueprint.name, "missileCost")
     if not missileCost then
         return Defines.Chain.CONTINUE, firstLine, secondLine, thirdLine
