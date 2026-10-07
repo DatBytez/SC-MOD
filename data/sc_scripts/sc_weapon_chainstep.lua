@@ -178,7 +178,7 @@ script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(bluepri
     local blueprintCost = math.floor(blueprint.missiles)
     local missileStats =
         "Missile cost: " .. (baseCost + blueprintCost)
-        .. " -> " .. (minimumCost + blueprintCost)
+        .. " - " .. (minimumCost + blueprintCost)
         .. "\nMissile cost per step: " .. missileCost.value
 
     stats = stats:gsub(

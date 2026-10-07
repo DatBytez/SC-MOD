@@ -379,7 +379,7 @@ STRAIF: Increase Accuracy and Projectile Speed (Accuracy +0.5% per Evasion)</tex
     
 ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 20%)
 
-UPGRADE: System Bracers (+1 max level)
+UPGRADE: System Bracers (+2 max level)
 
 PENALTY: Evasion -1% per engine level</text>
 
@@ -388,13 +388,13 @@ PENALTY: Evasion -1% per engine level</text>
 
 ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 20%)
 
-UPGRADE: System Bracers (+2 max level)
+UPGRADE: System Bracers (+3 max level)
 
 PENALTY: Evasion -2% per engine level</text>
 
 <text name="aug_SC_DETECTOR_NAME">Detector</text>
 <!-- Protoss could be called Advanced Sensor Array, Zerg could be something biological -->
-<text name="aug_SC_DETECTOR_DESC">Advanced sensors allow this ship to track enemy targets more effectively. For each active level of sensors, weapons will charge while enemies are cloaked at a cumulative 25% speed.
+<text name="aug_SC_DETECTOR_DESC">Advanced sensors allow this ship to track enemy targets more effectively. For each active level of sensors, weapons will charge while enemies are cloaked at a cumulative 20% speed.
     
 UPGRADE: Sensors (+2 max level)
 

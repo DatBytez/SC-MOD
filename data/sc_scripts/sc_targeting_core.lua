@@ -15,7 +15,7 @@ local targeting = mods.sc.targeting
 local ACCURACY_PER_STRENGTH = 2.5
 local MISSILE_ACCURACY_MULTIPLIER = 2
 local RADIUS_REDUCTION_PER_ACCURACY = 4
-local CLOAK_CHARGE_PER_STRENGTH = 0.25
+local CLOAK_CHARGE_PER_STRENGTH = 0.20
 
 local sources = {}
 local cloakProxies = {}
