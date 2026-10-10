@@ -407,3 +407,4 @@ DETECTOR: Projectiles +2.5% accuracy per sensor level. Missiles gain double that
 <text name="tooltip_sc_yamato_artillery_level_2">Damage x3 — 25 sec cooldown</text>
 <text name="tooltip_sc_yamato_artillery_level_3">Damage x4 — 22.5 sec cooldown</text>
 <text name="tooltip_sc_yamato_artillery_level_4">Damage x5 — 17.5 sec cooldown</text>
+<text name="tooltip_sc_yamato_artillery_level_5">Damage x6 — 10 sec cooldown</text>

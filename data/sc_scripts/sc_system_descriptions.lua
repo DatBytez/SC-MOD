@@ -34,7 +34,8 @@ local YAMATO_LEVEL_TEXT_IDS = {
     [1] = "tooltip_sc_yamato_artillery_level_1",
     [2] = "tooltip_sc_yamato_artillery_level_2",
     [3] = "tooltip_sc_yamato_artillery_level_3",
-    [4] = "tooltip_sc_yamato_artillery_level_4"
+    [4] = "tooltip_sc_yamato_artillery_level_4",
+    [5] = "tooltip_sc_yamato_artillery_level_5"
 }
 
 local function has_yamato_artillery()

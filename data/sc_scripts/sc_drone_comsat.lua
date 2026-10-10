@@ -3,7 +3,7 @@ DESCRIPTION: Comsat drones provide temporary detector-style targeting while depl
         - Tagged drones use Sensors effective power as targeting strength.
         - Active Comsats provide 2 temporary bonus power to Sensors.
         - Drone parts spent deploying a Comsat are refunded after deployment.
-        - Tagged drones self-destruct after the lifetime defined by <sc-comsat>.
+        - Tagged drones are destroyed when their lifetime ends or if depowered early, entering the normal rebuild cycle.
         - The Comsat uses the DEFENSE drone type so it can deploy on the friendly side without an enemy ship.
         - Native defense-drone shots are blocked.
         - A separate Lua timer creates the Comsat scan hit animation at a random enemy room when an enemy ship is present.
@@ -169,7 +169,7 @@ local function update_comsat_lifetime(shipTimers, drone, lifetime)
 
     if not drone.powered then
         if drone.deployed or shipTimers[droneId] then
-            drone:SetDestroyed(true, false)
+            drone:SetDestroyed(true, true)
         end
 
         shipTimers[droneId] = nil

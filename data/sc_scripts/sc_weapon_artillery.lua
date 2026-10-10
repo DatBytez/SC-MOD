@@ -58,14 +58,23 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
             local statBoosts = artilleryLevel[weaponName]
 
             if statBoosts then
-                local cooldownPerLevel = get_stat_value(statBoosts, "cooldown")
+                local cooldownPerMissingPower = get_stat_value(statBoosts, "cooldown")
 
-                if cooldownPerLevel then
+                if cooldownPerMissingPower then
                     if baseCooldowns[weaponName] == nil then
                         baseCooldowns[weaponName] = weapon.blueprint.cooldown
                     end
 
-                    weapon.blueprint.cooldown = baseCooldowns[weaponName] + (artillery.healthState.second - 1) * cooldownPerLevel
+                    local effectivePower = artillery:GetEffectivePower()
+                    local powerMultiplier = 1.5 - 0.25 * effectivePower
+
+                    if effectivePower > 0 and powerMultiplier > 0 then
+                        local missingPower = math.max(0, artillery.healthState.second - effectivePower)
+                        local desiredCooldown = baseCooldowns[weaponName] * 1.25
+                            + missingPower * cooldownPerMissingPower
+
+                        weapon.blueprint.cooldown = desiredCooldown / powerMultiplier
+                    end
                 end
             end
         end

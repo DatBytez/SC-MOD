@@ -56,3 +56,28 @@ script.on_internal_event(
         return Defines.Chain.CONTINUE, math.max(0, dodge + bonus)
     end
 )
+
+-- Engines Level Descriptions
+
+local ENGINES_SYSTEM_ID = Hyperspace.ShipSystem.NameToSystemId("engines")
+local ENGINE_DODGE_BY_LEVEL = {5, 10, 15, 20, 25, 28, 31, 35}
+
+script.on_internal_event(
+    Defines.InternalEvents.GET_LEVEL_DESCRIPTION,
+    function(systemId, level, tooltip)
+        if systemId ~= ENGINES_SYSTEM_ID or level < 1 then return end
+
+        local ship = Hyperspace.ships(0)
+        if not ship then return end
+
+        local perPowerAmount = get_sc_dodge_amount(ship)
+        if perPowerAmount == 0 then return end
+
+        -- Describe the selected level with functional, manned Piloting.
+        local baseDodge = ENGINE_DODGE_BY_LEVEL[level] or (5 * level - 5)
+        local dodge = math.max(0, baseDodge + perPowerAmount * level)
+        local ftl = 0.75 + level / 4
+
+        return string.format("Dodge: %g / FTL: %gx", dodge, ftl)
+    end
+)
