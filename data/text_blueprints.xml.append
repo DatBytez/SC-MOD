@@ -291,7 +291,7 @@ Powered Armor:
 
 <text name="crew_TERRAN_CIVILIAN_NAME">Terran Civilian</text>
 <text name="crew_TERRAN_CIVILIAN_SHORT">Civilian</text>
-<text name="crew_TERRAN_CIVILIAN_DESC">Civilians are quick learners, but ill equipped for combat.</text>
+<text name="crew_TERRAN_CIVILIAN_DESC">Civilians are quick learners and take up only half a crew slot, but are not equipped for combat.</text>
 
 <text name="crew_TERRAN_SPIDER_SET_NAME">Terran Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_SET_SHORT">Spider Mine</text>

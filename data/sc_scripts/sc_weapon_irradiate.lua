@@ -10,7 +10,7 @@ local irradiateWeapons = {}
 
 mods.sc.tag.register("weapon", "sc-irradiate", irradiateWeapons)
 
-local function get_room_center(shipId, location)
+local function get_tile_center(shipId, location)
     if Hyperspace.ShipGraph.GetShipInfo(shipId):GetSelectedRoom(location.x, location.y, true) == -1 then
         return nil
     end
@@ -29,7 +29,7 @@ local function get_irradiate_blueprint_name(projectile)
 end
 
 local function spawn_irradiate_impact(shipManager, projectile, location, blueprintName)
-    local target = get_room_center(shipManager.iShipId, location)
+    local target = get_tile_center(shipManager.iShipId, location)
     if not target then return end
 
     local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint(blueprintName)

@@ -1719,21 +1719,29 @@ END OF SUBSYSTEMS
     </erosion>
 
     <statBoosts>
-        <statBoost name="trueHealAmount">
-            <boostType>FLAT</boostType>
-            <amount>-1</amount>
-            <shipTarget>CURRENT_ROOM</shipTarget>
-            <crewTarget>ALL</crewTarget>
-            <droneTarget>CREW</droneTarget>
-            <affectsSelf>true</affectsSelf>
-            <priority>-100</priority>
-            <duration>25</duration>
-            <blackList>
-                <blueprintList load="TERRAN_SCV"/>
-            </blackList>
-            <maxStacks>3</maxStacks>
-			<boostAnim>sc_irradiate</boostAnim>
-        </statBoost>
+		</statBoost="statBoost">
+			<statBoost name="trueHealAmount">
+				<boostType>FLAT</boostType>
+				<amount>-1</amount>
+				<shipTarget>CURRENT_ROOM</shipTarget>
+				<crewTarget>ALL</crewTarget>
+				<droneTarget>CREW</droneTarget>
+				<affectsSelf>true</affectsSelf>
+				<priority>-100</priority>
+				<duration>25</duration>
+				<blackList>
+					<blueprintList load="TERRAN_SCV"/>
+				</blackList>
+				<maxStacks>3</maxStacks>
+				<boostAnim>sc_irradiate</boostAnim>
+			</statBoost>
+
+			<shipTarget>ALL</shipTarget>
+			<crewTarget>ALL</crewTarget>
+			<droneTarget>CREW</droneTarget>
+			<duration>25</duration>
+			<maxStacks>3</maxStacks>
+		</statBoost>
     </statBoosts>
 </weaponBlueprint>
 
@@ -1763,21 +1771,29 @@ END OF SUBSYSTEMS
     </erosion>
 
     <statBoosts>
-        <statBoost name="trueHealAmount">
-            <boostType>FLAT</boostType>
-            <amount>-2</amount>
-            <shipTarget>CURRENT_ROOM</shipTarget>
-            <crewTarget>ALL</crewTarget>
-            <droneTarget>CREW</droneTarget>
-            <affectsSelf>true</affectsSelf>
-            <priority>-100</priority>
-            <duration>25</duration>
-            <blackList>
-                <blueprintList load="TERRAN_SCV"/>
-            </blackList>
-            <maxStacks>3</maxStacks>
-			<boostAnim>sc_irradiate</boostAnim>
-        </statBoost>
+		<statBoost name="statBoost">
+			<statBoost name="trueHealAmount">
+				<boostType>FLAT</boostType>
+				<amount>-2</amount>
+				<shipTarget>CURRENT_ROOM</shipTarget>
+				<crewTarget>ALL</crewTarget>
+				<droneTarget>CREW</droneTarget>
+				<affectsSelf>true</affectsSelf>
+				<priority>-100</priority>
+				<duration>25</duration>
+				<blackList>
+					<blueprintList load="TERRAN_SCV"/>
+				</blackList>
+				<maxStacks>3</maxStacks>
+				<boostAnim>sc_irradiate</boostAnim>
+			</statBoost>
+			
+			<shipTarget>ALL</shipTarget>
+			<crewTarget>ALL</crewTarget>
+			<droneTarget>CREW</droneTarget>
+			<duration>25</duration>
+			<maxStacks>3</maxStacks>
+		</statBoost>
     </statBoosts>
 </weaponBlueprint>
 
@@ -1807,21 +1823,29 @@ END OF SUBSYSTEMS
     </erosion>
 
     <statBoosts>
-        <statBoost name="trueHealAmount">
-            <boostType>FLAT</boostType>
-            <amount>-3</amount>
-            <shipTarget>CURRENT_ROOM</shipTarget>
-            <crewTarget>ALL</crewTarget>
-            <droneTarget>CREW</droneTarget>
-            <affectsSelf>true</affectsSelf>
-            <priority>-100</priority>
-            <duration>25</duration>
-            <blackList>
-                <blueprintList load="TERRAN_SCV"/>
-            </blackList>
-            <maxStacks>3</maxStacks>
-			<boostAnim>sc_irradiate</boostAnim>
-        </statBoost>
+		<statBoost name="statBoost">
+			<statBoost name="trueHealAmount">
+				<boostType>FLAT</boostType>
+				<amount>-3</amount>
+				<shipTarget>CURRENT_ROOM</shipTarget>
+				<crewTarget>ALL</crewTarget>
+				<droneTarget>CREW</droneTarget>
+				<affectsSelf>true</affectsSelf>
+				<priority>-100</priority>
+				<duration>25</duration>
+				<blackList>
+					<blueprintList load="TERRAN_SCV"/>
+				</blackList>
+				<maxStacks>3</maxStacks>
+				<boostAnim>sc_irradiate</boostAnim>
+			</statBoost>
+
+			<shipTarget>ALL</shipTarget>
+			<crewTarget>ALL</crewTarget>
+			<droneTarget>CREW</droneTarget>
+			<duration>25</duration>
+			<maxStacks>3</maxStacks>
+		</statBoost>
     </statBoosts>
 </weaponBlueprint>
 
@@ -1851,21 +1875,29 @@ END OF SUBSYSTEMS
     </erosion>
 
     <statBoosts>
-        <statBoost name="trueHealAmount">
-            <boostType>FLAT</boostType>
-            <amount>-4</amount>
-            <shipTarget>CURRENT_ROOM</shipTarget>
-            <crewTarget>ALL</crewTarget>
-            <droneTarget>CREW</droneTarget>
-            <affectsSelf>true</affectsSelf>
-            <priority>-100</priority>
-            <duration>25</duration>
-            <blackList>
-                <blueprintList load="TERRAN_SCV"/>
-            </blackList>
-            <maxStacks>3</maxStacks>
-			<boostAnim>sc_irradiate</boostAnim>
-        </statBoost>
+		<statBoost name="statBoost">
+			<statBoost name="trueHealAmount">
+				<boostType>FLAT</boostType>
+				<amount>-4</amount>
+				<shipTarget>CURRENT_ROOM</shipTarget>
+				<crewTarget>ALL</crewTarget>
+				<droneTarget>CREW</droneTarget>
+				<affectsSelf>true</affectsSelf>
+				<priority>-100</priority>
+				<duration>25</duration>
+				<blackList>
+					<blueprintList load="TERRAN_SCV"/>
+				</blackList>
+				<maxStacks>3</maxStacks>
+				<boostAnim>sc_irradiate</boostAnim>
+			</statBoost>
+
+			<shipTarget>ALL</shipTarget>
+			<crewTarget>ALL</crewTarget>
+			<droneTarget>CREW</droneTarget>
+			<duration>25</duration>
+			<maxStacks>3</maxStacks>
+		</statBoost>
     </statBoosts>
 </weaponBlueprint>
 
@@ -1895,21 +1927,29 @@ END OF SUBSYSTEMS
     </erosion>
 
     <statBoosts>
-        <statBoost name="trueHealAmount">
-            <boostType>FLAT</boostType>
-            <amount>-5</amount>
-            <shipTarget>CURRENT_ROOM</shipTarget>
-            <crewTarget>ALL</crewTarget>
-            <droneTarget>CREW</droneTarget>
-            <affectsSelf>true</affectsSelf>
-            <priority>-100</priority>
-            <duration>25</duration>
-            <blackList>
-                <blueprintList load="TERRAN_SCV"/>
-            </blackList>
-            <maxStacks>3</maxStacks>
-			<boostAnim>sc_irradiate</boostAnim>
-        </statBoost>
+		<statBoost name="statBoost">
+			<statBoost name="trueHealAmount">
+				<boostType>FLAT</boostType>
+				<amount>-5</amount>
+				<shipTarget>CURRENT_ROOM</shipTarget>
+				<crewTarget>ALL</crewTarget>
+				<droneTarget>CREW</droneTarget>
+				<affectsSelf>true</affectsSelf>
+				<priority>-100</priority>
+				<duration>25</duration>
+				<blackList>
+					<blueprintList load="TERRAN_SCV"/>
+				</blackList>
+				<maxStacks>3</maxStacks>
+				<boostAnim>sc_irradiate</boostAnim>
+			</statBoost>
+		
+			<shipTarget>ALL</shipTarget>
+			<crewTarget>ALL</crewTarget>
+			<droneTarget>CREW</droneTarget>
+			<duration>25</duration>
+			<maxStacks>3</maxStacks>
+		</statBoost>
     </statBoosts>
 </weaponBlueprint>
 
@@ -2632,7 +2672,7 @@ TERRAN_GOLIATH-->
 	<short id="drone_TERRAN_DEFENSE_1_SHORT"/>
 	<desc id="drone_TERRAN_DEFENSE_1_DESC"/>
 	<power>2</power>					
-	<cooldown>2000</cooldown><!-- was 1500/2000-->					
+	<cooldown>4000</cooldown><!-- was 1500/2000-->					
 	<dodge>10</dodge>					
 	<speed>20</speed>					
 	<cost>60</cost>
@@ -2640,21 +2680,9 @@ TERRAN_GOLIATH-->
 	<droneImage>terran_defense_1</droneImage>
 	<sc-droneEngine value="matrix_engine_1"/>			
 	<weaponBlueprint>TERRAN_DEFENSE_PROJECTILE</weaponBlueprint>					
-	<iconImage>defense</iconImage>					 
+	<iconImage>defense</iconImage>
 	<rarity>3</rarity>					
-</droneBlueprint>						
-<!--
-<weaponBlueprint name="TERRAN_DEFENSE_2">		
-	<type>LASER</type>
-	<title id="NOYB"/>
-	<short id="NOYB"/>
-	<desc id="NOYB"/>
-	<rarity>0</rarity>
-	<launchSounds>
-		<sound>shieldDroneActivate</sound>
-	</launchSounds>				
-</weaponBlueprint>
--->		
+</droneBlueprint>							
 <droneBlueprint name="TERRAN_DEFENSE_2">						
 	<type>DEFENSE</type>					
 	<target>ALL</target>					
@@ -2662,8 +2690,8 @@ TERRAN_GOLIATH-->
 	<title id="drone_TERRAN_DEFENSE_2_NAME"/>
 	<short id="drone_TERRAN_DEFENSE_2_SHORT"/>
 	<desc id="drone_TERRAN_DEFENSE_2_DESC"/>
-	<power>3</power>					
-	<cooldown>1500</cooldown><!-- was 1500 -->
+	<power>3</power>
+	<cooldown>3000</cooldown><!-- was 1500 -->
 	<dodge>10</dodge>					
 	<speed>20</speed>					
 	<cost>80</cost>
@@ -2673,19 +2701,7 @@ TERRAN_GOLIATH-->
 	<weaponBlueprint>TERRAN_DEFENSE_PROJECTILE</weaponBlueprint>					
 	<iconImage>defense</iconImage>					
 	<rarity>4</rarity>					
-</droneBlueprint>			
-<!--
-<weaponBlueprint name="TERRAN_DEFENSE_3">
-	<type>LASER</type>		
-	<title id="NOYB"/>
-	<short id="NOYB"/>
-	<desc id="NOYB"/>
-	<rarity>0</rarity>
-	<launchSounds>
-		<sound>shieldDroneActivate</sound>
-	</launchSounds>				
-</weaponBlueprint>		
--->				
+</droneBlueprint>					
 <droneBlueprint name="TERRAN_DEFENSE_3">						
 	<type>DEFENSE</type>					
 	<target>ALL</target>					
@@ -2694,7 +2710,7 @@ TERRAN_GOLIATH-->
 	<short id="drone_TERRAN_DEFENSE_3_SHORT"/>					
 	<desc id="drone_TERRAN_DEFENSE_3_DESC"/>					
 	<power>4</power>					
-	<cooldown>1000</cooldown><!-- was 1000 -->					
+	<cooldown>2000</cooldown><!-- was 1000 -->					
 	<dodge>10</dodge>					
 	<speed>20</speed>					
 	<cost>140</cost>

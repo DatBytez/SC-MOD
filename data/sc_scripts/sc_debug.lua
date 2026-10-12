@@ -1,55 +1,35 @@
 --[[
-DESCRIPTION: Fixed on-screen ranged crew combat diagnostic.
+DESCRIPTION: Compact fixed on-screen active shield cooldown diagnostic.
     Diagnostic only; gameplay logic does not depend on this file.
-
-PURPOSE:
-    Detect crew health loss by sampling the global CrewMemberFactory once per
-    completed game tick, then test which attacker -> target relationship is
-    actually exposed to Lua.
-
-    Established data used:
-        Hyperspace.CrewFactory.crewMembers
-        crew.extend.selfId
-        crew.health.first
-        crew.crewTarget
-        crew.crewAnim.status
-        crew.crewAnim.target
-
-    Experimental target tests:
-        TEST 1: crew.crewTarget == victim
-        TEST 2: crew.crewTarget:GetPosition() == victim:GetPosition()
-
-    TEST 2 is protected with pcall only because CrewTarget method exposure to
-    Lua has not yet been established. It is diagnostic code, not a fallback.
 ]]
 
 local vter = mods.multiverse.vter
 
 mods.sc = mods.sc or {}
-mods.sc.crewHitDebug = {
+mods.sc.activeShieldCooldownDebug = {
     tickCount = 0,
-    crewCount = 0,
-    damageEvents = 0,
-    rangedAttackers = 0,
-    lastDamage = nil,
-    lastRanged = nil,
-    recentDamage = {}
+    projectileFireCount = 0,
+    droneFireCount = 0,
+    threatCount = 0,
+    lastThreat = nil,
+    lastSuperChange = nil,
+    lastSuperByShip = {},
+    recentEvents = {}
 }
 
-local debug = mods.sc.crewHitDebug
-local healthById = {}
+local debug = mods.sc.activeShieldCooldownDebug
 
 local PANEL_X = 20
-local PANEL_Y = 235
-local PANEL_W = 820
-local PANEL_H = 430
+local PANEL_Y = 115
+local PANEL_W = 690
+local PANEL_H = 130
 
-local TEXT_X = PANEL_X + 10
-local TEXT_Y = PANEL_Y + 8
-local LINE_HEIGHT = 20
+local TEXT_X = PANEL_X + 8
+local TEXT_Y = PANEL_Y + 6
+local LINE_HEIGHT = 16
 local FONT = 10
 
-local MAX_RECENT_DAMAGE = 4
+local MAX_RECENT_EVENTS = 3
 
 local function draw_line(line, text)
     Graphics.freetype.easy_print(
@@ -60,185 +40,201 @@ local function draw_line(line, text)
     )
 end
 
-local function point_text(point)
-    if not point then
-        return "N/A"
+local function yn(value)
+    return value and "Y" or "N"
+end
+
+local function num(value)
+    if value == nil then return "-" end
+    return string.format("%.1f", value)
+end
+
+local function add_recent_event(text)
+    table.insert(debug.recentEvents, 1, text)
+
+    if #debug.recentEvents > MAX_RECENT_EVENTS then
+        table.remove(debug.recentEvents)
     end
-
-    return string.format(
-        "%.1f, %.1f",
-        point.x,
-        point.y
-    )
 end
 
-local function get_crew_id(crew)
-    return crew.extend.selfId
+local function get_ship(shipId)
+    if shipId ~= 0 and shipId ~= 1 then return nil end
+    return Hyperspace.ships(shipId)
 end
 
-local function get_crew_name(crew)
-    return crew:GetName()
+local function get_super_shields(shipManager)
+    if not shipManager or not shipManager.shieldSystem then return 0 end
+    return shipManager.shieldSystem.shields.power.super.first or 0
 end
 
-local function get_crew_target_position(crewTarget)
-    local success, position = pcall(function()
-        return crewTarget:GetPosition()
+local function drone_has_active_shield_tag(drone)
+    if not drone or not drone.blueprint then return false end
+    if not mods.sc.activeShield then return false end
+    return mods.sc.activeShield[drone.blueprint.name]
+end
+
+local function drone_is_active_and_powered(drone)
+    return drone_has_active_shield_tag(drone) and drone.deployed and drone.powered and not drone.bDead
+end
+
+local function get_drone_weapon_cooldown(drone)
+    local success, cooldown = pcall(function()
+        return drone:GetWeaponCooldown()
     end)
 
     if success then
-        return position, true
+        return cooldown
     end
 
-    return nil, false
+    return nil
 end
 
-local function get_crew_target_is_crew(crewTarget)
-    local success, result = pcall(function()
-        return crewTarget:IsCrew()
-    end)
+local function get_drone_name(drone)
+    if not drone or not drone.blueprint then return "none" end
+    return drone.blueprint.name or "unk"
+end
 
-    if success then
-        return tostring(result), true
+local function get_active_shield_drone_key(shipId, slot, drone)
+    if not drone or not drone.blueprint then return nil end
+    return tostring(shipId) .. ":" .. tostring(slot) .. ":" .. tostring(drone.blueprint.name)
+end
+
+local function get_script_cooldown(key)
+    if not key or not mods.sc.activeShieldCooldowns then return 0 end
+    return mods.sc.activeShieldCooldowns[key] or 0
+end
+
+local function get_projectile_target_ship_id(projectile, allowOwnerFallback)
+    local targetShipId = projectile.destinationSpace
+    local usedOwnerFallback = false
+
+    if targetShipId == nil or targetShipId < 0 then
+        if not allowOwnerFallback or projectile.ownerId == nil then
+            return nil, false
+        end
+
+        targetShipId = 1 - projectile.ownerId
+        usedOwnerFallback = true
     end
 
-    return "ERROR", false
+    if targetShipId ~= 0 and targetShipId ~= 1 then
+        return nil, usedOwnerFallback
+    end
+
+    if projectile.ownerId == targetShipId then
+        return nil, usedOwnerFallback
+    end
+
+    return targetShipId, usedOwnerFallback
 end
 
-local function find_attackers_for_victim(victim)
-    local directNames = {}
-    local positionNames = {}
-    local positionMethodAvailable = false
+local function count_incoming_enemy_projectiles(shipId)
+    if not Hyperspace.App or not Hyperspace.App.world or not Hyperspace.App.world.space then
+        return 0
+    end
 
-    local victimPosition = victim:GetPosition()
+    local count = 0
 
-    for attacker in vter(Hyperspace.CrewFactory.crewMembers) do
-        if attacker ~= victim
-            and attacker.crewTarget
-            and attacker.crewAnim
-            and attacker.bFighting then
+    for projectile in vter(Hyperspace.App.world.space.projectiles) do
+        local projectileIsActive = projectile._targetable ~= false and not projectile.passedTarget
+        local projectileIsEnemy = projectile.ownerId ~= shipId
+        local projectileIsAtShip = projectile.currentSpace == shipId
 
-            -- TEST 1:
-            -- Does CrewTarget directly compare equal to the CrewMember?
-            if attacker.crewTarget == victim then
-                table.insert(
-                    directNames,
-                    get_crew_name(attacker)
-                )
-            end
-
-            -- TEST 2:
-            -- Does CrewTarget:GetPosition() identify the damaged CrewMember?
-            local targetPosition, available =
-                get_crew_target_position(attacker.crewTarget)
-
-            if available then
-                positionMethodAvailable = true
-
-                if targetPosition.x == victimPosition.x
-                    and targetPosition.y == victimPosition.y then
-
-                    table.insert(
-                        positionNames,
-                        get_crew_name(attacker)
-                    )
-                end
-            end
+        if projectileIsActive and projectileIsEnemy and projectileIsAtShip then
+            count = count + 1
         end
     end
 
-    return {
-        direct = #directNames > 0
-            and table.concat(directNames, ", ")
-            or "NONE",
-
-        position = #positionNames > 0
-            and table.concat(positionNames, ", ")
-            or "NONE",
-
-        positionMethodAvailable = positionMethodAvailable
-    }
+    return count
 end
 
-local function record_damage(victim, oldHealth, newHealth)
-    local attackers = find_attackers_for_victim(victim)
+local function get_drone_status(shipManager)
+    if not shipManager then return nil end
 
-    local event = {
-        victim = get_crew_name(victim),
-        victimId = get_crew_id(victim),
-        race = victim.crewAnim and victim.crewAnim.race or "N/A",
-        ownerShip = victim.iShipId,
-        currentShip = victim.currentShipId,
-        position = victim:GetPosition(),
-        oldHealth = oldHealth,
-        newHealth = newHealth,
-        damage = oldHealth - newHealth,
-        directAttackers = attackers.direct,
-        positionAttackers = attackers.position,
-        positionMethodAvailable = attackers.positionMethodAvailable
-    }
+    local slotIndex = 0
 
-    debug.damageEvents = debug.damageEvents + 1
-    debug.lastDamage = event
+    for drone in vter(shipManager.spaceDrones) do
+        slotIndex = slotIndex + 1
 
-    table.insert(
-        debug.recentDamage,
-        1,
-        string.format(
-            "%s [%d]   %.2f -> %.2f   Damage %.2f",
-            event.victim,
-            event.victimId,
-            event.oldHealth,
-            event.newHealth,
-            event.damage
-        )
-    )
+        if drone_has_active_shield_tag(drone) then
+            local key = get_active_shield_drone_key(shipManager.iShipId, slotIndex, drone)
+            local scriptCooldown = get_script_cooldown(key)
+            local active = drone_is_active_and_powered(drone)
 
-    if #debug.recentDamage > MAX_RECENT_DAMAGE then
-        table.remove(debug.recentDamage)
-    end
-end
-
-local function sample_ranged_attackers()
-    local rangedCount = 0
-    local lastRanged = nil
-
-    for crew in vter(Hyperspace.CrewFactory.crewMembers) do
-        if crew.crewAnim
-            and crew.bFighting
-            and crew.crewTarget
-            and crew.crewAnim.status == 7 then
-
-            rangedCount = rangedCount + 1
-
-            local targetPosition, positionAvailable =
-                get_crew_target_position(crew.crewTarget)
-
-            local targetIsCrew, isCrewAvailable =
-                get_crew_target_is_crew(crew.crewTarget)
-
-            lastRanged = {
-                attacker = get_crew_name(crew),
-                attackerId = get_crew_id(crew),
-                race = crew.crewAnim.race,
-                ownerShip = crew.iShipId,
-                currentShip = crew.currentShipId,
-                animationTarget = crew.crewAnim.target,
-                targetPosition = targetPosition,
-                positionAvailable = positionAvailable,
-                targetIsCrew = targetIsCrew,
-                isCrewAvailable = isCrewAvailable
+            return {
+                slot = slotIndex,
+                key = key,
+                name = get_drone_name(drone),
+                active = active,
+                ready = active and scriptCooldown <= 0,
+                deployed = drone.deployed,
+                powered = drone.powered,
+                dead = drone.bDead,
+                scriptCooldown = scriptCooldown,
+                weaponCooldown = drone.weaponCooldown or 0,
+                getWeaponCooldown = get_drone_weapon_cooldown(drone)
             }
         end
     end
 
-    debug.rangedAttackers = rangedCount
-
-    if lastRanged then
-        debug.lastRanged = lastRanged
-    end
+    return nil
 end
 
-local function sample_crew()
+local function count_ready_active_shield_drones(shipManager)
+    if not shipManager then return 0 end
+
+    local count = 0
+    local slotIndex = 0
+
+    for drone in vter(shipManager.spaceDrones) do
+        slotIndex = slotIndex + 1
+
+        if drone_is_active_and_powered(drone) then
+            local key = get_active_shield_drone_key(shipManager.iShipId, slotIndex, drone)
+
+            if get_script_cooldown(key) <= 0 then
+                count = count + 1
+            end
+        end
+    end
+
+    return count
+end
+
+local function record_threat(eventType, projectile, targetShipId, usedOwnerFallback, isBeam, sourceName)
+    local shipManager = get_ship(targetShipId)
+    local droneStatus = get_drone_status(shipManager)
+    local readyCount = count_ready_active_shield_drones(shipManager)
+
+    debug.threatCount = debug.threatCount + 1
+
+    debug.lastThreat = {
+        eventType = eventType,
+        sourceName = sourceName or "unk",
+        isBeam = isBeam,
+        ownerId = projectile and projectile.ownerId or nil,
+        currentSpace = projectile and projectile.currentSpace or nil,
+        destinationSpace = projectile and projectile.destinationSpace or nil,
+        targetShipId = targetShipId,
+        usedOwnerFallback = usedOwnerFallback,
+        superBefore = get_super_shields(shipManager),
+        droneStatus = droneStatus,
+        readyCount = readyCount
+    }
+
+    add_recent_event(
+        string.format(
+            "T %s s%s %s r%d c%s",
+            eventType,
+            tostring(targetShipId),
+            sourceName or "unk",
+            readyCount,
+            droneStatus and num(droneStatus.scriptCooldown) or "-"
+        )
+    )
+end
+
+script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
     if not Hyperspace.App
         or not Hyperspace.App.world
         or not Hyperspace.App.world.bStartedGame then
@@ -246,37 +242,127 @@ local function sample_crew()
     end
 
     debug.tickCount = debug.tickCount + 1
+end)
 
-    local crewCount = 0
+script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile, spacedrone)
+    debug.droneFireCount = debug.droneFireCount + 1
 
-    for crew in vter(Hyperspace.CrewFactory.crewMembers) do
-        crewCount = crewCount + 1
+    local sourceName = get_drone_name(spacedrone)
+    local sourceTagged = drone_has_active_shield_tag(spacedrone)
 
-        local crewId = get_crew_id(crew)
-        local currentHealth = crew.health.first
-        local previousHealth = healthById[crewId]
+    if projectile and not sourceTagged then
+        local targetShipId, usedOwnerFallback = get_projectile_target_ship_id(projectile, true)
 
-        if previousHealth ~= nil
-            and currentHealth < previousHealth then
-
-            record_damage(
-                crew,
-                previousHealth,
-                currentHealth
+        if targetShipId then
+            record_threat(
+                "DF",
+                projectile,
+                targetShipId,
+                usedOwnerFallback,
+                false,
+                sourceName
             )
         end
-
-        healthById[crewId] = currentHealth
     end
 
-    debug.crewCount = crewCount
-    sample_ranged_attackers()
-end
+    return Defines.Chain.CONTINUE
+end)
 
-script.on_internal_event(
-    Defines.InternalEvents.ON_TICK,
-    sample_crew
-)
+script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projectile, weapon)
+    debug.projectileFireCount = debug.projectileFireCount + 1
+
+    if not projectile then
+        return Defines.Chain.CONTINUE
+    end
+
+    local isBeam = weapon and weapon.blueprint and weapon.blueprint.typeName == "BEAM"
+
+    if not isBeam and projectile.currentSpace ~= projectile.ownerId then
+        return Defines.Chain.CONTINUE
+    end
+
+    local weaponName = weapon and weapon.blueprint and weapon.blueprint.name or "unk"
+    local targetShipId, usedOwnerFallback = get_projectile_target_ship_id(projectile, true)
+
+    if targetShipId then
+        record_threat(
+            isBeam and "BF" or "PF",
+            projectile,
+            targetShipId,
+            usedOwnerFallback,
+            isBeam,
+            weaponName
+        )
+    end
+
+    return Defines.Chain.CONTINUE
+end)
+
+script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
+    if not shipManager then return end
+
+    local shipId = shipManager.iShipId
+    local currentSuper = get_super_shields(shipManager)
+    local previousSuper = debug.lastSuperByShip[shipId]
+
+    if previousSuper ~= nil and currentSuper ~= previousSuper then
+        local status = get_drone_status(shipManager)
+
+        debug.lastSuperChange = {
+            shipId = shipId,
+            previous = previousSuper,
+            current = currentSuper,
+            incoming = count_incoming_enemy_projectiles(shipId),
+            droneStatus = status,
+            readyCount = count_ready_active_shield_drones(shipManager)
+        }
+
+        add_recent_event(
+            string.format(
+                "S s%d %d>%d in%d c%s",
+                shipId,
+                previousSuper,
+                currentSuper,
+                debug.lastSuperChange.incoming,
+                status and num(status.scriptCooldown) or "-"
+            )
+        )
+    end
+
+    debug.lastSuperByShip[shipId] = currentSuper
+end)
+
+local function ship_line(shipId, label)
+    local shipManager = get_ship(shipId)
+    if not shipManager then return label .. " miss" end
+
+    local status = get_drone_status(shipManager)
+    local droneText = "noD"
+
+    if status then
+        droneText = string.format(
+            "%s a%s r%s c%s/%s w%s d%s p%s x%s",
+            status.name,
+            yn(status.active),
+            yn(status.ready),
+            num(status.scriptCooldown),
+            num(status.getWeaponCooldown),
+            num(status.weaponCooldown),
+            yn(status.deployed),
+            yn(status.powered),
+            yn(status.dead)
+        )
+    end
+
+    return string.format(
+        "%s sh%d in%d r%d %s",
+        label,
+        get_super_shields(shipManager),
+        count_incoming_enemy_projectiles(shipId),
+        count_ready_active_shield_drones(shipManager),
+        droneText
+    )
+end
 
 local function draw_panel()
     if not Hyperspace.App
@@ -293,148 +379,38 @@ local function draw_panel()
         PANEL_Y,
         PANEL_W,
         PANEL_H,
-        Graphics.GL_Color(0, 0, 0, 0.82)
+        Graphics.GL_Color(0, 0, 0, 0.70)
     )
 
     Graphics.CSurface.GL_SetColor(
         Graphics.GL_Color(1, 1, 1, 1)
     )
 
-    draw_line(0, "CREW HIT DEBUG")
+    draw_line(0, string.format("t%d th%d pf%d df%d", debug.tickCount, debug.threatCount, debug.projectileFireCount, debug.droneFireCount))
+    draw_line(1, ship_line(0, "P"))
+    draw_line(2, ship_line(1, "E"))
 
-    draw_line(
-        1,
-        string.format(
-            "ON_TICK samples: %d   CrewFactory crew: %d   Damage events: %d",
-            debug.tickCount,
-            debug.crewCount,
-            debug.damageEvents
-        )
-    )
+    local threat = debug.lastThreat
 
-    draw_line(
-        2,
-        "Ranged attackers currently observed (status 7): "
-        .. tostring(debug.rangedAttackers)
-    )
-
-    local damage = debug.lastDamage
-
-    draw_line(4, "LAST CREW HEALTH DECREASE")
-
-    if damage then
-        draw_line(
-            5,
-            string.format(
-                "Victim: %s   ID: %d   Race: %s",
-                damage.victim,
-                damage.victimId,
-                tostring(damage.race)
-            )
-        )
-
-        draw_line(
-            6,
-            string.format(
-                "Health: %.2f -> %.2f   Damage: %.2f",
-                damage.oldHealth,
-                damage.newHealth,
-                damage.damage
-            )
-        )
-
-        draw_line(
-            7,
-            string.format(
-                "Owner Ship: %s   Current Ship: %s   Position: %s",
-                tostring(damage.ownerShip),
-                tostring(damage.currentShip),
-                point_text(damage.position)
-            )
-        )
-
-        draw_line(
-            8,
-            "TEST 1 - crewTarget == victim: "
-            .. damage.directAttackers
-        )
-
-        draw_line(
-            9,
-            string.format(
-                "TEST 2 - CrewTarget position: %s   Method available: %s",
-                damage.positionAttackers,
-                tostring(damage.positionMethodAvailable)
-            )
-        )
+    if threat then
+        local gate = (threat.readyCount or 0) > 0 and "OK" or "BLK"
+        draw_line(3, string.format("T %s s%s b%s %s sh%s r%d %s", threat.eventType, tostring(threat.targetShipId), yn(threat.isBeam), tostring(threat.sourceName), tostring(threat.superBefore), threat.readyCount or 0, gate))
+        draw_line(4, string.format("o%s c%s d%s fb%s", tostring(threat.ownerId), tostring(threat.currentSpace), tostring(threat.destinationSpace), yn(threat.usedOwnerFallback)))
     else
-        draw_line(
-            5,
-            "Waiting for CrewFactory health sampling to observe damage..."
-        )
+        draw_line(3, "T none")
     end
 
-    draw_line(11, "LAST OBSERVED STATUS-7 RANGED ATTACKER")
+    local superChange = debug.lastSuperChange
 
-    local ranged = debug.lastRanged
-
-    if ranged then
-        draw_line(
-            12,
-            string.format(
-                "Attacker: %s   ID: %d   Race: %s",
-                ranged.attacker,
-                ranged.attackerId,
-                tostring(ranged.race)
-            )
-        )
-
-        draw_line(
-            13,
-            string.format(
-                "Owner Ship: %s   Current Ship: %s",
-                tostring(ranged.ownerShip),
-                tostring(ranged.currentShip)
-            )
-        )
-
-        draw_line(
-            14,
-            "crewAnim.target: "
-            .. point_text(ranged.animationTarget)
-        )
-
-        draw_line(
-            15,
-            string.format(
-                "crewTarget:GetPosition(): %s   Available: %s",
-                point_text(ranged.targetPosition),
-                tostring(ranged.positionAvailable)
-            )
-        )
-
-        draw_line(
-            16,
-            string.format(
-                "crewTarget:IsCrew(): %s   Available: %s",
-                ranged.targetIsCrew,
-                tostring(ranged.isCrewAvailable)
-            )
-        )
+    if superChange then
+        local status = superChange.droneStatus
+        draw_line(5, string.format("S s%d %d>%d in%d r%d c%s", superChange.shipId, superChange.previous, superChange.current, superChange.incoming, superChange.readyCount or 0, status and num(status.scriptCooldown) or "-"))
     else
-        draw_line(
-            12,
-            "No status-7 ranged attacker has been observed yet."
-        )
+        draw_line(5, "S none")
     end
 
-    draw_line(18, "RECENT CREW HEALTH DECREASES")
-
-    for i = 1, MAX_RECENT_DAMAGE do
-        draw_line(
-            18 + i,
-            debug.recentDamage[i] or "-"
-        )
+    for i = 1, MAX_RECENT_EVENTS do
+        draw_line(5 + i, debug.recentEvents[i] or "-")
     end
 
     Graphics.CSurface.GL_PopMatrix()

@@ -370,6 +370,7 @@
 		<canFight>false</canFight>
 		<canSabotage>true</canSabotage>
 		<canShoot>false</canShoot>
+		<crewSlots>0.5</crewSlots>
 		<deathSounds>
 			<deathSound>terran_civilian_death</deathSound>
 		</deathSounds>
@@ -2046,6 +2047,6 @@
     <mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
 
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
-    <!--<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>-->
+    <!-- <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script> -->
 </mod:findLike>
 </FTL>
