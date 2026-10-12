@@ -180,10 +180,6 @@ end
 
 script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile, spacedrone)
     if drone_has_active_shield_tag(spacedrone) then
-        if projectile then
-            projectile:Kill()
-        end
-
         return Defines.Chain.CONTINUE
     end
 

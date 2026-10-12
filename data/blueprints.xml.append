@@ -1693,6 +1693,136 @@ END OF SUBSYSTEMS
 
 <!-- Irradiate Erosion Effects -->
 
+<weaponBlueprint name="TERRAN_IRRADIATE_EROSION_PULSE_1">
+    <type>LASER</type>
+    <title id="NOYB"/>
+    <short id="NOYB"/>
+    <desc id="NOYB"/>
+
+    <sp>10</sp>
+    <damage>0</damage>
+    <rarity>0</rarity>
+    <accuracyMod>100</accuracyMod>
+    <erosionChance>10</erosionChance>
+
+    <erosion>
+        <speed>0.05</speed>
+        <maxSpeed>0.60</maxSpeed>
+        <time>1.25</time>
+        <maxTime>2.00</maxTime>
+        <systemRepairMultiplier>1</systemRepairMultiplier>
+        <erodeShields>false</erodeShields>
+        <roomAnim renderLayer="1">
+            <anim animType="default" animBorder="2">invisible</anim>
+            <wallAnim>irradiate_wall</wallAnim>
+        </roomAnim>
+    </erosion>
+</weaponBlueprint>
+
+<weaponBlueprint name="TERRAN_IRRADIATE_EROSION_PULSE_2">
+    <type>LASER</type>
+    <title id="NOYB"/>
+    <short id="NOYB"/>
+    <desc id="NOYB"/>
+
+    <sp>10</sp>
+    <damage>0</damage>
+    <rarity>0</rarity>
+    <accuracyMod>100</accuracyMod>
+    <erosionChance>10</erosionChance>
+
+    <erosion>
+        <speed>0.075</speed>
+        <maxSpeed>0.90</maxSpeed>
+        <time>1.25</time>
+        <maxTime>2.00</maxTime>
+        <systemRepairMultiplier>1</systemRepairMultiplier>
+        <erodeShields>false</erodeShields>
+        <roomAnim renderLayer="1">
+            <anim animType="default" animBorder="2">invisible</anim>
+            <wallAnim>irradiate_wall</wallAnim>
+        </roomAnim>
+    </erosion>
+</weaponBlueprint>
+
+<weaponBlueprint name="TERRAN_IRRADIATE_EROSION_PULSE_3">
+    <type>LASER</type>
+    <title id="NOYB"/>
+    <short id="NOYB"/>
+    <desc id="NOYB"/>
+
+    <sp>10</sp>
+    <damage>0</damage>
+    <rarity>0</rarity>
+    <accuracyMod>100</accuracyMod>
+    <erosionChance>100</erosionChance>
+
+    <erosion>
+        <speed>0.10</speed>
+        <maxSpeed>1.2</maxSpeed>
+        <time>7.5</time>
+        <maxTime>30.0</maxTime>
+        <systemRepairMultiplier>1</systemRepairMultiplier>
+        <erodeShields>false</erodeShields>
+        <roomAnim renderLayer="1">
+            <anim animType="default" animBorder="2">invisible</anim>
+            <wallAnim>irradiate_wall</wallAnim>
+        </roomAnim>
+    </erosion>
+</weaponBlueprint>
+
+<weaponBlueprint name="TERRAN_IRRADIATE_EROSION_PULSE_4">
+    <type>LASER</type>
+    <title id="NOYB"/>
+    <short id="NOYB"/>
+    <desc id="NOYB"/>
+
+    <sp>0</sp>
+    <damage>0</damage>
+    <rarity>0</rarity>
+    <accuracyMod>100</accuracyMod>
+    <erosionChance>100</erosionChance>
+
+    <erosion>
+        <speed>0.5</speed>
+        <maxSpeed>2</maxSpeed>
+        <time>10.0</time>
+        <maxTime>30.0</maxTime>
+        <systemRepairMultiplier>1</systemRepairMultiplier>
+        <erodeShields>false</erodeShields>
+        <roomAnim renderLayer="1">
+            <anim animType="default" animBorder="2">invisible</anim>
+            <wallAnim>irradiate_wall</wallAnim>
+        </roomAnim>
+    </erosion>
+</weaponBlueprint>
+
+<weaponBlueprint name="TERRAN_IRRADIATE_EROSION_PULSE_5">
+    <type>LASER</type>
+    <title id="NOYB"/>
+    <short id="NOYB"/>
+    <desc id="NOYB"/>
+
+    <sp>0</sp>
+    <damage>0</damage>
+    <rarity>0</rarity>
+    <accuracyMod>100</accuracyMod>
+    <erosionChance>100</erosionChance>
+
+    <erosion>
+        <speed>0.5</speed>
+        <maxSpeed>2</maxSpeed>
+        <time>12.5</time>
+        <maxTime>30.0</maxTime>
+        <systemRepairMultiplier>1</systemRepairMultiplier>
+        <erodeShields>false</erodeShields>
+        <roomAnim renderLayer="1">
+            <anim animType="default" animBorder="2">invisible</anim>
+            <wallAnim>irradiate_wall</wallAnim>
+        </roomAnim>
+    </erosion>
+</weaponBlueprint>
+
 <weaponBlueprint name="TERRAN_IRRADIATE_EROSION_1">
     <type>LASER</type>
 	<title id="NOYB"/>
