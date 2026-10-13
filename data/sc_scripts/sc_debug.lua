@@ -1,5 +1,5 @@
 --[[
-DESCRIPTION: Compact fixed on-screen active shield cooldown diagnostic.
+DESCRIPTION: Compact fixed on-screen active shield drone diagnostic.
     Diagnostic only; gameplay logic does not depend on this file.
 ]]
 
@@ -19,13 +19,8 @@ mods.sc.activeShieldCooldownDebug = {
 
 local debug = mods.sc.activeShieldCooldownDebug
 
-local PANEL_X = 20
-local PANEL_Y = 115
-local PANEL_W = 690
-local PANEL_H = 130
-
-local TEXT_X = PANEL_X + 8
-local TEXT_Y = PANEL_Y + 6
+local TEXT_X = 20
+local TEXT_Y = 115
 local LINE_HEIGHT = 16
 local FONT = 10
 
@@ -89,19 +84,47 @@ local function get_drone_weapon_cooldown(drone)
     return nil
 end
 
+local function get_drone_owner_id(drone)
+    local success, ownerId = pcall(function()
+        return drone:GetOwnerId()
+    end)
+
+    if success then
+        return ownerId
+    end
+
+    return nil
+end
+
+local function get_drone_type_text(drone)
+    if not drone or not drone.blueprint then return "-" end
+
+    if drone.blueprint.typeName then
+        return tostring(drone.blueprint.typeName)
+    end
+
+    if drone.blueprint.type then
+        return tostring(drone.blueprint.type)
+    end
+
+    return "-"
+end
+
 local function get_drone_name(drone)
     if not drone or not drone.blueprint then return "none" end
     return drone.blueprint.name or "unk"
 end
 
-local function get_active_shield_drone_key(shipId, slot, drone)
-    if not drone or not drone.blueprint then return nil end
-    return tostring(shipId) .. ":" .. tostring(slot) .. ":" .. tostring(drone.blueprint.name)
-end
+local function ship_has_active_shield_drone(shipManager)
+    if not shipManager then return false end
 
-local function get_script_cooldown(key)
-    if not key or not mods.sc.activeShieldCooldowns then return 0 end
-    return mods.sc.activeShieldCooldowns[key] or 0
+    for drone in vter(shipManager.spaceDrones) do
+        if drone_is_active_and_powered(drone) then
+            return true
+        end
+    end
+
+    return false
 end
 
 local function get_projectile_target_ship_id(projectile, allowOwnerFallback)
@@ -128,6 +151,21 @@ local function get_projectile_target_ship_id(projectile, allowOwnerFallback)
     return targetShipId, usedOwnerFallback
 end
 
+local function get_drone_projectile_target_ship_id(projectile, spacedrone)
+    local droneOwnerId = get_drone_owner_id(spacedrone)
+
+    if droneOwnerId == 0 or droneOwnerId == 1 then
+        return 1 - droneOwnerId, true, droneOwnerId
+    end
+
+    if projectile and (projectile.currentSpace == 0 or projectile.currentSpace == 1) then
+        return projectile.currentSpace, false, droneOwnerId
+    end
+
+    local targetShipId, fallback = get_projectile_target_ship_id(projectile, true)
+    return targetShipId, fallback, droneOwnerId
+end
+
 local function count_incoming_enemy_projectiles(shipId)
     if not Hyperspace.App or not Hyperspace.App.world or not Hyperspace.App.world.space then
         return 0
@@ -138,7 +176,7 @@ local function count_incoming_enemy_projectiles(shipId)
     for projectile in vter(Hyperspace.App.world.space.projectiles) do
         local projectileIsActive = projectile._targetable ~= false and not projectile.passedTarget
         local projectileIsEnemy = projectile.ownerId ~= shipId
-        local projectileIsAtShip = projectile.currentSpace == shipId
+        local projectileIsAtShip = projectile.currentSpace == shipId or projectile.destinationSpace == shipId
 
         if projectileIsActive and projectileIsEnemy and projectileIsAtShip then
             count = count + 1
@@ -157,22 +195,21 @@ local function get_drone_status(shipManager)
         slotIndex = slotIndex + 1
 
         if drone_has_active_shield_tag(drone) then
-            local key = get_active_shield_drone_key(shipManager.iShipId, slotIndex, drone)
-            local scriptCooldown = get_script_cooldown(key)
             local active = drone_is_active_and_powered(drone)
+            local weaponCooldown = drone.weaponCooldown or 0
 
             return {
                 slot = slotIndex,
-                key = key,
                 name = get_drone_name(drone),
+                typeText = get_drone_type_text(drone),
                 active = active,
-                ready = active and scriptCooldown <= 0,
+                ready = active and weaponCooldown <= 0,
                 deployed = drone.deployed,
                 powered = drone.powered,
                 dead = drone.bDead,
-                scriptCooldown = scriptCooldown,
-                weaponCooldown = drone.weaponCooldown or 0,
-                getWeaponCooldown = get_drone_weapon_cooldown(drone)
+                weaponCooldown = weaponCooldown,
+                getWeaponCooldown = get_drone_weapon_cooldown(drone),
+                ownerId = get_drone_owner_id(drone)
             }
         end
     end
@@ -184,25 +221,23 @@ local function count_ready_active_shield_drones(shipManager)
     if not shipManager then return 0 end
 
     local count = 0
-    local slotIndex = 0
 
     for drone in vter(shipManager.spaceDrones) do
-        slotIndex = slotIndex + 1
-
-        if drone_is_active_and_powered(drone) then
-            local key = get_active_shield_drone_key(shipManager.iShipId, slotIndex, drone)
-
-            if get_script_cooldown(key) <= 0 then
-                count = count + 1
-            end
+        if drone_is_active_and_powered(drone) and (drone.weaponCooldown or 0) <= 0 then
+            count = count + 1
         end
     end
 
     return count
 end
 
-local function record_threat(eventType, projectile, targetShipId, usedOwnerFallback, isBeam, sourceName)
+local function record_threat(eventType, projectile, targetShipId, usedOwnerFallback, isBeam, sourceName, droneOwnerId)
     local shipManager = get_ship(targetShipId)
+
+    if not ship_has_active_shield_drone(shipManager) then
+        return
+    end
+
     local droneStatus = get_drone_status(shipManager)
     local readyCount = count_ready_active_shield_drones(shipManager)
 
@@ -217,6 +252,7 @@ local function record_threat(eventType, projectile, targetShipId, usedOwnerFallb
         destinationSpace = projectile and projectile.destinationSpace or nil,
         targetShipId = targetShipId,
         usedOwnerFallback = usedOwnerFallback,
+        droneOwnerId = droneOwnerId,
         superBefore = get_super_shields(shipManager),
         droneStatus = droneStatus,
         readyCount = readyCount
@@ -224,12 +260,12 @@ local function record_threat(eventType, projectile, targetShipId, usedOwnerFallb
 
     add_recent_event(
         string.format(
-            "T %s s%s %s r%d c%s",
+            "T %s s%s %s r%d w%s",
             eventType,
             tostring(targetShipId),
             sourceName or "unk",
             readyCount,
-            droneStatus and num(droneStatus.scriptCooldown) or "-"
+            droneStatus and num(droneStatus.weaponCooldown) or "-"
         )
     )
 end
@@ -251,7 +287,7 @@ script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile,
     local sourceTagged = drone_has_active_shield_tag(spacedrone)
 
     if projectile and not sourceTagged then
-        local targetShipId, usedOwnerFallback = get_projectile_target_ship_id(projectile, true)
+        local targetShipId, usedOwnerFallback, droneOwnerId = get_drone_projectile_target_ship_id(projectile, spacedrone)
 
         if targetShipId then
             record_threat(
@@ -260,7 +296,8 @@ script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile,
                 targetShipId,
                 usedOwnerFallback,
                 false,
-                sourceName
+                sourceName,
+                droneOwnerId
             )
         end
     end
@@ -276,13 +313,8 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
     end
 
     local isBeam = weapon and weapon.blueprint and weapon.blueprint.typeName == "BEAM"
-
-    if not isBeam and projectile.currentSpace ~= projectile.ownerId then
-        return Defines.Chain.CONTINUE
-    end
-
     local weaponName = weapon and weapon.blueprint and weapon.blueprint.name or "unk"
-    local targetShipId, usedOwnerFallback = get_projectile_target_ship_id(projectile, true)
+    local targetShipId, usedOwnerFallback = get_projectile_target_ship_id(projectile, isBeam)
 
     if targetShipId then
         record_threat(
@@ -291,7 +323,8 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
             targetShipId,
             usedOwnerFallback,
             isBeam,
-            weaponName
+            weaponName,
+            nil
         )
     end
 
@@ -319,18 +352,37 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
 
         add_recent_event(
             string.format(
-                "S s%d %d>%d in%d c%s",
+                "S s%d %d>%d in%d w%s",
                 shipId,
                 previousSuper,
                 currentSuper,
                 debug.lastSuperChange.incoming,
-                status and num(status.scriptCooldown) or "-"
+                status and num(status.weaponCooldown) or "-"
             )
         )
     end
 
     debug.lastSuperByShip[shipId] = currentSuper
 end)
+
+local function state_line()
+    local state = mods.sc.activeShieldState
+    if not state then return "st none" end
+
+    local threatSource = state.lastThreat and state.lastThreat.sourceName or "-"
+    local useSource = state.lastUse and state.lastUse.sourceName or "-"
+    local blockSource = state.lastBlock and state.lastBlock.sourceName or "-"
+
+    return string.format(
+        "st th%d u%d b%d t%s u%s b%s",
+        state.threats or 0,
+        state.used or 0,
+        state.blocked or 0,
+        tostring(threatSource),
+        tostring(useSource),
+        tostring(blockSource)
+    )
+end
 
 local function ship_line(shipId, label)
     local shipManager = get_ship(shipId)
@@ -341,13 +393,14 @@ local function ship_line(shipId, label)
 
     if status then
         droneText = string.format(
-            "%s a%s r%s c%s/%s w%s d%s p%s x%s",
+            "%s ty%s a%s r%s w%s/%s o%s d%s p%s x%s",
             status.name,
+            status.typeText,
             yn(status.active),
             yn(status.ready),
-            num(status.scriptCooldown),
-            num(status.getWeaponCooldown),
             num(status.weaponCooldown),
+            num(status.getWeaponCooldown),
+            tostring(status.ownerId),
             yn(status.deployed),
             yn(status.powered),
             yn(status.dead)
@@ -374,14 +427,6 @@ local function draw_panel()
     Graphics.CSurface.GL_PushMatrix()
     Graphics.CSurface.GL_LoadIdentity()
 
-    Graphics.CSurface.GL_DrawRect(
-        PANEL_X,
-        PANEL_Y,
-        PANEL_W,
-        PANEL_H,
-        Graphics.GL_Color(0, 0, 0, 0.70)
-    )
-
     Graphics.CSurface.GL_SetColor(
         Graphics.GL_Color(1, 1, 1, 1)
     )
@@ -389,28 +434,29 @@ local function draw_panel()
     draw_line(0, string.format("t%d th%d pf%d df%d", debug.tickCount, debug.threatCount, debug.projectileFireCount, debug.droneFireCount))
     draw_line(1, ship_line(0, "P"))
     draw_line(2, ship_line(1, "E"))
+    draw_line(3, state_line())
 
     local threat = debug.lastThreat
 
     if threat then
         local gate = (threat.readyCount or 0) > 0 and "OK" or "BLK"
-        draw_line(3, string.format("T %s s%s b%s %s sh%s r%d %s", threat.eventType, tostring(threat.targetShipId), yn(threat.isBeam), tostring(threat.sourceName), tostring(threat.superBefore), threat.readyCount or 0, gate))
-        draw_line(4, string.format("o%s c%s d%s fb%s", tostring(threat.ownerId), tostring(threat.currentSpace), tostring(threat.destinationSpace), yn(threat.usedOwnerFallback)))
+        draw_line(4, string.format("T %s s%s b%s %s sh%s r%d %s", threat.eventType, tostring(threat.targetShipId), yn(threat.isBeam), tostring(threat.sourceName), tostring(threat.superBefore), threat.readyCount or 0, gate))
+        draw_line(5, string.format("pO%s dO%s c%s d%s fb%s", tostring(threat.ownerId), tostring(threat.droneOwnerId), tostring(threat.currentSpace), tostring(threat.destinationSpace), yn(threat.usedOwnerFallback)))
     else
-        draw_line(3, "T none")
+        draw_line(4, "T none")
     end
 
     local superChange = debug.lastSuperChange
 
     if superChange then
         local status = superChange.droneStatus
-        draw_line(5, string.format("S s%d %d>%d in%d r%d c%s", superChange.shipId, superChange.previous, superChange.current, superChange.incoming, superChange.readyCount or 0, status and num(status.scriptCooldown) or "-"))
+        draw_line(6, string.format("S s%d %d>%d in%d r%d w%s", superChange.shipId, superChange.previous, superChange.current, superChange.incoming, superChange.readyCount or 0, status and num(status.weaponCooldown) or "-"))
     else
-        draw_line(5, "S none")
+        draw_line(6, "S none")
     end
 
     for i = 1, MAX_RECENT_EVENTS do
-        draw_line(5 + i, debug.recentEvents[i] or "-")
+        draw_line(6 + i, debug.recentEvents[i] or "-")
     end
 
     Graphics.CSurface.GL_PopMatrix()
