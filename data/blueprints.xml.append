@@ -1707,9 +1707,9 @@ END OF SUBSYSTEMS
 
     <erosion>
         <speed>0.05</speed>
-        <maxSpeed>0.60</maxSpeed>
-        <time>1.25</time>
-        <maxTime>2.00</maxTime>
+        <maxSpeed>1.25</maxSpeed>
+        <time>1.5</time>
+        <maxTime>1.8</maxTime>
         <systemRepairMultiplier>1</systemRepairMultiplier>
         <erodeShields>false</erodeShields>
     </erosion>
@@ -1730,9 +1730,9 @@ END OF SUBSYSTEMS
 
     <erosion>
         <speed>0.075</speed>
-        <maxSpeed>0.90</maxSpeed>
-        <time>1.25</time>
-        <maxTime>2.00</maxTime>
+        <maxSpeed>1.25</maxSpeed>
+        <time>1.5</time>
+        <maxTime>1.8</maxTime>
         <systemRepairMultiplier>1</systemRepairMultiplier>
         <erodeShields>false</erodeShields>
     </erosion>
@@ -1753,9 +1753,9 @@ END OF SUBSYSTEMS
 
     <erosion>
         <speed>0.10</speed>
-        <maxSpeed>1.2</maxSpeed>
-        <time>1.25</time>
-        <maxTime>2.0</maxTime>
+        <maxSpeed>1.25</maxSpeed>
+        <time>1.5</time>
+        <maxTime>1.8</maxTime>
         <systemRepairMultiplier>1</systemRepairMultiplier>
         <erodeShields>false</erodeShields>
     </erosion>
@@ -1776,9 +1776,9 @@ END OF SUBSYSTEMS
 
     <erosion>
         <speed>0.125</speed>
-        <maxSpeed>1.5</maxSpeed>
-        <time>1.25</time>
-        <maxTime>2.0</maxTime>
+        <maxSpeed>1.25</maxSpeed>
+        <time>1.5</time>
+        <maxTime>1.8</maxTime>
         <systemRepairMultiplier>1</systemRepairMultiplier>
         <erodeShields>false</erodeShields>
     </erosion>
@@ -1799,9 +1799,9 @@ END OF SUBSYSTEMS
 
     <erosion>
         <speed>0.15</speed>
-        <maxSpeed>1.8</maxSpeed>
-        <time>1.25</time>
-        <maxTime>2.0</maxTime>
+        <maxSpeed>1.25</maxSpeed>
+        <time>1.5</time>
+        <maxTime>1.8</maxTime>
         <systemRepairMultiplier>1</systemRepairMultiplier>
         <erodeShields>false</erodeShields>
     </erosion>
@@ -2721,7 +2721,7 @@ TERRAN_GOLIATH-->
 	<dodge>10</dodge>					
 	<speed>20</speed>					
 	<cost>60</cost>
-	<sc-active-shield/>				
+	<sc-active-shield value="1"/>				
 	<droneImage>terran_defense_1</droneImage>
 	<sc-droneEngine value="matrix_engine_1"/>			
 	<weaponBlueprint>TERRAN_DEFENSE_PROJECTILE</weaponBlueprint>					
@@ -2736,11 +2736,11 @@ TERRAN_GOLIATH-->
 	<short id="drone_TERRAN_DEFENSE_2_SHORT"/>
 	<desc id="drone_TERRAN_DEFENSE_2_DESC"/>
 	<power>3</power>
-	<cooldown>3000</cooldown><!-- was 1500 -->
+	<cooldown>2000</cooldown><!-- was 1500 -->
 	<dodge>10</dodge>					
 	<speed>20</speed>					
 	<cost>80</cost>
-	<sc-active-shield/>				
+	<sc-active-shield value="2"/>
 	<droneImage>terran_defense_2</droneImage>
 	<sc-droneEngine value="matrix_engine_2"/>				
 	<weaponBlueprint>TERRAN_DEFENSE_PROJECTILE</weaponBlueprint>					
@@ -2759,7 +2759,7 @@ TERRAN_GOLIATH-->
 	<dodge>10</dodge>					
 	<speed>20</speed>					
 	<cost>140</cost>
-	<sc-active-shield/>			
+	<sc-active-shield value="3"/>
 	<droneImage>terran_defense_3</droneImage>
 	<sc-droneEngine value="matrix_engine_3"/>			
 	<weaponBlueprint>TERRAN_DEFENSE_PROJECTILE</weaponBlueprint>					

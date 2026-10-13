@@ -145,6 +145,30 @@ local function add_super_shield_if_ready(shipManager, sourceName, isBeam)
     return true
 end
 
+local function add_super_shield_from_native_fire(spacedrone)
+    local ownerId = get_drone_owner_id(spacedrone)
+    if ownerId ~= 0 and ownerId ~= 1 then return false end
+
+    local shipManager = Hyperspace.ships(ownerId)
+    if not shipManager or not shipManager.shieldSystem then return false end
+    if not drone_is_active_and_powered(spacedrone) then return false end
+
+    projectileDangerTimer[ownerId] = PROJECTILE_DANGER_DURATION
+    add_super_shield(shipManager)
+    put_active_shield_drone_on_cooldown(spacedrone)
+
+    activeShieldState.used = activeShieldState.used + 1
+    activeShieldState.lastUse = {
+        shipId = ownerId,
+        sourceName = "native_fire",
+        isBeam = false,
+        droneName = spacedrone.blueprint and spacedrone.blueprint.name or nil,
+        weaponCooldown = spacedrone.weaponCooldown or 0
+    }
+
+    return true
+end
+
 local function add_super_shields_until(shipManager, desiredSuperShields)
     local shieldSystem = shipManager.shieldSystem
     if not shieldSystem then return end
@@ -233,6 +257,8 @@ end
 
 script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile, spacedrone)
     if drone_has_active_shield_tag(spacedrone) then
+        add_super_shield_from_native_fire(spacedrone)
+
         if projectile then
             projectile:Kill()
         end
@@ -252,11 +278,7 @@ script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile,
     droneProjectileThreats[projectile] = true
 
     local sourceName = spacedrone and spacedrone.blueprint and spacedrone.blueprint.name or "drone"
-
-    if create_threat_shield(targetShipId, false, sourceName) then
-        projectile:Kill()
-        return Defines.Chain.PREEMPT
-    end
+    create_threat_shield(targetShipId, false, sourceName)
 
     return Defines.Chain.CONTINUE
 end)
