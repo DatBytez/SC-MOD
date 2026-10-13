@@ -1560,7 +1560,7 @@
 	<mod-append:ship name="PLAYER_SHIP_PLAYER_TERRAN_VESSEL" a="true" b="false" c="false" />
 		<mod-append:customShip name="PLAYER_SHIP_PLAYER_TERRAN_VESSEL">
 			<hiddenAug>TERRAN_SHIP</hiddenAug>
-			<crewLimit>8</crewLimit>
+			<crewLimit>6</crewLimit>
 			<systemLimit>8</systemLimit>
 			<subsystemLimit>5</subsystemLimit>
 			<exclusivityOverride>
@@ -2000,7 +2000,6 @@
     <mod-append:script>data/sc_scripts/sc_pilot.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_firefill.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_breachfill.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_filter.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_chain.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_charge.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_paired.lua</mod-append:script>
@@ -2009,6 +2008,7 @@
     <mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_size.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_irradiate.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_filter.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_halo.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_emp.lua</mod-append:script>
 
@@ -2044,9 +2044,10 @@
 	<mod-append:script>data/sc_scripts/sc_drone_pod.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_comsat.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_defense.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_active_shield_damage_down.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
 
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
-    <!-- <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script> -->
+    <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
 </mod:findLike>
 </FTL>

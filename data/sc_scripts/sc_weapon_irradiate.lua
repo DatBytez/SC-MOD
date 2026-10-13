@@ -3,11 +3,10 @@ DESCRIPTION: Applies additional Irradiate effects to each newly struck beam tile
         - Hits apply bonus erosion and crew damage effects from hidden blueprints.
         - Crew struck by Irradiate periodically apply additional erosion to their current room.
 TAG: <sc-irradiate/>
-DEPENDENCIES: sc_tag.lua, sc_projectile_scaling.lua, Multiverse userdata_table
+DEPENDENCIES: sc_tag.lua, Multiverse userdata_table
 ]]
 
 local userdata_table = mods.multiverse.userdata_table
-local scaling = mods.sc.scaling
 local irradiateWeapons = {}
 
 mods.sc.tag.register("weapon", "sc-irradiate", irradiateWeapons)
@@ -26,11 +25,13 @@ local function get_tile_center(shipId, location)
     )
 end
 
-local function get_irradiate_blueprint_name(projectile)
+local function get_irradiate_blueprint_name(projectile, damage)
     if not irradiateWeapons[projectile.extend.name] then return nil end
+    if damage.iDamage <= 0 then return nil end
 
-    local level = math.min(scaling.get_level(projectile, "chainstep"), 4)
-    return "TERRAN_IRRADIATE_EROSION_" .. level + 1
+    local level = math.min(math.floor(damage.iDamage), 5)
+
+    return "TERRAN_IRRADIATE_EROSION_" .. level
 end
 
 local function get_irradiate_level(projectile)
@@ -86,12 +87,12 @@ local function spawn_erosion_pulse(crew, data)
     )
 end
 
-script.on_internal_event(Defines.InternalEvents.DAMAGE_BEAM, function(shipManager, projectile, location, _damage, _realNewTile, beamHitType)
+script.on_internal_event(Defines.InternalEvents.DAMAGE_BEAM, function(shipManager, projectile, location, damage, _realNewTile, beamHitType)
     if beamHitType == Defines.BeamHit.SAME_TILE then
         return Defines.Chain.CONTINUE, beamHitType
     end
 
-    local blueprintName = get_irradiate_blueprint_name(projectile)
+    local blueprintName = get_irradiate_blueprint_name(projectile, damage)
 
     if blueprintName then
         spawn_irradiate_impact(

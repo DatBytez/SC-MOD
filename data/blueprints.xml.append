@@ -1833,7 +1833,7 @@ END OF SUBSYSTEMS
 				<blackList>
 					<blueprintList load="TERRAN_SCV"/>
 				</blackList>
-				<maxStacks>3</maxStacks>
+				<maxStacks>10</maxStacks>
 				<boostAnim>sc_irradiate</boostAnim>
 			</statBoost>
 
@@ -1841,7 +1841,7 @@ END OF SUBSYSTEMS
 			<crewTarget>ALL</crewTarget>
 			<droneTarget>CREW</droneTarget>
 			<duration>25</duration>
-			<maxStacks>3</maxStacks>
+			<maxStacks>10</maxStacks>
 		</statBoost>
     </statBoosts>
 </weaponBlueprint>
@@ -1871,7 +1871,7 @@ END OF SUBSYSTEMS
 				<blackList>
 					<blueprintList load="TERRAN_SCV"/>
 				</blackList>
-				<maxStacks>3</maxStacks>
+				<maxStacks>10</maxStacks>
 				<boostAnim>sc_irradiate</boostAnim>
 			</statBoost>
 			
@@ -1879,7 +1879,7 @@ END OF SUBSYSTEMS
 			<crewTarget>ALL</crewTarget>
 			<droneTarget>CREW</droneTarget>
 			<duration>25</duration>
-			<maxStacks>3</maxStacks>
+			<maxStacks>10</maxStacks>
 		</statBoost>
     </statBoosts>
 </weaponBlueprint>
@@ -1909,7 +1909,7 @@ END OF SUBSYSTEMS
 				<blackList>
 					<blueprintList load="TERRAN_SCV"/>
 				</blackList>
-				<maxStacks>3</maxStacks>
+				<maxStacks>10</maxStacks>
 				<boostAnim>sc_irradiate</boostAnim>
 			</statBoost>
 
@@ -1917,7 +1917,7 @@ END OF SUBSYSTEMS
 			<crewTarget>ALL</crewTarget>
 			<droneTarget>CREW</droneTarget>
 			<duration>25</duration>
-			<maxStacks>3</maxStacks>
+			<maxStacks>10</maxStacks>
 		</statBoost>
     </statBoosts>
 </weaponBlueprint>
@@ -1947,7 +1947,7 @@ END OF SUBSYSTEMS
 				<blackList>
 					<blueprintList load="TERRAN_SCV"/>
 				</blackList>
-				<maxStacks>3</maxStacks>
+				<maxStacks>10</maxStacks>
 				<boostAnim>sc_irradiate</boostAnim>
 			</statBoost>
 
@@ -1955,7 +1955,7 @@ END OF SUBSYSTEMS
 			<crewTarget>ALL</crewTarget>
 			<droneTarget>CREW</droneTarget>
 			<duration>25</duration>
-			<maxStacks>3</maxStacks>
+			<maxStacks>10</maxStacks>
 		</statBoost>
     </statBoosts>
 </weaponBlueprint>
@@ -2717,7 +2717,7 @@ TERRAN_GOLIATH-->
 	<short id="drone_TERRAN_DEFENSE_1_SHORT"/>
 	<desc id="drone_TERRAN_DEFENSE_1_DESC"/>
 	<power>2</power>					
-	<cooldown>2000</cooldown><!-- was 1500/2000-->					
+	<cooldown>2500</cooldown><!-- was 1500/2000-->					
 	<dodge>10</dodge>					
 	<speed>20</speed>					
 	<cost>60</cost>
@@ -2736,7 +2736,7 @@ TERRAN_GOLIATH-->
 	<short id="drone_TERRAN_DEFENSE_2_SHORT"/>
 	<desc id="drone_TERRAN_DEFENSE_2_DESC"/>
 	<power>3</power>
-	<cooldown>2000</cooldown><!-- was 1500 -->
+	<cooldown>2500</cooldown><!-- was 1500 -->
 	<dodge>10</dodge>					
 	<speed>20</speed>					
 	<cost>80</cost>
@@ -2755,7 +2755,7 @@ TERRAN_GOLIATH-->
 	<short id="drone_TERRAN_DEFENSE_3_SHORT"/>					
 	<desc id="drone_TERRAN_DEFENSE_3_DESC"/>					
 	<power>4</power>					
-	<cooldown>2000</cooldown><!-- was 1000 -->					
+	<cooldown>2500</cooldown><!-- was 1000 -->					
 	<dodge>10</dodge>					
 	<speed>20</speed>					
 	<cost>140</cost>
