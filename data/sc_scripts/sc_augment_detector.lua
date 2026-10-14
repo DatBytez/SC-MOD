@@ -27,4 +27,7 @@ local function get_detector_strength(ship)
     return sensors:GetEffectivePower()
 end
 
-targeting.register_source("sc_detector", get_detector_strength)
+if targeting and targeting.register_source then
+    targeting.register_source("sc_detector", get_detector_strength)
+end
+-- targeting.register_source("sc_detector", get_detector_strength)

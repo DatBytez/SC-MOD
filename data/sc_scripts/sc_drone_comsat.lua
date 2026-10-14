@@ -151,7 +151,10 @@ local function update_comsat_scan(shipId, drone)
     scanTimers[shipId][droneId] = remaining
 end
 
-targeting.register_source("sc_comsat", get_comsat_strength)
+-- targeting.register_source("sc_comsat", get_comsat_strength)
+if targeting and targeting.register_source then
+    targeting.register_source("sc_comsat", get_comsat_strength)
+end
 
 local function reset_comsat_state()
     comsatTimers[0] = {}
