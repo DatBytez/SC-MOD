@@ -368,7 +368,7 @@
 		<animBase>human</animBase>
 		<maxHealth>80</maxHealth>
 		<canFight>false</canFight>
-		<canSabotage>true</canSabotage>
+		<canSabotage>false</canSabotage>
 		<canShoot>false</canShoot>
 		<crewSlots>0.5</crewSlots>
 		<deathSounds>
@@ -1980,8 +1980,10 @@
 
 </store>
 
-
-
+<!-- TODO: ONLY REQUIRED FOR MV -->
+<mod:findName type="req" name="LIST_CHECK_ANY_CREW" panic="true">
+    <mod-append:req type="any" load="TERRAN_LIST_CREW_ALL"/>
+</mod:findName>
 
 
 <mod:findLike type="scripts" limit="1">
@@ -2044,10 +2046,13 @@
 	<mod-append:script>data/sc_scripts/sc_drone_pod.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_comsat.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_defense.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_active_shield_damage_down.lua</mod-append:script>
+	<!-- <mod-append:script>data/sc_scripts/sc_active_shield_damage_down.lua</mod-append:script> -->
     <mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
 
+	
+    <mod-append:script>data/sc_scripts/sc_sensors.lua</mod-append:script>
+
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
+    <!-- <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script> -->
 </mod:findLike>
 </FTL>

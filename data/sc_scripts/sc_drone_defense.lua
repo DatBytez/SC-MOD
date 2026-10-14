@@ -6,7 +6,7 @@ DESCRIPTION: Active shield drones create temporary super shields while threats a
         - Incoming beams create defensive super shields when fired.
         - Threat shields use the active shield drone's real cooldown.
         - Clears all super shields while an active shield drone is deployed and no enemy projectiles or beams are incoming.
-TAG: <sc-active-shield/>
+TAG: <sc-active-shield value="1"/>
 SOURCE CREDIT: TNE_ACTIVE_DRONE_LUA.lua, Fusion drones.lua
 ]]
 
@@ -26,7 +26,13 @@ mods.sc.activeShieldState = mods.sc.activeShieldState or {
 local activeDrones = mods.sc.activeShield
 local activeShieldState = mods.sc.activeShieldState
 
-mods.sc.tag.register("drone", "sc-active-shield", activeDrones)
+mods.sc.tag.register("drone", "sc-active-shield", activeDrones, function(tagNode)
+    local valueAttribute = tagNode:first_attribute("value")
+    if not valueAttribute then return 1 end
+
+    local value = tonumber(valueAttribute:value()) or 1
+    return math.max(1, math.floor(value))
+end)
 
 local BEAM_DANGER_DURATION = 1.5
 local PROJECTILE_DANGER_DURATION = 0.25
@@ -42,10 +48,24 @@ local projectileDangerTimer = {
 }
 
 local droneProjectileThreats = setmetatable({}, {__mode = "k"})
+local activeShieldCycleSpent = setmetatable({}, {__mode = "k"})
 
 local function drone_has_active_shield_tag(drone)
     if not drone or not drone.blueprint then return false end
     return activeDrones[drone.blueprint.name]
+end
+
+local function get_active_shield_levels(drone)
+    if not drone or not drone.blueprint then return 1 end
+
+    local shieldLevels = activeDrones[drone.blueprint.name]
+
+    if shieldLevels == true then
+        return 1
+    end
+
+    shieldLevels = tonumber(shieldLevels) or 1
+    return math.max(1, math.floor(shieldLevels))
 end
 
 local function drone_is_active_and_powered(drone)
@@ -64,6 +84,36 @@ local function get_drone_owner_id(drone)
     return nil
 end
 
+local function update_active_shield_cycle_lock(drone)
+    if not drone_has_active_shield_tag(drone) then return end
+
+    if activeShieldCycleSpent[drone] and (drone.weaponCooldown or 0) <= 0 then
+        activeShieldCycleSpent[drone] = nil
+    end
+end
+
+local function update_active_shield_cycle_locks(shipManager)
+    for drone in vter(shipManager.spaceDrones) do
+        update_active_shield_cycle_lock(drone)
+    end
+end
+
+local function drone_can_activate_shield(drone, ignoreCooldown)
+    if not drone_is_active_and_powered(drone) then return false end
+
+    update_active_shield_cycle_lock(drone)
+
+    if activeShieldCycleSpent[drone] then
+        return false
+    end
+
+    if not ignoreCooldown and (drone.weaponCooldown or 0) > 0 then
+        return false
+    end
+
+    return true
+end
+
 local function ship_has_active_shield_drone(shipManager)
     for drone in vter(shipManager.spaceDrones) do
         if drone_is_active_and_powered(drone) then
@@ -76,7 +126,7 @@ end
 
 local function get_ready_active_shield_drone(shipManager)
     for drone in vter(shipManager.spaceDrones) do
-        if drone_is_active_and_powered(drone) and (drone.weaponCooldown or 0) <= 0 then
+        if drone_can_activate_shield(drone, false) then
             return drone
         end
     end
@@ -116,10 +166,10 @@ local function add_super_shield(shipManager)
     shieldSystem:AddSuperShield(Hyperspace.Point(shieldLocation.x, shieldLocation.y))
 end
 
-local function add_super_shield_if_ready(shipManager, sourceName, isBeam)
-    local activeShieldDrone = get_ready_active_shield_drone(shipManager)
+local function activate_matrix_shield(shipManager, sourceName, isBeam, activeShieldDrone, ignoreCooldown)
+    activeShieldDrone = activeShieldDrone or get_ready_active_shield_drone(shipManager)
 
-    if not activeShieldDrone then
+    if not activeShieldDrone or not drone_can_activate_shield(activeShieldDrone, ignoreCooldown) then
         activeShieldState.blocked = activeShieldState.blocked + 1
         activeShieldState.lastBlock = {
             shipId = shipManager.iShipId,
@@ -130,7 +180,13 @@ local function add_super_shield_if_ready(shipManager, sourceName, isBeam)
         return false
     end
 
-    add_super_shield(shipManager)
+    local shieldLevels = get_active_shield_levels(activeShieldDrone)
+
+    for i = 1, shieldLevels do
+        add_super_shield(shipManager)
+    end
+
+    activeShieldCycleSpent[activeShieldDrone] = true
     put_active_shield_drone_on_cooldown(activeShieldDrone)
 
     activeShieldState.used = activeShieldState.used + 1
@@ -139,10 +195,15 @@ local function add_super_shield_if_ready(shipManager, sourceName, isBeam)
         sourceName = sourceName,
         isBeam = isBeam,
         droneName = activeShieldDrone.blueprint and activeShieldDrone.blueprint.name or nil,
+        shieldLevels = shieldLevels,
         weaponCooldown = activeShieldDrone.weaponCooldown or 0
     }
 
     return true
+end
+
+local function add_super_shield_if_ready(shipManager, sourceName, isBeam)
+    return activate_matrix_shield(shipManager, sourceName, isBeam, nil, false)
 end
 
 local function add_super_shield_from_native_fire(spacedrone)
@@ -151,34 +212,9 @@ local function add_super_shield_from_native_fire(spacedrone)
 
     local shipManager = Hyperspace.ships(ownerId)
     if not shipManager or not shipManager.shieldSystem then return false end
-    if not drone_is_active_and_powered(spacedrone) then return false end
 
     projectileDangerTimer[ownerId] = PROJECTILE_DANGER_DURATION
-    add_super_shield(shipManager)
-    put_active_shield_drone_on_cooldown(spacedrone)
-
-    activeShieldState.used = activeShieldState.used + 1
-    activeShieldState.lastUse = {
-        shipId = ownerId,
-        sourceName = "native_fire",
-        isBeam = false,
-        droneName = spacedrone.blueprint and spacedrone.blueprint.name or nil,
-        weaponCooldown = spacedrone.weaponCooldown or 0
-    }
-
-    return true
-end
-
-local function add_super_shields_until(shipManager, desiredSuperShields)
-    local shieldSystem = shipManager.shieldSystem
-    if not shieldSystem then return end
-
-    local superPower = shieldSystem.shields.power.super
-    local currentSuper = superPower.first
-
-    for i = currentSuper + 1, desiredSuperShields do
-        if not add_super_shield_if_ready(shipManager, "incoming", false) then break end
-    end
+    return activate_matrix_shield(shipManager, "native_fire", false, spacedrone, true)
 end
 
 local function pop_all_super_shields(shipManager)
@@ -328,24 +364,19 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     local shipId = shipManager.iShipId
     local frameTime = Hyperspace.FPS.SpeedFactor / 16
 
+    update_active_shield_cycle_locks(shipManager)
+
     beamDangerTimer[shipId] = math.max(0, (beamDangerTimer[shipId] or 0) - frameTime)
     projectileDangerTimer[shipId] = math.max(0, (projectileDangerTimer[shipId] or 0) - frameTime)
 
     if not ship_has_active_shield_drone(shipManager) then return end
 
     local incomingProjectiles = count_incoming_enemy_projectiles(shipId)
-    local desiredSuperShields = incomingProjectiles
+    local hasActiveThreat = incomingProjectiles > 0
+        or beamDangerTimer[shipId] > 0
+        or projectileDangerTimer[shipId] > 0
 
-    if beamDangerTimer[shipId] > 0 then
-        desiredSuperShields = desiredSuperShields + 1
-    end
-
-    if projectileDangerTimer[shipId] > 0 and desiredSuperShields <= 0 then
-        desiredSuperShields = 1
-    end
-
-    if desiredSuperShields > 0 then
-        add_super_shields_until(shipManager, desiredSuperShields)
+    if hasActiveThreat then
         return
     end
 
