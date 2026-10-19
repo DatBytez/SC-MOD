@@ -1,6 +1,7 @@
 --[[
 DESCRIPTION: Grants advanced Sensors abilities based on Sensors power.
         - Restores Sensors power in nebulas when the installed level is 4 or greater.
+        - Reapplies the nebula Sensors penalty when the installed level falls below 4.
         - Reveals cloaked enemy rooms and makes listed invisible crew targetable at effective Sensors level 5 or greater.
         - Allows weapons to charge at their normal rate against cloaked ships at effective Sensors level 5 or greater.
         - Does not require the Detector augment or an active Comsat.
@@ -131,10 +132,12 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
 
     local sensors = ship:GetSystem(7)
 
-    if sensors and Hyperspace.App.world.space.bNebula
-        and sensors.powerState.second >= 4 then
-
-        sensors:SetPowerCap(sensors.powerState.second + 22)
+    if sensors and Hyperspace.App.world.space.bNebula then
+        if sensors.powerState.second >= 4 then
+            sensors:SetPowerCap(sensors.powerState.second + 22)
+        else
+            sensors:SetPowerCap(0)
+        end
     end
 
     local enemyShip = Hyperspace.ships(1 - shipId)

@@ -573,9 +573,10 @@
 				<droneTarget>CREW</droneTarget>
 				<affectsSelf>false</affectsSelf>
 				<priority>0</priority>
+				<blackList load="SC_LIST_CREW_DRONES"/>
 			</statBoost>
 
-			<statBoost name="trueHealAmount" save="Heal-Drones">
+			<!-- <statBoost name="trueHealAmount" save="Heal-Drones">
 				<boostType>FLAT</boostType>
 				<amount>2</amount>
 				<shipTarget>CURRENT_ROOM</shipTarget>
@@ -584,7 +585,7 @@
 				<affectsSelf>false</affectsSelf>
 				<priority>0</priority>
 				<whiteList load="SC_LIST_CREW_DRONES"/>
-			</statBoost>
+			</statBoost> -->
 		</passiveStatBoosts>
 		
 		<powerEffect load="SC_REPAIR"/>
@@ -625,7 +626,7 @@
 
 		<passiveStatBoosts>
 			<statBoost load="Heal-Crew"/>
-			<statBoost load="Heal-Drones"/>
+			<!-- <statBoost load="Heal-Drones"/> -->
 		</passiveStatBoosts>
 		
 		<!-- ACTIVATED ABILITIES -->
@@ -684,7 +685,7 @@
 
 		<passiveStatBoosts>
 			<statBoost load="Heal-Crew"/>
-			<statBoost load="Heal-Drones"/>
+			<!-- <statBoost load="Heal-Drones"/> -->
 		</passiveStatBoosts>
 		
 		<!-- ACTIVATED ABILITIES -->
@@ -995,7 +996,7 @@
   TERRAN SCV
 *********************************************************************************************************
 -->
-	<race name="terran_scv">
+	<race name="terran_scv" drone="REPAIR">
 		<crewSlots>0</crewSlots>
 		<noSlot>true</noSlot>
 		<noClone>true</noClone>
@@ -1082,7 +1083,7 @@
   TERRAN GOLIATH
 *********************************************************************************************************
 -->
-	<race name="terran_goliath">
+	<race name="terran_goliath" drone="BATTLE">
 		<crewSlots>0</crewSlots>
 		<noSlot>true</noSlot>
 		<noClone>true</noClone>
@@ -1983,7 +1984,7 @@
 
 <!-- TODO: ONLY REQUIRED FOR MV -->
 <mod:findLike type="events" limit="1">
-    <mod:findName type="req" name="LIST_CHECK_ANY_CREW" panic="true">
+    <mod:findName type="req" name="LIST_CHECK_ANY_CREW">
         <mod-append:req type="any" load="TERRAN_LIST_CREW_ALL"/>
     </mod:findName>
 </mod:findLike>

@@ -125,15 +125,10 @@
 	<name>terran_marine</name>
 	<name>terran_medic</name>
 </blueprintList>
-<blueprintList name="LIST_CREW_TELEPATHIC">
-	<name>terran_ghost</name>
-	<name>slug</name>
-	<name>slug_clansman</name>
-	<name>slug_saboteur</name>
-	<name>slug_ranger</name>
-	<name>slug_knight</name>
-	<name>slug_hektar</name>
-</blueprintList>
+
+<mod:findName type="blueprintList" name="LIST_CREW_TELEPATHIC" panic="true">
+    <mod-append:name>terran_ghost</mod-append:name>
+</mod:findName>
 
 <!--********************            SHOP ITEM LISTS            *******************-->
 <blueprintList name="SHOP_TERRAN_SYSTEMS_ESSENTIAL">

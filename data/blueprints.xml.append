@@ -2471,7 +2471,6 @@ TERRAN_GOLIATH-->
 </crewBlueprint>
 <droneBlueprint name="TERRAN_GOLIATH">
 	<type>BATTLE</type>
-	<locked>1</locked><!-- Don't know what this does, but MV drones have it -->
 	<tip>tip_crew</tip>
 	<title id="drone_TERRAN_GOLIATH_NAME"/>
 	<short id="drone_TERRAN_GOLIATH_SHORT"/>
