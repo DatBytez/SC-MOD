@@ -2390,9 +2390,9 @@ END OF SUBSYSTEMS
 **********************************************************************************************************************
 -->
 <crewBlueprint name="terran_scv">
-	<title id="NOYB"/>
-	<short id="NOYB"/>
-	<desc id="NOYB"/>
+	<title id="drone_TERRAN_SCV_NAME"/>
+	<short id="drone_TERRAN_SCV_SHORT"/>
+	<desc id="drone_TERRAN_SCV_DESC"/>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -2418,7 +2418,7 @@ END OF SUBSYSTEMS
 	<short id="drone_TERRAN_SCV_SHORT"></short>
 	<desc id="drone_TERRAN_SCV_DESC"></desc>
 	<power>2</power>
-	<cost>50</cost>
+	<cost>75</cost>
 	<bp>3</bp>
 	<rarity>1</rarity>
 	<iconImage>battle</iconImage>
@@ -2445,7 +2445,7 @@ END OF SUBSYSTEMS
 	<dodge>0</dodge>
 	<speed>15</speed>
 	<!-- Change this to increase/decrease firing speed -->
-	<cost>50</cost>
+	<cost>75</cost>
 	<bp>5</bp>
 	<droneImage>terran_scv_hull</droneImage>
 	<image>weapons/laser_light2_strip4.png</image> <!-- TODO: Check to see if this does anything -->
