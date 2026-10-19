@@ -115,7 +115,7 @@
 <blueprintList name="SC_LIST_CREW_DRONES">
 	<name>terran_scv</name>
 	<name>terran_goliath</name>
-	<name>terran_spider_mine</name>
+	<name>terran_spider_mine</name> 
 </blueprintList>
 
 <blueprintList name="TERRAN_LIST_CREW_ALL">

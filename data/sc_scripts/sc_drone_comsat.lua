@@ -1,22 +1,25 @@
 --[[
 DESCRIPTION: Comsat drones provide temporary detector-style targeting while deployed.
         - Tagged drones use Sensors effective power as targeting strength.
-        - Active Comsats provide 2 temporary bonus power to Sensors.
+        - Active Comsats temporarily increase the installed Sensors level by 2.
         - Drone parts spent deploying a Comsat are refunded after deployment.
         - Tagged drones are destroyed when their lifetime ends or if depowered early, entering the normal rebuild cycle.
         - The Comsat uses the DEFENSE drone type so it can deploy on the friendly side without an enemy ship.
         - Native defense-drone shots are blocked.
         - A separate Lua timer creates the Comsat scan hit animation at a random enemy room when an enemy ship is present.
 TAG: <sc-comsat value="#"/>
-DEPENDENCIES: sc_targeting_core.lua, sc_helpers.lua
+DEPENDENCIES: sc_targeting_core.lua, sc_helpers.lua, sc_augment_upgrade.lua
 ]]
 
 local vter = mods.multiverse.vter
 local helpers = mods.sc.helpers
 local targeting = mods.sc.targeting
 
+mods.sc.comsat = mods.sc.comsat or {}
+local comsat = mods.sc.comsat
+
 local SCAN_BLUEPRINT = "TERRAN_COMSAT_PROJECTILE"
-local SENSOR_POWER_BONUS = 2
+local SENSOR_LEVEL_BOOST = 2
 
 local scanBlueprint = Hyperspace.Blueprints:GetWeaponBlueprint(SCAN_BLUEPRINT)
 local SCAN_INTERVAL = scanBlueprint.cooldown
@@ -34,9 +37,13 @@ local comsatWasDeployed = {
     [0] = {},
     [1] = {}
 }
-local sensorBonusApplied = {
+local sensorLevelsApplied = {
     [0] = 0,
     [1] = 0
+}
+local sensorOriginalMax = {
+    [0] = nil,
+    [1] = nil
 }
 
 mods.sc.tag.register("drone", "sc-comsat", comsatDrones, "value")
@@ -69,35 +76,85 @@ local function get_comsat_strength(ship)
     return sensors:GetEffectivePower()
 end
 
-local function update_sensor_bonus(ship)
+-- Reserve the temporary Sensors levels during the same frame a Comsat deactivates.
+-- sc_augment_upgrade.lua loads first and must not clamp the system before removal.
+function comsat.get_temporary_sensor_cap_bonus(ship)
+    if not ship then return 0 end
+
+    if ship_has_active_comsat(ship) or sensorLevelsApplied[ship.iShipId] > 0 then
+        return SENSOR_LEVEL_BOOST
+    end
+
+    return 0
+end
+
+local function update_sensor_levels(ship)
     local shipId = ship.iShipId
     local sensors = ship:GetSystem(7)
+    local applied = sensorLevelsApplied[shipId]
 
     if not sensors then
-        sensorBonusApplied[shipId] = 0
+        sensorLevelsApplied[shipId] = 0
+        sensorOriginalMax[shipId] = nil
         return
     end
 
-    local wanted = ship_has_active_comsat(ship) and SENSOR_POWER_BONUS or 0
-    local current = sensorBonusApplied[shipId]
-    local diff = wanted - current
+    local wanted = ship_has_active_comsat(ship) and SENSOR_LEVEL_BOOST or 0
+    local difference = wanted - applied
+    if difference == 0 then return end
 
-    if diff ~= 0 then
-        sensors.iBonusPower = math.max(0, sensors.iBonusPower + diff)
-        sensorBonusApplied[shipId] = wanted
+    if difference > 0 then
+        if applied == 0 then
+            sensorOriginalMax[shipId] = sensors.maxLevel
+        end
+
+        sensors.maxLevel = math.max(sensors.maxLevel, sensors.powerState.second + difference)
+    end
+
+    local direction = difference > 0 and 1 or -1
+
+    for _ = 1, math.abs(difference) do
+        local previousLevel = sensors.powerState.second
+        sensors:UpgradeSystem(direction)
+        local actualChange = sensors.powerState.second - previousLevel
+
+        if actualChange == 0 then break end
+        sensorLevelsApplied[shipId] = math.max(0, sensorLevelsApplied[shipId] + actualChange)
+    end
+
+    sensors:CheckMaxPower()
+    sensors:CheckForRepower()
+
+    if sensorLevelsApplied[shipId] == 0 then
+        -- Player maxLevel is managed by sc_augment_upgrade.lua on the next loop.
+        -- Restore the original cap for enemy ships, which do not use that manager.
+        if shipId ~= 0 and sensorOriginalMax[shipId] then
+            sensors.maxLevel = sensorOriginalMax[shipId]
+        end
+        sensorOriginalMax[shipId] = nil
     end
 end
 
-local function remove_sensor_bonus(shipId)
+local function remove_sensor_levels(shipId)
     local ship = Hyperspace.ships(shipId)
-    local sensors = ship and ship:GetSystem(7)
-    local applied = sensorBonusApplied[shipId]
-
-    if sensors and applied ~= 0 then
-        sensors.iBonusPower = math.max(0, sensors.iBonusPower - applied)
+    if ship and sensorLevelsApplied[shipId] > 0 then
+        -- With no active Comsat, this subtracts exactly the temporary levels.
+        -- Do not reset the counter before the upgrade-cap script can see it.
+        local sensors = ship:GetSystem(7)
+        if sensors then
+            for _ = 1, sensorLevelsApplied[shipId] do
+                sensors:UpgradeSystem(-1)
+            end
+            sensors:CheckMaxPower()
+            sensors:CheckForRepower()
+            if shipId ~= 0 and sensorOriginalMax[shipId] then
+                sensors.maxLevel = sensorOriginalMax[shipId]
+            end
+        end
     end
 
-    sensorBonusApplied[shipId] = 0
+    sensorLevelsApplied[shipId] = 0
+    sensorOriginalMax[shipId] = nil
 end
 
 local function update_comsat_refund(ship, drone)
@@ -194,13 +251,15 @@ end
 
 script.on_init(function()
     reset_comsat_state()
-    sensorBonusApplied[0] = 0
-    sensorBonusApplied[1] = 0
+    sensorLevelsApplied[0] = 0
+    sensorLevelsApplied[1] = 0
+    sensorOriginalMax[0] = nil
+    sensorOriginalMax[1] = nil
 end)
 
 script.on_internal_event(Defines.InternalEvents.JUMP_ARRIVE, function()
-    remove_sensor_bonus(0)
-    remove_sensor_bonus(1)
+    remove_sensor_levels(0)
+    remove_sensor_levels(1)
     reset_comsat_state()
 end)
 
@@ -226,7 +285,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
         end
     end
 
-    update_sensor_bonus(ship)
+    update_sensor_levels(ship)
 end)
 
 script.on_internal_event(Defines.InternalEvents.DRONE_FIRE, function(projectile, spacedrone)

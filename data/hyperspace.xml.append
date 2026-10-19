@@ -1981,6 +1981,14 @@
 </store>
 
 
+<!-- TODO: ONLY REQUIRED FOR MV -->
+<mod:findLike type="events" limit="1">
+    <mod:findName type="req" name="LIST_CHECK_ANY_CREW" panic="true">
+        <mod-append:req type="any" load="TERRAN_LIST_CREW_ALL"/>
+    </mod:findName>
+</mod:findLike>
+
+
 <mod:findLike type="scripts" limit="1">
     <mod-append:script>data/mv_scripts/tags/tag-data-init.lua</mod-append:script>
 

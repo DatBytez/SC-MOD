@@ -2,6 +2,7 @@
 DESCRIPTION: Increases systems maximum based on augment upgrades.
         - Requires system max to be increased in blueprints.
         - Adds bonuses from installed augments with the <sc-upgrade> tag.
+        - Allows temporary Comsat Sensors levels without enforcing the normal Sensors cap.
         - Handles multiple artillery system instances? Untested.
 TAG: <sc-upgrade system="SYSTEM_NAME" value="#"/>
 DEPENDENCIES: sc_tag.lua, Multiverse vter
@@ -78,6 +79,10 @@ end
 
 local function apply_effective_max(ship, systemName, systemData)
     local effectiveMax = systemData.baseCap + get_active_upgrade_bonus(ship, systemName)
+
+    if systemName == "sensors" and mods.sc.comsat and mods.sc.comsat.get_temporary_sensor_cap_bonus then
+        effectiveMax = effectiveMax + mods.sc.comsat.get_temporary_sensor_cap_bonus(ship)
+    end
 
     if systemData.systemId == ARTILLERY_ID and ship.artillerySystems then
         local foundArtillery = false
