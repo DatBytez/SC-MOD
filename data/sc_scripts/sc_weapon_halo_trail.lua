@@ -1,20 +1,16 @@
 --[[
-DESCRIPTION: Leaves animated particles behind the real HALO projectile.
-        - Uses the eight frames in the terran_halo_trail spritesheet.
-        - Applies to all projectiles using the terran_halo_projectile animation.
+DESCRIPTION: Creates partical trail for HALO projectile.
+        - Hard coded to HALO projectile.
         - Resets the emitter when a projectile changes ship spaces.
         - Does not change projectile heading, targeting, or damage.
-DEPENDENCIES: brightness_particles.lua (spritesheet render edit),
-              brightness_spritesheet.lua, Multiverse userdata_table
+DEPENDENCIES: brightness_spritesheet.lua, Multiverse userdata_table
 ]]
 
 local Brightness = mods.brightness
 local userdata_table = mods.multiverse.userdata_table
 
 local PROJECTILE_ANIMATION = "terran_halo_projectile"
-local TRAIL_SHEET = "projectiles/terran_halo_trail.png"
-local FRAME_WIDTH = 158
-local FRAME_HEIGHT = 202
+local TRAIL_FOLDER = "projectiles/terran_halo_trail"
 local FRAME_COUNT = 8
 local FRAME_DURATION = 1.5 -- Total duration of all eight frames, in seconds.
 local TRAIL_SCALE = 1.0 -- Original frames are 158 x 202 pixels.
@@ -29,11 +25,7 @@ local function emit_particle(x, y, space)
         if particles[i]:isDestroyed() then table.remove(particles, i) end
     end
 
-    local particle = Brightness.create_particle(
-        TRAIL_SHEET, FRAME_COUNT, FRAME_DURATION,
-        Hyperspace.Pointf(x, y), 0, space, RENDER_LAYER
-    )
-    Brightness.attach_spritesheet(particle, TRAIL_SHEET, FRAME_WIDTH, FRAME_HEIGHT)
+local particle = Brightness.create_particle(TRAIL_FOLDER, FRAME_COUNT, FRAME_DURATION, Hyperspace.Pointf(x, y), 0, space, RENDER_LAYER)
     particle.scale = TRAIL_SCALE
     particles[#particles + 1] = particle
 end
