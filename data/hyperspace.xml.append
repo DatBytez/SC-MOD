@@ -2016,6 +2016,8 @@
 	<mod-append:script>data/sc_scripts/sc_weapon_irradiate.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_filter.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_halo.lua</mod-append:script>
+	<mod-append:script>data/brightness_scripts/brightness_particles.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_halo_trail.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_emp.lua</mod-append:script>
 
     <mod-append:script>data/sc_scripts/sc_augment_battery.lua</mod-append:script>

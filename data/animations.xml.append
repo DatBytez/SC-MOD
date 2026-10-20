@@ -283,7 +283,7 @@
 	<time>1</time>
 </anim>
 
-<animSheet name="terran_halo_projectile" w="47" h="41" fw="47" fh="41">projectiles/terran_halo_projectile.png</animSheet>
+<animSheet name="terran_halo_projectile" w="21" h="24" fw="21" fh="24">projectiles/terran_halo_projectile.png</animSheet>
 <anim name="terran_halo_projectile">
 	<sheet>terran_halo_projectile</sheet>
 	<desc length="1" x="0" y="0" />
@@ -295,13 +295,6 @@
 	<sheet>terran_halo_trail</sheet>
 	<desc length="8" x="0" y="0" />
 	<time>0.5</time>
-</anim>
-
-<animSheet name="terran_halo_projectile_2" w="24" h="21" fw="24" fh="21">projectiles/terran_halo_projectile_2.png</animSheet>
-<anim name="terran_halo_projectile_2">
-	<sheet>terran_halo_projectile_2</sheet>
-	<desc length="1" x="0" y="0" />
-	<time>1</time>
 </anim>
 
 <animSheet name="terran_pod_projectile" w="19" h="38" fw="19" fh="38">weapons/terran_pod_projectile.png</animSheet>

@@ -2035,7 +2035,7 @@ END OF SUBSYSTEMS
 	<explosion>explosion_random</explosion>
 	<projectiles>
 		<projectile count="1" fake="false">terran_halo_projectile</projectile>
-		<projectile count="1" fake="true">terran_halo_projectile_2</projectile>
+		<projectile count="1" fake="true">terran_halo_projectile</projectile>
 	</projectiles>
 	<launchSounds>
 		<sound>smallMissile1</sound>
