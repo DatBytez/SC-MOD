@@ -2021,7 +2021,7 @@ END OF SUBSYSTEMS
 	<fireChance>1</fireChance>
 	<breachChance>1</breachChance>
 	<drone_targetable>1</drone_targetable>
-	<speed>45</speed>
+	<speed>35</speed>
 	<power>3</power>
 	<cooldown>13</cooldown>
 	<sc-chainstep stat="fireThreshold" value="4"/>

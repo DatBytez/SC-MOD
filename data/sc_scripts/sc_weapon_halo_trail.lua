@@ -1,21 +1,24 @@
 --[[
 DESCRIPTION: Leaves animated particles behind the real HALO projectile.
-        - Uses the eight terran_halo_trail frames, split into numbered PNGs.
-        - Does not emit trails for terran_halo_projectile_2 (the fake projectile).
+        - Uses the eight frames in the terran_halo_trail spritesheet.
+        - Applies to all projectiles using the terran_halo_projectile animation.
         - Resets the emitter when a projectile changes ship spaces.
         - Does not change projectile heading, targeting, or damage.
-DEPENDENCIES: brightness_particles.lua, Multiverse userdata_table
+DEPENDENCIES: brightness_particles.lua (spritesheet render edit),
+              brightness_spritesheet.lua, Multiverse userdata_table
 ]]
 
 local Brightness = mods.brightness
 local userdata_table = mods.multiverse.userdata_table
 
 local PROJECTILE_ANIMATION = "terran_halo_projectile"
-local TRAIL_FOLDER = "projectiles/terran_halo_trail"
+local TRAIL_SHEET = "projectiles/terran_halo_trail.png"
+local FRAME_WIDTH = 158
+local FRAME_HEIGHT = 202
 local FRAME_COUNT = 8
-local FRAME_DURATION = 0.5 -- Total duration of all eight frames, in seconds.
-local TRAIL_SCALE = 0.25 -- Original frames are 158 x 202 pixels.
-local PARTICLE_SPACING = 10 -- Pixels travelled between particles.
+local FRAME_DURATION = 1.5 -- Total duration of all eight frames, in seconds.
+local TRAIL_SCALE = 1.0 -- Original frames are 158 x 202 pixels.
+local PARTICLE_SPACING = 40 -- Pixels travelled between particles.
 local MAX_SEGMENT = 500 -- Do not draw a trail across a teleport/discontinuity.
 local RENDER_LAYER = "SHIP"
 
@@ -27,9 +30,10 @@ local function emit_particle(x, y, space)
     end
 
     local particle = Brightness.create_particle(
-        TRAIL_FOLDER, FRAME_COUNT, FRAME_DURATION,
+        TRAIL_SHEET, FRAME_COUNT, FRAME_DURATION,
         Hyperspace.Pointf(x, y), 0, space, RENDER_LAYER
     )
+    Brightness.attach_spritesheet(particle, TRAIL_SHEET, FRAME_WIDTH, FRAME_HEIGHT)
     particle.scale = TRAIL_SCALE
     particles[#particles + 1] = particle
 end
