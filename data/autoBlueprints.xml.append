@@ -116,9 +116,7 @@
 	<name>terran_scv</name>
 	<name>terran_goliath</name>
 	<name>terran_spider_mine</name>
-	<name>terran_spider_1</name>
-	<name>terran_spider_2</name>
-	<name>terran_spider_3</name>
+	<name>terran_spider_set</name>
 </blueprintList>
 
 <blueprintList name="TERRAN_LIST_CREW_ALL">

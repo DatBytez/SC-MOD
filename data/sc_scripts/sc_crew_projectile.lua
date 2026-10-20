@@ -13,11 +13,10 @@ script.on_internal_event(Defines.InternalEvents.CREW_LOOP, function(crew)
         return
     end
 
-    local success, replacement = pcall(function()
-        return Hyperspace.Animations:GetAnimation(animationName)
-    end)
+    local replacement =
+        Hyperspace.Animations:GetAnimation(animationName)
 
-    if not success then
+    if not replacement.animationStrip then
         missingAnimations[animationName] = true
         return
     end

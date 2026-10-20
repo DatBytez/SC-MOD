@@ -328,8 +328,9 @@ END OF AUXILIARY SYSTEMS
 	<upgradeCost>
 		<level>20</level>
 		<level>30</level>
-		<level>30</level>
-		<level>30</level>
+		<level>40</level>
+		<level>50</level>
+		<level>60</level>
 	</upgradeCost>
 	<cost>30</cost>
 </systemBlueprint>
@@ -377,12 +378,10 @@ END OF AUXILIARY SYSTEMS
         <level>30</level>
         <level>40</level>
         <level>50</level>
-        <level>65</level>
-		<level>85</level>
-        <level>95</level>
+        <level>85</level>
+		<level>95</level>
+        <level>105</level>
         <level>110</level>
-        <level>100</level>
-        <level>100</level>
     </upgradeCost>
     <cost>110</cost>
 </systemBlueprint>
@@ -2035,8 +2034,8 @@ END OF SUBSYSTEMS
 	<rarity>4</rarity>
 	<explosion>explosion_random</explosion>
 	<projectiles>
-		<projectile count="1" fake="false">missile_burst</projectile>
-		<projectile count="1" fake="true">terran_burst_laser_heavy_projectile</projectile>
+		<projectile count="1" fake="false">terran_halo_projectile</projectile>
+		<projectile count="1" fake="true">terran_halo_projectile_2</projectile>
 	</projectiles>
 	<launchSounds>
 		<sound>smallMissile1</sound>

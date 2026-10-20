@@ -283,6 +283,27 @@
 	<time>1</time>
 </anim>
 
+<animSheet name="terran_halo_projectile" w="47" h="41" fw="47" fh="41">projectiles/terran_halo_projectile.png</animSheet>
+<anim name="terran_halo_projectile">
+	<sheet>terran_halo_projectile</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
+
+<animSheet name="terran_halo_trail" w="1264" h="202" fw="158" fh="202">projectiles/terran_halo_trail.png</animSheet>
+<anim name="terran_halo_trail">
+	<sheet>terran_halo_trail</sheet>
+	<desc length="8" x="0" y="0" />
+	<time>0.5</time>
+</anim>
+
+<animSheet name="terran_halo_projectile_2" w="24" h="21" fw="24" fh="21">projectiles/terran_halo_projectile_2.png</animSheet>
+<anim name="terran_halo_projectile_2">
+	<sheet>terran_halo_projectile_2</sheet>
+	<desc length="1" x="0" y="0" />
+	<time>1</time>
+</anim>
+
 <animSheet name="terran_pod_projectile" w="19" h="38" fw="19" fh="38">weapons/terran_pod_projectile.png</animSheet>
 <anim name="terran_pod_projectile">
 	<sheet>terran_pod_projectile</sheet>
@@ -347,6 +368,15 @@
 	<desc length="7" x="0" y="0"/>
 	<time>0.50</time>
 </anim>
+
+<animSheet name="terran_halo_hit" w="960" h="96" fw="96" fh="96">weapons/terran_halo_hit.png</animSheet>
+<anim name="terran_halo_hit">
+	<sheet>terran_halo_hit</sheet>
+	<desc length="10" x="0" y="0"/>
+	<time>0.50</time>
+</anim>
+
+
 
 <!-- Status Effects -->
 <animSheet name="invisible" w="35" h="35" fw="35" fh="35">effects/invisible.png</animSheet>
@@ -474,6 +504,7 @@
 <anim name="terran_marine_type_up">		<sheet>terran_marine</sheet>	<desc length="2" x="0" y="12" />	<time>0.75</time></anim>
 <anim name="terran_marine_type_down">	<sheet>terran_marine</sheet>	<desc length="2" x="2" y="12" />	<time>0.75</time></anim>
 <anim name="terran_marine_portrait">	<sheet>terran_marine</sheet>	<desc length="1" x="0" y="0" />		<time>1</time></anim>
+<anim name="terran_marine_crewLaser">	<sheet>terran_marine</sheet>	<desc length="1" x="1" y="0"/>		<time>0.5</time></anim>
 <!-- 
 *********************************************************************************************************
      TERRAN FIREBAT
@@ -505,6 +536,7 @@
 <anim name="terran_firebat_type_up">		<sheet>terran_firebat</sheet>	<desc length="2" x="0" y="12" />	<time>0.75</time></anim>
 <anim name="terran_firebat_type_down">		<sheet>terran_firebat</sheet>	<desc length="2" x="2" y="12" />	<time>0.75</time></anim>
 <anim name="terran_firebat_portrait">		<sheet>terran_firebat</sheet>	<desc length="1" x="0" y="0" />		<time>1</time></anim>
+<anim name="terran_firebat_crewLaser">		<sheet>terran_firebat</sheet>	<desc length="1" x="1" y="0"/>		<time>0.5</time></anim>
 <!-- 
 *********************************************************************************************************
      TERRAN GHOST
