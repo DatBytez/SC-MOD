@@ -20,6 +20,7 @@
 
 <blueprintList name="TERRAN_DRONES_INTERNAL">
 	<name>TERRAN_SCV</name>
+	<name>TERRAN_SCV_1</name>
 	<name>TERRAN_SPIDER_1</name>
 	<name>TERRAN_SPIDER_2</name>
 	<name>TERRAN_SPIDER_3</name>
@@ -114,6 +115,7 @@
 
 <blueprintList name="SC_LIST_CREW_DRONES">
 	<name>terran_scv</name>
+	<name>terran_scv_1</name>
 	<name>terran_goliath</name>
 	<name>terran_spider_mine</name>
 	<name>terran_spider_set</name>
@@ -122,13 +124,21 @@
 <blueprintList name="TERRAN_LIST_CREW_ALL">
 	<name>terran_civilian</name>
 	<name>terran_firebat</name>
+	<name>terran_firebat_1</name>
 	<name>terran_ghost</name>
+	<name>terran_ghost_1</name>
+	<name>terran_ghost_2</name>
 	<name>terran_marine</name>
+	<name>terran_marine_1</name>
 	<name>terran_medic</name>
+	<name>terran_medic_1</name>
+	<name>terran_medic_2</name>
 </blueprintList>
 
 <blueprintList name="LIST_CREW_TELEPATHIC">
     <name>terran_ghost</name>
+	<name>terran_ghost_1</name>
+	<name>terran_ghost_2</name>
     <name>slug</name>
     <name>slug_clansman</name>
     <name>slug_saboteur</name>

@@ -1025,7 +1025,51 @@
 		<animBase>human</animBase>
 		<hasCustomDeathAnimation>true</hasCustomDeathAnimation>
 				<!-- POWERED ARMOR -->
-		<damageTakenMultiplier>1.2</damageTakenMultiplier>
+		<damageTakenMultiplier>1.25</damageTakenMultiplier>
+		<suffocationModifier>0.1</suffocationModifier>
+		<fireDamageMultiplier>0.4</fireDamageMultiplier>
+		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
+
+		<repairSpeed>2.0</repairSpeed>
+		<fireRepairMultiplier>1.2</fireRepairMultiplier>
+		<rangedDamageMultiplier>0.8</rangedDamageMultiplier>
+		<repairSounds>
+			<repairSound>ability_repair1</repairSound>
+			<repairSound>ability_repair2</repairSound>
+			<repairSound>ability_repair3</repairSound>
+			<repairSound>ability_repair4</repairSound>
+			<repairSound>ability_repair5</repairSound>
+		</repairSounds>
+		<deathSounds>
+			<deathSound>terran_scv_death</deathSound>
+		</deathSounds>
+		<powerEffect load="SC_REPAIR"/>
+	</race>
+
+	<race name="terran_scv_1" drone="REPAIR">
+		<crewSlots>0</crewSlots>
+		<noSlot>true</noSlot>
+		<noClone>true</noClone>
+		<selectable>true</selectable>
+		<controllable>true</controllable>
+		<canFight>true</canFight>
+		<canRepair>true</canRepair>
+		<canSabotage>true</canSabotage>
+		<canSuffocate>true</canSuffocate>
+		<canMan>false</canMan>
+		<maxHealth>100</maxHealth>
+		<stunMultiplier>0.25</stunMultiplier>
+		<droneAI>
+			<repairAI />
+			<returnToDroneRoom />
+			<manAI/>
+			<fightAI/>
+		</droneAI>
+		<animBase>human</animBase>
+    	<animSheet>terran_scv</animSheet>
+		<hasCustomDeathAnimation>true</hasCustomDeathAnimation>
+				<!-- POWERED ARMOR -->
+		<damageTakenMultiplier>1.25</damageTakenMultiplier>
 		<suffocationModifier>0.1</suffocationModifier>
 		<fireDamageMultiplier>0.4</fireDamageMultiplier>
 		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
@@ -1469,9 +1513,9 @@
 		<crewBlueprint>terran_scv</crewBlueprint>
 		<tooltipName>Terran SCV</tooltipName>
 	</drone>
-	<drone name="TERRAN_SCV_HULL">
-		<crewBlueprint>terran_scv_hull</crewBlueprint>
-		<tooltipName>Terran SCV Hull Repair</tooltipName>
+	<drone name="TERRAN_SCV_1">
+		<crewBlueprint>terran_scv_1</crewBlueprint>
+		<tooltipName>Terran SCV</tooltipName>
 	</drone>
 	<drone name="TERRAN_GOLIATH">
 		<crewBlueprint>terran_goliath</crewBlueprint>

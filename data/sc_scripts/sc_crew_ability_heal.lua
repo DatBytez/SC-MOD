@@ -60,12 +60,9 @@ local function is_eligible(medic, crew)
         and same_room_ally(medic, crew)
 end
 
-function medicHeal.choose_target(medic, ship)
-    if not ship or not medic or medic.bDead or not medic:Functional() then return nil end
-
+local function select_lowest_health(medic, crewList)
     local lowest
-    for i = 0, ship.vCrewList:size() - 1 do
-        local crew = ship.vCrewList[i]
+    for _, crew in ipairs(crewList) do
         if is_eligible(medic, crew)
             and (not lowest or crew.health.first < lowest.health.first) then
             lowest = crew
@@ -74,28 +71,91 @@ function medicHeal.choose_target(medic, ship)
     return lowest
 end
 
--- Count the XML contributions that apply, and the ones we want to keep.
+-- Freeze choices and source counts between game updates. Recalculating them in
+-- CALCULATE_STAT_POST could select a different target as earlier crew get healed.
+local snapshots = {}
+
+local function update_snapshot(ship)
+    local crewList = {}
+    local snapshot = {targets = {}, recipients = {}}
+
+    for i = 0, ship.vCrewList:size() - 1 do
+        local crew = ship.vCrewList[i]
+        crewList[#crewList + 1] = crew
+
+        if not crew.bDead and not crew:IsDrone() and crew.iRoomId >= 0 then
+            snapshot.recipients[crew.extend.selfId] = {
+                sources = 0,
+                selected = 0,
+                room = crew.iRoomId,
+                owner = crew.iShipId,
+                ship = crew.currentShipId
+            }
+        end
+    end
+
+    for _, medic in ipairs(crewList) do
+        if not medic.bDead and medicRaces[medic:GetSpecies()] and medic:Functional() then
+            local target = select_lowest_health(medic, crewList)
+            snapshot.targets[medic.extend.selfId] = target
+
+            for _, crew in ipairs(crewList) do
+                local recipient = snapshot.recipients[crew.extend.selfId]
+                if recipient and not same_crew(medic, crew)
+                    and same_room_ally(medic, crew) then
+                    recipient.sources = recipient.sources + 1
+                    if same_crew(target, crew) then
+                        recipient.selected = recipient.selected + 1
+                    end
+                end
+            end
+        end
+    end
+
+    snapshots[ship.iShipId] = snapshot
+end
+
+-- ON_TICK runs after the game update; the snapshot is used consistently by
+-- every crew stat calculation during the following update.
+script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
+    if not Hyperspace.App or not Hyperspace.App.world
+        or not Hyperspace.App.world.bStartedGame then
+        snapshots[0], snapshots[1] = nil, nil
+        return
+    end
+
+    local global = Hyperspace.Global.GetInstance()
+    for shipId = 0, 1 do
+        local ship = global:GetShipManager(shipId)
+        if ship then
+            update_snapshot(ship)
+        else
+            snapshots[shipId] = nil
+        end
+    end
+end)
+
+-- These functions are also used by the optional sc_debug.lua display.
+function medicHeal.choose_target(medic, ship)
+    local snapshot = ship and snapshots[ship.iShipId]
+    return snapshot and medic and snapshot.targets[medic.extend.selfId] or nil
+end
+
 function medicHeal.count_boosts(crew, ship)
     if not ship or not crew or crew.bDead or crew:IsDrone()
         or crew.iRoomId < 0 then
         return 0, 0
     end
 
-    local sources, selected = 0, 0
-    for i = 0, ship.vCrewList:size() - 1 do
-        local medic = ship.vCrewList[i]
-        if medic and not medic.bDead
-            and medicRaces[medic:GetSpecies()]
-            and medic:Functional()
-            and not same_crew(medic, crew)
-            and same_room_ally(medic, crew) then
-            sources = sources + 1
-            if same_crew(medicHeal.choose_target(medic, ship), crew) then
-                selected = selected + 1
-            end
-        end
+    local snapshot = snapshots[ship.iShipId]
+    local recipient = snapshot and snapshot.recipients[crew.extend.selfId]
+    if not recipient or recipient.room ~= crew.iRoomId
+        or recipient.owner ~= crew.iShipId
+        or recipient.ship ~= crew.currentShipId then
+        return 0, 0
     end
-    return sources, selected
+
+    return recipient.sources, recipient.selected
 end
 
 script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(crew, stat, _def, amount, value)

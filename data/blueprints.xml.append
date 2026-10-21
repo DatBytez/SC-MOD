@@ -1830,7 +1830,7 @@ END OF SUBSYSTEMS
 				<priority>-100</priority>
 				<duration>25</duration>
 				<blackList>
-					<blueprintList load="TERRAN_SCV"/>
+					<blueprintList load="SC_LIST_CREW_DRONES"/>
 				</blackList>
 				<maxStacks>10</maxStacks>
 				<boostAnim>sc_irradiate</boostAnim>
@@ -1868,7 +1868,7 @@ END OF SUBSYSTEMS
 				<priority>-100</priority>
 				<duration>25</duration>
 				<blackList>
-					<blueprintList load="TERRAN_SCV"/>
+					<blueprintList load="SC_LIST_CREW_DRONES"/>
 				</blackList>
 				<maxStacks>10</maxStacks>
 				<boostAnim>sc_irradiate</boostAnim>
@@ -1906,7 +1906,7 @@ END OF SUBSYSTEMS
 				<priority>-100</priority>
 				<duration>25</duration>
 				<blackList>
-					<blueprintList load="TERRAN_SCV"/>
+					<blueprintList load="SC_LIST_CREW_DRONES"/>
 				</blackList>
 				<maxStacks>10</maxStacks>
 				<boostAnim>sc_irradiate</boostAnim>
@@ -1944,7 +1944,7 @@ END OF SUBSYSTEMS
 				<priority>-100</priority>
 				<duration>25</duration>
 				<blackList>
-					<blueprintList load="TERRAN_SCV"/>
+					<blueprintList load="SC_LIST_CREW_DRONES"/>
 				</blackList>
 				<maxStacks>10</maxStacks>
 				<boostAnim>sc_irradiate</boostAnim>
@@ -1982,7 +1982,7 @@ END OF SUBSYSTEMS
 				<priority>-100</priority>
 				<duration>25</duration>
 				<blackList>
-					<blueprintList load="TERRAN_SCV"/>
+					<blueprintList load="SC_LIST_CREW_DRONES"/>
 				</blackList>
 				<maxStacks>3</maxStacks>
 				<boostAnim>sc_irradiate</boostAnim>
@@ -2395,7 +2395,6 @@ END OF SUBSYSTEMS
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
-		<power id="crew_TERRAN_POWER_REPAIR_HULL"/>
 		<power>DRONE</power>
 	</powerList>
 	<colorList>
@@ -2418,22 +2417,47 @@ END OF SUBSYSTEMS
 	<short id="drone_TERRAN_SCV_SHORT"></short>
 	<desc id="drone_TERRAN_SCV_DESC"></desc>
 	<power>2</power>
-	<cost>60</cost>
+	<cost>50</cost>
 	<bp>3</bp>
 	<rarity>1</rarity>
 	<iconImage>battle</iconImage>
 </droneBlueprint>
-<crewBlueprint name="terran_scv_hull">
-	<title id="NOYB"/>
-	<short id="NOYB"/>
-	<desc id="NOYB"/>
+
+<crewBlueprint name="terran_scv_1">
+	<title id="drone_TERRAN_SCV_NAME"/>
+	<short id="drone_TERRAN_SCV_SHORT"/>
+	<desc id="drone_TERRAN_SCV_DESC"/>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
 		<power id="crew_TERRAN_POWER_REPAIR_HULL"/>
 		<power>DRONE</power>
 	</powerList>
+	<colorList>
+		<layer>
+			<color r="244" g="4" b="4" a="1.0" />
+			<color r="12" g="72" b="204" a="1.0" />
+			<color r="44" g="180" b="148" a="1.0" />
+			<color r="136" g="64" b="156" a="1.0" />
+			<color r="248" g="140" b="20" a="1.0" />
+			<color r="112" g="48" b="20" a="1.0" />
+			<color r="204" g="224" b="208" a="1.0" />
+			<color r="252" g="252" b="56" a="1.0" />
+		</layer>
+	</colorList>
 </crewBlueprint>
+<droneBlueprint name="TERRAN_SCV_1">
+	<type>REPAIR</type>
+	<tip>tip_crew</tip>
+	<title id="drone_TERRAN_SCV_NAME"></title>
+	<short id="drone_TERRAN_SCV_SHORT"></short>
+	<desc id="drone_TERRAN_SCV_DESC"></desc>
+	<power>3</power>
+	<cost>75</cost>
+	<bp>3</bp>
+	<rarity>3</rarity>
+	<iconImage>battle</iconImage>
+</droneBlueprint>
 <droneBlueprint name="TERRAN_SCV_HULL">
 	<type>SHIP_REPAIR</type>
 	<tip>tip_crew</tip>
@@ -2441,12 +2465,10 @@ END OF SUBSYSTEMS
 	<short id="NOYB"/>
 	<desc id="NOYB"/>
 	<power>1</power>
-	<cooldown>1000</cooldown>
-	<!-- Doesn't effect repair drone -->
+	<cooldown>1000</cooldown>	<!-- Doesn't effect repair drone -->
 	<dodge>0</dodge>
-	<speed>15</speed>
-	<!-- Change this to increase/decrease firing speed -->
-	<cost>75</cost>
+	<speed>15</speed>	<!-- Change this to increase/decrease firing speed -->
+	<cost>0</cost>
 	<bp>5</bp>
 	<droneImage>terran_scv_hull</droneImage>
 	<image>weapons/laser_light2_strip4.png</image> <!-- TODO: Check to see if this does anything -->
@@ -2457,9 +2479,8 @@ END OF SUBSYSTEMS
 **********************************************************************************************************************
            TERRAN_GOLIATH
 **********************************************************************************************************************
-TERRAN_GOLIATH-->
+-->
 <FTL>
-<!-- *****************	TERRAN_GOLIATH	****************** -->
 <crewBlueprint name="terran_goliath">
 	<title id="NOYB"/>
 	<short id="NOYB"/>
@@ -2481,8 +2502,6 @@ TERRAN_GOLIATH-->
 	<rarity>4</rarity>
 	<iconImage>battle</iconImage>
 </droneBlueprint>
-
-<!-- *****************	TERRAN_GOLIATH_T	****************** -->
 <droneBlueprint name="TERRAN_GOLIATH_T">
 	<target>SOLID</target>
 	<type>DEFENSE</type>
@@ -2964,6 +2983,7 @@ TERRAN_GOLIATH-->
 	</weaponList>
 	<droneList drones="4" count="3">
 		<drone name="TERRAN_SCV" />
+		<drone name="TERRAN_SCV_1" />
 		<drone name="TERRAN_COMSAT" />
 	</droneList>
 	<health amount="30" />
