@@ -572,7 +572,7 @@
 				<boostType>FLAT</boostType>
 				<amount>2</amount>
 				<!-- <shipTarget>CURRENT_ROOM</shipTarget> -->
-				<shipTarget>CREW_TARGET</shipTarget>
+				<shipTarget>CURRENT_ROOM</shipTarget>
 				<crewTarget>ALLIES</crewTarget>
 				<droneTarget>CREW</droneTarget>
 				<affectsSelf>false</affectsSelf>
@@ -864,7 +864,8 @@
 		<!-- POWERED ARMOR -->
 		<suffocationModifier>0.4</suffocationModifier>
 		<fireDamageMultiplier>0.9</fireDamageMultiplier>
-		<moveSpeedMultiplier>1.2</moveSpeedMultiplier>
+		<moveSpeedMultiplier>1.1</moveSpeedMultiplier>
+		<damageTakenMultiplier>0.95</damageTakenMultiplier>
 		<!-- STATIC ABILITIES -->
 		<isTelepathic>true</isTelepathic>
 		<resistsMindControl>true</resistsMindControl>
@@ -905,7 +906,8 @@
 		<!-- POWERED ARMOR -->
 		<suffocationModifier>0.4</suffocationModifier>
 		<fireDamageMultiplier>0.9</fireDamageMultiplier>
-		<moveSpeedMultiplier>1.2</moveSpeedMultiplier>
+		<moveSpeedMultiplier>1.1</moveSpeedMultiplier>
+		<damageTakenMultiplier>0.95</damageTakenMultiplier>
 		<!-- STATIC ABILITIES -->
 		<isTelepathic>true</isTelepathic>
 		<resistsMindControl>true</resistsMindControl>
@@ -971,7 +973,8 @@
 		<!-- POWERED ARMOR -->
 		<suffocationModifier>0.4</suffocationModifier>
 		<fireDamageMultiplier>0.9</fireDamageMultiplier>
-		<moveSpeedMultiplier>1.2</moveSpeedMultiplier>
+		<moveSpeedMultiplier>1.1</moveSpeedMultiplier>
+		<damageTakenMultiplier>0.95</damageTakenMultiplier>
 		<!-- STATIC ABILITIES -->
 		<isTelepathic>true</isTelepathic>
 		<resistsMindControl>true</resistsMindControl>
@@ -1011,7 +1014,7 @@
 		<canSabotage>true</canSabotage>
 		<canSuffocate>true</canSuffocate>
 		<canMan>false</canMan>
-		<maxHealth>50</maxHealth>
+		<maxHealth>100</maxHealth>
 		<stunMultiplier>0.25</stunMultiplier>
 		<droneAI>
 			<repairAI />
@@ -1019,13 +1022,17 @@
 			<manAI/>
 			<fightAI/>
 		</droneAI>
-		<repairSpeed>2.5</repairSpeed>
 		<animBase>human</animBase>
 		<hasCustomDeathAnimation>true</hasCustomDeathAnimation>
+				<!-- POWERED ARMOR -->
+		<damageTakenMultiplier>1.2</damageTakenMultiplier>
 		<suffocationModifier>0.1</suffocationModifier>
 		<fireDamageMultiplier>0.4</fireDamageMultiplier>
 		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
-		<fireRepairMultiplier>1.8</fireRepairMultiplier>
+
+		<repairSpeed>2.0</repairSpeed>
+		<fireRepairMultiplier>1.2</fireRepairMultiplier>
+		<rangedDamageMultiplier>0.8</rangedDamageMultiplier>
 		<repairSounds>
 			<repairSound>ability_repair1</repairSound>
 			<repairSound>ability_repair2</repairSound>

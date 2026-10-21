@@ -1,20 +1,17 @@
 --[[
-DESCRIPTION: Temporary on-screen Terran Medic CREW_TARGET test.
-        - Replaces the previous defense-drone diagnostics entirely.
-        - Optionally assigns the first injured friendly non-drone in each medic's room.
-        - Displays targeting, effective trueHealAmount, and HP changes.
-        - Does not heal crew directly.
-DEPENDENCIES: Hyperspace. Does not depend on any other SC debug script.
+DESCRIPTION: On-screen Terran Medic healing diagnostics.
+        - Displays medic selection, affected crew, XML boost targeting, and effective healing.
+        - Does not assign targets or alter healing.
+DEPENDENCIES: sc_crew_ability_heal.lua (diagnostics remain visible if missing).
 ]]
 
-local ASSIGN_TEST_TARGET = true -- Set false to observe a separate medic targeting script without changing its targets.
 local REFRESH_TICKS = 15
 local HEALTH_SAMPLE_TICKS = 30
 local MAX_MEDICS_SHOWN = 3
 local MAX_CREW_SHOWN = 5
 
 local TEXT_X = 20
-local TEXT_Y = 115
+local TEXT_Y = 165
 local LINE_HEIGHT = 16
 local FONT = 10
 
@@ -26,67 +23,31 @@ local medicRaces = {
 
 local state = {
     ticks = {[0] = 0, [1] = 0},
-    medics = {[0] = {}, [1] = {}},
-    medicCounts = {[0] = 0, [1] = 0},
-    lastHealth = {},
-    healthDelta = {}
+    healthBefore = {},
+    healthDelta = {},
+    snapshots = {[0] = {}, [1] = {}},
+    medicCounts = {[0] = 0, [1] = 0}
 }
-
-local function yn(value)
-    return value and "Y" or "N"
-end
-
-local function number(value)
-    if type(value) ~= "number" then return "-" end
-    return string.format("%.1f", value)
-end
 
 local function name_of(crew)
     if not crew then return "none" end
-    local ok, name = pcall(function() return crew:GetName() end)
-    if not ok or not name then return crew:GetSpecies() end
-    return tostring(name):gsub("[\r\n]", " "):sub(1, 18)
+    return tostring(crew:GetName()):gsub("[\r\n]", " "):sub(1, 15)
 end
 
-local function crew_id(crew)
-    if not crew or not crew.extend then return "?" end
-    return tostring(crew.extend.selfId)
+local function id_of(crew)
+    return crew and crew.extend and tostring(crew.extend.selfId) or "-"
 end
 
-local function same_room_friendly(medic, crew)
-    return crew_id(crew) ~= crew_id(medic)
-        and not crew.bDead
-        and medic.iRoomId >= 0
-        and crew.iRoomId == medic.iRoomId
-        and crew.currentShipId == medic.currentShipId
-        and crew.iShipId == medic.iShipId
+local function num(n)
+    return type(n) == "number" and string.format("%.1f", n) or "-"
 end
 
-local function is_eligible(medic, crew)
-    return same_room_friendly(medic, crew)
-        and not crew:IsDrone()
-        and crew.health.first > 0
-        and crew.health.first < crew.health.second
-end
-
-local function first_eligible(medic, ship)
-    for i = 0, ship.vCrewList:size() - 1 do
-        local crew = ship.vCrewList[i]
-        if is_eligible(medic, crew) then return crew end
-    end
-    return nil
-end
-
-local function effective_heal(crew)
-    local ok, amount = pcall(function()
-        return crew.extend:CalculateStat(Hyperspace.CrewStat.TRUE_HEAL_AMOUNT)
-    end)
-    if not ok then return "ERR" end
-    return number(amount)
+local function yn(v)
+    return v and "Y" or "N"
 end
 
 local function health_key(shipId, crew)
-    return tostring(shipId) .. ":" .. crew_id(crew)
+    return tostring(shipId) .. ":" .. id_of(crew)
 end
 
 local function sample_health(ship)
@@ -94,55 +55,50 @@ local function sample_health(ship)
         local crew = ship.vCrewList[i]
         if crew and not crew.bDead then
             local key = health_key(ship.iShipId, crew)
-            local now = crew.health.first
-            local previous = state.lastHealth[key]
-            if previous ~= nil then
-                state.healthDelta[key] = now - previous
+            local before = state.healthBefore[key]
+            if before ~= nil then
+                state.healthDelta[key] = crew.health.first - before
             end
-            state.lastHealth[key] = now
+            state.healthBefore[key] = crew.health.first
         end
     end
 end
 
-local function make_snapshot(medic, target, writeOk, writeError, preTarget)
-    local afterTarget = medic.crewTarget
+local function effective_heal(crew)
+    local ok, amount = pcall(function()
+        return crew.extend:CalculateStat(Hyperspace.CrewStat.TRUE_HEAL_AMOUNT)
+    end)
+    return ok and num(amount) or "ERR"
+end
+
+local function build_medic_snapshot(medic, ship, heal)
+    local target = heal and heal.choose_target(medic, ship) or nil
     local snapshot = {
-        medicName = name_of(medic),
-        medicId = crew_id(medic),
-        room = medic.iRoomId,
-        functional = medic:Functional(),
-        intended = target and (name_of(target) .. "#" .. crew_id(target)) or "none",
-        priorPresent = preTarget ~= nil,
-        afterPresent = afterTarget ~= nil,
-        writeStatus = not ASSIGN_TEST_TARGET and "OBSERVE" or (writeOk and "OK" or "ERROR"),
-        writeError = writeError,
+        header = string.format("Medic %s#%s r%d active=%s -> %s#%s",
+            name_of(medic), id_of(medic), medic.iRoomId,
+            yn(medic:Functional()), name_of(target), id_of(target)),
         crewLines = {}
     }
 
-    -- This list includes excluded drones and full-health crew to explain the choice.
-    local ship = Hyperspace.Global.GetInstance():GetShipManager(medic.currentShipId)
-    if not ship then return snapshot end
-
     for i = 0, ship.vCrewList:size() - 1 do
         local crew = ship.vCrewList[i]
-        if same_room_friendly(medic, crew) then
-            local status = target and crew_id(crew) == crew_id(target) and "*" or " "
-            if crew:IsDrone() then
-                status = "D"
-            elseif crew.health.first >= crew.health.second then
-                status = "F"
-            end
+
+        if crew and not crew.bDead and crew.extend.selfId ~= medic.extend.selfId
+            and crew.iRoomId == medic.iRoomId
+            and crew.currentShipId == medic.currentShipId
+            and crew.iShipId == medic.iShipId then
+
+            local sources, selected = 0, 0
+            if heal then sources, selected = heal.count_boosts(crew, ship) end
+            local isTarget = target and target.extend.selfId == crew.extend.selfId
+            local marker = crew:IsDrone() and "D" or (isTarget and "*" or "-")
             local change = state.healthDelta[health_key(ship.iShipId, crew)]
             snapshot.crewLines[#snapshot.crewLines + 1] = string.format(
-                "%s %s#%s HP %s/%s trueHeal=%s d%d=%s",
-                status,
-                name_of(crew),
-                crew_id(crew),
-                number(crew.health.first),
-                number(crew.health.second),
-                effective_heal(crew),
-                HEALTH_SAMPLE_TICKS,
-                change == nil and "-" or string.format("%+.1f", change)
+                " %s %s#%s HP %s/%s heal=%s src=%d sel=%d d30=%s",
+                marker, name_of(crew), id_of(crew),
+                num(crew.health.first), num(crew.health.second),
+                effective_heal(crew), sources, selected,
+                change and string.format("%+.1f", change) or "-"
             )
         end
     end
@@ -161,59 +117,40 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
         sample_health(ship)
     end
 
-    local makeDisplay = ticks == 1 or ticks % REFRESH_TICKS == 0
+    if ticks ~= 1 and ticks % REFRESH_TICKS ~= 0 then return end
+
+    local heal = mods.sc and mods.sc.medicHeal
     local snapshots = {}
-    local medicCount = 0
+    local count = 0
 
     for i = 0, ship.vCrewList:size() - 1 do
         local medic = ship.vCrewList[i]
-
         if medic and not medic.bDead and medicRaces[medic:GetSpecies()] then
-            medicCount = medicCount + 1
-            local target = first_eligible(medic, ship)
-            local previous = medic.crewTarget
-            local writeOk, writeError = true, nil
-
-            if ASSIGN_TEST_TARGET then
-                writeOk, writeError = pcall(function()
-                    medic.crewTarget = target
-                end)
-            end
-
-            if makeDisplay and medicCount <= MAX_MEDICS_SHOWN then
-                snapshots[#snapshots + 1] = make_snapshot(
-                    medic, target, writeOk, writeError, previous
-                )
+            count = count + 1
+            if count <= MAX_MEDICS_SHOWN then
+                snapshots[#snapshots + 1] = build_medic_snapshot(medic, ship, heal)
             end
         end
     end
 
-    if makeDisplay then
-        state.medics[shipId] = snapshots
-        state.medicCounts[shipId] = medicCount
-    end
+    state.snapshots[shipId] = snapshots
+    state.medicCounts[shipId] = count
 end)
 
-local function boost_definition_line()
+local function boost_info()
     local ok, def = pcall(function()
         return Hyperspace.StatBoostDefinition.savedStatBoostDefs["Heal-Crew"]
     end)
+    if not ok or not def then return "XML Heal-Crew=MISSING" end
 
-    if not ok then return "Heal-Crew: could not inspect saved XML definition" end
-    if not def then return "Heal-Crew: MISSING saved XML definition" end
-
-    return string.format(
-        "Heal-Crew: target=CREW_TARGET:%s stat=TRUE_HEAL:%s amount=%s",
-        yn(def.shipTarget == Hyperspace.StatBoostDefinition.ShipTarget.CREW_TARGET),
+    return string.format("XML Heal-Crew: room=%s stat=%s amt=%s",
+        yn(def.shipTarget == Hyperspace.StatBoostDefinition.ShipTarget.CURRENT_ROOM),
         yn(def.stat == Hyperspace.CrewStat.TRUE_HEAL_AMOUNT),
-        number(def.amount)
-    )
+        num(def.amount))
 end
 
 local function draw_line(line, value)
-    Graphics.freetype.easy_print(
-        FONT, TEXT_X, TEXT_Y + line * LINE_HEIGHT, value
-    )
+    Graphics.freetype.easy_print(FONT, TEXT_X, TEXT_Y + line * LINE_HEIGHT, value)
 end
 
 local function draw_panel()
@@ -230,46 +167,35 @@ local function draw_panel()
         line = line + 1
     end
 
-    add("MEDIC CREW_TARGET TEST | assignment=" .. (ASSIGN_TEST_TARGET and "ON" or "OFF"))
-    add(boost_definition_line())
-    add("Legend: *=selected D=drone F=full | d30=HP change per 30 ship loops")
+    local heal = mods.sc and mods.sc.medicHeal
+    add("MEDIC HEAL TEST | Lua=" .. (heal and "ON" or "MISSING"))
+    add(boost_info())
+    add(string.format("POST calls=%s adjusted=%s | *=selected D=drone | d30=HP delta",
+        heal and tostring(heal.postCalls) or "-",
+        heal and tostring(heal.adjustedCalls) or "-"))
 
-    local shown = 0
+    local displayed = 0
     for shipId = 0, 1 do
-        local ship = Hyperspace.Global.GetInstance():GetShipManager(shipId)
-        if ship then
-            add(string.format("%s ship: %d medics | loop %d",
+        if (state.medicCounts[shipId] > 0) then
+            add(string.format("%s medics=%d ticks=%d",
                 shipId == 0 and "PLAYER" or "ENEMY",
-                state.medicCounts[shipId] or 0,
-                state.ticks[shipId] or 0
-            ))
+                state.medicCounts[shipId], state.ticks[shipId]))
 
-            for _, medic in ipairs(state.medics[shipId]) do
-                if shown >= MAX_MEDICS_SHOWN then break end
-                shown = shown + 1
-                add(string.format(" Medic %s#%s room %s functional=%s",
-                    medic.medicName, medic.medicId, tostring(medic.room), yn(medic.functional)))
-                add(string.format(" Pick: %s | write=%s | before=%s after=%s",
-                    medic.intended, medic.writeStatus,
-                    yn(medic.priorPresent), yn(medic.afterPresent)))
-                if medic.writeError then add(" Assignment error: " .. tostring(medic.writeError):sub(1, 90)) end
-                for i = 1, math.min(MAX_CREW_SHOWN, #medic.crewLines) do
-                    add("  " .. medic.crewLines[i])
+            for _, snapshot in ipairs(state.snapshots[shipId]) do
+                if displayed >= MAX_MEDICS_SHOWN then break end
+                displayed = displayed + 1
+                add(snapshot.header)
+                for i = 1, math.min(MAX_CREW_SHOWN, #snapshot.crewLines) do
+                    add(snapshot.crewLines[i])
                 end
-                if #medic.crewLines == 0 then add("  No other friendly crew in medic room") end
-                if #medic.crewLines > MAX_CREW_SHOWN then
-                    add("  ..." .. tostring(#medic.crewLines - MAX_CREW_SHOWN) .. " more crew")
-                end
+                if #snapshot.crewLines == 0 then add(" No friendly crew in medic's room") end
             end
         end
     end
 
-    if shown == 0 then add("No living Terran Medics detected on either ship") end
+    if displayed == 0 then add("No Terran Medics found on either ship") end
+
     Graphics.CSurface.GL_PopMatrix()
 end
 
-script.on_render_event(
-    Defines.RenderEvents.MOUSE_CONTROL,
-    draw_panel,
-    function() end
-)
+script.on_render_event(Defines.RenderEvents.MOUSE_CONTROL, draw_panel, function() end)

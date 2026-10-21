@@ -2123,7 +2123,7 @@ END OF SUBSYSTEMS
 	<desc id="crew_TERRAN_MARINE_DESC"/>
 	<title id="crew_TERRAN_MARINE_NAME"/>
 	<short id="crew_TERRAN_MARINE_SHORT"/>
-	<cost>55</cost>
+	<cost>50</cost>
 	<rarity>1</rarity>
 	<powerList/>
 	<colorList>
@@ -2144,7 +2144,7 @@ END OF SUBSYSTEMS
 	<desc id="crew_TERRAN_MARINE_DESC"/>
 	<title id="crew_TERRAN_MARINE_NAME"/>
 	<short id="crew_TERRAN_MARINE_SHORT"/>
-	<cost>65</cost>
+	<cost>60</cost>
 	<rarity>1</rarity>
 	<powerList>
 		<power id="crew_TERRAN_POWER_STIMPACK"/>
@@ -2294,7 +2294,7 @@ END OF SUBSYSTEMS
 	<desc id="crew_TERRAN_GHOST_DESC"/>
 	<title id="crew_TERRAN_GHOST_NAME"/>
 	<short id="crew_TERRAN_GHOST_SHORT"/>
-	<cost>65</cost>
+	<cost>70</cost>
 	<rarity>4</rarity>
 	<powerList/>
 	<colorList>
@@ -2315,7 +2315,7 @@ END OF SUBSYSTEMS
 	<desc id="crew_TERRAN_GHOST_DESC"/>
 	<title id="crew_TERRAN_GHOST_NAME"/>
 	<short id="crew_TERRAN_GHOST_SHORT"/>
-	<cost>75</cost>
+	<cost>95</cost>
 	<rarity>5</rarity>
 	<powerList>
 		<power id="crew_TERRAN_POWER_CLOAK"/>
@@ -2338,7 +2338,7 @@ END OF SUBSYSTEMS
 	<desc id="crew_TERRAN_GHOST_DESC"/>
 	<title id="crew_TERRAN_GHOST_NAME"/>
 	<short id="crew_TERRAN_GHOST_SHORT"/>
-	<cost>75</cost>
+	<cost>95</cost>
 	<rarity>5</rarity>
 	<powerList>
 		<power id="crew_TERRAN_POWER_LOCKDOWN"/>
@@ -2418,7 +2418,7 @@ END OF SUBSYSTEMS
 	<short id="drone_TERRAN_SCV_SHORT"></short>
 	<desc id="drone_TERRAN_SCV_DESC"></desc>
 	<power>2</power>
-	<cost>75</cost>
+	<cost>60</cost>
 	<bp>3</bp>
 	<rarity>1</rarity>
 	<iconImage>battle</iconImage>
@@ -2430,6 +2430,7 @@ END OF SUBSYSTEMS
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
+		<power id="crew_TERRAN_POWER_REPAIR_HULL"/>
 		<power>DRONE</power>
 	</powerList>
 </crewBlueprint>
