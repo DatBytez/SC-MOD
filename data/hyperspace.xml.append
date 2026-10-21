@@ -450,8 +450,8 @@
 			<engines req="15" />
 			<shields req="55" />
 			<weapons req="65" />
-			<repair req="18" />
-			<combat req="8" />
+			<repair req="16" />
+			<combat req="6" />
 		</skills>
 		<!-- POWERED ARMOR -->
 		<suffocationModifier>0.4</suffocationModifier>
@@ -488,8 +488,8 @@
 			<engines req="15" />
 			<shields req="55" />
 			<weapons req="65" />
-			<repair req="18" />
-			<combat req="8" />
+			<repair req="16" />
+			<combat req="6" />
 		</skills>
 		<!-- POWERED ARMOR -->
 		<suffocationModifier>0.4</suffocationModifier>
@@ -738,8 +738,8 @@
 			<engines req="15" />
 			<shields req="55" />
 			<weapons req="65" />
-			<repair req="18" />
-			<combat req="8" />
+			<repair req="16" />
+			<combat req="6" />
 		</skills>
 		<!-- POWERED ARMOR -->
 		<suffocationModifier>0.4</suffocationModifier>
@@ -750,7 +750,7 @@
 		<canBurn>false</canBurn>
 		<hasDeathExplosion>true</hasDeathExplosion>
 		<hasCustomDeathAnimation>true</hasCustomDeathAnimation>
-		<fireRepairMultiplier>2.2</fireRepairMultiplier>
+		<fireRepairMultiplier>2.0</fireRepairMultiplier>
 		<deathEffect>
 			<fireChance>100</fireChance>
 			<persDamage>1</persDamage>
@@ -809,8 +809,8 @@
 			<engines req="15" />
 			<shields req="55" />
 			<weapons req="65" />
-			<repair req="18" />
-			<combat req="8" />
+			<repair req="16" />
+			<combat req="6" />
 		</skills>
 		<!-- POWERED ARMOR -->
 		<suffocationModifier>0.4</suffocationModifier>
