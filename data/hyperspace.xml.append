@@ -392,7 +392,7 @@
 		<damageTakenMultiplier>1.4</damageTakenMultiplier>
 		<!-- STATIC ABILITIES -->
 		<repairSpeed>1.4</repairSpeed>
-		<fireRepairMultiplier>1.4</fireRepairMultiplier>
+		<fireRepairMultiplier>2.0</fireRepairMultiplier>
 		
 		<powerEffect name="SC_REPAIR">
 			<req type="player">
@@ -753,7 +753,7 @@
 			<friendlyFire>true</friendlyFire>
 		</deathEffect>
 		<powerEffect name="SC_FLAMETHROWER">
-			<cooldown>4</cooldown>
+			<cooldown>2</cooldown>
 			<hideCooldown>true</hideCooldown>
 			<hideButton>true</hideButton>
 			<chargeReq>
@@ -864,7 +864,7 @@
 		<!-- STATIC ABILITIES -->
 		<isTelepathic>true</isTelepathic>
 		<resistsMindControl>true</resistsMindControl>
-		<repairSpeed>1.5</repairSpeed>
+		<repairSpeed>1.2</repairSpeed>
 		<fireRepairMultiplier>1.6</fireRepairMultiplier>
 		<sabotageSpeedMultiplier>1.5</sabotageSpeedMultiplier>
 		<rangedDamageMultiplier>3.5</rangedDamageMultiplier>
@@ -905,7 +905,7 @@
 		<!-- STATIC ABILITIES -->
 		<isTelepathic>true</isTelepathic>
 		<resistsMindControl>true</resistsMindControl>
-		<repairSpeed>1.5</repairSpeed>
+		<repairSpeed>1.2</repairSpeed>
 		<fireRepairMultiplier>1.6</fireRepairMultiplier>
 		<sabotageSpeedMultiplier>1.5</sabotageSpeedMultiplier>
 		<rangedDamageMultiplier>3.5</rangedDamageMultiplier>
@@ -971,7 +971,7 @@
 		<!-- STATIC ABILITIES -->
 		<isTelepathic>true</isTelepathic>
 		<resistsMindControl>true</resistsMindControl>
-		<repairSpeed>1.5</repairSpeed>
+		<repairSpeed>1.2</repairSpeed>
 		<fireRepairMultiplier>1.6</fireRepairMultiplier>
 		<sabotageSpeedMultiplier>1.5</sabotageSpeedMultiplier>
 		<rangedDamageMultiplier>3.5</rangedDamageMultiplier>
@@ -1512,7 +1512,7 @@
 		<mod-append:customShip name="PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER">
 			<hiddenAug>TERRAN_SHIP</hiddenAug>
 			<hiddenAug>ARTILLERY_ORDER</hiddenAug>
-			<crewLimit>10</crewLimit>
+			<crewLimit>8</crewLimit>
 			<systemLimit>8</systemLimit>
 			<subsystemLimit>5</subsystemLimit>
 			<exclusivityOverride>
@@ -1581,7 +1581,7 @@
 	<mod-append:ship name="PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE" a="true" b="false" c="false" />
 		<mod-append:customShip name="PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE">
 			<hiddenAug>TERRAN_SHIP</hiddenAug>
-			<crewLimit>8</crewLimit>
+			<crewLimit>7</crewLimit>
 			<systemLimit>8</systemLimit>
 			<subsystemLimit>5</subsystemLimit>
 			<exclusivityOverride>
@@ -2016,6 +2016,7 @@
 	<mod-append:script>data/sc_scripts/sc_weapon_irradiate.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_filter.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_halo.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_halo_launch.lua</mod-append:script>
 	<mod-append:script>data/brightness_scripts/brightness_particles.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_halo_trail.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_emp.lua</mod-append:script>

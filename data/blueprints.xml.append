@@ -1668,7 +1668,7 @@ END OF SUBSYSTEMS
 	<speed>1</speed> <!--<speed>10</speed>-->
 	<length>1</length> <!--<length>50</length>-->
 	<mv-aiCrewTarget>MOST_CREW</mv-aiCrewTarget>
-	<power>2</power>
+	<power>1</power>
 	<cost>65</cost>
 	<rarity>3</rarity>
 	<boost>
@@ -2032,11 +2032,11 @@ END OF SUBSYSTEMS
 	<sc-halo/>
 	<cost>65</cost>
 	<rarity>4</rarity>
-	<explosion>explosion_random</explosion>
 	<projectiles>
 		<projectile count="1" fake="false">terran_halo_projectile</projectile>
 		<projectile count="1" fake="true">terran_halo_projectile</projectile>
 	</projectiles>
+	<explosion>terran_halo_hit</explosion>
 	<launchSounds>
 		<sound>smallMissile1</sound>
 		<sound>smallMissile2</sound>
@@ -2197,8 +2197,8 @@ END OF SUBSYSTEMS
 	<cost>65</cost>
 	<rarity>3</rarity>
 	<powerList>
-		<power id="crew_TERRAN_POWER_OPTICAL_FLARE"/>
 		<power id="crew_TERRAN_POWER_HEAL"/>
+		<power id="crew_TERRAN_POWER_OPTICAL_FLARE"/>
 	</powerList>
 	<colorList>
 		<layer>
@@ -2221,8 +2221,8 @@ END OF SUBSYSTEMS
 	<cost>65</cost>
 	<rarity>3</rarity>
 	<powerList>
-		<power id="crew_TERRAN_POWER_RESTORATION"/>
 		<power id="crew_TERRAN_POWER_HEAL"/>
+		<power id="crew_TERRAN_POWER_RESTORATION"/>
 	</powerList>
 	<colorList>
 		<layer>
@@ -2358,7 +2358,7 @@ END OF SUBSYSTEMS
 </crewBlueprint>
 <!--
 *********************************************************************************************************
-     TERRAN_CIVILIAN
+     TERRAN CIVILIAN
 *********************************************************************************************************
 -->
 <crewBlueprint name="terran_civilian">
@@ -2368,7 +2368,7 @@ END OF SUBSYSTEMS
 	<cost>35</cost>
 	<rarity>1</rarity>
 	<powerList>
-		<power></power>
+		<power id="crew_TERRAN_POWER_CIVILIAN"/>
 	</powerList>
 	<colorList>
 		<layer>
@@ -2385,7 +2385,7 @@ END OF SUBSYSTEMS
 </crewBlueprint>
 <!-- 
 **********************************************************************************************************************
-           TERRAN_SCV
+           TERRAN SCV
 **********************************************************************************************************************
 -->
 <crewBlueprint name="terran_scv">
@@ -2395,6 +2395,7 @@ END OF SUBSYSTEMS
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
+		<power id="crew_TERRAN_POWER_REPAIR_HULL"/>
 		<power>DRONE</power>
 	</powerList>
 	<colorList>
@@ -2966,10 +2967,23 @@ TERRAN_GOLIATH-->
 	</droneList>
 	<health amount="30" />
 	<maxPower amount="8" />
-	<crewCount amount="1" class="terran_civilian" />
+	<!-- <crewCount amount="1" class="terran_civilian" />
 	<crewCount amount="1" class="terran_marine" />
 	<crewCount amount="1" class="terran_medic_1" />
+	<crewCount amount="1" class="terran_marine" /> -->
+
+	<crewCount amount="1" class="terran_civilian" />
 	<crewCount amount="1" class="terran_marine" />
+	<crewCount amount="1" class="terran_marine_1" />
+	<crewCount amount="1" class="terran_medic" />
+	<crewCount amount="1" class="terran_medic_1" />
+	<crewCount amount="1" class="terran_medic_2" />
+	<crewCount amount="1" class="terran_firebat" />
+	<crewCount amount="1" class="terran_firebat_1" />
+	<crewCount amount="1" class="terran_ghost" />
+	<crewCount amount="1" class="terran_ghost_1" />
+	<crewCount amount="1" class="terran_ghost_2" />
+
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
 	<!--<mv-mapImage>map_icon_mup_mvfed_a</mv-mapImage>-->
 </shipBlueprint>
