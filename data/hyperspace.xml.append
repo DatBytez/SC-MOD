@@ -382,17 +382,20 @@
 			<repairSound>ability_repair5</repairSound>
 		</repairSounds>
          	<skills>
-         		<piloting req="12"/>
-         		<engines req="12"/>
-         		<shields req="65"/>
-         		<weapons req="60"/>
-         		<repair req="14"/>
-         		<combat req="20"/>
+         		<piloting req="10"/>
+         		<engines req="10"/>
+         		<shields req="38"/>
+         		<weapons req="45"/>
+         		<repair req="12"/>
+         		<combat req="5"/>
          	</skills>
-		<damageTakenMultiplier>1.4</damageTakenMultiplier>
+		<damageTakenMultiplier>1.25</damageTakenMultiplier>
 		<!-- STATIC ABILITIES -->
 		<repairSpeed>1.4</repairSpeed>
-		<fireRepairMultiplier>2.0</fireRepairMultiplier>
+		<fireRepairMultiplier>1.2</fireRepairMultiplier>
+		<!-- HIDDEN ABILITIES -->
+		<suffocationModifier>0.85</suffocationModifier>
+		<fireDamageMultiplier>0.85</fireDamageMultiplier>
 		
 		<powerEffect name="SC_REPAIR">
 			<req type="player">
@@ -451,7 +454,7 @@
 			<combat req="8" />
 		</skills>
 		<!-- POWERED ARMOR -->
-		<suffocationModifier>0.2</suffocationModifier>
+		<suffocationModifier>0.4</suffocationModifier>
 		<fireDamageMultiplier>0.8</fireDamageMultiplier>
 		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
 		<damageTakenMultiplier>0.8</damageTakenMultiplier>
@@ -489,7 +492,7 @@
 			<combat req="8" />
 		</skills>
 		<!-- POWERED ARMOR -->
-		<suffocationModifier>0.2</suffocationModifier>
+		<suffocationModifier>0.4</suffocationModifier>
 		<fireDamageMultiplier>0.8</fireDamageMultiplier>
 		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
 		<damageTakenMultiplier>0.8</damageTakenMultiplier>
@@ -556,7 +559,7 @@
 			<combat req="8" />
 		</skills>
 		<!-- POWERED ARMOR -->
-		<suffocationModifier>0.2</suffocationModifier>
+		<suffocationModifier>0.4</suffocationModifier>
 		<fireDamageMultiplier>0.8</fireDamageMultiplier>
 		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
 		<damageTakenMultiplier>0.8</damageTakenMultiplier>
@@ -616,7 +619,7 @@
 			<combat req="8" />
 		</skills>
 		<!-- POWERED ARMOR -->
-		<suffocationModifier>0.2</suffocationModifier>
+		<suffocationModifier>0.4</suffocationModifier>
 		<fireDamageMultiplier>0.8</fireDamageMultiplier>
 		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
 		<damageTakenMultiplier>0.8</damageTakenMultiplier>
@@ -675,7 +678,7 @@
 			<combat req="8" />
 		</skills>
 		<!-- POWERED ARMOR -->
-		<suffocationModifier>0.2</suffocationModifier>
+		<suffocationModifier>0.4</suffocationModifier>
 		<fireDamageMultiplier>0.8</fireDamageMultiplier>
 		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
 		<damageTakenMultiplier>0.8</damageTakenMultiplier>
@@ -738,7 +741,7 @@
 			<combat req="8" />
 		</skills>
 		<!-- POWERED ARMOR -->
-		<suffocationModifier>0.2</suffocationModifier>
+		<suffocationModifier>0.4</suffocationModifier>
 		<fireDamageMultiplier>0.8</fireDamageMultiplier>
 		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
 		<damageTakenMultiplier>0.8</damageTakenMultiplier>
@@ -809,7 +812,7 @@
 			<combat req="8" />
 		</skills>
 		<!-- POWERED ARMOR -->
-		<suffocationModifier>0.2</suffocationModifier>
+		<suffocationModifier>0.4</suffocationModifier>
 		<fireDamageMultiplier>0.8</fireDamageMultiplier>
 		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
 		<damageTakenMultiplier>0.8</damageTakenMultiplier>
@@ -858,7 +861,7 @@
 			<combat req="5" />
 		</skills>
 		<!-- POWERED ARMOR -->
-		<suffocationModifier>0.2</suffocationModifier>
+		<suffocationModifier>0.4</suffocationModifier>
 		<fireDamageMultiplier>0.9</fireDamageMultiplier>
 		<moveSpeedMultiplier>1.2</moveSpeedMultiplier>
 		<!-- STATIC ABILITIES -->
@@ -899,7 +902,7 @@
 			<combat req="5" />
 		</skills>
 		<!-- POWERED ARMOR -->
-		<suffocationModifier>0.2</suffocationModifier>
+		<suffocationModifier>0.4</suffocationModifier>
 		<fireDamageMultiplier>0.9</fireDamageMultiplier>
 		<moveSpeedMultiplier>1.2</moveSpeedMultiplier>
 		<!-- STATIC ABILITIES -->
@@ -965,7 +968,7 @@
 			<combat req="5" />
 		</skills>
 		<!-- POWERED ARMOR -->
-		<suffocationModifier>0.2</suffocationModifier>
+		<suffocationModifier>0.4</suffocationModifier>
 		<fireDamageMultiplier>0.9</fireDamageMultiplier>
 		<moveSpeedMultiplier>1.2</moveSpeedMultiplier>
 		<!-- STATIC ABILITIES -->

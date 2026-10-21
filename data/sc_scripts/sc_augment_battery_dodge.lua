@@ -28,10 +28,8 @@ script.on_internal_event(
         if not helpers.ship_has_augment(shipManager, dodgeAugments) then return end
         if not battery.is_active(shipManager) then return end
 
-        local batteryPow, systemPow, systemLvl =
-            battery.get_system_power_info(shipManager, "engines")
-        local activationTimer =
-            battery.get_system_activation(shipManager, "engines")
+        local batteryPow, systemPow, systemLvl = battery.get_system_power_info(shipManager, "engines")
+        local activationTimer = battery.get_system_activation(shipManager, "engines")
 
         if batteryPow < 1 or activationTimer <= 0 then return end
 
