@@ -571,7 +571,8 @@
 			<statBoost name="trueHealAmount" save="Heal-Crew">
 				<boostType>FLAT</boostType>
 				<amount>2</amount>
-				<shipTarget>CURRENT_ROOM</shipTarget>
+				<!-- <shipTarget>CURRENT_ROOM</shipTarget> -->
+				<shipTarget>CREW_TARGET</shipTarget>
 				<crewTarget>ALLIES</crewTarget>
 				<droneTarget>CREW</droneTarget>
 				<affectsSelf>false</affectsSelf>
@@ -2050,6 +2051,7 @@
 	<mod-append:script>data/sc_scripts/sc_crew_ability_cost.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_shoot.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_restoration.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_crew_ability_heal.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_flare.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_copy.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_return.lua</mod-append:script>
