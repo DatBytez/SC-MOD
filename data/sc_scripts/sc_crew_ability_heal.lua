@@ -10,6 +10,7 @@ mods.sc = mods.sc or {}
 mods.sc.medicHeal = mods.sc.medicHeal or {}
 
 local medicHeal = mods.sc.medicHeal
+local HEALTH_GROUP_SIZE = 1 -- Group current HP in steps of 5 when selecting a target.
 local medicRaces = {
     terran_medic = true,
     terran_medic_1 = true,
@@ -60,12 +61,18 @@ local function is_eligible(medic, crew)
         and same_room_ally(medic, crew)
 end
 
-local function select_lowest_health(medic, crewList)
+local function select_lowest_health(medic, crewList, previousTarget)
     local lowest
+    local lowestGroup
+
     for _, crew in ipairs(crewList) do
-        if is_eligible(medic, crew)
-            and (not lowest or crew.health.first < lowest.health.first) then
-            lowest = crew
+        if is_eligible(medic, crew) then
+            local group = math.floor(crew.health.first / HEALTH_GROUP_SIZE)
+            if not lowest or group < lowestGroup
+                or (group == lowestGroup and same_crew(crew, previousTarget)) then
+                lowest = crew
+                lowestGroup = group
+            end
         end
     end
     return lowest
@@ -77,6 +84,7 @@ local snapshots = {}
 
 local function update_snapshot(ship)
     local crewList = {}
+    local previousSnapshot = snapshots[ship.iShipId]
     local snapshot = {targets = {}, recipients = {}}
 
     for i = 0, ship.vCrewList:size() - 1 do
@@ -96,7 +104,8 @@ local function update_snapshot(ship)
 
     for _, medic in ipairs(crewList) do
         if not medic.bDead and medicRaces[medic:GetSpecies()] and medic:Functional() then
-            local target = select_lowest_health(medic, crewList)
+            local previousTarget = previousSnapshot and previousSnapshot.targets[medic.extend.selfId]
+            local target = select_lowest_health(medic, crewList, previousTarget)
             snapshot.targets[medic.extend.selfId] = target
 
             for _, crew in ipairs(crewList) do
