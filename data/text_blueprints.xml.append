@@ -291,13 +291,13 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 
 <text name="crew_TERRAN_CIVILIAN_NAME">Terran Civilian</text>
 <text name="crew_TERRAN_CIVILIAN_SHORT">Civilian</text>
-<text name="crew_TERRAN_CIVILIAN_DESC">Civilians are quick learners and take up only half a crew slot, but are not equipped for combat.
+<text name="crew_TERRAN_CIVILIAN_DESC">Civilian personnel who excel at maintenance and emergency response, but are not equipped for combat.
 
--Tradesman:
+-Expertise:
     Increased learning speed
     Increased repair speed
     Increased fire supression speed
-    Susseptible to damage</text>
+    Increased damage taken</text>
 
 <text name="crew_TERRAN_SPIDER_SET_NAME">Terran Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_SET_SHORT">Spider Mine</text>

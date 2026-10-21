@@ -2365,7 +2365,7 @@ END OF SUBSYSTEMS
 	<desc id="crew_TERRAN_CIVILIAN_DESC"/>
 	<title id="crew_TERRAN_CIVILIAN_NAME"/>
 	<short id="crew_TERRAN_CIVILIAN_SHORT"/>
-	<cost>35</cost>
+	<cost>30</cost>
 	<rarity>1</rarity>
 	<powerList>
 		<power id="crew_TERRAN_POWER_CIVILIAN"/>

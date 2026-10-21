@@ -392,7 +392,7 @@
 		<damageTakenMultiplier>1.25</damageTakenMultiplier>
 		<!-- STATIC ABILITIES -->
 		<repairSpeed>1.4</repairSpeed>
-		<fireRepairMultiplier>1.2</fireRepairMultiplier>
+		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 		<!-- HIDDEN ABILITIES -->
 		<suffocationModifier>0.85</suffocationModifier>
 		<fireDamageMultiplier>0.85</fireDamageMultiplier>
@@ -428,7 +428,7 @@
 -->
 	<race name="terran_marine">
 		<animBase>human</animBase>
-		<maxHealth>80</maxHealth>
+		<maxHealth>85</maxHealth>
 		<rangedDamageMultiplier>1.5</rangedDamageMultiplier>
 		<canPunch>false</canPunch>
 		<deathSounds>
@@ -500,7 +500,7 @@
 		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 		<!-- ACTIVATED ABILITIES -->
 		<powerEffect name="SC_STIMPACK">
-			<cooldown>0.1</cooldown>
+			<cooldown>10.0</cooldown>
 			<jumpCooldown>full</jumpCooldown>
 			<powerSounds>
 				<powerSound>ability_stimpack1</powerSound>
@@ -520,7 +520,7 @@
 			<cooldownColor r="80" g="220" b="80" />
 			<selfHealth>-15</selfHealth>
 			<temporaryEffect>
-				<duration>10</duration>
+				<duration>10.0</duration>
 				<cooldownColor r="240" g="210" b="50" />
 				<moveSpeedMultiplier>1.6</moveSpeedMultiplier>
 				<damageMultiplier>1.8</damageMultiplier>
@@ -537,7 +537,7 @@
 -->
 	<race name="terran_medic">
 		<animBase>human</animBase>
-		<maxHealth>120</maxHealth>
+		<maxHealth>100</maxHealth>
 		<canFight>false</canFight>
 		<canSabotage>false</canSabotage>
 		<deathSounds>
@@ -551,18 +551,18 @@
 			<repairSound>ability_repair5</repairSound>
 		</repairSounds>
 		<skills>
-			<piloting req="15" />
-			<engines req="15" />
-			<shields req="55" />
-			<weapons req="65" />
-			<repair req="18" />
+			<piloting req="13" />
+			<engines req="13" />
+			<shields req="50" />
+			<weapons req="58" />
+			<repair req="16" />
 			<combat req="8" />
 		</skills>
 		<!-- POWERED ARMOR -->
 		<suffocationModifier>0.4</suffocationModifier>
-		<fireDamageMultiplier>0.8</fireDamageMultiplier>
+		<fireDamageMultiplier>0.67</fireDamageMultiplier>
 		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
-		<damageTakenMultiplier>0.8</damageTakenMultiplier>
+		<damageTakenMultiplier>0.67</damageTakenMultiplier>
 
 		<!-- STATIC ABILITIES -->
 		 <fireRepairMultiplier>1.4</fireRepairMultiplier>
@@ -611,18 +611,18 @@
 			<repairSound>ability_repair5</repairSound>
 		</repairSounds>
 		<skills>
-			<piloting req="15" />
-			<engines req="15" />
-			<shields req="55" />
-			<weapons req="65" />
-			<repair req="18" />
+			<piloting req="13" />
+			<engines req="13" />
+			<shields req="50" />
+			<weapons req="58" />
+			<repair req="16" />
 			<combat req="8" />
 		</skills>
 		<!-- POWERED ARMOR -->
 		<suffocationModifier>0.4</suffocationModifier>
-		<fireDamageMultiplier>0.8</fireDamageMultiplier>
+		<fireDamageMultiplier>0.67</fireDamageMultiplier>
 		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
-		<damageTakenMultiplier>0.8</damageTakenMultiplier>
+		<damageTakenMultiplier>0.67</damageTakenMultiplier>
 
 		<!-- STATIC ABILITIES -->
 		 <fireRepairMultiplier>1.4</fireRepairMultiplier>
@@ -670,18 +670,18 @@
 			<repairSound>ability_repair5</repairSound>
 		</repairSounds>
 		<skills>
-			<piloting req="15" />
-			<engines req="15" />
-			<shields req="55" />
-			<weapons req="65" />
-			<repair req="18" />
+			<piloting req="13" />
+			<engines req="13" />
+			<shields req="50" />
+			<weapons req="58" />
+			<repair req="16" />
 			<combat req="8" />
 		</skills>
 		<!-- POWERED ARMOR -->
 		<suffocationModifier>0.4</suffocationModifier>
-		<fireDamageMultiplier>0.8</fireDamageMultiplier>
+		<fireDamageMultiplier>0.67</fireDamageMultiplier>
 		<moveSpeedMultiplier>0.8</moveSpeedMultiplier>
-		<damageTakenMultiplier>0.8</damageTakenMultiplier>
+		<damageTakenMultiplier>0.67</damageTakenMultiplier>
 
 		<!-- STATIC ABILITIES -->
 		 <fireRepairMultiplier>1.4</fireRepairMultiplier>
