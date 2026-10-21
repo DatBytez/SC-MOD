@@ -838,7 +838,7 @@
 -->
 	<race name="terran_ghost">
 		<animBase>human</animBase>
-		<maxHealth>70</maxHealth>
+		<maxHealth>90</maxHealth>
 		<canPunch>false</canPunch>
 		<deathSounds>
 			<deathSound>terran_ghost_death</deathSound>
@@ -854,11 +854,11 @@
 			<repairSound>ability_repair5</repairSound>
 		</repairSounds>
 		<skills>
-			<piloting req="10" />
-			<engines req="10" />
-			<shields req="36" />
-			<weapons req="43" />
-			<repair req="12" />
+			<piloting req="11" />
+			<engines req="11" />
+			<shields req="43" />
+			<weapons req="50" />
+			<repair req="14" />
 			<combat req="5" />
 		</skills>
 		<!-- POWERED ARMOR -->
@@ -869,7 +869,7 @@
 		<isTelepathic>true</isTelepathic>
 		<resistsMindControl>true</resistsMindControl>
 		<repairSpeed>1.2</repairSpeed>
-		<fireRepairMultiplier>1.6</fireRepairMultiplier>
+		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 		<sabotageSpeedMultiplier>1.5</sabotageSpeedMultiplier>
 		<rangedDamageMultiplier>3.5</rangedDamageMultiplier>
 		<shootTimer min="1500" max="1800" />
@@ -895,11 +895,11 @@
 			<repairSound>ability_repair5</repairSound>
 		</repairSounds>
 		<skills>
-			<piloting req="10" />
-			<engines req="10" />
-			<shields req="36" />
-			<weapons req="43" />
-			<repair req="12" />
+			<piloting req="11" />
+			<engines req="11" />
+			<shields req="43" />
+			<weapons req="50" />
+			<repair req="14" />
 			<combat req="5" />
 		</skills>
 		<!-- POWERED ARMOR -->
@@ -910,7 +910,7 @@
 		<isTelepathic>true</isTelepathic>
 		<resistsMindControl>true</resistsMindControl>
 		<repairSpeed>1.2</repairSpeed>
-		<fireRepairMultiplier>1.6</fireRepairMultiplier>
+		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 		<sabotageSpeedMultiplier>1.5</sabotageSpeedMultiplier>
 		<rangedDamageMultiplier>3.5</rangedDamageMultiplier>
 		<shootTimer min="1500" max="1800" />
@@ -961,11 +961,11 @@
 			<repairSound>ability_repair5</repairSound>
 		</repairSounds>
 		<skills>
-			<piloting req="10" />
-			<engines req="10" />
-			<shields req="36" />
-			<weapons req="43" />
-			<repair req="12" />
+			<piloting req="11" />
+			<engines req="11" />
+			<shields req="43" />
+			<weapons req="50" />
+			<repair req="14" />
 			<combat req="5" />
 		</skills>
 		<!-- POWERED ARMOR -->
@@ -976,7 +976,7 @@
 		<isTelepathic>true</isTelepathic>
 		<resistsMindControl>true</resistsMindControl>
 		<repairSpeed>1.2</repairSpeed>
-		<fireRepairMultiplier>1.6</fireRepairMultiplier>
+		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 		<sabotageSpeedMultiplier>1.5</sabotageSpeedMultiplier>
 		<rangedDamageMultiplier>3.5</rangedDamageMultiplier>
 		<shootTimer min="1500" max="1800" />
@@ -984,7 +984,7 @@
 		<powerEffect name="SC_LOCKDOWN">
 			<sc-shoot projectile="TERRAN_LOCKDOWN_PROJECTILE"/>
 			<sc-cost resource="missiles" amount="1"/>
-			<cooldown>3</cooldown>
+			<cooldown>24</cooldown>
 			<powerSounds>
 				<powerSound>weapon_target</powerSound>
 			</powerSounds>
@@ -2065,6 +2065,6 @@
     <mod-append:script>data/sc_scripts/sc_system_sensors.lua</mod-append:script>
 
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
-    <!-- <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script> -->
+    <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
 </mod:findLike>
 </FTL>
