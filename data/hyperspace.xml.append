@@ -571,7 +571,6 @@
 			<statBoost name="trueHealAmount" save="Heal-Crew">
 				<boostType>FLAT</boostType>
 				<amount>2</amount>
-				<!-- <shipTarget>CURRENT_ROOM</shipTarget> -->
 				<shipTarget>CURRENT_ROOM</shipTarget>
 				<crewTarget>ALLIES</crewTarget>
 				<droneTarget>CREW</droneTarget>
@@ -579,17 +578,6 @@
 				<priority>0</priority>
 				<blackList load="SC_LIST_CREW_DRONES"/>
 			</statBoost>
-
-			<!-- <statBoost name="trueHealAmount" save="Heal-Drones">
-				<boostType>FLAT</boostType>
-				<amount>2</amount>
-				<shipTarget>CURRENT_ROOM</shipTarget>
-				<crewTarget>ALLIES</crewTarget>
-				<droneTarget>DRONES</droneTarget>
-				<affectsSelf>false</affectsSelf>
-				<priority>0</priority>
-				<whiteList load="SC_LIST_CREW_DRONES"/>
-			</statBoost> -->
 		</passiveStatBoosts>
 		<sc-heal/>
 		<powerEffect load="SC_REPAIR"/>
@@ -748,7 +736,7 @@
 		<canBurn>false</canBurn>
 		<hasDeathExplosion>true</hasDeathExplosion>
 		<hasCustomDeathAnimation>true</hasCustomDeathAnimation>
-		<fireRepairMultiplier>2.0</fireRepairMultiplier>
+		<fireRepairMultiplier>2.4</fireRepairMultiplier>
 		<deathEffect>
 			<fireChance>100</fireChance>
 			<persDamage>1</persDamage>
@@ -764,7 +752,7 @@
 				</extraConditions>
 			</chargeReq>
 			<req type="enemy">
-				<extraConditions>
+				<extraConditions>                  
 					<shooting>true</shooting>
 				</extraConditions>
 			</req>
@@ -775,6 +763,7 @@
 			</req>
 			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
 			<friendlyFire>true</friendlyFire>
+			<shipFriendlyFire>true</shipFriendlyFire>
 			<fireChance>100</fireChance>
 		</powerEffect>
 		<powerEffect load="SC_REPAIR"/>
@@ -819,7 +808,7 @@
 		<canBurn>false</canBurn>
 		<hasDeathExplosion>true</hasDeathExplosion>
 		<hasCustomDeathAnimation>true</hasCustomDeathAnimation>
-		<fireRepairMultiplier>2.2</fireRepairMultiplier>
+		<fireRepairMultiplier>2.4</fireRepairMultiplier>
 		<deathEffect>
 			<fireChance>100</fireChance>
 			<persDamage>1</persDamage>
@@ -2104,6 +2093,7 @@
 	<mod-append:script>data/sc_scripts/sc_crew_ability_shoot.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_restoration.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_heal.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_crew_ability_flamethrower.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_flare.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_copy.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_return.lua</mod-append:script>
@@ -2117,6 +2107,6 @@
     <mod-append:script>data/sc_scripts/sc_system_sensors.lua</mod-append:script>
 
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
+    <!-- <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script> -->
 </mod:findLike>
 </FTL>
