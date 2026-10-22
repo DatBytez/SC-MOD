@@ -164,3 +164,4 @@ mods.multiverse.weaponTagParsers = {}
 mods.multiverse.droneTagParsers = {}
 mods.multiverse.augmentTagParsers = {}
 mods.multiverse.powerTagParsers = {}
+mods.multiverse.crewTagParsers = mods.multiverse.crewTagParsers or {}
