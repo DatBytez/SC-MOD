@@ -591,7 +591,7 @@
 				<whiteList load="SC_LIST_CREW_DRONES"/>
 			</statBoost> -->
 		</passiveStatBoosts>
-		
+		<sc-heal/>
 		<powerEffect load="SC_REPAIR"/>
 	</race>
 
@@ -630,9 +630,8 @@
 
 		<passiveStatBoosts>
 			<statBoost load="Heal-Crew"/>
-			<!-- <statBoost load="Heal-Drones"/> -->
 		</passiveStatBoosts>
-		
+		<sc-heal/>
 		<!-- ACTIVATED ABILITIES -->
 		<powerEffect name="SC_OPTICAL_FLARE">
 			<cooldown>30</cooldown>
@@ -689,9 +688,8 @@
 
 		<passiveStatBoosts>
 			<statBoost load="Heal-Crew"/>
-			<!-- <statBoost load="Heal-Drones"/> -->
 		</passiveStatBoosts>
-		
+		<sc-heal/>
 		<!-- ACTIVATED ABILITIES -->
 		<powerEffect name="SC_RESTORATION">
 			<cooldown>30</cooldown>
@@ -1010,6 +1008,7 @@
 		<selectable>true</selectable>
 		<controllable>true</controllable>
 		<canFight>true</canFight>
+		<canPunch>true</canPunch>
 		<canRepair>true</canRepair>
 		<canSabotage>true</canSabotage>
 		<canSuffocate>true</canSuffocate>
@@ -1032,7 +1031,7 @@
 
 		<repairSpeed>2.0</repairSpeed>
 		<fireRepairMultiplier>1.2</fireRepairMultiplier>
-		<rangedDamageMultiplier>0.8</rangedDamageMultiplier>
+		<damageMultiplier>0.8</damageMultiplier>
 		<repairSounds>
 			<repairSound>ability_repair1</repairSound>
 			<repairSound>ability_repair2</repairSound>
@@ -1053,6 +1052,7 @@
 		<selectable>true</selectable>
 		<controllable>true</controllable>
 		<canFight>true</canFight>
+		<canPunch>true</canPunch>
 		<canRepair>true</canRepair>
 		<canSabotage>true</canSabotage>
 		<canSuffocate>true</canSuffocate>
@@ -1076,7 +1076,7 @@
 
 		<repairSpeed>2.0</repairSpeed>
 		<fireRepairMultiplier>1.2</fireRepairMultiplier>
-		<rangedDamageMultiplier>0.8</rangedDamageMultiplier>
+		<damageMultiplier>0.8</damageMultiplier>
 		<repairSounds>
 			<repairSound>ability_repair1</repairSound>
 			<repairSound>ability_repair2</repairSound>
@@ -1148,7 +1148,7 @@
 		<canRepair>false</canRepair>
 		<canSuffocate>false</canSuffocate>
 		<canMan>false</canMan>
-		<maxHealth>175</maxHealth>
+		<maxHealth>140</maxHealth>
 		<stunMultiplier>0.25</stunMultiplier>
 		<canTeleport>false</canTeleport>
 		<resistsMindControl>true</resistsMindControl>
@@ -1157,10 +1157,11 @@
 			<fightAI/>
 			<returnToDroneRoom />
 		</droneAI>
-		<damageMultiplier>1.1</damageMultiplier>
+		<damageMultiplier>1.5</damageMultiplier>
 		<animBase>human</animBase>
 		<hasCustomDeathAnimation>true</hasCustomDeathAnimation>
-		<fireDamageMultiplier>0.4</fireDamageMultiplier>
+		<fireDamageMultiplier>0.25</fireDamageMultiplier>
+		<damageTakenMultiplier>0.8</damageTakenMultiplier>
 		<moveSpeedMultiplier>0.5</moveSpeedMultiplier>
 		<shootingSounds>
 			<shootingSound>terran_marine_attack</shootingSound>

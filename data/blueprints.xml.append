@@ -14,7 +14,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
 <FTL>
-
 <!-- 
 [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
@@ -165,8 +164,6 @@ END OF ESSENTIAL SYSTEMS
 [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 -->
 </FTL>
-
-
 <!-- 
 [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
@@ -292,8 +289,6 @@ END OF AUXILIARY SYSTEMS
 [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 -->
 </FTL>
-
-
 <!-- 
 [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
@@ -390,12 +385,14 @@ END OF AUXILIARY SYSTEMS
 END OF SUBSYSTEMS
 [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 -->
-
-<!-- 
-**********************************************************************************************************************
-  TERRAN AUGMENTS
-**********************************************************************************************************************
--->
+</FTL>
+</FTL>
+<!-- ========================================================== --
+						TERRAN AUGMENTS
+  -- ========================================================== -->
+<FTL>
+<!-- ===============	TERRAN SPECIES AUGMENT	=============== -->
+<FTL>
 <augBlueprint name="TERRAN_SHIP">
 	<title id="NOYB"/>
 	<desc id="NOYB"/>
@@ -404,7 +401,9 @@ END OF SUBSYSTEMS
 	<stackable>false</stackable>
 	<sc-repair/>
 </augBlueprint>
-
+</FTL>
+<!-- ===============	TERRAN SHIP BATTERIES	=============== -->
+ <FTL>
 <augBlueprint name="TERRAN_WRAITH_BATTERY">
     <title id="aug_TERRAN_WRAITH_BATTERY_NAME"/>
     <desc id="aug_TERRAN_WRAITH_BATTERY_DESC"/>
@@ -418,7 +417,9 @@ END OF SUBSYSTEMS
     <sc-battery-fire/>
     <sc-battery-ftl/>
 </augBlueprint>
-
+</FTL>
+ <!-- ===============	TERRAN SHIP ARMORS		=============== -->
+<FTL>
 <augBlueprint name="TERRAN_SHIP_ARMOR_LIGHT">
 	<title id="aug_TERRAN_SHIP_ARMOR_LIGHT_NAME"/>
 	<desc id="aug_TERRAN_SHIP_ARMOR_LIGHT_DESC"/>
@@ -450,7 +451,9 @@ END OF SUBSYSTEMS
 	<sc-armor/>
 	<sc-dodge value="-2"/>
 </augBlueprint>
-
+</FTL>
+<!-- ===============	SC SHIP DETECTORS		=============== -->
+<FTL>
 <augBlueprint name="SC_DETECTOR">
 	<title id="aug_SC_DETECTOR_NAME"/>
 	<desc id="aug_SC_DETECTOR_DESC"/>
@@ -460,16 +463,14 @@ END OF SUBSYSTEMS
 	<sc-upgrade system="sensors" value="2"/>
 	<sc-detector/>
 </augBlueprint>
-
-	<!-- 
-*********************************************************************************************************
-  TERRAN WEAPONS
-*********************************************************************************************************
--->
-
-<!-- ============
-     BURST LASERS
-     ============ -->
+</FTL>
+</FTL>
+<!-- ========================================================== --
+						TERRAN WEAPONS
+  -- ========================================================== -->
+<FTL>
+<!-- ===============	BURST LASERS			=============== -->
+<FTL>
 <weaponBlueprint name="TERRAN_BURST_LASER_1"> 
 	<type>LASER</type>
 	<title id="weapon_TERRAN_BURST_LASER_1_title"/>
@@ -731,8 +732,9 @@ END OF SUBSYSTEMS
 	<weaponArt>terran_burst_laser_heavy_2</weaponArt> 
 	<iconImage>laser_charge2</iconImage>
 </weaponBlueprint>
-
-<!-- ===============     LASER BATTERIES     =============== -->
+</FTL>
+<!-- ===============    LASER BATTERIES			=============== -->
+<FTL>
 <weaponBlueprint name="TERRAN_LASER_BATTERY_1"> 
 	<type>LASER</type>
 	<title id="weapon_TERRAN_LASER_BATTERY_1_title"/>
@@ -958,8 +960,8 @@ END OF SUBSYSTEMS
 	<weaponArt>terran_laser_battery_heavy_2</weaponArt> 
 	<iconImage>laser_charge2</iconImage>
 </weaponBlueprint>
-
-<!-- ===============     GEMINI MISSILES     =============== -->
+</FTL>
+<!-- ===============    GEMINI MISSILES			=============== -->
 <FTL>
 <weaponBlueprint name="GEMINI_PAIRED">
 	<type>MISSILES</type>
@@ -1507,8 +1509,8 @@ END OF SUBSYSTEMS
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
 </FTL>
-
-<!-- ===============     YAMATO GUN     =============== -->
+<!-- ===============    YAMATO GUN				=============== -->
+<FTL>
 <weaponBlueprint name="ARTILLERY_YAMATO_LASER" NOLOC="1">
 	<type>LASER</type>
 	<title id="weapon_ARTILLERY_YAMATO_LASER_title"/>
@@ -1557,7 +1559,9 @@ END OF SUBSYSTEMS
 	</missSounds>
 	<weaponArt>boss_1</weaponArt>
 </weaponBlueprint>
-<!-- ===============     EMP MISSILE     =============== -->
+ </FTL>
+<!-- ===============    EMP MISSILES			=============== -->
+<FTL>
 <weaponBlueprint name="EMP_MISSILE">
 	<type>MISSILES</type>
 	<tip>tip_missiles</tip>
@@ -1601,7 +1605,9 @@ END OF SUBSYSTEMS
 	<weaponArt>terran_missile_emp</weaponArt>
 	<iconImage>missile</iconImage>
 </weaponBlueprint>
-
+</FTL>
+<!-- ===============	IRRADIATE BEAMS			=============== -->
+<FTL>
 <weaponBlueprint name="TERRAN_BEAM_IRRADIATE">
 	<type>BEAM</type>
 	<flavorType>Pinpoint</flavorType>
@@ -1996,13 +2002,9 @@ END OF SUBSYSTEMS
 		</statBoost>
     </statBoosts>
 </weaponBlueprint>
-
-
-<!-- 
-*********************************************************************************************************
-  TERRAN_MISSILE_HALO
-*********************************************************************************************************
--->
+</FTL>
+<!-- ===============	HALO MISSILES			=============== -->
+<FTL>
 <weaponBlueprint name="TERRAN_MISSILE_HALO">
 	<type>BURST</type>
 	<flavorType>Missile</flavorType>
@@ -2055,7 +2057,9 @@ END OF SUBSYSTEMS
 	<weaponArt>chargemissile</weaponArt>
 	<iconImage>missile_charge</iconImage>
 </weaponBlueprint>
-
+</FTL>
+<!-- ===============	LONGBOLT MISSILES		=============== -->
+<FTL>
 <weaponBlueprint name="TERRAN_MISSILE_LONGBOLT">
 	<type>BURST</type>
 	<flavorType>Missile</flavorType>
@@ -2103,22 +2107,23 @@ END OF SUBSYSTEMS
 	<weaponArt>chargemissile</weaponArt>
 	<iconImage>missile_charge</iconImage>
 </weaponBlueprint>
-<!--
-*********************************************************************************************************
-     SC TARGET
-*********************************************************************************************************
--->
+</FTL>
+</FTL>
+<!-- ========================================================== --
+						TERRAN CREW			
+  -- ========================================================== -->
+<FTL>
+<!-- ===============	SC TARGET				=============== -->
+<FTL>
 <crewBlueprint name="sc_target">
 	<title id="NOYB"/>
 	<short id="NOYB"/>
 	<desc id="NOYB"/>
 	<powerList/>
 </crewBlueprint>
-<!-- 
-*********************************************************************************************************
-  TERRAN MARINE
-*********************************************************************************************************
--->
+</FTL>
+<!-- ===============	TERRAN MARINE			=============== -->
+<FTL>
 <crewBlueprint name="terran_marine">
 	<desc id="crew_TERRAN_MARINE_DESC"/>
 	<title id="crew_TERRAN_MARINE_NAME"/>
@@ -2162,11 +2167,9 @@ END OF SUBSYSTEMS
 		</layer>
 	</colorList>
 </crewBlueprint>
-<!-- 
-*********************************************************************************************************
-  TERRAN MEDIC
-*********************************************************************************************************
--->
+</FTL>
+<!-- ===============	TERRAN MEDIC			=============== -->
+<FTL>
 <crewBlueprint name="terran_medic">
 	<desc id="crew_TERRAN_MEDIC_DESC"/>
 	<title id="crew_TERRAN_MEDIC_NAME"/>
@@ -2237,11 +2240,9 @@ END OF SUBSYSTEMS
 		</layer>
 	</colorList>
 </crewBlueprint>
-<!-- 
-*********************************************************************************************************
-  TERRAN FIREBAT
-*********************************************************************************************************
--->
+</FTL>
+<!-- ===============	TERRAN FIREBAT			=============== -->
+<FTL>
 <crewBlueprint name="terran_firebat">
 	<desc id="crew_TERRAN_FIREBAT_DESC"/>
 	<title id="crew_TERRAN_FIREBAT_NAME"/>
@@ -2285,11 +2286,9 @@ END OF SUBSYSTEMS
 		</layer>
 	</colorList>
 </crewBlueprint>
-<!-- 
-*********************************************************************************************************
-  TERRAN GHOST
-*********************************************************************************************************
--->
+</FTL>
+<!-- ===============	TERRAN GHOST			=============== -->
+<FTL>
 <crewBlueprint name="terran_ghost">
 	<desc id="crew_TERRAN_GHOST_DESC"/>
 	<title id="crew_TERRAN_GHOST_NAME"/>
@@ -2356,11 +2355,32 @@ END OF SUBSYSTEMS
 		</layer>
 	</colorList>
 </crewBlueprint>
-<!--
-*********************************************************************************************************
-     TERRAN CIVILIAN
-*********************************************************************************************************
--->
+
+<weaponBlueprint name="TERRAN_LOCKDOWN_PROJECTILE">
+	<type>MISSILE</type>
+	<title id="NOYB"/>
+	<short id="NOYB"/>
+	<desc id="NOYB"/>
+	<rarity>0</rarity>
+	<launchSounds>
+		<sound>weapon_gemini_fire</sound>
+	</launchSounds>
+	<hitShipSounds>
+		<sound>ability_lockdown</sound>
+	</hitShipSounds>
+	<damage>0</damage>
+    <sysDamage>0</sysDamage>
+    <persDamage>0</persDamage>
+    <sp>10</sp>
+    <shots>1</shots>
+    <speed>20</speed>
+    <accuracyMod>100</accuracyMod>
+	<mv-hack duration="6"/>
+    <image>missile_1</image>
+</weaponBlueprint>	
+</FTL>
+<!-- ===============	TERRAN CIVILIAN			=============== -->
+<FTL>
 <crewBlueprint name="terran_civilian">
 	<desc id="crew_TERRAN_CIVILIAN_DESC"/>
 	<title id="crew_TERRAN_CIVILIAN_NAME"/>
@@ -2383,11 +2403,14 @@ END OF SUBSYSTEMS
 		</layer>
 	</colorList>
 </crewBlueprint>
-<!-- 
-**********************************************************************************************************************
-           TERRAN SCV
-**********************************************************************************************************************
--->
+</FTL>
+</FTL>
+<!-- ========================================================== --
+						TERRAN DRONES			
+  -- ========================================================== -->
+<FTL>
+<!-- ===============	TERRAN SCV				=============== -->
+<FTL>
 <crewBlueprint name="terran_scv">
 	<title id="drone_TERRAN_SCV_NAME"/>
 	<short id="drone_TERRAN_SCV_SHORT"/>
@@ -2475,11 +2498,8 @@ END OF SUBSYSTEMS
 	<rarity>0</rarity>
 	<iconImage>Srepair</iconImage>
 </droneBlueprint>
-<!-- 
-**********************************************************************************************************************
-           TERRAN_GOLIATH
-**********************************************************************************************************************
--->
+</FTL>
+<!-- ===============	TERRAN GOLIATH			=============== -->
 <FTL>
 <crewBlueprint name="terran_goliath">
 	<title id="NOYB"/>
@@ -2498,7 +2518,7 @@ END OF SUBSYSTEMS
 	<short id="drone_TERRAN_GOLIATH_SHORT"/>
 	<desc id="drone_TERRAN_GOLIATH_DESC"/>
 	<power>3</power>
-	<cost>80</cost>
+	<cost>120</cost>
 	<rarity>4</rarity>
 	<iconImage>battle</iconImage>
 </droneBlueprint>
@@ -2510,7 +2530,7 @@ END OF SUBSYSTEMS
 	<short id="NOYB"/>
 	<desc id="NOYB"/>
 	<power>1</power>
-	<cooldown>1000</cooldown>
+	<cooldown>1200</cooldown>
 	<dodge>0</dodge>
 	<speed>5</speed>
 	<cost>0</cost>
@@ -2521,14 +2541,8 @@ END OF SUBSYSTEMS
 	<sc-droneEngine value="drone_engine"/>
 </droneBlueprint>
 </FTL>
-<!-- 
-**********************************************************************************************************************
-           TERRAN_SPIDER
-**********************************************************************************************************************
--->
-<!-- *****************
-	TERRAN_SPIDER_1
-	****************** -->
+<!-- ===============	TERRAN SPIDER			=============== -->
+<FTL>
 <crewBlueprint name="terran_spider_1">
 	<title id="NOYB"/>
 	<short id="NOYB"/>
@@ -2563,9 +2577,6 @@ END OF SUBSYSTEMS
 	<iconImage>battle</iconImage>
 </droneBlueprint>
 
-<!-- *****************
-	TERRAN_SPIDER_2
-	****************** -->
 <crewBlueprint name="terran_spider_2">
 	<title id="NOYB"/>
 	<short id="NOYB"/>
@@ -2600,9 +2611,6 @@ END OF SUBSYSTEMS
 	<iconImage>battle</iconImage>
 </droneBlueprint>
 
-<!-- *****************
-	TERRAN_SPIDER_3
-	****************** -->
 <crewBlueprint name="terran_spider_3">
 	<title id="NOYB"/>
 	<short id="NOYB"/>
@@ -2637,9 +2645,6 @@ END OF SUBSYSTEMS
 	<iconImage>battle</iconImage>
 </droneBlueprint>
 
-<!-- *****************
-	TERRAN_SPIDER_SET
-	****************** -->
 <crewBlueprint name="terran_spider_set">
 	<title id="crew_TERRAN_SPIDER_SET_NAME"/>
 	<short id="crew_TERRAN_SPIDER_SET_SHORT"/>
@@ -2675,9 +2680,6 @@ END OF SUBSYSTEMS
 	<iconImage>battle</iconImage>
 </droneBlueprint>
 
-<!-- *****************
-	TERRAN_SPIDER_MINE
-	****************** -->
 <crewBlueprint name="terran_spider_mine">
 	<title id="crew_TERRAN_SPIDER_MINE_NAME"/>
 	<short id="crew_TERRAN_SPIDER_MINE_SHORT"/>
@@ -2712,12 +2714,9 @@ END OF SUBSYSTEMS
 	<rarity>0</rarity>
 	<iconImage>battle</iconImage>
 </droneBlueprint>
-
-<!-- 
-**********************************************************************************************************************
-           TERRAN_DEFENSE
-**********************************************************************************************************************
--->
+</FTL>
+<!-- ===============	TERRAN DEFENSE			=============== -->
+<FTL>
 <weaponBlueprint name="TERRAN_DEFENSE_PROJECTILE">
 	<type>LASER</type>
 	<title id="NOYB"/>
@@ -2777,7 +2776,7 @@ END OF SUBSYSTEMS
 	<cooldown>2500</cooldown><!-- was 1000 -->					
 	<dodge>10</dodge>					
 	<speed>20</speed>					
-	<cost>140</cost>
+	<cost>125</cost>
 	<sc-active-shield value="3"/>
 	<droneImage>terran_defense_3</droneImage>
 	<sc-droneEngine value="matrix_engine_3"/>			
@@ -2785,36 +2784,28 @@ END OF SUBSYSTEMS
 	<iconImage>defense</iconImage>					
 	<rarity>5</rarity>					
 </droneBlueprint>	
-
-<!--
-**********************************************************************************************************************
-           TERRAN_COMSAT
-**********************************************************************************************************************
--->
+</FTL>
+<!-- ===============	TERRAN_COMSAT			=============== -->
+<FTL>
 <weaponBlueprint name="TERRAN_COMSAT_PROJECTILE">
     <type>LASER</type>
 	<title id="NOYB"/>
 	<short id="NOYB"/>
 	<desc id="NOYB"/>
-
     <damage>0</damage>
     <sysDamage>0</sysDamage>
     <persDamage>0</persDamage>
     <ion>0</ion>
     <sp>10</sp>
     <shots>1</shots>
-
     <cooldown>2</cooldown>
     <speed>20</speed>
     <accuracyMod>100</accuracyMod>
     <radius>0</radius>
-
     <power>0</power>
     <cost>0</cost>
     <rarity>0</rarity>
-
     <image>laser_light2</image>
-
     <explosion>terran_comsat_hit</explosion>
 </weaponBlueprint>
 
@@ -2837,12 +2828,9 @@ END OF SUBSYSTEMS
 	<iconImage>defense</iconImage>					 
 	<rarity>3</rarity>					
 </droneBlueprint>	
-<!-- 
-**********************************************************************************************************************
-           TERRAN_POD
-**********************************************************************************************************************
--->
-
+</FTL>
+<!-- ===============	TERRAN_POD				=============== -->
+<FTL>
 <crewBlueprint name="terran_pod">
 	<title id="NOYB"/>
 	<short id="NOYB"/>
@@ -2884,44 +2872,14 @@ END OF SUBSYSTEMS
     <image>terran_pod_projectile</image>
     <explosion>explosion_random</explosion>
 </weaponBlueprint>
-
-<!-- 
-**********************************************************************************************************************
-           TERRAN_LOCKDOWN
-**********************************************************************************************************************
--->
-<weaponBlueprint name="TERRAN_LOCKDOWN_PROJECTILE">
-	<type>MISSILE</type>
-	<title id="NOYB"/>
-	<short id="NOYB"/>
-	<desc id="NOYB"/>
-	<rarity>0</rarity>
-	<launchSounds>
-		<sound>weapon_gemini_fire</sound>
-	</launchSounds>
-	<hitShipSounds>
-		<sound>ability_lockdown</sound>
-	</hitShipSounds>
-	<damage>0</damage>
-    <sysDamage>0</sysDamage>
-    <persDamage>0</persDamage>
-    <sp>10</sp>
-    <shots>1</shots>
-    <speed>20</speed>
-    <accuracyMod>100</accuracyMod>
-	<mv-hack duration="6"/>
-    <image>missile_1</image>
-</weaponBlueprint>	
-
-<!-- 
-*********************************************************************************************************
-						SHIPS
-*********************************************************************************************************
--->
-
-<!-- ====================
-	TERRAN_BATTLECRUISER
-	====================-->
+</FTL>
+</FTL>
+<!-- ========================================================== --
+						TERRAN SHIPS
+  -- ========================================================== -->
+<FTL>
+<!-- ===============	TERRAN BATTLECRUISER	=============== -->
+<FTL>
 <shipBlueprint name="PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER" layout="SHIP_PLAYER_TERRAN_BATTLECRUISER" img="terran_battlecruiser">
     <class  id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_class"/>
     <name id="text_PLAYER_SHIP_TERRAN_BATTLECRUISER_name"/>
@@ -3008,10 +2966,9 @@ END OF SUBSYSTEMS
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
 	<!--<mv-mapImage>map_icon_mup_mvfed_a</mv-mapImage>-->
 </shipBlueprint>
-
-<!-- ====================
-	TERRAN_WRAITH
-	====================-->
+</FTL>
+<!-- ===============	TERRAN WRAITH			=============== -->
+<FTL>
 <shipBlueprint name="PLAYER_SHIP_PLAYER_TERRAN_WRAITH" layout="SHIP_PLAYER_TERRAN_WRAITH" img="terran_wraith">
     <class id="text_PLAYER_SHIP_TERRAN_WRAITH_class"/>
     <name id="text_PLAYER_SHIP_TERRAN_WRAITH_name"/>
@@ -3082,12 +3039,10 @@ END OF SUBSYSTEMS
 	<crewCount amount="1" class="terran_civilian" />
 	<aug name="TERRAN_WRAITH_BATTERY" />
 	<aug name="TERRAN_SHIP_ARMOR_LIGHT" />
-	
 </shipBlueprint>
-
-<!-- ====================
-     TERRAN_VESSEL
-     ====================-->
+</FTL>
+<!-- ===============	TERRAN VESSEL			=============== -->
+<FTL>
 <shipBlueprint name="PLAYER_SHIP_PLAYER_TERRAN_VESSEL" layout="SHIP_PLAYER_TERRAN_VESSEL" img="terran_vessel">
 	<class id="text_PLAYER_SHIP_TERRAN_VESSEL_class"/>
 	<name id="text_PLAYER_SHIP_TERRAN_VESSEL_name"/>
@@ -3166,10 +3121,9 @@ END OF SUBSYSTEMS
 	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
 	<aug name="SC_DETECTOR" />
 </shipBlueprint>
-
-<!-- ====================
-     TERRAN_VALKYRIE
-     ====================-->
+</FTL>
+<!-- ===============	TERRAN VALKYRIE			=============== -->
+<FTL>
 <shipBlueprint name="PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE" layout="TERRAN_PLAYER_SHIP_VALKYRIE" img="TERRAN_PLAYER_SHIP_VALKYRIE">
 	<class id="text_PLAYER_SHIP_TERRAN_VALKYRIE_class"/>
 	<name id="text_PLAYER_SHIP_TERRAN_VALKYRIE_name"/>
@@ -3246,3 +3200,5 @@ END OF SUBSYSTEMS
 	<crewCount amount="1" class="terran_marine" />
 	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
 </shipBlueprint>
+</FTL>
+</FTL>

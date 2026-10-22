@@ -2,20 +2,18 @@
 DESCRIPTION: Directs Terran Medic passive healing to the lowest-health friendly crew in the room.
         - Preserves the XML trueHealAmount boost; removes each medic's contribution from other recipients.
         - Excludes the medic itself, drones, dead crew, and crew at full health from selection.
-        - Supports all three Terran Medic variants, both ships, and multiple medics.
-DEPENDENCIES: Hyperspace, Heal-Crew XML stat boost with shipTarget CURRENT_ROOM.
+        - Supports tagged healer races, both ships, and multiple healers.
+TAG: <sc-heal/>
+DEPENDENCIES: sc_tag.lua, Hyperspace, Heal-Crew XML stat boost with shipTarget CURRENT_ROOM.
 ]]
 
 mods.sc = mods.sc or {}
 mods.sc.medicHeal = mods.sc.medicHeal or {}
 
 local medicHeal = mods.sc.medicHeal
-local HEALTH_GROUP_SIZE = 1 -- Group current HP in steps of 5 when selecting a target.
-local medicRaces = {
-    terran_medic = true,
-    terran_medic_1 = true,
-    terran_medic_2 = true
-}
+local medicRaces = {}
+medicHeal.races = medicRaces
+mods.sc.tag.register("crew", "sc-heal", medicRaces)
 
 -- Retained for the optional sc_debug.lua display.
 medicHeal.postCalls = 0
@@ -67,7 +65,7 @@ local function select_lowest_health(medic, crewList, previousTarget)
 
     for _, crew in ipairs(crewList) do
         if is_eligible(medic, crew) then
-            local group = math.floor(crew.health.first / HEALTH_GROUP_SIZE)
+            local group = math.floor(crew.health.first)
             if not lowest or group < lowestGroup
                 or (group == lowestGroup and same_crew(crew, previousTarget)) then
                 lowest = crew

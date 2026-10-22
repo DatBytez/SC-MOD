@@ -15,11 +15,7 @@ local TEXT_Y = 165
 local LINE_HEIGHT = 16
 local FONT = 10
 
-local medicRaces = {
-    terran_medic = true,
-    terran_medic_1 = true,
-    terran_medic_2 = true
-}
+local medicRaces = (mods.sc and mods.sc.medicHeal and mods.sc.medicHeal.races) or {}
 
 local state = {
     ticks = {[0] = 0, [1] = 0},

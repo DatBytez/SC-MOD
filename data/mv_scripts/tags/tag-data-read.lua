@@ -3,8 +3,9 @@ local weaponTagParsers = mods.multiverse.weaponTagParsers
 local droneTagParsers = mods.multiverse.droneTagParsers
 local augmentTagParsers = mods.multiverse.augmentTagParsers
 local powerTagParsers = mods.multiverse.powerTagParsers
+local crewTagParsers = mods.multiverse.crewTagParsers
 
--- Check all weapons, drones, augments, and powers for custom tags on game load
+-- Check all weapons, drones, augments, powers, and crew for custom tags on game load
 script.on_load(function()
     for _, file in ipairs(mods.multiverse.blueprintFiles) do
         local doc = RapidXML.xml_document(file)
@@ -45,6 +46,10 @@ script.on_load(function()
         local raceNode = crewNode:first_node("race")
 
         while raceNode do
+            for _, crewTagParser in ipairs(crewTagParsers) do
+                crewTagParser(raceNode)
+            end
+
             local powerNode = raceNode:first_node("powerEffect")
 
             while powerNode do
