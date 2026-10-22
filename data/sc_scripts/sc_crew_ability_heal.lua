@@ -1,16 +1,23 @@
 --[[
-DESCRIPTION: Directs tagged healer passive healing to the lowest-health friendly crew in the room.
-        - Preserves the XML trueHealAmount boost; removes each healer's contribution from other recipients.
-        - Excludes the healer itself, drones, dead crew, and crew at full health from selection.
+DESCRIPTION: Directs Terran Medic passive healing to the lowest-health friendly crew in the room.
+        - Preserves the XML trueHealAmount boost; removes each medic's contribution from other recipients.
+        - Excludes the medic itself, drones, dead crew, and crew at full health from selection.
         - Supports tagged healer races, both ships, and multiple healers.
 TAG: <sc-heal/>
 DEPENDENCIES: sc_tag.lua, Hyperspace, Heal-Crew XML stat boost with shipTarget CURRENT_ROOM.
 ]]
 
 mods.sc = mods.sc or {}
+mods.sc.medicHeal = mods.sc.medicHeal or {}
 
+local medicHeal = mods.sc.medicHeal
 local medicRaces = {}
+medicHeal.races = medicRaces
 mods.sc.tag.register("crew", "sc-heal", medicRaces)
+
+-- Retained for the optional sc_debug.lua display.
+medicHeal.postCalls = 0
+medicHeal.adjustedCalls = 0
 
 -- The XML definition is static; validate it once and reuse its amount.
 local xmlHealAmount
@@ -135,7 +142,13 @@ script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
     end
 end)
 
-local function count_boosts(crew, ship)
+-- These functions are also used by the optional sc_debug.lua display.
+function medicHeal.choose_target(medic, ship)
+    local snapshot = ship and snapshots[ship.iShipId]
+    return snapshot and medic and snapshot.targets[medic.extend.selfId] or nil
+end
+
+function medicHeal.count_boosts(crew, ship)
     if not ship or not crew or crew.bDead or crew:IsDrone()
         or crew.iRoomId < 0 then
         return 0, 0
@@ -157,15 +170,18 @@ script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(cr
         return Defines.Chain.CONTINUE, amount, value
     end
 
+    medicHeal.postCalls = medicHeal.postCalls + 1
+
     local healAmount = get_xml_heal_amount()
     if not healAmount then return Defines.Chain.CONTINUE, amount, value end
 
     local shipId = crew.currentShipId
     local ship = (shipId == 0 or shipId == 1)
         and Hyperspace.Global.GetInstance():GetShipManager(shipId) or nil
-    local sources, selected = count_boosts(crew, ship)
+    local sources, selected = medicHeal.count_boosts(crew, ship)
 
     if sources > selected then
+        medicHeal.adjustedCalls = medicHeal.adjustedCalls + 1
         amount = amount - (sources - selected) * healAmount
     end
 
