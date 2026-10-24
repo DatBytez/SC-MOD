@@ -36,7 +36,9 @@
 <shieldWithoutSystem enabled="true"/>
 <dualMedical enabled="true"/>
 <scaleSlugGel enabled="true"/>
-
+</FTL>
+<!-- ====================	TITLE SCREEN	==================== -->
+ <FTL>
 <titleScreen logo_x="0" logo_y="533" enabled="true"> <!--when not enabled gives the bad install screen-->
     <splashImages>
 		<splashImage x="475" y="690" center="true">cheats_01</splashImage>
@@ -205,43 +207,40 @@
 		<!--<splashImage x="50" y="50" center="true" chance="1">img_secret</splashImage> If the chance attribute is set to 1 or above, every time the main menu is loaded there is a x/10000 chance that it loads that splash image-->
     </splashImages>
 </titleScreen>
-
+ </FTL>
+<!--*****************************************************************************************************
+  TERRAN CUSTOM FLEET VISUAL
+******************************************************************************************************-->
+<FTL>
 <events>
 	<eventFile>sector_terran</eventFile>
 	<eventFile>ships_terran</eventFile>
-
-<!--
-*********************************************************************************************************
-  TERRAN CUSTOM FLEET VISUAL
-*********************************************************************************************************
--->
 		<fleetDef name="TERRAN_CUSTOM_FLEET">
-		<ship layer="0">terran_fleet_battlecruiser_1_small</ship>
-		<ship layer="0">terran_fleet_wraith_1_small</ship>
-		<ship layer="0">terran_fleet_valkyrie_1_small</ship>
+			<ship layer="0">terran_fleet_battlecruiser_1_small</ship>
+			<ship layer="0">terran_fleet_wraith_1_small</ship>
+			<ship layer="0">terran_fleet_valkyrie_1_small</ship>
 
-		<ship layer="1">terran_fleet_battlecruiser_1_med</ship>
-		<ship layer="1">terran_fleet_wraith_1_med</ship>
-		<ship layer="1">terran_fleet_valkyrie_1_med</ship>
+			<ship layer="1">terran_fleet_battlecruiser_1_med</ship>
+			<ship layer="1">terran_fleet_wraith_1_med</ship>
+			<ship layer="1">terran_fleet_valkyrie_1_med</ship>
 
-		<ship layer="2">terran_fleet_valkyrie_1_large</ship>
-		<ship layer="2">terran_fleet_wraith_1_large</ship>
+			<ship layer="2">terran_fleet_valkyrie_1_large</ship>
+			<ship layer="2">terran_fleet_wraith_1_large</ship>
 
-		<bigShip>terran_fleet_battlecruiser_1_large</bigShip>
+			<bigShip>terran_fleet_battlecruiser_1_large</bigShip>
 
-		<numShips layer="2">1</numShips>
-		<numShips layer="1">3</numShips>
-		<numShips layer="0">5</numShips>
-	</fleetDef>	
+			<numShips layer="2">1</numShips>
+			<numShips layer="1">3</numShips>
+			<numShips layer="0">5</numShips>
+		</fleetDef>	
 </events>
-	<!-- 
-*********************************************************************************************************
+</FTL>
+<!--*****************************************************************************************************
   TERRAN AUGMENTS
-*********************************************************************************************************
--->
-
+******************************************************************************************************-->
+<FTL>
 <augments>
-    <aug name="TERRAN_SHIP_ARMOR_LIGHT">
+    <!-- <aug name="TERRAN_SHIP_ARMOR_LIGHT">
         <statBoosts>
 			<statBoost name="repairSpeed" save="SC_ARMOR_BRACERS_REPAIR">
                 <boostType>MULT</boostType>
@@ -268,10 +267,10 @@
         <statBoosts>
 			<statBoost load="SC_ARMOR_BRACERS_REPAIR"/>
         </statBoosts>
-    </aug>
+    </aug> -->
 	
 	<!-- TERRAN_WRAITH_BATTERY HIDDEN AUGS -->
-	
+	<FTL>
 	<aug name="TERRAN_HIDDEN_FIRE_EXTINGUISHERS">
 		<function name="FIRE_EXTINGUISHERS" value="1" useForReqs="true" warning="false"/>
 		<locked/>
@@ -324,13 +323,12 @@
     	<function name="FTL_BOOSTER" value="0.90" useForReqs="true" warning="false"/>
 		<locked/>
     </aug>
+	</FTL>
 </augments>
-
-<!--
-*********************************************************************************************************
+</FTL>
+<!--*****************************************************************************************************
   SC TARGET
-*********************************************************************************************************
--->
+******************************************************************************************************-->
 <crew>
 	<race name="sc_target">
 		<animBase>human</animBase>
@@ -524,8 +522,10 @@
 				<cooldownColor r="240" g="210" b="50" />
 				<moveSpeedMultiplier>1.6</moveSpeedMultiplier>
 				<damageMultiplier>1.8</damageMultiplier>
-				<shootTimer min="250" max="325" />
-				<punchTimer min="250" max="325" />
+				<sc-shootTimer min="25" max="32" />
+				<sc-punchTimer min="25" max="32" />
+				<!-- <sc-shootTimer min="250" max="325" />
+				<sc-punchTimer min="250" max="325" /> -->
 			</temporaryEffect>
 		</powerEffect>
 		<powerEffect load="SC_REPAIR"/>
@@ -859,8 +859,8 @@
 		<repairSpeed>1.2</repairSpeed>
 		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 		<sabotageSpeedMultiplier>1.5</sabotageSpeedMultiplier>
-		<rangedDamageMultiplier>3.5</rangedDamageMultiplier>
-		<shootTimer min="1500" max="1800" />
+		<rangedDamageMultiplier>4</rangedDamageMultiplier>
+		<shootTimer min="1900" max="2100" />
 		<powerEffect load="SC_REPAIR"/>
 	</race>
 
@@ -901,8 +901,8 @@
 		<repairSpeed>1.2</repairSpeed>
 		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 		<sabotageSpeedMultiplier>1.5</sabotageSpeedMultiplier>
-		<rangedDamageMultiplier>3.5</rangedDamageMultiplier>
-		<shootTimer min="1500" max="1800" />
+		<rangedDamageMultiplier>4</rangedDamageMultiplier>
+		<shootTimer min="1900" max="2100" />
 		<powerEffect load="SC_REPAIR"/>
 		<powerEffect name="SC_CLOAK">
 			<cooldown>30</cooldown>
@@ -968,8 +968,8 @@
 		<repairSpeed>1.2</repairSpeed>
 		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 		<sabotageSpeedMultiplier>1.5</sabotageSpeedMultiplier>
-		<rangedDamageMultiplier>3.5</rangedDamageMultiplier>
-		<shootTimer min="1500" max="1800" />
+		<rangedDamageMultiplier>4</rangedDamageMultiplier>
+		<shootTimer min="1900" max="2100" />
 		<powerEffect load="SC_REPAIR"/>
 		<powerEffect name="SC_LOCKDOWN">
 			<sc-shoot projectile="TERRAN_LOCKDOWN_PROJECTILE"/>
@@ -2077,6 +2077,7 @@
     <mod-append:script>data/scripts_lily/lily_system_bracers.lua</mod-append:script>	
     <mod-append:script>data/sc_scripts/sc_augment_armor.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_augment_cloak.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_repair.lua</mod-append:script>
 
@@ -2090,10 +2091,11 @@
 	<mod-append:script>data/sc_scripts/sc_drone_scv.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_scv_ai.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_cost.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_temporaryEffects.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_shoot.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_restoration.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_heal.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_crew_ability_flamethrower.lua</mod-append:script>
+	<!-- <mod-append:script>data/sc_scripts/sc_crew_ability_flamethrower.lua</mod-append:script> -->
 	<mod-append:script>data/sc_scripts/sc_crew_ability_flare.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_copy.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_return.lua</mod-append:script>
@@ -2105,6 +2107,6 @@
     <mod-append:script>data/sc_scripts/sc_system_sensors.lua</mod-append:script>
 
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
+    <!-- <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script> -->
 </mod:findLike>
 </FTL>

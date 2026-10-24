@@ -203,6 +203,7 @@ END OF ESSENTIAL SYSTEMS
 	<cost>45</cost>
 </systemBlueprint>
 
+<!-- Modified -->
 <systemBlueprint name="cloaking">
 	<type>cloaking</type>
 	<title>Cloaking</title>
@@ -212,7 +213,7 @@ END OF ESSENTIAL SYSTEMS
 	<rarity>1</rarity>
 	<upgradeCost>
 		<level>55</level>
-		<level>9999</level>
+		<level>80</level>
 		<level>9999</level>
 		<level>9999</level>
 	</upgradeCost>
@@ -313,6 +314,7 @@ END OF AUXILIARY SYSTEMS
 	<cost>35</cost>
 </systemBlueprint>
 
+<!-- Modified-->
 <systemBlueprint name="sensors">
 	<type>sensors</type>
 	<title>Sensors</title>
@@ -346,6 +348,7 @@ END OF AUXILIARY SYSTEMS
 	<cost>40</cost>
 </systemBlueprint>
 
+<!-- Modified? -->
 <systemBlueprint name="battery">
 	<type>battery</type>
 	<title>Backup Battery</title>
@@ -362,6 +365,7 @@ END OF AUXILIARY SYSTEMS
 	<cost>45</cost>
 </systemBlueprint>
 
+<!-- Modified-->
 <systemBlueprint name="lily_system_bracers">
     <type>doors</type>
     <title id="system_lily_system_bracers_NAME"/>
@@ -391,7 +395,7 @@ END OF SUBSYSTEMS
 						TERRAN AUGMENTS
   -- ========================================================== -->
 <FTL>
-<!-- ===============	TERRAN SPECIES AUGMENT	=============== -->
+<!-- ===============	SPECIES AUGMENT		=============== -->
 <FTL>
 <augBlueprint name="TERRAN_SHIP">
 	<title id="NOYB"/>
@@ -407,15 +411,17 @@ END OF SUBSYSTEMS
 <augBlueprint name="TERRAN_WRAITH_BATTERY">
     <title id="aug_TERRAN_WRAITH_BATTERY_NAME"/>
     <desc id="aug_TERRAN_WRAITH_BATTERY_DESC"/>
-    <cost>60</cost>
-    <rarity>4</rarity>
+    <cost>30</cost>
+    <rarity>3</rarity>
     <stackable>false</stackable>
-    <sc-upgrade system="battery" value="2"/>
-    <sc-battery/>
+	<sc-cloak value="1.65"/>
+    <sc-upgrade system="battery" value="1"/>
+	<sc-upgrade system="cloaking" value="1"/>
+    <!-- <sc-battery/>
     <sc-battery-dodge/>
     <sc-battery-oxygen/>
     <sc-battery-fire/>
-    <sc-battery-ftl/>
+    <sc-battery-ftl/> -->
 </augBlueprint>
 </FTL>
  <!-- ===============	TERRAN SHIP ARMORS		=============== -->
@@ -427,6 +433,7 @@ END OF SUBSYSTEMS
 	<rarity>3</rarity>
 	<stackable>false</stackable>
 	<sc-armor/>
+	<sc-cloak value="1.5"/>
 	<sc-dodge value="2"/>
 </augBlueprint>
 
@@ -439,6 +446,7 @@ END OF SUBSYSTEMS
 	<sc-upgrade system="lily_system_bracers" value="2"/>
 	<sc-armor/>
 	<sc-dodge value="-1"/>
+	<sc-cloak value="-1"/>
 </augBlueprint>
 
 <augBlueprint name="TERRAN_SHIP_ARMOR_HEAVY">
@@ -450,6 +458,7 @@ END OF SUBSYSTEMS
 	<sc-upgrade system="lily_system_bracers" value="3"/>
 	<sc-armor/>
 	<sc-dodge value="-2"/>
+	<sc-cloak value="-2"/>
 </augBlueprint>
 </FTL>
 <!-- ===============	SC SHIP DETECTORS		=============== -->

@@ -29,7 +29,7 @@ local SYSTEMS = {
     sensors = {systemId = 7, baseCap = 3},
     doors = {systemId = 8, baseCap = 3},
     teleporter = {systemId = 9, baseCap = 4},
-    cloaking = {systemId = 10, baseCap = 3},
+    cloaking = {systemId = 10, baseCap = 2},
     artillery = {systemId = ARTILLERY_ID, baseCap = 5},
     battery = {systemId = 12, baseCap = 2},
     clonebay = {systemId = 13, baseCap = 3},
