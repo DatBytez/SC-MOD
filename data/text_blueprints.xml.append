@@ -321,8 +321,7 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 <text name="ability_TERRAN_STIMPACK_TOOLTIP">[DURATION:10s -15HP]
 	Increased damage and movement speed.</text>
 <text name="crew_TERRAN_POWER_STIMPACK">Ability: [Stimpack]
-     Double rate of fire and
-     increase movement speed.
+     Double rate of fire and increase movement speed.
 </text>
 
 <text name="ability_TERRAN_OPTICAL_FLARE_BUTTON">OPTICAL FLARE</text>
@@ -336,16 +335,14 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 <text name="ability_TERRAN_RESTORATION_TOOLTIP">[COOLDOWN:30s]
 	Restore nearby friendly troops.</text>
 <text name="crew_TERRAN_POWER_RESTORATION">Ability: [Restoration]
-    Restore nearby friendly troops, clensing
-    them of negative effects.
+    Restore nearby friendly troops, clensing them of negative effects.
 </text>
 
 <text name="ability_TERRAN_CLOAK_BUTTON">CLOAK</text>
 <text name="ability_TERRAN_CLOAK_TOOLTIP">[COOLDOWN:30s DURATION:15s]
 	Cannot be targeted by enemies.</text>
 <text name="crew_TERRAN_POWER_CLOAK">Ability: [Cloak]
-    Become untargetable except by enemies 
-    with detectors.
+    Become untargetable except by enemies with detectors.
 </text>
 
 <text name="ability_TERRAN_LOCKDOWN_BUTTON">LOCKDOWN</text>
@@ -360,8 +357,7 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 <text name="ability_TERRAN_SCV_REPAIR_HULL_TOOLTIP">[READY]
 	Repair a portion of the ships hull at the cost of an SCV.</text>
 <text name="crew_TERRAN_POWER_REPAIR_HULL">Ability: [Repair Hull]
-    Repair a portion of the ships hull at the 
-    cost of an SCV.
+    Repair a portion of the ships hull at the cost of an SCV.
 </text>
 
 <text name="ability_TERRAN_SPIDER_SET_MINE_BUTTON">SET-MINE</text>
@@ -382,12 +378,10 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 <text name="aug_TERRAN_WRAITH_BATTERY_NAME">Apollo Reactor</text>
 <text name="aug_TERRAN_WRAITH_BATTERY_DESC">High yield uranium reactors designed by the Terran Confederacy.  
 
-OVERCHARGED: Systems powered by the reactor recover more quickly from ion damage and have increased performance.
-- Cloak: Reduced Downtime.
-- Engines: Increased evasion and ftl charge rate.
-- Oxygen: Automated fire supression. Increased refill speed.
+BONUS: +1.65 seconds of cloak per cloaking level
 
-UPGRADE: Battery System (+2 max level)</text>
+UPGRADE: Battery System (+1 max level)
+UPGRADE: Cloaking System (+1 max level)</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_LIGHT_NAME">Light Armor Plating</text>
 <text name="aug_TERRAN_SHIP_ARMOR_LIGHT_DESC">Light neosteel hulls and reinforced structural bracers provide better maneuverability at a cost of durability.  

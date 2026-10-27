@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================	HYPERSPACE PROPERTIES	==================== -->
 <FTL>
-<!-- NEW TEST -->
 <advancedCrewTooltips enabled="true" ally="false" enemy="false" rounding="2"/>
 <eventTooltips enabled="true"/>
 <showNumericalWeaponCooldown enabled="true"/>
@@ -327,9 +327,13 @@
 </augments>
 </FTL>
 <!--*****************************************************************************************************
-  SC TARGET
+  TERRAN CREW
 ******************************************************************************************************-->
 <crew>
+<!--*****************************************************************************************************
+  SC TARGET
+******************************************************************************************************-->
+<FTL>
 	<race name="sc_target">
 		<animBase>human</animBase>
 		<maxHealth>1</maxHealth>
@@ -357,11 +361,11 @@
 		<invulnerable>true</invulnerable>
 		<allDamageTakenMultiplier>0</allDamageTakenMultiplier>
 	</race>
-<!--
-*********************************************************************************************************
+</FTL>
+<!--*****************************************************************************************************
   TERRAN CIVILIAN
-*********************************************************************************************************
--->
+******************************************************************************************************-->
+<FTL>
 	<race name="terran_civilian">
 		<animBase>human</animBase>
 		<maxHealth>80</maxHealth>
@@ -418,12 +422,11 @@
 			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
 		</powerEffect>
 	</race>
-
-	<!-- 
-*********************************************************************************************************
+</FTL>
+<!--*****************************************************************************************************
   TERRAN MARINE
-*********************************************************************************************************
--->
+******************************************************************************************************-->
+<FTL>
 	<race name="terran_marine">
 		<animBase>human</animBase>
 		<maxHealth>85</maxHealth>
@@ -530,11 +533,11 @@
 		</powerEffect>
 		<powerEffect load="SC_REPAIR"/>
 	</race>
-	<!-- 
-*********************************************************************************************************
+</FTL>
+<!--*****************************************************************************************************
   TERRAN MEDIC
-*********************************************************************************************************
--->
+******************************************************************************************************-->
+<FTL>
 	<race name="terran_medic">
 		<animBase>human</animBase>
 		<maxHealth>100</maxHealth>
@@ -693,11 +696,11 @@
 		</powerEffect>
 		<powerEffect load="SC_REPAIR"/>
 	</race>
-	<!-- 
-*********************************************************************************************************
+</FTL>
+<!--*****************************************************************************************************
   TERRAN FIREBAT
-*********************************************************************************************************
--->
+******************************************************************************************************-->
+<FTL>
 	<race name="terran_firebat">
 		<animBase>human</animBase>
 		<maxHealth>100</maxHealth>
@@ -818,11 +821,11 @@
 		<powerEffect load="SC_REPAIR"/>
 		<powerEffect load="SC_STIMPACK"/>
 	</race>
-	<!-- 
-*********************************************************************************************************
+</FTL>
+<!--*****************************************************************************************************
   TERRAN GHOST
-*********************************************************************************************************
--->
+******************************************************************************************************-->
+<FTL>
 	<race name="terran_ghost">
 		<animBase>human</animBase>
 		<maxHealth>90</maxHealth>
@@ -985,11 +988,11 @@
 			<cooldownColor r="38" g="130" b="152" />
 		</powerEffect>
 	</race>
-	<!--
-*********************************************************************************************************
+</FTL>
+<!--*****************************************************************************************************
   TERRAN SCV
-*********************************************************************************************************
--->
+******************************************************************************************************-->
+<FTL>
 	<race name="terran_scv" drone="REPAIR">
 		<crewSlots>0</crewSlots>
 		<noSlot>true</noSlot>
@@ -1120,13 +1123,12 @@
 			<activateWhenReady enemiesOnly="false">true</activateWhenReady>
 			<selfHealth>-999.0</selfHealth>
 		</powerEffect>
-
 	</race>
-		<!--
-*********************************************************************************************************
+</FTL>
+<!--*****************************************************************************************************
   TERRAN GOLIATH
-*********************************************************************************************************
--->
+******************************************************************************************************-->
+<FTL>
 	<race name="terran_goliath" drone="BATTLE">
 		<crewSlots>0</crewSlots>
 		<noSlot>true</noSlot>
@@ -1159,11 +1161,11 @@
 			<deathSound>terran_goliath_death</deathSound>
 		</deathSounds>
 	</race>
-		<!-- 
-*********************************************************************************************************
+</FTL>
+<!--*****************************************************************************************************
   TERRAN SPIDER
-*********************************************************************************************************
--->
+******************************************************************************************************-->
+<FTL>
 	<!-- *************
 	TERRAN_SPIDER_1
 	****************** -->
@@ -1443,14 +1445,11 @@
 			</powerEffectSounds>
 		</powerEffect>
 	</race>
-</crew>
-
-		<!-- 
-*********************************************************************************************************
+</FTL>
+<!--*****************************************************************************************************
   TERRAN BOARDING POD
-*********************************************************************************************************
--->
-<crew>
+******************************************************************************************************-->
+<FTL>
     <race name="terran_pod">
         <crewSlots>0</crewSlots>
         <noSlot>true</noSlot>
@@ -1496,8 +1495,9 @@
 			<selfHealth>-999.0</selfHealth>
         </powerEffect>
     </race>
+</FTL>
 </crew>
-
+<!-- ===============	TERRAN DRONES		=============== -->
 <drones>
 	<drone name="TERRAN_SCV">
 		<crewBlueprint>terran_scv</crewBlueprint>
@@ -1533,6 +1533,8 @@
     </drone>
 </drones>
 
+<!-- ===============	TERRAN SHIPS		=============== -->
+<FTL>
 <ships hideFirstShipPage="true">
 	<hangarAnims>
 		<anim x="100" y="100">custom_anim</anim>
@@ -1551,7 +1553,8 @@
 		<empty/>
 	</shipOrder>
 </ships>
-
+<!-- ===============	TERRAN BATTLECRUISER	=============== -->
+ <FTL>
 	<mod:findLike type="ships">
 		<mod-append:ship name="PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER" b="false" c="false" />
 		<mod-append:customShip name="PLAYER_SHIP_PLAYER_TERRAN_BATTLECRUISER">
@@ -1576,7 +1579,9 @@
 			</exclusivityOverride>
 		</mod-append:customShip>
 	</mod:findLike>	
-
+</FTL>
+<!-- ===============	TERRAN WRAITH			=============== -->
+<FTL>
 	<mod:findLike type="ships">
 		<mod-append:ship name="PLAYER_SHIP_PLAYER_TERRAN_WRAITH" b="false" c="false" />
 		<mod-append:customShip name="PLAYER_SHIP_PLAYER_TERRAN_WRAITH">
@@ -1601,7 +1606,9 @@
 			</exclusivityOverride>
 		</mod-append:customShip>
 	</mod:findLike>
-
+</FTL>
+<!-- ===============	TERRAN VESSEL			=============== -->
+<FTL>
 	<mod:findLike type="ships">
 	<mod-append:ship name="PLAYER_SHIP_PLAYER_TERRAN_VESSEL" a="true" b="false" c="false" />
 		<mod-append:customShip name="PLAYER_SHIP_PLAYER_TERRAN_VESSEL">
@@ -1621,7 +1628,9 @@
 			</exclusivityOverride>
 		</mod-append:customShip>
 	</mod:findLike>
-
+</FTL>
+<!-- ===============	TERRAN VALKYRIE			=============== -->
+<FTL>
 	<mod:findLike type="ships">
 	<mod-append:ship name="PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE" a="true" b="false" c="false" />
 		<mod-append:customShip name="PLAYER_SHIP_PLAYER_TERRAN_VALKYRIE">
@@ -1641,8 +1650,8 @@
 			</exclusivityOverride>
 		</mod-append:customShip>
 	</mod:findLike>
-
-<!--				
+</FTL>
+<!--				 
 			<exclusivityOverride>
 				<exclusivityGroup>
 					<shields/>
@@ -1664,10 +1673,7 @@
         			<battery/>
 				</exclusivityGroup>
 			</exclusivityOverride>				-->
-
-
-
-
+</FTL>
 <!--
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -1675,13 +1681,14 @@
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 -->
+<FTL>
 <store>
 <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TERRAN ENGINEERING BAY
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
-
+<FTL>
 <customStore id="STORE_TERRAN_ENGINEERING">
 
     <resource>
@@ -1713,14 +1720,13 @@
     </category>
 
 </customStore>
-
-
+</FTL>
 <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TERRAN BARRACKS
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
-
+<FTL>
 <customStore id="STORE_TERRAN_BARRACKS">
 
     <resource>
@@ -1763,14 +1769,13 @@
     </category>
 
 </customStore>
-
-
+</FTL>
 <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TERRAN STARPORT
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
-
+<FTL>
 <customStore id="STORE_TERRAN_STARPORT">
 
     <resource>
@@ -1810,14 +1815,13 @@
     </category>
 
 </customStore>
-
-
+</FTL>
 <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TERRAN FACTORY
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
-
+<FTL>
 <customStore id="STORE_TERRAN_FACTORY">
 
     <resource>
@@ -1849,14 +1853,13 @@
     </category>
 
 </customStore>
-
-
+</FTL>
 <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TERRAN SCIENCE FACILITY
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
-
+<FTL>
 <customStore id="STORE_TERRAN_SCIENCE">
 
     <resource>
@@ -1886,16 +1889,14 @@
         <item/>
         <chance>100</chance>
     </category>
-
 </customStore>
-
-
+</FTL>
 <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TERRAN COMMAND CENTER
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
-
+<FTL>
 <customStore id="STORE_TERRAN_COMMAND">
 
     <!-- Discounted Hull Repairs -->
@@ -2020,21 +2021,21 @@
         <item/>
         <chance>100</chance>
     </category>
-
-
 </customStore>
-
+</FTL>
 </store>
+</FTL>
 
-
-<!-- TODO: ONLY REQUIRED FOR MV -->
+<!-- ===============	MV CEW LISTS		=============== -->
+<!-- =============== ONLY REQUIRED FOR MV	=============== -->
 <mod:findLike type="events" limit="1">
     <mod:findName type="req" name="LIST_CHECK_ANY_CREW">
         <mod-append:req type="any" load="TERRAN_LIST_CREW_ALL"/>
     </mod:findName>
 </mod:findLike>
 
-
+<!-- ===============	SC SCRIPTS		=============== -->
+ <FTL>
 <mod:findLike type="scripts" limit="1">
     <mod-append:script>data/mv_scripts/tags/tag-data-init.lua</mod-append:script>
 
@@ -2109,4 +2110,4 @@
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
     <!-- <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script> -->
 </mod:findLike>
-</FTL>
+ </FTL>
