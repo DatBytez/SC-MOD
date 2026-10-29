@@ -2427,7 +2427,7 @@ END OF SUBSYSTEMS
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
-		<power>DRONE</power>
+		<powerList/>
 	</powerList>
 	<colorList>
 		<layer>
@@ -2463,7 +2463,6 @@ END OF SUBSYSTEMS
 	<rarity>0</rarity>
 	<powerList>
 		<power id="crew_TERRAN_POWER_REPAIR_HULL"/>
-		<power>DRONE</power>
 	</powerList>
 	<colorList>
 		<layer>
@@ -2488,6 +2487,9 @@ END OF SUBSYSTEMS
 	<cost>75</cost>
 	<bp>3</bp>
 	<rarity>3</rarity>
+	<powerList>
+		<power id="crew_TERRAN_POWER_REPAIR_HULL"/>
+	</powerList>
 	<iconImage>battle</iconImage>
 </droneBlueprint>
 <droneBlueprint name="TERRAN_SCV_HULL">
@@ -2955,12 +2957,12 @@ END OF SUBSYSTEMS
 	</droneList>
 	<health amount="30" />
 	<maxPower amount="8" />
-	<!-- <crewCount amount="1" class="terran_civilian" />
+	<crewCount amount="1" class="terran_civilian" />
 	<crewCount amount="1" class="terran_marine" />
 	<crewCount amount="1" class="terran_medic_1" />
-	<crewCount amount="1" class="terran_marine" /> -->
+	<crewCount amount="1" class="terran_marine_1" />
 
-	<crewCount amount="1" class="terran_civilian" />
+	<!-- <crewCount amount="1" class="terran_civilian" />
 	<crewCount amount="1" class="terran_marine" />
 	<crewCount amount="1" class="terran_marine_1" />
 	<crewCount amount="1" class="terran_medic" />
@@ -2970,7 +2972,7 @@ END OF SUBSYSTEMS
 	<crewCount amount="1" class="terran_firebat_1" />
 	<crewCount amount="1" class="terran_ghost" />
 	<crewCount amount="1" class="terran_ghost_1" />
-	<crewCount amount="1" class="terran_ghost_2" />
+	<crewCount amount="1" class="terran_ghost_2" /> -->
 
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
 	<!--<mv-mapImage>map_icon_mup_mvfed_a</mv-mapImage>-->

@@ -381,6 +381,7 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 BONUS: +1.65 seconds of cloak per cloaking level
 
 UPGRADE: Battery System (+1 max level)
+
 UPGRADE: Cloaking System (+1 max level)</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_LIGHT_NAME">Light Armor Plating</text>

@@ -501,7 +501,7 @@
 		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 		<!-- ACTIVATED ABILITIES -->
 		<powerEffect name="SC_STIMPACK">
-			<cooldown>10.0</cooldown>
+			<cooldown>0.1</cooldown>
 			<jumpCooldown>full</jumpCooldown>
 			<powerSounds>
 				<powerSound>ability_stimpack1</powerSound>
@@ -523,12 +523,9 @@
 			<temporaryEffect>
 				<duration>10.0</duration>
 				<cooldownColor r="240" g="210" b="50" />
-				<moveSpeedMultiplier>1.6</moveSpeedMultiplier>
-				<damageMultiplier>1.8</damageMultiplier>
-				<sc-shootTimer min="25" max="32" />
-				<sc-punchTimer min="25" max="32" />
-				<!-- <sc-shootTimer min="250" max="325" />
-				<sc-punchTimer min="250" max="325" /> -->
+				<moveSpeedMultiplier>1.5</moveSpeedMultiplier>
+				<shootTimer min="250" max="325" />
+				<punchTimer min="250" max="325" />
 			</temporaryEffect>
 		</powerEffect>
 		<powerEffect load="SC_REPAIR"/>
@@ -2108,6 +2105,7 @@
     <mod-append:script>data/sc_scripts/sc_system_sensors.lua</mod-append:script>
 
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_powerlist.lua</mod-append:script>
     <!-- <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script> -->
 </mod:findLike>
  </FTL>

@@ -1,11 +1,6 @@
 --[[
-DESCRIPTION: Adds temporary shooting and punching timers to tagged crew powers.
-        - Reads timers inside a power's <temporaryEffect> XML node.
-        - Applies timers only while that power's temporary effect is active.
-        - Preserves attack progress and restores the original timers on expiration or cancellation.
-        - Supports both timer types independently and multiple active powers per crew.
-TAGS: <sc-shootTimer min="250" max="325"/>, <sc-punchTimer min="250" max="325"/>
-        - Also accepts <shootTimer/> and <punchTimer/> inside <temporaryEffect>.
+DESCRIPTION: Extends shootTimer and punchTimer to work inside crew powers <temporaryEffect>
+TAGS: <shootTimer min="#" max="#"/>, <punchTimer min="#" max="#"/>
 DEPENDENCIES: sc_tag.lua, Multiverse userdata_table, tag-data-read.lua.
 ]]
 
@@ -21,7 +16,6 @@ local function parse_timer(node)
     local min = minAttribute and tonumber(minAttribute:value()) or value
     local max = maxAttribute and tonumber(maxAttribute:value()) or value
 
-    -- A single boundary is also accepted, as a fixed interval.
     min = min or max
     max = max or min
 
@@ -30,16 +24,24 @@ local function parse_timer(node)
     return {min = min, max = max}
 end
 
-mods.sc.tag.register("power", "temporaryEffect", powerTimers, function(node)
-    local shoot = parse_timer(node:first_node("sc-shootTimer") or node:first_node("shootTimer"))
-    local punch = parse_timer(node:first_node("sc-punchTimer") or node:first_node("punchTimer"))
+table.insert(mods.multiverse.crewTagParsers, function(raceNode)
+    local powerNode = raceNode:first_node("powerEffect")
+    while powerNode do
+        local effectNode = powerNode:first_node("temporaryEffect")
+        if effectNode then
+            local shoot = parse_timer(effectNode:first_node("shootTimer"))
+            local punch = parse_timer(effectNode:first_node("punchTimer"))
 
-    if not shoot and not punch then return nil end
+            local name = powerNode:first_attribute("name")
+            if name and (shoot or punch) then
+                powerTimers[name:value()] = {shoot = shoot, punch = punch}
+            end
+        end
 
-    return {shoot = shoot, punch = punch}
+        powerNode = powerNode:next_sibling("powerEffect")
+    end
 end)
 
--- Prefer the shortest average interval when multiple timed powers overlap.
 local function get_active_timers(crew)
     local shoot, punch
     local powers = crew.extend.crewPowers
@@ -91,8 +93,6 @@ local function update_timer(animation, timerType, desired, state)
     timer.minTime = target.min
     timer.maxTime = target.max
 
-    -- Match Hyperspace's timer adjustment: keep the fraction of the current
-    -- attack already completed, including the punching animation's progress.
     local oldGoal = timer.currGoal
     if oldGoal > 0 then
         local newGoal = math.max(target.min / 1000, math.min(oldGoal, target.max / 1000))
@@ -113,8 +113,6 @@ local function update_timer(animation, timerType, desired, state)
     end
 end
 
--- CREW_LOOP runs after the native crew update, so the power state is already
--- current, including effects that ended or were canceled this frame.
 script.on_internal_event(Defines.InternalEvents.CREW_LOOP, function(crew)
     if not crew.extend or not crew.crewAnim then return end
 
