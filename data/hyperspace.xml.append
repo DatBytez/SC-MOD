@@ -2046,6 +2046,8 @@
 
     <mod-append:script>data/sc_scripts/sc_button_ui.lua</mod-append:script>
 
+	
+    <mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_pilot.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_firefill.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_breachfill.lua</mod-append:script>
@@ -2064,17 +2066,10 @@
 	<mod-append:script>data/sc_scripts/sc_weapon_halo_trail.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_emp.lua</mod-append:script>
 
-    <mod-append:script>data/sc_scripts/sc_augment_battery.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_augment_battery_dodge.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_augment_battery_oxygen.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_augment_battery_fire.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_augment_battery_ftl.lua</mod-append:script>
-
 	<mod-append:script>data/sc_scripts/sc_targeting_core.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_detector.lua</mod-append:script>
     <mod-append:script>data/scripts_lily/lily_system_bracers.lua</mod-append:script>	
     <mod-append:script>data/sc_scripts/sc_augment_armor.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_augment_cloak.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_augment_repair.lua</mod-append:script>
@@ -2093,14 +2088,12 @@
 	<mod-append:script>data/sc_scripts/sc_crew_ability_shoot.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_restoration.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_heal.lua</mod-append:script>
-	<!-- <mod-append:script>data/sc_scripts/sc_crew_ability_flamethrower.lua</mod-append:script> -->
 	<mod-append:script>data/sc_scripts/sc_crew_ability_flare.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_copy.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_return.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_pod.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_comsat.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_defense.lua</mod-append:script>
-	<!-- <mod-append:script>data/sc_scripts/sc_active_shield_damage_down.lua</mod-append:script> -->
     <mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_system_sensors.lua</mod-append:script>
 

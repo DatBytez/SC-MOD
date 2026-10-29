@@ -381,44 +381,44 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 UPGRADE: Battery System (+1 max level)
 UPGRADE: Cloaking System (+1 max level)
 
-BONUS: Cloaking +1.65 seconds per system level</text>
+BONUS: Cloaking +1.65 seconds per active power</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_LIGHT_NAME">Light Armor Plating</text>
 <text name="aug_TERRAN_SHIP_ARMOR_LIGHT_DESC">Light neosteel hulls and reinforced structural bracers provide better maneuverability at a cost of durability.  
 
-ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 20%)
+ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 40%)
 
-BONUS: Evasion +2% per engine level
+BONUS: Evasion +2% per active Engine power
     
 STRAIF: Increase Accuracy and Projectile Speed (Accuracy +0.5% per Evasion)</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_MEDIUM_NAME">Medium Armor Plating</text>
 <text name="aug_TERRAN_SHIP_ARMOR_MEDIUM_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a slight cost to maneuverability.  
     
-ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 20%)
+ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 40%)
 
 UPGRADE: System Bracers (+2 max level)
 
-PENALTY: Evasion -1% per engine level
-PENALTY: Cloaking -1 second per system level</text>
+PENALTY: Evasion -1% per active Engine power
+PENALTY: Cloaking -1 second per active Cloaking power</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_HEAVY_NAME">Heavy Armor Plating</text>
 <text name="aug_TERRAN_SHIP_ARMOR_HEAVY_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a significan cost to maneuverability.
 
-ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 20%)
+ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 40%)
 
 UPGRADE: System Bracers (+3 max level)
 
-PENALTY: Evasion -2% per engine level
-PENALTY: Cloaking -2 seconds per system level</text>
+PENALTY: Evasion -2% per active Engine power
+PENALTY: Cloaking -2 seconds per active Cloaking power</text>
 
 <text name="aug_SC_DETECTOR_NAME">Detector</text>
 <!-- Protoss could be called Advanced Sensor Array, Zerg could be something biological -->
-<text name="aug_SC_DETECTOR_DESC">Advanced sensors allow this ship to track enemy targets more effectively. For each active level of sensors, weapons will charge while enemies are cloaked at a cumulative 20% speed.
+<text name="aug_SC_DETECTOR_DESC">Advanced sensors allow this ship to track enemy targets more effectively, providing bonuses to weapon accuracy.
     
 UPGRADE: Sensors (+2 max level)
 
-DETECTOR: Projectiles +2.5% accuracy per sensor level. Missiles gain double that.</text>
+DETECTOR: Projectiles +2.5% accuracy per active Sensor power. Missiles gain double that.</text>
 
 <text name="tooltip_sc_sensors_level_5">Improves detector targeting bonuses.</text>
 <text name="tooltip_sc_sensors_level_6">Improves detector targeting bonuses.</text>

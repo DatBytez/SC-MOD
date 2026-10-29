@@ -1,16 +1,20 @@
 --[[
 DESCRIPTION: Tagged augments modify ship dodge based on effective Engines power.
-        - Applies the configured dodge amount per effective Engines power.
 TAG: <sc-dodge value="#"/>
+DEPENDENCIES: sc_tag.lua
 ]]
 
 mods.sc = mods.sc or {}
 mods.sc.dodgeAugments = mods.sc.dodgeAugments or {}
-local helpers = mods.sc.helpers
 
 local dodgeAugments = mods.sc.dodgeAugments
 
 mods.sc.tag.register("augment", "sc-dodge", dodgeAugments, "value")
+
+local ENGINES_SYSTEM_ID = Hyperspace.ShipSystem.NameToSystemId("engines")
+local PILOT_SYSTEM_ID = Hyperspace.ShipSystem.NameToSystemId("pilot")
+
+local ENGINE_DODGE_BY_LEVEL = {5, 10, 15, 20, 25, 28, 31, 35}
 
 local function get_sc_dodge_amount(ship)
     local total = 0
@@ -22,34 +26,27 @@ local function get_sc_dodge_amount(ship)
     return total
 end
 
-local PILOT_SYSTEM_ID = 6
+local function piloting_allows_positive_dodge(ship)
+    local piloting = ship:GetSystem(PILOT_SYSTEM_ID)
 
-local function piloting_allows_positive_dodge(shipManager)
-    local piloting = shipManager:GetSystem(PILOT_SYSTEM_ID)
-
-    if not piloting
-        or piloting:CompletelyDestroyed()
-        or not piloting.bManned then
-
-        return false
-    end
-
-    return piloting:GetEffectivePower() > 0
+    return piloting
+        and not piloting:CompletelyDestroyed()
+        and piloting.bManned
+        and piloting:GetEffectivePower() > 0
 end
 
 script.on_internal_event(
     Defines.InternalEvents.GET_DODGE_FACTOR,
-    function(shipManager, dodge)
-        local perPowerAmount = get_sc_dodge_amount(shipManager)
+    function(ship, dodge)
+        local perPowerAmount = get_sc_dodge_amount(ship)
         if perPowerAmount == 0 then return end
 
-        local engines = helpers.get_system_by_name(shipManager, "engines")
+        local engines = ship:GetSystem(ENGINES_SYSTEM_ID)
         if not engines then return end
 
         local bonus = perPowerAmount * engines:GetEffectivePower()
 
-        if bonus > 0 and not piloting_allows_positive_dodge(shipManager) then
-
+        if bonus > 0 and not piloting_allows_positive_dodge(ship) then
             bonus = 0
         end
 
@@ -58,9 +55,6 @@ script.on_internal_event(
 )
 
 -- Engines Level Descriptions
-
-local ENGINES_SYSTEM_ID = Hyperspace.ShipSystem.NameToSystemId("engines")
-local ENGINE_DODGE_BY_LEVEL = {5, 10, 15, 20, 25, 28, 31, 35}
 
 script.on_internal_event(
     Defines.InternalEvents.GET_LEVEL_DESCRIPTION,
@@ -73,7 +67,6 @@ script.on_internal_event(
         local perPowerAmount = get_sc_dodge_amount(ship)
         if perPowerAmount == 0 then return end
 
-        -- Describe the selected level with functional, manned Piloting.
         local baseDodge = ENGINE_DODGE_BY_LEVEL[level] or (5 * level - 5)
         local dodge = math.max(0, baseDodge + perPowerAmount * level)
         local ftl = 0.75 + level / 4

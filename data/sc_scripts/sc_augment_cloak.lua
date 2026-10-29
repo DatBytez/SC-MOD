@@ -1,9 +1,5 @@
 --[[
 DESCRIPTION: Tagged augments modify Cloaking duration based on effective Cloaking power.
-        - Applies the configured number of seconds per effective Cloaking power.
-        - Positive values extend Cloaking; negative values shorten it.
-        - Scales elapsed Cloaking time without changing the timer's normal goal.
-        - Changes duration, not the Cloaking cooldown.
 TAG: <sc-cloak value="#"/>
 DEPENDENCIES: sc_tag.lua, Multiverse userdata_table
 ]]
@@ -39,7 +35,6 @@ script.on_internal_event(
         local data = userdata_table(shipManager, "mods.sc.cloakDuration")
 
         if not cloaking.bTurnedOn then
-            data.applied = false
             data.lastTime = nil
             return
         end
@@ -52,48 +47,27 @@ script.on_internal_event(
         local duration = math.max(MIN_CLOAK_DURATION, timer.currGoal + bonus)
         local rate = timer.currGoal / duration
 
-        if not data.applied then
-            data.applied = true
-            -- Include the first native tick if the cloak has just begun.
-            -- An already-running cloak loaded from a save starts from its current time.
+        if data.lastTime == nil then
             data.lastTime = timer.currTime <= MAX_NORMAL_STEP and 0 or timer.currTime
-            data.adjustments = 0
-            data.lastBefore = nil
-            data.lastAfter = nil
-            data.lastDelta = nil
-            data.lastScaledDelta = nil
-            data.skippedJumps = 0
-            data.lastJumpDelta = nil
         end
 
-        data.duration = duration
-        data.rate = rate
-        data.bonus = bonus
-
         -- The native cloak system may restart its timer when currGoal is edited.
-        -- Leave currGoal unchanged and scale ONLY time added since the last loop.
+        -- Leave currGoal unchanged and scale only normal elapsed-time progression.
         local delta = timer.currTime - data.lastTime
-        if delta > MAX_NORMAL_STEP then
-            -- Preserve sudden penalties/other external changes to elapsed time.
-            data.skippedJumps = data.skippedJumps + 1
-            data.lastJumpDelta = delta
-        elseif delta > 0 and bonus ~= 0 then
-            local adjusted = math.min(timer.currGoal, data.lastTime + delta * rate)
 
-            data.lastBefore = timer.currTime
-            data.lastAfter = adjusted
-            data.lastDelta = delta
-            data.lastScaledDelta = adjusted - data.lastTime
-            data.adjustments = data.adjustments + 1
+        if delta > 0
+            and delta <= MAX_NORMAL_STEP
+            and bonus ~= 0 then
 
-            timer.currTime = adjusted
+            timer.currTime = math.min(
+                timer.currGoal,
+                data.lastTime + delta * rate
+            )
         end
 
         data.lastTime = timer.currTime
     end
 )
-
--- Cloaking Level Descriptions
 
 script.on_internal_event(
     Defines.InternalEvents.GET_LEVEL_DESCRIPTION,
@@ -106,7 +80,6 @@ script.on_internal_event(
         local perPowerAmount = get_sc_cloak_amount(ship)
         if perPowerAmount == 0 then return end
 
-        -- Describe the selected level when Cloaking is fully powered.
         local baseDuration = level * 5
         local duration = math.max(MIN_CLOAK_DURATION, baseDuration + perPowerAmount * level)
 

@@ -1,33 +1,34 @@
 --[[
 DESCRIPTION: Registers tagged detector augments as a targeting source.
         - Scales detector strength with Sensors effective power.
-        - Shared targeting core handles accuracy, radius, cloak, and detection effects.
 TAG: <sc-detector/>
-DEPENDENCIES: sc_targeting_core.lua
+DEPENDENCIES: sc_tag.lua, sc_targeting_core.lua
 ]]
 
-mods.sc = mods.sc or {}
-mods.sc.detectorAugments = mods.sc.detectorAugments or {}
-
-local detectorAugments = mods.sc.detectorAugments
 local targeting = mods.sc.targeting
-local helpers = mods.sc.helpers
+local detectorAugments = {}
 
 mods.sc.tag.register("augment", "sc-detector", detectorAugments)
 
-local function get_detector_strength(ship)
-    local sensors = ship:GetSystem(7)
+local SENSORS_SYSTEM_ID = Hyperspace.ShipSystem.NameToSystemId("sensors")
 
-    if not sensors
-        or not helpers.ship_has_augment(ship, detectorAugments) then
-
-        return nil
+local function ship_has_detector(ship)
+    for augName in pairs(detectorAugments) do
+        if ship:HasAugmentation(augName) > 0 then
+            return true
+        end
     end
+
+    return false
+end
+
+local function get_detector_strength(ship)
+    if not ship_has_detector(ship) then return nil end
+
+    local sensors = ship:GetSystem(SENSORS_SYSTEM_ID)
+    if not sensors then return nil end
 
     return sensors:GetEffectivePower()
 end
 
-if targeting and targeting.register_source then
-    targeting.register_source("sc_detector", get_detector_strength)
-end
--- targeting.register_source("sc_detector", get_detector_strength)
+targeting.register_source("sc_detector", get_detector_strength)
