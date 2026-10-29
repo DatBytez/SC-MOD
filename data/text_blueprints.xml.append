@@ -381,7 +381,7 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 UPGRADE: Battery System (+1 max level)
 UPGRADE: Cloaking System (+1 max level)
 
-BONUS: Cloaking +1.65 seconds per active power</text>
+BONUS: Cloaking +1.65 seconds per active Cloaking power</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_LIGHT_NAME">Light Armor Plating</text>
 <text name="aug_TERRAN_SHIP_ARMOR_LIGHT_DESC">Light neosteel hulls and reinforced structural bracers provide better maneuverability at a cost of durability.  
@@ -390,7 +390,7 @@ ARMORED: System Bracers have a chance to block incoming damage (System Bracer He
 
 BONUS: Evasion +2% per active Engine power
     
-STRAIF: Increase Accuracy and Projectile Speed (Accuracy +0.5% per Evasion)</text>
+STRAFE: Increase Accuracy and Projectile Speed (Accuracy +0.5% per Evasion)</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_MEDIUM_NAME">Medium Armor Plating</text>
 <text name="aug_TERRAN_SHIP_ARMOR_MEDIUM_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a slight cost to maneuverability.  
@@ -403,7 +403,7 @@ PENALTY: Evasion -1% per active Engine power
 PENALTY: Cloaking -1 second per active Cloaking power</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_HEAVY_NAME">Heavy Armor Plating</text>
-<text name="aug_TERRAN_SHIP_ARMOR_HEAVY_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a significan cost to maneuverability.
+<text name="aug_TERRAN_SHIP_ARMOR_HEAVY_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a significant cost to maneuverability.
 
 ARMORED: System Bracers have a chance to block incoming damage (System Bracer Health * 40%)
 
