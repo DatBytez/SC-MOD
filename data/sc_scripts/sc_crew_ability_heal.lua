@@ -1,8 +1,5 @@
 --[[
 DESCRIPTION: Directs Terran Medic passive healing to the lowest-health friendly crew in the room.
-        - Preserves the XML trueHealAmount boost; removes each medic's contribution from other recipients.
-        - Excludes the medic itself, drones, dead crew, and crew at full health from selection.
-        - Supports tagged healer races, both ships, and multiple healers.
 TAG: <sc-heal/>
 DEPENDENCIES: sc_tag.lua, Hyperspace, Heal-Crew XML stat boost with shipTarget CURRENT_ROOM.
 ]]
@@ -11,8 +8,8 @@ mods.sc = mods.sc or {}
 
 local medicRaces = {}
 mods.sc.tag.register("crew", "sc-heal", medicRaces)
+local HEALTH_BUCKET = 4
 
--- The XML definition is static; validate it once and reuse its amount.
 local xmlHealAmount
 local function get_xml_heal_amount()
     if xmlHealAmount ~= nil then return xmlHealAmount or nil end
@@ -58,7 +55,7 @@ local function select_lowest_health(medic, crewList, previousTarget)
 
     for _, crew in ipairs(crewList) do
         if is_eligible(medic, crew) then
-            local group = math.floor(crew.health.first)
+            local group = math.floor(crew.health.first / HEALTH_BUCKET)
             if not lowest or group < lowestGroup
                 or (group == lowestGroup and same_crew(crew, previousTarget)) then
                 lowest = crew
@@ -69,8 +66,6 @@ local function select_lowest_health(medic, crewList, previousTarget)
     return lowest
 end
 
--- Freeze choices and source counts between game updates. Recalculating them in
--- CALCULATE_STAT_POST could select a different target as earlier crew get healed.
 local snapshots = {}
 
 local function update_snapshot(ship)
@@ -115,8 +110,6 @@ local function update_snapshot(ship)
     snapshots[ship.iShipId] = snapshot
 end
 
--- ON_TICK runs after the game update; the snapshot is used consistently by
--- every crew stat calculation during the following update.
 script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
     if not Hyperspace.App or not Hyperspace.App.world
         or not Hyperspace.App.world.bStartedGame then

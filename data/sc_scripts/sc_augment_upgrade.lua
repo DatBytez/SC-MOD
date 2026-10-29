@@ -1,7 +1,5 @@
 --[[
 DESCRIPTION: Increases systems maximum based on augment upgrades.
-        - Requires system max to be increased in blueprints.
-        - Adds bonuses from installed augments with the <sc-upgrade> tag.
         - Allows temporary Comsat Sensors levels without enforcing the normal Sensors cap.
         - Handles multiple artillery system instances? Untested.
 TAG: <sc-upgrade system="SYSTEM_NAME" value="#"/>
@@ -9,14 +7,9 @@ DEPENDENCIES: sc_tag.lua, Multiverse vter
 ]]
 
 local vter = mods.multiverse.vter
+local augmentUpgrades = {}
 
-mods.sc = mods.sc or {}
-mods.sc.augmentUpgrades = mods.sc.augmentUpgrades or {}
-
-local augmentUpgrades = mods.sc.augmentUpgrades
-
-local ARTILLERY_ID = 11
-local CAP_CHECK_INTERVAL = 15
+local ARTILLERY_ID = Hyperspace.ShipSystem.NameToSystemId("artillery")
 
 local SYSTEMS = {
     shields = {systemId = 0, baseCap = 16},
@@ -38,8 +31,6 @@ local SYSTEMS = {
     temporal = {systemId = 20, baseCap = 3},
     lily_system_bracers = {baseCap = 3}
 }
-
-local capCheckCounter = 0
 
 mods.sc.tag.register("augment", "sc-upgrade", augmentUpgrades, "system")
 
@@ -72,6 +63,7 @@ local function apply_max_to_system(system, effectiveMax)
     end
 
     local excess = system:GetMaxPower() - effectiveMax
+
     for _ = 1, math.max(excess, 0) do
         system:UpgradeSystem(-1)
     end
@@ -80,7 +72,10 @@ end
 local function apply_effective_max(ship, systemName, systemData)
     local effectiveMax = systemData.baseCap + get_active_upgrade_bonus(ship, systemName)
 
-    if systemName == "sensors" and mods.sc.comsat and mods.sc.comsat.get_temporary_sensor_cap_bonus then
+    if systemName == "sensors"
+        and mods.sc.comsat
+        and mods.sc.comsat.get_temporary_sensor_cap_bonus then
+
         effectiveMax = effectiveMax + mods.sc.comsat.get_temporary_sensor_cap_bonus(ship)
     end
 

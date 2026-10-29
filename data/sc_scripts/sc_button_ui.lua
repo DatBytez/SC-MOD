@@ -73,7 +73,6 @@ function buttonTimer.activate(name, ship)
     return true
 end
 
--- Is this really necessary?
 local function ensure_button_runtime(button, systemBox, ship)
     local shipSystem = systemBox.pSystem
     local visuals = button.get_visuals(ship, shipSystem)
@@ -102,7 +101,7 @@ local function ensure_button_runtime(button, systemBox, ship)
             visuals.baseImage, button.x, button.y, 0, Graphics.GL_Color(1, 1, 1, 1), 1, false)
 
         runtime.buttonCharging = Hyperspace.Resources:CreateImagePrimitiveString(
-        visuals.chargingImage, button.x, button.y, 0, Graphics.GL_Color(1, 1, 1, 1), 1, false)
+            visuals.chargingImage, button.x, button.y, 0, Graphics.GL_Color(1, 1, 1, 1), 1, false)
     end
 
     return runtime
@@ -130,9 +129,7 @@ script.on_internal_event(Defines.InternalEvents.SYSTEM_BOX_MOUSE_MOVE, function(
         if button_matches_system_box(button, systemBox)
             and button.is_visible(ship, systemBox.pSystem) then
 
-            local activateButton =
-                ensure_button_runtime(button, systemBox, ship).activateButton
-
+            local activateButton = ensure_button_runtime(button, systemBox, ship).activateButton
             activateButton:MouseMove(x - button.x, y - button.y, false)
         end
     end
@@ -147,8 +144,7 @@ script.on_internal_event(Defines.InternalEvents.SYSTEM_BOX_MOUSE_CLICK, function
         if button_matches_system_box(button, systemBox)
             and button.is_visible(ship, systemBox.pSystem) then
 
-            local activateButton =
-                ensure_button_runtime(button, systemBox, ship).activateButton
+            local activateButton = ensure_button_runtime(button, systemBox, ship).activateButton
 
             if activateButton.bHover and activateButton.bActive then
                 buttonTimer.activate(button.name, ship)
@@ -186,12 +182,11 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
         else
             state.duration = button.get_duration(ship, shipSystem)
 
-            local timerRate =
-                button.get_timer_rate
+            local timerRate = button.get_timer_rate
                 and button.get_timer_rate(ship, shipSystem, state)
                 or 1 / state.duration
 
-            state.timer = math.max( 0, math.min(1, state.timer + timerRate * Hyperspace.FPS.SpeedFactor / 16))
+            state.timer = math.max(0, math.min(1, state.timer + timerRate * Hyperspace.FPS.SpeedFactor / 16))
 
             set_active(button, ship, shipSystem, state.timer < 1)
         end
@@ -205,7 +200,6 @@ local function render_button(button, systemBox)
     if not button.is_visible(ship, shipSystem) then return end
 
     local runtime = ensure_button_runtime(button, systemBox, ship)
-
     local state = button.state[ship.iShipId]
     local activateButton = runtime.activateButton
 
@@ -230,20 +224,23 @@ local function render_button(button, systemBox)
 
         Graphics.CSurface.GL_SetStencilMode(Graphics.STENCIL_SET, 1, 1)
 
-        Graphics.CSurface.GL_DrawRect(button.x + mask.x, button.y - height + mask.bottomY, mask.w, height, Graphics.GL_Color(1, 1, 1, 1))
+        Graphics.CSurface.GL_DrawRect(
+            button.x + mask.x,
+            button.y - height + mask.bottomY,
+            mask.w,
+            height,
+            Graphics.GL_Color(1, 1, 1, 1)
+        )
 
         Graphics.CSurface.GL_SetStencilMode(Graphics.STENCIL_USE, 1, 1)
-
         Graphics.CSurface.GL_RenderPrimitive(runtime.buttonCharging)
-
         Graphics.CSurface.GL_SetStencilMode(Graphics.STENCIL_IGNORE, 1, 1)
     else
         activateButton:OnRender()
     end
 end
 
-script.on_render_event(
-    Defines.RenderEvents.SYSTEM_BOX,
+script.on_render_event(Defines.RenderEvents.SYSTEM_BOX,
     function()
         return Defines.Chain.CONTINUE
     end,

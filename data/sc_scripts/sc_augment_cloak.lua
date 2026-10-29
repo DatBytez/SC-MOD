@@ -1,88 +1,71 @@
 --[[
-DESCRIPTION: Tagged augments modify Cloaking duration based on effective Cloaking power.
-TAG: <sc-cloak value="#"/>
-DEPENDENCIES: sc_tag.lua, Multiverse userdata_table
+DESCRIPTION: Tagged augments modify ship dodge based on effective Engines power.
+TAG: <sc-dodge value="#"/>
+DEPENDENCIES: sc_tag.lua, sc_helpers.lua
 ]]
 
 mods.sc = mods.sc or {}
-mods.sc.cloakAugments = mods.sc.cloakAugments or {}
+mods.sc.dodgeAugments = mods.sc.dodgeAugments or {}
 
-local cloakAugments = mods.sc.cloakAugments
-local userdata_table = mods.multiverse.userdata_table
+local dodgeAugments = mods.sc.dodgeAugments
+local helpers = mods.sc.helpers
 
-mods.sc.tag.register("augment", "sc-cloak", cloakAugments, "value")
+mods.sc.tag.register("augment", "sc-dodge", dodgeAugments, "value")
 
-local CLOAK_SYSTEM_ID = Hyperspace.ShipSystem.NameToSystemId("cloaking")
-local MIN_CLOAK_DURATION = 0.1
-local MAX_NORMAL_STEP = 0.25 -- Preserve large timer jumps such as weapon-fire penalties.
+local ENGINES_SYSTEM_ID = Hyperspace.ShipSystem.NameToSystemId("engines")
+local PILOT_SYSTEM_ID = Hyperspace.ShipSystem.NameToSystemId("pilot")
 
-local function get_sc_cloak_amount(ship)
-    local total = 0
+local ENGINE_DODGE_BY_LEVEL = {5, 10, 15, 20, 25, 28, 31, 35}
 
-    for augName, value in pairs(cloakAugments) do
-        total = total + value * ship:HasAugmentation(augName)
-    end
+local function get_sc_dodge_amount(ship)
+    return helpers.get_augment_value_total(ship, dodgeAugments)
+end
 
-    return total
+local function piloting_allows_positive_dodge(ship)
+    local piloting = ship:GetSystem(PILOT_SYSTEM_ID)
+
+    return piloting
+        and not piloting:CompletelyDestroyed()
+        and piloting.bManned
+        and piloting:GetEffectivePower() > 0
 end
 
 script.on_internal_event(
-    Defines.InternalEvents.SHIP_LOOP,
-    function(shipManager)
-        local cloaking = shipManager.cloakSystem
-        if not cloaking then return end
+    Defines.InternalEvents.GET_DODGE_FACTOR,
+    function(ship, dodge)
+        local perPowerAmount = get_sc_dodge_amount(ship)
+        if perPowerAmount == 0 then return end
 
-        local data = userdata_table(shipManager, "mods.sc.cloakDuration")
+        local engines = ship:GetSystem(ENGINES_SYSTEM_ID)
+        if not engines then return end
 
-        if not cloaking.bTurnedOn then
-            data.lastTime = nil
-            return
+        local bonus = perPowerAmount * engines:GetEffectivePower()
+
+        if bonus > 0 and not piloting_allows_positive_dodge(ship) then
+            bonus = 0
         end
 
-        local timer = cloaking.timer
-        if not timer or not timer.running or timer.currGoal <= 0 then return end
-
-        local perPowerAmount = get_sc_cloak_amount(shipManager)
-        local bonus = perPowerAmount * cloaking:GetEffectivePower()
-        local duration = math.max(MIN_CLOAK_DURATION, timer.currGoal + bonus)
-        local rate = timer.currGoal / duration
-
-        if data.lastTime == nil then
-            data.lastTime = timer.currTime <= MAX_NORMAL_STEP and 0 or timer.currTime
-        end
-
-        -- The native cloak system may restart its timer when currGoal is edited.
-        -- Leave currGoal unchanged and scale only normal elapsed-time progression.
-        local delta = timer.currTime - data.lastTime
-
-        if delta > 0
-            and delta <= MAX_NORMAL_STEP
-            and bonus ~= 0 then
-
-            timer.currTime = math.min(
-                timer.currGoal,
-                data.lastTime + delta * rate
-            )
-        end
-
-        data.lastTime = timer.currTime
+        return Defines.Chain.CONTINUE, math.max(0, dodge + bonus)
     end
 )
+
+-- Engines Level Descriptions
 
 script.on_internal_event(
     Defines.InternalEvents.GET_LEVEL_DESCRIPTION,
     function(systemId, level, tooltip)
-        if systemId ~= CLOAK_SYSTEM_ID or level < 1 then return end
+        if systemId ~= ENGINES_SYSTEM_ID or level < 1 then return end
 
         local ship = Hyperspace.ships(0)
         if not ship then return end
 
-        local perPowerAmount = get_sc_cloak_amount(ship)
+        local perPowerAmount = get_sc_dodge_amount(ship)
         if perPowerAmount == 0 then return end
 
-        local baseDuration = level * 5
-        local duration = math.max(MIN_CLOAK_DURATION, baseDuration + perPowerAmount * level)
+        local baseDodge = ENGINE_DODGE_BY_LEVEL[level] or (5 * level - 5)
+        local dodge = math.max(0, baseDodge + perPowerAmount * level)
+        local ftl = 0.75 + level / 4
 
-        return string.format("Cloaking Duration: %g seconds", duration)
+        return string.format("Dodge: %g / FTL: %gx", dodge, ftl)
     end
 )

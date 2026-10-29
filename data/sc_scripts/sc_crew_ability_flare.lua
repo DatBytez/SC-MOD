@@ -1,18 +1,20 @@
-mods.sc.crewFlareDurations = mods.sc.crewFlareDurations or {}
+--[[
+DESCRIPTION: Stuns hostile non-drone crew in the activating crew member's room.
+        - Mind-controlled crew are treated according to their current allegiance.
+        - Crew listed in SC_LIST_CREW_DRONES are excluded.
+TAG: <sc-flare value="#"/>
+DEPENDENCIES: sc_tag.lua, sc_helpers.lua
+]]
 
-local flareDurations = mods.sc.crewFlareDurations
+local helpers = mods.sc.helpers
+local flareDurations = {}
 
 mods.sc.tag.register("power", "sc-flare", flareDurations, "value")
 
-local excludedDrones = {}
-local droneList = Hyperspace.Blueprints:GetBlueprintList("SC_LIST_CREW_DRONES")
-
-for i = 0, droneList:size() - 1 do
-    excludedDrones[droneList[i]] = true
-end
+local excludedDrones = helpers.blueprint_list_to_set("SC_LIST_CREW_DRONES")
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, ship)
-    local stunDuration = tonumber(flareDurations[power.def.name])
+    local stunDuration = flareDurations[power.def.name]
 
     if not stunDuration or stunDuration <= 0 then
         return Defines.Chain.CONTINUE
@@ -27,6 +29,7 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, 
             and not excludedDrones[crew:GetSpecies()]
             and ((crew.iShipId ~= power.crew.iShipId and not crew.bMindControlled)
                 or (crew.iShipId == power.crew.iShipId and crew.bMindControlled)) then
+
             crew.fStunTime = math.max(crew.fStunTime, stunDuration)
         end
     end

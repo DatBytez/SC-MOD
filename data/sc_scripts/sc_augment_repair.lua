@@ -1,7 +1,7 @@
 --[[
 DESCRIPTION: Heals 1 hull when a completely destroyed system is repaired.
 TAG: <sc-repair/>
-DEPENDENCIES: sc_tag.lua
+DEPENDENCIES: sc_tag.lua, sc_helpers.lua
 ]]
 mods.sc.repairAugments = mods.sc.repairAugments or {}
 
