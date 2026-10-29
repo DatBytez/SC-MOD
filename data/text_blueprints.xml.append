@@ -378,11 +378,10 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 <text name="aug_TERRAN_WRAITH_BATTERY_NAME">Apollo Reactor</text>
 <text name="aug_TERRAN_WRAITH_BATTERY_DESC">High yield uranium reactors designed by the Terran Confederacy.  
 
-BONUS: +1.65 seconds of cloak per cloaking level
-
 UPGRADE: Battery System (+1 max level)
+UPGRADE: Cloaking System (+1 max level)
 
-UPGRADE: Cloaking System (+1 max level)</text>
+BONUS: Cloaking +1.65 seconds per system level</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_LIGHT_NAME">Light Armor Plating</text>
 <text name="aug_TERRAN_SHIP_ARMOR_LIGHT_DESC">Light neosteel hulls and reinforced structural bracers provide better maneuverability at a cost of durability.  
@@ -400,7 +399,8 @@ ARMORED: System Bracers have a chance to block incoming damage (System Bracer He
 
 UPGRADE: System Bracers (+2 max level)
 
-PENALTY: Evasion -1% per engine level</text>
+PENALTY: Evasion -1% per engine level
+PENALTY: Cloaking -1 second per system level</text>
 
 <text name="aug_TERRAN_SHIP_ARMOR_HEAVY_NAME">Heavy Armor Plating</text>
 <text name="aug_TERRAN_SHIP_ARMOR_HEAVY_DESC">Layered neosteel hulls and reinforced structural plating make this ship more durable, at a significan cost to maneuverability.
@@ -409,7 +409,8 @@ ARMORED: System Bracers have a chance to block incoming damage (System Bracer He
 
 UPGRADE: System Bracers (+3 max level)
 
-PENALTY: Evasion -2% per engine level</text>
+PENALTY: Evasion -2% per engine level
+PENALTY: Cloaking -2 seconds per system level</text>
 
 <text name="aug_SC_DETECTOR_NAME">Detector</text>
 <!-- Protoss could be called Advanced Sensor Array, Zerg could be something biological -->

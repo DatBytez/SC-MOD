@@ -417,11 +417,6 @@ END OF SUBSYSTEMS
 	<sc-cloak value="1.65"/>
     <sc-upgrade system="battery" value="1"/>
 	<sc-upgrade system="cloaking" value="1"/>
-    <!-- <sc-battery/>
-    <sc-battery-dodge/>
-    <sc-battery-oxygen/>
-    <sc-battery-fire/>
-    <sc-battery-ftl/> -->
 </augBlueprint>
 </FTL>
  <!-- ===============	TERRAN SHIP ARMORS		=============== -->
@@ -433,7 +428,6 @@ END OF SUBSYSTEMS
 	<rarity>3</rarity>
 	<stackable>false</stackable>
 	<sc-armor/>
-	<sc-cloak value="1.5"/>
 	<sc-dodge value="2"/>
 </augBlueprint>
 
