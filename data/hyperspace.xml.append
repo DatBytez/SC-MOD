@@ -2095,11 +2095,13 @@
 	<mod-append:script>data/sc_scripts/sc_drone_comsat.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_comsat_sensors.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_defense.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_defense_threats.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_defense_cleanup.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_system_sensors.lua</mod-append:script>
 
     <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_powerlist.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
+    <!-- <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script> -->
 </mod:findLike>
  </FTL>
