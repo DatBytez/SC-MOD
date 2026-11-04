@@ -1,8 +1,8 @@
 --[[
 DESCRIPTION: Draws engine overlays for active space drones.
         - Tagged drones use the engine image named by <sc-droneEngine>.
-        - Untagged drones use the default SC drone engine image.
 TAG: <sc-droneEngine value="#"/>
+DEPENDENCIES: sc_tag.lua, Multiverse vter
 ]]
 
 local vter = mods.multiverse.vter
@@ -18,10 +18,6 @@ local ENGINE_FLIP_VERTICAL = true
 local droneEngineImages = {}
 local enginePrimitives = {}
 
-local DISABLED_DRONE_TYPES = {
-    BOARDER = true,
-}
-
 mods.sc.tag.register("drone", "sc-droneEngine", droneEngineImages, "value")
 
 local function get_engine_primitive(imagePath)
@@ -29,7 +25,7 @@ local function get_engine_primitive(imagePath)
 
     if not primitive then
         primitive = Hyperspace.Resources:CreateImagePrimitiveString(
-        imagePath, 0, 0, 0, Graphics.GL_Color(1, 1, 1, 1), 1.0, ENGINE_MIRROR)
+            imagePath, 0, 0, 0, Graphics.GL_Color(1, 1, 1, 1), 1.0, ENGINE_MIRROR)
 
         enginePrimitives[imagePath] = primitive
     end
@@ -58,10 +54,11 @@ script.on_render_event(Defines.RenderEvents.SHIP_ENGINES, function() end, functi
             and spacedrone.deployed
             and spacedrone.powered
             and not spacedrone.bDead
-            and not DISABLED_DRONE_TYPES[string.upper(spacedrone.blueprint.typeName or "")] then
+            and string.upper(spacedrone.blueprint.typeName or "") ~= "BOARDER" then
 
             local engineImage = droneEngineImages[spacedrone.blueprint.name]
             local imagePath = engineImage and "ship/drones/" .. engineImage .. ".png" or DEFAULT_ENGINE_IMAGE
+
             render_engine(spacedrone, get_engine_primitive(imagePath))
         end
     end

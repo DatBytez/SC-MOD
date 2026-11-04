@@ -1,5 +1,5 @@
 --[[
-DESCRIPTION: Weapon hits stun crew drones.
+DESCRIPTION: Tagged weapon hits stun enemy crew drones.
         - Weapons with <mv-aoe> also stun drones in adjacent rooms.
 TAG: <sc-emp value="#"/>
 DEPENDENCIES: sc_tag.lua, Multiverse vter, get_room_at_location, get_adjacent_rooms

@@ -3,7 +3,7 @@ DESCRIPTION: Applies shared stat scaling to tagged native Charge weapons.
         - Limits volleys for weapons with a tagged shot count.
         - Applies tagged Charge-based cooldown scaling while charging.
 TAG: <sc-charge stat="..." value="#"/>
-DEPENDENCIES: sc_tag.lua, sc_projectile_scaling.lua, Multiverse userdata_table, Multiverse vter
+DEPENDENCIES: sc_tag.lua, sc_weapon_scaling.lua, Multiverse userdata_table, Multiverse vter
 ]]
 
 local userdata_table = mods.multiverse.userdata_table

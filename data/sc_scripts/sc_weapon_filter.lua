@@ -36,33 +36,30 @@ local function remove_filtered_ship_damage(shipManager, projectile, damage)
 end
 
 script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA, function(shipManager, projectile, _location, damage)
-        remove_filtered_ship_damage(shipManager, projectile, damage)
-    end
-)
+    remove_filtered_ship_damage(shipManager, projectile, damage)
+end)
 
 script.on_internal_event(Defines.InternalEvents.DAMAGE_BEAM, function(shipManager, projectile, _location, damage, _realNewTile, beamHitType)
-        if beamHitType == Defines.BeamHit.NEW_ROOM then
-            remove_filtered_ship_damage(shipManager, projectile, damage)
-        end
+    if beamHitType == Defines.BeamHit.NEW_ROOM then
+        remove_filtered_ship_damage(shipManager, projectile, damage)
     end
-)
+end)
 
 script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(bp, stats)
-        local hasBio = bioWeapons[bp.name]
-        local hasRust = rustWeapons[bp.name]
+    local hasBio = bioWeapons[bp.name]
+    local hasRust = rustWeapons[bp.name]
 
-        if not hasBio and not hasRust then return end
+    if not hasBio and not hasRust then return end
 
-        local text = stats
+    local text = stats
 
-        if hasBio then
-            text = text .. "\n\n" .. Hyperspace.Text:GetText("stat_bio_weapon")
-        end
-
-        if hasRust then
-            text = text .. "\n\n" .. Hyperspace.Text:GetText("stat_rust_weapon")
-        end
-
-        return Defines.Chain.CONTINUE, text
+    if hasBio then
+        text = text .. "\n\n" .. Hyperspace.Text:GetText("stat_bio_weapon")
     end
-)
+
+    if hasRust then
+        text = text .. "\n\n" .. Hyperspace.Text:GetText("stat_rust_weapon")
+    end
+
+    return Defines.Chain.CONTINUE, text
+end)

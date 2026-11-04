@@ -3,7 +3,7 @@ DESCRIPTION: Applies special behavior to tagged HALO weapons.
         - Adds +10 radius per stored chainstep level to fake projectiles.
         - Gives fake projectiles the parent weapon's shield piercing.
 TAG: <sc-halo/>
-DEPENDENCIES: sc_tag.lua, sc_projectile_scaling.lua, sc_radius_core.lua
+DEPENDENCIES: sc_tag.lua, sc_weapon_scaling.lua, sc_radius_core.lua
 ]]
 
 local haloWeapons = {}

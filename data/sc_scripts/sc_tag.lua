@@ -1,6 +1,5 @@
 --[[
 DESCRIPTION: Registers reusable SC XML tag parsers for weapon, drone, augment, power, and crew blueprints.
-        - Omit dataType for boolean flag tags.
         - "value" stores a single numeric or string value.
         - "stat" stores repeated {stat, value} entries.
         - "system" stores repeated {system, value} entries.
@@ -12,8 +11,6 @@ mods.sc = mods.sc or {}
 mods.sc.tag = mods.sc.tag or {}
 
 local tag = mods.sc.tag
-
-mods.multiverse.crewTagParsers = mods.multiverse.crewTagParsers or {}
 
 local parserLists = {
     weapon = mods.multiverse.weaponTagParsers,
@@ -62,8 +59,7 @@ function tag.register(blueprintType, tagName, targetTable, dataType)
                 value = get_value(tagNode)
             }
 
-            entry[dataType] =
-                tagNode:first_attribute(dataType):value()
+            entry[dataType] = tagNode:first_attribute(dataType):value()
 
             table.insert(entries, entry)
             tagNode = tagNode:next_sibling(tagName)

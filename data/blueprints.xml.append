@@ -2001,7 +2001,7 @@ END OF SUBSYSTEMS
 			<crewTarget>ALL</crewTarget>
 			<droneTarget>CREW</droneTarget>
 			<duration>25</duration>
-			<maxStacks>3</maxStacks>
+			<maxStacks>10</maxStacks>
 		</statBoost>
     </statBoosts>
 </weaponBlueprint>

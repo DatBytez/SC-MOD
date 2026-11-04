@@ -4,7 +4,7 @@ DESCRIPTION: Implements SC Chainstep weapon behavior.
         - Derives the maximum Chainstep level from weapon cooldown.
         - Handles variable missile cost, payment, selection checks, and tooltip text.
 TAG: <sc-chainstep stat="..." value="#"/>
-DEPENDENCIES: sc_tag.lua, sc_projectile_scaling.lua, Multiverse userdata_table, Multiverse vter
+DEPENDENCIES: sc_tag.lua, sc_weapon_scaling.lua, Multiverse userdata_table, Multiverse vter
 ]]
 
 local userdata_table = mods.multiverse.userdata_table
@@ -28,7 +28,7 @@ end
 local function calculate_missile_cost(weaponName, level)
     local baseCost = get_stat_value(weaponName, "missileBase")
     local value = get_stat_value(weaponName, "missileCost")
-    return math.max(0, math.floor(baseCost + level * value)) 
+    return math.max(0, math.floor(baseCost + level * value))
 end
 
 local function update_chainstep_weapon(weapon)
@@ -88,7 +88,10 @@ script.on_internal_event(Defines.InternalEvents.SELECT_ARMAMENT_PRE, function(ar
         return Defines.Chain.CONTINUE, armamentSlot
     end
 
-    if weapon.powered and missileCost and ship:GetMissileCount() < calculate_missile_cost(weaponName, get_chainstep_level(weapon)) then
+    if weapon.powered and missileCost
+        and ship:GetMissileCount() < weapon.blueprint.missiles
+            + calculate_missile_cost(weaponName, get_chainstep_level(weapon)) then
+
         return Defines.Chain.PREEMPT, armamentSlot
     end
 
@@ -125,8 +128,7 @@ script.on_internal_event(Defines.InternalEvents.WEAPON_RENDERBOX, function(weapo
         return Defines.Chain.CONTINUE, firstLine, secondLine, thirdLine
     end
 
-    local currentCost = calculate_missile_cost(weapon.blueprint.name, weapon.boostLevel)
-        + math.floor(weapon.blueprint.missiles)
+    local currentCost = calculate_missile_cost(weapon.blueprint.name, weapon.boostLevel) + math.floor(weapon.blueprint.missiles)
 
     secondLine = "Missile cost: " .. currentCost
 
@@ -141,37 +143,20 @@ script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(bluepri
     local chainStep = get_stat_value(blueprint.name, "chainStep")
     local maxSteps = math.ceil((blueprint.cooldown - fireThreshold) / chainStep)
 
-    local vanillaChargeTime =
-        Hyperspace.Text:GetText("charge_time")
+    local vanillaChargeTime = Hyperspace.Text:GetText("charge_time")
 
-    vanillaChargeTime =
-        vanillaChargeTime:gsub(
-            "\\1",
-            string.format("%g", blueprint.cooldown)
-        )
+    vanillaChargeTime = vanillaChargeTime:gsub("\\1", string.format("%g", blueprint.cooldown))
 
     local chainstepChargeTime =
         Hyperspace.Text:GetText("charge_time")
 
-    chainstepChargeTime =
-        chainstepChargeTime:gsub(
-            "\\1",
-            string.format("%g - %g", fireThreshold, blueprint.cooldown)
-        )
+    chainstepChargeTime = chainstepChargeTime:gsub("\\1", string.format("%g - %g", fireThreshold, blueprint.cooldown))
 
-    stats = stats:gsub(
-        vanillaChargeTime,
-        chainstepChargeTime
-    )
+    stats = stats:gsub(vanillaChargeTime, chainstepChargeTime)
 
-    local vanillaMissileCost =
-        Hyperspace.Text:GetText("stat_resources_missiles")
+    local vanillaMissileCost = Hyperspace.Text:GetText("stat_resources_missiles")
 
-    vanillaMissileCost =
-        vanillaMissileCost:gsub(
-            "\\1",
-            tostring(math.floor(blueprint.missiles))
-        )
+    vanillaMissileCost = vanillaMissileCost:gsub("\\1", tostring(math.floor(blueprint.missiles)))
 
     local baseCost = get_stat_value(blueprint.name, "missileBase")
     local minimumCost = calculate_missile_cost(blueprint.name, maxSteps)
@@ -181,10 +166,7 @@ script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(bluepri
         .. " - " .. (minimumCost + blueprintCost)
         .. "\nMissile cost per step: " .. missileCost.value
 
-    stats = stats:gsub(
-        vanillaMissileCost .. "\n",
-        missileStats .. "\n"
-    )
+    stats = stats:gsub(vanillaMissileCost .. "\n", missileStats .. "\n")
 
     local radius = scaling.get_source_stat_entry("chainstep", blueprint.name, "radius")
 
@@ -192,28 +174,15 @@ script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(bluepri
         local startingRadius = blueprint.radius
         local endingRadius = math.max(0, blueprint.radius + maxSteps * radius.value)
 
-        local vanillaRadius =
-            Hyperspace.Text:GetText("shot_radius")
+        local vanillaRadius = Hyperspace.Text:GetText("shot_radius")
 
-        vanillaRadius =
-            vanillaRadius:gsub(
-                "\\1",
-                string.format("%g", blueprint.radius)
-            )
+        vanillaRadius = vanillaRadius:gsub("\\1", string.format("%g", blueprint.radius))
 
-        local chainstepRadius =
-            Hyperspace.Text:GetText("shot_radius")
+        local chainstepRadius = Hyperspace.Text:GetText("shot_radius")
 
-        chainstepRadius =
-            chainstepRadius:gsub(
-                "\\1",
-                string.format("%g - %g", startingRadius, endingRadius)
-            )
+        chainstepRadius = chainstepRadius:gsub("\\1", string.format("%g - %g", startingRadius, endingRadius))
 
-        stats = stats:gsub(
-            vanillaRadius,
-            chainstepRadius
-        )
+        stats = stats:gsub(vanillaRadius, chainstepRadius)
     end
 
     return Defines.Chain.CONTINUE, stats

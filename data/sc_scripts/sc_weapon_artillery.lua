@@ -1,7 +1,8 @@
 --[[
 DESCRIPTION: Scales tagged artillery weapons based on the artillery system's level.
-        - Shot count starts at the tagged value and increases by 1 per artillery level.
-        - Base cooldown starts at the blueprint cooldown and changes by the tagged value per artillery level.
+        - Shot count starts at the tagged value and increases by 1 per installed artillery level.
+        - Fully powered cooldown remains at the weapon's level-1 effective cooldown.
+        - Each missing artillery power adds the tagged cooldown penalty.
 TAGS:   <sc-artillery-level stat="shots" value="#"/>
         <sc-artillery-level stat="cooldown" value="#"/>
 DEPENDENCIES: sc_tag.lua, sc_weapon_scaling.lua, Multiverse vter
@@ -38,45 +39,43 @@ local function apply_artillery_level_shots(weapon, startingShots, artillery)
 end
 
 script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(_projectile, weapon)
-        local statBoosts = artilleryLevel[weapon.blueprint.name]
-        if not statBoosts then return end
+    local statBoosts = artilleryLevel[weapon.blueprint.name]
+    if not statBoosts then return end
 
-        local startingShots = get_stat_value(statBoosts, "shots")
-        if not startingShots then return end
+    local startingShots = get_stat_value(statBoosts, "shots")
+    if not startingShots then return end
 
-        local artillery = get_matching_artillery(Hyperspace.ships(weapon.iShipId), weapon)
-        if not artillery then return end
+    local artillery = get_matching_artillery(Hyperspace.ships(weapon.iShipId), weapon)
+    if not artillery then return end
 
-        apply_artillery_level_shots(weapon, startingShots, artillery)
-    end
-)
+    apply_artillery_level_shots(weapon, startingShots, artillery)
+end)
 
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
-        for artillery in vter(ship.artillerySystems) do
-            local weapon = artillery.projectileFactory
-            local weaponName = weapon.blueprint.name
-            local statBoosts = artilleryLevel[weaponName]
+    for artillery in vter(ship.artillerySystems) do
+        local weapon = artillery.projectileFactory
+        local weaponName = weapon.blueprint.name
+        local statBoosts = artilleryLevel[weaponName]
 
-            if statBoosts then
-                local cooldownPerMissingPower = get_stat_value(statBoosts, "cooldown")
+        if statBoosts then
+            local cooldownPerMissingPower = get_stat_value(statBoosts, "cooldown")
 
-                if cooldownPerMissingPower then
-                    if baseCooldowns[weaponName] == nil then
-                        baseCooldowns[weaponName] = weapon.blueprint.cooldown
-                    end
+            if cooldownPerMissingPower then
+                if baseCooldowns[weaponName] == nil then
+                    baseCooldowns[weaponName] = weapon.blueprint.cooldown
+                end
 
-                    local effectivePower = artillery:GetEffectivePower()
-                    local powerMultiplier = 1.5 - 0.25 * effectivePower
+                local effectivePower = artillery:GetEffectivePower()
+                local powerMultiplier = 1.5 - 0.25 * effectivePower
 
-                    if effectivePower > 0 and powerMultiplier > 0 then
-                        local missingPower = math.max(0, artillery.healthState.second - effectivePower)
-                        local desiredCooldown = baseCooldowns[weaponName] * 1.25
-                            + missingPower * cooldownPerMissingPower
+                if effectivePower > 0 and powerMultiplier > 0 then
+                    local missingPower = math.max(0, artillery.healthState.second - effectivePower)
+                    local desiredCooldown = baseCooldowns[weaponName] * 1.25
+                        + missingPower * cooldownPerMissingPower
 
-                        weapon.blueprint.cooldown = desiredCooldown / powerMultiplier
-                    end
+                    weapon.blueprint.cooldown = desiredCooldown / powerMultiplier
                 end
             end
         end
     end
-)
+end)

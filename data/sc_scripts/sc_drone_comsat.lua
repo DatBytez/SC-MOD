@@ -1,12 +1,9 @@
 --[[
 DESCRIPTION: Controls Terran Comsat drone deployment and lifetime behavior.
-        - Drone parts spent deploying a Comsat are refunded after deployment.
         - Tagged drones are destroyed when their lifetime ends or if depowered early, entering the normal rebuild cycle.
-        - The Comsat uses the DEFENSE drone type so it can deploy on the friendly side without an enemy ship.
-        - Native defense-drone shots are blocked.
         - A separate Lua timer creates the Comsat scan hit animation at a random enemy room when an enemy ship is present.
 TAG: <sc-comsat value="#"/>
-DEPENDENCIES: sc_tag.lua, sc_helpers.lua
+DEPENDENCIES: sc_tag.lua
 ]]
 
 local vter = mods.multiverse.vter
@@ -50,9 +47,13 @@ function comsat.is_active(drone)
 end
 
 function comsat.has_active(ship)
-    return ship
-        and ship.droneSystem
-        and helpers.ship_has_drone_matching(ship, comsat.is_active)
+    if not ship or not ship.droneSystem then return false end
+
+    for drone in vter(ship.droneSystem.drones) do
+        if comsat.is_active(drone) then return true end
+    end
+
+    return false
 end
 
 local function update_comsat_refund(ship, drone)

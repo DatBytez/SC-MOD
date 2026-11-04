@@ -2048,14 +2048,16 @@
 
 	
     <mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_pilot.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_firefill.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_breachfill.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_pilot.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_pilot_button.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_pilot_targeting.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_roomfill.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_chain.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_charge.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_paired.lua</mod-append:script>
+    <mod-append:script>data/sc_scripts/sc_weapon_paired_core.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_paired_secondary.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_paired_projectile.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_artillery.lua</mod-append:script>
-    <mod-append:script>data/sc_scripts/sc_weapon_battery.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_chainstep.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_weapon_size.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_irradiate.lua</mod-append:script>
@@ -2091,7 +2093,9 @@
 	<mod-append:script>data/sc_scripts/sc_crew_ability_flare.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_copy.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_return.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_pod_transport.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_pod.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_pod_delivery.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_comsat.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_comsat_sensors.lua</mod-append:script>
     <mod-append:script>data/sc_scripts/sc_drone_defense.lua</mod-append:script>

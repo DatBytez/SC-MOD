@@ -1,7 +1,8 @@
 --[[
-DESCRIPTION: Shared projectile stat scaling for Chain, Charge, and Chainstep weapons.
-        - Provides shared access to each weapon's tagged stat entries.
-        - Applies ordinary projectile stat values.
+DESCRIPTION: Shared weapon scaling helpers for Chain, Charge, Chainstep, and Artillery weapons.
+        - Provides shared access to tagged scaling stat entries and frozen projectile levels.
+        - Applies ordinary projectile stat scaling.
+        - Provides shared volley shot limiting.
 DEPENDENCIES: sc_tag.lua, Multiverse userdata_table
 ]]
 

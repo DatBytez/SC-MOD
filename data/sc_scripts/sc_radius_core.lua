@@ -1,12 +1,8 @@
 --[[
 DESCRIPTION: Owns all SC weapon-radius calculation, preview, modifiers, and projectile spread.
         - Calculates base radius and Chain/Charge/Chainstep radius scaling.
-        - Applies registered weapon-radius modifiers in priority order.
-        - Refreshes the live targeting radius, including while paused.
-        - Calculates frozen fired-projectile radius from stored scaling levels.
-        - Applies projectile-only radius deltas such as HALO fake-projectile spread.
         - Randomizes the projectile target once without changing its heading.
-DEPENDENCIES: sc_projectile_scaling.lua, Multiverse userdata_table, Multiverse vter
+DEPENDENCIES: sc_weapon_scaling.lua, Multiverse userdata_table, Multiverse vter
 ]]
 
 local userdata_table = mods.multiverse.userdata_table

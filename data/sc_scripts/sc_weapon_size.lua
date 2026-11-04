@@ -16,12 +16,10 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projec
     if not scaleStep then return end
 
     local weaponData = userdata_table(weapon, "mods.sc.projectileScale")
-
     weaponData.shotIndex = (weaponData.shotIndex or 0) + 1
 
     if projectile.flight_animation then
-        projectile.flight_animation.fScale =
-            math.max(0, 1 + (weaponData.shotIndex - 1) * scaleStep)
+        projectile.flight_animation.fScale = math.max(0, 1 + (weaponData.shotIndex - 1) * scaleStep)
     end
 
     if weapon.queuedProjectiles:size() == 0 then

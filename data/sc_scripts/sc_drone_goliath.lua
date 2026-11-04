@@ -13,124 +13,68 @@ local goliath = mods.sc.goliath
 
 local TURRET_HIT_DAMAGE = 45
 
-local function update_ship_goliaths(
-    shipManager
-)
-    if goliath.ship_is_destroyed(
-        shipManager
-    ) then
-        goliath.remove_all_turrets(
-            shipManager
-        )
+local function update_ship_goliaths(shipManager)
+    if goliath.ship_is_destroyed(shipManager) then
+        goliath.remove_all_turrets(shipManager)
         return
     end
 
-    goliath.synchronize_pairs(
-        shipManager
-    )
+    goliath.synchronize_pairs(shipManager)
 
-    local hostileDefenseTarget =
-        goliath.has_hostile_defense_target(
-            shipManager
-        )
+    local hostileDefenseTarget = goliath.has_hostile_defense_target(shipManager)
 
-    for _, pair in pairs(
-        goliath.get_active_pairs(
-            shipManager
-        )
-    ) do
-        goliath.position_turret_with_crew(
-            pair.crew,
-            pair.drone
-        )
+    for _, pair in pairs(goliath.get_active_pairs(shipManager)) do
+        goliath.position_turret_with_crew(pair.crew, pair.drone)
 
-        local turretPowered =
-            goliath.update_turret_power_from_legs(
-                pair.crew,
-                pair.drone
-            )
+        local turretPowered = goliath.update_turret_power_from_legs(pair.crew, pair.drone)
 
         goliath.get_facing_state(pair.crew)
 
-        if not turretPowered
-            or not hostileDefenseTarget then
+        if not turretPowered or not hostileDefenseTarget then
             pair.drone.bFire = false
         end
     end
 end
 
-script.on_internal_event(
-    Defines.InternalEvents.ON_TICK,
-    function()
-        local playerShip = goliath.get_ship_manager(0)
+script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
+    local playerShip = goliath.get_ship_manager(0)
 
-        if playerShip then
-            update_ship_goliaths(
-                playerShip
-            )
-        else
-            goliath.activePairsByShip[0] = {}
-        end
-
-        local otherShip = goliath.get_ship_manager(1)
-
-        if otherShip then
-            update_ship_goliaths(otherShip)
-        else
-            goliath.activePairsByShip[1] = {}
-        end
+    if playerShip then
+        update_ship_goliaths(playerShip)
+    else
+        goliath.activePairsByShip[0] = {}
     end
-)
 
-script.on_internal_event(
-    Defines.InternalEvents.DRONE_COLLISION,
-    function(
-        defenseDrone,
-        projectile
-    )
-        local shipManager =
-            goliath.get_ship_manager(
-                defenseDrone.currentSpace
-            )
+    local otherShip = goliath.get_ship_manager(1)
 
-        if not shipManager
-            or not goliath.is_live_goliath_turret(
-                defenseDrone,
-                shipManager
-            ) then
-            return Defines.Chain.CONTINUE
-        end
-
-        if projectile
-            and projectile.ownerId
-                == shipManager.iShipId then
-            return Defines.Chain.CONTINUE
-        end
-
-        local turretState = userdata_table(
-            defenseDrone,
-            goliath.TURRET_STATE_KEY
-        )
-
-        if not turretState.managed
-            or turretState.crewId == nil then
-            return Defines.Chain.CONTINUE
-        end
-
-        local crew =
-            goliath.find_active_goliath_by_id(
-                shipManager,
-                turretState.crewId
-            )
-
-        if not crew then
-            return Defines.Chain.CONTINUE
-        end
-
-        crew:DirectModifyHealth(
-            -TURRET_HIT_DAMAGE
-        )
-
-        return Defines.Chain.PREEMPT
+    if otherShip then
+        update_ship_goliaths(otherShip)
+    else
+        goliath.activePairsByShip[1] = {}
     end
-)
+end)
+
+script.on_internal_event(Defines.InternalEvents.DRONE_COLLISION, function(defenseDrone, projectile)
+    local shipManager = goliath.get_ship_manager(defenseDrone.currentSpace)
+
+    if not shipManager or not goliath.is_live_goliath_turret(defenseDrone, shipManager) then
+        return Defines.Chain.CONTINUE
+    end
+
+    if projectile and projectile.ownerId == shipManager.iShipId then
+        return Defines.Chain.CONTINUE
+    end
+
+    local turretState = userdata_table(defenseDrone, goliath.TURRET_STATE_KEY)
+
+    if not turretState.managed or turretState.crewId == nil then
+        return Defines.Chain.CONTINUE
+    end
+
+    local crew = goliath.find_active_goliath_by_id(shipManager, turretState.crewId)
+    if not crew then return Defines.Chain.CONTINUE end
+
+    crew:DirectModifyHealth(-TURRET_HIT_DAMAGE)
+
+    return Defines.Chain.PREEMPT
+end)

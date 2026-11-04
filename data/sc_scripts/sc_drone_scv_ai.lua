@@ -1,31 +1,30 @@
 --[[
 DESCRIPTION: Enemy AI for Terran SCV hull repair.
-        - At 5 hull or less, activates enemy terran_scv LAUNCH_REPAIR power.
+        - At 5 hull or less, activates an available enemy SC_LAUNCH_REPAIR power.
 DEPENDENCIES: Multiverse vter; sc_drone_scv.lua
 ]]
 
 local vter = mods.multiverse.vter
 
-local SCV_RACE = "terran_scv"
-local SCV_REPAIR_POWER = "SC_LAUNCH_REPAIR"
+local REPAIR_POWER = "SC_LAUNCH_REPAIR"
 local ENEMY_HULL_THRESHOLD = 5
 
 local repairUsedBelowThreshold = false
 
-local function is_available_enemy_scv(crew)
+local function is_available_enemy_crew(crew)
     return crew.iShipId == 1
-        and crew:GetSpecies() == SCV_RACE
         and not crew:IsDead()
         and not crew:OutOfGame()
 end
 
-local function try_activate_enemy_scv_repair(enemyShip)
+local function try_activate_enemy_repair(enemyShip)
     for crew in vter(enemyShip.vCrewList) do
-        if is_available_enemy_scv(crew) then
+        if is_available_enemy_crew(crew) then
             for power in vter(crew.extend.crewPowers) do
-                if power.def.name == SCV_REPAIR_POWER
+                if power.def.name == REPAIR_POWER
                     and power.enabled
                     and power:PowerReady() == 1 then
+
                     power:PreparePower()
                     return true
                 end
@@ -40,6 +39,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     if shipManager.iShipId ~= 0 then return end
 
     local enemyShip = Hyperspace.Global.GetInstance():GetShipManager(1)
+
     if not enemyShip then
         repairUsedBelowThreshold = false
         return
@@ -55,7 +55,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
 
     if repairUsedBelowThreshold or currentHull >= hull.second then return end
 
-    if try_activate_enemy_scv_repair(enemyShip) then
+    if try_activate_enemy_repair(enemyShip) then
         repairUsedBelowThreshold = true
     end
 end)

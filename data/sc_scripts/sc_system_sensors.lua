@@ -4,17 +4,14 @@ DESCRIPTION: Grants advanced Sensors abilities based on Sensors power.
         - Reapplies the nebula Sensors penalty when the installed level falls below 4.
         - Reveals cloaked enemy rooms and makes listed invisible crew targetable at effective Sensors level 5 or greater.
         - Allows weapons to charge at their normal rate against cloaked ships at effective Sensors level 5 or greater.
-        - Does not require the Detector augment or an active Comsat.
 DEPENDENCIES: Multiverse vter, Multiverse time_increment, SC_LIST_CREW_INVISIBLE, sc_target
 ]]
 
 local vter = mods.multiverse.vter
 local time_increment = mods.multiverse.time_increment
 
-mods.sc = mods.sc or {}
-mods.sc.sensors = mods.sc.sensors or {}
+local SENSORS_SYSTEM_ID = Hyperspace.ShipSystem.NameToSystemId("sensors")
 
-local sensorsCore = mods.sc.sensors
 local cloakProxies = {}
 local invisibleCrew = {}
 
@@ -22,8 +19,8 @@ for crew in vter(Hyperspace.Blueprints:GetBlueprintList("SC_LIST_CREW_INVISIBLE"
     invisibleCrew[crew] = true
 end
 
-function sensorsCore.can_detect_stealth(ship)
-    local sensors = ship and ship:GetSystem(7)
+local function can_detect_stealth(ship)
+    local sensors = ship and ship:GetSystem(SENSORS_SYSTEM_ID)
 
     return sensors ~= nil
         and sensors:Functioning()
@@ -40,7 +37,7 @@ script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(cr
         return Defines.Chain.CONTINUE, amount, value
     end
 
-    if sensorsCore.can_detect_stealth(Hyperspace.ships(1 - crewShipId)) then
+    if can_detect_stealth(Hyperspace.ships(1 - crewShipId)) then
         value = true
     end
 
@@ -130,7 +127,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
     local shipId = ship.iShipId
     if shipId ~= 0 and shipId ~= 1 then return end
 
-    local sensors = ship:GetSystem(7)
+    local sensors = ship:GetSystem(SENSORS_SYSTEM_ID)
 
     if sensors and Hyperspace.App.world.space.bNebula then
         if sensors.powerState.second >= 4 then
@@ -141,7 +138,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
     end
 
     local enemyShip = Hyperspace.ships(1 - shipId)
-    local detectionActive = sensorsCore.can_detect_stealth(ship)
+    local detectionActive = can_detect_stealth(ship)
 
     update_cloak_targeting_proxy(shipId, enemyShip, detectionActive)
 

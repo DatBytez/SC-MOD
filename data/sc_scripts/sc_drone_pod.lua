@@ -1,22 +1,15 @@
 --[[
-DESCRIPTION: Controls Terran Drop Pod deployment and crew transport.
+DESCRIPTION: Controls Terran Drop Pod deployment and launch eligibility.
         - TERRAN_POD is deployable only when eligible crew are in Drone Control and a hostile target ship is present.
-        - Crew are snapshotted and retired when their projectile launches, then recreated when it reaches the target.
-DEPENDENCIES: sc_crew_copy.lua, Multiverse userdata_table
+        - Launching sends every eligible crew member in Drone Control through the Drop Pod transport system.
+DEPENDENCIES: sc_drone_pod_transport.lua
 ]]
 
-local userdata_table = mods.multiverse.userdata_table
-local crew_copy = mods.sc.crew_copy
-
-mods.sc_drone_pod = mods.sc_drone_pod or {}
-local pod = mods.sc_drone_pod
+local pod = mods.sc.dronePod
 
 local POD_SPECIES = "terran_pod"
-local POD_PROJECTILE_BLUEPRINT = "TERRAN_POD_PROJECTILE"
 local POD_DRONE_BLUEPRINT = "TERRAN_POD"
-
-pod.nextTransportId = pod.nextTransportId or 0
-pod.activeTransports = pod.activeTransports or {}
+local LAUNCH_POWER = "SC_LAUNCH"
 
 local function get_drone_room_id(shipManager)
     local droneSystem = shipManager.droneSystem
@@ -107,74 +100,10 @@ local function update_pod_deployment_guard(shipManager)
     end
 end
 
-local function launch_transport_projectile(payloadCrew, ownerShip, targetShip)
-    local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint(POD_PROJECTILE_BLUEPRINT)
-    if not blueprint then return nil end
-
-    local sourceShipId = payloadCrew.iShipId
-    local targetShipId = targetShip.iShipId
-
-    local sourceSlot = payloadCrew.currentSlot
-    local slotPosition = Hyperspace.ShipGraph
-        .GetShipInfo(sourceShipId)
-        :GetSlotWorldPosition(sourceSlot.slotId, sourceSlot.roomId)
-
-    local sourcePosition = Hyperspace.Pointf(slotPosition.x, slotPosition.y)
-    local targetPosition = targetShip:GetRandomRoomCenter()
-    local heading = sourceShipId == 0 and 0 or 180
-
-    local projectile = Hyperspace.App.world.space:CreateMissile(
-        blueprint,
-        sourcePosition,
-        sourceShipId,
-        sourceShipId,
-        targetPosition,
-        targetShipId,
-        heading
-    )
-
-    if projectile then
-        projectile.damage.crystalShard = true
-    end
-
-    return projectile
-end
-
-local function create_transport_payload(crew)
-    local snapshot = crew_copy.snapshot(crew)
-
-    pod.nextTransportId = pod.nextTransportId + 1
-
-    local payload = {
-        transportId = pod.nextTransportId,
-        snapshot = snapshot
-    }
-
-    pod.activeTransports[payload.transportId] = payload
-    return payload
-end
-
-local function kill_transport_crew(transportId)
-    local payload = pod.activeTransports[transportId]
-
-    pod.activeTransports[transportId] = nil
-
-    local snapshot = payload.snapshot
-    local sourceShip = Hyperspace.Global.GetInstance():GetShipManager(snapshot.currentShipId)
-
-    if not sourceShip or sourceShip.bDestroyed then return end
-
-    local crew = crew_copy.recreate(snapshot, sourceShip, snapshot.roomId)
-
-    if crew then
-        crew:Kill(false)
-    end
-end
-
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, update_pod_deployment_guard)
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
-    if power.def.name ~= "SC_LAUNCH" then return end
+    if power.def.name ~= LAUNCH_POWER then return end
 
     local podCrew = power.crew
     if not podCrew or podCrew:GetSpecies() ~= POD_SPECIES then return end
@@ -192,87 +121,6 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
     if not targetShip then return end
 
     for _, payloadCrew in ipairs(payloadCrews) do
-        local projectile = launch_transport_projectile(payloadCrew, ownerShip, targetShip)
-
-        if projectile then
-            local payload = create_transport_payload(payloadCrew)
-
-            if payload then
-                userdata_table(projectile, "mods.sc.dronePod").transportId = payload.transportId
-
-                if not crew_copy.retire(payloadCrew) then
-                    pod.activeTransports[payload.transportId] = nil
-                end
-            end
-        end
+        pod.launch(payloadCrew, ownerShip, targetShip)
     end
-end)
-
-script.on_internal_event(
-    Defines.InternalEvents.DAMAGE_AREA_HIT, function(shipManager, projectile, location)
-        if not projectile or projectile.extend.name ~= POD_PROJECTILE_BLUEPRINT then
-            return Defines.Chain.CONTINUE
-        end
-
-        local transportId = userdata_table(projectile, "mods.sc.dronePod").transportId
-        local payload = transportId and pod.activeTransports[transportId] or nil
-
-        if not payload then return Defines.Chain.CONTINUE end
-
-        local roomId = Hyperspace.ShipGraph
-            .GetShipInfo(shipManager.iShipId)
-            :GetSelectedRoom(location.x, location.y, true)
-
-        if roomId < 0 then
-            return Defines.Chain.CONTINUE
-        end
-
-        if crew_copy.recreate(payload.snapshot, shipManager, roomId) then
-            pod.activeTransports[transportId] = nil
-        end
-
-        return Defines.Chain.CONTINUE
-    end
-)
-
-script.on_internal_event(
-    Defines.InternalEvents.PROJECTILE_UPDATE_POST,
-    function(projectile)
-        if projectile.extend.name ~= POD_PROJECTILE_BLUEPRINT then
-            return Defines.Chain.CONTINUE
-        end
-
-        local transportId = userdata_table(projectile, "mods.sc.dronePod").transportId
-
-        if transportId
-            and pod.activeTransports[transportId]
-            and projectile:Dead() then
-
-            kill_transport_crew(transportId)
-        end
-
-        return Defines.Chain.CONTINUE
-    end
-)
-
---script.on_internal_event(
---    Defines.InternalEvents.DRONE_COLLISION,
---   function(drone, projectile, damage, response)
---        if not projectile
---            or projectile.extend.name ~= POD_PROJECTILE_BLUEPRINT then
---            return Defines.Chain.CONTINUE
---        end
-
---        if drone:GetOwnerId() ~= 1 - projectile.ownerId then
---            return Defines.Chain.CONTINUE
---        end
-
---        response.collision_type = 0
-
---        return Defines.Chain.PREEMPT
---    end
---)
-
-script.on_internal_event(Defines.InternalEvents.JUMP_LEAVE, function()
-    pod.activeTransports = {}
 end)

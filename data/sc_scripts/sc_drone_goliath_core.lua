@@ -24,11 +24,10 @@ goliath.TURRET_STATE_KEY = "mods.sc.goliathTurretCompanion"
 local FOLLOW_OFFSET_X = 3
 local FOLLOW_OFFSET_Y = 0
 
-goliath.activePairsByShip =
-    goliath.activePairsByShip or {
-        [0] = {},
-        [1] = {}
-    }
+goliath.activePairsByShip = goliath.activePairsByShip or {
+    [0] = {},
+    [1] = {}
+}
 
 function goliath.get_ship_manager(shipId)
     if shipId == 0 then
@@ -41,18 +40,11 @@ function goliath.get_ship_manager(shipId)
 end
 
 function goliath.get_active_pairs(shipManager)
-    return goliath.activePairsByShip[
-        shipManager.iShipId
-    ]
+    return goliath.activePairsByShip[shipManager.iShipId]
 end
 
-function goliath.set_active_pairs(
-    shipManager,
-    pairs
-)
-    goliath.activePairsByShip[
-        shipManager.iShipId
-    ] = pairs
+function goliath.set_active_pairs(shipManager, pairs)
+    goliath.activePairsByShip[shipManager.iShipId] = pairs
 end
 
 function goliath.error_print(message)
@@ -94,26 +86,13 @@ local function crew_direction_angle(direction)
 end
 
 function goliath.get_facing_state(crew)
-    local state = userdata_table(
-        crew,
-        goliath.CREW_STATE_KEY
-    )
-
-    state.idleAngle =
-        crew_direction_angle(
-            crew.crewAnim.direction
-        )
-
+    local state = userdata_table(crew, goliath.CREW_STATE_KEY)
+    state.idleAngle = crew_direction_angle(crew.crewAnim.direction)
     return state
 end
 
-function goliath.set_cached_image_rotation(
-    cachedImage,
-    angle
-)
-    if not cachedImage then
-        return
-    end
+function goliath.set_cached_image_rotation(cachedImage, angle)
+    if not cachedImage then return end
 
     -- Newly created native drone images can briefly exist as invalid SWIG
     -- userdata. Ignore that single frame instead of aborting turret creation.
@@ -123,14 +102,9 @@ function goliath.set_cached_image_rotation(
     end)
 end
 
-function goliath.has_hostile_defense_target(
-    shipManager
-)
+function goliath.has_hostile_defense_target(shipManager)
     local spaceManager = Hyperspace.App.world.space
-
-    if not spaceManager then
-        return false
-    end
+    if not spaceManager then return false end
 
     local shipId = shipManager.iShipId
 
@@ -158,22 +132,16 @@ end
 
 local function legs_are_operational(crew)
     -- Functional() follows the actual TERRAN_GOLIATH device power state.
-    return crew:Functional()
-        and crew.fStunTime <= 0
+    return crew:Functional() and crew.fStunTime <= 0
 end
 
-function goliath.update_turret_power_from_legs(
-    crew,
-    defenseDrone
-)
-    local shouldBePowered =
-        legs_are_operational(crew)
+function goliath.update_turret_power_from_legs(crew, defenseDrone)
+    local shouldBePowered = legs_are_operational(crew)
 
     if shouldBePowered then
         defenseDrone.powerRequired = 0
         defenseDrone:SetDeployed(true)
         defenseDrone:SetPowered(true)
-
         defenseDrone:SetInstantPowered()
         defenseDrone.powered = true
     else
@@ -185,31 +153,20 @@ function goliath.update_turret_power_from_legs(
     return shouldBePowered
 end
 
-function goliath.position_turret_with_crew(
-    crew,
-    defenseDrone
-)
+function goliath.position_turret_with_crew(crew, defenseDrone)
     local crewPosition = crew:GetLocation()
-
     local followPosition = Hyperspace.Pointf(
         crewPosition.x + FOLLOW_OFFSET_X,
         crewPosition.y + FOLLOW_OFFSET_Y
     )
 
     defenseDrone:SetCurrentLocation(followPosition)
-
-    defenseDrone.destinationLocation = Hyperspace.Pointf(
-        followPosition.x,
-        followPosition.y
-    )
-
+    defenseDrone.destinationLocation = Hyperspace.Pointf(followPosition.x, followPosition.y)
     defenseDrone.speedVector = Hyperspace.Pointf(0, 0)
 end
 
 function goliath.ship_is_destroyed(shipManager)
-    if shipManager.bDestroyed then
-        return true
-    end
+    if shipManager.bDestroyed then return true end
 
     local success, hullDestroyed = pcall(function()
         return shipManager.ship

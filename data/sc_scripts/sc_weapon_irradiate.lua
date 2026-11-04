@@ -3,21 +3,22 @@ DESCRIPTION: Applies additional Irradiate effects to each newly struck beam tile
         - Hits apply bonus erosion and crew damage effects from hidden blueprints.
         - Crew struck by Irradiate periodically apply additional erosion to their current room.
 TAG: <sc-irradiate/>
-DEPENDENCIES: sc_tag.lua, Multiverse userdata_table
+DEPENDENCIES: sc_tag.lua, sc_helpers.lua, Multiverse userdata_table
 ]]
 
+local helpers = mods.sc.helpers
 local userdata_table = mods.multiverse.userdata_table
 local irradiateWeapons = {}
 
 mods.sc.tag.register("weapon", "sc-irradiate", irradiateWeapons)
 
+local excludedDrones = helpers.blueprint_list_to_set("SC_LIST_CREW_DRONES")
+
 local IRRADIATE_DURATION = 25
 local EROSION_PULSE_INTERVAL = 1
 
 local function get_tile_center(shipId, location)
-    if Hyperspace.ShipGraph.GetShipInfo(shipId):GetSelectedRoom(location.x, location.y, true) == -1 then
-        return nil
-    end
+    if Hyperspace.ShipGraph.GetShipInfo(shipId):GetSelectedRoom(location.x, location.y, true) == -1 then return nil end
 
     return Hyperspace.Pointf(
         math.floor(location.x / 35) * 35 + 17.5,
@@ -30,18 +31,13 @@ local function get_irradiate_blueprint_name(projectile, damage)
     if damage.iDamage <= 0 then return nil end
 
     local level = math.min(math.floor(damage.iDamage), 5)
-
     return "TERRAN_IRRADIATE_EROSION_" .. level
 end
 
 local function get_irradiate_level(projectile)
     if not projectile or not projectile.extend then return nil end
 
-    local level =
-        projectile.extend.name:match(
-            "^TERRAN_IRRADIATE_EROSION_(%d+)$"
-        )
-
+    local level = projectile.extend.name:match("^TERRAN_IRRADIATE_EROSION_(%d+)$")
     return level and tonumber(level)
 end
 
@@ -52,15 +48,7 @@ local function spawn_irradiate_impact(shipManager, projectile, location, bluepri
     local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint(blueprintName)
     local spaceManager = Hyperspace.Global.GetInstance():GetCApp().world.space
 
-    spaceManager:CreateLaserBlast(
-        blueprint,
-        target,
-        shipManager.iShipId,
-        projectile.ownerId,
-        target,
-        shipManager.iShipId,
-        0
-    )
+    spaceManager:CreateLaserBlast(blueprint, target, shipManager.iShipId, projectile.ownerId, target, shipManager.iShipId, 0)
 end
 
 local function spawn_erosion_pulse(crew, data)
@@ -68,23 +56,10 @@ local function spawn_erosion_pulse(crew, data)
     if not shipManager or crew.iRoomId < 0 then return end
 
     local target = shipManager:GetRoomCenter(crew.iRoomId)
-
-    local blueprint =
-        Hyperspace.Blueprints:GetWeaponBlueprint(
-            "TERRAN_IRRADIATE_EROSION_PULSE_" .. data.level
-        )
-
+    local blueprint = Hyperspace.Blueprints:GetWeaponBlueprint("TERRAN_IRRADIATE_EROSION_PULSE_" .. data.level)
     local spaceManager = Hyperspace.Global.GetInstance():GetCApp().world.space
 
-    spaceManager:CreateLaserBlast(
-        blueprint,
-        target,
-        shipManager.iShipId,
-        data.ownerId,
-        target,
-        shipManager.iShipId,
-        0
-    )
+    spaceManager:CreateLaserBlast(blueprint, target, shipManager.iShipId, data.ownerId, target, shipManager.iShipId, 0)
 end
 
 script.on_internal_event(Defines.InternalEvents.DAMAGE_BEAM, function(shipManager, projectile, location, damage, _realNewTile, beamHitType)
@@ -95,12 +70,7 @@ script.on_internal_event(Defines.InternalEvents.DAMAGE_BEAM, function(shipManage
     local blueprintName = get_irradiate_blueprint_name(projectile, damage)
 
     if blueprintName then
-        spawn_irradiate_impact(
-            shipManager,
-            projectile,
-            location,
-            blueprintName
-        )
+        spawn_irradiate_impact(shipManager, projectile, location, blueprintName)
     end
 
     return Defines.Chain.CONTINUE, beamHitType
@@ -118,20 +88,12 @@ script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA_HIT, function(shipMa
 
         if not crew.bDead
             and crew.currentShipId == shipManager.iShipId
-            and crew:GetSpecies() ~= "terran_scv"
+            and not excludedDrones[crew:GetSpecies()]
             and crew:ContainsPoint(x, y) then
 
-            local data =
-                userdata_table(
-                    crew,
-                    "mods.sc.irradiate"
-                )
+            local data = userdata_table(crew, "mods.sc.irradiate")
 
-            data.level = math.max(
-                data.level or 0,
-                level
-            )
-
+            data.level = math.max(data.level or 0, level)
             data.duration = IRRADIATE_DURATION
             data.pulseTimer = EROSION_PULSE_INTERVAL
             data.ownerId = projectile.ownerId
@@ -140,18 +102,10 @@ script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA_HIT, function(shipMa
 end)
 
 script.on_internal_event(Defines.InternalEvents.CREW_LOOP, function(crew)
-    local data =
-        userdata_table(
-            crew,
-            "mods.sc.irradiate"
-        )
-
+    local data = userdata_table(crew, "mods.sc.irradiate")
     if not data.duration then return end
 
-    if crew.bDead
-        or crew.currentShipId < 0
-        or crew.iRoomId < 0 then
-
+    if crew.bDead or crew.currentShipId < 0 or crew.iRoomId < 0 then
         data.level = nil
         data.duration = nil
         data.pulseTimer = nil
@@ -159,11 +113,8 @@ script.on_internal_event(Defines.InternalEvents.CREW_LOOP, function(crew)
         return
     end
 
-    local frameTime =
-        Hyperspace.FPS.SpeedFactor / 16
-
-    data.duration =
-        data.duration - frameTime
+    local frameTime = Hyperspace.FPS.SpeedFactor / 16
+    data.duration = data.duration - frameTime
 
     if data.duration <= 0 then
         data.level = nil
@@ -173,13 +124,10 @@ script.on_internal_event(Defines.InternalEvents.CREW_LOOP, function(crew)
         return
     end
 
-    data.pulseTimer =
-        data.pulseTimer - frameTime
+    data.pulseTimer = data.pulseTimer - frameTime
 
     if data.pulseTimer <= 0 then
         spawn_erosion_pulse(crew, data)
-
-        data.pulseTimer =
-            data.pulseTimer + EROSION_PULSE_INTERVAL
+        data.pulseTimer = data.pulseTimer + EROSION_PULSE_INTERVAL
     end
 end)

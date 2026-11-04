@@ -1,7 +1,7 @@
 --[[
-DESCRIPTION: Extends shootTimer and punchTimer to work inside crew powers <temporaryEffect>
+DESCRIPTION: Extends shootTimer and punchTimer to work inside crew power <temporaryEffect> definitions.
 TAGS: <shootTimer min="#" max="#"/>, <punchTimer min="#" max="#"/>
-DEPENDENCIES: sc_tag.lua, Multiverse userdata_table, tag-data-read.lua.
+DEPENDENCIES: Multiverse crewTagParsers, Multiverse userdata_table; must load before tag-data-read.lua
 ]]
 
 local userdata_table = mods.multiverse.userdata_table

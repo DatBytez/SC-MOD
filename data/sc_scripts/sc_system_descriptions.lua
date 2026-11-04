@@ -1,8 +1,13 @@
+--[[
+DESCRIPTION: Provides custom system upgrade level descriptions.
+        - Adds descriptions for extended Sensors levels.
+        - Adds Yamato-specific Artillery descriptions when the player has the Yamato Cannon.
+DEPENDENCIES: Multiverse vter
+]]
+
 mods.sc = mods.sc or {}
 
 local vter = mods.multiverse.vter
-
--- Sensors Level Descriptions
 
 local SENSORS_ID = Hyperspace.ShipSystem.NameToSystemId("sensors")
 
@@ -11,7 +16,7 @@ local SENSOR_LEVEL_TEXT_IDS = {
     [6] = "tooltip_sc_sensors_level_6"
 }
 
-local function get_sc_level_description(systemId, level, tooltip)
+local function get_sc_level_description(systemId, level, _tooltip)
     if systemId ~= SENSORS_ID then return end
 
     local textId = SENSOR_LEVEL_TEXT_IDS[level]
@@ -20,12 +25,7 @@ local function get_sc_level_description(systemId, level, tooltip)
     return Hyperspace.Text:GetText(textId)
 end
 
-script.on_internal_event(
-    Defines.InternalEvents.GET_LEVEL_DESCRIPTION,
-    get_sc_level_description
-)
-
--- Yamato Artillery Level Descriptions
+script.on_internal_event(Defines.InternalEvents.GET_LEVEL_DESCRIPTION, get_sc_level_description)
 
 local YAMATO_WEAPON = "ARTILLERY_YAMATO_LASER"
 local ARTILLERY_ID = Hyperspace.ShipSystem.NameToSystemId("artillery")
@@ -63,7 +63,4 @@ local function get_yamato_artillery_description(systemId, level, _tooltip)
     return Hyperspace.Text:GetText(textId)
 end
 
-script.on_internal_event(
-    Defines.InternalEvents.GET_LEVEL_DESCRIPTION,
-    get_yamato_artillery_description
-)
+script.on_internal_event(Defines.InternalEvents.GET_LEVEL_DESCRIPTION, get_yamato_artillery_description)

@@ -1,7 +1,7 @@
 --[[
 DESCRIPTION: Tagged augments modify ship dodge based on effective Engines power.
 TAG: <sc-dodge value="#"/>
-DEPENDENCIES: sc_tag.lua
+DEPENDENCIES: sc_tag.lua, sc_helpers.lua
 ]]
 
 mods.sc = mods.sc or {}
@@ -16,14 +16,10 @@ local PILOT_SYSTEM_ID = Hyperspace.ShipSystem.NameToSystemId("pilot")
 
 local ENGINE_DODGE_BY_LEVEL = {5, 10, 15, 20, 25, 28, 31, 35}
 
+local helpers = mods.sc.helpers
+
 local function get_sc_dodge_amount(ship)
-    local total = 0
-
-    for augName, value in pairs(dodgeAugments) do
-        total = total + value * ship:HasAugmentation(augName)
-    end
-
-    return total
+    return helpers.get_augment_value_total(ship, dodgeAugments)
 end
 
 local function piloting_allows_positive_dodge(ship)

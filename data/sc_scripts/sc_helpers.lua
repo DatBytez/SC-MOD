@@ -1,3 +1,11 @@
+--[[
+DESCRIPTION: Shared utility functions used by multiple SC scripts.
+        - Checks ships for tagged augments.
+        - Totals numeric values from tagged augments.
+        - Converts blueprint lists into lookup sets.
+DEPENDENCIES: Multiverse vter
+]]
+
 mods.sc = mods.sc or {}
 mods.sc.helpers = mods.sc.helpers or {}
 
@@ -30,20 +38,6 @@ function helpers.get_augment_value_total(ship, augments)
     end
 
     return total
-end
-
-function helpers.ship_has_drone_matching(ship, predicate)
-    if not ship or not ship.droneSystem or not ship.droneSystem.drones then
-        return false
-    end
-
-    for drone in vter(ship.droneSystem.drones) do
-        if predicate(drone) then
-            return true
-        end
-    end
-
-    return false
 end
 
 function helpers.blueprint_list_to_set(listName)
