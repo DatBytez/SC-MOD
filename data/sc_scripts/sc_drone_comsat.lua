@@ -7,7 +7,6 @@ DEPENDENCIES: sc_tag.lua
 ]]
 
 local vter = mods.multiverse.vter
-local helpers = mods.sc.helpers
 
 mods.sc.comsat = mods.sc.comsat or {}
 local comsat = mods.sc.comsat
