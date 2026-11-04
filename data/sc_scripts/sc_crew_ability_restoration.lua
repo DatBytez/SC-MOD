@@ -1,9 +1,25 @@
 --[[
 DESCRIPTION: Implements the Terran Restoration ability.
-        - Removes stun, mind control, silence and erosion from the user's room.
+        - Removes stun, mind control, silence, and erosion from the user's room.
+        - Silence remains suppressed until the original silence effect expires.
 ]]
 
+local RESTORATION_POWER = "SC_RESTORATION"
 local cleansedSilence = {}
+
+local function cleanse_crew(crew)
+    crew.fStunTime = 0
+
+    if crew.bMindControlled then
+        crew:SetMindControl(false)
+    end
+
+    local _, silenced = crew.extend:CalculateStat(Hyperspace.CrewStat.SILENCED)
+
+    if silenced then
+        cleansedSilence[crew.extend.selfId] = true
+    end
+end
 
 script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(crew, stat, _def, amount, value)
     if stat == Hyperspace.CrewStat.SILENCED and cleansedSilence[crew.extend.selfId] then
@@ -18,7 +34,7 @@ script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(cr
 end)
 
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, ship)
-    if power.def.name ~= "SC_RESTORATION" then
+    if power.def.name ~= RESTORATION_POWER then
         return Defines.Chain.CONTINUE
     end
 
@@ -29,17 +45,7 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, 
             and crew.iRoomId == power.powerRoom
             and crew.iShipId == power.crew.iShipId then
 
-            crew.fStunTime = 0
-
-            if crew.bMindControlled then
-                crew:SetMindControl(false)
-            end
-
-            local _, silenced = crew.extend:CalculateStat(Hyperspace.CrewStat.SILENCED)
-
-            if silenced then
-                cleansedSilence[crew.extend.selfId] = true
-            end
+            cleanse_crew(crew)
         end
     end
 

@@ -10,6 +10,8 @@ mods.sc.crew_copy = mods.sc.crew_copy or {}
 
 local crew_copy = mods.sc.crew_copy
 
+local SKILL_COUNT = 6
+
 local function snapshot_crew_powers(crew)
     local snapshots = {}
     local powers = crew.extend and crew.extend.crewPowers
@@ -45,9 +47,7 @@ local function find_matching_power(crew, savedPower)
     local powers = crew.extend and crew.extend.crewPowers
     if not powers then return nil end
 
-    if savedPower.index ~= nil
-        and savedPower.index < powers:size() then
-
+    if savedPower.index ~= nil and savedPower.index < powers:size() then
         local indexedPower = powers[savedPower.index]
 
         if indexedPower then
@@ -90,10 +90,7 @@ local function restore_crew_powers(crew, savedPowers)
                     local newChargesTotal = power.powerCharges.second
 
                     if newChargesTotal ~= nil and newChargesTotal >= 0 then
-                        power.powerCharges.first = math.max(
-                            0,
-                            math.min(savedPower.chargesCurrent, newChargesTotal)
-                        )
+                        power.powerCharges.first = math.max(0, math.min(savedPower.chargesCurrent, newChargesTotal))
                     else
                         power.powerCharges.first = savedPower.chargesCurrent
                     end
@@ -147,9 +144,7 @@ local function restore_crew_appearance(crew, appearance)
             crew.crewAnim.layerColors:clear()
 
             for _, color in ipairs(appearance.layerColors) do
-                crew.crewAnim.layerColors:push_back(
-                    Graphics.GL_Color(color.r, color.g, color.b, color.a)
-                )
+                crew.crewAnim.layerColors:push_back(Graphics.GL_Color(color.r, color.g, color.b, color.a))
             end
         end
     end)
@@ -157,15 +152,12 @@ end
 
 local function snapshot_crew_skills(crew)
     local skills = {}
-    local skillLevels = crew.blueprint and crew.blueprint.skillLevel
-
-    if not skillLevels then return skills end
 
     pcall(function()
-        for skillId = 0, math.min(6, skillLevels:size()) - 1 do
+        for skillId = 0, SKILL_COUNT - 1 do
             skills[#skills + 1] = {
                 id = skillId,
-                progress = skillLevels[skillId].first
+                progress = crew:GetSkillProgress(skillId)
             }
         end
     end)
@@ -185,6 +177,7 @@ function crew_copy.snapshot(crew)
     if not crew then return nil end
 
     local male = nil
+
     if crew.blueprint then
         male = crew.blueprint.male
     end

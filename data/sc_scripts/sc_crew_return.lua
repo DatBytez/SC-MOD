@@ -1,6 +1,5 @@
 --[[
 DESCRIPTION: Returns player-owned crew from the enemy ship whenever that ship is non-hostile.
-        - Returns crew to a random room containing an exterior airlock when possible.
 DEPENDENCIES: sc_crew_copy.lua
 ]]
 
@@ -64,10 +63,12 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
         end
     end
 
+    if #returningCrew == 0 then return end
+
     local airlockRoomIds = get_airlock_room_ids(shipManager)
 
     for _, crew in ipairs(returningCrew) do
-        local roomId = nil
+        local roomId
 
         if #airlockRoomIds > 0 then
             roomId = airlockRoomIds[math.random(#airlockRoomIds)]
@@ -75,6 +76,6 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
             roomId = get_random_room_id(shipManager)
         end
 
-            crew_copy.move(crew, shipManager, roomId)
+        crew_copy.move(crew, shipManager, roomId)
     end
 end)
