@@ -21,7 +21,6 @@ local TURRET_OFFSET_Y = -26
 local TURRET_ROTATION_OFFSET = 90
 
 local turretPrimitive = nil
-local lastRenderError = nil
 
 local function get_turret_primitive()
     if not turretPrimitive then
@@ -89,18 +88,13 @@ local function force_native_idle_facing(shipManager, crew, defenseDrone)
 end
 
 local function apply_all_native_facing(shipManager)
-    local success, errorMessage = pcall(function()
+    pcall(function()
         if not shipManager or goliath.ship_is_destroyed(shipManager) then return end
 
         for _, pair in pairs(goliath.get_active_pairs(shipManager)) do
             force_native_idle_facing(shipManager, pair.crew, pair.drone)
         end
     end)
-
-    if not success and errorMessage ~= lastRenderError then
-        lastRenderError = errorMessage
-        goliath.error_print("Render error: " .. tostring(errorMessage))
-    end
 end
 
 script.on_render_event(

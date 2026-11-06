@@ -51,13 +51,50 @@ local function reset_pair_cooldowns_on_initial_pair(pairData)
     reset_weapon_cooldown(pairData.secondaryWeapon)
 end
 
+local function try_get_field(object, fieldName)
+    local ok, value = pcall(function()
+        return object[fieldName]
+    end)
+
+    if not ok then return nil end
+
+    return value
+end
+
+local function try_set_field(object, fieldName, value)
+    local ok = pcall(function()
+        object[fieldName] = value
+    end)
+
+    return ok
+end
+
+local SECONDARY_POWER_FIELD_CANDIDATES = {
+    "powerRequired",
+    "requiredPower",
+    "iRequiredPower",
+    "powerRequirement",
+    "iPowerRequired"
+}
+
 local function set_secondary_power_requirement_zero(secondaryWeapon)
     local data = paired.get_state(secondaryWeapon)
 
-    if data.originalRequiredPower == nil then data.originalRequiredPower = secondaryWeapon.requiredPower end
     if data.originalPowered == nil then data.originalPowered = secondaryWeapon.powered end
 
-    secondaryWeapon.requiredPower = 0
+    data.modifiedFields = data.modifiedFields or {}
+
+    for _, fieldName in ipairs(SECONDARY_POWER_FIELD_CANDIDATES) do
+        local currentValue = try_get_field(secondaryWeapon, fieldName)
+
+        if type(currentValue) == "number" then
+            if data.modifiedFields[fieldName] == nil then
+                data.modifiedFields[fieldName] = currentValue
+            end
+
+            try_set_field(secondaryWeapon, fieldName, 0)
+        end
+    end
 end
 
 local function set_secondary_missile_spend_zero(secondaryWeapon)
@@ -79,13 +116,7 @@ local function set_secondary_to_paired_blueprint(secondaryWeapon)
 
     local pairedBlueprint = Hyperspace.Blueprints:GetWeaponBlueprint(paired.GENERIC_SECONDARY_BLUEPRINT)
 
-    if not pairedBlueprint then
-        if not data.missingPairedBlueprintPrinted then
-            print("SC PAIRED WARNING | Missing generic paired secondary blueprint: " .. paired.GENERIC_SECONDARY_BLUEPRINT)
-            data.missingPairedBlueprintPrinted = true
-        end
-        return
-    end
+    if not pairedBlueprint then return end
 
     secondaryWeapon.blueprint = pairedBlueprint
 end
@@ -95,13 +126,12 @@ local function restore_secondary_blueprint(weapon, data)
 
     data.originalBlueprint = nil
     data.originalBlueprintName = nil
-    data.missingPairedBlueprintPrinted = nil
 end
 
 local function weapon_has_active_pair_restore_state(data)
     return data.isPaired == true
         or data.originalBlueprint ~= nil
-        or data.originalRequiredPower ~= nil
+        or data.modifiedFields ~= nil
         or data.originalPowered ~= nil
         or data.originalMissileSpend ~= nil
         or data.pairSignature ~= nil
@@ -113,7 +143,12 @@ local function restore_secondary_state(weapon)
     local data = paired.get_state(weapon)
     if not weapon_has_active_pair_restore_state(data) then return end
 
-    if data.originalRequiredPower ~= nil then weapon.requiredPower = data.originalRequiredPower end
+    if data.modifiedFields then
+        for fieldName, originalValue in pairs(data.modifiedFields) do
+            try_set_field(weapon, fieldName, originalValue)
+        end
+    end
+
     if data.originalMissileSpend ~= nil then weapon.iSpendMissile = data.originalMissileSpend end
 
     restore_secondary_blueprint(weapon, data)
@@ -122,7 +157,7 @@ local function restore_secondary_state(weapon)
 
     reset_stored_pair_cooldowns(data, weapon)
 
-    data.originalRequiredPower = nil
+    data.modifiedFields = nil
     data.originalPowered = nil
     data.originalMissileSpend = nil
     data.isPaired = false

@@ -1,43 +1,37 @@
 --[[
 DESCRIPTION: Increases systems maximum based on augment upgrades.
         - Allows temporary Comsat Sensors levels without enforcing the normal Sensors cap.
-        - Handles multiple artillery system instances? Untested.
+        - Applies upgrades to all artillery system instances.
 TAG: <sc-upgrade system="SYSTEM_NAME" value="#"/>
-DEPENDENCIES: sc_tag.lua, Multiverse vter
+DEPENDENCIES: sc_tag.lua, sc_helpers.lua, Multiverse vter
 ]]
 
 local vter = mods.multiverse.vter
+local helpers = mods.sc.helpers
 local augmentUpgrades = {}
 
-local ARTILLERY_ID = Hyperspace.ShipSystem.NameToSystemId("artillery")
-
 local SYSTEMS = {
-    shields = {systemId = 0, baseCap = 16},
-    engines = {systemId = 1, baseCap = 8},
-    oxygen = {systemId = 2, baseCap = 3},
-    weapons = {systemId = 3, baseCap = 8},
-    drones = {systemId = 4, baseCap = 15},
-    medbay = {systemId = 5, baseCap = 3},
-    pilot = {systemId = 6, baseCap = 3},
-    sensors = {systemId = 7, baseCap = 3},
-    doors = {systemId = 8, baseCap = 3},
-    teleporter = {systemId = 9, baseCap = 4},
-    cloaking = {systemId = 10, baseCap = 2},
-    artillery = {systemId = ARTILLERY_ID, baseCap = 5},
-    battery = {systemId = 12, baseCap = 2},
-    clonebay = {systemId = 13, baseCap = 3},
-    mind = {systemId = 14, baseCap = 3},
-    hacking = {systemId = 15, baseCap = 3},
-    temporal = {systemId = 20, baseCap = 3},
+    shields = {baseCap = 16},
+    engines = {baseCap = 8},
+    oxygen = {baseCap = 3},
+    weapons = {baseCap = 8},
+    drones = {baseCap = 15},
+    medbay = {baseCap = 3},
+    pilot = {baseCap = 3},
+    sensors = {baseCap = 3},
+    doors = {baseCap = 3},
+    teleporter = {baseCap = 4},
+    cloaking = {baseCap = 2},
+    artillery = {baseCap = 5},
+    battery = {baseCap = 2},
+    clonebay = {baseCap = 3},
+    mind = {baseCap = 3},
+    hacking = {baseCap = 3},
+    temporal = {baseCap = 3},
     lily_system_bracers = {baseCap = 3}
 }
 
 mods.sc.tag.register("augment", "sc-upgrade", augmentUpgrades, "system")
-
-local function system_id_from_name(systemName)
-    local systemId = Hyperspace.ShipSystem.NameToSystemId(systemName)
-    return systemId >= 0 and systemId or nil
-end
 
 local function get_active_upgrade_bonus(ship, systemName)
     local bonus = 0
@@ -79,7 +73,7 @@ local function apply_effective_max(ship, systemName, systemData)
         effectiveMax = effectiveMax + mods.sc.comsat.get_temporary_sensor_cap_bonus(ship)
     end
 
-    if systemData.systemId == ARTILLERY_ID and ship.artillerySystems then
+    if systemName == "artillery" and ship.artillerySystems then
         local foundArtillery = false
 
         for system in vter(ship.artillerySystems) do
@@ -90,7 +84,7 @@ local function apply_effective_max(ship, systemName, systemData)
         if foundArtillery then return end
     end
 
-    local systemId = systemData.systemId or system_id_from_name(systemName)
+    local systemId = helpers.system_id_from_name(systemName)
 
     if systemId and ship:HasSystem(systemId) then
         apply_max_to_system(ship:GetSystem(systemId), effectiveMax)

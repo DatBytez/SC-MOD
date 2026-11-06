@@ -69,7 +69,6 @@ local function spawn_companion_turret(shipManager, crew)
     local droneBlueprint = Hyperspace.Blueprints:GetDroneBlueprint(goliath.FOLLOW_DRONE_BLUEPRINT)
 
     if not droneBlueprint then
-        goliath.error_print("Could not find drone blueprint " .. goliath.FOLLOW_DRONE_BLUEPRINT .. ".")
         return nil
     end
 
@@ -102,7 +101,6 @@ local function spawn_companion_turret(shipManager, crew)
     end)
 
     if not success then
-        goliath.error_print("Failed to summon " .. goliath.FOLLOW_DRONE_BLUEPRINT .. ": " .. tostring(defenseDrone))
         return nil
     end
 

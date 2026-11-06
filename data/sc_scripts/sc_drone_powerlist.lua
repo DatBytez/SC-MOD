@@ -71,15 +71,9 @@ end
 
 script.on_init(function()
     local ok, list = pcall(get_associations)
-    if not ok then
-        print("[Drone PowerList] Unable to read hyperspace.xml: " .. tostring(list))
-        return
-    end
+    if not ok then return end
 
     for droneName, crewName in pairs(list) do
-        local succeeded, err = pcall(update_blueprint, droneName, crewName)
-        if not succeeded then
-            print("[Drone PowerList] " .. droneName .. ": " .. tostring(err))
-        end
+        pcall(update_blueprint, droneName, crewName)
     end
 end)

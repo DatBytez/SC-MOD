@@ -47,10 +47,6 @@ function goliath.set_active_pairs(shipManager, pairs)
     goliath.activePairsByShip[shipManager.iShipId] = pairs
 end
 
-function goliath.error_print(message)
-    print("[GOLIATH ERROR] " .. tostring(message))
-end
-
 function goliath.is_active_goliath(crew, shipManager)
     return crew.type == goliath.FOLLOW_CREW_TYPE
         and not crew.bDead
