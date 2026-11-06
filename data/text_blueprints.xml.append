@@ -428,3 +428,12 @@ DETECTOR: Projectiles +2.5% accuracy per active Sensor power. Missiles gain doub
 <text name="tooltip_sc_yamato_artillery_level_3">Damage x4 — 25 sec cooldown</text>
 <text name="tooltip_sc_yamato_artillery_level_4">Damage x5 — 25 sec cooldown</text>
 <text name="tooltip_sc_yamato_artillery_level_5">Damage x6 — 25 sec cooldown</text>
+
+<!-- SC SYSTEM LEVEL DESCRIPTIONS -->
+<text name="tooltip_sc_dodge_level">Dodge: \1 / FTL: \2x</text>
+<text name="tooltip_sc_cloak_level">Cloaking Duration: \1 seconds</text>
+
+<!-- SC CHAINSTEP -->
+<text name="stat_sc_chainstep_missile_cost">Missile cost: \1</text>
+<text name="stat_sc_chainstep_missile_cost_range">Missile cost: \1 - \2</text>
+<text name="stat_sc_chainstep_missile_cost_per_step">Missile cost per step: \1</text>

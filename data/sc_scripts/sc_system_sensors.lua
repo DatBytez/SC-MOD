@@ -4,20 +4,17 @@ DESCRIPTION: Grants advanced Sensors abilities based on Sensors power.
         - Reapplies the nebula Sensors penalty when the installed level falls below 4.
         - Reveals cloaked enemy rooms and makes listed invisible crew targetable at effective Sensors level 5 or greater.
         - Allows weapons to charge at their normal rate against cloaked ships at effective Sensors level 5 or greater.
-DEPENDENCIES: Multiverse vter, Multiverse time_increment, SC_LIST_CREW_INVISIBLE, sc_target
+DEPENDENCIES: sc_helpers.lua, Multiverse vter, Multiverse time_increment, SC_LIST_CREW_INVISIBLE, sc_target
 ]]
 
+local helpers = mods.sc.helpers
 local vter = mods.multiverse.vter
 local time_increment = mods.multiverse.time_increment
 
 local SENSORS_SYSTEM_ID = Hyperspace.ShipSystem.NameToSystemId("sensors")
 
 local cloakProxies = {}
-local invisibleCrew = {}
-
-for crew in vter(Hyperspace.Blueprints:GetBlueprintList("SC_LIST_CREW_INVISIBLE")) do
-    invisibleCrew[crew] = true
-end
+local invisibleCrew = helpers.blueprint_list_to_set("SC_LIST_CREW_INVISIBLE")
 
 local function can_detect_stealth(ship)
     local sensors = ship and ship:GetSystem(SENSORS_SYSTEM_ID)

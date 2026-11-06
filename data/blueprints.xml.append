@@ -429,7 +429,7 @@ END OF SUBSYSTEMS
 	<stackable>false</stackable>
 	<sc-armor/>
 	<sc-dodge value="2"/>
-	<sc-strafe value="engines"/>
+	<sc-strafe value="pilot"/>
 </augBlueprint>
 
 <augBlueprint name="TERRAN_SHIP_ARMOR_MEDIUM">

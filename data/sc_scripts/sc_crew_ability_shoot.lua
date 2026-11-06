@@ -1,11 +1,12 @@
 --[[
 DESCRIPTION: Implements reusable targeted projectile crew abilities.
 TAG: <sc-shoot projectile="WEAPON_BLUEPRINT"/>
-DEPENDENCIES: sc_tag.lua, sc_crew_ability_cost.lua
+DEPENDENCIES: sc_tag.lua, sc_crew_ability_cost.lua, Multiverse get_room_at_location
 ]]
 
 local shootProjectiles = {}
 local cost = mods.sc.cost
+local get_room_at_location = mods.multiverse.get_room_at_location
 
 local shootActive = false
 local shootCrew = nil
@@ -22,14 +23,6 @@ local function parse_shoot_projectile(tagNode)
 end
 
 mods.sc.tag.register("power", "sc-shoot", shootProjectiles, parse_shoot_projectile)
-
-local function get_room_at_location(ship, location)
-    return Hyperspace.ShipGraph.GetShipInfo(ship.iShipId):GetSelectedRoom(
-        location.x,
-        location.y,
-        true
-    )
-end
 
 local function convert_mouse_to_enemy_position(mousePosition)
     local combatControl = Hyperspace.App.gui.combatControl
@@ -111,7 +104,7 @@ script.on_render_event(Defines.RenderEvents.MOUSE_CONTROL, function()
 
     if enemyShip then
         local targetPosition = convert_mouse_to_enemy_position(mousePosition)
-        validTarget = get_room_at_location(enemyShip, targetPosition) >= 0
+        validTarget = get_room_at_location(enemyShip, targetPosition, true) >= 0
     end
 
     local crosshair = Hyperspace.Resources:GetImageId("mouse/mouse_crosshairs2_1.png")
@@ -144,7 +137,7 @@ script.on_internal_event(Defines.InternalEvents.ON_MOUSE_L_BUTTON_DOWN, function
     local mousePosition = Hyperspace.Mouse.position
     local targetPosition = convert_mouse_to_enemy_position(mousePosition)
 
-    if get_room_at_location(enemyShip, targetPosition) < 0 then
+    if get_room_at_location(enemyShip, targetPosition, true) < 0 then
         return Defines.Chain.CONTINUE
     end
 

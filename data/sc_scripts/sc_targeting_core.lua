@@ -35,7 +35,7 @@ end
 
 local function weapon_is_missile(weapon)
     return weapon.blueprint.typeName == "MISSILES"
-        or weapon.blueprint.flavorType:GetText() == "Missile"
+        or weapon.blueprint.flavorType.data == "Missile"
 end
 
 local function get_accuracy_bonus(ship, weapon)

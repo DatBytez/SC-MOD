@@ -130,7 +130,8 @@ script.on_internal_event(Defines.InternalEvents.WEAPON_RENDERBOX, function(weapo
 
     local currentCost = calculate_missile_cost(weapon.blueprint.name, weapon.boostLevel) + math.floor(weapon.blueprint.missiles)
 
-    secondLine = "Missile cost: " .. currentCost
+    secondLine = Hyperspace.Text:GetText("stat_sc_chainstep_missile_cost")
+    secondLine = secondLine:gsub("\\1", tostring(currentCost))
 
     return Defines.Chain.CONTINUE, firstLine, secondLine, thirdLine
 end)
@@ -161,10 +162,14 @@ script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(bluepri
     local baseCost = get_stat_value(blueprint.name, "missileBase")
     local minimumCost = calculate_missile_cost(blueprint.name, maxSteps)
     local blueprintCost = math.floor(blueprint.missiles)
-    local missileStats =
-        "Missile cost: " .. (baseCost + blueprintCost)
-        .. " - " .. (minimumCost + blueprintCost)
-        .. "\nMissile cost per step: " .. missileCost.value
+    local missileCostRange = Hyperspace.Text:GetText("stat_sc_chainstep_missile_cost_range")
+    missileCostRange = missileCostRange:gsub("\\1", tostring(baseCost + blueprintCost))
+    missileCostRange = missileCostRange:gsub("\\2", tostring(minimumCost + blueprintCost))
+
+    local missileCostPerStep = Hyperspace.Text:GetText("stat_sc_chainstep_missile_cost_per_step")
+    missileCostPerStep = missileCostPerStep:gsub("\\1", tostring(missileCost.value))
+
+    local missileStats = missileCostRange .. "\n" .. missileCostPerStep
 
     stats = stats:gsub(vanillaMissileCost .. "\n", missileStats .. "\n")
 

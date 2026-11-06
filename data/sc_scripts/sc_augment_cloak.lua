@@ -74,6 +74,9 @@ script.on_internal_event(
         local baseDuration = level * 5
         local duration = math.max(MIN_CLOAK_DURATION, baseDuration + perPowerAmount * level)
 
-        return string.format("Cloaking Duration: %g seconds", duration)
+        local description = Hyperspace.Text:GetText("tooltip_sc_cloak_level")
+        description = description:gsub("\\1", string.format("%g", duration))
+
+        return description
     end
 )

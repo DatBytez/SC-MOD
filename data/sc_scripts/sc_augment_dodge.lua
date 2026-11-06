@@ -67,6 +67,10 @@ script.on_internal_event(
         local dodge = math.max(0, baseDodge + perPowerAmount * level)
         local ftl = 0.75 + level / 4
 
-        return string.format("Dodge: %g / FTL: %gx", dodge, ftl)
+        local description = Hyperspace.Text:GetText("tooltip_sc_dodge_level")
+        description = description:gsub("\\1", string.format("%g", dodge))
+        description = description:gsub("\\2", string.format("%g", ftl))
+
+        return description
     end
 )

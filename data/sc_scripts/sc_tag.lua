@@ -30,7 +30,10 @@ function tag.register(blueprintType, tagName, targetTable, dataType)
         local tagNode = blueprintNode:first_node(tagName)
         if not tagNode then return end
 
-        local blueprintName = blueprintNode:first_attribute("name"):value()
+        local nameAttribute = blueprintNode:first_attribute("name")
+        if not nameAttribute then return end
+
+        local blueprintName = nameAttribute:value()
 
         if type(dataType) == "function" then
             local data = dataType(tagNode, blueprintNode)
