@@ -2,14 +2,13 @@
 DESCRIPTION: Controls Terran Drop Pod deployment and launch eligibility.
         - TERRAN_POD is deployable only when eligible crew are in Drone Control and a hostile target ship is present.
         - Launching sends every eligible crew member in Drone Control through the Drop Pod transport system.
-DEPENDENCIES: sc_drone_pod_transport.lua
+DEPENDENCIES: sc_tag.lua, sc_drone_pod_transport.lua
 ]]
 
 local pod = mods.sc.dronePod
 
 local POD_SPECIES = "terran_pod"
 local POD_DRONE_BLUEPRINT = "TERRAN_POD"
-local LAUNCH_POWER = "SC_LAUNCH"
 
 local function get_drone_room_id(shipManager)
     local droneSystem = shipManager.droneSystem
@@ -102,9 +101,7 @@ end
 
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, update_pod_deployment_guard)
 
-script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
-    if power.def.name ~= LAUNCH_POWER then return end
-
+mods.sc.tag.on_power_activate("SC_LAUNCH", function(power)
     local podCrew = power.crew
     if not podCrew or podCrew:GetSpecies() ~= POD_SPECIES then return end
 

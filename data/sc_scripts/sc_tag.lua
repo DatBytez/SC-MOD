@@ -1,5 +1,5 @@
 --[[
-DESCRIPTION: Registers reusable SC XML tag parsers for weapon, drone, augment, power, and crew blueprints.
+DESCRIPTION: Registers reusable SC XML tag parsers and named power activation handlers.
         - "value" stores a single numeric or string value.
         - "stat" stores repeated {stat, value} entries.
         - "system" stores repeated {system, value} entries.
@@ -55,9 +55,7 @@ function tag.register(blueprintType, tagName, targetTable, dataType)
         local entries = {}
 
         while tagNode do
-            local entry = {
-                value = get_value(tagNode)
-            }
+            local entry = { value = get_value(tagNode) }
 
             entry[dataType] = tagNode:first_attribute(dataType):value()
 
@@ -66,5 +64,15 @@ function tag.register(blueprintType, tagName, targetTable, dataType)
         end
 
         targetTable[blueprintName] = entries
+    end)
+end
+
+function tag.on_power_activate(powerName, callback)
+    script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, ...)
+        if not power.def or power.def.name ~= powerName then
+            return Defines.Chain.CONTINUE
+        end
+
+        return callback(power, ...) or Defines.Chain.CONTINUE
     end)
 end

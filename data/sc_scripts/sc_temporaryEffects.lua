@@ -1,7 +1,7 @@
 --[[
 DESCRIPTION: Extends shootTimer and punchTimer to work inside crew power <temporaryEffect> definitions.
 TAGS: <shootTimer min="#" max="#"/>, <punchTimer min="#" max="#"/>
-DEPENDENCIES: Multiverse crewTagParsers, Multiverse userdata_table; must load before tag-data-read.lua
+DEPENDENCIES: sc_tag.lua, Multiverse userdata_table; must load before tag-data-read.lua
 ]]
 
 local userdata_table = mods.multiverse.userdata_table
@@ -24,23 +24,19 @@ local function parse_timer(node)
     return {min = min, max = max}
 end
 
-table.insert(mods.multiverse.crewTagParsers, function(raceNode)
-    local powerNode = raceNode:first_node("powerEffect")
-    while powerNode do
-        local effectNode = powerNode:first_node("temporaryEffect")
-        if effectNode then
-            local shoot = parse_timer(effectNode:first_node("shootTimer"))
-            local punch = parse_timer(effectNode:first_node("punchTimer"))
+local function parse_temporary_effect(effectNode)
+    local shoot = parse_timer(effectNode:first_node("shootTimer"))
+    local punch = parse_timer(effectNode:first_node("punchTimer"))
 
-            local name = powerNode:first_attribute("name")
-            if name and (shoot or punch) then
-                powerTimers[name:value()] = {shoot = shoot, punch = punch}
-            end
-        end
+    if not shoot and not punch then return nil end
 
-        powerNode = powerNode:next_sibling("powerEffect")
-    end
-end)
+    return {
+        shoot = shoot,
+        punch = punch
+    }
+end
+
+mods.sc.tag.register("power", "temporaryEffect", powerTimers, parse_temporary_effect)
 
 local function get_active_timers(crew)
     local shoot, punch
