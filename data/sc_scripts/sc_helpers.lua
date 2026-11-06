@@ -3,6 +3,7 @@ DESCRIPTION: Shared utility functions used by multiple SC scripts.
         - Checks ships for tagged augments.
         - Totals numeric values from tagged augments.
         - Converts blueprint lists into lookup sets.
+        - Converts system names into valid system IDs
 DEPENDENCIES: Multiverse vter
 ]]
 
@@ -48,4 +49,11 @@ function helpers.blueprint_list_to_set(listName)
     end
 
     return entries
+end
+
+function helpers.system_id_from_name(systemName)
+    if not systemName then return nil end
+
+    local systemId = Hyperspace.ShipSystem.NameToSystemId(systemName)
+    return systemId >= 0 and systemId or nil
 end

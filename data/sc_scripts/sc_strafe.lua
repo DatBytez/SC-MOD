@@ -1,18 +1,21 @@
 --[[
-DESCRIPTION: Shared state and dodge-to-accuracy calculation for the Terran pilot ability.
-        - Converts half of current dodge into accuracy while the pilot effect is active.
-DEPENDENCIES: sc_button_ui.lua, sc_helpers.lua
+DESCRIPTION: Shared state and dodge-to-accuracy calculation for the Terran Strafe ability.
+        - Converts half of current dodge into accuracy while the Strafe effect is active.
+TAG: <sc-strafe/>
+DEPENDENCIES: sc_tag.lua, sc_button_ui.lua, sc_helpers.lua
 ]]
 
-mods.sc.pilot = mods.sc.pilot or {}
+mods.sc.strafe = mods.sc.strafe or {}
 
-local pilot = mods.sc.pilot
+local strafe = mods.sc.strafe
 local helpers = mods.sc.helpers
 local buttonTimer = mods.sc.buttonTimer
 
-local PILOT_BUTTON = "terran_pilot"
-local PILOT_AUGMENT = "TERRAN_SHIP_ARMOR_LIGHT"
-local PILOT_SYSTEM_ID = 6
+local STRAFE_BUTTON = "terran_strafe"
+local PILOT_SYSTEM_ID = Hyperspace.ShipSystem.NameToSystemId("pilot")
+
+local strafeAugments = {}
+mods.sc.tag.register("augment", "sc-strafe", strafeAugments, "value")
 
 local accuracyBonus = {
     [0] = 0,
@@ -29,27 +32,48 @@ local dodgeEventSerial = {
     [1] = 0
 }
 
-pilot.BUTTON_NAME = PILOT_BUTTON
-pilot.SYSTEM_ID = PILOT_SYSTEM_ID
+strafe.BUTTON_NAME = STRAFE_BUTTON
+strafe.SYSTEM_ID = PILOT_SYSTEM_ID
 
-function pilot.has_augment(ship)
-    return helpers.ship_has_augment(ship, PILOT_AUGMENT)
+function strafe.get_system_id(ship)
+    if not ship then return nil end
+
+    for augmentName, systemName in pairs(strafeAugments) do
+        if ship:HasAugmentation(augmentName) > 0 then
+            local systemId = helpers.system_id_from_name(systemName)
+
+            if systemId then
+                return systemId
+            end
+        end
+    end
+
+    return nil
 end
 
-function pilot.is_active(ship)
-    return buttonTimer.is_active(PILOT_BUTTON, ship.iShipId)
-        and pilot.has_augment(ship)
-        and ship:GetSystem(PILOT_SYSTEM_ID).bManned
+function strafe.has_augment(ship)
+    return helpers.ship_has_augment(ship, strafeAugments)
 end
 
-function pilot.clear_accuracy(ship)
+function strafe.is_active(ship)
+    if not ship then return false end
+
+    local strafeSystem = ship:GetSystem(PILOT_SYSTEM_ID)
+
+    return strafeSystem
+        and strafeSystem.bManned
+        and strafe.has_augment(ship)
+        and buttonTimer.is_active(STRAFE_BUTTON, ship.iShipId)
+end
+
+function strafe.clear_accuracy(ship)
     accuracyBonus[ship.iShipId] = 0
 end
 
 local function update_accuracy_bonus_from_dodge(ship, dodge)
     local shipId = ship.iShipId
 
-    if not pilot.is_active(ship) then
+    if not strafe.is_active(ship) then
         accuracyBonus[shipId] = 0
         return 0
     end
@@ -66,10 +90,10 @@ local function update_accuracy_bonus_from_dodge(ship, dodge)
     return removedAmount
 end
 
-function pilot.refresh_accuracy(ship)
+function strafe.refresh_accuracy(ship)
     local shipId = ship.iShipId
 
-    if not pilot.is_active(ship) then
+    if not strafe.is_active(ship) then
         accuracyBonus[shipId] = 0
         return 0
     end

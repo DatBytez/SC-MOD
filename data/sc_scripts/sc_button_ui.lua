@@ -23,6 +23,14 @@ local function reset_all_states()
     end
 end
 
+local function resolve_system_id(button, ship)
+    if type(button.systemId) == "function" then
+        return button.systemId(ship)
+    end
+
+    return button.systemId
+end
+
 local function set_active(button, ship, shipSystem, active)
     local state = button.state[ship.iShipId]
     if state.active == active then return end
@@ -54,7 +62,8 @@ end
 
 function buttonTimer.activate(name, ship)
     local button = buttons[name]
-    local shipSystem = ship:GetSystem(button.systemId)
+    local systemId = resolve_system_id(button, ship)
+    local shipSystem = systemId and ship:GetSystem(systemId) or nil
 
     if not shipSystem or not button.is_visible(ship, shipSystem) then
         return false
@@ -107,16 +116,19 @@ local function ensure_button_runtime(button, systemBox, ship)
     return runtime
 end
 
-local function button_matches_system_box(button, systemBox)
-    return systemBox.bPlayerUI
-        and systemBox.pSystem.iSystemType == button.systemId
+local function button_matches_system_box(button, systemBox, ship)
+    local systemId = resolve_system_id(button, ship)
+
+    return systemId ~= nil
+        and systemBox.bPlayerUI
+        and systemBox.pSystem.iSystemType == systemId
 end
 
 script.on_internal_event(Defines.InternalEvents.CONSTRUCT_SYSTEM_BOX, function(systemBox)
     local ship = Hyperspace.ships.player
 
     for _, button in ipairs(buttonOrder) do
-        if button_matches_system_box(button, systemBox) then
+        if button_matches_system_box(button, systemBox, ship) then
             ensure_button_runtime(button, systemBox, ship)
         end
     end
@@ -126,7 +138,7 @@ script.on_internal_event(Defines.InternalEvents.SYSTEM_BOX_MOUSE_MOVE, function(
     local ship = Hyperspace.ships.player
 
     for _, button in ipairs(buttonOrder) do
-        if button_matches_system_box(button, systemBox)
+        if button_matches_system_box(button, systemBox, ship)
             and button.is_visible(ship, systemBox.pSystem) then
 
             local activateButton = ensure_button_runtime(button, systemBox, ship).activateButton
@@ -141,7 +153,7 @@ script.on_internal_event(Defines.InternalEvents.SYSTEM_BOX_MOUSE_CLICK, function
     local ship = Hyperspace.ships.player
 
     for _, button in ipairs(buttonOrder) do
-        if button_matches_system_box(button, systemBox)
+        if button_matches_system_box(button, systemBox, ship)
             and button.is_visible(ship, systemBox.pSystem) then
 
             local activateButton = ensure_button_runtime(button, systemBox, ship).activateButton
@@ -162,7 +174,8 @@ script.on_internal_event(Defines.InternalEvents.JUMP_ARRIVE, reset_all_states)
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
     for _, button in ipairs(buttonOrder) do
         local state = button.state[ship.iShipId]
-        local shipSystem = ship:GetSystem(button.systemId)
+        local systemId = resolve_system_id(button, ship)
+        local shipSystem = systemId and ship:GetSystem(systemId) or nil
 
         if not shipSystem then
             state.timer = 1
@@ -246,7 +259,7 @@ script.on_render_event(Defines.RenderEvents.SYSTEM_BOX,
     end,
     function(systemBox)
         for _, button in ipairs(buttonOrder) do
-            if button_matches_system_box(button, systemBox) then
+            if button_matches_system_box(button, systemBox, ship) then
                 render_button(button, systemBox)
             end
         end

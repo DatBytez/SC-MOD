@@ -2049,11 +2049,11 @@
 	<mod-append:script>data/sc_scripts/sc_radius_core.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_button_ui.lua</mod-append:script>
 
-	<!-- Pilot / dodge -->
+	<!-- Strafe / dodge -->
 	<mod-append:script>data/sc_scripts/sc_augment_dodge.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_pilot.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_pilot_button.lua</mod-append:script>
-	<mod-append:script>data/sc_scripts/sc_pilot_targeting.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_strafe.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_strafe_button.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_strafe_targeting.lua</mod-append:script>
 
 	<!-- Weapons -->
 	<mod-append:script>data/sc_scripts/sc_weapon_roomfill.lua</mod-append:script>
