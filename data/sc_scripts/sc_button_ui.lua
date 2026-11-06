@@ -258,6 +258,8 @@ script.on_render_event(Defines.RenderEvents.SYSTEM_BOX,
         return Defines.Chain.CONTINUE
     end,
     function(systemBox)
+        local ship = Hyperspace.ships.player
+
         for _, button in ipairs(buttonOrder) do
             if button_matches_system_box(button, systemBox, ship) then
                 render_button(button, systemBox)

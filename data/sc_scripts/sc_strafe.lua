@@ -1,7 +1,9 @@
 --[[
 DESCRIPTION: Shared state and dodge-to-accuracy calculation for the Terran Strafe ability.
         - Converts half of current dodge into accuracy while the Strafe effect is active.
-TAG: <sc-strafe/>
+        - The tagged augment determines which system hosts and scales the ability.
+        - Piloting must always be manned while the effect is active.
+TAG: <sc-strafe value="SYSTEM_NAME"/>
 DEPENDENCIES: sc_tag.lua, sc_button_ui.lua, sc_helpers.lua
 ]]
 
@@ -12,7 +14,7 @@ local helpers = mods.sc.helpers
 local buttonTimer = mods.sc.buttonTimer
 
 local STRAFE_BUTTON = "terran_strafe"
-local PILOT_SYSTEM_ID = Hyperspace.ShipSystem.NameToSystemId("pilot")
+local PILOT_SYSTEM_ID = helpers.system_id_from_name("pilot")
 
 local strafeAugments = {}
 mods.sc.tag.register("augment", "sc-strafe", strafeAugments, "value")
@@ -33,7 +35,7 @@ local dodgeEventSerial = {
 }
 
 strafe.BUTTON_NAME = STRAFE_BUTTON
-strafe.SYSTEM_ID = PILOT_SYSTEM_ID
+strafe.PILOT_SYSTEM_ID = PILOT_SYSTEM_ID
 
 function strafe.get_system_id(ship)
     if not ship then return nil end
@@ -58,10 +60,10 @@ end
 function strafe.is_active(ship)
     if not ship then return false end
 
-    local strafeSystem = ship:GetSystem(PILOT_SYSTEM_ID)
+    local pilotingSystem = ship:GetSystem(PILOT_SYSTEM_ID)
 
-    return strafeSystem
-        and strafeSystem.bManned
+    return pilotingSystem
+        and pilotingSystem.bManned
         and strafe.has_augment(ship)
         and buttonTimer.is_active(STRAFE_BUTTON, ship.iShipId)
 end
