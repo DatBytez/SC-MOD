@@ -68,11 +68,11 @@ function tag.register(blueprintType, tagName, targetTable, dataType)
 end
 
 function tag.on_power_activate(powerName, callback)
-    script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, ...)
+    script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, ship)
         if not power.def or power.def.name ~= powerName then
             return Defines.Chain.CONTINUE
         end
 
-        return callback(power, ...) or Defines.Chain.CONTINUE
+        return callback(power, ship) or Defines.Chain.CONTINUE
     end)
 end

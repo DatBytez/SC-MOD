@@ -3,7 +3,7 @@ DESCRIPTION: Shared utility functions used by multiple SC scripts.
         - Checks ships for tagged augments.
         - Totals numeric values from tagged augments.
         - Converts blueprint lists into lookup sets.
-        - Converts system names into valid system IDs
+        - Converts system names into valid system IDs.
 DEPENDENCIES: Multiverse vter
 ]]
 

@@ -54,11 +54,7 @@ local function get_strafe_button_tooltip(ship, strafeSystem, state)
         return Hyperspace.Text:GetText("tooltip_sc_strafe_manned")
     end
 
-    return string.gsub(
-        Hyperspace.Text:GetText("tooltip_sc_strafe_ready"),
-        "\\1",
-        string.format("%.1f", state.duration)
-    )
+    return string.gsub(Hyperspace.Text:GetText("tooltip_sc_strafe_ready"), "\\1", string.format("%.1f", state.duration))
 end
 
 local function strafe_timer_rate(ship, strafeSystem, state)
@@ -78,14 +74,9 @@ local function finish_strafe_effect(ship, strafeSystem)
     strafe.clear_accuracy(ship)
 
     local damage = Hyperspace.Damage()
-    damage.iIonDamage = COOLDOWN_TIME
-        + (strafeSystem:GetMaxPower() - 1) * COOLDOWN_BONUS_PER_LEVEL
+    damage.iIonDamage = COOLDOWN_TIME + (strafeSystem:GetMaxPower() - 1) * COOLDOWN_BONUS_PER_LEVEL
 
-    ship:DamageArea(
-        ship:GetRoomCenter(strafeSystem:GetRoomId()),
-        damage,
-        true
-    )
+    ship:DamageArea(ship:GetRoomCenter(strafeSystem:GetRoomId()), damage, true)
 end
 
 buttonTimer.register(STRAFE_BUTTON, {
@@ -102,8 +93,7 @@ buttonTimer.register(STRAFE_BUTTON, {
     is_ready = strafe_button_ready,
 
     get_duration = function(ship, strafeSystem)
-        return ACTIVATION_TIME
-            + (strafeSystem:GetMaxPower() - 1) * DURATION_BONUS_PER_LEVEL
+        return ACTIVATION_TIME + (strafeSystem:GetMaxPower() - 1) * DURATION_BONUS_PER_LEVEL
     end,
 
     get_timer_rate = strafe_timer_rate,

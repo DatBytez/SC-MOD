@@ -524,7 +524,7 @@
 				<duration>10.0</duration>
 				<cooldownColor r="240" g="210" b="50" />
 				<moveSpeedMultiplier>1.5</moveSpeedMultiplier>
-				<shootTimer min="250" max="325" />
+				<shootTimer min="25" max="32" />
 				<punchTimer min="250" max="325" />
 			</temporaryEffect>
 		</powerEffect>
@@ -1082,7 +1082,6 @@
 			<tooltip id="ability_TERRAN_SCV_REPAIR_HULL_TOOLTIP"/>
 			<cooldownColor r="255" g="78" b="69" />
 			<effectAnim>explosion_big1_heal</effectAnim>
-			<transformRace health="0" deathSound="false">terran_scv_hull</transformRace>
 			<selfHealth>-999.0</selfHealth>
 		</powerEffect>
 		<powerEffect load="SC_REPAIR"/>

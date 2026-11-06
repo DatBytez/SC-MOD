@@ -429,7 +429,7 @@ END OF SUBSYSTEMS
 	<stackable>false</stackable>
 	<sc-armor/>
 	<sc-dodge value="2"/>
-	<sc-strafe value="pilot"/>
+	<sc-strafe value="engines"/>
 </augBlueprint>
 
 <augBlueprint name="TERRAN_SHIP_ARMOR_MEDIUM">
@@ -3203,7 +3203,7 @@ END OF SUBSYSTEMS
 	<maxPower amount="8" />
 	<crewCount amount="1" class="terran_civilian" />
 	<crewCount amount="1" class="terran_marine" />
-	<crewCount amount="1" class="terran_marine" />
+	<crewCount amount="1" class="terran_marine_1" />
 	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
 </shipBlueprint>
 </FTL>
