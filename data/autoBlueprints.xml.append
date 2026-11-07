@@ -2,7 +2,7 @@
 <!-- Copyright (c) 2012 by Subset Games. All rights reserved -->
 <FTL>
 
-<!--********************            DRONE LISTS            *******************-->
+<!--********************		DRONE LISTS				*******************-->
 <FTL>
 <blueprintList name="TERRAN_DRONES_STANDARD">
 	<name>TERRAN_SCV</name>
@@ -36,7 +36,7 @@
 	<name>TERRAN_DEFENSE_3</name>
 </blueprintList>
 </FTL>
-<!--********************            WEAPON LISTS            *******************-->
+<!--********************		WEAPON LISTS			*******************-->
 <FTL>
 <blueprintList name="TERRAN_STANDARD_WEAPONS">  <!-- this is just all of them -->
 	<name>TERRAN_BURST_LASER_1</name>
@@ -102,7 +102,7 @@
 	<name>GEMINI_SYS_1</name>
 </blueprintList>
 </FTL>
-<!--********************            AUGMENT LISTS            *******************-->
+<!--********************		AUGMENT LISTS			*******************-->
 <FTL>
 <blueprintList name="TERRAN_LIST_AUGMENT_ALL">
 	<name>TERRAN_WRAITH_BATTERY</name>
@@ -112,7 +112,7 @@
 	<name>SC_DETECTOR</name>
 </blueprintList>
 </FTL>
-<!--********************            CREW LISTS            *******************-->
+<!--********************		CREW LISTS				*******************-->
 <FTL>
 <blueprintList name="SC_LIST_CREW_INVISIBLE">
 	<name>terran_ghost</name>
@@ -152,7 +152,7 @@
     <name>slug_hektar</name>
 </blueprintList>
 </FTL>
-<!--********************            SHOP ITEM LISTS            *******************-->
+<!--********************		SHOP ITEM LISTS			*******************-->
 <FTL>
 <blueprintList name="SHOP_TERRAN_SYSTEMS_ESSENTIAL">
 	<name>oxygen</name>
@@ -175,7 +175,7 @@
 	<name>teleporter</name>
 </blueprintList>
 </FTL>
-<!--********************            SHIP LISTS            *******************-->
+<!--********************		SHIP LISTS				*******************-->
 <FTL>
 <blueprintList name="TERRAN_LIST_SHIPS_ALL">
 	<name>TERRAN_SHIP_BATTLECRUISER_A</name>
@@ -258,9 +258,11 @@
 	<name>TERRAN_SHIP_DROPSHIP</name>
 </blueprintList>
 </FTL>
-<!--********************			TERRAN SHIPS			*******************-->
-<FTL>
-<!--********************			TERRAN WRAITH			*******************-->
+<!--***********************************************************************-->
+<!--********************		TERRAN SHIPS			*******************-->
+<!--***********************************************************************-->
+
+<!--********************		TERRAN WRAITH			*******************-->
 <FTL>
 <blueprintList name="LIST_CREW_TERRAN_WRAITH">
 	<name>terran_civilian</name>
@@ -509,7 +511,7 @@
 	<aug name="CLOAK_FIRE" />
 </shipBlueprint>
 </FTL>
-<!--********************			TERRAN BATTLECRUISER			*******************-->
+<!--********************		TERRAN BATTLECRUISER	*******************-->
 <FTL>
 <blueprintList name="LIST_CREW_TERRAN_BATTLECRUISER">
 	<name>terran_civilian</name>
@@ -549,7 +551,7 @@
 	<aug name="TERRAN_SHIP" />
 </shipBlueprint>
 </FTL>
-<!--********************			TERRAN VESSEL			*******************-->
+<!--********************		TERRAN VESSEL			*******************-->
 <FTL>
 <blueprintList name="LIST_CREW_TERRAN_VESSEL">
 	<name>terran_civilian</name>
@@ -677,7 +679,7 @@
 	<aug name="TERRAN_SHIP" />
 </shipBlueprint>
 </FTL>
-<!--********************			TERRAN DROPSHIP			*******************-->
+<!--********************		TERRAN DROPSHIP			*******************-->
 <FTL>
 <blueprintList name="LIST_CREW_TERRAN_DROPSHIP">
 	<name>terran_civilian</name>
@@ -719,7 +721,7 @@
 	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
 </shipBlueprint>
 </FTL>
-<!--********************			TERRAN VALKYRIE			*******************-->
+<!--********************		TERRAN VALKYRIE			*******************-->
 <FTL>
 <blueprintList name="LIST_CREW_TERRAN_VALKYRIE">
 	<name>terran_civilian</name>
@@ -792,7 +794,9 @@
 	<aug name="TERRAN_SHIP_ARMOR_MEDIUM" />
 </shipBlueprint>
 </FTL>
-<!-- ********** TERRAN STORE SHIPS ********** -->
+<!--***********************************************************************-->
+<!--********************		TERRAN STORE SHIPS		*******************-->
+<!--***********************************************************************-->
 <FTL>
 <shipBlueprint name="TERRAN_SHIP_COMMAND" layout="TERRAN_SHIP_COMMAND" img="TERRAN_SHIP_COMMAND">
 	<class id="text_TERRAN_BUILDING_class"/>
