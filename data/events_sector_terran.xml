@@ -2432,7 +2432,7 @@
 		A Terran Engineering Bay operates at this beacon. Repair drones and maintenance craft move between the station and nearby vessels while its quartermaster broadcasts an open offer of engineering supplies.
 	</text>
 
-	<ship load="TERRAN_SHIP_ENGINEERING" hostile="false"/>
+	<!-- <ship load="TERRAN_SHIP_ENGINEERING" hostile="false"/> -->
 
 	<choice>
 		<text>Dock with the Engineering Bay.</text>

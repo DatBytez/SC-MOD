@@ -140,6 +140,15 @@
 	<name>terran_medic_2</name>
 </blueprintList>
 
+<blueprintList name="TERRAN_LIST_CREW_ADVANCED">
+	<name>terran_firebat_1</name>
+	<name>terran_ghost_1</name>
+	<name>terran_ghost_2</name>
+	<name>terran_marine_1</name>
+	<name>terran_medic_1</name>
+	<name>terran_medic_2</name>
+</blueprintList>
+
 <blueprintList name="LIST_CREW_TELEPATHIC">
     <name>terran_ghost</name>
 	<name>terran_ghost_1</name>
@@ -154,26 +163,6 @@
 </FTL>
 <!--********************		SHOP ITEM LISTS			*******************-->
 <FTL>
-<!-- <blueprintList name="SHOP_TERRAN_SYSTEMS_ESSENTIAL">
-	<name>oxygen</name>
-	<name>weapons</name>
-	<name>doors</name>
-	<name>sensors</name>
-	<name>medbay</name>
-	<name>lily_system_bracers</name>
-</blueprintList>
-<blueprintList name="SHOP_TERRAN_SYSTEMS_BONUS">
-	<name>drones</name>
-	<name>hacking</name>
-	<name>cloaking</name>
-	<name>battery</name>
-	<name>clonebay</name>
-</blueprintList>
-<blueprintList name="SHOP_TERRAN_SYSTEMS_LOCKED">
-	<name>mind</name>
-	<name>shields</name>
-	<name>teleporter</name>
-</blueprintList> -->
 <blueprintList name="SHOP_TERRAN_SYSTEMS">
     <name>oxygen</name>
     <name>weapons</name>
@@ -285,6 +274,22 @@
 	<name>terran_ghost</name>
 	<name>terran_medic</name>
 	<name>terran_marine</name>
+
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_ghost</name>
+	<name>terran_ghost</name>
+	<name>terran_medic_1</name>
+	<name>terran_marine</name>
+
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_ghost_1</name>
+	<name>terran_ghost_2</name>
+	<name>terran_medic_2</name>
+	<name>terran_marine_1</name>
 </blueprintList>
 
 <blueprintList name="LIST_WEAPONS_TERRAN_WRAITH">
@@ -534,6 +539,22 @@
 	<name>terran_marine</name>
 	<name>terran_medic</name>
 	<name>terran_firebat</name>
+
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_marine</name>
+	<name>terran_marine</name>
+	<name>terran_medic_1</name>
+	<name>terran_firebat</name>
+
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_marine_1</name>
+	<name>terran_marine_1</name>
+	<name>terran_medic_2</name>
+	<name>terran_firebat_1</name>
 </blueprintList>
 
 <shipBlueprint name="TERRAN_SHIP_BATTLECRUISER_A" layout="TERRAN_SHIP_BATTLECRUISER_A" img="TERRAN_SHIP_BATTLECRUISER_A">
@@ -574,6 +595,22 @@
 	<name>terran_medic</name>
 	<name>terran_ghost</name>
 	<name>terran_ghost</name>
+
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_medic_1</name>
+	<name>terran_medic_1</name>
+	<name>terran_ghost_1</name>
+	<name>terran_ghost_1</name>
+
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_medic_2</name>
+	<name>terran_medic_2</name>
+	<name>terran_ghost_2</name>
+	<name>terran_ghost_2</name>
 </blueprintList>
 
 <shipBlueprint name="TERRAN_SHIP_VESSEL_A" layout="TERRAN_SHIP_VESSEL_A" img="TERRAN_SHIP_VESSEL_A">
@@ -702,6 +739,22 @@
 	<name>terran_medic</name>
 	<name>terran_firebat</name>
 	<name>terran_firebat</name>
+
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_marine</name>
+	<name>terran_marine</name>
+	<name>terran_medic_1</name>
+	<name>terran_firebat</name>
+	<name>terran_firebat</name>
+
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_marine_1</name>
+	<name>terran_marine_1</name>
+	<name>terran_medic_2</name>
+	<name>terran_firebat_1</name>
+	<name>terran_firebat_1</name>
 </blueprintList>
 <shipBlueprint name="TERRAN_SHIP_DROPSHIP" layout="TERRAN_SHIP_DROPSHIP" img="TERRAN_SHIP_DROPSHIP">
 	<class id="text_TERRAN_TRANSPORT_class"/>
@@ -744,6 +797,22 @@
 	<name>terran_medic</name>
 	<name>terran_firebat</name>
 	<name>terran_firebat</name>
+
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_marine</name>
+	<name>terran_marine</name>
+	<name>terran_medic_1</name>
+	<name>terran_firebat</name>
+	<name>terran_firebat</name>
+
+	<name>terran_civilian</name>
+	<name>terran_civilian</name>
+	<name>terran_marine_1</name>
+	<name>terran_marine_1</name>
+	<name>terran_medic_2</name>
+	<name>terran_firebat_1</name>
+	<name>terran_firebat_1</name>
 </blueprintList>
 
 <shipBlueprint name="TERRAN_SHIP_VALKYRIE_A" layout="TERRAN_SHIP_VALKYRIE_A" img="TERRAN_SHIP_VALKYRIE_A">
@@ -811,6 +880,8 @@
 <!--********************		TERRAN STORE SHIPS		*******************-->
 <!--***********************************************************************-->
 <FTL>
+<!--********************		TERRAN COMMAND			*******************-->
+<FTL>
 <shipBlueprint name="TERRAN_SHIP_COMMAND" layout="TERRAN_SHIP_COMMAND" img="TERRAN_SHIP_COMMAND">
 	<class id="text_TERRAN_BUILDING_class"/>
 	<minSector>1</minSector>
@@ -835,7 +906,9 @@
 	<aug name="TERRAN_SHIP" />
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
 </shipBlueprint>
-
+</FTL>
+<!--********************		TERRAN FACTORY			*******************-->
+<FTL>
 <shipBlueprint name="TERRAN_SHIP_FACTORY" layout="TERRAN_SHIP_FACTORY" img="TERRAN_SHIP_FACTORY">
 	<class id="text_TERRAN_BUILDING_class"/>
 	<minSector>1</minSector>
@@ -860,7 +933,9 @@
 	<aug name="TERRAN_SHIP" />
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
 </shipBlueprint>
-
+</FTL>
+<!--********************		TERRAN SCIENCE			*******************-->
+<FTL>
 <shipBlueprint name="TERRAN_SHIP_SCIENCE" layout="TERRAN_SHIP_SCIENCE" img="TERRAN_SHIP_SCIENCE">
 	<class id="text_TERRAN_BUILDING_class"/>
 	<minSector>1</minSector>
@@ -887,7 +962,28 @@
 	<aug name="TERRAN_SHIP" />
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
 </shipBlueprint>
+</FTL>
+<!--********************		TERRAN BARRACKS			*******************-->
+<FTL>
+	<blueprintList name="LIST_CREW_TERRAN_BARRACKS">
+		<name>terran_marine</name>
+		<name>terran_marine</name>
+		<name>terran_medic</name>
+		<name>terran_firebat</name>
+		<name>terran_ghost</name>
 
+		<name>terran_marine</name>
+		<name>terran_marine</name>
+		<name>terran_medic_1</name>
+		<name>terran_firebat</name>
+		<name>terran_ghost_1</name>
+
+		<name>terran_marine_1</name>
+		<name>terran_marine_1</name>
+		<name>terran_medic_2</name>
+		<name>terran_firebat_1</name>
+		<name>terran_ghost_2</name>
+	</blueprintList>
 <shipBlueprint name="TERRAN_SHIP_BARRACKS" layout="TERRAN_SHIP_BARRACKS" img="TERRAN_SHIP_BARRACKS">
 	<class id="text_TERRAN_BUILDING_class"/>
 	<minSector>1</minSector>
@@ -895,32 +991,52 @@
 	<systemList>
 		<clonebay power="1" max="1" room="9" start="true" />
 		<doors power="1" max="1" room="4" start="true" />
-		<drones power="1" max="1" room="0" start="true" />
+		<!-- <drones power="1" max="1" room="0" start="true" /> -->
 		<medbay power="1" max="1" room="5" start="true" />
 		<oxygen power="1" max="1" room="1" start="true" />
 		<lily_system_bracers power="1" max="1" room="7" start="true" />
-		<teleporter power="1" max="3" room="3" start="true" />
+		<drones power="1" max="1" room="3" start="true" />
 	</systemList>
 	<weaponSlots>0</weaponSlots>
 	<droneSlots>2</droneSlots>
 	<weaponList missiles="0" count="0" />
-	<droneList drones="2" count="2" load="TERRAN_DRONES_INTERNAL" />
+	<droneList drones="3" count="1">
+		<drone name="TERRAN_POD" />
+	</droneList>
 	<health amount="10" />
 	<maxPower amount="5" />
-	<crewCount amount="5" max="10" class="TERRAN_LIST_CREW_ALL" />
+	<crewCount amount="5" max="10" class="LIST_CREW_TERRAN_BARRACKS" />
 	<boardingAI>invasion</boardingAI>
 	<aug name="TERRAN_SHIP" />
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
 </shipBlueprint>
+</FTL>
+<!--********************		TERRAN ENGINEERING			*******************-->
+<FTL>
+<blueprintList name="LIST_CREW_TERRAN_ENGINEERING">
+	<name>terran_marine</name>
+	<name>terran_marine</name>
+	<name>terran_medic</name>
+	<name>terran_firebat</name>
 
+	<name>terran_marine</name>
+	<name>terran_marine</name>
+	<name>terran_medic_1</name>
+	<name>terran_firebat</name>
+
+	<name>terran_marine_1</name>
+	<name>terran_marine_1</name>
+	<name>terran_medic_2</name>
+	<name>terran_firebat_1</name>
+</blueprintList>
 <shipBlueprint name="TERRAN_SHIP_ENGINEERING" layout="TERRAN_SHIP_ENGINEERING" img="TERRAN_SHIP_ENGINEERING">
 	<class id="text_TERRAN_BUILDING_class"/>
 	<minSector>1</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
-		<artillery power="1" max="4" room="6" start="false" weapon="TERRAN_LASER_BATTERY_HEAVY_2" />
+		<!-- <artillery power="1" max="4" room="6" start="false" weapon="TERRAN_LASER_BATTERY_HEAVY_2" />
 		<artillery power="1" max="4" room="8" start="false" weapon="TERRAN_LASER_BATTERY_HEAVY_2" />
-		<artillery power="1" max="4" room="7" start="false" weapon="TERRAN_LASER_BATTERY_HEAVY_2" />
+		<artillery power="1" max="4" room="7" start="false" weapon="TERRAN_LASER_BATTERY_HEAVY_2" /> -->
 		<clonebay power="1" max="3" room="4" start="true" />
 		<doors power="1" max="3" room="0" start="true" />
 		<drones power="2" max="6" room="3" start="true" />
@@ -934,12 +1050,15 @@
 	<droneList drones="4" count="3" load="TERRAN_DRONES_DEFENSE" />
 	<health amount="8" />
 	<maxPower amount="12" />
-	<crewCount amount="1" max="5" class="human" />
+	<crewCount amount="1" max="4" class="LIST_CREW_TERRAN_ENGINEERING" />
+	<crewCount amount="1" max="3" class="terran_civilian" />
 	<boardingAI>sabotage</boardingAI>
 	<aug name="TERRAN_SHIP" />
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
 </shipBlueprint>
-
+</FTL>
+<!--********************		TERRAN STARPORT			*******************-->
+<FTL>
 <shipBlueprint name="TERRAN_SHIP_STARPORT" layout="TERRAN_SHIP_STARPORT" img="TERRAN_SHIP_STARPORT">
 	<class id="text_TERRAN_BUILDING_class"/>
 	<minSector>1</minSector>
@@ -952,7 +1071,7 @@
 		<medbay power="1" max="3" room="1" start="false" />
 		<oxygen power="1" max="3" room="7" start="true" />
 		<lily_system_bracers power="1" max="3" room="4" start="true" />
-		<teleporter power="1" max="3" room="5" start="false" />
+		<!-- <teleporter power="1" max="3" room="5" start="false" /> -->
 		<weapons power="1" max="1" room="0" start="true" />
 	</systemList>
 	<weaponSlots>1</weaponSlots>
@@ -966,6 +1085,7 @@
 	<aug name="TERRAN_SHIP" />
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
 </shipBlueprint>
+</FTL>
 </FTL>
 
 <!--********************		SC TEST BATTLECRUISER	*******************-->

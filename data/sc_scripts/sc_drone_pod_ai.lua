@@ -1,24 +1,22 @@
 
 --[[
 DESCRIPTION: Controls enemy Boarding Pod assembly and launch readiness.
-        - Assembles boarding parties only while a Terran Boarding Pod is active.
+        - Assembles boarding parties only while a Terran Boarding Pod is available.
         - Selects teleport-capable enemy crew up to Drone Control's capacity.
         - Excludes crew in or assigned to Piloting.
-        - Temporarily disables normal AI for selected crew using NO_AI.
+        - Suppresses normal AI for selected crew while a Boarding Pod is available.
         - Orders selected crew to Drone Control through normal movement.
-        - Allows enemy SC_LAUNCH when at least two eligible crew are in Drone Control.
-        - Clears the boarding party after launch so another Pod can assemble a new party.
+        - Allows enemy SC_LAUNCH when eligible crew equal Drone Control slots minus one.
+        - Clears boarding assignments after launch or when no Pod is available.
         - The existing Pod script transports all crew present in Drone Control.
         - Exposes movement and launch diagnostics to sc_debug.lua.
-DEPENDENCIES: Hyperspace StatBoostManager, sc_drone_pod.lua
+DEPENDENCIES: sc_drone_pod.lua
 ]]
 
 local DRONES_SYSTEM_ID = 4
 local PILOT_SYSTEM_ID = 6
 local POD_SPECIES = "terran_pod"
 local POD_POWER = "SC_LAUNCH"
-local MIN_BOARDING_CREW = 3
-local NO_AI_DURATION = 60
 local ORDER_INTERVAL = 5
 local MAX_EVENTS = 12
 
@@ -33,27 +31,18 @@ debug.tick = 0
 debug.launches = 0
 debug.readyCrew = 0
 
+local lastEnemyShip = nil
+local selected = nil
+local selectedIds = {}
+local boardingActive = false
+local orderTimer = 0
+
 local function add_event(message)
     table.insert(debug.events, 1, message)
     if #debug.events > MAX_EVENTS then
         table.remove(debug.events)
     end
 end
-
-local noAiBoost = Hyperspace.StatBoostDefinition()
-noAiBoost.stat = Hyperspace.CrewStat.NO_AI
-noAiBoost.boostType = Hyperspace.StatBoostDefinition.BoostType.SET
-noAiBoost.boostSource = Hyperspace.StatBoostDefinition.BoostSource.AUGMENT
-noAiBoost.shipTarget = Hyperspace.StatBoostDefinition.ShipTarget.ALL
-noAiBoost.crewTarget = Hyperspace.StatBoostDefinition.CrewTarget.ALL
-noAiBoost.value = true
-noAiBoost.duration = NO_AI_DURATION
-noAiBoost.realBoostId = Hyperspace.StatBoostDefinition.statBoostDefs:size()
-Hyperspace.StatBoostDefinition.statBoostDefs:push_back(noAiBoost)
-
-local lastEnemyShip = nil
-local selected = nil
-local orderTimer = 0
 
 local function eligible_crew(crew, shipId)
     return crew.iShipId == shipId
@@ -138,12 +127,27 @@ end
 
 local function clear_boarding_party()
     selected = nil
+    selectedIds = {}
+    boardingActive = false
     orderTimer = 0
     debug.rows = {}
 end
 
--- Prevent enemy Pods from activating before two eligible crew are ready.
--- Player Pods retain their existing automatic activation behavior.
+-- Suppress normal AI only while the crew member belongs
+-- to an active boarding party.
+script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(crew, stat, _def, amount, value)
+    if stat == Hyperspace.CrewStat.NO_AI
+        and boardingActive
+        and selectedIds[crew.extend.selfId] then
+
+        return Defines.Chain.CONTINUE, amount, true
+    end
+
+    return Defines.Chain.CONTINUE, amount, value
+end)
+
+-- Require Drone Control capacity minus one eligible crew before launch.
+-- Player Boarding Pods retain their existing automatic activation behavior.
 script.on_internal_event(Defines.InternalEvents.POWER_READY, function(power, ready)
     if not power.def
         or power.def.name ~= POD_POWER
@@ -156,6 +160,10 @@ script.on_internal_event(Defines.InternalEvents.POWER_READY, function(power, rea
 
     if ready ~= 1 then
         return Defines.Chain.CONTINUE, ready
+    end
+
+    if not boardingActive then
+        return Defines.Chain.CONTINUE, 0
     end
 
     local enemyShip = Hyperspace.Global.GetInstance():GetShipManager(1)
@@ -180,15 +188,23 @@ script.on_internal_event(Defines.InternalEvents.POWER_READY, function(power, rea
         return Defines.Chain.CONTINUE, 0
     end
 
-    if count_boarding_crew(enemyShip, droneRoomId) < MIN_BOARDING_CREW then
+    local graph = Hyperspace.ShipGraph.GetShipInfo(enemyShip.iShipId)
+    if not graph then
+        return Defines.Chain.CONTINUE, 0
+    end
+
+    local roomCapacity = graph:GetNumSlots(droneRoomId)
+    local minimumCrew = math.max(1, roomCapacity - 1)
+
+    if count_boarding_crew(enemyShip, droneRoomId) < minimumCrew then
         return Defines.Chain.CONTINUE, 0
     end
 
     return Defines.Chain.CONTINUE, ready
 end)
 
--- Once a Pod activates, release the old boarding-party selection.
--- Another active Pod may then assemble a new party from remaining crew.
+-- The existing Pod ability performs the actual transport.
+-- Release the boarding party when the Pod launches.
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
     if not power.def
         or power.def.name ~= POD_POWER
@@ -228,7 +244,7 @@ local function make_record(crew)
         goalChanges = 0,
         lastGoal = nil,
         lastNoAI = nil,
-        boost = "PENDING",
+        boost = "ACTIVE",
         lastOrder = "NONE"
     }
 end
@@ -262,6 +278,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     end
 
     if not shipManager:HasSystem(DRONES_SYSTEM_ID) then
+        clear_boarding_party()
         debug.state = "Enemy has no Drone Control"
         debug.roomId = nil
         debug.capacity = nil
@@ -270,6 +287,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
 
     local droneRoomId = shipManager:GetSystemRoom(DRONES_SYSTEM_ID)
     if droneRoomId < 0 then
+        clear_boarding_party()
         debug.state = "Drone Control room is invalid"
         return
     end
@@ -277,13 +295,13 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     debug.roomId = droneRoomId
     debug.readyCrew = count_boarding_crew(shipManager, droneRoomId)
 
-    -- Only assemble crew when a Boarding Pod is deployed.
+    -- Only assemble crew while a Boarding Pod exists.
     if not has_active_pod(shipManager) then
-        if selected then
+        if boardingActive then
             clear_boarding_party()
         end
 
-        debug.state = "Waiting for active Boarding Pod"
+        debug.state = "Waiting for Boarding Pod"
         return
     end
 
@@ -309,40 +327,25 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
         )
 
         debug.rows = {}
-
-        if #selected > 0 then
-            add_event(string.format(
-                "Room %d: %d slots, %d crew selected",
-                droneRoomId, roomCapacity, #selected
-            ))
-        end
+        selectedIds = {}
 
         for _, crew in ipairs(selected) do
+            selectedIds[crew.extend.selfId] = true
+
             local record = make_record(crew)
             debug.rows[#debug.rows + 1] = record
 
-            local ok, err = pcall(function()
-                Hyperspace.StatBoostManager.GetInstance():CreateTimedAugmentBoost(
-                    Hyperspace.StatBoost(noAiBoost), crew
-                )
-            end)
-
-            record.boost = ok and "APPLIED" or "ERROR"
-
-            if ok then
-                add_event(string.format("%s: NO_AI boost applied", record.name))
-            else
-                add_event(string.format(
-                    "%s: boost ERROR: %s",
-                    record.name, tostring(err):sub(1, 70)
-                ))
-            end
+            add_event(string.format("%s: NO_AI enabled", record.name))
         end
     end
 
+    boardingActive = #selected > 0
+
+    local minimumCrew = math.max(1, (debug.capacity or 1) - 1)
+
     debug.state = string.format(
         "Boarding assembly: %d/%d ready",
-        debug.readyCrew, MIN_BOARDING_CREW
+        debug.readyCrew, minimumCrew
     )
 
     local issueOrders = orderTimer <= 0
