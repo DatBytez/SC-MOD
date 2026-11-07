@@ -2114,7 +2114,7 @@
 	<mod-append:script>data/sc_scripts/sc_crew_return.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_pod_transport.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_pod.lua</mod-append:script>
-	<!-- <mod-append:script>data/sc_scripts/sc_drone_pod_ai.lua</mod-append:script> -->
+	<mod-append:script>data/sc_scripts/sc_drone_pod_ai.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_pod_delivery.lua</mod-append:script>
 
 	<!-- Comsat -->
@@ -2129,9 +2129,6 @@
 	<!-- Other drone/system behavior -->
 	<mod-append:script>data/sc_scripts/sc_drone_engine.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_system_sensors.lua</mod-append:script>
-
-	<!-- Read registered tags only after all tag-registering scripts have loaded. -->
-	<!-- <mod-append:script>data/mv_scripts/tags/tag-data-read.lua</mod-append:script> -->
 
 	<!-- Requires parsed blueprint/tag data. -->
 	<mod-append:script>data/sc_scripts/sc_drone_powerlist.lua</mod-append:script>

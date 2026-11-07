@@ -29,8 +29,19 @@ local function activate_event(eventName)
     local player = Hyperspace.Global.GetInstance():GetShipManager(0)
 
     for _, entry in ipairs(entries) do
+
         if entry.target == "player" then
+            local hadAugment = player and player:HasAugmentation(entry.value) > 0
+
             add_hidden_augment(player, entry.value)
+
+            if player and not hadAugment and entry.value == "WEAPON_PREIGNITE" and player.weaponSystem then
+                for weapon in mods.multiverse.vter(player.weaponSystem.weapons) do
+                    if weapon.powered then
+                        weapon:ForceCoolup()
+                    end
+                end
+            end
         elseif entry.target == "enemy" then
             pendingEnemyAugments = pendingEnemyAugments or {}
             table.insert(pendingEnemyAugments, entry.value)
