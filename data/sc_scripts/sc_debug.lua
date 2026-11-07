@@ -1,24 +1,37 @@
 --[[
-DESCRIPTION: Displays enemy Boarding Pod AI assembly diagnostics.
-        - Shows the selected crew's room, destination, task, and active NO_AI stat.
-        - Shows accepted/rejected movement commands and destination changes.
-        - Shows recent AI and movement transitions useful for troubleshooting.
+DESCRIPTION: Displays enemy Boarding Pod AI selection and movement diagnostics.
+        - Shows why each enemy crew member is or is not eligible.
+        - Shows selected crew's NO_AI value, room, movement goal, and current task.
+        - Shows accepted/rejected movement orders to troubleshoot assembly.
 DEPENDENCIES: sc_drone_pod_ai.lua
 ]]
 
 local TEXT_X = 20
-local TEXT_Y = 165
-local LINE_HEIGHT = 16
+local TEXT_Y = 175
+local LINE_HEIGHT = 15
 local FONT = 10
-local MAX_EVENTS = 10
+local MAX_CREW_LINES = 12
+
+local function yesno(value)
+    return value and "Y" or "N"
+end
+
+local function safe_name(crew)
+    local ok, name = pcall(function() return crew:GetName() end)
+    return ok and tostring(name) or "?"
+end
+
+local function get_no_ai(crew)
+    local ok, _, value = pcall(function()
+        return crew.extend:CalculateStat(Hyperspace.CrewStat.NO_AI)
+    end)
+    if not ok then return "ERR" end
+    return yesno(value)
+end
 
 local function draw_panel()
     if not Hyperspace.App or not Hyperspace.App.world
-        or not Hyperspace.App.world.bStartedGame then
-        return
-    end
-
-    local debug = mods.sc and mods.sc.dronePodAI
+        or not Hyperspace.App.world.bStartedGame then return end
 
     Graphics.CSurface.GL_PushMatrix()
     Graphics.CSurface.GL_LoadIdentity()
@@ -30,43 +43,42 @@ local function draw_panel()
         line = line + 1
     end
 
-    add("TERRAN BOARDING POD AI TEST")
+    add("TERRAN BOARDING AI DIAGNOSTICS (NO LAUNCH)")
 
-    if not debug then
-        add("sc_drone_pod_ai.lua is not loaded")
-        Graphics.CSurface.GL_PopMatrix()
-        return
-    end
+    local state = mods.sc and mods.sc.dronePodAI
+    local ship = Hyperspace.Global.GetInstance():GetShipManager(1)
+    if not state then
+        add("ERROR: sc_drone_pod_ai.lua did not register diagnostics")
+    elseif not ship then
+        add("No enemy ship")
+    else
+        local selected = state.selected or {}
+        add(string.format("Room=%s Slots=%s Selected=%d  Status=%s",
+            tostring(state.room), tostring(state.capacity), #selected, tostring(state.status)))
+        add(string.format("NO_AI boosts=%d  Move accepted=%d rejected=%d",
+            state.boostsAttempted or 0, state.ordersAccepted or 0, state.ordersRejected or 0))
+        add("Crew: name  owner/current  room/goal  task  fight/drone/dead/out  NO_AI")
 
-    add(string.format("State: %s", debug.state or "Unknown"))
-    add(string.format("Tick=%d  Drone room=%s  Slots=%s  Selected=%d",
-        debug.tick or 0,
-        tostring(debug.roomId or "-"),
-        tostring(debug.capacity or "-"),
-        #(debug.rows or {})
-    ))
-    add("NO_AI duration=30s (once)    Orders every 6 ship loops")
-    add("room=current  goal=destination  task=AI task  orders=OK/FAIL")
-
-    for _, record in ipairs(debug.rows or {}) do
-        add(string.format("%s [%s] room=%s goal=%s task=%s NO_AI=%s",
-            tostring(record.name), tostring(record.id),
-            tostring(record.room or "-"), tostring(record.goal or "-"),
-            tostring(record.task or "-"), tostring(record.noAi or "-")
-        ))
-        add(string.format("  arrived=%s  boost=%s  orders=%d/%d  last=%s  goal changes=%d",
-            record.arrived and "YES" or "NO",
-            tostring(record.boost),
-            record.accepted or 0, record.rejected or 0,
-            tostring(record.lastOrder), record.goalChanges or 0
-        ))
-    end
-
-    add("")
-    add("Recent events (newest first):")
-    local events = debug.events or {}
-    for i = 1, math.min(#events, MAX_EVENTS) do
-        add(events[i])
+        local crewList = ship.vCrewList
+        local limit = math.min(crewList:size(), MAX_CREW_LINES)
+        for i = 0, limit - 1 do
+            local crew = crewList[i]
+            local marked = " "
+            for _, member in ipairs(selected) do
+                if member == crew then marked = "*"; break end
+            end
+            local goal = crew.finalGoal and crew.finalGoal.roomId or -1
+            local task = crew.task and crew.task.taskId or -1
+            add(string.format("%s%s %d/%d %d/%d t=%s F%s D%s X%s O%s AI=%s",
+                marked, safe_name(crew), crew.iShipId, crew.currentShipId,
+                crew.iRoomId, goal, tostring(task), yesno(crew:CanFight()),
+                yesno(crew:IsDrone()), yesno(crew.bDead), yesno(crew.bOutOfGame),
+                get_no_ai(crew)))
+        end
+        if crewList:size() > limit then
+            add(string.format("... %d more crew omitted", crewList:size() - limit))
+        end
+        add("* = selected for boarding; F=fights D=drone X=dead O=out")
     end
 
     Graphics.CSurface.GL_PopMatrix()

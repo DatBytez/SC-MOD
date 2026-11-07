@@ -1,13 +1,12 @@
--- Make tag tables local
-local weaponTagParsers = mods.multiverse.weaponTagParsers
-local droneTagParsers = mods.multiverse.droneTagParsers
-local augmentTagParsers = mods.multiverse.augmentTagParsers
-local powerTagParsers = mods.multiverse.powerTagParsers
-local crewTagParsers = mods.multiverse.crewTagParsers
-local eventTagParsers = mods.multiverse.eventTagParsers
-
 -- Check all weapons, drones, augments, powers, crew, and events for custom tags on game load
 script.on_load(function()
+    -- Make tag tables local
+    local weaponTagParsers = mods.multiverse.weaponTagParsers
+    local droneTagParsers = mods.multiverse.droneTagParsers
+    local augmentTagParsers = mods.multiverse.augmentTagParsers
+    local powerTagParsers = mods.multiverse.powerTagParsers
+    local crewTagParsers = mods.multiverse.crewTagParsers
+    local eventTagParsers = mods.multiverse.eventTagParsers
 
     for _, file in ipairs(mods.multiverse.blueprintFiles) do
         local doc = RapidXML.xml_document(file)
@@ -72,18 +71,21 @@ script.on_load(function()
     doc:clear()
 
     for _, file in ipairs(eventFiles) do
-        local doc = RapidXML.xml_document(file)
-        local root = doc:first_node("FTL") or doc
+        local ok, doc = pcall(RapidXML.xml_document, file)
 
-        local eventNode = root:first_node("event")
-        while eventNode do
-            for _, eventTagParser in ipairs(eventTagParsers) do
-                eventTagParser(eventNode)
+        if ok and doc then
+            local root = doc:first_node("FTL") or doc
+
+            local eventNode = root:first_node("event")
+            while eventNode do
+                for _, eventTagParser in ipairs(eventTagParsers) do
+                    eventTagParser(eventNode)
+                end
+                eventNode = eventNode:next_sibling("event")
             end
-            eventNode = eventNode:next_sibling("event")
-        end
 
-        doc:clear()
+            doc:clear()
+        end
     end
 
     local doc = RapidXML.xml_document("data/hyperspace.xml")
