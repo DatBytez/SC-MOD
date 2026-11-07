@@ -2,7 +2,7 @@
 DESCRIPTION: Fully charges weapons for player or enemy ships through custom event tags.
         - Supports player and enemy targets.
         - Player weapons are charged when the event activates.
-        - Enemy weapons are charged after the event's choice box is created.
+        - Enemy weapons are charged after the ship is initialized and updated.
         - Does not add or remove augments.
 TAG: <ambush target="enemy"/>
 DEPENDENCIES: sc_tag.lua, Multiverse vter, Hyperspace event hooks.
@@ -67,9 +67,20 @@ mods.sc.tag.register("event", "ambush", eventAmbushes, function(tagNode, eventNo
     return entries
 end)
 
-script.on_internal_event(Defines.InternalEvents.POST_CREATE_CHOICEBOX, function()
-    if not pendingEnemyAmbush then return end
+script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
+    if not pendingEnemyAmbush or ship.iShipId ~= 1 or not ship.weaponSystem then return end
 
+    local weapons = ship.weaponSystem.weapons
+    if weapons:size() == 0 then return end
+
+    for weapon in mods.multiverse.vter(weapons) do
+        ship.weaponSystem:IncreasePower(weapon.requiredPower, false)
+    end
+
+    charge_weapons(ship)
     pendingEnemyAmbush = false
-    charge_weapons(Hyperspace.Global.GetInstance():GetShipManager(1))
+end)
+
+script.on_internal_event(Defines.InternalEvents.JUMP_LEAVE, function()
+    pendingEnemyAmbush = false
 end)
