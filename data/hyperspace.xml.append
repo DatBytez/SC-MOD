@@ -2044,6 +2044,7 @@
 
 	<!-- SC core -->
 	<mod-append:script>data/sc_scripts/sc_tag.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_event.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_helpers.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_system_descriptions.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_scaling.lua</mod-append:script>

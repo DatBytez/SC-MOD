@@ -2313,6 +2313,7 @@
 	<text>
 		You try to accelerate out of the kill zone, but the Terran ship anticipates your course and cuts off your escape.
 	</text>
+	<addAugment value="WEAPON_PREIGNITE" target="enemy"/>
 	<ship load="SC_TERRAN_AMBUSH_SHIP" hostile="true"/>
 </event>
 
@@ -2367,6 +2368,7 @@
 	<text>
 		Your pilot tries to break away, but the Terran ship already has the vector covered. The ambush lands exactly as planned.
 	</text>
+	<addAugment value="WEAPON_PREIGNITE" target="enemy"/>
 	<ship load="SC_TERRAN_AMBUSH_SHIP" hostile="true"/>
 </event>
 
