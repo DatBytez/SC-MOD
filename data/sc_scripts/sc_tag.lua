@@ -8,10 +8,14 @@ DEPENDENCIES: Multiverse tag-data-init.lua loads before this file; tag-data-read
 ]]
 
 mods.sc = mods.sc or {}
-mods.sc.tag = mods.sc.tag or {}
-tag.eventTagParsers = tag.eventTagParsers or {}
+mods.sc.tag = {}
 
 local tag = mods.sc.tag
+
+mods.multiverse.augmentTagParsers = {}
+mods.multiverse.powerTagParsers = {}
+mods.multiverse.crewTagParsers = {}
+mods.multiverse.eventTagParsers = {}
 
 local parserLists = {
     weapon = mods.multiverse.weaponTagParsers,
@@ -19,7 +23,7 @@ local parserLists = {
     augment = mods.multiverse.augmentTagParsers,
     power = mods.multiverse.powerTagParsers,
     crew = mods.multiverse.crewTagParsers,
-    event = mods.sc.tag.eventTagParsers
+    event = mods.multiverse.eventTagParsers
 }
 
 local function get_value(tagNode)

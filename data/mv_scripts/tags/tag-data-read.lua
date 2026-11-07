@@ -4,9 +4,11 @@ local droneTagParsers = mods.multiverse.droneTagParsers
 local augmentTagParsers = mods.multiverse.augmentTagParsers
 local powerTagParsers = mods.multiverse.powerTagParsers
 local crewTagParsers = mods.multiverse.crewTagParsers
+local eventTagParsers = mods.multiverse.eventTagParsers
 
--- Check all weapons, drones, augments, powers, and crew for custom tags on game load
+-- Check all weapons, drones, augments, powers, crew, and events for custom tags on game load
 script.on_load(function()
+
     for _, file in ipairs(mods.multiverse.blueprintFiles) do
         local doc = RapidXML.xml_document(file)
         local root = doc:first_node("FTL") or doc
@@ -33,6 +35,52 @@ script.on_load(function()
                 augmentTagParser(blueprintNode)
             end
             blueprintNode = blueprintNode:next_sibling("augBlueprint")
+        end
+
+        doc:clear()
+    end
+
+    local eventFiles = {}
+    local seenFiles = {}
+
+    local doc = RapidXML.xml_document("data/hyperspace.xml")
+    local root = doc:first_node("FTL")
+
+    while root do
+        local eventsNode = root:first_node("events")
+
+        while eventsNode do
+            local fileNode = eventsNode:first_node("eventFile")
+
+            while fileNode do
+                local file = "data/events_" .. fileNode:value() .. ".xml"
+
+                if not seenFiles[file] then
+                    seenFiles[file] = true
+                    table.insert(eventFiles, file)
+                end
+
+                fileNode = fileNode:next_sibling("eventFile")
+            end
+
+            eventsNode = eventsNode:next_sibling("events")
+        end
+
+        root = root:next_sibling("FTL")
+    end
+
+    doc:clear()
+
+    for _, file in ipairs(eventFiles) do
+        local doc = RapidXML.xml_document(file)
+        local root = doc:first_node("FTL") or doc
+
+        local eventNode = root:first_node("event")
+        while eventNode do
+            for _, eventTagParser in ipairs(eventTagParsers) do
+                eventTagParser(eventNode)
+            end
+            eventNode = eventNode:next_sibling("event")
         end
 
         doc:clear()

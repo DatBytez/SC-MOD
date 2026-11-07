@@ -2035,8 +2035,6 @@
 <!-- ===============	SC SCRIPTS		=============== -->
 <FTL>
 <mod:findLike type="scripts" limit="1">
-	<!-- Tag initialization must load before scripts register SC tags. -->
-	<mod-append:script>data/mv_scripts/tags/tag-data-init.lua</mod-append:script>
 
 	<!-- External/shared dependencies -->
 	<mod-append:script>data/aa_scripts/AA_core.lua</mod-append:script>
@@ -2138,6 +2136,6 @@
 	<!-- Requires parsed blueprint/tag data. -->
 	<mod-append:script>data/sc_scripts/sc_drone_powerlist.lua</mod-append:script>
 
-	<!-- <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script> -->
+	<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
 </mod:findLike>
 </FTL>

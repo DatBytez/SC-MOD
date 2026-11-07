@@ -14,55 +14,6 @@ mods.sc.event = mods.sc.event or {}
 local eventAugments = {}
 local pendingEnemyAugments = nil
 
-mods.sc.tag.register("event", "addAugment", eventAugments, function(tagNode)
-    local entries = {}
-
-    while tagNode do
-        local value = tagNode:first_attribute("value")
-        local target = tagNode:first_attribute("target")
-
-        if value and target then
-            local targetName = target:value()
-
-            if targetName == "player" or targetName == "enemy" then
-                table.insert(entries, {
-                    value = value:value(),
-                    target = targetName
-                })
-            end
-        end
-
-        tagNode = tagNode:next_sibling("addAugment")
-    end
-
-    return #entries > 0 and entries or nil
-end)
-
-local function walk_nodes(node, callback)
-    while node do
-        callback(node)
-        walk_nodes(node:first_node(), callback)
-        node = node:next_sibling()
-    end
-end
-
-local function read_event_file(file)
-    local doc = RapidXML.xml_document(file)
-
-    walk_nodes(doc:first_node(), function(node)
-        if node:name() ~= "event" then return end
-
-        local name = node:first_attribute("name")
-        if not name then return end
-
-        for _, parser in ipairs(mods.sc.tag.eventTagParsers) do
-            parser(node)
-        end
-    end)
-
-    doc:clear()
-end
-
 local function add_hidden_augment(ship, augmentName)
     if not ship or ship:HasAugmentation(augmentName) > 0 then return end
 
@@ -87,34 +38,36 @@ local function activate_event(eventName)
     end
 end
 
-script.on_load(function()
-    local eventFiles = {}
-    local seenFiles = {}
+mods.sc.tag.register("event", "addAugment", eventAugments, function(tagNode, eventNode)
+    local entries = {}
 
-    local doc = RapidXML.xml_document("data/hyperspace.xml")
+    while tagNode do
+        local value = tagNode:first_attribute("value")
+        local target = tagNode:first_attribute("target")
 
-    walk_nodes(doc:first_node(), function(node)
-        if node:name() ~= "eventFile" then return end
+        if value and target then
+            local targetName = target:value()
 
-        local fileName = "data/events_" .. node:value() .. ".xml"
-
-        if not seenFiles[fileName] then
-            seenFiles[fileName] = true
-            table.insert(eventFiles, fileName)
+            if targetName == "player" or targetName == "enemy" then
+                table.insert(entries, {
+                    value = value:value(),
+                    target = targetName
+                })
+            end
         end
+
+        tagNode = tagNode:next_sibling("addAugment")
+    end
+
+    if #entries == 0 then return nil end
+
+    local eventName = eventNode:first_attribute("name"):value()
+
+    script.on_game_event(eventName, false, function()
+        activate_event(eventName)
     end)
 
-    doc:clear()
-
-    for _, fileName in ipairs(eventFiles) do
-        read_event_file(fileName)
-    end
-
-    for eventName in pairs(eventAugments) do
-        script.on_game_event(eventName, false, function()
-            activate_event(eventName)
-        end)
-    end
+    return entries
 end)
 
 script.on_internal_event(Defines.InternalEvents.GENERATOR_CREATE_SHIP_POST,
