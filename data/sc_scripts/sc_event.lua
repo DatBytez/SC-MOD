@@ -1,73 +1,59 @@
-
 --[[
-DESCRIPTION: Adds hidden augments to ships through custom event tags.
+DESCRIPTION: Fully charges weapons for player or enemy ships through custom event tags.
         - Supports player and enemy targets.
-        - Enemy augments are added during ship generation.
-        - All added augments are hidden and do not occupy normal augment slots.
-TAG: <addAugment value="AUGMENT_NAME" target="enemy"/>
-DEPENDENCIES: sc_tag.lua, Hyperspace event and ship generation hooks.
+        - Player weapons are charged when the event activates.
+        - Enemy weapons are charged after the event's choice box is created.
+        - Does not add or remove augments.
+TAG: <ambush target="enemy"/>
+DEPENDENCIES: sc_tag.lua, Multiverse vter, Hyperspace event hooks.
 ]]
 
 mods.sc = mods.sc or {}
 mods.sc.event = mods.sc.event or {}
 
-local eventAugments = {}
-local pendingEnemyAugments = nil
+local eventAmbushes = {}
+local pendingEnemyAmbush = false
 
-local function add_hidden_augment(ship, augmentName)
-    if not ship or ship:HasAugmentation(augmentName) > 0 then return end
+local function charge_weapons(ship)
+    if not ship or not ship.weaponSystem then return end
 
-    ship:AddAugmentation("HIDDEN " .. augmentName)
-end
-
-local function activate_event(eventName)
-    local entries = eventAugments[eventName]
-    if not entries then return end
-
-    pendingEnemyAugments = nil
-
-    local player = Hyperspace.Global.GetInstance():GetShipManager(0)
-
-    for _, entry in ipairs(entries) do
-
-        if entry.target == "player" then
-            local hadAugment = player and player:HasAugmentation(entry.value) > 0
-
-            add_hidden_augment(player, entry.value)
-
-            if player and not hadAugment and entry.value == "WEAPON_PREIGNITE" and player.weaponSystem then
-                for weapon in mods.multiverse.vter(player.weaponSystem.weapons) do
-                    if weapon.powered then
-                        weapon:ForceCoolup()
-                    end
-                end
-            end
-        elseif entry.target == "enemy" then
-            pendingEnemyAugments = pendingEnemyAugments or {}
-            table.insert(pendingEnemyAugments, entry.value)
+    for weapon in mods.multiverse.vter(ship.weaponSystem.weapons) do
+        if weapon.powered then
+            weapon:ForceCoolup()
         end
     end
 end
 
-mods.sc.tag.register("event", "addAugment", eventAugments, function(tagNode, eventNode)
+local function activate_event(eventName)
+    local entries = eventAmbushes[eventName]
+    if not entries then return end
+
+    pendingEnemyAmbush = false
+
+    for _, target in ipairs(entries) do
+        if target == "player" then
+            charge_weapons(Hyperspace.Global.GetInstance():GetShipManager(0))
+        elseif target == "enemy" then
+            pendingEnemyAmbush = true
+        end
+    end
+end
+
+mods.sc.tag.register("event", "ambush", eventAmbushes, function(tagNode, eventNode)
     local entries = {}
 
     while tagNode do
-        local value = tagNode:first_attribute("value")
         local target = tagNode:first_attribute("target")
 
-        if value and target then
+        if target then
             local targetName = target:value()
 
             if targetName == "player" or targetName == "enemy" then
-                table.insert(entries, {
-                    value = value:value(),
-                    target = targetName
-                })
+                table.insert(entries, targetName)
             end
         end
 
-        tagNode = tagNode:next_sibling("addAugment")
+        tagNode = tagNode:next_sibling("ambush")
     end
 
     if #entries == 0 then return nil end
@@ -81,22 +67,9 @@ mods.sc.tag.register("event", "addAugment", eventAugments, function(tagNode, eve
     return entries
 end)
 
-script.on_internal_event(Defines.InternalEvents.GENERATOR_CREATE_SHIP_POST,
-    function(name, sector, event, bp, ship)
-        if not pendingEnemyAugments or not ship then
-            return Defines.Chain.CONTINUE
-        end
-
-        for _, augmentName in ipairs(pendingEnemyAugments) do
-            add_hidden_augment(ship, augmentName)
-        end
-
-        pendingEnemyAugments = nil
-
-        return Defines.Chain.CONTINUE
-    end
-)
-
 script.on_internal_event(Defines.InternalEvents.POST_CREATE_CHOICEBOX, function()
-    pendingEnemyAugments = nil
+    if not pendingEnemyAmbush then return end
+
+    pendingEnemyAmbush = false
+    charge_weapons(Hyperspace.Global.GetInstance():GetShipManager(1))
 end)
