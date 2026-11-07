@@ -4,10 +4,9 @@ DESCRIPTION: Manages the secondary/right weapon while an <sc_paired> pair is act
         - Removes its power and missile cost while paired.
         - Synchronizes its cooldown with the primary weapon and suppresses native firing.
         - Restores the original weapon state when the pair breaks or a management screen opens.
-DEPENDENCIES: sc_weapon_paired_core.lua, Multiverse vter
+DEPENDENCIES: sc_weapon_paired_core.lua
 ]]
 
-local vter = mods.multiverse.vter
 local paired = mods.sc.paired
 
 local SECONDARY_FULL_CHARGE_BUFFER = 0.10
@@ -51,50 +50,13 @@ local function reset_pair_cooldowns_on_initial_pair(pairData)
     reset_weapon_cooldown(pairData.secondaryWeapon)
 end
 
-local function try_get_field(object, fieldName)
-    local ok, value = pcall(function()
-        return object[fieldName]
-    end)
-
-    if not ok then return nil end
-
-    return value
-end
-
-local function try_set_field(object, fieldName, value)
-    local ok = pcall(function()
-        object[fieldName] = value
-    end)
-
-    return ok
-end
-
-local SECONDARY_POWER_FIELD_CANDIDATES = {
-    "powerRequired",
-    "requiredPower",
-    "iRequiredPower",
-    "powerRequirement",
-    "iPowerRequired"
-}
-
 local function set_secondary_power_requirement_zero(secondaryWeapon)
     local data = paired.get_state(secondaryWeapon)
 
+    if data.originalRequiredPower == nil then data.originalRequiredPower = secondaryWeapon.requiredPower end
     if data.originalPowered == nil then data.originalPowered = secondaryWeapon.powered end
 
-    data.modifiedFields = data.modifiedFields or {}
-
-    for _, fieldName in ipairs(SECONDARY_POWER_FIELD_CANDIDATES) do
-        local currentValue = try_get_field(secondaryWeapon, fieldName)
-
-        if type(currentValue) == "number" then
-            if data.modifiedFields[fieldName] == nil then
-                data.modifiedFields[fieldName] = currentValue
-            end
-
-            try_set_field(secondaryWeapon, fieldName, 0)
-        end
-    end
+    secondaryWeapon.requiredPower = 0
 end
 
 local function set_secondary_missile_spend_zero(secondaryWeapon)
@@ -131,7 +93,7 @@ end
 local function weapon_has_active_pair_restore_state(data)
     return data.isPaired == true
         or data.originalBlueprint ~= nil
-        or data.modifiedFields ~= nil
+        or data.originalRequiredPower ~= nil
         or data.originalPowered ~= nil
         or data.originalMissileSpend ~= nil
         or data.pairSignature ~= nil
@@ -143,12 +105,7 @@ local function restore_secondary_state(weapon)
     local data = paired.get_state(weapon)
     if not weapon_has_active_pair_restore_state(data) then return end
 
-    if data.modifiedFields then
-        for fieldName, originalValue in pairs(data.modifiedFields) do
-            try_set_field(weapon, fieldName, originalValue)
-        end
-    end
-
+    if data.originalRequiredPower ~= nil then weapon.requiredPower = data.originalRequiredPower end
     if data.originalMissileSpend ~= nil then weapon.iSpendMissile = data.originalMissileSpend end
 
     restore_secondary_blueprint(weapon, data)
@@ -157,7 +114,7 @@ local function restore_secondary_state(weapon)
 
     reset_stored_pair_cooldowns(data, weapon)
 
-    data.modifiedFields = nil
+    data.originalRequiredPower = nil
     data.originalPowered = nil
     data.originalMissileSpend = nil
     data.isPaired = false
@@ -228,26 +185,30 @@ local function restore_all_paired_secondary_states(shipManager)
     for i = 0, weapons:size() - 1 do restore_secondary_state(weapons[i]) end
 end
 
-local function player_has_open_management_screen()
-    if not Hyperspace.App or not Hyperspace.App.gui then return false end
+local tabbedWindowRendered = false
+local tabbedWindowOpen = false
 
-    local gui = Hyperspace.App.gui
+script.on_render_event(
+    Defines.RenderEvents.TABBED_WINDOW,
+    function()
+        tabbedWindowRendered = true
 
-    if gui.equipScreen.bOpen
-        or gui.crewScreen.bOpen
-        or gui.upgradeScreen.bOpen
-        or gui.storeScreens.bOpen
-        or gui.menuBox.bOpen
-        or (gui.starMap and gui.starMap.bOpen) then
-        return true
+        local shipManager = Hyperspace.ships(0)
+        if shipManager then
+            restore_all_paired_secondary_states(shipManager)
+        end
+    end,
+    function() end
+)
+
+script.on_render_event(
+    Defines.RenderEvents.MOUSE_CONTROL,
+    function() end,
+    function()
+        tabbedWindowOpen = tabbedWindowRendered
+        tabbedWindowRendered = false
     end
-
-    for window in vter(gui.focusWindows) do
-        if window.bOpen then return true end
-    end
-
-    return false
-end
+)
 
 local function maintain_paired_secondary_weapons(shipManager)
     local weapons = shipManager.weaponSystem.weapons
@@ -273,19 +234,10 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     if not paired.run_has_started() then return end
     if not shipManager or shipManager.iShipId ~= 0 or not shipManager.weaponSystem then return end
 
-    if player_has_open_management_screen() then
+    if tabbedWindowOpen then
         restore_all_paired_secondary_states(shipManager)
         return
     end
 
     maintain_paired_secondary_weapons(shipManager)
-end)
-
-script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
-    if not paired.run_has_started() or not player_has_open_management_screen() then return end
-
-    local shipManager = Hyperspace.ships(0)
-    if not shipManager or not shipManager.weaponSystem then return end
-
-    restore_all_paired_secondary_states(shipManager)
 end)

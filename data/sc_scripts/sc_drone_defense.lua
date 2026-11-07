@@ -38,21 +38,14 @@ function defense.is_active(drone)
 end
 
 function defense.get_owner_id(drone)
-    local success, ownerId = pcall(function()
-        return drone:GetOwnerId()
-    end)
-
-    if success then
-        return ownerId
-    end
-
-    return nil
+    if not drone then return nil end
+    return drone:GetOwnerId()
 end
 
 local function update_cycle_lock(drone)
     if not defense.has_tag(drone) then return end
 
-    if activeShieldCycleSpent[drone] and (drone.weaponCooldown or 0) <= 0 then
+    if activeShieldCycleSpent[drone] and (drone.weaponCooldown) <= 0 then
         activeShieldCycleSpent[drone] = nil
     end
 end
@@ -102,7 +95,7 @@ end
 local function put_drone_on_cooldown(drone)
     local cooldown = drone:GetWeaponCooldown()
 
-    if cooldown and cooldown > 0 then
+    if cooldown > 0 then
         drone.weaponCooldown = cooldown
     end
 end

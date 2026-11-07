@@ -22,6 +22,7 @@
 <oxygenWithoutSystem enabled="true"/>
 <playerHpColorFix enabled="true"/>
 <preIgniteChargers enabled="true"/>
+<enemyPreigniterFix enabled="true"/>
 <showDummyEquipmentSlots enabled="true" opacity="0.2"/>
 <showScrapCollectorScrap enabled="true"/>
 <multiShipFix enabled="true"/>
@@ -372,6 +373,7 @@
 		<canFight>false</canFight>
 		<canSabotage>false</canSabotage>
 		<canShoot>false</canShoot>
+		<canTeleport>false</canTeleport>
 		<crewSlots>0.5</crewSlots>
 		<deathSounds>
 			<deathSound>terran_civilian_death</deathSound>
@@ -524,7 +526,7 @@
 				<duration>10.0</duration>
 				<cooldownColor r="240" g="210" b="50" />
 				<moveSpeedMultiplier>1.5</moveSpeedMultiplier>
-				<shootTimer min="25" max="32" />
+				<shootTimer min="250" max="325" />
 				<punchTimer min="250" max="325" />
 			</temporaryEffect>
 		</powerEffect>
@@ -2113,6 +2115,7 @@
 	<mod-append:script>data/sc_scripts/sc_crew_return.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_pod_transport.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_pod.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_pod_ai.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_pod_delivery.lua</mod-append:script>
 
 	<!-- Comsat -->

@@ -45,7 +45,7 @@ local function retire_cloak_proxy(shipId)
     local proxy = cloakProxies[shipId]
     if not proxy then return end
 
-    if not proxy.bDead and not proxy:IsDead() then
+    if not proxy:IsDead() then
         proxy.health.first = 0
     else
         cloakProxies[shipId] = nil
@@ -55,7 +55,7 @@ end
 local function update_cloak_targeting_proxy(shipId, enemyShip, detectionActive)
     local proxy = cloakProxies[shipId]
 
-    if proxy and (proxy.bDead or proxy:IsDead()) then
+    if proxy and proxy:IsDead() then
         cloakProxies[shipId] = nil
         proxy = nil
     end
