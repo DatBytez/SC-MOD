@@ -2947,7 +2947,6 @@ END OF SUBSYSTEMS
 	</weaponList>
 	<droneList drones="4" count="3">
 		<drone name="TERRAN_SCV" />
-		<drone name="TERRAN_SCV_1" />
 		<drone name="TERRAN_COMSAT" />
 	</droneList>
 	<health amount="30" />
