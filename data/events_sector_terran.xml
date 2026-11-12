@@ -14,10 +14,6 @@
     <gotaway load="GOTAWAY_EVENT"/>
     <destroyed load="SC_DESTROYED_TERRAN"/>
     <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-    <crew>
-        <crewMember type="terran_marine" prop="0.01"/>
-        <crewMember type="LIST_CREW_TERRAN_BATTLECRUISER" prop="0.99"/>
-    </crew>
 </ship>
 
 
