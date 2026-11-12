@@ -1,5 +1,10 @@
+
 --[[
-DESCRIPTION: Returns player-owned crew from the enemy ship whenever that ship is non-hostile.
+DESCRIPTION: Returns crew to their original ships when the opposing ship becomes non-hostile.
+        - Returns player-owned crew from a non-hostile enemy ship.
+        - Returns enemy-owned crew from the player ship when the enemy becomes non-hostile.
+        - Does not return enemy crew to a destroyed or escaping ship.
+        - Prefers airlock rooms, falling back to a random room.
 DEPENDENCIES: sc_crew_copy.lua
 ]]
 
@@ -35,6 +40,40 @@ local function get_airlock_room_ids(shipManager)
     return roomIds
 end
 
+local function return_crew(sourceShip, destinationShip)
+    local returningCrew = {}
+
+    for i = 0, sourceShip.vCrewList:size() - 1 do
+        local crew = sourceShip.vCrewList[i]
+
+        if crew.iShipId == destinationShip.iShipId
+            and crew.currentShipId == sourceShip.iShipId
+            and not crew:IsDrone()
+            and not crew.bDead
+            and not crew.bOutOfGame
+            and ((not crew.deathTimer) or not crew.deathTimer:Running()) then
+
+            returningCrew[#returningCrew + 1] = crew
+        end
+    end
+
+    if #returningCrew == 0 then return end
+
+    local airlockRoomIds = get_airlock_room_ids(destinationShip)
+
+    for _, crew in ipairs(returningCrew) do
+        local roomId
+
+        if #airlockRoomIds > 0 then
+            roomId = airlockRoomIds[math.random(#airlockRoomIds)]
+        else
+            roomId = get_random_room_id(destinationShip)
+        end
+
+        crew_copy.move(crew, destinationShip, roomId)
+    end
+end
+
 script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     if shipManager.iShipId ~= 0 then return end
 
@@ -47,35 +86,11 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
         return
     end
 
-    local returningCrew = {}
+    -- Preserve the existing return behavior for player-owned crew.
+    return_crew(enemyShip, shipManager)
 
-    for i = 0, enemyShip.vCrewList:size() - 1 do
-        local crew = enemyShip.vCrewList[i]
+    -- Enemy boarders cannot return to a ship that is escaping.
+    if enemyShip.bJumping then return end
 
-        if crew.iShipId == 0
-            and crew.currentShipId == enemyShip.iShipId
-            and not crew:IsDrone()
-            and not crew.bDead
-            and not crew.bOutOfGame
-            and ((not crew.deathTimer) or not crew.deathTimer:Running()) then
-
-            returningCrew[#returningCrew + 1] = crew
-        end
-    end
-
-    if #returningCrew == 0 then return end
-
-    local airlockRoomIds = get_airlock_room_ids(shipManager)
-
-    for _, crew in ipairs(returningCrew) do
-        local roomId
-
-        if #airlockRoomIds > 0 then
-            roomId = airlockRoomIds[math.random(#airlockRoomIds)]
-        else
-            roomId = get_random_room_id(shipManager)
-        end
-
-        crew_copy.move(crew, shipManager, roomId)
-    end
+    return_crew(shipManager, enemyShip)
 end)
