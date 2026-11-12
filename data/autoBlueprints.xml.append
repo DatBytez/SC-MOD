@@ -1104,14 +1104,15 @@
 	<weaponSlots>4</weaponSlots>
 	<droneSlots>2</droneSlots>
 	<weaponList missiles="8" count="4" load="TERRAN_STANDARD_WEAPONS" />
-	<droneList drones="8" count="1">
+	<droneList drones="1" count="1">
 		<drone name="TERRAN_POD" />
 	</droneList>
 	<health amount="11" />
 	<maxPower amount="8" />
+	<crewCount amount="2" class="terran_medic_2" />
 	<crewCount amount="6" max="12" class="LIST_CREW_TERRAN_BATTLECRUISER" />
 	<boardingAI>sabotage</boardingAI>
-	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
+	<!-- <aug name="TERRAN_SHIP_ARMOR_HEAVY" /> -->
 	<aug name="TERRAN_SHIP" />
 </shipBlueprint>
 </FTL>

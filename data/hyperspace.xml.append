@@ -527,8 +527,8 @@
 				<duration>10.0</duration>
 				<cooldownColor r="240" g="210" b="50" />
 				<moveSpeedMultiplier>1.5</moveSpeedMultiplier>
-				<shootTimer min="350" max="425" />
-				<punchTimer min="350" max="425" />
+				<shootTimer min="450" max="525" />
+				<punchTimer min="450" max="525" />
 			</temporaryEffect>
 		</powerEffect>
 		<powerEffect load="SC_REPAIR"/>
@@ -706,7 +706,7 @@
 	<race name="terran_firebat">
 		<animBase>human</animBase>
 		<maxHealth>100</maxHealth>
-		<rangedDamageMultiplier>1.5</rangedDamageMultiplier>
+		<rangedDamageMultiplier>0.5</rangedDamageMultiplier>
 		<canPunch>false</canPunch>
 		<shootingSounds>
 			<shootingSound>terran_firebat_attack1</shootingSound>
@@ -778,7 +778,7 @@
 		<animBase>human</animBase>
 		<animSheet>terran_firebat</animSheet>
 		<maxHealth>100</maxHealth>
-		<rangedDamageMultiplier>1.5</rangedDamageMultiplier>
+		<rangedDamageMultiplier>0.5</rangedDamageMultiplier>
 		<canPunch>false</canPunch>
 		<shootingSounds>
 			<shootingSound>terran_firebat_attack1</shootingSound>
