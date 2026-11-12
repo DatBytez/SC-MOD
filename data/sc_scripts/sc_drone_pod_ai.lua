@@ -20,7 +20,6 @@ local PILOT_SYSTEM_ID = system_id_from_name("pilot")
 local POD_SPECIES = "terran_pod"
 local POD_POWER = "SC_LAUNCH"
 local ORDER_INTERVAL = 5
-local MAX_EVENTS = 12
 
 mods.sc = mods.sc or {}
 mods.sc.dronePodAI = mods.sc.dronePodAI or {}
@@ -44,9 +43,6 @@ local minimumCrew = 0
 
 local function add_event(message)
     table.insert(debug.events, 1, message)
-    if #debug.events > MAX_EVENTS then
-        table.remove(debug.events)
-    end
 end
 
 local function eligible_crew(crew, shipId)
@@ -180,8 +176,6 @@ local function clear_boarding_party()
     debug.eligibleCrew = 0
 end
 
--- Suppress normal AI while the crew member belongs to
--- an active boarding party.
 script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(crew, stat, _def, amount, value)
     if stat == Hyperspace.CrewStat.NO_AI
         and boardingActive
@@ -193,8 +187,6 @@ script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(cr
     return Defines.Chain.CONTINUE, amount, value
 end)
 
--- Do not recalculate the target as crew enter Drone Control.
--- The required number is fixed when assembly begins.
 script.on_internal_event(Defines.InternalEvents.POWER_READY, function(power, ready)
     if not power.def
         or power.def.name ~= POD_POWER
@@ -242,7 +234,6 @@ script.on_internal_event(Defines.InternalEvents.POWER_READY, function(power, rea
     return Defines.Chain.CONTINUE, ready
 end)
 
--- The existing Pod ability performs the transport.
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
     if not power.def
         or power.def.name ~= POD_POWER

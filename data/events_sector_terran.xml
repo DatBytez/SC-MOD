@@ -8,9 +8,10 @@
 </event>
 
 
+
 <ship name="SC_TEST_BATTLECRUISER" auto_blueprint="SC_TEST_BATTLECRUISER">
-    <surrender chance="1.0" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
-    <escape chance="1.0" min="3" max="10" load="ESCAPE_EVENT"/>
+    <surrender chance="1.0" min="2" max="2" load="SC_SURRENDER_TERRAN"/>
+    <escape chance="1.0" min="5" max="5" load="ESCAPE_EVENT"/>
     <gotaway load="GOTAWAY_EVENT"/>
     <destroyed load="SC_DESTROYED_TERRAN"/>
     <deadCrew load="SC_DEAD_CREW_TERRAN"/>
