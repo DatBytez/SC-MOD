@@ -1,4 +1,3 @@
-
 --[[
 DESCRIPTION: Returns crew to their original ships when the opposing ship becomes non-hostile.
         - Returns player-owned crew from a non-hostile enemy ship.
@@ -49,9 +48,12 @@ local function return_crew(sourceShip, destinationShip)
         if crew.iShipId == destinationShip.iShipId
             and crew.currentShipId == sourceShip.iShipId
             and not crew:IsDrone()
-            and not crew.bDead
-            and not crew.bOutOfGame
-            and ((not crew.deathTimer) or not crew.deathTimer:Running()) then
+            and not crew:IsDead()
+            and not crew:OutOfGame()
+            and (
+                not crew.extend.deathTimer
+                or not crew.extend.deathTimer:Running()
+            ) then
 
             returningCrew[#returningCrew + 1] = crew
         end
@@ -70,7 +72,9 @@ local function return_crew(sourceShip, destinationShip)
             roomId = get_random_room_id(destinationShip)
         end
 
-        crew_copy.move(crew, destinationShip, roomId)
+        if roomId ~= nil and roomId >= 0 then
+            crew_copy.move(crew, destinationShip, roomId)
+        end
     end
 end
 
@@ -86,10 +90,8 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
         return
     end
 
-    -- Preserve the existing return behavior for player-owned crew.
     return_crew(enemyShip, shipManager)
 
-    -- Enemy boarders cannot return to a ship that is escaping.
     if enemyShip.bJumping then return end
 
     return_crew(shipManager, enemyShip)

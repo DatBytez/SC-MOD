@@ -170,8 +170,6 @@ local function clear_boarding_party()
     minimumCrew = 0
 end
 
--- Suppress normal AI while the crew member belongs to
--- an active boarding party.
 script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(crew, stat, _def, amount, value)
     if stat == Hyperspace.CrewStat.NO_AI
         and boardingActive
@@ -183,8 +181,6 @@ script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(cr
     return Defines.Chain.CONTINUE, amount, value
 end)
 
--- Do not recalculate the target as crew enter Drone Control.
--- The required number is fixed when assembly begins.
 script.on_internal_event(Defines.InternalEvents.POWER_READY, function(power, ready)
     if not power.def
         or power.def.name ~= POD_POWER

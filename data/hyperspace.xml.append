@@ -691,6 +691,7 @@
 				<powerSound>ability_restoration1</powerSound>
 				<powerSound>ability_restoration2</powerSound>
 			</powerSounds>
+			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
 			<buttonText id="ability_TERRAN_RESTORATION_BUTTON"/>
 			<tooltip id="ability_TERRAN_RESTORATION_TOOLTIP"/>
 			<cooldownColor r="240" g="210" b="50" />

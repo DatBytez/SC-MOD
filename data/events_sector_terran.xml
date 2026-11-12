@@ -8,7 +8,7 @@
 </event>
 
 <ship name="SC_TEST_BATTLECRUISER" auto_blueprint="SC_TEST_BATTLECRUISER">
-    <!-- <surrender min="2" max="2" load="SC_SURRENDER_TERRAN"/> -->
+    <surrender min="2" max="6" load="SC_SURRENDER_TERRAN"/>
     <escape min="2" max="999" load="ESCAPE_EVENT"/>
     <gotaway load="GOTAWAY_EVENT"/>
     <destroyed load="SC_DESTROYED_TERRAN"/>
@@ -107,7 +107,7 @@
 
 <event name="EVENT_TERRAN_BATTLECRUISER_A">
 	<text>Aaaaa! Scary ship!</text>
-	<ship load="TERRAN_SHIP_BATTLECRUISER_A" hostile="false"/>
+	<ship load="TERRAN_SHIP_BATTLECRUISER_A" hostile="true"/>
 </event>
 
 <ship name="TERRAN_SHIP_VESSEL_A" auto_blueprint="TERRAN_SHIP_VESSEL_A">

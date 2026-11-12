@@ -562,7 +562,6 @@
 	<minSector>3</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
-		<artillery power="2" max="5" room="0" start="false" weapon="ARTILLERY_FED" />
 		<doors power="1" max="3" room="3" start="true" />
 		<drones power="2" max="6" room="8" start="true" />
 		<engines power="1" max="3" room="7" start="true" />
@@ -570,7 +569,6 @@
 		<oxygen power="1" max="2" room="1" start="true" />
 		<pilot power="1" max="1" room="11" start="true" />
 		<lily_system_bracers power="2" max="5" room="6" start="true" />
-		<teleporter power="1" max="3" room="9" start="false" />
 		<weapons power="3" max="8" room="5" start="true" />
 	</systemList>
 	<weaponSlots>4</weaponSlots>
@@ -849,8 +847,8 @@
 	<minSector>3</minSector>
 	<maxSector>8</maxSector>
 	<systemList>
-		<artillery power="1" max="2" room="4" start="false" weapon="TERRAN_MISSILE_HALO" />
-		<artillery power="1" max="2" room="12" start="false" weapon="TERRAN_MISSILE_HALO" />
+		<artillery power="1" max="2" room="4" start="true" weapon="TERRAN_MISSILE_HALO" />
+		<artillery power="1" max="2" room="12" start="true" weapon="TERRAN_MISSILE_HALO" />
 		<battery power="1" max="2" room="8" start="false" />
 		<clonebay power="1" max="3" room="3" start="false" />
 		<doors power="1" max="3" room="2" start="false" />
@@ -862,7 +860,7 @@
 		<pilot power="1" max="3" room="1" start="true" />
 		<sensors power="1" max="1" room="0" start="false" />
 		<lily_system_bracers power="2" max="4" room="6" start="true" />
-		<weapons power="1" max="5" room="13" start="true" />
+		<!-- <weapons power="1" max="5" room="13" start="true" /> -->
 	</systemList>
 	<weaponSlots>2</weaponSlots>
 	<droneSlots>1</droneSlots>
@@ -991,7 +989,6 @@
 	<systemList>
 		<clonebay power="1" max="1" room="9" start="true" />
 		<doors power="1" max="1" room="4" start="true" />
-		<!-- <drones power="1" max="1" room="0" start="true" /> -->
 		<medbay power="1" max="1" room="5" start="true" />
 		<oxygen power="1" max="1" room="1" start="true" />
 		<lily_system_bracers power="1" max="1" room="7" start="true" />
@@ -1068,7 +1065,6 @@
 		<medbay power="1" max="3" room="1" start="false" />
 		<oxygen power="1" max="3" room="7" start="true" />
 		<lily_system_bracers power="1" max="3" room="4" start="true" />
-		<!-- <teleporter power="1" max="3" room="5" start="false" /> -->
 		<weapons power="1" max="1" room="0" start="true" />
 	</systemList>
 	<weaponSlots>1</weaponSlots>
@@ -1109,10 +1105,9 @@
 	</droneList>
 	<health amount="11" />
 	<maxPower amount="8" />
-	<crewCount amount="2" class="terran_medic_2" />
 	<crewCount amount="6" max="12" class="LIST_CREW_TERRAN_BATTLECRUISER" />
 	<boardingAI>sabotage</boardingAI>
-	<!-- <aug name="TERRAN_SHIP_ARMOR_HEAVY" /> -->
+	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
 	<aug name="TERRAN_SHIP" />
 </shipBlueprint>
 </FTL>
