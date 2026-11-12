@@ -32,10 +32,10 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_ghost" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_WRAITH" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_WRAITH_A">
@@ -49,10 +49,10 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_ghost" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_WRAITH" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_WRAITH_B">
@@ -66,10 +66,10 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_ghost" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_WRAITH" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_WRAITH_C">
@@ -83,10 +83,10 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_ghost" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_WRAITH" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_WRAITH_D">
@@ -100,10 +100,10 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_marine" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_BATTLECRUISER" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_BATTLECRUISER_A">
@@ -117,10 +117,10 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_civilian" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_VESSEL_A">
@@ -134,10 +134,10 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_civilian" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_VESSEL_B">
@@ -151,10 +151,10 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_civilian" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_VESSEL_C">
@@ -168,10 +168,10 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_civilian" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_VESSEL_D">
@@ -185,10 +185,10 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_civilian" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_DROPSHIP">
@@ -202,10 +202,10 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_civilian" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_VALKYRIE_A">
@@ -219,10 +219,10 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_civilian" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_VALKYRIE_B">
@@ -234,10 +234,10 @@
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_civilian" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_BARRACKS">
@@ -249,10 +249,10 @@
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_civilian" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_SCIENCE">
@@ -264,10 +264,10 @@
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_civilian" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_FACTORY">
@@ -279,10 +279,10 @@
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_civilian" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_COMMAND">
@@ -294,10 +294,10 @@
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<crew>
+<!-- <crew>
     <crewMember type="terran_civilian" prop="0.01"/>
 	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew>
+</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_ENGINEERING">
@@ -309,10 +309,10 @@
 	<surrender chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 	<destroyed load="SC_DESTROYED_TERRAN"/>
 	<deadCrew load="SC_DEAD_CREW_TERRAN"/>
-	<crew>
+	<!-- <crew>
 		<crewMember type="terran_civilian" prop="0.01"/>
 		<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-	</crew>
+	</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_STARPORT">
