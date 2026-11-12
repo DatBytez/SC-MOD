@@ -7,16 +7,13 @@
     <text>The area around this beacon is quiet. Nothing of interest appears on your sensors.</text>
 </event>
 
-
-
 <ship name="SC_TEST_BATTLECRUISER" auto_blueprint="SC_TEST_BATTLECRUISER">
-    <surrender chance="1.0" min="2" max="2" load="SC_SURRENDER_TERRAN"/>
-    <escape chance="1.0" min="5" max="5" load="ESCAPE_EVENT"/>
+    <!-- <surrender min="2" max="2" load="SC_SURRENDER_TERRAN"/> -->
+    <escape min="2" max="999" load="ESCAPE_EVENT"/>
     <gotaway load="GOTAWAY_EVENT"/>
     <destroyed load="SC_DESTROYED_TERRAN"/>
     <deadCrew load="SC_DEAD_CREW_TERRAN"/>
 </ship>
-
 
 <event name="SC_TEST">
 	<text>A Terran battlecruiser moves to engage.</text>

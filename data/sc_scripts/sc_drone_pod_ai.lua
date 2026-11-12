@@ -5,7 +5,7 @@ DESCRIPTION: Controls enemy Boarding Pod assembly and launch readiness.
         - Excludes crew in or assigned to Piloting when its room is valid.
         - Suppresses normal AI for selected crew while a Boarding Pod is available.
         - Orders selected crew to Drone Control through normal movement.
-        - Requires the smaller of Drone Control slots - 1 or eligible boarding crew.
+        - Requires the smaller of Drone Control slots - 1 or available boarding crew.
         - Does not reserve an eligible boarder when an ineligible crew member can pilot.
         - Locks the required crew count until the Pod launches or disappears.
         - The existing Pod script transports all crew present in Drone Control.
@@ -32,6 +32,7 @@ debug.tick = 0
 debug.launches = 0
 debug.readyCrew = 0
 debug.eligibleCrew = 0
+debug.availableCrew = 0
 debug.minimumCrew = 0
 
 local lastEnemyShip = nil
@@ -75,11 +76,19 @@ local function has_ineligible_pilot_candidate(shipManager)
     return false
 end
 
+-- local function available_for_boarding(crew, shipId, pilotRoomId)
+--     return eligible_crew(crew, shipId)
+--         and (pilotRoomId < 0
+--             or (crew.iRoomId ~= pilotRoomId
+--                 and (not crew.finalGoal or crew.finalGoal.roomId ~= pilotRoomId)))
+-- end
+
 local function available_for_boarding(crew, shipId, pilotRoomId)
     return eligible_crew(crew, shipId)
-        and (pilotRoomId < 0
-            or (crew.iRoomId ~= pilotRoomId
-                and (not crew.finalGoal or crew.finalGoal.roomId ~= pilotRoomId)))
+        and not (
+            crew.iManningId == PILOT_SYSTEM_ID
+            and crew.bActiveManning
+        )
 end
 
 local function has_active_pod(shipManager)
@@ -109,6 +118,21 @@ local function count_eligible_crew(shipManager)
         local crew = crewList[i]
 
         if eligible_crew(crew, shipManager.iShipId) then
+            count = count + 1
+        end
+    end
+
+    return count
+end
+
+local function count_available_boarding_crew(shipManager, pilotRoomId)
+    local crewList = shipManager.vCrewList
+    local count = 0
+
+    for i = 0, crewList:size() - 1 do
+        local crew = crewList[i]
+
+        if available_for_boarding(crew, shipManager.iShipId, pilotRoomId) then
             count = count + 1
         end
     end
@@ -174,8 +198,11 @@ local function clear_boarding_party()
     debug.rows = {}
     debug.minimumCrew = 0
     debug.eligibleCrew = 0
+    debug.availableCrew = 0
 end
 
+-- Suppress normal AI while the crew member belongs to
+-- an active boarding party.
 script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(crew, stat, _def, amount, value)
     if stat == Hyperspace.CrewStat.NO_AI
         and boardingActive
@@ -187,6 +214,8 @@ script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(cr
     return Defines.Chain.CONTINUE, amount, value
 end)
 
+-- Do not recalculate the target as crew enter Drone Control.
+-- The required number is fixed when assembly begins.
 script.on_internal_event(Defines.InternalEvents.POWER_READY, function(power, ready)
     if not power.def
         or power.def.name ~= POD_POWER
@@ -234,6 +263,7 @@ script.on_internal_event(Defines.InternalEvents.POWER_READY, function(power, rea
     return Defines.Chain.CONTINUE, ready
 end)
 
+-- The existing Pod ability performs the transport.
 script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power)
     if not power.def
         or power.def.name ~= POD_POWER
@@ -350,13 +380,25 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     if not selected or #selected == 0 then
         local pilotRoomId = shipManager:GetSystemRoom(PILOT_SYSTEM_ID)
         local eligibleCrew = count_eligible_crew(shipManager)
-        local reserveCrew = has_ineligible_pilot_candidate(shipManager) and 0 or 1
+        local availableCrew = count_available_boarding_crew(
+            shipManager, pilotRoomId
+        )
+
+        local protectedPilot = availableCrew < eligibleCrew
+        local reserveCrew = (
+            protectedPilot
+            or has_ineligible_pilot_candidate(shipManager)
+        ) and 0 or 1
 
         minimumCrew = math.max(
-            0, math.min(roomCapacity - 1, eligibleCrew - reserveCrew)
+            0, math.min(
+                roomCapacity - 1,
+                availableCrew - reserveCrew
+            )
         )
 
         debug.eligibleCrew = eligibleCrew
+        debug.availableCrew = availableCrew
         debug.minimumCrew = minimumCrew
 
         selected = select_boarding_party(
@@ -367,8 +409,12 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
         selectedIds = {}
 
         add_event(string.format(
-            "Slots=%d Eligible=%d Required=%d Selected=%d",
-            roomCapacity, eligibleCrew, minimumCrew, #selected
+            "Slots=%d Eligible=%d Boardable=%d Required=%d Selected=%d",
+            roomCapacity,
+            eligibleCrew,
+            availableCrew,
+            minimumCrew,
+            #selected
         ))
 
         for _, crew in ipairs(selected) do
@@ -384,8 +430,11 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     boardingActive = #selected > 0
 
     debug.state = string.format(
-        "Boarding assembly: %d/%d ready (eligible=%d)",
-        debug.readyCrew, minimumCrew, debug.eligibleCrew
+        "Boarding assembly: %d/%d ready (eligible=%d boardable=%d)",
+        debug.readyCrew,
+        minimumCrew,
+        debug.eligibleCrew,
+        debug.availableCrew
     )
 
     local issueOrders = orderTimer <= 0

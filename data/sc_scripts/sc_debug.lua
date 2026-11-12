@@ -1,7 +1,7 @@
 --[[
 DESCRIPTION: Displays enemy Boarding Pod AI selection and movement diagnostics.
         - Shows each enemy crew member's teleport eligibility and Piloting exclusion.
-        - Shows CrewTask and active manning state for pilot-AI investigation.
+        - Shows each crew member's current manning system and active manning state.
         - Shows selected crew's NO_AI state, movement destination, and order results.
         - Collects text outside the render callback to avoid userdata errors during drawing.
 DEPENDENCIES: sc_helpers.lua, sc_drone_pod_ai.lua
@@ -16,7 +16,10 @@ local FONT = 10
 local MAX_CREW_LINES = 12
 local MAX_EVENT_LINES = 5
 
-local displayLines = {"TERRAN BOARDING POD AI DIAGNOSTICS", "Waiting for enemy ship"}
+local displayLines = {
+    "TERRAN BOARDING POD AI DIAGNOSTICS",
+    "Waiting for enemy ship"
+}
 
 local function yesno(value)
     return value and "Y" or "N"
@@ -29,44 +32,41 @@ local function safe_read(callback, fallback)
 end
 
 local function name_of(crew)
-    return tostring(safe_read(function() return crew:GetName() end, "?"))
+    return tostring(safe_read(function()
+        return crew:GetName()
+    end, "?"))
 end
 
 local function room_goal(crew)
-    return safe_read(function() return crew.finalGoal.roomId end, -1)
+    return safe_read(function()
+        return crew.finalGoal.roomId
+    end, -1)
 end
 
 local function no_ai(crew)
     local ok, _, value = pcall(function()
         return crew.extend:CalculateStat(Hyperspace.CrewStat.NO_AI)
     end)
+
     if not ok then return "ERR" end
     return yesno(value)
 end
 
-local function task_values(crew)
-    local ok, taskId, systemId = pcall(function()
-        return crew.task.taskId, crew.task.system
-    end)
-
-    if not ok then
-        return "ERR", "ERR"
-    end
-
-    return tostring(taskId), tostring(systemId)
-end
-
 local function build_snapshot(ship)
     local lines = {"TERRAN BOARDING POD AI DIAGNOSTICS"}
-    local function add(message) lines[#lines + 1] = message end
+    local function add(message)
+        lines[#lines + 1] = message
+    end
 
     local state = mods.sc and mods.sc.dronePodAI
+
     if not state then
         add("sc_drone_pod_ai.lua not loaded")
         return lines
     end
 
     add("Status: " .. tostring(state.state or "Waiting"))
+
     add(string.format(
         "Tick=%s Drone room=%s Slots=%s Selected=%d",
         tostring(state.tick or 0),
@@ -75,17 +75,24 @@ local function build_snapshot(ship)
         #(state.rows or {})
     ))
 
+    add(string.format(
+        "Eligible=%s Boardable=%s Required=%s Ready=%s",
+        tostring(state.eligibleCrew or 0),
+        tostring(state.availableCrew or 0),
+        tostring(state.minimumCrew or 0),
+        tostring(state.readyCrew or 0)
+    ))
+
     if not ship then
         add("No enemy ship")
         return lines
     end
 
-    local pilotRoom = safe_read(
-        function() return ship:GetSystemRoom(PILOT_SYSTEM_ID) end,
-        -1
-    )
+    local pilotRoom = safe_read(function()
+        return ship:GetSystemRoom(PILOT_SYSTEM_ID)
+    end, -1)
 
-    add("P=room/goal protected  Task=id/system  Man=system/active")
+    add("P=room/goal protected  Man=system/active  *=selected")
     add("Crew: current/goal T P AI D/X/O")
 
     local crewList = ship.vCrewList
@@ -103,15 +110,26 @@ local function build_snapshot(ship)
             end
         end
 
-        local room = safe_read(function() return crew.iRoomId end, -1)
+        local room = safe_read(function()
+            return crew.iRoomId
+        end, -1)
+
         local goal = room_goal(crew)
-        local canTeleport = safe_read(function() return crew:CanTeleport() end, false)
-        local protected = room == pilotRoom or goal == pilotRoom
 
-        local owner = safe_read(function() return crew.iShipId end, -1)
-        local currentShip = safe_read(function() return crew.currentShipId end, -1)
+        local canTeleport = safe_read(function()
+            return crew:CanTeleport()
+        end, false)
 
-        local taskId, taskSystem = task_values(crew)
+        local protected = room == pilotRoom
+            or goal == pilotRoom
+
+        local owner = safe_read(function()
+            return crew.iShipId
+        end, -1)
+
+        local currentShip = safe_read(function()
+            return crew.currentShipId
+        end, -1)
 
         local manningId = safe_read(function()
             return crew.iManningId
@@ -121,19 +139,17 @@ local function build_snapshot(ship)
             return crew.bActiveManning
         end, false)
 
-        local species = tostring(safe_read(function()
-            return crew:GetSpecies()
-        end, "ERR"))
-
-        local crewType = tostring(safe_read(function()
-            return crew.type
-        end, "ERR"))
-
         local flags = string.format(
             "D%s X%s O%s",
-            yesno(safe_read(function() return crew:IsDrone() end, true)),
-            yesno(safe_read(function() return crew.bDead end, true)),
-            yesno(safe_read(function() return crew.bOutOfGame end, true))
+            yesno(safe_read(function()
+                return crew:IsDrone()
+            end, true)),
+            yesno(safe_read(function()
+                return crew.bDead
+            end, true)),
+            yesno(safe_read(function()
+                return crew.bOutOfGame
+            end, true))
         )
 
         add(string.format(
@@ -151,13 +167,9 @@ local function build_snapshot(ship)
         ))
 
         add(string.format(
-            "  Task=%s/%s Man=%s/%s Species=%s Type=%s",
-            taskId,
-            taskSystem,
+            "  Man=%s/%s",
             tostring(manningId),
-            yesno(activeManning),
-            species,
-            crewType
+            yesno(activeManning)
         ))
 
         if row then
@@ -182,27 +194,34 @@ local function build_snapshot(ship)
 
     add("Recent events:")
 
-    for i = 1, math.min(#(state.events or {}), MAX_EVENT_LINES) do
+    for i = 1, math.min(
+        #(state.events or {}),
+        MAX_EVENT_LINES
+    ) do
         add(tostring(state.events[i]))
     end
 
     return lines
 end
 
-script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(ship)
-    if ship.iShipId ~= 1 then return end
+script.on_internal_event(
+    Defines.InternalEvents.SHIP_LOOP,
+    function(ship)
+        if ship.iShipId ~= 1 then return end
 
-    local ok, lines = pcall(build_snapshot, ship)
+        local ok, lines = pcall(build_snapshot, ship)
 
-    if ok then
-        displayLines = lines
-    else
-        displayLines = {
-            "TERRAN BOARDING POD AI DIAGNOSTICS",
-            "Snapshot error: " .. tostring(lines):sub(1, 120)
-        }
+        if ok then
+            displayLines = lines
+        else
+            displayLines = {
+                "TERRAN BOARDING POD AI DIAGNOSTICS",
+                "Snapshot error: "
+                    .. tostring(lines):sub(1, 120)
+            }
+        end
     end
-end)
+)
 
 local function draw_panel()
     if not Hyperspace.App
@@ -213,7 +232,7 @@ local function draw_panel()
 
     Graphics.CSurface.GL_PushMatrix()
 
-    local ok, err = pcall(function()
+    pcall(function()
         Graphics.CSurface.GL_LoadIdentity()
 
         for i, line in ipairs(displayLines) do

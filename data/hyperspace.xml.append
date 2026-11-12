@@ -503,7 +503,8 @@
 		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 		<!-- ACTIVATED ABILITIES -->
 		<powerEffect name="SC_STIMPACK">
-			<cooldown>0.1</cooldown>
+			<cooldown>10.0</cooldown>
+			<initialCooldownFraction>1</initialCooldownFraction>
 			<jumpCooldown>full</jumpCooldown>
 			<powerSounds>
 				<powerSound>ability_stimpack1</powerSound>
@@ -520,14 +521,14 @@
 			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
 			<buttonText id="ability_TERRAN_STIMPACK_BUTTON"/>
 			<tooltip id="ability_TERRAN_STIMPACK_TOOLTIP"/>
-			<cooldownColor r="80" g="220" b="80" />
+			<cooldownColor r="240" g="210" b="50" />
 			<selfHealth>-15</selfHealth>
 			<temporaryEffect>
 				<duration>10.0</duration>
 				<cooldownColor r="240" g="210" b="50" />
 				<moveSpeedMultiplier>1.5</moveSpeedMultiplier>
-				<shootTimer min="2500" max="3250" />
-				<punchTimer min="250" max="325" />
+				<shootTimer min="350" max="425" />
+				<punchTimer min="350" max="425" />
 			</temporaryEffect>
 		</powerEffect>
 		<powerEffect load="SC_REPAIR"/>
@@ -572,7 +573,7 @@
 		<passiveStatBoosts>
 			<statBoost name="trueHealAmount" save="Heal-Crew">
 				<boostType>FLAT</boostType>
-				<amount>2</amount>
+				<amount>1.0</amount>
 				<shipTarget>CURRENT_ROOM</shipTarget>
 				<crewTarget>ALLIES</crewTarget>
 				<droneTarget>CREW</droneTarget>
@@ -625,6 +626,7 @@
 		<!-- ACTIVATED ABILITIES -->
 		<powerEffect name="SC_OPTICAL_FLARE">
 			<cooldown>30</cooldown>
+			<initialCooldownFraction>1</initialCooldownFraction>
 			<jumpCooldown>full</jumpCooldown>
 			<powerSounds>
 				<powerSound>ability_optical_flare</powerSound>
@@ -638,7 +640,7 @@
 			<tooltip id="ability_TERRAN_OPTICAL_FLARE_TOOLTIP"/>
 			<cooldownColor r="240" g="210" b="50" />
 			<effectAnim>explosion_big1_heal</effectAnim>
-			<sc-flare value="10"/>
+			<sc-flare value="5"/>
 		</powerEffect>
 		<powerEffect load="SC_REPAIR"/>
 	</race>
@@ -683,6 +685,7 @@
 		<!-- ACTIVATED ABILITIES -->
 		<powerEffect name="SC_RESTORATION">
 			<cooldown>30</cooldown>
+			<initialCooldownFraction>1</initialCooldownFraction>
 			<jumpCooldown>full</jumpCooldown>
 			<powerSounds>
 				<powerSound>ability_restoration1</powerSound>
@@ -908,6 +911,8 @@
 		<powerEffect load="SC_REPAIR"/>
 		<powerEffect name="SC_CLOAK">
 			<cooldown>30</cooldown>
+			<initialCooldownFraction>1</initialCooldownFraction>
+			<jumpCooldown>full</jumpCooldown>
 			<powerSounds>
 				<powerSound>cloak</powerSound>
 			</powerSounds>
@@ -915,7 +920,6 @@
 				<enemyInRoom />
 			</req>
 			<activateWhenReady enemiesOnly="true">true</activateWhenReady>
-			<jumpCooldown>full</jumpCooldown>
 			<onHotkey>always</onHotkey>
 			<buttonText id="ability_TERRAN_CLOAK_BUTTON"/>
 			<tooltip id="ability_TERRAN_CLOAK_TOOLTIP"/>
@@ -977,10 +981,11 @@
 			<sc-shoot projectile="TERRAN_LOCKDOWN_PROJECTILE"/>
 			<sc-cost resource="missiles" amount="1"/>
 			<cooldown>24</cooldown>
+			<initialCooldownFraction>1</initialCooldownFraction>
+			<jumpCooldown>full</jumpCooldown>
 			<powerSounds>
 				<powerSound>weapon_target</powerSound>
 			</powerSounds>
-			<jumpCooldown>full</jumpCooldown>
 			<onHotkey>always</onHotkey>
 			<buttonText id="ability_TERRAN_LOCKDOWN_BUTTON"/>
 			<tooltip id="ability_TERRAN_LOCKDOWN_TOOLTIP"/>
@@ -2148,6 +2153,7 @@
 	<mod-append:script>data/sc_scripts/sc_temporaryEffects.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_shoot.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_restoration.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_crew_ability_restoration_ai.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_heal.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_crew_ability_flare.lua</mod-append:script>
 
