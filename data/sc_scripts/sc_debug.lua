@@ -1,10 +1,13 @@
 --[[
 DESCRIPTION: Displays enemy Boarding Pod AI selection and movement diagnostics.
-        - Shows each enemy crew member's teleport eligibility and Piloting exclusion.
+        - Shows each enemy crew member's teleport eligibility and Piloting assignment.
         - Shows selected crew's NO_AI state, movement destination, and order results.
         - Collects text outside the render callback to avoid userdata errors during drawing.
-DEPENDENCIES: sc_drone_pod_ai.lua
+DEPENDENCIES: sc_helpers.lua, sc_drone_pod_ai.lua
 ]]
+
+local PILOT_SYSTEM_ID = mods.sc.helpers.system_id_from_name("pilot")
+local TASK_MANNING = 0
 
 local TEXT_X = 20
 local TEXT_Y = 175
@@ -41,6 +44,13 @@ local function no_ai(crew)
     return yesno(value)
 end
 
+local function assigned_to_piloting(crew)
+    return safe_read(function()
+        return crew.task.taskId == TASK_MANNING
+            and crew.task.system == PILOT_SYSTEM_ID
+    end, false)
+end
+
 local function build_snapshot(ship)
     local lines = {"TERRAN BOARDING POD AI DIAGNOSTICS (NO LAUNCH)"}
     local function add(message) lines[#lines + 1] = message end
@@ -60,8 +70,7 @@ local function build_snapshot(ship)
         return lines
     end
 
-    local pilotRoom = safe_read(function() return ship:GetSystemRoom(6) end, -1)
-    add("Pilot room=" .. tostring(pilotRoom) .. "   *=selected  T=teleportable  P=pilot protected")
+    add("P=assigned to man Piloting   *=selected  T=teleportable")
     add("Crew: current/goal  T P  NO_AI  (owner/current ship)")
 
     local crewList = ship.vCrewList
@@ -78,7 +87,7 @@ local function build_snapshot(ship)
         local room = safe_read(function() return crew.iRoomId end, -1)
         local goal = room_goal(crew)
         local canTeleport = safe_read(function() return crew:CanTeleport() end, false)
-        local protected = room == pilotRoom or goal == pilotRoom
+        local protected = assigned_to_piloting(crew)
         local owner = safe_read(function() return crew.iShipId end, -1)
         local currentShip = safe_read(function() return crew.currentShipId end, -1)
         local flags = string.format("D%s X%s O%s",

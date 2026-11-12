@@ -1,20 +1,23 @@
-
 --[[
 DESCRIPTION: Controls enemy Boarding Pod assembly and launch readiness.
         - Assembles boarding parties only while a Terran Boarding Pod is available.
-        - Selects teleport-capable enemy crew while reserving one aboard.
-        - Excludes crew in or assigned to Piloting when its room is valid.
+        - Selects teleport-capable enemy crew while reserving a pilot when necessary.
+        - Excludes only crew whose current AI task is manning Piloting.
+        - Replaces selected crew who become unavailable before launch.
         - Suppresses normal AI for selected crew while a Boarding Pod is available.
         - Orders selected crew to Drone Control through normal movement.
-        - Requires the smaller of Drone Control slots - 1 or eligible crew - 1.
+        - Requires the smaller of Drone Control slots - 1 or available boarding crew.
         - Locks the required crew count until the Pod launches or disappears.
         - The existing Pod script transports all crew present in Drone Control.
         - Exposes movement and launch diagnostics to sc_debug.lua.
-DEPENDENCIES: sc_drone_pod.lua
+DEPENDENCIES: sc_helpers.lua, sc_drone_pod.lua
 ]]
 
-local DRONES_SYSTEM_ID = 4
-local PILOT_SYSTEM_ID = 6
+local system_id_from_name = mods.sc.helpers.system_id_from_name
+
+local DRONES_SYSTEM_ID = system_id_from_name("drones")
+local PILOT_SYSTEM_ID = system_id_from_name("pilot")
+local TASK_MANNING = 0
 local POD_SPECIES = "terran_pod"
 local POD_POWER = "SC_LAUNCH"
 local ORDER_INTERVAL = 5
@@ -56,11 +59,56 @@ local function eligible_crew(crew, shipId)
         and crew:CanTeleport()
 end
 
-local function available_for_boarding(crew, shipId, pilotRoomId)
+local function assigned_to_piloting(crew)
+    return crew.task
+        and crew.task.taskId == TASK_MANNING
+        and crew.task.system == PILOT_SYSTEM_ID
+end
+
+local function available_for_boarding(crew, shipId)
     return eligible_crew(crew, shipId)
-        and (pilotRoomId < 0
-            or (crew.iRoomId ~= pilotRoomId
-                and (not crew.finalGoal or crew.finalGoal.roomId ~= pilotRoomId)))
+        and not assigned_to_piloting(crew)
+end
+
+local function can_serve_as_pilot(crew, shipId)
+    return crew.iShipId == shipId
+        and crew.currentShipId == shipId
+        and not crew:IsDrone()
+        and not crew.bDead
+        and not crew.bOutOfGame
+        and crew:CanMan()
+end
+
+local function has_assigned_pilot(shipManager)
+    local crewList = shipManager.vCrewList
+
+    for i = 0, crewList:size() - 1 do
+        local crew = crewList[i]
+
+        if can_serve_as_pilot(crew, shipManager.iShipId)
+            and assigned_to_piloting(crew) then
+
+            return true
+        end
+    end
+
+    return false
+end
+
+local function has_ineligible_pilot_candidate(shipManager)
+    local crewList = shipManager.vCrewList
+
+    for i = 0, crewList:size() - 1 do
+        local crew = crewList[i]
+
+        if can_serve_as_pilot(crew, shipManager.iShipId)
+            and not eligible_crew(crew, shipManager.iShipId) then
+
+            return true
+        end
+    end
+
+    return false
 end
 
 local function has_active_pod(shipManager)
@@ -82,14 +130,14 @@ local function has_active_pod(shipManager)
     return false
 end
 
-local function count_eligible_crew(shipManager)
+local function count_available_boarding_crew(shipManager)
     local crewList = shipManager.vCrewList
     local count = 0
 
     for i = 0, crewList:size() - 1 do
         local crew = crewList[i]
 
-        if eligible_crew(crew, shipManager.iShipId) then
+        if available_for_boarding(crew, shipManager.iShipId) then
             count = count + 1
         end
     end
@@ -97,7 +145,7 @@ local function count_eligible_crew(shipManager)
     return count
 end
 
-local function select_boarding_party(shipManager, droneRoomId, partySize, pilotRoomId)
+local function select_boarding_party(shipManager, droneRoomId, partySize, excludedIds)
     local crewList = shipManager.vCrewList
     local party = {}
 
@@ -105,8 +153,10 @@ local function select_boarding_party(shipManager, droneRoomId, partySize, pilotR
 
     for i = 0, crewList:size() - 1 do
         local crew = crewList[i]
+        local crewId = crew.extend.selfId
 
-        if available_for_boarding(crew, shipManager.iShipId, pilotRoomId)
+        if available_for_boarding(crew, shipManager.iShipId)
+            and not excludedIds[crewId]
             and crew.iRoomId == droneRoomId then
 
             party[#party + 1] = crew
@@ -116,8 +166,10 @@ local function select_boarding_party(shipManager, droneRoomId, partySize, pilotR
 
     for i = 0, crewList:size() - 1 do
         local crew = crewList[i]
+        local crewId = crew.extend.selfId
 
-        if available_for_boarding(crew, shipManager.iShipId, pilotRoomId)
+        if available_for_boarding(crew, shipManager.iShipId)
+            and not excludedIds[crewId]
             and crew.iRoomId ~= droneRoomId then
 
             party[#party + 1] = crew
@@ -130,14 +182,13 @@ end
 
 local function count_boarding_crew(shipManager, droneRoomId)
     local crewList = shipManager.vCrewList
-    local pilotRoomId = shipManager:GetSystemRoom(PILOT_SYSTEM_ID)
     local count = 0
 
     for i = 0, crewList:size() - 1 do
         local crew = crewList[i]
 
         if crew.iRoomId == droneRoomId
-            and available_for_boarding(crew, shipManager.iShipId, pilotRoomId) then
+            and available_for_boarding(crew, shipManager.iShipId) then
 
             count = count + 1
         end
@@ -264,6 +315,57 @@ local function make_record(crew)
     }
 end
 
+local function update_selected_state(newSelection)
+    local previousRecords = {}
+
+    for _, record in ipairs(debug.rows) do
+        previousRecords[record.id] = record
+    end
+
+    selected = newSelection
+    selectedIds = {}
+    debug.rows = {}
+
+    for _, crew in ipairs(selected) do
+        local crewId = crew.extend.selfId
+        selectedIds[crewId] = true
+        debug.rows[#debug.rows + 1] = previousRecords[crewId] or make_record(crew)
+    end
+end
+
+local function refresh_boarding_party(shipManager, droneRoomId)
+    local retained = {}
+    local retainedIds = {}
+
+    for _, crew in ipairs(selected or {}) do
+        local crewId = crew.extend.selfId
+
+        if available_for_boarding(crew, shipManager.iShipId) then
+            retained[#retained + 1] = crew
+            retainedIds[crewId] = true
+        else
+            add_event(string.format("%s: removed from boarding party", crew:GetName()))
+        end
+    end
+
+    local replacementsNeeded = minimumCrew - #retained
+
+    if replacementsNeeded > 0 then
+        local replacements = select_boarding_party(
+            shipManager, droneRoomId, replacementsNeeded, retainedIds
+        )
+
+        for _, crew in ipairs(replacements) do
+            local crewId = crew.extend.selfId
+            retained[#retained + 1] = crew
+            retainedIds[crewId] = true
+            add_event(string.format("%s: added as replacement", crew:GetName()))
+        end
+    end
+
+    update_selected_state(retained)
+end
+
 local function reset_test()
     lastEnemyShip = nil
     clear_boarding_party()
@@ -333,40 +435,41 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
         return
     end
 
-    if not selected or #selected == 0 then
-        local pilotRoomId = shipManager:GetSystemRoom(PILOT_SYSTEM_ID)
-        local eligibleCrew = count_eligible_crew(shipManager)
+    if not boardingActive then
+        local availableCrew = count_available_boarding_crew(shipManager)
+        local reserveNeeded = not has_assigned_pilot(shipManager)
+            and not has_ineligible_pilot_candidate(shipManager)
 
         minimumCrew = math.max(
-            0, math.min(roomCapacity - 1, eligibleCrew - 1)
+            0, math.min(roomCapacity - 1, availableCrew - (reserveNeeded and 1 or 0))
         )
 
-        debug.eligibleCrew = eligibleCrew
+        debug.eligibleCrew = availableCrew
         debug.minimumCrew = minimumCrew
 
-        selected = select_boarding_party(
-            shipManager, droneRoomId, minimumCrew, pilotRoomId
+        local party = select_boarding_party(
+            shipManager, droneRoomId, minimumCrew, {}
         )
 
-        debug.rows = {}
-        selectedIds = {}
+        update_selected_state(party)
+        boardingActive = minimumCrew > 0
 
         add_event(string.format(
             "Slots=%d Eligible=%d Required=%d Selected=%d",
-            roomCapacity, eligibleCrew, minimumCrew, #selected
+            roomCapacity, availableCrew, minimumCrew, #selected
         ))
 
-        for _, crew in ipairs(selected) do
-            selectedIds[crew.extend.selfId] = true
-
-            local record = make_record(crew)
-            debug.rows[#debug.rows + 1] = record
-
+        for _, record in ipairs(debug.rows) do
             add_event(string.format("%s: NO_AI enabled", record.name))
         end
+    else
+        refresh_boarding_party(shipManager, droneRoomId)
     end
 
-    boardingActive = #selected > 0
+    if not boardingActive then
+        debug.state = "Waiting for eligible boarding crew"
+        return
+    end
 
     debug.state = string.format(
         "Boarding assembly: %d/%d ready (eligible=%d)",
@@ -383,7 +486,7 @@ script.on_internal_event(Defines.InternalEvents.SHIP_LOOP, function(shipManager)
     for _, record in ipairs(debug.rows) do
         local crew = record.crew
 
-        if eligible_crew(crew, shipManager.iShipId) then
+        if available_for_boarding(crew, shipManager.iShipId) then
             local currentRoom = crew.iRoomId
             local goalRoom = crew.finalGoal and crew.finalGoal.roomId or -1
             local noAi = read_no_ai(crew)

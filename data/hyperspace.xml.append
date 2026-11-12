@@ -526,7 +526,7 @@
 				<duration>10.0</duration>
 				<cooldownColor r="240" g="210" b="50" />
 				<moveSpeedMultiplier>1.5</moveSpeedMultiplier>
-				<shootTimer min="250" max="325" />
+				<shootTimer min="2500" max="3250" />
 				<punchTimer min="250" max="325" />
 			</temporaryEffect>
 		</powerEffect>
