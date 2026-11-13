@@ -2084,10 +2084,6 @@
 <FTL>
 <mod:findLike type="scripts" limit="1">
 
-	<!-- External/shared dependencies -->
-	<mod-append:script>data/aa_scripts/AA_core.lua</mod-append:script>
-	<mod-append:script>data/aa_scripts/weapons/smash.lua</mod-append:script>
-
 	<!-- SC core -->
 	<mod-append:script>data/sc_scripts/sc_tag.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_event.lua</mod-append:script>
@@ -2120,7 +2116,6 @@
 
 	<mod-append:script>data/sc_scripts/sc_weapon_halo.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_halo_launch.lua</mod-append:script>
-	<mod-append:script>data/brightness_scripts/brightness_particles.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_weapon_halo_trail.lua</mod-append:script>
 
 	<mod-append:script>data/sc_scripts/sc_weapon_emp.lua</mod-append:script>
@@ -2130,7 +2125,6 @@
 	<mod-append:script>data/sc_scripts/sc_augment_detector.lua</mod-append:script>
 
 	<!-- Augments -->
-	<!-- <mod-append:script>data/scripts_lily/lily_system_bracers.lua</mod-append:script> -->
 	<mod-append:script>data/sc_scripts/sc_augment_armor.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_augment_cloak.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_augment_upgrade.lua</mod-append:script>
