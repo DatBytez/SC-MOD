@@ -2074,14 +2074,30 @@
 </store>
 </FTL>
 
-<!-- ===============	MV CEW LISTS		=============== -->
-<!-- =============== ONLY REQUIRED FOR MV	=============== -->
+<!-- ===============		MV CEW LISTS			=============== -->
+<!-- =============== 	ONLY REQUIRED FOR MV		=============== -->
 <mod:findLike type="events" limit="1">
     <mod:findName type="req" name="LIST_CHECK_ANY_CREW">
         <mod-append:req type="any" load="TERRAN_LIST_CREW_ALL"/>
     </mod:findName>
 </mod:findLike>
 
+<!-- =============== 	ONLY REQUIRED FOR MV-MED	=============== -->
+<mod:findName type="aug" name="DRONE_AI_ENABLED">
+    <mod:findLike type="statBoosts" limit="1">
+        <mod:findName type="statBoost" name="controllable">
+            <mod:findLike type="blackList" limit="1">
+                <mod-append:terran_scv_hull/>
+                <mod-append:terran_spider_1/>
+                <mod-append:terran_spider_2/>
+                <mod-append:terran_spider_3/>
+                <mod-append:terran_spider_set/>
+                <mod-append:terran_spider_mine/>
+				<mod-append:terran_pod/>
+            </mod:findLike>
+        </mod:findName>
+    </mod:findLike>
+</mod:findName>
 <!-- ===============	SC SCRIPTS		=============== -->
 <FTL>
 <mod:findLike type="scripts" limit="1">
@@ -2178,6 +2194,6 @@
 	<!-- Requires parsed blueprint/tag data. -->
 	<mod-append:script>data/sc_scripts/sc_drone_powerlist.lua</mod-append:script>
 
-	<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
+	<!-- <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script> -->
 </mod:findLike>
 </FTL>
