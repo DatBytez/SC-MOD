@@ -26,6 +26,8 @@
 <showDummyEquipmentSlots enabled="true" opacity="0.2"/>
 <showScrapCollectorScrap enabled="true"/>
 <multiShipFix enabled="true"/>
+<renameShipInRun enabled="true" allowButton="true"/>
+    
 
 <alternateOxygenRendering enabled="false">
     <gradient>
