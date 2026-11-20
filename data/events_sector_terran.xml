@@ -663,7 +663,8 @@
 
 <event name="SC_TERRAN_SUPPLY_DEPOT">
 	<preventQuest/>
-    <beaconType id="map_icon_supply" global="true">
+    <!-- <beaconType id="map_icon_supply" global="true"> -->
+	<beaconType text="SUPPLY DEPOT" global="true">
         <color r="233" g="123" b="74" a="1.0"/>
         <unvisitedTooltip>Terran Supply Depot</unvisitedTooltip>
         <visitedTooltip>Terran Supply Depot</visitedTooltip>
