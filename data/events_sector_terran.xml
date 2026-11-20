@@ -31,10 +31,6 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_ghost" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_WRAITH" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_WRAITH_A">
@@ -48,10 +44,6 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_ghost" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_WRAITH" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_WRAITH_B">
@@ -65,10 +57,6 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_ghost" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_WRAITH" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_WRAITH_C">
@@ -82,10 +70,6 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_ghost" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_WRAITH" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_WRAITH_D">
@@ -99,10 +83,6 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_marine" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_BATTLECRUISER" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_BATTLECRUISER_A">
@@ -116,10 +96,6 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_civilian" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_VESSEL_A">
@@ -133,10 +109,6 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_civilian" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_VESSEL_B">
@@ -150,10 +122,6 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_civilian" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_VESSEL_C">
@@ -167,10 +135,6 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_civilian" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_VESSEL_D">
@@ -184,10 +148,6 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_civilian" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_DROPSHIP">
@@ -201,10 +161,6 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_civilian" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_VALKYRIE_A">
@@ -218,10 +174,6 @@
 <gotaway load="GOTAWAY_EVENT"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_civilian" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_VALKYRIE_B">
@@ -233,10 +185,6 @@
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_civilian" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_BARRACKS">
@@ -248,10 +196,6 @@
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_civilian" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_SCIENCE">
@@ -263,10 +207,6 @@
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_civilian" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_FACTORY">
@@ -278,10 +218,6 @@
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_civilian" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_COMMAND">
@@ -293,10 +229,6 @@
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 <destroyed load="SC_DESTROYED_TERRAN"/>
 <deadCrew load="SC_DEAD_CREW_TERRAN"/>
-<!-- <crew>
-    <crewMember type="terran_civilian" prop="0.01"/>
-	<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_ENGINEERING">
@@ -308,10 +240,6 @@
 	<surrender chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
 	<destroyed load="SC_DESTROYED_TERRAN"/>
 	<deadCrew load="SC_DEAD_CREW_TERRAN"/>
-	<!-- <crew>
-		<crewMember type="terran_civilian" prop="0.01"/>
-		<crewMember type="LIST_CREW_TERRAN_VESSEL" prop="0.99"/>
-	</crew> -->
 </ship>
 
 <event name="EVENT_TERRAN_STARPORT">
@@ -339,67 +267,6 @@
         <event/>
     </choice>
 </event>
-<!--
-<event name="SC_SURRENDER_TERRAN_SCOUT">
-    <text>"You recieve a jumbled message from the heavily damaged ship. The remaining crew has surrendered and is requesting immediate aid."</text>
-    <choice>
-        <text>Accept their surrender.</text>
-        <event>
-            <ship hostile="false"/>
-            <autoReward level="LOW">stuff</autoReward>
-        </event>
-    </choice>
-    <choice>
-        <text>Refuse.</text>
-        <event/>
-    </choice>
-</event>
-
-<event name="SC_SURRENDER_TERRAN_TRANSPORT">
-    <text>"Fine, fine. Take the cargo. Just do not vent us into space."</text>
-    <choice>
-        <text>Accept the cargo.</text>
-        <event>
-            <ship hostile="false"/>
-            <autoReward level="MED">stuff</autoReward>
-        </event>
-    </choice>
-    <choice>
-        <text>Finish the fight.</text>
-        <event/>
-    </choice>
-</event>
-
-<event name="SC_SURRENDER_PROTOSS">
-    <text>The Protoss commander transmits a terse offer of withdrawal. Their vessel remains dangerous, but they seem willing to leave.</text>
-    <choice>
-        <text>Allow them to withdraw.</text>
-        <event>
-            <ship hostile="false"/>
-            <autoReward level="LOW">standard</autoReward>
-        </event>
-    </choice>
-    <choice>
-        <text>Continue the battle.</text>
-        <event/>
-    </choice>
-</event>
-
-<event name="SC_SURRENDER_DOMINION_ELITE">
-    <text>"You have made your point. We are authorized to offer battlefield salvage for safe passage."</text>
-    <choice>
-        <text>Accept the offer.</text>
-        <event>
-            <ship hostile="false"/>
-            <autoReward level="MED">item</autoReward>
-        </event>
-    </choice>
-    <choice>
-        <text>No deal.</text>
-        <event/>
-    </choice>
-</event>
--->
 <event name="SC_DESTROYED_TERRAN">
     <text>The Terran ship breaks apart. You salvage what remains.</text>
     <autoReward level="MED">standard</autoReward>
@@ -414,57 +281,6 @@
     <text>With the crew neutralized, you search the Terran ship and secure its supplies.</text>
     <autoReward level="HIGH">standard</autoReward>
 </event>
-<!--
-<event name="SC_DESTROYED_RAIDER">
-    <text>The raider ship is destroyed. Whatever cargo survived is now yours.</text>
-    <autoReward level="MED">standard</autoReward>
-</event>
-
-<event name="SC_DEAD_CREW_RAIDER">
-    <text>The raiders are gone. Their hold is easy to search now.</text>
-    <autoReward level="HIGH">item</autoReward>
-</event>
-
-<event name="SC_DESTROYED_ZERG">
-    <text>The swarm vessel ruptures, leaving behind only scorched biological residue and a few salvageable fragments.</text>
-    <autoReward level="LOW">standard</autoReward>
-</event>
-
-<event name="SC_DEAD_CREW_ZERG">
-    <text>The infestation is quiet. Your crew carefully collects what can be salvaged.</text>
-    <autoReward level="MED">standard</autoReward>
-</event>
-
-<event name="SC_DESTROYED_INFESTED">
-    <text>The infested ship collapses in a cloud of spores. You keep your distance and recover whatever drifts clear.</text>
-    <autoReward level="LOW">standard</autoReward>
-</event>
-
-<event name="SC_DEAD_CREW_INFESTED">
-    <text>The last infested life-sign fades. The ship is dangerous to board, but some supplies are intact.</text>
-    <autoReward level="MED">standard</autoReward>
-</event>
-
-<event name="SC_DESTROYED_PROTOSS">
-    <text>The Protoss ship fractures under your fire. Its strange components are difficult to repurpose, but valuable.</text>
-    <autoReward level="MED">standard</autoReward>
-</event>
-
-<event name="SC_DEAD_CREW_PROTOSS">
-    <text>The Protoss vessel falls silent. You recover advanced components from the ship.</text>
-    <autoReward level="HIGH">standard</autoReward>
-</event>
-
-<event name="SC_DESTROYED_DOMINION_ELITE">
-    <text>The Dominion elite ship is destroyed. Its reinforced hull leaves useful salvage behind.</text>
-    <autoReward level="HIGH">standard</autoReward>
-</event>
-
-<event name="SC_DEAD_CREW_DOMINION_ELITE">
-    <text>With the Dominion crew defeated, you seize their equipment and encrypted supply manifest.</text>
-    <autoReward level="HIGH">item</autoReward>
-</event>
--->
 
 <!--
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -514,160 +330,440 @@
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 -->	
 <eventList name="ITEMS_TERRAN">
-	<event load="DOMINION_SUPPLY"/>
-	<event load="DOMINION_FREECREW"/>
-	<event load="DOMINION_AMMO"/>
+	<event load="SC_TERRAN_STARPORT_UPGRADES"/>
+	<event load="SC_TERRAN_SCIENCE_UPGRADES"/>
+	<event load="SC_TERRAN_SUPPLY_DEPOT"/>
 </eventList>
+
 
 <!--
 *********************************************************************************************************
-  DOMINION SUPPLY (MV)
+  TERRAN STARPORT WEAPON UPGRADES
 *********************************************************************************************************
 -->
-<event name="DOMINION_SUPPLY" unique="false">
-	<text>You discover a fully militarized Dominion station here, though it appears they are selling supplies to passing allied ships.</text>
-	<ship load="SC_TERRAN_PATROL_SHIP" hostile="false"/>
-	<choice>
-		<text>Purchase fuel.</text>
-		<event>
-			<item_modify>
-				<item type="fuel" min="5" max="7"/>
-				<item type="scrap" min="-20" max="-10"/>
-			</item_modify>
-		</event>
-	</choice>
-	<choice>
-		<text>Purchase ammunition.</text>
-		<event>
-			<item_modify>
-				<item type="missiles" min="8" max="10"/>
-				<item type="scrap" min="-40" max="-25"/>
-			</item_modify>
-		</event>
-	</choice>
-	<choice>
-		<text>Purchase a weapon.</text>
-		<event>
-			<item_modify>
-				<item type="scrap" min="-60" max="-40"/>
-			</item_modify>
-			<weapon name="TERRAN_STANDARD_WEAPONS"/>
-		</event>
-	</choice>
-	<choice hidden="true">
-		<text>Attack the station!</text>
-		<event>
-			<text>No one is safe from you. The Dominion will not be pleased when they hear of this.</text>
-			<ship hostile="true"/>
-		</event>
-	</choice>
-	<choice hidden="true">
-		<text>Ignore the station.</text>
-		<event/>
-	</choice>
-</event>
-<event name="DOMINION_SUPPLY_STATION_KILL">
-	<text>Your unprovoked, attack on a Dominion Station has been successful. You scrap what remains.</text>
-	<autoReward level="MED">standard</autoReward>
-</event>
- 
-<!--
-*********************************************************************************************************
-  DOMINION FREECREW (MV)
-*********************************************************************************************************
--->
-<event name="DOMINION_FREECREW" unique="true">
-	<text>A damaged Dominion ship hails you. "Good, a friendly face for once. Our ship has taken catastrophic damage and there's no chance of repairing it. I don't suppose you'd be willing to allow me aboard? I'm handy with a wrench and I'm sure my skills could be of service to you."</text>
-	<choice hidden="true">
-		<text>Welcome them aboard.</text>
-		<event load="DOMINION_FREECREW_WELCOME"/>
-	</choice>
-	<choice hidden="true">
-		<text>We don't need any more crew, sorry.</text>
-		<event>
-			<text>"Oh... ok. Hopefully I'll be able to keep the stabilizers under control so they don't collapse before another ship arrives to help..."</text>
-		</event>
-	</choice>
-</event>
-<eventList name="DOMINION_FREECREW_WELCOME">
-	<event>
-		<text>The civilian is thankful for your assistance.</text>
-		<crewMember amount="1" class="terran_civilian" repair="1"/>
-	</event>
-	<event>
-		<text>As the crewman comes onto your ship, draws a laser and shoots at you. Luckily, no one is hit, but a ship bearing the markings of the Sons of Korhal uncloaks nearby and attacks. It was a trap!</text>
-		<boarders min="1" max="1" class="terran_civilian"/>
-		<ship load="SC_TERRAN_ALL_SHIPS" hostile="true"/>
-	</event>
-</eventList>
 
-<!--
-*********************************************************************************************************
-  DOMINION AMMO (MV)
-*********************************************************************************************************
--->
-<event name="DOMINION_AMMO" unique="false">
-    <text>A Dominion station is sending out a request for ammunition, in return for scrap. Their high demand is likely due to the increasing number of blockades by the outlaws, the Sons of Korhal. They might be able to spare some blueprints if you are generous.</text>
+<event name="SC_TERRAN_STARPORT_UPGRADES">
+    <text>A Terran Starport is offering weapon upgrades.</text>
+    <ship load="TERRAN_SHIP_STARPORT" hostile="false"/>
+
     <choice>
-        <text>Offer 5 missiles for whatever scrap they have.</text>
+        <text>Attack the Starport.</text>
         <event>
-            <disableScrapAugments/>
-            <item_modify>
-                <item type="scrap" min="35" max="35"/>
-                <item type="missiles" min="-5" max="-5"/>
-            </item_modify>
+            <ship hostile="true"/>
         </event>
     </choice>
-    <choice>
-        <text>Offer 10 missiles for a patch-up and some extra fuel.</text>
+
+    <!-- TERRAN BURST LASERS -->
+
+    <choice hidden="true" req="TERRAN_BURST_LASER_1">
+        <text>Upgrade your Terran Burst Laser.</text>
         <event>
-            <disableScrapAugments/>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="TERRAN_BURST_LASER_1"/>
             <item_modify>
-                <item type="missiles" min="-10" max="-10"/>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="TERRAN_BURST_LASER_2"/>
+        </event>
+    </choice>
+
+    <choice hidden="true" req="TERRAN_BURST_LASER_2">
+        <text>Upgrade weapons for a small cost</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="TERRAN_BURST_LASER_2"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="TERRAN_BURST_LASER_3"/>
+        </event>
+    </choice>
+
+    <!-- TERRAN HEAVY BURST LASERS -->
+
+    <choice hidden="true" req="TERRAN_BURST_LASER_HEAVY_1">
+        <text>Upgrade weapons for a small cost</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="TERRAN_BURST_LASER_HEAVY_1"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="TERRAN_BURST_LASER_HEAVY_2"/>
+        </event>
+    </choice>
+
+    <!-- TERRAN LASER BATTERIES -->
+
+    <choice hidden="true" req="TERRAN_LASER_BATTERY_1">
+        <text>Upgrade weapons for a small cost</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="TERRAN_LASER_BATTERY_1"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="TERRAN_LASER_BATTERY_2"/>
+        </event>
+    </choice>
+
+    <choice hidden="true" req="TERRAN_LASER_BATTERY_2">
+        <text>Upgrade weapons for a small cost</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="TERRAN_LASER_BATTERY_2"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="TERRAN_LASER_BATTERY_3"/>
+        </event>
+    </choice>
+
+    <!-- TERRAN HEAVY LASER BATTERIES -->
+
+    <choice hidden="true" req="TERRAN_LASER_BATTERY_HEAVY_1">
+        <text>Upgrade weapons for a small cost</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="TERRAN_LASER_BATTERY_HEAVY_1"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="TERRAN_LASER_BATTERY_HEAVY_2"/>
+        </event>
+    </choice>
+
+    <!-- GEMINI FIRE MISSILES -->
+
+    <choice hidden="true" req="GEMINI_FIRE_1">
+        <text>Upgrade weapons for a small cost</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="GEMINI_FIRE_1"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="GEMINI_FIRE_2"/>
+        </event>
+    </choice>
+
+    <choice hidden="true" req="GEMINI_FIRE_2">
+        <text>Upgrade weapons for a small cost</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="GEMINI_FIRE_2"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="GEMINI_FIRE_3"/>
+        </event>
+    </choice>
+
+    <!-- GEMINI ION MISSILES -->
+
+    <choice hidden="true" req="GEMINI_ION_1">
+        <text>Upgrade weapons for a small cost</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="GEMINI_ION_1"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="GEMINI_ION_2"/>
+        </event>
+    </choice>
+
+    <choice hidden="true" req="GEMINI_ION_2">
+        <text>Upgrade weapons for a small cost</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="GEMINI_ION_2"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="GEMINI_ION_3"/>
+        </event>
+    </choice>
+
+    <!-- GEMINI BREACH MISSILES -->
+
+    <choice hidden="true" req="GEMINI_BREACH_1">
+        <text>Upgrade weapons for a small cost</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="GEMINI_BREACH_1"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="GEMINI_BREACH_2"/>
+        </event>
+    </choice>
+
+    <choice hidden="true" req="GEMINI_BREACH_2">
+        <text>Upgrade weapons for a small cost</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="GEMINI_BREACH_2"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="GEMINI_BREACH_3"/>
+        </event>
+    </choice>
+
+    <!-- GEMINI HULL MISSILES -->
+
+    <choice hidden="true" req="GEMINI_HULL_1">
+        <text>Upgrade weapons for a small cost</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="GEMINI_HULL_1"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="GEMINI_HULL_2"/>
+        </event>
+    </choice>
+
+    <!-- GEMINI SYSTEM MISSILES -->
+
+    <choice hidden="true" req="GEMINI_SYS_1">
+        <text>Upgrade weapons for a small cost</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="GEMINI_SYS_1"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="GEMINI_SYS_2"/>
+        </event>
+    </choice>
+
+	<choice hidden="true">
+        <text>Leave.</text>
+		<event/>
+    </choice>
+
+</event>
+
+
+<!--
+*********************************************************************************************************
+  TERRAN SCIENCE FACILITY CREW UPGRADES
+*********************************************************************************************************
+-->
+
+<event name="SC_TERRAN_SCIENCE_UPGRADES">
+    <text>A Terran Science Facility is offering crew upgrades.</text>
+    <ship load="TERRAN_SHIP_SCIENCE" hostile="false"/>
+
+    <choice>
+        <text>Attack the Starport</text>
+        <event>
+            <ship hostile="true"/>
+        </event>
+    </choice>
+
+    <!-- TERRAN MARINE -->
+
+    <choice hidden="true" req="terran_marine">
+        <text>Upgrade crew for a small cost</text>
+        <event>
+            <text>Upgrade crew for a small cost</text>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <transformRace class="terran_marine">terran_marine_1</transformRace>
+        </event>
+    </choice>
+
+    <!-- TERRAN MEDIC -->
+
+    <choice hidden="true" req="terran_medic">
+        <text>Upgrade crew for a small cost</text>
+        <event>
+            <text>Upgrade crew for a small cost</text>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <transformRace class="terran_medic">terran_medic_1</transformRace>
+        </event>
+    </choice>
+
+    <choice hidden="true" req="terran_medic_1">
+        <text>Upgrade crew for a small cost</text>
+        <event>
+            <text>Upgrade crew for a small cost</text>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <transformRace class="terran_medic_1">terran_medic_2</transformRace>
+        </event>
+    </choice>
+
+    <!-- TERRAN FIREBAT -->
+
+    <choice hidden="true" req="terran_firebat">
+        <text>Upgrade crew for a small cost</text>
+        <event>
+            <text>Upgrade crew for a small cost</text>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <transformRace class="terran_firebat">terran_firebat_1</transformRace>
+        </event>
+    </choice>
+
+    <!-- TERRAN GHOST -->
+
+    <choice hidden="true" req="terran_ghost">
+        <text>Upgrade crew for a small cost</text>
+        <event>
+            <text>Upgrade crew for a small cost</text>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <transformRace class="terran_ghost">terran_ghost_1</transformRace>
+        </event>
+    </choice>
+
+    <choice hidden="true" req="terran_ghost_1">
+        <text>Upgrade crew for a small cost</text>
+        <event>
+            <text>Upgrade crew for a small cost</text>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <transformRace class="terran_ghost_1">terran_ghost_2</transformRace>
+        </event>
+    </choice>
+
+    <!-- TERRAN SCV -->
+
+    <choice hidden="true" req="terran_scv">
+        <text>Upgrade crew for a small cost</text>
+        <event>
+            <text>Upgrade crew for a small cost</text>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <transformRace class="terran_scv">terran_scv_1</transformRace>
+        </event>
+    </choice>
+
+</event>
+
+
+
+<!--
+*********************************************************************************************************
+  TERRAN SUPPLY DEPOT
+*********************************************************************************************************
+-->
+
+<event name="SC_TERRAN_SUPPLY_DEPOT">
+	<preventQuest/>
+    <beaconType id="map_icon_supply" global="true">
+        <color r="233" g="123" b="74" a="1.0"/>
+        <unvisitedTooltip>Terran Supply Depot</unvisitedTooltip>
+        <visitedTooltip>Terran Supply Depot</visitedTooltip>
+    </beaconType>
+
+    <text>Welcome to the autmoated Terran Supply Depot. Please Deposit surpluss supplies.</text>
+
+    <choice>
+        <text> </text>
+        <event>
+			<text>Trading Fuel for Scrap.</text>
+			<disableScrapAugments/>
+            <item_modify>
+                <item type="fuel" min="-5" max="-5"/>
+                <item type="scrap" min="10" max="10"/>
+            </item_modify>
+            <choice hidden="true">
+                <text>Continue...</text>
+                <event load="SC_TERRAN_SUPPLY_DEPOT_RESTOCK"/>
+            </choice>
+        </event>
+    </choice>
+
+    <choice>
+        <text></text>
+        <event>
+			<text>Trading Drones for Scrap.</text>
+			<disableScrapAugments/>
+            <item_modify>
+                <item type="drones" min="-3" max="-3"/>
+                <item type="scrap" min="12" max="12"/>
+            </item_modify>
+            <choice hidden="true">
+                <text>Continue...</text>
+                <event load="SC_TERRAN_SUPPLY_DEPOT_RESTOCK"/>
+            </choice>
+        </event>
+    </choice>
+
+    <choice>
+        <text></text>
+        <event>
+			<text>Trading Missiles for Scrap.</text>
+			<disableScrapAugments/>
+            <item_modify>
+                <item type="missiles" min="-5" max="-5"/>
+                <item type="scrap" min="15" max="15"/>
+            </item_modify>
+			<choice hidden="true">
+				<text>Continue...</text>
+				<event load="SC_TERRAN_SUPPLY_DEPOT_RESTOCK"/>
+			</choice>
+        </event>
+    </choice>
+
+    <choice hidden="true">
+        <text>   Continue...</text>
+        <event load="SC_TERRAN_SUPPLY_DEPOT_RESTOCK"/>
+    </choice>
+</event>
+
+<event name="SC_TERRAN_SUPPLY_DEPOT_RESTOCK">
+    <text>Please select supplies that are in need of restocking.</text>
+
+    <choice>
+        <text></text>
+        <event>
+            <item_modify>
+                <item type="scrap" min="-15" max="-15"/>
                 <item type="fuel" min="5" max="5"/>
             </item_modify>
-            <damage amount="-20"/>
         </event>
     </choice>
+
     <choice>
-        <text>Offer 10 missiles for an augment.</text>
+        <text></text>
         <event>
-            <disableScrapAugments/>
             <item_modify>
-                <item type="missiles" min="-10" max="-10"/>
+                <item type="scrap" min="-18" max="-18"/>
+                <item type="drones" min="3" max="3"/>
             </item_modify>
-			<augment name="TERRAN_LIST_AUGMENT_ALL"/>
         </event>
     </choice>
+
     <choice>
-        <text>Offer 15 missiles for a weapon.</text>
+        <text></text>
         <event>
             <item_modify>
-                <item type="missiles" min="-15" max="-15"/>
+                <item type="scrap" min="-20" max="-20"/>
+                <item type="missiles" min="5" max="5"/>
             </item_modify>
-            <weapon name="TERRAN_STANDARD_WEAPONS"/>
         </event>
     </choice>
-	<choice>
-        <text>Offer 20 missiles because the Sons of Korhal need to be stopped!</text>
-        <event>
-            <disableScrapAugments/>
-            <text>"Wow, are you serious? Thank you, your commitment to the cause will not be forgotten! The Dominion is grateful for your support."</text>
-            <item_modify>
-                <item type="missiles" min="-20" max="-20"/>
-            </item_modify>
-            <modifyPursuit amount="-2"/>
-			<!--<choice>
-				<text>Continue...</text>
-				<event load="MORALITY_REMOVE_GENERAL"/>
-			</choice>-->
-        </event>
-    </choice>
+
     <choice hidden="true">
-        <text>We don't have anything to sell.</text>
-		<event/>
+        <text>   Continue...</text>
+        <event/>
     </choice>
 </event>
+
 
 <!--
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

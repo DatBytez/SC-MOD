@@ -2943,11 +2943,11 @@ END OF SUBSYSTEMS
 	<droneSlots>3</droneSlots>
 	<weaponList missiles="2" count="4">
 		<weapon name="TERRAN_LASER_BATTERY_1" />
-		<weapon name="TERRAN_LASER_BATTERY_1" />
+		<!-- <weapon name="TERRAN_LASER_BATTERY_1" /> -->
 	</weaponList>
 	<droneList drones="4" count="3">
 		<drone name="TERRAN_SCV" />
-		<drone name="TERRAN_COMSAT" />
+		<!-- <drone name="TERRAN_COMSAT" /> -->
 	</droneList>
 	<health amount="30" />
 	<maxPower amount="8" />
@@ -2955,18 +2955,6 @@ END OF SUBSYSTEMS
 	<crewCount amount="1" class="terran_marine" />
 	<crewCount amount="1" class="terran_medic_1" />
 	<crewCount amount="1" class="terran_marine_1" />
-
-	<!-- <crewCount amount="1" class="terran_civilian" />
-	<crewCount amount="1" class="terran_marine" />
-	<crewCount amount="1" class="terran_marine_1" />
-	<crewCount amount="1" class="terran_medic" />
-	<crewCount amount="1" class="terran_medic_1" />
-	<crewCount amount="1" class="terran_medic_2" />
-	<crewCount amount="1" class="terran_firebat" />
-	<crewCount amount="1" class="terran_firebat_1" />
-	<crewCount amount="1" class="terran_ghost" />
-	<crewCount amount="1" class="terran_ghost_1" />
-	<crewCount amount="1" class="terran_ghost_2" /> -->
 
 	<aug name="TERRAN_SHIP_ARMOR_HEAVY" />
 	<!--<mv-mapImage>map_icon_mup_mvfed_a</mv-mapImage>-->
