@@ -12,7 +12,6 @@
     SHIP EVENT DEFINITIONS (PRIMARILY FOR TESTING)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
-<FTL>
 <event name="SC_TEST">
 	<text>A Terran battlecruiser moves to engage.</text>
 	<ship load="SC_TEST_BATTLECRUISER" hostile="true"/>
@@ -247,7 +246,6 @@
 	<text>Aaaaa! Scary ship!</text>
 	<ship load="TERRAN_SHIP_STARPORT" hostile="true"/>
 </event>
-</FTL>
 <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     GENERIC COMBAT RESULT EVENTS
@@ -308,17 +306,9 @@
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 -->
 <event name="FINISH_BEACON_TERRAN">
-	<text id="finish_beacon"/>
+	<text>Do nothing.</text>
 	<choice hidden="true">
-		<text>Explore.</text>
-		<event load="EXIT_FILLER_LIST"/>
-	</choice>
-	<choice hidden="true">
-		<text>Do something onboard the ship.</text>
-		<event load="STORAGE_CHECK"/>
-	</choice>
-	<choice hidden="true">
-		<text>Do nothing.</text>
+		<text>Leave.</text>
 		<event/>
 	</choice>
 </event>
@@ -336,13 +326,12 @@
 	<event load="SC_TERRAN_SCIENCE_UPGRADES"/>
 	<event load="SC_TERRAN_ENGINEERING_UPGRADES"/>
 	<event load="SC_TERRAN_SUPPLY_DEPOT"/>
+	<event load="SC_TERRAN_EMPTY"/>
 </eventList>
-
 
 <!--*****************************************************************************************************
   TERRAN STARPORT WEAPON UPGRADES
 ******************************************************************************************************-->
-<FTL>
 <event name="SC_TERRAN_STARPORT_UPGRADES">
     <text>A Terran Starport is offering weapon upgrades.</text>
     <ship load="TERRAN_SHIP_STARPORT" hostile="false"/>
@@ -526,13 +515,10 @@
         <text>Leave.</text>
 		<event/>
     </choice>
-
 </event>
-</FTL>
 <!--*****************************************************************************************************
   TERRAN SCIENCE FACILITY CREW UPGRADES
 ******************************************************************************************************-->
-<FTL>
 <event name="SC_TERRAN_SCIENCE_UPGRADES">
     <text>A Terran Science Facility is offering crew upgrades.</text>
     <ship load="TERRAN_SHIP_SCIENCE" hostile="false"/>
@@ -624,11 +610,9 @@
     </choice>
 
 </event>
-</FTL>
 <!--*****************************************************************************************************
   TERRAN ENGINEERING BAY UPGRADES
 ******************************************************************************************************-->
-<FTL>
 <event name="SC_TERRAN_ENGINEERING_UPGRADES">
     <text>
         A Terran Engineering Bay operates at this beacon. Repair drones and maintenance craft move between the station and nearby vessels while its quartermaster broadcasts an offer to upgrade infantry weapons and armor.
@@ -715,7 +699,6 @@
         <event/>
     </choice>
 </event>
-</FTL>
 <!--*****************************************************************************************************
   TERRAN SUPPLY DEPOT
 ******************************************************************************************************-->
@@ -832,6 +815,10 @@
 
 <eventList name="NEUTRAL_TERRAN">
 	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
 </eventList>
 
 <eventList name="NEUTRAL_TERRAN_UNIQUE">
@@ -841,22 +828,18 @@
 <!--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 					DISTRESS EVENTS ()
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
-<FTL>
 <eventList name="DISTRESS_BEACON_TERRAN">
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
 	<event load="SC_TERRAN_EMPTY"/>
 </eventList>
 
 <eventList name="DISTRESS_TERRAN_UNIQUE">
 	<event load="SC_TERRAN_EMPTY"/>
 </eventList>
-</FTL>
-<!--
-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+<!--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 					QUEST EVENTS ()
-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
--->
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
 
 <eventList name="QUESTS_TERRAN">
 	<event load="SC_TERRAN_TRANSPORT"/>
@@ -877,7 +860,6 @@
 		<event load="SC_TERRAN_TRANSPORT_FIGHT"/>
 	</choice>
 </event>
-
 <event name="SC_TERRAN_TRANSPORT_FIGHT">
 	<text>
 		The transport diverts power to its engines and attempts to flee as soon as you close in.
@@ -885,7 +867,6 @@
 
 	<ship hostile="true"/>
 </event>
-
 <event name="SC_TERRAN_TRANSPORT_GOTAWAY">
 	<text>
 		The transport jumps away before you can stop it. Its FTL trail is unstable, but a strong sensor sweep might still recover its destination.
@@ -896,7 +877,6 @@
 		<event load="SC_TERRAN_TRANSPORT_SENSORS_CHECK"/>
 	</choice>
 </event>
-
 <event name="SC_TERRAN_TRANSPORT_SURRENDER_TRACK">
 	<text>
 		The transport powers down its weapons and transfers a cargo manifest fragment along with the surrender payment. The data may reveal where the rest of its convoy was headed.
@@ -914,7 +894,6 @@
 		<event/>
 	</choice>
 </event>
-
 <event name="SC_TERRAN_TRANSPORT_SENSORS_CHECK">
 	<text>
 		Your crew scans the transport's residual jump data, looking for a usable destination.
@@ -977,13 +956,11 @@
 
 	<quest event="SC_TERRAN_TRANSPORT_QUEST"/>
 </event>
-
 <event name="SC_TERRAN_TRANSPORT_QUEST_FAILURE">
 	<text>
 		The transport's trail breaks apart before your sensors can resolve a destination. Whatever it was carrying is gone.
 	</text>
 </event>
-
 <event name="SC_TERRAN_TRANSPORT_QUEST">
 	<text>
 		You arrive at the coordinates recovered from the transport's route data. The trail leads to a Terran logistics waypoint, but this event is still a stub and can be expanded into a follow-up fight, cache, or special reward later.
@@ -993,12 +970,15 @@
 <!--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 					HOSTILE EVENTS ()
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
-
 <eventList name="HOSTILE_TERRAN">
 	<event load="SC_TERRAN_PATROL"/>
 	<event load="SC_TERRAN_SCOUT"/>
 	<event load="SC_TERRAN_AMBUSH"/>
 	<event load="SC_TERRAN_ASSAULT"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
 </eventList>
 
 <!--*****************************************************************************************************
