@@ -7,6 +7,17 @@
     <text>The area around this beacon is quiet. Nothing of interest appears on your sensors.</text>
 </event>
 
+ <!--
+////////////////////////////////////////////////////////////////////////////////////////////////////
+    SHIP EVENT DEFINITIONS (PRIMARILY FOR TESTING)
+////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<FTL>
+<event name="SC_TEST">
+	<text>A Terran battlecruiser moves to engage.</text>
+	<ship load="SC_TEST_BATTLECRUISER" hostile="true"/>
+</event>
+
 <ship name="SC_TEST_BATTLECRUISER" auto_blueprint="SC_TEST_BATTLECRUISER">
     <surrender min="2" max="6" load="SC_SURRENDER_TERRAN"/>
     <escape min="2" max="999" load="ESCAPE_EVENT"/>
@@ -14,16 +25,6 @@
     <destroyed load="SC_DESTROYED_TERRAN"/>
     <deadCrew load="SC_DEAD_CREW_TERRAN"/>
 </ship>
-
-<event name="SC_TEST">
-	<text>A Terran battlecruiser moves to engage.</text>
-	<ship load="SC_TEST_BATTLECRUISER" hostile="true"/>
-</event>
- <!--
-////////////////////////////////////////////////////////////////////////////////////////////////////
-    SHIP EVENT DEFINITIONS (PRIMARILY FOR TESTING)
-////////////////////////////////////////////////////////////////////////////////////////////////////
--->
 
  <ship name="TERRAN_SHIP_WRAITH_A" auto_blueprint="TERRAN_SHIP_WRAITH_A">
 <surrender  chance="0.8" min="2" max="3" load="SC_SURRENDER_TERRAN"/>
@@ -246,6 +247,7 @@
 	<text>Aaaaa! Scary ship!</text>
 	<ship load="TERRAN_SHIP_STARPORT" hostile="true"/>
 </event>
+</FTL>
 <!--
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     GENERIC COMBAT RESULT EVENTS
@@ -632,8 +634,6 @@
         A Terran Engineering Bay operates at this beacon. Repair drones and maintenance craft move between the station and nearby vessels while its quartermaster broadcasts an offer to upgrade infantry weapons and armor.
     </text>
 
-    <!-- INFANTRY WEAPONS -->
-
     <choice hidden="true" req="SC_INFANTRY_WEAPONS_2" lvl="1" max_group="0" blue="false">
         <text>Upgrade Crew Weapons. [Fully Upgraded]</text>
         <event>
@@ -667,8 +667,6 @@
             <hiddenAug>SC_INFANTRY_WEAPONS_1</hiddenAug>
         </event>
     </choice>
-
-    <!-- INFANTRY ARMOR -->
 
     <choice hidden="true" req="SC_INFANTRY_ARMOR_2" lvl="1" max_group="1" blue="false">
         <text>Upgrade Crew Armor. [Fully Upgraded]</text>
@@ -2737,7 +2735,7 @@
 	</beaconType>
 
 	<text>
-		An industrial Terran Factory fills the surrounding space with cargo traffic. Finished components and equipment are being loaded onto transports directly from its production lines.
+		A Terran Factory fills the surrounding space with cargo traffic. Finished components and equipment are being loaded onto transports directly from its production lines.
 	</text>
 
 		<ship load="TERRAN_SHIP_FACTORY" hostile="false"/>
