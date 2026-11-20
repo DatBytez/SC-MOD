@@ -243,90 +243,132 @@
 ******************************************************************************************************-->
 <FTL>
 <augments>
-    <!-- <aug name="TERRAN_SHIP_ARMOR_LIGHT">
-        <statBoosts>
-			<statBoost name="repairSpeed" save="SC_ARMOR_BRACERS_REPAIR">
-                <boostType>MULT</boostType>
-                <shipTarget>ORIGINAL_SHIP</shipTarget>
-                <crewTarget>ALLIES</crewTarget>
-                <droneTarget>ALL</droneTarget>
-                <amount>1.5</amount>
-                <priority>0</priority>
-                <systemRoomTarget>ALL</systemRoomTarget>
-                <systemList>
-                    <lily_system_bracers/>
-                </systemList>
-            </statBoost>
-        </statBoosts>
-    </aug>
-	
-    <aug name="TERRAN_SHIP_ARMOR_MEDIUM">
-        <statBoosts>
-			<statBoost load="SC_ARMOR_BRACERS_REPAIR"/>
-        </statBoosts>
-    </aug>
-	
-    <aug name="TERRAN_SHIP_ARMOR_HEAVY">
-        <statBoosts>
-			<statBoost load="SC_ARMOR_BRACERS_REPAIR"/>
-        </statBoosts>
-    </aug> -->
-	
-	<!-- TERRAN_WRAITH_BATTERY HIDDEN AUGS -->
-	<FTL>
-	<aug name="TERRAN_HIDDEN_FIRE_EXTINGUISHERS">
-		<function name="FIRE_EXTINGUISHERS" value="1" useForReqs="true" warning="false"/>
-		<locked/>
-	</aug>
-	<aug name="TERRAN_HIDDEN_FIRE_EXTINGUISHERS_1">
-		<function name="FIRE_EXTINGUISHERS" value="1" useForReqs="true" warning="false"/>
-		<locked/>
-	</aug>
-	<aug name="TERRAN_HIDDEN_FIRE_EXTINGUISHERS_2">
-		<function name="FIRE_EXTINGUISHERS" value="2" useForReqs="true" warning="false"/>
-		<locked/>
-	</aug>
-	<aug name="TERRAN_HIDDEN_FIRE_EXTINGUISHERS_3">
-		<function name="FIRE_EXTINGUISHERS" value="3" useForReqs="true" warning="false"/>
-		<locked/>
-	</aug>
-	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_1">
-    	<function name="FTL_BOOSTER" value="0.10" useForReqs="true" warning="false"/>
-		<locked/>
-    </aug>
-	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_2">
-    	<function name="FTL_BOOSTER" value="0.20" useForReqs="true" warning="false"/>
-		<locked/>
-    </aug>
-	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_3">
-    	<function name="FTL_BOOSTER" value="0.30" useForReqs="true" warning="false"/>
-		<locked/>
-    </aug>
-	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_4">
-    	<function name="FTL_BOOSTER" value="0.40" useForReqs="true" warning="false"/>
-		<locked/>
-    </aug>
-	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_5">
-    	<function name="FTL_BOOSTER" value="0.50" useForReqs="true" warning="false"/>
-		<locked/>
-    </aug>
-	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_6">
-    	<function name="FTL_BOOSTER" value="0.60" useForReqs="true" warning="false"/>
-		<locked/>
-    </aug>
-	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_7">
-    	<function name="FTL_BOOSTER" value="0.70" useForReqs="true" warning="false"/>
-		<locked/>
-    </aug>
-	<aug name="TERRAN_HIDDEN_FTL_BOOSTER_8">
-    	<function name="FTL_BOOSTER" value="0.80" useForReqs="true" warning="false"/>
-		<locked/>
-    </aug>
-		<aug name="TERRAN_HIDDEN_FTL_BOOSTER_9">
-    	<function name="FTL_BOOSTER" value="0.90" useForReqs="true" warning="false"/>
-		<locked/>
-    </aug>
-	</FTL>
+<!-- ===============	INFANTRY WEAPONS	=============== -->
+<FTL>
+<aug name="SC_INFANTRY_WEAPONS_1">
+	<statBoosts>
+		<statBoost name="rangedDamageMultiplier">
+			<boostType>MULT</boostType>
+			<amount>1.15</amount>
+			<shipTarget>ALL</shipTarget>
+			<crewTarget>ALLIES</crewTarget>
+			<droneTarget>CREW</droneTarget>
+			<priority>0</priority>
+			<whiteList>
+				<terran_marine/>
+				<terran_marine_1/>
+				<terran_ghost/>
+				<terran_ghost_1/>
+				<terran_ghost_2/>
+			</whiteList>
+		</statBoost>
+		<statBoost name="rangedDamageMultiplier">
+			<boostType>MULT</boostType>
+			<amount>1.25</amount>
+			<shipTarget>ALL</shipTarget>
+			<crewTarget>ALLIES</crewTarget>
+			<droneTarget>CREW</droneTarget>
+			<priority>0</priority>
+			<whiteList>
+				<terran_firebat/>
+				<terran_firebat_1/>
+			</whiteList>
+		</statBoost>
+	</statBoosts>
+	<locked/>
+</aug>
+
+<aug name="SC_INFANTRY_WEAPONS_2">
+	<statBoosts>
+		<statBoost name="rangedDamageMultiplier">
+			<boostType>MULT</boostType>
+			<amount>1.30</amount>
+			<shipTarget>ALL</shipTarget>
+			<crewTarget>ALLIES</crewTarget>
+			<droneTarget>CREW</droneTarget>
+			<priority>0</priority>
+			<whiteList>
+				<terran_marine/>
+				<terran_marine_1/>
+				<terran_ghost/>
+				<terran_ghost_1/>
+				<terran_ghost_2/>
+			</whiteList>
+		</statBoost>
+		<statBoost name="rangedDamageMultiplier">
+			<boostType>MULT</boostType>
+			<amount>1.50</amount>
+			<shipTarget>ALL</shipTarget>
+			<crewTarget>ALLIES</crewTarget>
+			<droneTarget>CREW</droneTarget>
+			<priority>0</priority>
+			<whiteList>
+				<terran_firebat/>
+				<terran_firebat_1/>
+			</whiteList>
+		</statBoost>
+	</statBoosts>
+	<locked/>
+</aug>
+</FTL>
+<!-- ===============	INFANTRY ARMOR		=============== -->
+<FTL>
+<aug name="SC_INFANTRY_ARMOR_1">
+	<statBoosts>
+		<statBoost name="damageTakenMultiplier">
+			<boostType>MULT</boostType>
+			<amount>0.90</amount>
+			<shipTarget>ALL</shipTarget>
+			<crewTarget>ALLIES</crewTarget>
+			<droneTarget>ALL</droneTarget>
+			<priority>0</priority>
+			<whiteList>
+				<terran_marine/>
+				<terran_marine_1/>
+				<terran_firebat/>
+				<terran_firebat_1/>
+				<terran_ghost/>
+				<terran_ghost_1/>
+				<terran_ghost_2/>
+				<terran_medic/>
+				<terran_medic_1/>
+				<terran_medic_2/>
+				<terran_scv/>
+				<terran_scv_1/>
+			</whiteList>
+		</statBoost>
+	</statBoosts>
+	<locked/>
+</aug>
+
+<aug name="SC_INFANTRY_ARMOR_2">
+	<statBoosts>
+		<statBoost name="damageTakenMultiplier">
+			<boostType>MULT</boostType>
+			<amount>0.80</amount>
+			<shipTarget>ALL</shipTarget>
+			<crewTarget>ALLIES</crewTarget>
+			<droneTarget>ALL</droneTarget>
+			<priority>0</priority>
+			<whiteList>
+				<terran_marine/>
+				<terran_marine_1/>
+				<terran_firebat/>
+				<terran_firebat_1/>
+				<terran_ghost/>
+				<terran_ghost_1/>
+				<terran_ghost_2/>
+				<terran_medic/>
+				<terran_medic_1/>
+				<terran_medic_2/>
+				<terran_scv/>
+				<terran_scv_1/>
+			</whiteList>
+		</statBoost>
+	</statBoosts>
+	<locked/>
+</aug>
+</FTL>
 </augments>
 </FTL>
 <!--*****************************************************************************************************

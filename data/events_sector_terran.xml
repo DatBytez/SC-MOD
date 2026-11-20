@@ -332,16 +332,15 @@
 <eventList name="ITEMS_TERRAN">
 	<event load="SC_TERRAN_STARPORT_UPGRADES"/>
 	<event load="SC_TERRAN_SCIENCE_UPGRADES"/>
+	<event load="SC_TERRAN_ENGINEERING_UPGRADES"/>
 	<event load="SC_TERRAN_SUPPLY_DEPOT"/>
 </eventList>
 
 
-<!--
-*********************************************************************************************************
+<!--*****************************************************************************************************
   TERRAN STARPORT WEAPON UPGRADES
-*********************************************************************************************************
--->
-
+******************************************************************************************************-->
+<FTL>
 <event name="SC_TERRAN_STARPORT_UPGRADES">
     <text>A Terran Starport is offering weapon upgrades.</text>
     <ship load="TERRAN_SHIP_STARPORT" hostile="false"/>
@@ -352,8 +351,6 @@
             <ship hostile="true"/>
         </event>
     </choice>
-
-    <!-- TERRAN BURST LASERS -->
 
     <choice hidden="true" req="TERRAN_BURST_LASER_1">
         <text>Upgrade your Terran Burst Laser.</text>
@@ -379,8 +376,6 @@
         </event>
     </choice>
 
-    <!-- TERRAN HEAVY BURST LASERS -->
-
     <choice hidden="true" req="TERRAN_BURST_LASER_HEAVY_1">
         <text>Upgrade weapons for a small cost</text>
         <event>
@@ -392,8 +387,6 @@
             <weapon name="TERRAN_BURST_LASER_HEAVY_2"/>
         </event>
     </choice>
-
-    <!-- TERRAN LASER BATTERIES -->
 
     <choice hidden="true" req="TERRAN_LASER_BATTERY_1">
         <text>Upgrade weapons for a small cost</text>
@@ -419,8 +412,6 @@
         </event>
     </choice>
 
-    <!-- TERRAN HEAVY LASER BATTERIES -->
-
     <choice hidden="true" req="TERRAN_LASER_BATTERY_HEAVY_1">
         <text>Upgrade weapons for a small cost</text>
         <event>
@@ -432,8 +423,6 @@
             <weapon name="TERRAN_LASER_BATTERY_HEAVY_2"/>
         </event>
     </choice>
-
-    <!-- GEMINI FIRE MISSILES -->
 
     <choice hidden="true" req="GEMINI_FIRE_1">
         <text>Upgrade weapons for a small cost</text>
@@ -459,8 +448,6 @@
         </event>
     </choice>
 
-    <!-- GEMINI ION MISSILES -->
-
     <choice hidden="true" req="GEMINI_ION_1">
         <text>Upgrade weapons for a small cost</text>
         <event>
@@ -484,8 +471,6 @@
             <weapon name="GEMINI_ION_3"/>
         </event>
     </choice>
-
-    <!-- GEMINI BREACH MISSILES -->
 
     <choice hidden="true" req="GEMINI_BREACH_1">
         <text>Upgrade weapons for a small cost</text>
@@ -511,8 +496,6 @@
         </event>
     </choice>
 
-    <!-- GEMINI HULL MISSILES -->
-
     <choice hidden="true" req="GEMINI_HULL_1">
         <text>Upgrade weapons for a small cost</text>
         <event>
@@ -524,8 +507,6 @@
             <weapon name="GEMINI_HULL_2"/>
         </event>
     </choice>
-
-    <!-- GEMINI SYSTEM MISSILES -->
 
     <choice hidden="true" req="GEMINI_SYS_1">
         <text>Upgrade weapons for a small cost</text>
@@ -545,14 +526,11 @@
     </choice>
 
 </event>
-
-
-<!--
-*********************************************************************************************************
+</FTL>
+<!--*****************************************************************************************************
   TERRAN SCIENCE FACILITY CREW UPGRADES
-*********************************************************************************************************
--->
-
+******************************************************************************************************-->
+<FTL>
 <event name="SC_TERRAN_SCIENCE_UPGRADES">
     <text>A Terran Science Facility is offering crew upgrades.</text>
     <ship load="TERRAN_SHIP_SCIENCE" hostile="false"/>
@@ -564,8 +542,6 @@
         </event>
     </choice>
 
-    <!-- TERRAN MARINE -->
-
     <choice hidden="true" req="terran_marine">
         <text>Upgrade crew for a small cost</text>
         <event>
@@ -576,8 +552,6 @@
             <transformRace class="terran_marine">terran_marine_1</transformRace>
         </event>
     </choice>
-
-    <!-- TERRAN MEDIC -->
 
     <choice hidden="true" req="terran_medic">
         <text>Upgrade crew for a small cost</text>
@@ -601,8 +575,6 @@
         </event>
     </choice>
 
-    <!-- TERRAN FIREBAT -->
-
     <choice hidden="true" req="terran_firebat">
         <text>Upgrade crew for a small cost</text>
         <event>
@@ -613,8 +585,6 @@
             <transformRace class="terran_firebat">terran_firebat_1</transformRace>
         </event>
     </choice>
-
-    <!-- TERRAN GHOST -->
 
     <choice hidden="true" req="terran_ghost">
         <text>Upgrade crew for a small cost</text>
@@ -652,14 +622,105 @@
     </choice>
 
 </event>
+</FTL>
+<!--*****************************************************************************************************
+  TERRAN ENGINEERING BAY UPGRADES
+******************************************************************************************************-->
+<FTL>
+<event name="SC_TERRAN_ENGINEERING_UPGRADES">
+    <text>
+        A Terran Engineering Bay operates at this beacon. Repair drones and maintenance craft move between the station and nearby vessels while its quartermaster broadcasts an offer to upgrade infantry weapons and armor.
+    </text>
 
+    <!-- INFANTRY WEAPONS -->
 
+    <choice hidden="true" req="SC_INFANTRY_WEAPONS_2" lvl="1" max_group="0" blue="false">
+        <text>Upgrade Crew Weapons. [Fully Upgraded]</text>
+        <event>
+            <text>Your infantry weapons have already been upgraded to their maximum level.</text>
+        </event>
+    </choice>
 
-<!--
-*********************************************************************************************************
+    <choice hidden="true" req="SC_INFANTRY_WEAPONS_1" lvl="1" max_group="0" blue="false">
+        <text>Upgrade Crew Weapons II. [Cost: 60 Scrap]</text>
+        <event>
+            <text>
+                The Engineering Bay installs advanced weapon modifications for your infantry, further improving their combat effectiveness.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-60" max="-60"/>
+            </item_modify>
+            <remove name="HIDDEN SC_INFANTRY_WEAPONS_1"/>
+            <hiddenAug>SC_INFANTRY_WEAPONS_2</hiddenAug>
+        </event>
+    </choice>
+
+    <choice hidden="true" req="SC_INFANTRY_WEAPONS_1" lvl="0" max_group="0" blue="false">
+        <text>Upgrade Crew Weapons I. [Cost: 40 Scrap]</text>
+        <event>
+            <text>
+                The Engineering Bay equips your infantry with improved weapons, increasing their combat effectiveness.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-40" max="-40"/>
+            </item_modify>
+            <hiddenAug>SC_INFANTRY_WEAPONS_1</hiddenAug>
+        </event>
+    </choice>
+
+    <!-- INFANTRY ARMOR -->
+
+    <choice hidden="true" req="SC_INFANTRY_ARMOR_2" lvl="1" max_group="1" blue="false">
+        <text>Upgrade Crew Armor. [Fully Upgraded]</text>
+        <event>
+            <text>Your infantry armor has already been upgraded to its maximum level.</text>
+        </event>
+    </choice>
+
+    <choice hidden="true" req="SC_INFANTRY_ARMOR_1" lvl="1" max_group="1" blue="false">
+        <text>Upgrade Crew Armor II. [Cost: 60 Scrap]</text>
+        <event>
+            <text>
+                The Engineering Bay installs reinforced armor plating and advanced protective systems, further reducing damage taken by your infantry.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-60" max="-60"/>
+            </item_modify>
+            <remove name="HIDDEN SC_INFANTRY_ARMOR_1"/>
+            <hiddenAug>SC_INFANTRY_ARMOR_2</hiddenAug>
+        </event>
+    </choice>
+
+    <choice hidden="true" req="SC_INFANTRY_ARMOR_1" lvl="0" max_group="1" blue="false">
+        <text>Upgrade Crew Armor I. [Cost: 40 Scrap]</text>
+        <event>
+            <text>
+                The Engineering Bay equips your infantry with improved protective equipment, increasing their resistance to incoming damage.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-40" max="-40"/>
+            </item_modify>
+            <hiddenAug>SC_INFANTRY_ARMOR_1</hiddenAug>
+        </event>
+    </choice>
+    <choice>
+        <text>Attack the Engineering Bay.</text>
+        <event>
+            <text>
+                You power your weapons and move against the Engineering Bay. Warning lights flare across the station as its defensive systems come online.
+            </text>
+            <ship load="TERRAN_SHIP_ENGINEERING" hostile="true"/>
+        </event>
+    </choice>
+    <choice>
+        <text>Leave the station alone.</text>
+        <event/>
+    </choice>
+</event>
+</FTL>
+<!--*****************************************************************************************************
   TERRAN SUPPLY DEPOT
-*********************************************************************************************************
--->
+******************************************************************************************************-->
 <!-- <event name="SC_TERRAN_SUPPLY_DEPOT_2"> -->
     <!-- <preventQuest/> -->
     <!-- <beaconType id="map_icon_supply" global="false"/> -->

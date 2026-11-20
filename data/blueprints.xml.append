@@ -390,12 +390,11 @@ END OF SUBSYSTEMS
 [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 -->
 </FTL>
-</FTL>
 <!-- ========================================================== --
 						TERRAN AUGMENTS
   -- ========================================================== -->
 <FTL>
-<!-- ===============	SPECIES AUGMENT		=============== -->
+<!-- ===============	SPECIES AUGMENT			=============== -->
 <FTL>
 <augBlueprint name="TERRAN_SHIP">
 	<title id="NOYB"/>
@@ -404,6 +403,42 @@ END OF SUBSYSTEMS
 	<rarity>0</rarity>
 	<stackable>false</stackable>
 	<sc-repair/>
+</augBlueprint>
+</FTL>
+<!-- ===============	INFANTRY WEAPONS		=============== -->
+<FTL>
+<augBlueprint name="SC_INFANTRY_WEAPONS_1">
+	<title>Infantry Weapons I</title>
+	<desc>Increases ranged damage by 15% for Terran Marines and Ghosts, and 25% for Terran Firebats.</desc>
+	<cost>0</cost>
+	<rarity>0</rarity>
+	<stackable>false</stackable>
+</augBlueprint>
+
+<augBlueprint name="SC_INFANTRY_WEAPONS_2">
+	<title>Infantry Weapons II</title>
+	<desc>Increases ranged damage by 30% for Terran Marines and Ghosts, and 50% for Terran Firebats.</desc>
+	<cost>0</cost>
+	<rarity>0</rarity>
+	<stackable>false</stackable>
+</augBlueprint>
+</FTL>
+<!-- ===============	INFANTRY ARMOR			=============== -->
+<FTL>
+<augBlueprint name="SC_INFANTRY_ARMOR_1">
+	<title>Infantry Armor I</title>
+	<desc>Reduces damage taken by Terran Marines, Firebats, Ghosts, Medics, and SCVs by 10%.</desc>
+	<cost>0</cost>
+	<rarity>0</rarity>
+	<stackable>false</stackable>
+</augBlueprint>
+
+<augBlueprint name="SC_INFANTRY_ARMOR_2">
+	<title>Infantry Armor II</title>
+	<desc>Reduces damage taken by Terran Marines, Firebats, Ghosts, Medics, and SCVs by 20%.</desc>
+	<cost>0</cost>
+	<rarity>0</rarity>
+	<stackable>false</stackable>
 </augBlueprint>
 </FTL>
 <!-- ===============	TERRAN SHIP BATTERIES	=============== -->
@@ -467,7 +502,6 @@ END OF SUBSYSTEMS
 	<sc-upgrade system="sensors" value="2"/>
 	<sc-detector/>
 </augBlueprint>
-</FTL>
 </FTL>
 <!-- ========================================================== --
 						TERRAN WEAPONS

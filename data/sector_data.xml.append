@@ -12,6 +12,10 @@
         <track>civilian</track>
     </trackList>
 
+    <rarityList>
+        <blueprint name="human" rarity="1"/>
+    </rarityList>
+
     <startEvent>SC_TERRAN_EMPTY</startEvent>
 
     <event name="SC_TERRAN_EMPTY" min="999" max="999"/>

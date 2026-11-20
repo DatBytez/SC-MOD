@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--Copyright (c) 2012 by Subset Games. All rights reserved.-->
+<FTL>
 <img x="-61" y="-41" w="228" h="196" />
 <offsets>
 	<floor x="114" y="98" />
@@ -11,4 +12,5 @@
 	<mount x="131" y="53" rotate="false" mirror="false" gib="-1" slide="up" />
 </weaponMounts>
 <explosion />
+</FTL>
 
