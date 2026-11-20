@@ -719,20 +719,13 @@
 <!--*****************************************************************************************************
   TERRAN SUPPLY DEPOT
 ******************************************************************************************************-->
-<!-- <event name="SC_TERRAN_SUPPLY_DEPOT_2"> -->
-    <!-- <preventQuest/> -->
-    <!-- <beaconType id="map_icon_supply" global="false"/> -->
-
-    <!-- <text>Welcome to the autmoated Terran Supply Depot. Please Deposit surpluss supplies.</text> -->
-<!-- </event> -->
-
 <event name="SC_TERRAN_SUPPLY_DEPOT">
-	<!-- <preventQuest/>
+	<preventQuest/>
     <beaconType id="map_icon_supply" global="true">
         <color r="233" g="123" b="74" a="1.0"/>
         <unvisitedTooltip>Terran Supply Depot</unvisitedTooltip>
         <visitedTooltip>Terran Supply Depot</visitedTooltip>
-    </beaconType> -->
+    </beaconType>
 
     <text>Welcome to the autmoated Terran Supply Depot. Please Deposit surpluss supplies.</text>
 

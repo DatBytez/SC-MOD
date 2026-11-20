@@ -220,17 +220,14 @@ S8 (7): Last Stand-->
 	</rarityList>
 	
 	<startEvent>SC_TERRAN_PATROL</startEvent>
-	<!-- <event name="STORE_ENGI" min="2" max="3"/> -->
-	<!-- <event name="ITEMS" min="2" max="2"/> -->
 	<event name="STORELIST_TERRAN" min="2" max="3"/>
-	<event name="ITEMS_TERRAN" min="2" max="2"/>
-	<event name="NOTHING_ENGI" min="1" max="2"/>
+	<event name="ITEMS_TERRAN" min="3" max="4"/>
 	<event name="ITEMS_ENGI" min="3" max="3"/>
 	<event name="DISTRESS_BEACON_ENGI" min="1" max="3"/>
 	<event name="QUESTS_ENGI" min="1" max="1"/>
 	<event name="NEUTRAL_ENGI" min="4" max="6"/>
 	<event name="HOSTILE_ENGI" min="5" max="7"/>
-
+	<event name="SC_TERRAN_EMPTY" min="999" max="999"/>
 		
 	<!-- <removeFirstBeaconNebula/>
 	<exitBeacon event="FINISH_BEACON_TERRAN" nebulaEvent="FINISH_BEACON_TERRAN" rebelEvent="FINISH_BEACON_TERRAN"/>
