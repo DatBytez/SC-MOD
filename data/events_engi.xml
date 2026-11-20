@@ -38,6 +38,12 @@ Idea - make an event where you're fighting to save an engi ship but theres manti
 
 -->
 
+<!--******************************
+	SC FILLER
+*******************************-->
+<event name="SC_TERRAN_EMPTY">
+    <text>The area around this beacon is quiet. Nothing of interest appears on your sensors.</text>
+</event>
 
 <!--
 ******************************
@@ -47,10 +53,9 @@ Idea - make an event where you're fighting to save an engi ship but theres manti
 
 
 
-<eventList name="ITEMS_ENGI">
+<!-- <eventList name="ITEMS_ENGI">
 	<event load="ENGI_GIFT"/>
 	<event load="ENGI_FLEET_DELAY"/>
-<!--	<event load="ENGI_MONSTER"/> -->
 	<event load="ENGI_SURRENDER"/>
 
 	<event load="FIND_DRONE"/>
@@ -73,7 +78,6 @@ Idea - make an event where you're fighting to save an engi ship but theres manti
 </eventList>
 
 <eventList name="NEUTRAL_ENGI">
-	<!--<event load="ENGI_UNLOCK_1"/> -->
 	<event load="ENGI_STATION_DISTRESS"/>
 	<event load="MANTIS_FIGHT_CHOICE"/>
 	<event load="MANTIS_CIVILIAN"/>
@@ -83,18 +87,18 @@ Idea - make an event where you're fighting to save an engi ship but theres manti
 	<event load="BROKEN_REBEL_DRONE"/>
 	<event load="AUTO_DEFENSE_ITEM"/>
 
-	<event load="ALISON_MANTIS_CREW"/> <!-- new alison written event -->
+	<event load="ALISON_MANTIS_CREW"/>
 
 	<event load="ZOLTAN_CREW_STUDY"/>
 
-	<event load="ASTEROID_DERELICT_SHIP"/> <!-- CRYSTAL UNLOCK-->
+	<event load="ASTEROID_DERELICT_SHIP"/>
 
-	<event load="REFUGEE_NO_DISTRESS"/> <!--DLC - newEvents-->
-	<event load="WRECKAGE_EVENT"/> <!--DLC - newEvents-->
-	<event load="FUELING_STATION"/> <!--DLC - newEvents-->
-	<event load="CONFUSED_MANTIS"/> <!--DLC - newEvents-->
-	<event load="ENGI_SEX"/><!--DLC - below-->
-	<event load="ENGI_VIRUS"/> <!--DLC - below-->
+	<event load="REFUGEE_NO_DISTRESS"/>
+	<event load="WRECKAGE_EVENT"/>
+	<event load="FUELING_STATION"/>
+	<event load="CONFUSED_MANTIS"/>
+	<event load="ENGI_SEX"/>
+	<event load="ENGI_VIRUS"/>
 </eventList>
 
 <eventList name="DISTRESS_BEACON_ENGI">
@@ -115,10 +119,63 @@ Idea - make an event where you're fighting to save an engi ship but theres manti
 	<event load="MERCHANT_REQUEST"/>
 	<event load="FEDERATION_PLANET_SIGNAL"/>
 	<event load="MERCENARY_WORK_START"/>
+</eventList> -->
+
+
+<eventList name="ITEMS_ENGI">
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
 </eventList>
 
+<eventList name="HOSTILE_ENGI">
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
 
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+</eventList>
 
+<eventList name="NEUTRAL_ENGI">
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+</eventList>
+
+<eventList name="DISTRESS_BEACON_ENGI">
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+</eventList>
+
+<eventList name="QUESTS_ENGI">
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_EMPTY"/>
+</eventList>
 
 
 
@@ -130,7 +187,7 @@ Idea - make an event where you're fighting to save an engi ship but theres manti
 -->
 
 <event name="START_BEACON_ENGI">
-	<text load="START_BEACON_ENGI"/>
+	<event load="SC_TERRAN_EMPTY"/>
 </event>
 <textList name="START_BEACON_ENGI">
 	<text id="text_START_BEACON_ENGI_1"/>
@@ -138,7 +195,7 @@ Idea - make an event where you're fighting to save an engi ship but theres manti
 </textList>
 
 <event name="STORE_ENGI">
-	<text load="STORE_ENGI"/>
+	<event load="SC_TERRAN_EMPTY"/>
 	<store/>
 </event>
 <textList name="STORE_ENGI">
@@ -148,7 +205,7 @@ Idea - make an event where you're fighting to save an engi ship but theres manti
 </textList>
 
 <event name="NOTHING_ENGI">
-	<text load="NOTHING_ENGI"/>
+	<event load="SC_TERRAN_EMPTY"/>
 </event>
 <textList name="NOTHING_ENGI">
 	<text id="text_NOTHING_ENGI_1"/>
