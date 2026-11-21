@@ -836,7 +836,7 @@
         <text></text>
         <event>
             <item_modify>
-                <item type="scrap" min="-15" max="-15"/>
+                <!-- <item type="scrap" min="-15" max="-15"/> -->
                 <item type="fuel" min="5" max="5"/>
             </item_modify>
         </event>
@@ -846,7 +846,7 @@
         <text></text>
         <event>
             <item_modify>
-                <item type="scrap" min="-18" max="-18"/>
+                <!-- <item type="scrap" min="-18" max="-18"/> -->
                 <item type="drones" min="3" max="3"/>
             </item_modify>
         </event>
@@ -856,7 +856,7 @@
         <text></text>
         <event>
             <item_modify>
-                <item type="scrap" min="-20" max="-20"/>
+                <!-- <item type="scrap" min="-20" max="-20"/> -->
                 <item type="missiles" min="5" max="5"/>
             </item_modify>
         </event>
@@ -2494,21 +2494,15 @@
 	</triggeredEvent>
 </event>
 <event name="SC_TERRAN_SCOUT_GOTAWAY">
-	<text>
-		The scout jumps away before you can stop it. Moments later, encrypted fleet traffic spikes across the sector.
-	</text>
+	<text>The scout jumps away before you can stop it. Moments later, encrypted fleet traffic spikes across the sector.</text>
 	<modifyPursuit amount="1"/>
 </event>
 <event name="SC_TERRAN_SCOUT_FIGHT">
-	<text>
-		The scout is already turning away, its FTL drive flaring hot. You power weapons and move to stop it.
-	</text>
+	<text>The scout is already turning away, its FTL drive flaring hot. You power weapons and move to stop it.</text>
 	<ship load="SC_TERRAN_SCOUT_SHIP" hostile="true"/>
 </event>
 <event name="SC_TERRAN_SCOUT_ENGINE_STATUS_CLEAR">
-	<text>
-		The scout's engine systems recover from the disruption.
-	</text>
+	<text>The scout's engine systems recover from the disruption.</text>
 	<status type="clear" target="enemy" system="engines" amount="100"/>
 	<choice>
 		<text>Continue the fight.</text>
@@ -2516,9 +2510,7 @@
 	</choice>
 </event>
 <event name="SC_TERRAN_SCOUT_DEAD_CREW">
-	<text>
-		With the scout's crew neutralized, you search its databanks and secure its emergency supplies before any message can be sent. The ship's still-active comms buffer may contain a way to delay the pursuing fleet, but tampering with it could also expose your position.
-	</text>
+	<text>With the scout's crew neutralized, you search its databanks and secure its emergency supplies before any message can be sent. The ship's still-active comms buffer may contain a way to delay the pursuing fleet, but tampering with it could also expose your position.</text>
 
 	<choice req="sensors" lvl="4" hidden="true" blue="false">
 		<text>(Sensors) Analyze the scout's transmission logs and try to redirect the fleet.</text>
@@ -2604,23 +2596,17 @@
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 </eventList>
 <event name="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS">
-	<text>
-		You alter the scout's final telemetry before it can be recovered. The pursuing fleet diverts toward a false trail, buying you time.
-	</text>
+	<text>You alter the scout's final telemetry before it can be recovered. The pursuing fleet diverts toward a false trail, buying you time.</text>
 	<modifyPursuit amount="-1"/>
 	<autoReward level="HIGH">standard</autoReward>
 </event>
 <event name="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE">
-	<text>
-		The scout's comms buffer resists your attempt. The failed intrusion causes an emergency beacon to fire, giving the pursuing fleet a cleaner trail to follow.
-	</text>
+	<text>The scout's comms buffer resists your attempt. The failed intrusion causes an emergency beacon to fire, giving the pursuing fleet a cleaner trail to follow.</text>
 	<modifyPursuit amount="1"/>
 	<autoReward level="HIGH">standard</autoReward>
 </event>
 <event name="SC_TERRAN_SCOUT_CREW_KILL_REWARD">
-	<text>
-		You leave the scout's comms buffer alone and focus on stripping the ship before more Terran forces arrive.
-	</text>
+	<text>You leave the scout's comms buffer alone and focus on stripping the ship before more Terran forces arrive.</text>
 	<autoReward level="HIGH">standard</autoReward>
 </event>
 
@@ -2628,9 +2614,7 @@
   TERRAN ASSAULT ENCOUNTER
 ******************************************************************************************************-->
 <event name="SC_TERRAN_ASSAULT">
-	<text>
-		A Terran assault group is already waiting at this beacon. Their lead ship moves to intercept, weapons hot and formation tight. This is not a scout or patrol trying to identify you; this is a direct attack.
-	</text>
+	<text>A Terran assault group is already waiting at this beacon. Their lead ship moves to intercept, weapons hot and formation tight. This is not a scout or patrol trying to identify you; this is a direct attack.</text>
 
 	<ship load="SC_TERRAN_ASSAULT_SHIP_1" hostile="true"/>
 
@@ -2640,16 +2624,12 @@
 	</choice>
 </event>
 <event name="SC_TERRAN_ASSAULT_FIGHT_1">
-	<text>
-		The first Terran attacker breaks formation and opens fire. More contacts remain at the edge of sensor range.
-	</text>
+	<text>The first Terran attacker breaks formation and opens fire. More contacts remain at the edge of sensor range.</text>
 
 	<ship hostile="true"/>
 </event>
 <event name="SC_TERRAN_ASSAULT_SECOND_WAVE">
-	<text>
-		As the first attacker falls back or breaks apart, a second Terran ship moves in to continue the assault. This one is committed to finishing the fight.
-	</text>
+	<text>As the first attacker falls back or breaks apart, a second Terran ship moves in to continue the assault. This one is committed to finishing the fight.</text>
 
 	<ship load="SC_TERRAN_ASSAULT_SHIP_2" hostile="false"/>
 
@@ -2659,9 +2639,7 @@
 	</choice>
 </event>
 <event name="SC_TERRAN_ASSAULT_FIGHT_2">
-	<text>
-		The second Terran assault ship advances and opens fire.
-	</text>
+	<text>The second Terran assault ship advances and opens fire.</text>
 
 	<ship hostile="true"/>
 </event>
@@ -2682,9 +2660,7 @@
 	</choice>
 </event>
 <event name="SC_TERRAN_AMBUSH_WARNED">
-	<text>
-		One of your crew stiffens before the sensors catch anything. A hostile presence is waiting nearby, masked behind the quiet beacon traffic. You have a brief chance to act before the trap fully closes.
-	</text>
+	<text>One of your crew stiffens before the sensors catch anything. A hostile presence is waiting nearby, masked behind the quiet beacon traffic. You have a brief chance to act before the trap fully closes.</text>
 
 	<choice>
 		<text>Push the engines and try to escape the ambush.</text>
@@ -2697,9 +2673,7 @@
 	</choice>
 </event>
 <event name="SC_TERRAN_AMBUSH_SPRUNG">
-	<text>
-		The empty beacon suddenly comes alive. A Terran ship cuts power to its masking field and moves into attack position. You have only seconds to react.
-	</text>
+	<text>The empty beacon suddenly comes alive. A Terran ship cuts power to its masking field and moves into attack position. You have only seconds to react.</text>
 
 	<choice>
 		<text>Continue...</text>
@@ -2758,14 +2732,10 @@
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
 </eventList>
 <event name="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS">
-	<text>
-		You slam power into the engines and break away before the Terran ship can fully close the trap.
-	</text>
+	<text>You slam power into the engines and break away before the Terran ship can fully close the trap.</text>
 </event>
 <event name="SC_TERRAN_AMBUSH_ESCAPE_FAILURE">
-	<text>
-		You try to accelerate out of the kill zone, but the Terran ship anticipates your course and cuts off your escape.
-	</text>
+	<text>You try to accelerate out of the kill zone, but the Terran ship anticipates your course and cuts off your escape.</text>
 	<ambush target="enemy"/>
 	<ship load="SC_TERRAN_AMBUSH_SHIP" hostile="true"/>
 </event>
@@ -2806,22 +2776,16 @@
 	<event load="SC_TERRAN_AMBUSH_PILOT_FAILURE"/>
 </eventList>
 <event name="SC_TERRAN_AMBUSH_PILOT_SUCCESS">
-	<text>
-		Your pilot reacts instantly, rolling the ship clear of the main firing lane. The ambusher loses its perfect angle, forcing it into a more conventional engagement.
-	</text>
+	<text>Your pilot reacts instantly, rolling the ship clear of the main firing lane. The ambusher loses its perfect angle, forcing it into a more conventional engagement.</text>
 	<ship load="SC_TERRAN_NON_AMBUSH_SHIP" hostile="true"/>
 </event>
 <event name="SC_TERRAN_AMBUSH_PILOT_FAILURE">
-	<text>
-		Your pilot tries to break away, but the Terran ship already has the vector covered. The ambush lands exactly as planned.
-	</text>
+	<text>Your pilot tries to break away, but the Terran ship already has the vector covered. The ambush lands exactly as planned.</text>
 	<ambush target="enemy"/>
 	<ship load="SC_TERRAN_AMBUSH_SHIP" hostile="true"/>
 </event>
 <event name="SC_TERRAN_AMBUSH_NON_AMBUSH_FIGHT">
-	<text>
-		Warned by your crew, you turn the trap against the Terran ship and force it into open combat.
-	</text>
+	<text>Warned by your crew, you turn the trap against the Terran ship and force it into open combat.</text>
 	<ship load="SC_TERRAN_NON_AMBUSH_SHIP" hostile="true"/>
 </event>
 
@@ -3176,18 +3140,14 @@
 		<color r="215" g="255" b="200" a="1"/>
 	</beaconType>
 
-	<text>
-		A Terran Engineering Bay operates at this beacon. Repair drones and maintenance craft move between the station and nearby vessels while its quartermaster broadcasts an open offer of engineering supplies.
-	</text>
+	<text>A Terran Engineering Bay operates at this beacon. Repair drones and maintenance craft move between the station and nearby vessels while its quartermaster broadcasts an open offer of engineering supplies.</text>
 
 	<!-- <ship load="TERRAN_SHIP_ENGINEERING" hostile="false"/> -->
 
 	<choice>
 		<text>Dock with the Engineering Bay.</text>
 		<event>
-			<text>
-				You are cleared for docking and directed toward the station's equipment exchange.
-			</text>
+			<text>You are cleared for docking and directed toward the station's equipment exchange.</text>
 			<store>STORE_TERRAN_ENGINEERING</store>
 		</event>
 	</choice>
@@ -3195,9 +3155,7 @@
 	<choice>
 		<text>Attack the Engineering Bay.</text>
 		<event>
-			<text>
-				You power your weapons and move against the Engineering Bay. Warning lights flare across the station as its defensive systems come online.
-			</text>
+			<text>You power your weapons and move against the Engineering Bay. Warning lights flare across the station as its defensive systems come online.</text>
 			<ship load="TERRAN_SHIP_ENGINEERING" hostile="true"/>
 		</event>
 	</choice>
@@ -3217,18 +3175,14 @@
 		<color r="215" g="255" b="200" a="1"/>
 	</beaconType>
 
-	<text>
-		A heavily fortified Terran Barracks occupies this beacon. Troop transports continuously arrive and depart while recruiters and supply officers advertise personnel available for reassignment.
-	</text>
+	<text>A heavily fortified Terran Barracks occupies this beacon. Troop transports continuously arrive and depart while recruiters and supply officers advertise personnel available for reassignment.</text>
 
 	<ship load="TERRAN_SHIP_BARRACKS" hostile="false"/>
 
 	<choice>
 		<text>Dock with the Barracks.</text>
 		<event>
-			<text>
-				The station grants you access to its personnel and supply offices.
-			</text>
+			<text>The station grants you access to its personnel and supply offices.</text>
 			<store>STORE_TERRAN_BARRACKS</store>
 		</event>
 	</choice>
@@ -3236,12 +3190,8 @@
 	<choice>
 		<text>Attack the Barracks.</text>
 		<event>
-			<text>
-				You open fire on the Barracks. Its garrison scrambles to defend the station.
-			</text>
-			<text>
-				Your hostile approach immediately triggers the Barracks' defenses. Its garrison scrambles to battle stations.
-			</text>
+			<text>You open fire on the Barracks. Its garrison scrambles to defend the station.</text>
+			<text>Your hostile approach immediately triggers the Barracks' defenses. Its garrison scrambles to battle stations.</text>
 			<ship load="TERRAN_SHIP_BARRACKS" hostile="true"/>
 		</event>
 	</choice>
@@ -3261,18 +3211,14 @@
 		<color r="215" g="255" b="200" a="1"/>
 	</beaconType>
 
-	<text>
-		A large Terran Starport dominates the beacon. Military craft pass through its docking lanes while fuel, ammunition, and weapons are transferred between supply ships and station warehouses.
-	</text>
+	<text>A large Terran Starport dominates the beacon. Military craft pass through its docking lanes while fuel, ammunition, and weapons are transferred between supply ships and station warehouses.</text>
 
 	<ship load="TERRAN_SHIP_STARPORT" hostile="false"/>
 
 	<choice>
 		<text>Dock with the Starport.</text>
 		<event>
-			<text>
-				Traffic control assigns you a berth near the Starport's military supply exchange.
-			</text>
+			<text>Traffic control assigns you a berth near the Starport's military supply exchange.</text>
 			<store>STORE_TERRAN_STARPORT</store>
 		</event>
 	</choice>
@@ -3280,9 +3226,7 @@
 	<choice>
 		<text>Attack the Starport.</text>
 		<event>
-			<text>
-				You break from the traffic pattern and open fire. Docking clamps retract and the Starport redirects power to its combat systems.
-			</text>
+			<text>You break from the traffic pattern and open fire. Docking clamps retract and the Starport redirects power to its combat systems.</text>
 			<ship load="TERRAN_SHIP_STARPORT" hostile="true"/>
 		</event>
 	</choice>
@@ -3302,18 +3246,14 @@
 		<color r="215" g="255" b="200" a="1"/>
 	</beaconType>
 
-	<text>
-		A Terran Factory fills the surrounding space with cargo traffic. Finished components and equipment are being loaded onto transports directly from its production lines.
-	</text>
+	<text>A Terran Factory fills the surrounding space with cargo traffic. Finished components and equipment are being loaded onto transports directly from its production lines.</text>
 
 		<ship load="TERRAN_SHIP_FACTORY" hostile="false"/>
 
 	<choice>
 		<text>Dock with the Factory.</text>
 		<event>
-			<text>
-				A factory representative gives you access to the facility's commercial inventory.
-			</text>
+			<text>A factory representative gives you access to the facility's commercial inventory.</text>
 			<store>STORE_TERRAN_FACTORY</store>
 		</event>
 	</choice>
@@ -3321,9 +3261,7 @@
 	<choice>
 		<text>Attack the Factory.</text>
 		<event>
-			<text>
-				As you move to attack, production lines shut down and armored bulkheads seal across the Factory. Its defensive systems activate.
-			</text>
+			<text>As you move to attack, production lines shut down and armored bulkheads seal across the Factory. Its defensive systems activate.</text>
 			<ship load="TERRAN_SHIP_FACTORY" hostile="true"/>
 		</event>
 	</choice>
@@ -3343,18 +3281,14 @@
 		<color r="215" g="255" b="200" a="1"/>
 	</beaconType>
 
-	<text>
-		A Terran Command Center coordinates military activity throughout the surrounding region. Despite the constant communications traffic, its logistics division permits passing vessels to purchase repairs and military supplies.
-	</text>
+	<text>A Terran Command Center coordinates military activity throughout the surrounding region. Despite the constant communications traffic, its logistics division permits passing vessels to purchase repairs and military supplies.</text>
 
 		<ship load="TERRAN_SHIP_COMMAND" hostile="false"/>
 
 	<choice>
 		<text>Request access to the Command Center's supplies.</text>
 		<event>
-			<text>
-				Command authorizes limited access to its repair docks and logistical reserves.
-			</text>
+			<text>Command authorizes limited access to its repair docks and logistical reserves.</text>
 			<store>STORE_TERRAN_COMMAND</store>
 		</event>
 	</choice>
@@ -3362,9 +3296,7 @@
 	<choice>
 		<text>Attack the Command Center.</text>
 		<event>
-			<text>
-				Your weapons lock onto the Command Center. The station immediately declares you hostile and redirects its military systems against your ship.
-			</text>
+			<text>Your weapons lock onto the Command Center. The station immediately declares you hostile and redirects its military systems against your ship.</text>
 			<ship load="TERRAN_SHIP_COMMAND" hostile="true"/>
 		</event>
 	</choice>
@@ -3384,18 +3316,14 @@
 		<color r="215" g="255" b="200" a="1"/>
 	</beaconType>
 
-	<text>
-		A Terran Science Facility is positioned at this beacon, surrounded by sensor arrays and experimental equipment. Its research administration offers selected technology to approved vessels.
-	</text>
+	<text>A Terran Science Facility is positioned at this beacon, surrounded by sensor arrays and experimental equipment. Its research administration offers selected technology to approved vessels.</text>
 
 	<ship load="TERRAN_SHIP_SCIENCE" hostile="false"/>
 
 	<choice>
 		<text>Dock with the Science Facility.</text>
 		<event>
-			<text>
-				You receive clearance to inspect technology released by the facility's research division.
-			</text>
+			<text>You receive clearance to inspect technology released by the facility's research division.</text>
 			<store>STORE_TERRAN_SCIENCE</store>
 		</event>
 	</choice>
@@ -3403,12 +3331,8 @@
 	<choice>
 		<text>Attack the Science Facility.</text>
 		<event>
-			<text>
-				You open fire on the Science Facility. Its research personnel scramble to defend the station.
-			</text>
-			<text>
-				Research personnel scramble for cover as you begin your attack. Experimental systems power up throughout the facility as it prepares to defend itself.
-			</text>
+			<text>You open fire on the Science Facility. Its research personnel scramble to defend the station.</text>
+			<text>Research personnel scramble for cover as you begin your attack. Experimental systems power up throughout the facility as it prepares to defend itself.</text>
 			<ship hostile="true"/>
 		</event>
 	</choice>
@@ -3423,9 +3347,7 @@
   TERRAN FLEET ENCOUNTER
 ******************************************************************************************************-->
 <event name="SC_TERRAN_FLEET_CHECK">
-	<text>
-		The pursuing fleet has caught up to you. A Terran identification sweep cuts through the sector as hostile ships move to intercept.
-	</text>
+	<text>The pursuing fleet has caught up to you. A Terran identification sweep cuts through the sector as hostile ships move to intercept.</text>
 
 	<choice req="TERRAN_SHIP" lvl="1" hidden="true" blue="false" max_group="0">
 		<text>Continue...</text>
@@ -3439,9 +3361,7 @@
 </event>
 
 <event name="SC_TERRAN_FLEET_CHECK_NEBULA">
-	<text>
-		The pursuing fleet has caught up to you inside the nebula. Distorted Terran sensor pings echo through the clouds.
-	</text>
+	<text>The pursuing fleet has caught up to you inside the nebula. Distorted Terran sensor pings echo through the clouds.</text>
 
 	<choice req="TERRAN_SHIP" lvl="1" hidden="true" blue="false" max_group="0">
 		<text>Continue...</text>
@@ -3458,9 +3378,7 @@
 	<revisitEvent>SC_TERRAN_FLEET_BATTLECRUISER</revisitEvent>
 	<customFleet right="false" firing="true" autoDarkening="false">TERRAN_CUSTOM_FLEET</customFleet>
 
-	<text>
-		[STARCRAFT] Your Terran ship signature confuses the automated fleet routing long enough to draw a Terran response instead of the standard Rebel fleet ship. A battlecruiser breaks formation and moves to engage.
-	</text>
+	<text>[STARCRAFT] Your Terran ship signature confuses the automated fleet routing long enough to draw a Terran response instead of the standard Rebel fleet ship. A battlecruiser breaks formation and moves to engage.</text>
 
 	<variable name="loc_dives" op="add" val="1"/>
 	<ship load="SC_TERRAN_FLEET_BATTLECRUISER_SHIP" hostile="true"/>
