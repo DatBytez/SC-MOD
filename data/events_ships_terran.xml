@@ -309,6 +309,54 @@
 	</deadCrew>
 </ship>
 
+
+<!--*****************************************************************************************************
+  TERRAN FUGITIVE SHIP
+******************************************************************************************************-->
+<ship name="SC_TERRAN_FUGITIVE_SHIP" auto_blueprint="LIST_TERRAN_FUGITIVE_SHIPS">
+    <surrender chance="1" min="2" max="4" load="SC_TERRAN_FUGITIVE_SURRENDER_ROLL"/>
+    <destroyed load="SC_TERRAN_FUGITIVE_DEFEATED"/>
+    <deadCrew load="SC_TERRAN_FUGITIVE_DEFEATED"/>
+</ship>
+
+<!--*****************************************************************************************************
+  TERRAN FUGITIVE WRAITH INTERCEPTORS
+******************************************************************************************************-->
+<ship name="SC_TERRAN_FUGITIVE_WRAITH_SHIP" auto_blueprint="LIST_TERRAN_WRAITH_SHIPS">
+    <surrender chance="0.4" min="2" max="3">
+        <text>
+            The Wraiths have taken heavy damage and offer to withdraw.
+        </text>
+
+        <choice>
+            <text>Accept their surrender.</text>
+            <event>
+                <text>The remaining Wraiths withdraw from the area.</text>
+                <ship hostile="false"/>
+                <autoReward level="MED">standard</autoReward>
+            </event>
+        </choice>
+
+        <choice>
+            <text>Refuse their surrender.</text>
+            <event>
+                <text>You reject their offer and continue the attack.</text>
+                <ship hostile="true"/>
+            </event>
+        </choice>
+    </surrender>
+
+    <destroyed>
+        <text>You salvage what remains of the Wraiths.</text>
+        <autoReward level="MED">standard</autoReward>
+    </destroyed>
+
+    <deadCrew>
+        <text>With the Wraith crews neutralized, you collect their remaining supplies.</text>
+        <autoReward level="MED">standard</autoReward>
+    </deadCrew>
+</ship>
+
 <!--
 *********************************************************************************************************
   TERRAN FLEET WRAPPER

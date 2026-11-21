@@ -326,7 +326,8 @@
 	<event load="SC_TERRAN_SCIENCE_UPGRADES"/>
 	<event load="SC_TERRAN_ENGINEERING_UPGRADES"/>
 	<event load="SC_TERRAN_SUPPLY_DEPOT"/>
-	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_COMMAND_CENTER"/>
+	<event load="SC_TERRAN_BARRACKS"/>
 </eventList>
 
 <!--*****************************************************************************************************
@@ -344,7 +345,7 @@
     </choice>
 
     <choice hidden="true" req="TERRAN_BURST_LASER_1">
-        <text>Upgrade your Terran Burst Laser.</text>
+        <text>Upgrade your Terran Burst Laser I.</text>
         <event>
             <text>The engineer begins upgrading your weapon.</text>
             <remove name="TERRAN_BURST_LASER_1"/>
@@ -356,7 +357,7 @@
     </choice>
 
     <choice hidden="true" req="TERRAN_BURST_LASER_2">
-        <text>Upgrade weapons for a small cost</text>
+        <text>Upgrade your Terran Burst Laser II.</text>
         <event>
             <text>The engineer begins upgrading your weapon.</text>
             <remove name="TERRAN_BURST_LASER_2"/>
@@ -368,7 +369,7 @@
     </choice>
 
     <choice hidden="true" req="TERRAN_BURST_LASER_HEAVY_1">
-        <text>Upgrade weapons for a small cost</text>
+        <text>Upgrade your Terran Burst Laser Heavy I.</text>
         <event>
             <text>The engineer begins upgrading your weapon.</text>
             <remove name="TERRAN_BURST_LASER_HEAVY_1"/>
@@ -380,7 +381,7 @@
     </choice>
 
     <choice hidden="true" req="TERRAN_LASER_BATTERY_1">
-        <text>Upgrade weapons for a small cost</text>
+        <text>Upgrade your Terran Laser Battery I.</text>
         <event>
             <text>The engineer begins upgrading your weapon.</text>
             <remove name="TERRAN_LASER_BATTERY_1"/>
@@ -392,7 +393,7 @@
     </choice>
 
     <choice hidden="true" req="TERRAN_LASER_BATTERY_2">
-        <text>Upgrade weapons for a small cost</text>
+        <text>Upgrade your Terran Laser Battery II.</text>
         <event>
             <text>The engineer begins upgrading your weapon.</text>
             <remove name="TERRAN_LASER_BATTERY_2"/>
@@ -404,7 +405,7 @@
     </choice>
 
     <choice hidden="true" req="TERRAN_LASER_BATTERY_HEAVY_1">
-        <text>Upgrade weapons for a small cost</text>
+        <text>Upgrade your Terran Laser Battery Heavy I.</text>
         <event>
             <text>The engineer begins upgrading your weapon.</text>
             <remove name="TERRAN_LASER_BATTERY_HEAVY_1"/>
@@ -416,7 +417,7 @@
     </choice>
 
     <choice hidden="true" req="GEMINI_FIRE_1">
-        <text>Upgrade weapons for a small cost</text>
+        <text>Upgrade your Gemini Fire I.</text>
         <event>
             <text>The engineer begins upgrading your weapon.</text>
             <remove name="GEMINI_FIRE_1"/>
@@ -428,7 +429,7 @@
     </choice>
 
     <choice hidden="true" req="GEMINI_FIRE_2">
-        <text>Upgrade weapons for a small cost</text>
+        <text>Upgrade your Gemini Fire II.</text>
         <event>
             <text>The engineer begins upgrading your weapon.</text>
             <remove name="GEMINI_FIRE_2"/>
@@ -440,7 +441,7 @@
     </choice>
 
     <choice hidden="true" req="GEMINI_ION_1">
-        <text>Upgrade weapons for a small cost</text>
+        <text>Upgrade your Gemini Ion I.</text>
         <event>
             <text>The engineer begins upgrading your weapon.</text>
             <remove name="GEMINI_ION_1"/>
@@ -452,7 +453,7 @@
     </choice>
 
     <choice hidden="true" req="GEMINI_ION_2">
-        <text>Upgrade weapons for a small cost</text>
+        <text>Upgrade your Gemini Ion II.</text>
         <event>
             <text>The engineer begins upgrading your weapon.</text>
             <remove name="GEMINI_ION_2"/>
@@ -464,7 +465,7 @@
     </choice>
 
     <choice hidden="true" req="GEMINI_BREACH_1">
-        <text>Upgrade weapons for a small cost</text>
+        <text>Upgrade your Gemini Breach I.</text>
         <event>
             <text>The engineer begins upgrading your weapon.</text>
             <remove name="GEMINI_BREACH_1"/>
@@ -476,7 +477,7 @@
     </choice>
 
     <choice hidden="true" req="GEMINI_BREACH_2">
-        <text>Upgrade weapons for a small cost</text>
+        <text>Upgrade your Gemini Breach II.</text>
         <event>
             <text>The engineer begins upgrading your weapon.</text>
             <remove name="GEMINI_BREACH_2"/>
@@ -488,8 +489,8 @@
     </choice>
 
     <choice hidden="true" req="GEMINI_HULL_1">
-        <text>Upgrade weapons for a small cost</text>
-        <event>
+        <text>Upgrade your Gemini Hull I.</text>
+        <event> 
             <text>The engineer begins upgrading your weapon.</text>
             <remove name="GEMINI_HULL_1"/>
             <item_modify>
@@ -499,8 +500,20 @@
         </event>
     </choice>
 
+	<choice hidden="true" req="GEMINI_HULL_2">
+        <text>Upgrade your Gemini Hull II.</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="GEMINI_HULL_2"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="GEMINI_BREACH_3"/>
+        </event>
+    </choice>
+
     <choice hidden="true" req="GEMINI_SYS_1">
-        <text>Upgrade weapons for a small cost</text>
+        <text>Upgrade your Gemini System I.</text>
         <event>
             <text>The engineer begins upgrading your weapon.</text>
             <remove name="GEMINI_SYS_1"/>
@@ -511,11 +524,24 @@
         </event>
     </choice>
 
+	<choice hidden="true" req="GEMINI_SYS_2">
+        <text>Upgrade your Gemini System II.</text>
+        <event>
+            <text>The engineer begins upgrading your weapon.</text>
+            <remove name="GEMINI_SYS_2"/>
+            <item_modify>
+                <item type="scrap" min="-30" max="-30"/>
+            </item_modify>
+            <weapon name="GEMINI_FIRE_3"/>
+        </event>
+    </choice>
+
 	<choice hidden="true">
         <text>Leave.</text>
 		<event/>
     </choice>
 </event>
+
 <!--*****************************************************************************************************
   TERRAN SCIENCE FACILITY CREW UPGRADES
 ******************************************************************************************************-->
@@ -531,85 +557,122 @@
     </choice>
 
     <choice hidden="true" req="terran_marine">
-        <text>Upgrade crew for a small cost</text>
+        <text>Upgrade your Marine for a small cost</text>
         <event>
-            <text>Upgrade crew for a small cost</text>
+            <text>Upgrading Marine</text>
             <item_modify>
-                <item type="scrap" min="-30" max="-30"/>
+                <item type="scrap" min="-5" max="-15"/>
             </item_modify>
             <transformRace class="terran_marine">terran_marine_1</transformRace>
         </event>
     </choice>
 
     <choice hidden="true" req="terran_medic">
-        <text>Upgrade crew for a small cost</text>
+        <text>Upgrade your Medic for a small cost</text>
         <event>
-            <text>Upgrade crew for a small cost</text>
+            <text>Upgrading Medic</text>
             <item_modify>
-                <item type="scrap" min="-30" max="-30"/>
+                <item type="scrap" min="-5" max="-15"/>
             </item_modify>
             <transformRace class="terran_medic">terran_medic_1</transformRace>
         </event>
     </choice>
 
     <choice hidden="true" req="terran_medic_1">
-        <text>Upgrade crew for a small cost</text>
+        <text>Change your Medic's ability. (Currently Restoration)</text>
         <event>
-            <text>Upgrade crew for a small cost</text>
+            <text>Changing ability</text>
             <item_modify>
-                <item type="scrap" min="-30" max="-30"/>
+                <item type="scrap" min="-5" max="-10"/>
             </item_modify>
             <transformRace class="terran_medic_1">terran_medic_2</transformRace>
         </event>
     </choice>
 
-    <choice hidden="true" req="terran_firebat">
-        <text>Upgrade crew for a small cost</text>
+    <choice hidden="true" req="terran_medic_2">
+        <text>Change your Medic's ability. (Currently Restoration)</text>
         <event>
-            <text>Upgrade crew for a small cost</text>
+            <text>Changing ability.</text>
             <item_modify>
-                <item type="scrap" min="-30" max="-30"/>
+                <item type="scrap" min="-5" max="-10"/>
+            </item_modify>
+            <transformRace class="terran_medic_1">terran_medic_1</transformRace>
+        </event>
+    </choice>
+
+    <choice hidden="true" req="terran_firebat">
+        <text>Upgrade your Firebat for a small cost.</text>
+        <event>
+            <text>Upgrading Firebat.</text>
+            <item_modify>
+                <item type="scrap" min="-5" max="-15"/>
             </item_modify>
             <transformRace class="terran_firebat">terran_firebat_1</transformRace>
         </event>
     </choice>
 
     <choice hidden="true" req="terran_ghost">
-        <text>Upgrade crew for a small cost</text>
+        <text>Upgrade your Ghost for a small cost.</text>
         <event>
-            <text>Upgrade crew for a small cost</text>
+            <text>Upgrading Ghost.</text>
             <item_modify>
-                <item type="scrap" min="-30" max="-30"/>
+                <item type="scrap" min="-5" max="-15"/>
             </item_modify>
             <transformRace class="terran_ghost">terran_ghost_1</transformRace>
         </event>
     </choice>
 
     <choice hidden="true" req="terran_ghost_1">
-        <text>Upgrade crew for a small cost</text>
+        <text>Change your Ghost's ability. (Currently Cloak)</text>
         <event>
-            <text>Upgrade crew for a small cost</text>
+            <text>Changing ability.</text>
             <item_modify>
-                <item type="scrap" min="-30" max="-30"/>
+                <item type="scrap" min="-5" max="-10"/>
             </item_modify>
             <transformRace class="terran_ghost_1">terran_ghost_2</transformRace>
         </event>
     </choice>
 
-    <!-- TERRAN SCV -->
-
-    <choice hidden="true" req="terran_scv">
-        <text>Upgrade crew for a small cost</text>
+	<choice hidden="true" req="terran_ghost_2">
+        <text>Change your Ghost's ability. (Currently Lockdown)</text>
         <event>
-            <text>Upgrade crew for a small cost</text>
+            <text>Changing ability.</text>
+            <item_modify>
+                <item type="scrap" min="-5" max="-10"/>
+            </item_modify>
+            <transformRace class="terran_ghost_1">terran_ghost_2</transformRace>
+        </event>
+    </choice>
+
+	<choice hidden="true" req="terran_civilian">
+        <text>Train your Civilian for a cost.</text>
+        <event>
+            <text>Training Civilian.</text>
+            <item_modify>
+                <item type="scrap" min="-25" max="-40"/>
+            </item_modify>
+            <transformRace class="terran_civilian">terran_ghost</transformRace>
+        </event>
+    </choice>
+
+    <!-- TERRAN SCV -->
+    <!-- <choice hidden="true" req="terran_scv">
+        <text>Upgrade your SCV for a small cost.</text>
+        <event>
+            <text>Upgrading your SCV.</text>
             <item_modify>
                 <item type="scrap" min="-30" max="-30"/>
             </item_modify>
             <transformRace class="terran_scv">terran_scv_1</transformRace>
         </event>
+    </choice> -->
+    <choice>
+        <text>Leave.</text>
+        <event>
+        </event>
     </choice>
-
 </event>
+
 <!--*****************************************************************************************************
   TERRAN ENGINEERING BAY UPGRADES
 ******************************************************************************************************-->
@@ -699,6 +762,7 @@
         <event/>
     </choice>
 </event>
+
 <!--*****************************************************************************************************
   TERRAN SUPPLY DEPOT
 ******************************************************************************************************-->
@@ -765,7 +829,6 @@
         <event load="SC_TERRAN_SUPPLY_DEPOT_RESTOCK"/>
     </choice>
 </event>
-
 <event name="SC_TERRAN_SUPPLY_DEPOT_RESTOCK">
     <text>Please select supplies that are in need of restocking.</text>
 
@@ -805,38 +868,1099 @@
     </choice>
 </event>
 
-<!--
-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+<!--*****************************************************************************************************
+  TERRAN COMMAND CENTER
+******************************************************************************************************-->
+<event name="SC_TERRAN_COMMAND_CENTER">
+    <text>
+    A Terran Command Center operates at this beacon, coordinating military operations and logistics throughout the surrounding sector.
+    </text>
+
+    <ship load="TERRAN_SHIP_COMMAND" hostile="false"/>
+
+    <choice>
+        <text>Request minor repairs. (5 scrap for 5 hull)</text>
+        <event>
+            <text>
+                The Command Center dispatches a repair team to your ship. The damaged sections of your hull are quickly patched.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-5" max="-5"/>
+            </item_modify>
+            <damage amount="-5"/>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Request major repairs. (10 scrap for 10 hull)</text>
+        <event>
+            <text>
+                A full team of SCVs is dispatched to your ship. Their skilled work restores a significant portion of your hull.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-10" max="-10"/>
+            </item_modify>
+            <damage amount="-10"/>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Purchase an SCV repair drone. (50 scrap)</text>
+        <event>
+            <text>
+                The Command Center transfers an SCV repair drone from its maintenance reserves to your ship.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-50" max="-50"/>
+            </item_modify>
+            <drone name="TERRAN_SCV"/>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Purchase a Comsat sector scan. (15 scrap)</text>
+        <event>
+            <text>
+                The Command Center's Comsat network has been hard at work. They transmit detailed sensor data to your ship, revealing the surrounding sector.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-15" max="-15"/>
+            </item_modify>
+            <reveal_map/>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Attack the Command Center.</text>
+        <event>
+            <text>
+                You power your weapons and move against the Command Center. Defensive systems activate as the facility prepares to repel your attack.
+            </text>
+            <ship hostile="true"/>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Leave the Command Center alone.</text>
+        <event/>
+    </choice>
+</event>
+
+<!--*****************************************************************************************************
+  TERRAN BARRACKS
+******************************************************************************************************-->
+<event name="SC_TERRAN_BARRACKS">
+    <text>
+        A Terran Barracks operates at this beacon. The facility maintains extensive ammunition reserves and regularly contracts trained mercenaries to passing vessels.
+    </text>
+
+    <ship load="TERRAN_SHIP_BARRACKS" hostile="false"/>
+
+    <choice>
+        <text>Purchase 5 missiles.</text>
+        <event>
+            <text>
+            The Barracks transfers a small shipment of missiles to your ship.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-10" max="-10"/>
+                <item type="missiles" min="5" max="5"/>
+            </item_modify>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Purchase 10 missiles.</text>
+        <event>
+            <text>
+            A supply team loads a shipment of missiles aboard your ship.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-18" max="-18"/>
+                <item type="missiles" min="10" max="10"/>
+            </item_modify>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Purchase 15 missiles.</text>
+        <event>
+            <text>
+            The Barracks authorizes a bulk ammunition transfer and delivers the missiles to your cargo hold.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-25" max="-25"/>
+                <item type="missiles" min="15" max="15"/>
+            </item_modify>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Hire a Terran mercenary.</text>
+        <event>
+            <text>
+            The recruitment officer presents an available mercenary. After negotiating a contract, the mercenary joins your crew.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-90" max="-25"/>
+            </item_modify>
+            <crewMember amount="1" class="TERRAN_LIST_CREW_ALL"/>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Attack the Barracks.</text>
+        <event>
+            <text>
+            You power your weapons and move against the Barracks. Its garrison scrambles to their launch pods as automated defenses come online.
+            </text>
+            <ship hostile="true"/>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Leave the Barracks alone.</text>
+        <event/>
+    </choice>
+</event>
+
+<!--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 					NEUTRAL EVENTS ()
-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
--->	
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->	
 
 <eventList name="NEUTRAL_TERRAN">
-	<event load="SC_TERRAN_EMPTY"/>
-	<event load="SC_TERRAN_EMPTY"/>
-	<event load="SC_TERRAN_EMPTY"/>
-	<event load="SC_TERRAN_EMPTY"/>
-	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_RAIDER_EXTORTION"/>
+	<event load="SC_TERRAN_BROADCAST_STATION"/>
+	<event load="SC_TERRAN_FUGITIVE"/>
+	<event load="SC_TERRAN_DYING_SATELLITE"/>
+	<event load="SC_TERRAN_MOON_PORT"/>
 </eventList>
 
 <eventList name="NEUTRAL_TERRAN_UNIQUE">
 	<event load="SC_TERRAN_EMPTY"/>
 </eventList>
 
+
+<!--*****************************************************************************************************
+  TERRAN RAIDER EXTORTION
+******************************************************************************************************-->
+<event name="SC_TERRAN_RAIDER_EXTORTION">
+    <text>
+        You receive a transmission from a settlement on a moon nearby. They complain that raiders harass them constantly, extorting them and taking their resources. Before they can explain any further, your transmission is interrupted by a nearby ship.
+
+        "There's nothing to see here, captain, just some ungrateful citizens that don't understand how much it costs to keep them safe. I, on the other hand, am not so naive." A notice for a credit transfer request appears on your screen. They are trying to send you money.
+    </text>
+
+    <ship load="SC_TERRAN_RAIDER_EXTORTION_SHIP" hostile="false"/>
+
+    <choice>
+        <text>Accept their bribe.</text>
+        <event>
+            <text>You accept the raiders' payment.</text>
+            <item_modify>
+                <item type="scrap" min="10" max="20"/>
+            </item_modify>
+            <!-- MORALITY: Raiders +1, Civilians -1 -->
+        </event>
+    </choice>
+
+    <choice req="weapons" lvl="4" hidden="true" blue="false">
+        <text>(Advanced Weapons) Threaten them.</text>
+        <event>
+            <text>
+                You send them a request for twice as much, right as you begin powering your weapons. If they are as savvy as they claim to be, they will get the message.
+            </text>
+            <item_modify>
+                <item type="scrap" min="20" max="40"/>
+            </item_modify>
+            <!-- MORALITY: Raiders -1, Civilians -1 -->
+        </event>
+    </choice>
+
+    <choice>
+        <text>This is none of your business.</text>
+        <event>
+            <text>You order your ship to jump away.</text>
+            <!-- MORALITY: Civilians -1 -->
+        </event>
+    </choice>
+
+    <choice>
+        <text>Attack them.</text>
+        <event>
+            <text>
+                This is obviously unacceptable. You begin powering up your weapons.
+            </text>
+            <!-- MORALITY: Raiders -1 -->
+            <ship hostile="true"/>
+        </event>
+    </choice>
+</event>
+<ship name="SC_TERRAN_RAIDER_EXTORTION_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_SCOUT"><!-- TODO: This should be a Raider -->
+    <destroyed load="SC_TERRAN_RAIDER_EXTORTION_REWARDS"/>
+    <deadCrew load="SC_TERRAN_RAIDER_EXTORTION_REWARDS"/>
+</ship>
+<event name="SC_TERRAN_RAIDER_EXTORTION_REWARDS">
+    <text>
+        With the raiders out of the way, the civilians offer what they can.
+    </text>
+
+    <choice>
+        <text>Accept 10 repairs. (Enemy fleet advances one jump)</text>
+        <event>
+            <text>
+                The civilians begin repairing your ship.
+            </text>
+            <damage amount="-10"/>
+            <modifyPursuit amount="1"/>
+            <!-- MORALITY: Civilians +1 -->
+        </event>
+    </choice>
+
+    <choice>
+        <text>Accept their supplies.</text>
+        <event>
+            <text>
+                The civilians transfer what supplies they can spare.
+            </text>
+            <autoReward level="MED">stuff</autoReward>
+            <!-- MORALITY: Civilians +1 -->
+        </event>
+    </choice>
+
+    <choice>
+        <text>Demand additional payment.</text>
+        <event>
+            <text>
+                You thank them for their generous offers, but then remind them that it's not cheap to ward off raiders, and they wouldn't want to come across as ungrateful.
+            </text>
+            <autoReward level="LOW">stuff</autoReward>
+            <item_modify>
+                <item type="scrap" min="10" max="20"/>
+            </item_modify>
+            <!-- MORALITY: Civilians -1 -->
+        </event>
+    </choice>
+</event>
+
+<!--*****************************************************************************************************
+  TERRAN BROADCAST STATION
+******************************************************************************************************-->
+<event name="SC_TERRAN_BROADCAST_STATION">
+    <text>
+        You pick up a broadband transmission from an abandoned planet nearby and use it to locate a very large structure on the planet's surface. This powerful station is capable of broadcasting signals across the entire system, and they are willing to do so, for the right price.
+    </text>
+
+    <choice req="weapons" lvl="4" hidden="true" blue="false">
+        <text>(Advanced Weapons) Threaten them.</text>
+        <event load="SC_TERRAN_BROADCAST_DISCOUNT"/>
+    </choice>
+
+    <choice>
+        <text>Pay 20 scrap to flood the sector with misinformation about your ship and its location.</text>
+        <event>
+            <text>
+                The station broadcasts false information about your ship and its location throughout the sector.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-20" max="-20"/>
+            </item_modify>
+            <modifyPursuit amount="-2"/>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Pay 25 scrap to spread propaganda about your crew and your cause throughout the sector.</text>
+        <event>
+            <text>
+                The station broadcasts propaganda about your crew and your cause throughout the sector.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-25" max="-25"/>
+            </item_modify>
+            <!-- MORALITY: Civilians +1, Raiders +1, Sons of Korhal +1, Confederation +1 -->
+        </event>
+    </choice>
+
+    <choice>
+        <text>Destroy the structure.</text>
+        <event>
+            <text>
+                You power your weapons and destroy the broadcasting station. You salvage what little remains of the structure.
+            </text>
+            <autoReward level="LOW">scrap_only</autoReward>
+            <!-- MORALITY: Civilians -2 -->
+        </event>
+    </choice>
+
+    <choice>
+        <text>Leave them alone.</text>
+        <event/>
+    </choice>
+</event>
+<event name="SC_TERRAN_BROADCAST_DISCOUNT">
+    <text>
+        You ask them if they really want to put a price on 'doing the right thing' at the same moment as your ship begins powering its weapons.
+
+        They agree to give you a discount.
+    </text>
+    <!-- MORALITY: Civilians -1 -->
+
+    <choice>
+        <text>Pay 10 scrap to flood the sector with misinformation about your ship and its location.</text>
+        <event>
+            <text>
+                The station broadcasts false information about your ship and its location throughout the sector.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-10" max="-10"/>
+            </item_modify>
+            <modifyPursuit amount="-2"/>
+            <choice hidden="true">
+                <text>Continue...</text>
+                <event load="SC_TERRAN_BROADCAST_EXIT"/>
+            </choice>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Pay 15 scrap to spread propaganda about your crew and your cause throughout the sector.</text>
+        <event>
+            <text>
+                The station broadcasts propaganda about your crew and your cause throughout the sector.
+            </text>
+            <item_modify>
+                <item type="scrap" min="-15" max="-15"/>
+            </item_modify>
+            <!-- MORALITY: Raiders +1, Sons of Korhal +1, Confederation +1 -->
+            <choice hidden="true">
+                <text>Continue...</text>
+                <event load="SC_TERRAN_BROADCAST_EXIT"/>
+            </choice>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Leave the station.</text>
+        <event load="SC_TERRAN_BROADCAST_EXIT"/>
+    </choice>
+</event>
+<eventList name="SC_TERRAN_BROADCAST_EXIT">
+    <event>
+        <text>
+            You leave the station without further incident.
+        </text>
+    </event>
+
+    <event>
+        <text>
+            As you prepare to leave, a Confederate ship approaches your position. The broadcasting station has reported your threats to the authorities, and the Confederate ship moves to intercept you.
+        </text>
+        <!-- TODO: Replace with a Confederate ship wrapper when available. -->
+        <ship load="SC_TERRAN_PATROL_SHIP" hostile="true"/>
+    </event>
+</eventList>
+
+<!--*****************************************************************************************************
+  TERRAN FUGITIVE
+******************************************************************************************************-->
+<event name="SC_TERRAN_FUGITIVE">
+    <text>The satellite at this beacon is part of the sector's active network, so when you arrive, there is already a message waiting for you.
+
+        "Listen Captain, just because we don't always see eye to eye doesn't mean we can't help each other out from time to time."
+
+        "There's a fugitive hiding at your beacon. He's powered down his systems so he can't be spotted and he's steadily drifting out of our Comsat range."
+
+        "Stop him from leaving the sector, and I may forget that you were there at all. Well... all except for the sizable bounty you will receive, of course."</text>
+    <choice req="sensors" lvl="3" hidden="true" blue="false">
+        <text>(Advanced Sensors) Scan the area yourself.</text>
+        <event load="SC_TERRAN_FUGITIVE_SCAN_CHECK"/>
+    </choice>
+    <choice req="SC_DETECTOR" hidden="true" blue="false">
+        <text>(Detector) Scan the area yourself.</text>
+        <event load="SC_TERRAN_FUGITIVE_SCAN_CHECK"/>
+    </choice>
+    <choice req="TERRAN_COMSAT" hidden="true" blue="false">
+        <text>(Comsat) Scan the area yourself.</text>
+        <event load="SC_TERRAN_FUGITIVE_SCAN_CHECK"/>
+    </choice>
+    <choice>
+        <text>Request a Comsat from the Confederate satellite.</text>
+        <event>
+            <text>You request assistance from the Confederate Comsat network. The satellite locates the fugitive and transmits his position.</text>
+            <choice hidden="true">
+                <text>Continue...</text>
+                <event load="SC_TERRAN_FUGITIVE_FOUND"/>
+            </choice>
+        </event>
+    </choice>
+    <choice>
+        <text>Destroy the satellite.</text>
+        <event>
+            <text>You destroy the satellite and quickly jump away.</text>
+            <modifyPursuit amount="-1"/>
+            <!-- MORALITY: Confederation -1 -->
+        </event>
+    </choice>
+    <choice>
+        <text>Dismantle the satellite for a chance at valuable scrap.</text>
+        <event load="SC_TERRAN_FUGITIVE_DISMANTLE_ROLL"/>
+    </choice>
+    <choice req="hacking" lvl="3" hidden="true" blue="false">
+        <text>(Hacking) Attempt to hack the satellite.</text>
+        <event load="SC_TERRAN_FUGITIVE_HACK_ROLL_3"/>
+    </choice>
+    <choice req="hacking" lvl="2" max_lvl="2" hidden="true" blue="false">
+        <text>(Hacking) Attempt to hack the satellite.</text>
+        <event load="SC_TERRAN_FUGITIVE_HACK_ROLL_2"/>
+    </choice>
+    <choice req="hacking" lvl="1" max_lvl="1" hidden="true" blue="false">
+        <text>(Hacking) Attempt to hack the satellite.</text>
+        <event load="SC_TERRAN_FUGITIVE_HACK_ROLL_1"/>
+    </choice>
+    <choice>
+        <text>Leave the satellite alone.</text>
+        <event/>
+    </choice>
+</event>
+<eventList name="SC_TERRAN_FUGITIVE_DISMANTLE_ROLL">
+    <event load="SC_TERRAN_FUGITIVE_DISMANTLE_SUCCESS"/>
+    <event load="SC_TERRAN_FUGITIVE_DISMANTLE_FAILURE"/>
+</eventList>
+<event name="SC_TERRAN_FUGITIVE_DISMANTLE_SUCCESS">
+    <text>You begin dismantling the satellite, carefully removing its valuable components before the Confederate network can detect what is happening.</text>
+    <autoReward level="HIGH">scrap_only</autoReward>
+    <!-- MORALITY: Confederation -1 -->
+</event>
+<event name="SC_TERRAN_FUGITIVE_DISMANTLE_FAILURE">
+    <text>As you begin dismantling the satellite, an emergency transmission alerts nearby Confederate forces. A group of stealthed Wraiths approaches and attacks.</text>
+    <modifyPursuit amount="1"/>
+    <!-- MORALITY: Confederation -1 -->
+    <ambush target="enemy"/>
+    <ship load="SC_TERRAN_FUGITIVE_WRAITH_SHIP" hostile="true"/>
+</event>
+<eventList name="SC_TERRAN_FUGITIVE_HACK_ROLL_1">
+    <event load="SC_TERRAN_FUGITIVE_HACK_SUCCESS"/>
+    <event load="SC_TERRAN_FUGITIVE_HACK_FAILURE"/>
+    <event load="SC_TERRAN_FUGITIVE_HACK_FAILURE"/>
+    <event load="SC_TERRAN_FUGITIVE_HACK_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_FUGITIVE_HACK_ROLL_2">
+    <event load="SC_TERRAN_FUGITIVE_HACK_SUCCESS"/>
+    <event load="SC_TERRAN_FUGITIVE_HACK_SUCCESS"/>
+    <event load="SC_TERRAN_FUGITIVE_HACK_FAILURE"/>
+    <event load="SC_TERRAN_FUGITIVE_HACK_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_FUGITIVE_HACK_ROLL_3">
+    <event load="SC_TERRAN_FUGITIVE_HACK_SUCCESS"/>
+    <event load="SC_TERRAN_FUGITIVE_HACK_SUCCESS"/>
+    <event load="SC_TERRAN_FUGITIVE_HACK_SUCCESS"/>
+    <event load="SC_TERRAN_FUGITIVE_HACK_FAILURE"/>
+</eventList>
+<event name="SC_TERRAN_FUGITIVE_HACK_SUCCESS">
+    <text>You successfully hack the satellite and gain access to the Confederate communications network.</text>
+    <!-- MORALITY: Confederation -1 -->
+    <choice>
+        <text>Transmit false information to delay the enemy fleet by 2 jumps.</text>
+        <event>
+            <text>You transmit false information about your location throughout the network, sending the pursuing fleet in the wrong direction.</text>
+            <modifyPursuit amount="-2"/>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Use the satellite to scan the sector.</text>
+        <event>
+            <text>You access the satellite's surveillance data, revealing the surrounding sector.</text>
+            <reveal_map/>
+        </event>
+    </choice>
+</event>
+<event name="SC_TERRAN_FUGITIVE_HACK_FAILURE">
+    <text>Your attempt to hack the satellite triggers a security alert. A group of stealthed Wraiths approaches and attacks.</text>
+    <modifyPursuit amount="1"/>
+    <!-- MORALITY: Confederation -1 -->
+    <ambush target="enemy"/>
+    <ship load="SC_TERRAN_FUGITIVE_WRAITH_SHIP" hostile="true"/>
+</event>
+<event name="SC_TERRAN_FUGITIVE_SCAN_CHECK">
+    <text>You scan the surrounding area, searching for the fugitive's ship.</text>
+    <choice req="sensors" lvl="4" hidden="true" blue="false">
+        <text>Continue...</text>
+        <event load="SC_TERRAN_FUGITIVE_SCAN_ROLL_4"/>
+    </choice>
+    <choice req="sensors" lvl="3" max_lvl="3" hidden="true" blue="false">
+        <text>Continue...</text>
+        <event load="SC_TERRAN_FUGITIVE_SCAN_ROLL_3"/>
+    </choice>
+    <choice req="sensors" lvl="2" max_lvl="2" hidden="true" blue="false">
+        <text>Continue...</text>
+        <event load="SC_TERRAN_FUGITIVE_SCAN_ROLL_2"/>
+    </choice>
+    <choice req="sensors" lvl="0" max_lvl="1" hidden="true" blue="false">
+        <text>Continue...</text>
+        <event load="SC_TERRAN_FUGITIVE_SCAN_ROLL_1"/>
+    </choice>
+</event>
+<eventList name="SC_TERRAN_FUGITIVE_SCAN_ROLL_1">
+    <event load="SC_TERRAN_FUGITIVE_FOUND"/>
+    <event load="SC_TERRAN_FUGITIVE_SCAN_FAILURE"/>
+    <event load="SC_TERRAN_FUGITIVE_SCAN_FAILURE"/>
+    <event load="SC_TERRAN_FUGITIVE_SCAN_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_FUGITIVE_SCAN_ROLL_2">
+    <event load="SC_TERRAN_FUGITIVE_FOUND"/>
+    <event load="SC_TERRAN_FUGITIVE_FOUND"/>
+    <event load="SC_TERRAN_FUGITIVE_SCAN_FAILURE"/>
+    <event load="SC_TERRAN_FUGITIVE_SCAN_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_FUGITIVE_SCAN_ROLL_3">
+    <event load="SC_TERRAN_FUGITIVE_FOUND"/>
+    <event load="SC_TERRAN_FUGITIVE_FOUND"/>
+    <event load="SC_TERRAN_FUGITIVE_FOUND"/>
+    <event load="SC_TERRAN_FUGITIVE_SCAN_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_FUGITIVE_SCAN_ROLL_4">
+    <event load="SC_TERRAN_FUGITIVE_FOUND"/>
+    <event load="SC_TERRAN_FUGITIVE_FOUND"/>
+    <event load="SC_TERRAN_FUGITIVE_FOUND"/>
+    <event load="SC_TERRAN_FUGITIVE_FOUND"/>
+</eventList>
+<event name="SC_TERRAN_FUGITIVE_SCAN_FAILURE">
+    <text>Your scan fails to locate the fugitive. By the time your sensors finish searching, the ship has drifted beyond detection range.</text>
+</event>
+<event name="SC_TERRAN_FUGITIVE_FOUND">
+    <text>You locate the fugitive's ship drifting nearby with its systems powered down.</text>
+
+    <ship load="SC_TERRAN_FUGITIVE_SHIP" hostile="false"/>
+
+    <choice>
+        <text>Warn the ship.</text>
+        <event load="SC_TERRAN_FUGITIVE_WARN_ROLL"/>
+    </choice>
+
+    <choice>
+        <text>Fight the ship.</text>
+        <event>
+            <text>You power your weapons and move to stop the fugitive.</text>
+            <ship hostile="true"/>
+        </event>
+    </choice>
+</event>
+<eventList name="SC_TERRAN_FUGITIVE_WARN_ROLL">
+    <event load="SC_TERRAN_FUGITIVE_ESCAPES"/>
+    <event load="SC_TERRAN_FUGITIVE_INTERCEPTED"/>
+</eventList>
+<eventList name="SC_TERRAN_FUGITIVE_SURRENDER_ROLL">
+    <event load="SC_TERRAN_FUGITIVE_ESCAPES"/>
+    <event load="SC_TERRAN_FUGITIVE_INTERCEPTED"/>
+</eventList>
+<event name="SC_TERRAN_FUGITIVE_ESCAPES">
+    <text>The fugitive flees.</text>
+    <ship hostile="false"/>
+    <!-- MORALITY: Raiders +1, Confederation -1 -->
+</event>
+<event name="SC_TERRAN_FUGITIVE_INTERCEPTED">
+    <text>The fugitive flees, but is intercepted and destroyed by a fleet of Wraiths. The Wraiths then turn their attention toward you.</text>
+    <ship hostile="false"/>
+    <!-- MORALITY: Raiders +1, Confederation -1 -->
+
+    <choice hidden="true">
+        <text>Continue...</text>
+        <event load="SC_TERRAN_FUGITIVE_WRAITH_ATTACK"/>
+    </choice>
+</event>
+<event name="SC_TERRAN_FUGITIVE_WRAITH_ATTACK">
+    <text>The stealthed Wraiths move into attack position and power their weapons.</text>
+    <ambush target="enemy"/>
+    <ship load="SC_TERRAN_FUGITIVE_WRAITH_SHIP" hostile="true"/>
+</event>
+<event name="SC_TERRAN_FUGITIVE_DEFEATED">
+    <text>The fugitive has been stopped. You collect what supplies you can from the ship.</text>
+    <autoReward level="MED">standard</autoReward>
+    <!-- MORALITY: Raiders -1, Confederation +1 -->
+    <choice>
+        <text>Use the satellite network to contact the Officer about your reward.</text>
+        <event load="SC_TERRAN_FUGITIVE_BOUNTY_ROLL"/>
+    </choice>
+    <choice>
+        <text>Leave.</text>
+        <event>
+            <text>You leave the area without contacting the Officer.</text>
+            <modifyPursuit amount="-1"/>
+        </event>
+    </choice>
+</event>
+<eventList name="SC_TERRAN_FUGITIVE_BOUNTY_ROLL">
+    <event load="SC_TERRAN_FUGITIVE_BOUNTY_PAID"/>
+    <event load="SC_TERRAN_FUGITIVE_BOUNTY_DENIED"/>
+</eventList>
+<event name="SC_TERRAN_FUGITIVE_BOUNTY_PAID">
+    <text>The Officer begrudgingly gives you your reward.</text>
+    <autoReward level="HIGH">scrap_only</autoReward>
+    <!-- MORALITY: Confederation -1? (Tentative) -->
+</event>
+<event name="SC_TERRAN_FUGITIVE_BOUNTY_DENIED">
+    <text>The Officer mocks you and explains that the only big bounty you were getting was the one on your own head.</text>
+    <!-- MORALITY: Confederation -1 -->
+</event>
+
+<!--*****************************************************************************************************
+  TERRAN DYING SATELLITE
+******************************************************************************************************-->
+<event name="SC_TERRAN_DYING_SATELLITE">
+    <text>Your sensors find a faint energy pulse that leads you to a dying relay satellite.</text>
+    <choice>
+        <text>Scrap it.</text>
+        <event>
+            <text>You dismantle the satellite and collect what useful materials remain.</text>
+            <autoReward level="LOW">scrap_only</autoReward>
+        </event>
+    </choice>
+	<choice>
+		<text>Booby trap it.</text>
+		<event>
+			<text>You rig the satellite with explosives, setting them to detonate when another ship approaches.</text>
+			<item_modify>
+				<item type="missiles" min="-3" max="-4"/>
+			</item_modify>
+			<triggeredEvent event="SC_TERRAN_DYING_SATELLITE_TRAP_ROLL" jumps="2"/>
+		</event>
+	</choice>
+    <choice>
+        <text>Repair it.</text>
+        <event>
+            <text>You spend some scrap repairing the satellite. Once restored, you access the relay network and download detailed information about the sector.</text>
+            <item_modify>
+                <item type="scrap" min="-15" max="-15"/>
+            </item_modify>
+            <reveal_map/>
+        </event>
+    </choice>
+    <choice req="TERRAN_SCV" hidden="true" blue="true" max_group="0">
+        <text>Repair it. (SCV)</text>
+        <event load="SC_TERRAN_DYING_SATELLITE_SCV_REPAIR"/>
+    </choice>
+    <choice req="TERRAN_SCV_1" hidden="true" blue="true" max_group="0">
+        <text>Repair it. (SCV)</text>
+        <event load="SC_TERRAN_DYING_SATELLITE_SCV_REPAIR"/>
+    </choice>
+    <choice req="battery" lvl="1" hidden="true" blue="true">
+        <text>Jumpstart it. (Battery)</text>
+        <event>
+            <text>You use your Backup Battery to jumpstart the satellite. Its systems come back online, allowing you to access the relay network and download detailed information about the sector.</text>
+            <reveal_map/>
+        </event>
+    </choice>
+    <choice>
+        <text>Leave the satellite alone.</text>
+        <event/>
+    </choice>
+</event>
+
+<eventList name="SC_TERRAN_DYING_SATELLITE_TRAP_ROLL">
+    <event load="SC_TERRAN_DYING_SATELLITE_TRAP_CONFEDERATE"/>
+    <event load="SC_TERRAN_DYING_SATELLITE_TRAP_CONFEDERATE"/>
+    <event load="SC_TERRAN_DYING_SATELLITE_TRAP_CIVILIAN"/>
+</eventList>
+
+<event name="SC_TERRAN_DYING_SATELLITE_TRAP_CONFEDERATE">
+	<text>[style[color:FFD700]]* NOTIFICATION *[[/style]]
+	A passive monitoring program you left behind informs you that the trap you set has been triggered. A Confederate scout was destroyed and the pursuing fleet has been delayed.</text>
+    <modifyPursuit amount="-2"/>
+    <!-- MORALITY: Confederation -1 -->
+</event>
+
+<event name="SC_TERRAN_DYING_SATELLITE_TRAP_CIVILIAN">
+	<text>[style[color:FFD700]]* NOTIFICATION *[[/style]]
+	A passive monitoring program you left behind informs you that the trap you set has been triggered. Unfortunately, a civilian supply transport was destroyed. The pursuing fleet has been delayed as they investigate the incident.</text>
+    <modifyPursuit amount="-2"/>
+    <!-- MORALITY: Confederation -1, Civilians -1 -->
+</event>
+
+<event name="SC_TERRAN_DYING_SATELLITE_SCV_REPAIR">
+    <text>Your SCV repairs the satellite. Once restored, you access the relay network and download detailed information about the sector.</text>
+    <reveal_map/>
+</event>
+
+<!--*****************************************************************************************************
+  TERRAN MOON PORT
+******************************************************************************************************-->
+<event name="SC_TERRAN_MOON_PORT">
+    <text>The only thing that shows up near this beacon is a dingy little port on the dark side of a small, barren moon.</text>
+    <choice>
+        <text>Get refueling.</text>
+        <event>
+            <text>You pay the port's operator to refuel your ship.</text>
+            <item_modify>
+                <item type="scrap" min="-30" max="-5"/>
+                <item type="fuel" min="5" max="5"/>
+            </item_modify>
+        </event>
+    </choice>
+    <choice>
+        <text>Get repairs.</text>
+        <event>
+            <text>You pay the port's maintenance crew to repair your ship.</text>
+            <item_modify>
+                <item type="scrap" min="-25" max="-5"/>
+            </item_modify>
+            <damage amount="-5"/>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Get drones.</text>
+        <event>
+            <text>You purchase drone parts from the port's supplies.</text>
+            <item_modify>
+                <item type="scrap" min="-36" max="-6"/>
+                <item type="drones" min="3" max="3"/>
+            </item_modify>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Get munitions.</text>
+        <event>
+            <text>You purchase missiles from the port's supplies.</text>
+            <item_modify>
+                <item type="scrap" min="-40" max="-10"/>
+                <item type="missiles" min="5" max="5"/>
+            </item_modify>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Hire a mercenary.</text>
+        <event>
+            <text>You hire a mercenary looking for work at the port.</text>
+            <item_modify>
+                <item type="scrap" min="-100" max="-25"/>
+            </item_modify>
+            <crewMember amount="1" class="TERRAN_LIST_CREW_ALL"/>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Leave the port alone.</text>
+        <event/>
+    </choice>
+</event>
+
 <!--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 					DISTRESS EVENTS ()
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
 <eventList name="DISTRESS_BEACON_TERRAN">
-	<event load="SC_TERRAN_EMPTY"/>
-	<event load="SC_TERRAN_EMPTY"/>
-	<event load="SC_TERRAN_EMPTY"/>
+	<event load="SC_TERRAN_SCAVENGERS"/>
+	<event load="SC_TERRAN_CONFEDERATE_DISTRESS"/>
+	<!-- <event load="SC_TERRAN_EMPTY"/> -->
 </eventList>
 
 <eventList name="DISTRESS_TERRAN_UNIQUE">
 	<event load="SC_TERRAN_EMPTY"/>
 </eventList>
+
+<!--*****************************************************************************************************
+  TERRAN SCAVENGERS
+******************************************************************************************************-->
+<event name="SC_TERRAN_SCAVENGERS">
+    <text>You arrive at the beacon to find scavengers already picking apart the wreckage of a destroyed Terran vessel.</text>
+    <ship load="SC_TERRAN_SCAVENGERS_SHIP" hostile="false"/>
+
+    <choice>
+        <text>Confront the scavengers.</text>
+        <event load="SC_TERRAN_SCAVENGERS_CONFRONT"/>
+    </choice>
+
+    <choice>
+        <text>Salvage some scrap without drawing attention to yourself.</text>
+        <event load="SC_TERRAN_SCAVENGERS_STEALTH_ROLL"/>
+    </choice>
+
+    <choice req="cloaking" lvl="1" blue="true">
+        <text>(Cloaking) Salvage some scrap without drawing attention to yourself.</text>
+        <event load="SC_TERRAN_SCAVENGERS_CLOAK_ROLL"/>
+    </choice>
+
+    <choice>
+        <text>Leave the scavengers alone.</text>
+        <event/>
+    </choice>
+</event>
+<event name="SC_TERRAN_SCAVENGERS_CONFRONT">
+    <text>The scavengers notice your approach and warn you to stay away from their salvage.</text>
+
+    <choice>
+        <text>Attack them.</text>
+        <event load="SC_TERRAN_SCAVENGERS_ATTACK"/>
+    </choice>
+
+    <choice>
+        <text>Offer to split the haul.</text>
+        <event load="SC_TERRAN_SCAVENGERS_SPLIT_ROLL"/>
+    </choice>
+
+    <choice>
+        <text>Chase them off.</text>
+        <event load="SC_TERRAN_SCAVENGERS_CHASE_ROLL"/>
+    </choice>
+
+    <choice req="weapons" lvl="4" hidden="true" blue="true">
+        <text>Chase them off. (Advanced Weapons)</text>
+        <event load="SC_TERRAN_SCAVENGERS_CHASE_SUCCESS"/>
+    </choice>
+</event>
+<eventList name="SC_TERRAN_SCAVENGERS_SPLIT_ROLL">
+    <event load="SC_TERRAN_SCAVENGERS_SPLIT_SUCCESS"/>
+    <event load="SC_TERRAN_SCAVENGERS_SPLIT_FAILURE"/>
+</eventList>
+<event name="SC_TERRAN_SCAVENGERS_SPLIT_SUCCESS">
+    <text>The scavengers agree to split the haul. You collect your share of the salvage before leaving them to finish their work.</text>
+    <autoReward level="LOW">standard</autoReward>
+    <!-- MORALITY: Raiders +1 -->
+</event>
+<event name="SC_TERRAN_SCAVENGERS_SPLIT_FAILURE">
+    <text>"Get outa here!" The scavengers refuse to share their salvage and order you to leave.</text>
+
+    <choice>
+        <text>Leave them alone.</text>
+        <event/>
+    </choice>
+
+    <choice>
+        <text>Attack them.</text>
+        <event load="SC_TERRAN_SCAVENGERS_ATTACK"/>
+    </choice>
+</event>
+<eventList name="SC_TERRAN_SCAVENGERS_CHASE_ROLL">
+    <event load="SC_TERRAN_SCAVENGERS_CHASE_SUCCESS"/>
+    <event load="SC_TERRAN_SCAVENGERS_CHASE_FAILURE"/>
+</eventList>
+<event name="SC_TERRAN_SCAVENGERS_CHASE_SUCCESS">
+    <text>The scavengers decide the wreckage isn't worth fighting over and quickly retreat. You are free to salvage what remains.</text>
+    <autoReward level="MED">standard</autoReward>
+    <weapon name="RANDOM"/>
+</event>
+<event name="SC_TERRAN_SCAVENGERS_CHASE_FAILURE">
+    <text>The scavengers refuse to abandon their claim. They begin powering up their weapons.</text>
+    <ship hostile="true"/>
+</event>
+<eventList name="SC_TERRAN_SCAVENGERS_STEALTH_ROLL">
+    <event load="SC_TERRAN_SCAVENGERS_STEALTH_SCRAP"/>
+    <event load="SC_TERRAN_SCAVENGERS_STEALTH_REWARD"/>
+    <event load="SC_TERRAN_SCAVENGERS_STEALTH_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_SCAVENGERS_CLOAK_ROLL">
+    <event load="SC_TERRAN_SCAVENGERS_STEALTH_SCRAP"/>
+    <event load="SC_TERRAN_SCAVENGERS_STEALTH_SCRAP"/>
+    <event load="SC_TERRAN_SCAVENGERS_STEALTH_REWARD"/>
+    <event load="SC_TERRAN_SCAVENGERS_STEALTH_REWARD"/>
+    <event load="SC_TERRAN_SCAVENGERS_STEALTH_FAILURE"/>
+</eventList>
+<event name="SC_TERRAN_SCAVENGERS_STEALTH_SCRAP">
+    <text>You manage to salvage some debris before quickly jumping away.</text>
+    <item_modify>
+        <item type="scrap" min="5" max="12"/>
+    </item_modify>
+</event>
+<event name="SC_TERRAN_SCAVENGERS_STEALTH_REWARD">
+    <text>You are able to strip a stray portion of the wreckage before jumping away.</text>
+    <autoReward level="LOW">stuff</autoReward>
+</event>
+<event name="SC_TERRAN_SCAVENGERS_STEALTH_FAILURE">
+    <text>Despite your efforts to keep a wide berth, the enemy ship must have noticed. They begin powering up their weapons as they move in to defend their claim.</text>
+    <ship hostile="true"/>
+</event>
+<event name="SC_TERRAN_SCAVENGERS_ATTACK">
+    <text>You power your weapons and move to attack the scavengers.</text>
+    <ship hostile="true"/>
+</event>
+<ship name="SC_TERRAN_SCAVENGERS_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_SCOUT">
+    <destroyed load="SC_TERRAN_SCAVENGERS_COMBAT_REWARD"/>
+    <deadCrew load="SC_TERRAN_SCAVENGERS_COMBAT_REWARD"/>
+</ship>
+<event name="SC_TERRAN_SCAVENGERS_COMBAT_REWARD">
+    <text>With the scavengers defeated, you collect what remains of their ship.</text>
+    <autoReward level="MED">standard</autoReward>
+
+    <choice>
+        <text>Continue salvaging the wreckage. (Enemy fleet advances 1 jump)</text>
+        <event>
+            <text>You spend additional time searching the wreckage and collect more supplies before the pursuing fleet can arrive.</text>
+            <modifyPursuit amount="1"/>
+            <autoReward level="LOW">stuff</autoReward>
+        </event>
+    </choice>
+
+    <choice>
+        <text>Leave with what you've collected.</text>
+        <event/>
+    </choice>
+</event>
+
+
+<!--*****************************************************************************************************
+  TERRAN CONFEDERATE DISTRESS
+******************************************************************************************************-->
+<event name="SC_TERRAN_CONFEDERATE_DISTRESS">
+    <text>Your sensors find a distress signal, and to your surprise, it's transmitting from a Confederate ship on an unencrypted channel. Amidst sounds of chaos and explosions, they explain that they are under attack and in desperate need of aid. The transmission cuts out before they can explain any further.</text>
+
+    <choice>
+        <text>The Confederates can take care of their own. Order your ship to jump away.</text>
+        <event/>
+    </choice>
+
+    <choice>
+        <text>Seize the opportunity and join the assault against the Confederate ship.</text>
+        <!-- MORALITY: Confederation -1 -->
+        <event load="SC_TERRAN_CONFEDERATE_DISTRESS_ATTACK_ROLL"/>
+    </choice>
+
+    <choice>
+        <text>Order your ship to move in and defend the Confederate ship.</text>
+        <!-- MORALITY: Confederation +1 -->
+        <event load="SC_TERRAN_CONFEDERATE_DISTRESS_DEFEND_ROLL"/>
+    </choice>
+</event>
+<eventList name="SC_TERRAN_CONFEDERATE_DISTRESS_ATTACK_ROLL">
+    <event load="SC_TERRAN_CONFEDERATE_DISTRESS_ATTACK_SUCCESS"/>
+    <event load="SC_TERRAN_CONFEDERATE_DISTRESS_ATTACK_BETRAYAL"/>
+</eventList>
+<event name="SC_TERRAN_CONFEDERATE_DISTRESS_ATTACK_SUCCESS">
+    <text>You join a squad of ships that are already attacking the surrounded Confederate ship.</text>
+    <environment type="PDS" target="enemy"/>
+    <ship load="SC_TERRAN_CONFEDERATE_DISTRESS_ATTACK_SHIP" hostile="true"/>
+</event>
+<event name="SC_TERRAN_CONFEDERATE_DISTRESS_ATTACK_BETRAYAL">
+    <text>You join a squad of ships that are already attacking the surrounded Confederate ship, only to realize the squad is firing at you instead of them!</text>
+    <environment type="PDS" target="player"/>
+    <ship load="SC_TERRAN_CONFEDERATE_DISTRESS_BETRAYAL_SHIP" hostile="true"/>
+</event>
+<eventList name="SC_TERRAN_CONFEDERATE_DISTRESS_DEFEND_ROLL">
+    <event load="SC_TERRAN_CONFEDERATE_DISTRESS_DEFEND_SUCCESS"/>
+    <event load="SC_TERRAN_CONFEDERATE_DISTRESS_DEFEND_ASSAULT"/>
+</eventList>
+<event name="SC_TERRAN_CONFEDERATE_DISTRESS_DEFEND_SUCCESS">
+    <text>Your ship maneuvers into position beside the Confederate ship as you prepare to fend off the assault.</text>
+    <environment type="PDS" target="enemy"/>
+    <ship load="SC_TERRAN_CONFEDERATE_DISTRESS_DEFEND_SHIP" hostile="true"/>
+</event>
+<event name="SC_TERRAN_CONFEDERATE_DISTRESS_DEFEND_ASSAULT">
+    <text>Your ship maneuvers into position beside the Confederate ship as you prepare to fend off the assault. If you had known how big the assault would be, you may have chosen your actions differently.</text>
+    <environment type="PDS" target="all"/>
+    <ship load="SC_TERRAN_CONFEDERATE_DISTRESS_ASSAULT_SHIP_1" hostile="true"/>
+</event>
+<ship name="SC_TERRAN_CONFEDERATE_DISTRESS_ATTACK_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_SCOUT">
+    <destroyed>
+        <text>The Confederate ship breaks apart under your attack. You salvage what remains.</text>
+        <autoReward level="MED">standard</autoReward>
+    </destroyed>
+
+    <deadCrew>
+        <text>With the Confederate crew neutralized, you collect their remaining supplies.</text>
+        <autoReward level="MED">standard</autoReward>
+    </deadCrew>
+</ship>
+<ship name="SC_TERRAN_CONFEDERATE_DISTRESS_BETRAYAL_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_SCOUT">
+    <surrender chance="0.35" min="2" max="4">
+        <text>The attacking squad has taken serious damage and offers to surrender.</text>
+
+        <choice>
+            <text>Accept their surrender.</text>
+            <event>
+                <text>The squad transfers supplies before retreating from the area.</text>
+                <ship hostile="false"/>
+                <autoReward level="MED">standard</autoReward>
+            </event>
+        </choice>
+
+        <choice>
+            <text>Refuse their surrender.</text>
+            <event>
+                <text>You reject their offer and continue the attack.</text>
+                <ship hostile="true"/>
+            </event>
+        </choice>
+    </surrender>
+
+    <destroyed load="SC_TERRAN_CONFEDERATE_DISTRESS_BETRAYAL_DEFEATED"/>
+    <deadCrew load="SC_TERRAN_CONFEDERATE_DISTRESS_BETRAYAL_DEFEATED"/>
+</ship>
+<event name="SC_TERRAN_CONFEDERATE_DISTRESS_BETRAYAL_DEFEATED">
+    <text>With the attacking squad defeated, you salvage what remains. The Confederate ship, still under attack, turns its weapons toward you.</text>
+    <autoReward level="MED">standard</autoReward>
+
+    <choice hidden="true">
+        <text>Continue...</text>
+        <event load="SC_TERRAN_CONFEDERATE_DISTRESS_BETRAYAL_FOLLOWUP"/>
+    </choice>
+</event>
+<event name="SC_TERRAN_CONFEDERATE_DISTRESS_BETRAYAL_FOLLOWUP">
+    <text>The Confederate ship moves to intercept you.</text>
+    <ship load="SC_TERRAN_CONFEDERATE_DISTRESS_FOLLOWUP_SHIP" hostile="false"/>
+
+    <choice>
+        <text>Prepare to fight.</text>
+        <event>
+            <text>You power your weapons and engage the Confederate ship.</text>
+            <ship hostile="true"/>
+        </event>
+    </choice>
+</event>
+<ship name="SC_TERRAN_CONFEDERATE_DISTRESS_FOLLOWUP_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_SCOUT">
+    <destroyed>
+        <text>The Confederate ship is destroyed. You salvage what remains.</text>
+        <autoReward level="MED">standard</autoReward>
+    </destroyed>
+
+    <deadCrew>
+        <text>With the Confederate crew neutralized, you collect what supplies remain.</text>
+        <autoReward level="MED">standard</autoReward>
+    </deadCrew>
+</ship>
+<ship name="SC_TERRAN_CONFEDERATE_DISTRESS_DEFEND_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_SCOUT">
+    <destroyed>
+        <text>The attacking ship is destroyed. You salvage what remains.</text>
+        <autoReward level="MED">standard</autoReward>
+    </destroyed>
+
+    <deadCrew>
+        <text>With the attackers neutralized, you collect their remaining supplies.</text>
+        <autoReward level="MED">standard</autoReward>
+    </deadCrew>
+</ship>
+<ship name="SC_TERRAN_CONFEDERATE_DISTRESS_ASSAULT_SHIP_1" auto_blueprint="LIST_TERRAN_SHIPS_ASSAULT">
+    <destroyed load="SC_TERRAN_CONFEDERATE_DISTRESS_ASSAULT_SECOND_WAVE"/>
+    <deadCrew load="SC_TERRAN_CONFEDERATE_DISTRESS_ASSAULT_SECOND_WAVE"/>
+</ship>
+<event name="SC_TERRAN_CONFEDERATE_DISTRESS_ASSAULT_SECOND_WAVE">
+    <text>The first attacking ship is defeated, and you collect what remains. Another ship from the assault group moves in to continue the attack.</text>
+    <autoReward level="MED">standard</autoReward>
+    <environment type="PDS" target="all"/>
+    <ship load="SC_TERRAN_CONFEDERATE_DISTRESS_ASSAULT_SHIP_2" hostile="false"/>
+
+    <choice>
+        <text>Face the next attacker.</text>
+        <event>
+            <text>The second attacker advances and opens fire.</text>
+            <ship hostile="true"/>
+        </event>
+    </choice>
+</event>
+<ship name="SC_TERRAN_CONFEDERATE_DISTRESS_ASSAULT_SHIP_2" auto_blueprint="LIST_TERRAN_SHIPS_ASSAULT">
+    <destroyed>
+        <text>The second attacker is destroyed. You salvage what remains.</text>
+        <autoReward level="MED">standard</autoReward>
+    </destroyed>
+
+    <deadCrew>
+        <text>With the second attacking crew neutralized, you collect their remaining supplies.</text>
+        <autoReward level="MED">standard</autoReward>
+    </deadCrew>
+</ship>
+
+
 <!--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 					QUEST EVENTS ()
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
@@ -849,9 +1973,7 @@
   TERRAN TRANSPORT ENCOUNTER
 ******************************************************************************************************-->
 <event name="SC_TERRAN_TRANSPORT">
-	<text>
-		You arrive near a heavily escorted Terran transport vessel. Its cargo holds are reinforced and its engines are already cycling up, but it has not jumped yet.
-	</text>
+	<text>You arrive near a heavily armored Terran transport vessel. Its engines are already cycling up, but it has not jumped yet.</text>
 
 	<ship load="SC_TERRAN_TRANSPORT_SHIP" hostile="false"/>
 
@@ -861,16 +1983,12 @@
 	</choice>
 </event>
 <event name="SC_TERRAN_TRANSPORT_FIGHT">
-	<text>
-		The transport diverts power to its engines and attempts to flee as soon as you close in.
-	</text>
+	<text>The transport diverts power to its engines and attempts to flee as soon as you close in.</text>
 
 	<ship hostile="true"/>
 </event>
 <event name="SC_TERRAN_TRANSPORT_GOTAWAY">
-	<text>
-		The transport jumps away before you can stop it. Its FTL trail is unstable, but a strong sensor sweep might still recover its destination.
-	</text>
+	<text>The transport jumps away before you can stop it. Its FTL trail is unstable, but a strong sensor sweep might still recover its destination.</text>
 
 	<choice>
 		<text>Try to follow the transport's FTL trail.</text>
@@ -878,9 +1996,7 @@
 	</choice>
 </event>
 <event name="SC_TERRAN_TRANSPORT_SURRENDER_TRACK">
-	<text>
-		The transport powers down its weapons and transfers a cargo manifest fragment along with the surrender payment. The data may reveal where the rest of its convoy was headed.
-	</text>
+	<text>The transport powers down its weapons and transfers a cargo manifest fragment along with the surrender payment. The data may reveal where the rest of its convoy was headed.</text>
 
 	<autoReward level="MED">scrap_only</autoReward>
 
@@ -895,9 +2011,7 @@
 	</choice>
 </event>
 <event name="SC_TERRAN_TRANSPORT_SENSORS_CHECK">
-	<text>
-		Your crew scans the transport's residual jump data, looking for a usable destination.
-	</text>
+	<text>Your crew scans the transport's residual jump data, looking for a usable destination.</text>
 
 	<choice req="sensors" lvl="4" hidden="true" blue="false">
 		<text>Continue...</text>
@@ -919,28 +2033,24 @@
 		<event load="SC_TERRAN_TRANSPORT_SENSORS_ROLL_1"/>
 	</choice>
 </event>
-
 <eventList name="SC_TERRAN_TRANSPORT_SENSORS_ROLL_1">
 	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
 	<event load="SC_TERRAN_TRANSPORT_QUEST_FAILURE"/>
 	<event load="SC_TERRAN_TRANSPORT_QUEST_FAILURE"/>
 	<event load="SC_TERRAN_TRANSPORT_QUEST_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_TRANSPORT_SENSORS_ROLL_2">
 	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
 	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
 	<event load="SC_TERRAN_TRANSPORT_QUEST_FAILURE"/>
 	<event load="SC_TERRAN_TRANSPORT_QUEST_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_TRANSPORT_SENSORS_ROLL_3">
 	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
 	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
 	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
 	<event load="SC_TERRAN_TRANSPORT_QUEST_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_TRANSPORT_SENSORS_ROLL_4">
 	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
 	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
@@ -948,23 +2058,16 @@
 	<event load="SC_TERRAN_TRANSPORT_QUEST_SUCCESS"/>
 	<event load="SC_TERRAN_TRANSPORT_QUEST_FAILURE"/>
 </eventList>
-
 <event name="SC_TERRAN_TRANSPORT_QUEST_SUCCESS">
-	<text>
-		Your sensors isolate a clean jump vector from the transport's route data. You mark the destination on your map.
-	</text>
+	<text>Your sensors isolate a clean jump vector from the transport's route data. You mark the destination on your map.</text>
 
 	<quest event="SC_TERRAN_TRANSPORT_QUEST"/>
 </event>
 <event name="SC_TERRAN_TRANSPORT_QUEST_FAILURE">
-	<text>
-		The transport's trail breaks apart before your sensors can resolve a destination. Whatever it was carrying is gone.
-	</text>
+	<text>The transport's trail breaks apart before your sensors can resolve a destination. Whatever it was carrying is gone.</text>
 </event>
 <event name="SC_TERRAN_TRANSPORT_QUEST">
-	<text>
-		You arrive at the coordinates recovered from the transport's route data. The trail leads to a Terran logistics waypoint, but this event is still a stub and can be expanded into a follow-up fight, cache, or special reward later.
-	</text>
+	<text>You arrive at the coordinates recovered from the transport's route data. The trail leads to a Terran logistics waypoint, but this event is still a stub and can be expanded into a follow-up fight, cache, or special reward later. </text>
 </event>
 
 <!--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -975,10 +2078,10 @@
 	<event load="SC_TERRAN_SCOUT"/>
 	<event load="SC_TERRAN_AMBUSH"/>
 	<event load="SC_TERRAN_ASSAULT"/>
-	<event load="SC_TERRAN_EMPTY"/>
-	<event load="SC_TERRAN_EMPTY"/>
-	<event load="SC_TERRAN_EMPTY"/>
-	<event load="SC_TERRAN_EMPTY"/>
+    <event load="SC_TERRAN_CLASH_CONFED_SOK"/>
+    <event load="SC_TERRAN_CLASH_CONFED_RAIDERS"/>
+    <event load="SC_TERRAN_CLASH_SOK_RAIDERS"/>
+	<!-- <event load="SC_TERRAN_EMPTY"/> -->
 </eventList>
 
 <!--*****************************************************************************************************
@@ -1098,7 +2201,7 @@
 </event>
 <event name="SC_TERRAN_PATROL_DETECT_FAIL">
 	<text>
-		A nearby patrol has detected you. A Terran ship turns toward your position, weapons charging as it moves to intercept.
+		The nearby patrol has detected you and turns toward your position, weapons charging as it moves to intercept.
 	</text>
 
 	<choice req="engines" lvl="7" hidden="true" blue="false">
@@ -1215,7 +2318,6 @@
 		<event load="SC_TERRAN_SCOUT_STANDARD"/>
 	</choice>
 </event>
-
 <event name="SC_TERRAN_SCOUT_STANDARD">
 	<text>
 		You will have to act quickly if you want to stop the scout from escaping. If it gets away, it will warn the pursuing fleet.
@@ -1256,7 +2358,6 @@
 		<event load="SC_TERRAN_SCOUT_GOTAWAY"/>
 	</choice>
 </event>
-
 <event name="SC_TERRAN_SCOUT_PREIGNITER">
 	<text>
 		You will have to act quickly if you want to stop the scout from escaping. If it gets away, it will warn the pursuing fleet.
@@ -1312,21 +2413,18 @@
 		<event load="SC_TERRAN_SCOUT_GOTAWAY"/>
 	</choice>
 </event>
-
 <eventList name="SC_TERRAN_SCOUT_WEAPON_ROLL_2">
 	<event load="SC_TERRAN_SCOUT_WEAPON_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_WEAPON_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_WEAPON_FAILURE"/>
 	<event load="SC_TERRAN_SCOUT_WEAPON_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_SCOUT_WEAPON_ROLL_3">
 	<event load="SC_TERRAN_SCOUT_WEAPON_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_WEAPON_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_WEAPON_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_WEAPON_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_SCOUT_WEAPON_ROLL_4">
 	<event load="SC_TERRAN_SCOUT_WEAPON_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_WEAPON_SUCCESS"/>
@@ -1334,19 +2432,16 @@
 	<event load="SC_TERRAN_SCOUT_WEAPON_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_WEAPON_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_SCOUT_HACKING_ROLL_1">
 	<event load="SC_TERRAN_SCOUT_HACKING_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_HACKING_FAILURE"/>
 	<event load="SC_TERRAN_SCOUT_HACKING_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_SCOUT_HACKING_ROLL_2">
 	<event load="SC_TERRAN_SCOUT_HACKING_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_HACKING_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_HACKING_FAILURE"/>
 </eventList>
-
 <event name="SC_TERRAN_SCOUT_WEAPON_SUCCESS">
 	<text>
 		Your opening volley catches the scout before it can widen the gap. The shots rake across its engine housing.
@@ -1360,14 +2455,12 @@
 		<timerSounds load="DEFAULT_TIMER_SOUNDS"/>
 	</triggeredEvent>
 </event>
-
 <event name="SC_TERRAN_SCOUT_WEAPON_FAILURE">
 	<text>
 		You fire as the scout veers away, but the shot goes wide.
 	</text>
 	<ship load="SC_TERRAN_SCOUT_SHIP" hostile="true"/>
 </event>
-
 <event name="SC_TERRAN_SCOUT_HACKING_SUCCESS">
 	<text>
 		Your hacking system breaks into the scout's drive control. Its engines lock into a diagnostic loop, buying you time to finish the fight.
@@ -1381,14 +2474,12 @@
 		<timerSounds load="DEFAULT_TIMER_SOUNDS"/>
 	</triggeredEvent>
 </event>
-
 <event name="SC_TERRAN_SCOUT_HACKING_FAILURE">
 	<text>
 		You try to break into the scout's engine controls, but its emergency protocols reject the intrusion.
 	</text>
 	<ship load="SC_TERRAN_SCOUT_SHIP" hostile="true"/>
 </event>
-
 <event name="SC_TERRAN_SCOUT_FTL_JAMMER">
 	<text>
 		Your FTL Jammer floods the scout's drive with interference. Its escape vector collapses before the ship can jump.
@@ -1402,21 +2493,18 @@
 		<timerSounds load="DEFAULT_TIMER_SOUNDS"/>
 	</triggeredEvent>
 </event>
-
 <event name="SC_TERRAN_SCOUT_GOTAWAY">
 	<text>
 		The scout jumps away before you can stop it. Moments later, encrypted fleet traffic spikes across the sector.
 	</text>
 	<modifyPursuit amount="1"/>
 </event>
-
 <event name="SC_TERRAN_SCOUT_FIGHT">
 	<text>
 		The scout is already turning away, its FTL drive flaring hot. You power weapons and move to stop it.
 	</text>
 	<ship load="SC_TERRAN_SCOUT_SHIP" hostile="true"/>
 </event>
-
 <event name="SC_TERRAN_SCOUT_ENGINE_STATUS_CLEAR">
 	<text>
 		The scout's engine systems recover from the disruption.
@@ -1427,7 +2515,6 @@
 		<event/>
 	</choice>
 </event>
-
 <event name="SC_TERRAN_SCOUT_DEAD_CREW">
 	<text>
 		With the scout's crew neutralized, you search its databanks and secure its emergency supplies before any message can be sent. The ship's still-active comms buffer may contain a way to delay the pursuing fleet, but tampering with it could also expose your position.
@@ -1473,7 +2560,6 @@
 		<event load="SC_TERRAN_SCOUT_CREW_KILL_REWARD"/>
 	</choice>
 </event>
-
 <eventList name="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_1">
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
@@ -1481,7 +2567,6 @@
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_2">
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
@@ -1489,7 +2574,6 @@
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_3">
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
@@ -1497,7 +2581,6 @@
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_SCOUT_CREW_KILL_SENSORS_ROLL_4">
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
@@ -1505,25 +2588,21 @@
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_1">
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_2">
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_SCOUT_CREW_KILL_HACKING_ROLL_3">
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS"/>
 	<event load="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE"/>
 </eventList>
-
 <event name="SC_TERRAN_SCOUT_CREW_KILL_DELAY_SUCCESS">
 	<text>
 		You alter the scout's final telemetry before it can be recovered. The pursuing fleet diverts toward a false trail, buying you time.
@@ -1531,7 +2610,6 @@
 	<modifyPursuit amount="-1"/>
 	<autoReward level="HIGH">standard</autoReward>
 </event>
-
 <event name="SC_TERRAN_SCOUT_CREW_KILL_DELAY_FAILURE">
 	<text>
 		The scout's comms buffer resists your attempt. The failed intrusion causes an emergency beacon to fire, giving the pursuing fleet a cleaner trail to follow.
@@ -1539,7 +2617,6 @@
 	<modifyPursuit amount="1"/>
 	<autoReward level="HIGH">standard</autoReward>
 </event>
-
 <event name="SC_TERRAN_SCOUT_CREW_KILL_REWARD">
 	<text>
 		You leave the scout's comms buffer alone and focus on stripping the ship before more Terran forces arrive.
@@ -1562,7 +2639,6 @@
 		<event load="SC_TERRAN_ASSAULT_FIGHT_1"/>
 	</choice>
 </event>
-
 <event name="SC_TERRAN_ASSAULT_FIGHT_1">
 	<text>
 		The first Terran attacker breaks formation and opens fire. More contacts remain at the edge of sensor range.
@@ -1570,7 +2646,6 @@
 
 	<ship hostile="true"/>
 </event>
-
 <event name="SC_TERRAN_ASSAULT_SECOND_WAVE">
 	<text>
 		As the first attacker falls back or breaks apart, a second Terran ship moves in to continue the assault. This one is committed to finishing the fight.
@@ -1583,7 +2658,6 @@
 		<event load="SC_TERRAN_ASSAULT_FIGHT_2"/>
 	</choice>
 </event>
-
 <event name="SC_TERRAN_ASSAULT_FIGHT_2">
 	<text>
 		The second Terran assault ship advances and opens fire.
@@ -1595,9 +2669,7 @@
   TERRAN AMBUSH ENCOUNTER
 ******************************************************************************************************-->
 <event name="SC_TERRAN_AMBUSH">
-	<text>
-		You arrive in a quiet stretch of space. The beacon appears empty at first glance: no distress calls, no obvious wreckage, and no active Terran signatures on your sensors.
-	</text>
+	<text>You arrive in a quiet stretch of space. The beacon appears empty at first glance: no distress calls, no obvious wreckage, and no active Terran signatures on your sensors.</text>
 
 	<choice req="LIST_CREW_TELEPATHIC" lvl="1" hidden="true" blue="false" max_group="0">
 		<text>Continue...</text>
@@ -1609,7 +2681,6 @@
 		<event load="SC_TERRAN_AMBUSH_SPRUNG"/>
 	</choice>
 </event>
-
 <event name="SC_TERRAN_AMBUSH_WARNED">
 	<text>
 		One of your crew stiffens before the sensors catch anything. A hostile presence is waiting nearby, masked behind the quiet beacon traffic. You have a brief chance to act before the trap fully closes.
@@ -1625,7 +2696,6 @@
 		<event load="SC_TERRAN_AMBUSH_NON_AMBUSH_FIGHT"/>
 	</choice>
 </event>
-
 <event name="SC_TERRAN_AMBUSH_SPRUNG">
 	<text>
 		The empty beacon suddenly comes alive. A Terran ship cuts power to its masking field and moves into attack position. You have only seconds to react.
@@ -1636,7 +2706,6 @@
 		<event load="SC_TERRAN_AMBUSH_PILOT_CHECK"/>
 	</choice>
 </event>
-
 <event name="SC_TERRAN_AMBUSH_ENGINE_CHECK">
 	<text>Continue...</text>
 
@@ -1660,7 +2729,6 @@
 		<event load="SC_TERRAN_AMBUSH_ENGINE_ROLL_1"/>
 	</choice>
 </event>
-
 <eventList name="SC_TERRAN_AMBUSH_ENGINE_ROLL_1">
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
@@ -1668,7 +2736,6 @@
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_AMBUSH_ENGINE_ROLL_2">
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
@@ -1676,7 +2743,6 @@
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_AMBUSH_ENGINE_ROLL_3">
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
@@ -1684,7 +2750,6 @@
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_AMBUSH_ENGINE_ROLL_4">
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
@@ -1692,13 +2757,11 @@
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS"/>
 	<event load="SC_TERRAN_AMBUSH_ESCAPE_FAILURE"/>
 </eventList>
-
 <event name="SC_TERRAN_AMBUSH_ESCAPE_SUCCESS">
 	<text>
 		You slam power into the engines and break away before the Terran ship can fully close the trap.
 	</text>
 </event>
-
 <event name="SC_TERRAN_AMBUSH_ESCAPE_FAILURE">
 	<text>
 		You try to accelerate out of the kill zone, but the Terran ship anticipates your course and cuts off your escape.
@@ -1706,7 +2769,6 @@
 	<ambush target="enemy"/>
 	<ship load="SC_TERRAN_AMBUSH_SHIP" hostile="true"/>
 </event>
-
 <event name="SC_TERRAN_AMBUSH_PILOT_CHECK">
 	<text>Continue...</text>
 
@@ -1725,35 +2787,30 @@
 		<event load="SC_TERRAN_AMBUSH_PILOT_ROLL_1"/>
 	</choice>
 </event>
-
 <eventList name="SC_TERRAN_AMBUSH_PILOT_ROLL_1">
 	<event load="SC_TERRAN_AMBUSH_PILOT_SUCCESS"/>
 	<event load="SC_TERRAN_AMBUSH_PILOT_FAILURE"/>
 	<event load="SC_TERRAN_AMBUSH_PILOT_FAILURE"/>
 	<event load="SC_TERRAN_AMBUSH_PILOT_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_AMBUSH_PILOT_ROLL_2">
 	<event load="SC_TERRAN_AMBUSH_PILOT_SUCCESS"/>
 	<event load="SC_TERRAN_AMBUSH_PILOT_SUCCESS"/>
 	<event load="SC_TERRAN_AMBUSH_PILOT_FAILURE"/>
 	<event load="SC_TERRAN_AMBUSH_PILOT_FAILURE"/>
 </eventList>
-
 <eventList name="SC_TERRAN_AMBUSH_PILOT_ROLL_3">
 	<event load="SC_TERRAN_AMBUSH_PILOT_SUCCESS"/>
 	<event load="SC_TERRAN_AMBUSH_PILOT_SUCCESS"/>
 	<event load="SC_TERRAN_AMBUSH_PILOT_SUCCESS"/>
 	<event load="SC_TERRAN_AMBUSH_PILOT_FAILURE"/>
 </eventList>
-
 <event name="SC_TERRAN_AMBUSH_PILOT_SUCCESS">
 	<text>
 		Your pilot reacts instantly, rolling the ship clear of the main firing lane. The ambusher loses its perfect angle, forcing it into a more conventional engagement.
 	</text>
 	<ship load="SC_TERRAN_NON_AMBUSH_SHIP" hostile="true"/>
 </event>
-
 <event name="SC_TERRAN_AMBUSH_PILOT_FAILURE">
 	<text>
 		Your pilot tries to break away, but the Terran ship already has the vector covered. The ambush lands exactly as planned.
@@ -1761,13 +2818,337 @@
 	<ambush target="enemy"/>
 	<ship load="SC_TERRAN_AMBUSH_SHIP" hostile="true"/>
 </event>
-
 <event name="SC_TERRAN_AMBUSH_NON_AMBUSH_FIGHT">
 	<text>
 		Warned by your crew, you turn the trap against the Terran ship and force it into open combat.
 	</text>
 	<ship load="SC_TERRAN_NON_AMBUSH_SHIP" hostile="true"/>
 </event>
+
+<!--*****************************************************************************************************
+  TERRAN FACTION CLASH - CONFEDERACY VS SONS OF KORHAL
+******************************************************************************************************-->
+<event name="SC_TERRAN_CLASH_CONFED_SOK">
+    <text>A Confederate patrol and a Sons of Korhal strike group are exchanging fire at this beacon. Both formations have taken damage, but neither is willing to break off. As you approach, both sides hail you, demanding assistance.</text>
+
+    <choice>
+        <text>Side with the Confederacy against the Sons of Korhal.</text>
+        <event load="SC_TERRAN_CLASH_CONFED_SOK_SIDE_CONFED"/>
+    </choice>
+
+    <choice>
+        <text>Side with the Sons of Korhal against the Confederacy.</text>
+        <event load="SC_TERRAN_CLASH_CONFED_SOK_SIDE_SOK"/>
+    </choice>
+
+    <choice req="engines" lvl="7" hidden="true" blue="false">
+        <text>(Engines) Attempt to flee while the two groups are distracted.</text>
+        <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_ROLL_4"/>
+    </choice>
+
+    <choice req="engines" lvl="5" max_lvl="6" hidden="true" blue="false">
+        <text>(Engines) Attempt to flee while the two groups are distracted.</text>
+        <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_ROLL_3"/>
+    </choice>
+
+    <choice req="engines" lvl="3" max_lvl="4" hidden="true" blue="false">
+        <text>(Engines) Attempt to flee while the two groups are distracted.</text>
+        <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_ROLL_2"/>
+    </choice>
+
+    <choice req="engines" lvl="0" max_lvl="2" hidden="true" blue="false">
+        <text>(Engines) Attempt to flee while the two groups are distracted.</text>
+        <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_ROLL_1"/>
+    </choice>
+
+    <choice req="cloaking" lvl="1" blue="true">
+        <text>(Cloaking) Attempt to escape the battle under cloak.</text>
+        <event load="SC_TERRAN_CLASH_CONFED_SOK_CLOAK_ROLL"/>
+    </choice>
+</event>
+<event name="SC_TERRAN_CLASH_CONFED_SOK_SIDE_CONFED">
+    <text>You move alongside the Confederate formation and engage the Sons of Korhal. The Confederate ships provide supporting fire.</text>
+    <!-- MORALITY: Confederation +1, Sons of Korhal -1 -->
+    <environment type="PDS" target="enemy"/>
+    <ship load="SC_TERRAN_CLASH_SOK_SHIP" hostile="true"/>
+</event>
+<event name="SC_TERRAN_CLASH_CONFED_SOK_SIDE_SOK">
+    <text>You move alongside the Sons of Korhal and engage the Confederate ships. The Sons of Korhal provide supporting fire.</text>
+    <!-- MORALITY: Sons of Korhal +1, Confederation -1 -->
+    <environment type="PDS" target="enemy"/>
+    <ship load="SC_TERRAN_CLASH_CONFED_SHIP" hostile="true"/>
+</event>
+<eventList name="SC_TERRAN_CLASH_CONFED_SOK_FLEE_ROLL_1">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_CLASH_CONFED_SOK_FLEE_ROLL_2">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_CLASH_CONFED_SOK_FLEE_ROLL_3">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_CLASH_CONFED_SOK_FLEE_ROLL_4">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_CLASH_CONFED_SOK_CLOAK_ROLL">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_CONFED_SOK_FLEE_FAILURE"/>
+</eventList>
+<event name="SC_TERRAN_CLASH_CONFED_SOK_FLEE_FAILURE">
+    <text>You attempt to flee, but a Confederate ship breaks away from the fighting and moves to intercept you.</text>
+    <ship load="SC_TERRAN_CLASH_CONFED_SHIP" hostile="true"/>
+</event>
+
+<!--*****************************************************************************************************
+  TERRAN FACTION CLASH - CONFEDERACY VS RAIDERS
+******************************************************************************************************-->
+<event name="SC_TERRAN_CLASH_CONFED_RAIDERS">
+    <text>A Confederate patrol has intercepted a Raider group near this beacon. The Raiders are fighting to escape, and the Confederates are trying to cut them off. Both sides notice your arrival and demand your assistance.</text>
+
+    <choice>
+        <text>Side with the Confederacy against the Raiders.</text>
+        <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_SIDE_CONFED"/>
+    </choice>
+
+    <choice>
+        <text>Side with the Raiders against the Confederacy.</text>
+        <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_SIDE_RAIDERS"/>
+    </choice>
+
+    <choice req="engines" lvl="7" hidden="true" blue="false">
+        <text>(Engines) Attempt to flee while the two groups are distracted.</text>
+        <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_ROLL_4"/>
+    </choice>
+
+    <choice req="engines" lvl="5" max_lvl="6" hidden="true" blue="false">
+        <text>(Engines) Attempt to flee while the two groups are distracted.</text>
+        <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_ROLL_3"/>
+    </choice>
+
+    <choice req="engines" lvl="3" max_lvl="4" hidden="true" blue="false">
+        <text>(Engines) Attempt to flee while the two groups are distracted.</text>
+        <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_ROLL_2"/>
+    </choice>
+
+    <choice req="engines" lvl="0" max_lvl="2" hidden="true" blue="false">
+        <text>(Engines) Attempt to flee while the two groups are distracted.</text>
+        <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_ROLL_1"/>
+    </choice>
+
+    <choice req="cloaking" lvl="1" blue="true">
+        <text>(Cloaking) Attempt to escape the battle under cloak.</text>
+        <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_CLOAK_ROLL"/>
+    </choice>
+</event>
+<event name="SC_TERRAN_CLASH_CONFED_RAIDERS_SIDE_CONFED">
+    <text>You move alongside the Confederate formation and engage the Raiders. The Confederate ships provide supporting fire.</text>
+    <!-- MORALITY: Confederation +1, Raiders -1 -->
+    <environment type="PDS" target="enemy"/>
+    <ship load="SC_TERRAN_CLASH_RAIDERS_SHIP" hostile="true"/>
+</event>
+<event name="SC_TERRAN_CLASH_CONFED_RAIDERS_SIDE_RAIDERS">
+    <text>You move alongside the Raiders and engage the Confederate ships. The Raiders provide supporting fire.</text>
+    <!-- MORALITY: Raiders +1, Confederation -1 -->
+    <environment type="PDS" target="enemy"/>
+    <ship load="SC_TERRAN_CLASH_CONFED_SHIP" hostile="true"/>
+</event>
+<eventList name="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_ROLL_1">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_ROLL_2">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_ROLL_3">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_ROLL_4">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_CLASH_CONFED_RAIDERS_CLOAK_ROLL">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_FAILURE"/>
+</eventList>
+<event name="SC_TERRAN_CLASH_CONFED_RAIDERS_FLEE_FAILURE">
+    <text>You attempt to flee, but a Raider ship spots your maneuver and breaks away to attack you.</text>
+    <ship load="SC_TERRAN_CLASH_RAIDERS_SHIP" hostile="true"/>
+</event>
+
+<!--*****************************************************************************************************
+  TERRAN FACTION CLASH - SONS OF KORHAL VS RAIDERS
+******************************************************************************************************-->
+<event name="SC_TERRAN_CLASH_SOK_RAIDERS">
+    <text>A Sons of Korhal detachment and a group of Raiders are fighting over a disabled transport near this beacon. Neither group is willing to surrender the cargo, and both begin broadcasting requests for your assistance.</text>
+
+    <choice>
+        <text>Side with the Sons of Korhal against the Raiders.</text>
+        <event load="SC_TERRAN_CLASH_SOK_RAIDERS_SIDE_SOK"/>
+    </choice>
+
+    <choice>
+        <text>Side with the Raiders against the Sons of Korhal.</text>
+        <event load="SC_TERRAN_CLASH_SOK_RAIDERS_SIDE_RAIDERS"/>
+    </choice>
+
+    <choice req="engines" lvl="7" hidden="true" blue="false">
+        <text>(Engines) Attempt to flee while the two groups are distracted.</text>
+        <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_ROLL_4"/>
+    </choice>
+
+    <choice req="engines" lvl="5" max_lvl="6" hidden="true" blue="false">
+        <text>(Engines) Attempt to flee while the two groups are distracted.</text>
+        <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_ROLL_3"/>
+    </choice>
+
+    <choice req="engines" lvl="3" max_lvl="4" hidden="true" blue="false">
+        <text>(Engines) Attempt to flee while the two groups are distracted.</text>
+        <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_ROLL_2"/>
+    </choice>
+
+    <choice req="engines" lvl="0" max_lvl="2" hidden="true" blue="false">
+        <text>(Engines) Attempt to flee while the two groups are distracted.</text>
+        <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_ROLL_1"/>
+    </choice>
+
+    <choice req="cloaking" lvl="1" blue="true">
+        <text>(Cloaking) Attempt to escape the battle under cloak.</text>
+        <event load="SC_TERRAN_CLASH_SOK_RAIDERS_CLOAK_ROLL"/>
+    </choice>
+</event>
+<event name="SC_TERRAN_CLASH_SOK_RAIDERS_SIDE_SOK">
+    <text>You move alongside the Sons of Korhal and engage the Raiders. The Sons of Korhal provide supporting fire.</text>
+    <!-- MORALITY: Sons of Korhal +1, Raiders -1 -->
+    <environment type="PDS" target="enemy"/>
+    <ship load="SC_TERRAN_CLASH_RAIDERS_SHIP" hostile="true"/>
+</event>
+<event name="SC_TERRAN_CLASH_SOK_RAIDERS_SIDE_RAIDERS">
+    <text>You move alongside the Raiders and engage the Sons of Korhal. The Raiders provide supporting fire.</text>
+    <!-- MORALITY: Raiders +1, Sons of Korhal -1 -->
+    <environment type="PDS" target="enemy"/>
+    <ship load="SC_TERRAN_CLASH_SOK_SHIP" hostile="true"/>
+</event>
+<eventList name="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_ROLL_1">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_ROLL_2">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_ROLL_3">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_FAILURE"/>
+    <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_ROLL_4">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_FAILURE"/>
+</eventList>
+<eventList name="SC_TERRAN_CLASH_SOK_RAIDERS_CLOAK_ROLL">
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_FLEE_SUCCESS"/>
+    <event load="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_FAILURE"/>
+</eventList>
+<event name="SC_TERRAN_CLASH_SOK_RAIDERS_FLEE_FAILURE">
+    <text>You attempt to flee, but a Sons of Korhal ship breaks away from the fighting and blocks your escape.</text>
+    <ship load="SC_TERRAN_CLASH_SOK_SHIP" hostile="true"/>
+</event>
+<event name="SC_TERRAN_CLASH_FLEE_SUCCESS">
+    <text>You slip past the fighting ships and leave the battle before either faction can pursue you.</text>
+</event>
+
+<!--*****************************************************************************************************
+  TERRAN FACTION CLASH - CONFED SHIP (PLACEHOLDER BLUEPRINT LIST)
+******************************************************************************************************-->
+<ship name="SC_TERRAN_CLASH_CONFED_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_PATROL">
+    <destroyed>
+        <text>The Confederate ship is destroyed. You salvage what remains.</text>
+        <autoReward level="MED">standard</autoReward>
+    </destroyed>
+    <deadCrew>
+        <text>With the Confederate crew defeated, you collect what supplies remain.</text>
+        <autoReward level="HIGH">standard</autoReward>
+    </deadCrew>
+</ship>
+
+<!--*****************************************************************************************************
+  TERRAN FACTION CLASH - SOK SHIP (PLACEHOLDER BLUEPRINT LIST)
+******************************************************************************************************-->
+<ship name="SC_TERRAN_CLASH_SOK_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_NON_AMBUSH">
+    <destroyed>
+        <text>The Sons of Korhal ship is destroyed. You salvage what remains.</text>
+        <autoReward level="MED">standard</autoReward>
+    </destroyed>
+    <deadCrew>
+        <text>With the Sons of Korhal crew defeated, you collect what supplies remain.</text>
+        <autoReward level="HIGH">standard</autoReward>
+    </deadCrew>
+</ship>
+
+<!--*****************************************************************************************************
+  TERRAN FACTION CLASH - RAIDERS SHIP (PLACEHOLDER BLUEPRINT LIST)
+******************************************************************************************************-->
+<ship name="SC_TERRAN_CLASH_RAIDERS_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_SCOUT">
+    <destroyed>
+        <text>The Raider ship is destroyed. You salvage what remains.</text>
+        <autoReward level="MED">standard</autoReward>
+    </destroyed>
+    <deadCrew>
+        <text>With the Raider crew defeated, you collect what supplies remain.</text>
+        <autoReward level="HIGH">standard</autoReward>
+    </deadCrew>
+</ship>
+
 
 <!--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 					SPECIAL EVENTS
@@ -1789,7 +3170,6 @@
 <!--*****************************************************************************************************
   TERRAN ENGINEERING BAY STORE
 ******************************************************************************************************-->
-
 <event name="STOREEVENT_TERRAN_ENGINEERING">
 	<preventQuest/>
 	<beaconType id="map_icon_store_generic" global="false">
@@ -1831,7 +3211,6 @@
 <!--*****************************************************************************************************
   TERRAN BARRACKS STORE
 ******************************************************************************************************-->
-
 <event name="STOREEVENT_TERRAN_BARRACKS">
 	<preventQuest/>
 	<beaconType id="map_icon_store_generic" global="false">
@@ -1876,7 +3255,6 @@
 <!--*****************************************************************************************************
   TERRAN STARPORT STORE
 ******************************************************************************************************-->
-
 <event name="STOREEVENT_TERRAN_STARPORT">
 	<preventQuest/>
 	<beaconType id="map_icon_store_generic" global="false">
@@ -1918,7 +3296,6 @@
 <!--*****************************************************************************************************
   TERRAN FACTORY STORE
 ******************************************************************************************************-->
-
 <event name="STOREEVENT_TERRAN_FACTORY">
 	<preventQuest/>
 	<beaconType id="map_icon_store_generic" global="false">
@@ -1960,7 +3337,6 @@
 <!--*****************************************************************************************************
   TERRAN COMMAND CENTER STORE
 ******************************************************************************************************-->
-
 <event name="STOREEVENT_TERRAN_COMMAND">
 	<preventQuest/>
 	<beaconType id="map_icon_store_generic" global="false">
@@ -2002,7 +3378,6 @@
 <!--*****************************************************************************************************
   TERRAN SCIENCE FACILITY STORE
 ******************************************************************************************************-->
-
 <event name="STOREEVENT_TERRAN_SCIENCE">
 	<preventQuest/>
 	<beaconType id="map_icon_store_generic" global="false">
@@ -2044,12 +3419,9 @@
 	</choice>
 </event>
 
-<!--
-*********************************************************************************************************
+<!--*****************************************************************************************************
   TERRAN FLEET ENCOUNTER
-*********************************************************************************************************
--->
-
+******************************************************************************************************-->
 <event name="SC_TERRAN_FLEET_CHECK">
 	<text>
 		The pursuing fleet has caught up to you. A Terran identification sweep cuts through the sector as hostile ships move to intercept.

@@ -259,6 +259,18 @@
 	<name>TERRAN_SHIP_DROPSHIP</name>
 	<name>TERRAN_SHIP_DROPSHIP</name>
 </blueprintList>
+<blueprintList name="LIST_TERRAN_FUGITIVE_SHIPS">
+    <name>TERRAN_SHIP_VESSEL_A</name>
+    <name>TERRAN_SHIP_VESSEL_B</name>
+    <name>TERRAN_SHIP_VESSEL_C</name>
+    <name>TERRAN_SHIP_VESSEL_D</name>
+</blueprintList>
+<blueprintList name="LIST_TERRAN_WRAITH_SHIPS">
+    <name>TERRAN_SHIP_WRAITH_B</name>
+    <name>TERRAN_SHIP_WRAITH_C</name>
+    <name>TERRAN_SHIP_WRAITH_D</name>
+</blueprintList>
+
 </FTL>
 <!--***********************************************************************-->
 <!--********************		TERRAN SHIPS			*******************-->

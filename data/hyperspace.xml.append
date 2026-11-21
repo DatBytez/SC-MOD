@@ -27,6 +27,7 @@
 <showScrapCollectorScrap enabled="true"/>
 <multiShipFix enabled="true"/>
 <renameShipInRun enabled="true" allowButton="true"/>
+<customTextStyle enabled="true"/>
     
 
 <alternateOxygenRendering enabled="false">
