@@ -572,8 +572,8 @@
 				<duration>10.0</duration>
 				<cooldownColor r="240" g="210" b="50" />
 				<moveSpeedMultiplier>1.5</moveSpeedMultiplier>
-				<shootTimer min="450" max="525" />
-				<punchTimer min="450" max="525" />
+				<shootTimer min="550" max="625" />
+				<punchTimer min="550" max="625" />
 			</temporaryEffect>
 		</powerEffect>
 		<powerEffect load="SC_REPAIR"/>
@@ -1948,20 +1948,14 @@
 		<item>
 			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
 		</item>
-		<item>
-			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
-		</item>
         <chance>100</chance>
     </category>
 
-	<category type="SYSTEMS">
-        <customTitle>TERRAN SYSTEMS</customTitle>
-		<item>
-			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
-		</item>
-		<item>
-			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
-		</item>
+	<category type="WEAPONS">
+        <customTitle>TERRAN WEAPONS</customTitle>
+        <allowDuplicates/>
+        <item/>
+        <item/>
         <chance>75</chance>
     </category>
 
@@ -2045,9 +2039,6 @@
 		<item>
 			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
 		</item>
-		<item>
-			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
-		</item>
         <chance>100</chance>
     </category>
 
@@ -2085,9 +2076,6 @@
 
     <category type="SYSTEMS" group="1">
         <customTitle>SYSTEMS</customTitle>
-		<item>
-			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
-		</item>
 		<item>
 			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
 		</item>
@@ -2238,5 +2226,7 @@
 	<mod-append:script>data/sc_scripts/sc_drone_powerlist.lua</mod-append:script>
 
 	<!-- <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script> -->
+	<!-- <mod-append:script>data/sc_scripts/sc_rarity_test.lua</mod-append:script> -->
+
 </mod:findLike>
 </FTL>

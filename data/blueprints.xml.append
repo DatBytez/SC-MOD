@@ -2121,7 +2121,7 @@ END OF SUBSYSTEMS
 	<power>3</power>
 	<cooldown>16</cooldown>
 	<cost>65</cost>
-	<rarity>4</rarity>
+	<rarity>0</rarity>
 	<explosion>explosion_random</explosion>
 	<projectiles>
 		<projectile count="1" fake="false">missile_1</projectile>
