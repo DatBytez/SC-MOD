@@ -34,18 +34,3 @@ script.on_internal_event(Defines.InternalEvents.GENERATOR_CREATE_SHIP, function(
 
     return Defines.Chain.CONTINUE, sector, event, blueprint, ship
 end)
-
-
-
--- script.on_internal_event(Defines.InternalEvents.GENERATOR_CREATE_SHIP, function(name, sector, event, blueprint, ship)
---     local originalList = blueprint.loadDrones
-
---     for _, pair in ipairs(DRONE_LIST_PAIRS) do
---         if originalList == pair[2] then
---             blueprint.loadDrones = pair[1]
---             break
---         end
---     end
-
---     return Defines.Chain.CONTINUE, sector, event, blueprint, ship
--- end)
