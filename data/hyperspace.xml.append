@@ -2225,7 +2225,7 @@
 	<!-- Requires parsed blueprint/tag data. -->
 	<mod-append:script>data/sc_scripts/sc_drone_powerlist.lua</mod-append:script>
 
-	<!-- <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script> -->
+	<mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script>
 	<!-- <mod-append:script>data/sc_scripts/sc_rarity_test.lua</mod-append:script> -->
 
 </mod:findLike>
