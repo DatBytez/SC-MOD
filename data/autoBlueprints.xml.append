@@ -8,8 +8,8 @@
 	<name>TERRAN_SCV</name>
 	<name>TERRAN_SCV_1</name>
 	<name>TERRAN_SPIDER_1</name>
-	<name>TERRAN_SPIDER_2</name>
-	<name>TERRAN_SPIDER_3</name>
+	<!-- <name>TERRAN_SPIDER_2</name>
+	<name>TERRAN_SPIDER_3</name> -->
 	<name>TERRAN_DEFENSE_1</name>
 	<name>TERRAN_DEFENSE_2</name>
 	<name>TERRAN_DEFENSE_3</name>
@@ -25,8 +25,8 @@
 	<name>TERRAN_SCV</name>
 	<name>TERRAN_SCV_1</name>
 	<name>TERRAN_SPIDER_1</name>
-	<name>TERRAN_SPIDER_2</name>
-	<name>TERRAN_SPIDER_3</name>
+	<!-- <name>TERRAN_SPIDER_2</name>
+	<name>TERRAN_SPIDER_3</name> -->
 	<name>TERRAN_GOLIATH</name>
 </blueprintList>
 
