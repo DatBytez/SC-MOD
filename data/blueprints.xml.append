@@ -689,7 +689,7 @@ END OF SUBSYSTEMS
 		<amount>1.5</amount>
 		<count>3</count>
 	</boost>
-
+	<projectile speed="58" />
 	<cost>70</cost>
 	<rarity>2</rarity>
 	<bp>2</bp>
@@ -743,9 +743,9 @@ END OF SUBSYSTEMS
 	<fireChance>1</fireChance>
 	<breachChance>0</breachChance>
     <sc-chain stat="stunChance" value="1"/>
+	<projectile speed="58" />
 	<cost>90</cost>
 	<rarity>3</rarity>
-	<bp>2</bp>
 	<launchSounds>
 		<sound>weapon_40mm_fire</sound>
 	</launchSounds>
@@ -926,6 +926,7 @@ END OF SUBSYSTEMS
 		<amount>0</amount>
 		<count>6</count>
 	</boost>
+	<projectile speed="58" />
 	<simultaneousFire>true</simultaneousFire>
 	<cost>60</cost>
 	<rarity>1</rarity>
@@ -975,6 +976,7 @@ END OF SUBSYSTEMS
 		<count>6</count>
 	</boost>
 	<simultaneousFire>true</simultaneousFire>
+	<projectile speed="58" />
 	<cost>85</cost>
 	<rarity>3</rarity>
 	<launchSounds>
@@ -1226,7 +1228,6 @@ END OF SUBSYSTEMS
 	<damage>3</damage>
 	<sysDamage>3</sysDamage>
 	<sc-fireFill/>
-	<!--<fireChance>10</fireChance>-->
 	<missiles>1</missiles>
 	<speed>50</speed>
 	<shots>1</shots>
@@ -1556,13 +1557,12 @@ END OF SUBSYSTEMS
 	<desc id="weapon_ARTILLERY_YAMATO_LASER_desc"/>
 	<tooltip id="weapon_ARTILLERY_YAMATO_LASER_tooltip"/>
     <mv-aoe>
-		<fireChance>0.5</fireChance>
 		<sysDamage>1</sysDamage>
 		<persDamage>1</persDamage>
     </mv-aoe>
 	<damage>1</damage>
 	<ion>1</ion>
-	<fireChance>4</fireChance>
+	<fireChance>3</fireChance>
 	<explosion>terran_yamato_hit</explosion>
 	<shots>10</shots>
 	<sc-artillery-level stat="shots" value="2"/>

@@ -26,6 +26,7 @@ script.on_internal_event(Defines.InternalEvents.ACTIVATE_POWER, function(power, 
         if crew ~= power.crew
             and not crew.bDead
             and crew.iRoomId == power.powerRoom
+            and not crew:IsDrone()
             and not excludedDrones[crew:GetSpecies()]
             and ((crew.iShipId ~= power.crew.iShipId and not crew.bMindControlled)
                 or (crew.iShipId == power.crew.iShipId and crew.bMindControlled)) then

@@ -17,7 +17,7 @@ local function get_xml_heal_amount()
     local def = Hyperspace.StatBoostDefinition.savedStatBoostDefs["Heal-Crew"]
     if not def then return nil end
 
-    if def.stat == Hyperspace.CrewStat.TRUE_HEAL_AMOUNT
+    if def.stat == Hyperspace.CrewStat.ACTIVE_HEAL_AMOUNT
         and def.shipTarget == Hyperspace.StatBoostDefinition.ShipTarget.CURRENT_ROOM
         and def.boostType == Hyperspace.StatBoostDefinition.BoostType.FLAT then
         xmlHealAmount = def.amount
@@ -146,7 +146,7 @@ local function count_boosts(crew, ship)
 end
 
 script.on_internal_event(Defines.InternalEvents.CALCULATE_STAT_POST, function(crew, stat, _def, amount, value)
-    if stat ~= Hyperspace.CrewStat.TRUE_HEAL_AMOUNT then
+    if stat ~= Hyperspace.CrewStat.ACTIVE_HEAL_AMOUNT then
         return Defines.Chain.CONTINUE, amount, value
     end
 
