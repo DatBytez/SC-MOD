@@ -615,7 +615,6 @@
 
 		<!-- STATIC ABILITIES -->
 		<fireRepairMultiplier>1.4</fireRepairMultiplier>
-		<healCrewAmount>0.000001</healCrewAmount>
 
 		<passiveStatBoosts>
 			<statBoost name="healAmount" save="Heal-Crew">
@@ -664,8 +663,7 @@
 		<damageTakenMultiplier>0.67</damageTakenMultiplier>
 
 		<!-- STATIC ABILITIES -->
-		<fireRepairMultiplier>1.4</fireRepairMultiplier>\
-		<healCrewAmount>0.000001</healCrewAmount>
+		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 
 
 		<passiveStatBoosts>
@@ -726,8 +724,6 @@
 
 		<!-- STATIC ABILITIES -->
 		<fireRepairMultiplier>1.4</fireRepairMultiplier>
-		<healCrewAmount>0.000001</healCrewAmount>
-
 
 		<passiveStatBoosts>
 			<statBoost load="Heal-Crew"/>
@@ -1610,31 +1606,27 @@
 
 	<customShip name="TERRAN_SHIP_WRAITH_B">
         <crew>
-            <rock room="3"/> 
-            <rock room="6"/>
-			<!-- Not 1,5 -->
+            <!-- <terran_civilian room="4"/>  -->
+            <terran_civilian room="8"/>
         </crew>
     </customShip>
 	<customShip name="TERRAN_SHIP_WRAITH_C">
         <crew>
-            <rock room="3"/>
-            <rock room="8"/>
-			<!-- Not 2,6 -->
+            <terran_civilian room="4"/>
+            <!-- <terran_civilian room="8"/> -->
         </crew>
     </customShip>
 	<customShip name="TERRAN_SHIP_WRAITH_D">
         <crew>
-            <rock room="3"/>
-            <rock room="1"/>
-			<rock room="9"/>
-			<!-- maybe 3,4,7 -->
+            <terran_civilian room="3"/>
+            <terran_civilian room="12"/>
+			<!-- <terran_civilian room="8"/> -->
         </crew>
     </customShip>
 	<customShip name="TERRAN_SHIP_VALKYRIE_B">
         <crew>
-            <rock room="1"/>
-            <rock room="8"/>
-			<!-- maybe 1,5 -->
+            <!-- <terran_civilian room="1"/> -->
+            <terran_civilian room="9"/>
         </crew>
     </customShip>
 </ships>
