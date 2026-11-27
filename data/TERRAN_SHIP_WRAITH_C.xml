@@ -9,8 +9,9 @@
 <weaponMounts>
 	<mount x="236" y="59" rotate="false" mirror="false" gib="-1" slide="up" />
 	<mount x="131" y="269" rotate="false" mirror="false" gib="-1" slide="up" />
-	<mount x="96" y="269" rotate="false" mirror="true" gib="-1" slide="up" />
 	<mount x="201" y="59" rotate="false" mirror="true" gib="-1" slide="up" />
+	<mount x="201" y="209" rotate="false" mirror="false" gib="-1" slide="up" />
+	<mount x="96" y="269" rotate="false" mirror="true" gib="-1" slide="up" />
 </weaponMounts>
 <explosion />
 

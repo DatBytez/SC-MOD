@@ -1618,8 +1618,10 @@
     </customShip>
 	<customShip name="TERRAN_SHIP_WRAITH_D">
         <crew>
-            <terran_civilian room="3"/>
-            <terran_civilian room="12"/>
+			<terran_civilian room="10"/>
+            <terran_civilian room="7"/>
+            <!-- <terran_civilian room="3"/>
+            <terran_civilian room="12"/> -->
 			<!-- <terran_civilian room="8"/> -->
         </crew>
     </customShip>
