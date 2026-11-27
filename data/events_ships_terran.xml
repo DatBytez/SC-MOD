@@ -21,7 +21,7 @@
 
 	<escape chance="0.65" min="1" max="5">
 		<text>
-			The Terran patrol ship has taken serious damage. Its engines flare as it attempts to disengage and jump away.
+			The patrol ship has taken serious damage. Its engines flare as it attempts to disengage and jump away.
 		</text>
 	</escape>
 
@@ -31,7 +31,7 @@
 
 	<surrender chance="0.35" min="1" max="3">
 		<text>
-			The Terran patrol ship is barely holding together. They transmit a surrender offer, promising supplies if you let them retreat.
+			The patrol ship is barely holding together. They transmit a surrender offer, promising supplies if you let them retreat.
 		</text>
 
 		<choice>
@@ -55,7 +55,7 @@
 	</surrender>
 
 	<destroyed>
-		<text>The Terran patrol ship breaks apart under your final volley. You salvage what remains.</text>
+		<text>The patrol ship breaks apart under your final volley. You salvage what remains.</text>
 		<autoReward level="MED">standard</autoReward>
 	</destroyed>
 
@@ -73,7 +73,7 @@
 -->
 <ship name="SC_TERRAN_SCOUT_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_SCOUT">
 	<escape min="2" max="999">
-		<text>The Terran scout throws everything into its engines and begins charging its FTL drive.</text>
+		<text>The scout throws everything into its engines and begins charging its FTL drive.</text>
 	</escape>
 
 	<gotaway load="SC_TERRAN_SCOUT_GOTAWAY"/>
@@ -102,7 +102,7 @@
 	</surrender>
 
 	<destroyed>
-		<text>The Terran scout breaks apart before it can escape. You collect what little salvage remains.</text>
+		<text>The scout breaks apart before it can escape. You collect what little salvage remains.</text>
 		<autoReward level="LOW">standard</autoReward>
 	</destroyed>
 
@@ -196,7 +196,7 @@
 	</escape>
 
 	<destroyed>
-		<text>The Terran ambusher breaks apart under your final volley. You salvage the remains of the attack ship.</text>
+		<text>The ambusher breaks apart under your final volley. You salvage the remains of the attack ship.</text>
 		<autoReward level="HIGH">standard</autoReward>
 	</destroyed>
 
@@ -209,12 +209,12 @@
 
 <ship name="SC_TERRAN_NON_AMBUSH_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_NON_AMBUSH">
 	<destroyed>
-		<text>The Terran ship is destroyed. You salvage what remains.</text>
+		<text>The ship is destroyed. You salvage what remains.</text>
 		<autoReward level="MED">standard</autoReward>
 	</destroyed>
 
 	<deadCrew>
-		<text>With the Terran crew defeated, you search the ship and secure its supplies.</text>
+		<text>With the crew defeated, you search the ship and secure its supplies.</text>
 		<autoReward level="HIGH">standard</autoReward>
 	</deadCrew>
 </ship>
@@ -331,7 +331,7 @@
 
 <ship name="SC_TERRAN_FLEET_BATTLECRUISER_SHIP" auto_blueprint="TERRAN_SHIP_BATTLECRUISER_A">
 	<destroyed>
-		<text>The Terran battlecruiser breaks apart under your fire, but the pursuing fleet is still dangerously close.</text>
+		<text>The battlecruiser breaks apart under your fire, but the pursuing fleet is still dangerously close.</text>
 		<item_modify>
 			<item type="fuel" min="1" max="1"/>
 		</item_modify>
