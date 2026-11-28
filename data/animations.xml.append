@@ -216,6 +216,23 @@
 		<mountPoint x="9" y="40" />
 		<chargeImage>weapons/terran_missile_3_glow.png</chargeImage>
 	</weaponAnim>
+
+	<animSheet name="terran_missile_charge_charges" w="90" h="46" fw="30" fh="46">weapons/terran_missile_charge_charges.png</animSheet>
+	<anim name="terran_missile_charge_charges">
+		<sheet>terran_missile_charge_charges</sheet>
+		<desc length="3" x="0" y="0"/>
+		<time>1.0</time>
+	</anim>
+	<animSheet name="terran_missile_charge" w="240" h="46" fw="30" fh="46">weapons/terran_missile_charge.png</animSheet>
+	<weaponAnim name="terran_missile_charge">
+		<sheet>terran_missile_charge</sheet>
+		<desc length="8" x="0" y="0"/>
+		<chargedFrame>4</chargedFrame>
+		<fireFrame>5</fireFrame>
+		<firePoint  x="18" y="20" charge="0"/>
+		<mountPoint x="7" y="35"/>
+		<boost>terran_missile_charge_charges</boost>
+	</weaponAnim>
 	
 	<animSheet name="terran_missile_emp" w="78" h="62" fw="26" fh="62">weapons/terran_missile_emp.png</animSheet>
 	<weaponAnim name="terran_missile_emp">
@@ -239,6 +256,17 @@
 		<chargeImage>weapons/terran_irradiate_glow.png</chargeImage>
 	</weaponAnim>
 	
+	<animSheet name="terran_irradiate_lite" w="240" h="61" fw="30" fh="61">weapons/terran_irradiate_lite.png</animSheet>
+	<weaponAnim name="terran_irradiate_lite">
+		<sheet>terran_irradiate_lite</sheet>
+		<desc length="8" x="0" y="0" />
+		<chargedFrame>1</chargedFrame>
+		<fireFrame>2</fireFrame>
+		<firePoint x="18" y="19" />
+		<mountPoint x="3" y="55" />
+		<chargeImage>weapons/terran_irradiate_lite_glow.png</chargeImage>
+	</weaponAnim>
+
 <!-- Projectiles -->
 	
 <animSheet name="terran_yamato" w="101" h="29" fw="101" fh="29">weapons/terran_yamato_projectile.png</animSheet>
