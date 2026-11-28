@@ -115,6 +115,7 @@
 <text name="weapon_ARTILLERY_YAMATO_LASER_title">Yamato Cannon</text>
 <text name="weapon_ARTILLERY_YAMATO_LASER_short">Yamato Cannon</text>
 <text name="weapon_ARTILLERY_YAMATO_LASER_desc">A powerful weapon that focuses a nuclear explosion into a concentrated energy barrage using magnetic fields. Artillery upgrades increase the volume of the blast. Operating below full power increases the weapon's charge time.</text>
+<text name="weapon_ARTILLERY_YAMATO_LASER_tooltip">Artillery upgrades increase the volume of the blast. Operating below full power increases the weapon's charge time.</text>
 
 <!-- EMP MISSILES -->
 <text name="weapon_EMP_MISSILE_title">EMP Missile</text>
@@ -190,6 +191,7 @@
 <text name="drone_TERRAN_POD_NAME">Boarding Pod</text>
 <text name="drone_TERRAN_POD_SHORT">Boarding Pod</text>
 <text name="drone_TERRAN_POD_DESC">A transport capsule designed to deliver boarding parties directly to enemy vessels. Launches crew stationed in Drone Control toward enemy compartments.</text>
+
 <!-- TERRAN CREW -->
 <text name="crew_TERRAN_MARINE_NAME">Marine</text>
 <text name="crew_TERRAN_MARINE_SHORT">Marine</text>

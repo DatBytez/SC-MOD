@@ -1525,7 +1525,7 @@ END OF SUBSYSTEMS
 	<title id="weapon_ARTILLERY_YAMATO_LASER_title"/>
 	<short id="weapon_ARTILLERY_YAMATO_LASER_short"/>
 	<desc id="weapon_ARTILLERY_YAMATO_LASER_desc"/>
-	<tooltip id="tooltip_sc_unused"/>
+	<tooltip id="weapon_ARTILLERY_YAMATO_LASER_tooltip"/>
     <mv-aoe>
 		<sysDamage>1</sysDamage>
 		<persDamage>1</persDamage>
