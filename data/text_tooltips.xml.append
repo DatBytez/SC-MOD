@@ -7,21 +7,21 @@
 	<text name="stat_fire_fill">Lights all tiles on fire in any room hit</text>
 	<text name="stat_breach_fill">Creates a breach on all tiles in any room hit</text>
 
-		<!-- SC CHAINSTEP WEAPONS -->
-	<text name="stat_sc_chainstep_header">CHAINSTEP:</text>
-	<text name="stat_sc_chainstep_threshold">Minimum fire time: \1 sec</text>
-	<text name="stat_sc_chainstep_interval">Time per step: \1 sec</text>
-	<text name="stat_sc_chainstep_max">Maximum steps: \1</text>
-	<text name="stat_sc_chainstep_radius">Targeting radius per step: \1</text>
-
-	<!-- SC HALO WEAPONS -->
-	<text name="desc_sc_halo">HALO: Each damaging missile is accompanied by a decoy missile that can distract enemy defenses.</text>
-	<text name="stat_sc_halo_header">HALO:</text>
-	<text name="stat_sc_halo_decoys">Fires additional non-damaging decoy missiles with increased spread.</text>
+	<!-- SC WEAPON SCALING -->
+	<text name="stat_sc_charge_levels">Charges: \1</text>
+	<text name="stat_sc_chainstep_max">Chainsteps: \1</text>
+	<text name="stat_sc_accuracy_range">Accuracy Modifier: \1% to \2%</text>
+	<text name="stat_sc_breach_range">Breach Chance: \1 - \2%</text>
+	<text name="stat_sc_chain_levels">Chains: \1</text>
+	<text name="stat_sc_stun_range">Stun Chance: \1 - \2%</text>
 
 	<!-- SC LIVE WEAPON DISPLAY -->
+	<text name="render_sc_charge_level_radius">Charge \1/\2 | R: \3</text>
 	<text name="render_sc_halo_step_radius">Step \1/\2 | R: \3</text>
+	<text name="render_sc_chain_level_radius">Chain \1/\2 | R: \3</text>
 
 	<!-- SC WEAPON TIPS -->
+	<text name="tip_sc_charge">Tip: Additional charges increase the number of shots fired and modify the properties of every shot in the volley.</text>
 	<text name="tip_sc_chainstep">Tip: Chainstep weapons can fire before reaching full charge. Waiting longer changes the weapon's properties with each additional charge step.</text>
+	<text name="tip_sc_chain">Tip: Chain weapons improve or alter their properties with successive volleys. Chain levels reset when the weapon loses power.</text>
 </FTL>

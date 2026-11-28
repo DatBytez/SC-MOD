@@ -541,9 +541,6 @@ END OF SUBSYSTEMS
 		<sound>weapon_25mm_fire1</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<!--<sound>weapon_laser_hit1</sound>
-		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -592,9 +589,6 @@ END OF SUBSYSTEMS
 		<sound>weapon_25mm_fire1</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<!--<sound>weapon_laser_hit1</sound>
-		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -643,9 +637,6 @@ END OF SUBSYSTEMS
 		<sound>weapon_25mm_fire1</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<!--<sound>weapon_laser_hit1</sound>
-		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -697,9 +688,6 @@ END OF SUBSYSTEMS
 		<sound>weapon_40mm_fire</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<!--<sound>weapon_laser_hit1</sound>
-		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -750,9 +738,6 @@ END OF SUBSYSTEMS
 		<sound>weapon_40mm_fire</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<!--<sound>weapon_laser_hit1</sound>
-		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -775,11 +760,11 @@ END OF SUBSYSTEMS
 <FTL>
 <weaponBlueprint name="TERRAN_LASER_BATTERY_1"> 
 	<type>LASER</type>
+	<tip>tip_sc_charge</tip>
 	<title id="weapon_TERRAN_LASER_BATTERY_1_title"/>
 	<short id="weapon_TERRAN_LASER_BATTERY_1_short"/>
-	<tip>tip_laser</tip>
-	<desc id="weapon_TERRAN_LASER_BATTERY_1_desc"/>
-	<tooltip id="weapon_TERRAN_LASER_BATTERY_1_tooltip"/>
+	<desc id="weapon_TERRAN_LASER_BATTERY_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<damage>1</damage>	
 	<shots>1</shots>
 	<power>1</power>
@@ -798,9 +783,6 @@ END OF SUBSYSTEMS
 		<sound>weapon_burst_fire</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<!--<sound>weapon_laser_hit1</sound>
-		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -818,11 +800,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="TERRAN_LASER_BATTERY_2">
 	<type>LASER</type>
+	<tip>tip_sc_charge</tip>
 	<title id="weapon_TERRAN_LASER_BATTERY_2_title"/>
 	<short id="weapon_TERRAN_LASER_BATTERY_2_short"/>
-	<tip>tip_laser</tip>
-	<desc id="weapon_TERRAN_LASER_BATTERY_2_desc"/>
-	<tooltip id="weapon_TERRAN_LASER_BATTERY_2_tooltip"/>
+	<desc id="weapon_TERRAN_LASER_BATTERY_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<damage>1</damage>
 	<shots>1</shots>
 	<chargeLevels>3</chargeLevels>	
@@ -841,9 +823,6 @@ END OF SUBSYSTEMS
 		<sound>weapon_burst_fire</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<!--<sound>weapon_laser_hit1</sound>
-		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -861,11 +840,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="TERRAN_LASER_BATTERY_3">
 	<type>LASER</type>
+	<tip>tip_sc_charge</tip>
 	<title id="weapon_TERRAN_LASER_BATTERY_3_title"/>
 	<short id="weapon_TERRAN_LASER_BATTERY_3_short"/>
-	<tip>tip_laser</tip>
-	<desc id="weapon_TERRAN_LASER_BATTERY_3_desc"/>
-	<tooltip id="weapon_TERRAN_LASER_BATTERY_3_tooltip"/>
+	<desc id="weapon_TERRAN_LASER_BATTERY_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<damage>1</damage>
 	<shots>1</shots>
 	<chargeLevels>4</chargeLevels>
@@ -884,9 +863,6 @@ END OF SUBSYSTEMS
 		<sound>weapon_burst_fire</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<!--<sound>weapon_laser_hit1</sound>
-		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -904,11 +880,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="TERRAN_LASER_BATTERY_HEAVY_1">
 	<type>LASER</type>
-	<tip>tip_laser</tip>
+	<tip>tip_sc_chainstep</tip>
 	<title id="weapon_TERRAN_LASER_BATTERY_HEAVY_1_title"/>
 	<short id="weapon_TERRAN_LASER_BATTERY_HEAVY_1_short"/>
-	<desc id="weapon_TERRAN_LASER_BATTERY_HEAVY_1_desc"/>
-	<tooltip id="weapon_TERRAN_LASER_BATTERY_HEAVY_1_tooltip"/>
+	<desc id="weapon_TERRAN_LASER_BATTERY_HEAVY_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<damage>2</damage>
 	<shots>1</shots>
 	<power>2</power>
@@ -934,9 +910,6 @@ END OF SUBSYSTEMS
 		<sound>weapon_burst_fire</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<!--<sound>weapon_laser_hit1</sound>
-		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
@@ -954,11 +927,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="TERRAN_LASER_BATTERY_HEAVY_2">
 	<type>LASER</type>
-	<tip>tip_laser</tip>
+	<tip>tip_sc_chainstep</tip>
 	<title id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_title"/>
 	<short id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_short"/>
 	<desc id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_desc"/>
-	<tooltip id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_tooltip"/>
+	<tooltip id="weapon_TERRAN_LASER_BATTERY_HEAVY_tooltip"/>
 	<damage>2</damage>
 	<shots>2</shots>
 	<power>2</power>	
@@ -983,9 +956,6 @@ END OF SUBSYSTEMS
 		<sound>weapon_burst_fire</sound>
 	</launchSounds>
 	<hitShipSounds>
-		<!--<sound>weapon_laser_hit1</sound>
-		<sound>weapon_laser_hit2</sound>
-		<sound>weapon_laser_hit3</sound>-->
 	</hitShipSounds>
 	<hitShieldSounds>
 		<sound>hitShield1</sound>
