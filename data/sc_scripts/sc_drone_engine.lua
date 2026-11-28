@@ -14,6 +14,7 @@ local ENGINE_Y_OFFSET = 31
 local ENGINE_SCALE = 1.0
 local ENGINE_MIRROR = false
 local ENGINE_FLIP_VERTICAL = true
+local HACKING_DRONE_TYPE = 6
 
 local droneEngineImages = {}
 local enginePrimitives = {}
@@ -54,6 +55,7 @@ script.on_render_event(Defines.RenderEvents.SHIP_ENGINES, function() end, functi
             and spacedrone.deployed
             and spacedrone.powered
             and not spacedrone.bDead
+            and spacedrone.type ~= HACKING_DRONE_TYPE
             and string.upper(spacedrone.blueprint.typeName or "") ~= "BOARDER" then
 
             local engineImage = droneEngineImages[spacedrone.blueprint.name]

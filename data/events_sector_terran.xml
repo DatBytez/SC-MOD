@@ -3136,7 +3136,7 @@
 ******************************************************************************************************-->
 <event name="STOREEVENT_TERRAN_ENGINEERING">
 	<preventQuest/>
-	<beaconType id="map_icon_store_generic" global="false">
+	<beaconType id="map_icon_store_terran" global="false">
 		<color r="215" g="255" b="200" a="1"/>
 	</beaconType>
 
@@ -3171,7 +3171,7 @@
 ******************************************************************************************************-->
 <event name="STOREEVENT_TERRAN_BARRACKS">
 	<preventQuest/>
-	<beaconType id="map_icon_store_generic" global="false">
+	<beaconType id="map_icon_store_terran" global="false">
 		<color r="215" g="255" b="200" a="1"/>
 	</beaconType>
 
@@ -3207,7 +3207,7 @@
 ******************************************************************************************************-->
 <event name="STOREEVENT_TERRAN_STARPORT">
 	<preventQuest/>
-	<beaconType id="map_icon_store_generic" global="false">
+	<beaconType id="map_icon_store_terran" global="false">
 		<color r="215" g="255" b="200" a="1"/>
 	</beaconType>
 
@@ -3242,7 +3242,7 @@
 ******************************************************************************************************-->
 <event name="STOREEVENT_TERRAN_FACTORY">
 	<preventQuest/>
-	<beaconType id="map_icon_store_generic" global="false">
+	<beaconType id="map_icon_store_terran" global="false">
 		<color r="215" g="255" b="200" a="1"/>
 	</beaconType>
 
@@ -3277,7 +3277,7 @@
 ******************************************************************************************************-->
 <event name="STOREEVENT_TERRAN_COMMAND">
 	<preventQuest/>
-	<beaconType id="map_icon_store_generic" global="false">
+	<beaconType id="map_icon_store_terran" global="false">
 		<color r="215" g="255" b="200" a="1"/>
 	</beaconType>
 
@@ -3312,7 +3312,7 @@
 ******************************************************************************************************-->
 <event name="STOREEVENT_TERRAN_SCIENCE">
 	<preventQuest/>
-	<beaconType id="map_icon_store_generic" global="false">
+	<beaconType id="map_icon_store_terran" global="false">
 		<color r="215" g="255" b="200" a="1"/>
 	</beaconType>
 

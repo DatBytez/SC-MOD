@@ -202,7 +202,8 @@
 		<chargedFrame>1</chargedFrame>
 		<fireFrame>2</fireFrame>
 		<firePoint x="16" y="15" />
-		<mountPoint x="9" y="40" />
+		<!-- <mountPoint x="9" y="40" /> -->
+		<mountPoint x="3" y="20" />
 		<chargeImage>weapons/terran_missile_2_glow.png</chargeImage>
 	</weaponAnim>
 
@@ -241,7 +242,7 @@
 		<chargedFrame>1</chargedFrame>
 		<fireFrame>2</fireFrame>
 		<firePoint x="16" y="15" />
-		<mountPoint x="9" y="40" /> <!-- x was 3 -->
+		<mountPoint x="9" y="20" /> <!-- x was 3 -->
 		<chargeImage>weapons/terran_missile_3_glow.png</chargeImage>
 	</weaponAnim>
 

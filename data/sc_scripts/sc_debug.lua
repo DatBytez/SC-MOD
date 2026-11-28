@@ -1,255 +1,79 @@
+
 --[[
-DESCRIPTION: Displays enemy Boarding Pod AI selection and movement diagnostics.
-        - Shows each enemy crew member's teleport eligibility and Piloting exclusion.
-        - Shows each crew member's current manning system and active manning state.
-        - Shows selected crew's NO_AI state, movement destination, and order results.
-        - Collects text outside the render callback to avoid userdata errors during drawing.
-DEPENDENCIES: sc_helpers.lua, sc_drone_pod_ai.lua
+DESCRIPTION: Shows the weapon and drone lists before and after Cudgel runs.
+        - Displays the current enemy ship's equipped drone blueprints and drone system power.
+        - Checks eligible drones after generation for all four equipment flag values.
+        - Keeps the last result visible on screen.
+DEPENDENCIES: Hyperspace, load before sc_cudgel.lua
 ]]
 
-local PILOT_SYSTEM_ID = mods.sc.helpers.system_id_from_name("pilot")
+local message = "[SC Weapon Swap] Waiting for ship generation"
+local droneSwapMessage = "[SC Drone Swap] Waiting for ship generation"
+local droneMessage = "[SC Drones] Waiting for enemy ship"
+local dronePowerMessage = "[SC Drone Power] Waiting for enemy ship"
+local eligibleMessage = "[SC Drone Eligible] Waiting for ship generation"
+local originalList = nil
+local originalDrones = nil
 
-local TEXT_X = 20
-local TEXT_Y = 175
-local LINE_HEIGHT = 15
-local FONT = 10
-local MAX_CREW_LINES = 12
-local MAX_EVENT_LINES = 5
+script.on_internal_event(Defines.InternalEvents.GENERATOR_CREATE_SHIP, function(name, sector, event, blueprint, ship)
+    originalList = blueprint and blueprint.loadWeapons or "(nil)"
+    originalDrones = blueprint and blueprint.loadDrones or "(nil)"
+    message = "[SC Weapon Swap] " .. tostring(name) .. ": " .. tostring(originalList) .. " -> (waiting for POST)"
+    droneSwapMessage = "[SC Drone Swap] " .. tostring(originalDrones) .. " -> (waiting for POST)"
 
-local displayLines = {
-    "TERRAN BOARDING POD AI DIAGNOSTICS",
-    "Waiting for enemy ship"
-}
+    return Defines.Chain.CONTINUE, sector, event, blueprint, ship
+end)
 
-local function yesno(value)
-    return value and "Y" or "N"
-end
+script.on_internal_event(Defines.InternalEvents.GENERATOR_CREATE_SHIP_POST, function(name, sector, event, blueprint, ship)
+    local finalList = blueprint and blueprint.loadWeapons or "(nil)"
+    local finalDrones = blueprint and blueprint.loadDrones or "(nil)"
+    message = "[SC Weapon Swap] " .. tostring(name) .. ": " .. tostring(originalList) .. " -> " .. tostring(finalList)
+    droneSwapMessage = "[SC Drone Swap] " .. tostring(originalDrones) .. " -> " .. tostring(finalDrones)
 
-local function safe_read(callback, fallback)
-    local ok, result = pcall(callback)
-    if not ok then return fallback end
-    return result
-end
-
-local function name_of(crew)
-    return tostring(safe_read(function()
-        return crew:GetName()
-    end, "?"))
-end
-
-local function room_goal(crew)
-    return safe_read(function()
-        return crew.finalGoal.roomId
-    end, -1)
-end
-
-local function no_ai(crew)
-    local ok, _, value = pcall(function()
-        return crew.extend:CalculateStat(Hyperspace.CrewStat.NO_AI)
-    end)
-
-    if not ok then return "ERR" end
-    return yesno(value)
-end
-
-local function build_snapshot(ship)
-    local lines = {"TERRAN BOARDING POD AI DIAGNOSTICS"}
-    local function add(message)
-        lines[#lines + 1] = message
+    if blueprint and ship then
+        local counts = {}
+        for flags = 0, 3 do
+            local ok, candidates = pcall(Hyperspace.ShipGenerator.GetPossibleDroneList, ship, finalDrones, 0, flags, false)
+            counts[#counts + 1] = ok and tostring(candidates:size()) or "ERR"
+        end
+        eligibleMessage = "[SC Drone Eligible] flags 0/1/2/3: " .. table.concat(counts, " / ")
+    else
+        eligibleMessage = "[SC Drone Eligible] No generated ship"
     end
 
-    local state = mods.sc and mods.sc.dronePodAI
+    return Defines.Chain.CONTINUE
+end)
 
-    if not state then
-        add("sc_drone_pod_ai.lua not loaded")
-        return lines
-    end
+script.on_render_event(Defines.RenderEvents.MOUSE_CONTROL, function()
+    local enemy = Hyperspace.ships.enemy
+    if enemy then
+        dronePowerMessage = "[SC Drone Power] " .. (enemy:HasSystem(4) and tostring(enemy:GetSystemPowerMax(4)) or "(no system)")
 
-    add("Status: " .. tostring(state.state or "Waiting"))
+        local drones = enemy:GetDroneList()
+        local droneNames = {}
 
-    add(string.format(
-        "Tick=%s Drone room=%s Slots=%s Selected=%d",
-        tostring(state.tick or 0),
-        tostring(state.roomId or "-"),
-        tostring(state.capacity or "-"),
-        #(state.rows or {})
-    ))
-
-    add(string.format(
-        "Eligible=%s Boardable=%s Required=%s Ready=%s",
-        tostring(state.eligibleCrew or 0),
-        tostring(state.availableCrew or 0),
-        tostring(state.minimumCrew or 0),
-        tostring(state.readyCrew or 0)
-    ))
-
-    if not ship then
-        add("No enemy ship")
-        return lines
-    end
-
-    local pilotRoom = safe_read(function()
-        return ship:GetSystemRoom(PILOT_SYSTEM_ID)
-    end, -1)
-
-    add("P=room/goal protected  Man=system/active  *=selected")
-    add("Crew: current/goal T P AI D/X/O")
-
-    local crewList = ship.vCrewList
-    local limit = math.min(crewList:size(), MAX_CREW_LINES)
-    local records = state.rows or {}
-
-    for i = 0, limit - 1 do
-        local crew = crewList[i]
-        local row
-
-        for _, record in ipairs(records) do
-            if record.crew == crew then
-                row = record
-                break
+        for i = 0, drones:size() - 1 do
+            local drone = drones[i]
+            if drone and drone.blueprint then
+                droneNames[#droneNames + 1] = drone.blueprint.name
             end
         end
 
-        local room = safe_read(function()
-            return crew.iRoomId
-        end, -1)
-
-        local goal = room_goal(crew)
-
-        local canTeleport = safe_read(function()
-            return crew:CanTeleport()
-        end, false)
-
-        local protected = room == pilotRoom
-            or goal == pilotRoom
-
-        local owner = safe_read(function()
-            return crew.iShipId
-        end, -1)
-
-        local currentShip = safe_read(function()
-            return crew.currentShipId
-        end, -1)
-
-        local manningId = safe_read(function()
-            return crew.iManningId
-        end, "ERR")
-
-        local activeManning = safe_read(function()
-            return crew.bActiveManning
-        end, false)
-
-        local flags = string.format(
-            "D%s X%s O%s",
-            yesno(safe_read(function()
-                return crew:IsDrone()
-            end, true)),
-            yesno(safe_read(function()
-                return crew.bDead
-            end, true)),
-            yesno(safe_read(function()
-                return crew.bOutOfGame
-            end, true))
-        )
-
-        add(string.format(
-            "%s%s %s/%s T%s P%s AI%s %s (%s/%s)",
-            row and "*" or " ",
-            name_of(crew),
-            tostring(room),
-            tostring(goal),
-            yesno(canTeleport),
-            yesno(protected),
-            no_ai(crew),
-            flags,
-            tostring(owner),
-            tostring(currentShip)
-        ))
-
-        add(string.format(
-            "  Man=%s/%s",
-            tostring(manningId),
-            yesno(activeManning)
-        ))
-
-        if row then
-            add(string.format(
-                "  move OK=%d FAIL=%d last=%s boost=%s goals=%d arrived=%s",
-                row.accepted or 0,
-                row.rejected or 0,
-                tostring(row.lastOrder),
-                tostring(row.boost),
-                row.goalChanges or 0,
-                yesno(row.arrived)
-            ))
-        end
+        droneMessage = "[SC Drones] " .. (#droneNames > 0 and table.concat(droneNames, ", ") or "(none)")
     end
 
-    if crewList:size() > limit then
-        add(string.format(
-            "... %d additional crew",
-            crewList:size() - limit
-        ))
-    end
+    local x, y = 16, 32
+    local width = math.max(Graphics.freetype.easy_measureWidth(13, message), Graphics.freetype.easy_measureWidth(13, droneSwapMessage), Graphics.freetype.easy_measureWidth(13, dronePowerMessage), Graphics.freetype.easy_measureWidth(13, droneMessage), Graphics.freetype.easy_measureWidth(13, eligibleMessage))
+    local oldColor = Graphics.CSurface.GL_GetColor()
 
-    add("Recent events:")
+    Graphics.CSurface.GL_DrawRect(x - 6, y - 17, width + 12, 106, Graphics.GL_Color(0, 0, 0, 0.85))
+    Graphics.CSurface.GL_SetColor(Graphics.GL_Color(1, 1, 1, 1))
+    Graphics.freetype.easy_print(13, x, y, message)
+    Graphics.freetype.easy_print(13, x, y + 20, droneSwapMessage)
+    Graphics.freetype.easy_print(13, x, y + 40, dronePowerMessage)
+    Graphics.freetype.easy_print(13, x, y + 60, droneMessage)
+    Graphics.freetype.easy_print(13, x, y + 80, eligibleMessage)
+    Graphics.CSurface.GL_SetColor(oldColor)
 
-    for i = 1, math.min(
-        #(state.events or {}),
-        MAX_EVENT_LINES
-    ) do
-        add(tostring(state.events[i]))
-    end
-
-    return lines
-end
-
-script.on_internal_event(
-    Defines.InternalEvents.SHIP_LOOP,
-    function(ship)
-        if ship.iShipId ~= 1 then return end
-
-        local ok, lines = pcall(build_snapshot, ship)
-
-        if ok then
-            displayLines = lines
-        else
-            displayLines = {
-                "TERRAN BOARDING POD AI DIAGNOSTICS",
-                "Snapshot error: "
-                    .. tostring(lines):sub(1, 120)
-            }
-        end
-    end
-)
-
-local function draw_panel()
-    if not Hyperspace.App
-        or not Hyperspace.App.world
-        or not Hyperspace.App.world.bStartedGame then
-        return
-    end
-
-    Graphics.CSurface.GL_PushMatrix()
-
-    pcall(function()
-        Graphics.CSurface.GL_LoadIdentity()
-
-        for i, line in ipairs(displayLines) do
-            Graphics.freetype.easy_print(
-                FONT,
-                TEXT_X,
-                TEXT_Y + (i - 1) * LINE_HEIGHT,
-                line
-            )
-        end
-    end)
-
-    Graphics.CSurface.GL_PopMatrix()
-end
-
-script.on_render_event(
-    Defines.RenderEvents.MOUSE_CONTROL,
-    draw_panel,
-    function() end
-)
+    return Defines.Chain.CONTINUE
+end, function() end)

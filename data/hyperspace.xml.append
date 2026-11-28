@@ -28,6 +28,7 @@
 <multiShipFix enabled="true"/>
 <renameShipInRun enabled="true" allowButton="true"/>
 <customTextStyle enabled="true"/>
+<shipGenerators/>
     
 
 <alternateOxygenRendering enabled="false">
@@ -572,8 +573,8 @@
 				<duration>10.0</duration>
 				<cooldownColor r="240" g="210" b="50" />
 				<moveSpeedMultiplier>1.5</moveSpeedMultiplier>
-				<shootTimer min="450" max="525" />
-				<punchTimer min="450" max="525" />
+				<shootTimer min="550" max="625" />
+				<punchTimer min="550" max="625" />
 			</temporaryEffect>
 		</powerEffect>
 		<powerEffect load="SC_REPAIR"/>
@@ -613,10 +614,10 @@
 		<damageTakenMultiplier>0.67</damageTakenMultiplier>
 
 		<!-- STATIC ABILITIES -->
-		 <fireRepairMultiplier>1.4</fireRepairMultiplier>
+		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 
 		<passiveStatBoosts>
-			<statBoost name="trueHealAmount" save="Heal-Crew">
+			<statBoost name="healAmount" save="Heal-Crew">
 				<boostType>FLAT</boostType>
 				<amount>1.5</amount>
 				<shipTarget>CURRENT_ROOM</shipTarget>
@@ -662,7 +663,8 @@
 		<damageTakenMultiplier>0.67</damageTakenMultiplier>
 
 		<!-- STATIC ABILITIES -->
-		 <fireRepairMultiplier>1.4</fireRepairMultiplier>
+		<fireRepairMultiplier>1.4</fireRepairMultiplier>
+
 
 		<passiveStatBoosts>
 			<statBoost load="Heal-Crew"/>
@@ -721,7 +723,7 @@
 		<damageTakenMultiplier>0.67</damageTakenMultiplier>
 
 		<!-- STATIC ABILITIES -->
-		 <fireRepairMultiplier>1.4</fireRepairMultiplier>
+		<fireRepairMultiplier>1.4</fireRepairMultiplier>
 
 		<passiveStatBoosts>
 			<statBoost load="Heal-Crew"/>
@@ -1601,6 +1603,34 @@
 		<empty/>
 		<empty/>
 	</shipOrder>
+
+	<customShip name="TERRAN_SHIP_WRAITH_B">
+        <crew>
+            <!-- <terran_civilian room="4"/>  -->
+            <terran_civilian room="8"/>
+        </crew>
+    </customShip>
+	<customShip name="TERRAN_SHIP_WRAITH_C">
+        <crew>
+            <terran_civilian room="4"/>
+            <!-- <terran_civilian room="8"/> -->
+        </crew>
+    </customShip>
+	<customShip name="TERRAN_SHIP_WRAITH_D">
+        <crew>
+			<terran_civilian room="10"/>
+            <terran_civilian room="7"/>
+            <!-- <terran_civilian room="3"/>
+            <terran_civilian room="12"/> -->
+			<!-- <terran_civilian room="8"/> -->
+        </crew>
+    </customShip>
+	<customShip name="TERRAN_SHIP_VALKYRIE_B">
+        <crew>
+            <!-- <terran_civilian room="1"/> -->
+            <terran_civilian room="9"/>
+        </crew>
+    </customShip>
 </ships>
 <!-- ===============	TERRAN BATTLECRUISER	=============== -->
  <FTL>
@@ -1948,20 +1978,14 @@
 		<item>
 			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
 		</item>
-		<item>
-			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
-		</item>
         <chance>100</chance>
     </category>
 
-	<category type="SYSTEMS">
-        <customTitle>TERRAN SYSTEMS</customTitle>
-		<item>
-			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
-		</item>
-		<item>
-			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
-		</item>
+	<category type="WEAPONS">
+        <customTitle>TERRAN WEAPONS</customTitle>
+        <allowDuplicates/>
+        <item/>
+        <item/>
         <chance>75</chance>
     </category>
 
@@ -2045,9 +2069,6 @@
 		<item>
 			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
 		</item>
-		<item>
-			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
-		</item>
         <chance>100</chance>
     </category>
 
@@ -2085,9 +2106,6 @@
 
     <category type="SYSTEMS" group="1">
         <customTitle>SYSTEMS</customTitle>
-		<item>
-			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
-		</item>
 		<item>
 			<blueprint>SHOP_TERRAN_SYSTEMS</blueprint>
 		</item>
@@ -2224,6 +2242,7 @@
 	<!-- Comsat -->
 	<mod-append:script>data/sc_scripts/sc_drone_comsat.lua</mod-append:script>
 	<mod-append:script>data/sc_scripts/sc_drone_comsat_sensors.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_drone_comsat_ai.lua</mod-append:script>
 
 	<!-- Defense Matrix -->
 	<mod-append:script>data/sc_scripts/sc_drone_defense.lua</mod-append:script>
@@ -2238,5 +2257,9 @@
 	<mod-append:script>data/sc_scripts/sc_drone_powerlist.lua</mod-append:script>
 
 	<!-- <mod-append:script>data/sc_scripts/sc_debug.lua</mod-append:script> -->
+	<mod-append:script>data/sc_scripts/sc_cudgel.lua</mod-append:script>
+	<!-- <mod-append:script>data/sc_scripts/sc_rarity_test.lua</mod-append:script> -->
+	<!-- <mod-append:script>data/sc_scripts/sc_test_crew_drone_spawn.lua</mod-append:script> -->
+
 </mod:findLike>
 </FTL>

@@ -37,9 +37,17 @@ local function clear_particles()
     particles = {}
 end
 
+script.on_internal_event(Defines.InternalEvents.PROJECTILE_FIRE, function(projectile, weapon)
+    if not haloWeapons[weapon.blueprint.name] then return end
+
+    local data = userdata_table(projectile, "mods.sc.haloTrail")
+    data.enabled = true
+end)
+
 script.on_internal_event(Defines.InternalEvents.PROJECTILE_UPDATE_POST, function(projectile)
-    if not projectile.extend
-        or not haloWeapons[projectile.extend.name]
+    local data = userdata_table(projectile, "mods.sc.haloTrail")
+
+    if not data.enabled
         or projectile:Dead()
         or projectile.startedDeath then
         return Defines.Chain.CONTINUE
@@ -50,7 +58,6 @@ script.on_internal_event(Defines.InternalEvents.PROJECTILE_UPDATE_POST, function
         return Defines.Chain.CONTINUE
     end
 
-    local data = userdata_table(projectile, "mods.sc.haloTrail")
     local space = projectile.currentSpace
 
     if space < 0 then

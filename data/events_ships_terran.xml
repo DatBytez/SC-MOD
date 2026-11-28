@@ -21,7 +21,7 @@
 
 	<escape chance="0.65" min="1" max="5">
 		<text>
-			The Terran patrol ship has taken serious damage. Its engines flare as it attempts to disengage and jump away.
+			The patrol ship has taken serious damage. Its engines flare as it attempts to disengage and jump away.
 		</text>
 	</escape>
 
@@ -31,7 +31,7 @@
 
 	<surrender chance="0.35" min="1" max="3">
 		<text>
-			The Terran patrol ship is barely holding together. They transmit a surrender offer, promising supplies if you let them retreat.
+			The patrol ship is barely holding together. They transmit a surrender offer, promising supplies if you let them retreat.
 		</text>
 
 		<choice>
@@ -48,25 +48,19 @@
 		<choice>
 			<text>Refuse. Finish them off.</text>
 			<event>
-				<text>
-					You reject the offer and continue the attack.
-				</text>
+				<text>You reject the offer and continue the attack.</text>
 				<ship hostile="true"/>
 			</event>
 		</choice>
 	</surrender>
 
 	<destroyed>
-		<text>
-			The Terran patrol ship breaks apart under your final volley. You salvage what remains.
-		</text>
+		<text>The patrol ship breaks apart under your final volley. You salvage what remains.</text>
 		<autoReward level="MED">standard</autoReward>
 	</destroyed>
 
 	<deadCrew>
-		<text>
-			With the patrol crew neutralized, you strip the ship for useful supplies.
-		</text>
+		<text>With the patrol crew neutralized, you strip the ship for useful supplies.</text>
 		<autoReward level="HIGH">standard</autoReward>
 	</deadCrew>
 </ship>
@@ -79,24 +73,18 @@
 -->
 <ship name="SC_TERRAN_SCOUT_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_SCOUT">
 	<escape min="2" max="999">
-		<text>
-			The Terran scout throws everything into its engines and begins charging its FTL drive.
-		</text>
+		<text>The scout throws everything into its engines and begins charging its FTL drive.</text>
 	</escape>
 
 	<gotaway load="SC_TERRAN_SCOUT_GOTAWAY"/>
 
 	<surrender chance="0.35" min="1" max="1">
-		<text>
-			The scout is barely holding together. Its crew transmits a frantic surrender offer, promising supplies if you let them live.
-		</text>
+		<text>The scout is barely holding together. Its crew transmits a frantic surrender offer, promising supplies if you let them live.</text>
 
 		<choice>
 			<text>Accept their surrender.</text>
 			<event>
-				<text>
-					The scout transfers what supplies it can spare and powers down its weapons.
-				</text>
+				<text>The scout transfers what supplies it can spare and powers down its weapons.</text>
 				<ship hostile="false"/>
 				<autoReward level="RANDOM">stuff</autoReward>
 			</event>
@@ -114,9 +102,7 @@
 	</surrender>
 
 	<destroyed>
-		<text>
-			The Terran scout breaks apart before it can escape. You collect what little salvage remains.
-		</text>
+		<text>The scout breaks apart before it can escape. You collect what little salvage remains.</text>
 		<autoReward level="LOW">standard</autoReward>
 	</destroyed>
 
@@ -167,16 +153,12 @@
 <!-- SECOND SHIP -->
 <ship name="SC_TERRAN_ASSAULT_SHIP_2" auto_blueprint="LIST_TERRAN_SHIPS_ASSAULT">
 	<surrender chance="0.35" min="1" max="3">
-		<text>
-			The second Terran assault ship is badly damaged. With the attack broken, its captain offers supplies in exchange for being allowed to withdraw.
-		</text>
+		<text>The second Terran assault ship is badly damaged. With the attack broken, its captain offers supplies in exchange for being allowed to withdraw.</text>
 
 		<choice>
 			<text>Accept their surrender.</text>
 			<event>
-				<text>
-					The assault ship powers down its weapons and transfers a cache of supplies before limping away.
-				</text>
+				<text>The assault ship powers down its weapons and transfers a cache of supplies before limping away.</text>
 				<ship hostile="false"/>
 				<autoReward level="RANDOM">stuff</autoReward>
 			</event>
@@ -185,25 +167,19 @@
 		<choice>
 			<text>Refuse. Finish them off.</text>
 			<event>
-				<text>
-					You reject the offer and continue the attack.
-				</text>
+				<text>You reject the offer and continue the attack.</text>
 				<ship hostile="true"/>
 			</event>
 		</choice>
 	</surrender>
 
 	<destroyed>
-		<text>
-			The second Terran assault ship breaks apart under your final volley. With the attack force destroyed, you salvage the wreckage.
-		</text>
+		<text>The second Terran assault ship breaks apart under your final volley. With the attack force destroyed, you salvage the wreckage.</text>
 		<autoReward level="MED">standard</autoReward>
 	</destroyed>
 
 	<deadCrew>
-		<text>
-			With the second assault crew neutralized, you secure the ship and strip it for supplies.
-		</text>
+		<text>With the second assault crew neutralized, you secure the ship and strip it for supplies.</text>
 		<autoReward level="HIGH">standard</autoReward>
 	</deadCrew>
 </ship>
@@ -216,22 +192,16 @@
 
 <ship name="SC_TERRAN_AMBUSH_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_AMBUSH">
 	<escape chance="0.35" min="1" max="5">
-		<text>
-			The ambush ship has taken heavy damage. Its engines flare as it attempts to withdraw before you can finish it off.
-		</text>
+		<text>The ambush ship has taken heavy damage. Its engines flare as it attempts to withdraw before you can finish it off.</text>
 	</escape>
 
 	<destroyed>
-		<text>
-			The Terran ambusher breaks apart under your final volley. You salvage the remains of the attack ship.
-		</text>
+		<text>The ambusher breaks apart under your final volley. You salvage the remains of the attack ship.</text>
 		<autoReward level="HIGH">standard</autoReward>
 	</destroyed>
 
 	<deadCrew>
-		<text>
-			With the ambush crew neutralized, you secure the ship and strip it of everything useful.
-		</text>
+		<text>With the ambush crew neutralized, you secure the ship and strip it of everything useful.</text>
 		<autoReward level="HIGH">standard</autoReward>
 	</deadCrew>
 </ship>
@@ -239,16 +209,12 @@
 
 <ship name="SC_TERRAN_NON_AMBUSH_SHIP" auto_blueprint="LIST_TERRAN_SHIPS_NON_AMBUSH">
 	<destroyed>
-		<text>
-			The Terran ship is destroyed. You salvage what remains.
-		</text>
+		<text>The ship is destroyed. You salvage what remains.</text>
 		<autoReward level="MED">standard</autoReward>
 	</destroyed>
 
 	<deadCrew>
-		<text>
-			With the Terran crew defeated, you search the ship and secure its supplies.
-		</text>
+		<text>With the crew defeated, you search the ship and secure its supplies.</text>
 		<autoReward level="HIGH">standard</autoReward>
 	</deadCrew>
 </ship>
@@ -365,18 +331,14 @@
 
 <ship name="SC_TERRAN_FLEET_BATTLECRUISER_SHIP" auto_blueprint="TERRAN_SHIP_BATTLECRUISER_A">
 	<destroyed>
-		<text>
-			The Terran battlecruiser breaks apart under your fire, but the pursuing fleet is still dangerously close.
-		</text>
+		<text>The battlecruiser breaks apart under your fire, but the pursuing fleet is still dangerously close.</text>
 		<item_modify>
 			<item type="fuel" min="1" max="1"/>
 		</item_modify>
 	</destroyed>
 
 	<deadCrew>
-		<text>
-			With the battlecruiser's crew neutralized, you strip what supplies you can before the rest of the fleet closes in.
-		</text>
+		<text>With the battlecruiser's crew neutralized, you strip what supplies you can before the rest of the fleet closes in.</text>
 		<item_modify>
 			<item type="fuel" min="1" max="1"/>
 		</item_modify>

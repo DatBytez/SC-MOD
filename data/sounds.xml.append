@@ -56,5 +56,20 @@
 	<weapon_laser_hit2 volume="5">ship/weapon_laser_hit2.wav</weapon_laser_hit2>
 	<weapon_laser_hit3 volume="5">ship/weapon_laser_hit3.wav</weapon_laser_hit3>
 	
+
+	<music>
+		<track>
+			<name>terran1</name>
+			<explore>terran1.ogg</explore>
+		</track>
+		<track>
+			<name>terran2</name>
+			<explore>terran2.ogg</explore>
+		</track>
+		<track>
+			<name>terran3</name>
+			<explore>terran3.ogg</explore>
+		</track>
+	</music>
 </FTL>
 

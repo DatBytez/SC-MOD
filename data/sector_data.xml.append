@@ -13,7 +13,9 @@ S8 (7): Last Stand-->
 		<name>Terran Sector</name>
 	</nameList>
 	<trackList>
-		<track>civilian</track>
+		<track>terran1</track>
+		<track>terran2</track>
+		<track>terran3</track>
 	</trackList>
 	<rarityList>
 		<blueprint name="BEAM_1" rarity="0"/>
