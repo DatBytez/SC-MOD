@@ -183,10 +183,16 @@ PAIRED: These weapons bestow their properties on the paired weaponand fire simul
 <text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_desc">A modified version of the Irradiate weapon with reduced power and damage. Longer charges result in more damage.</text>
 <text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_tooltip">Applies erosion to targeted tiles. Crew struck suffer up to 3 HP/s damage for 25 seconds and spread erosion to rooms they occupy.</text>
 
-<text name="weapon_TERRAN_MISSILE_HALO_title">Terran Halo Missile</text>
+<text name="weapon_TERRAN_MISSILE_HALO_title">Halo Missile</text>
 <text name="weapon_TERRAN_MISSILE_HALO_short">Halo</text>
 <text name="weapon_TERRAN_MISSILE_HALO_desc">Fires salvos of High Altitude Long Operating cluster rockets. Missile costs and accuracy are reduced with each charge.</text>
 <text name="weapon_TERRAN_MISSILE_HALO_tooltip">Fires 8 missiles; accuracy and missile cost are reduced for each charge level.</text>
+
+<!-- TERRAN HALO MISSILE
+<text name="weapon_TERRAN_MISSILE_HALO_title">Terran Halo Missile</text>
+<text name="weapon_TERRAN_MISSILE_HALO_short">Halo</text>
+<text name="weapon_TERRAN_MISSILE_HALO_desc">Fires salvos of High Altitude Long Operating cluster rockets designed to overwhelm enemy defenses. Extended charging reduces ammunition consumption at the expense of targeting precision.</text>
+<text name="weapon_TERRAN_MISSILE_HALO_tooltip">Fires 4 damaging missiles and 4 decoy missiles. Additional charge steps reduce missile consumption and increase projectile spread.</text> -->
 
 <text name="weapon_TERRAN_MISSILE_LONGBOLT_title">Terran Longbolt Missile</text>
 <text name="weapon_TERRAN_MISSILE_LONGBOLT_short">Longbolt</text>

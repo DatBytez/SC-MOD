@@ -341,6 +341,7 @@
         <text>Attack the Starport.</text>
         <event>
             <ship hostile="true"/>
+            <triggeredEvent event="SC_TERRAN_STARPORT_REINFORCEMENTS" time="60" thisFight="true" clearOnJump="true"/>
         </event>
     </choice>
 
@@ -550,7 +551,7 @@
     <ship load="TERRAN_SHIP_SCIENCE" hostile="false"/>
 
     <choice>
-        <text>Attack the Starport</text>
+        <text>Attack the Science Facility</text>
         <event>
             <ship hostile="true"/>
         </event>
@@ -3223,13 +3224,14 @@
 		</event>
 	</choice>
 
-	<choice>
-		<text>Attack the Starport.</text>
-		<event>
-			<text>You break from the traffic pattern and open fire. Docking clamps retract and the Starport redirects power to its combat systems.</text>
-			<ship load="TERRAN_SHIP_STARPORT" hostile="true"/>
-		</event>
-	</choice>
+    <choice>
+        <text>Attack the Starport.</text>
+        <event>
+            <text>You break from the traffic pattern and open fire. Docking clamps retract and the Starport redirects power to its combat systems.</text>
+            <ship load="TERRAN_SHIP_STARPORT" hostile="true"/>
+            <triggeredEvent event="SC_TERRAN_STARPORT_REINFORCEMENTS" time="60" thisFight="true" clearOnJump="true"/>
+        </event>
+    </choice>
 
 	<choice>
 		<text>Leave the station alone.</text>
@@ -3342,6 +3344,30 @@
 		<event/>
 	</choice>
 </event>
+
+<!--*****************************************************************************************************
+  TERRAN STARPORT REINFORCEMENTS
+******************************************************************************************************-->
+<event name="SC_TERRAN_STARPORT_REINFORCEMENTS">
+    <text>The Starport's distress signal has been answered. A Wraith squadron arrives and moves to intercept your ship as the Starport disengages from combat.</text>
+    <recallBoarders force="true" ship="both"/>
+    <ship hostile="false"/>
+    <choice hidden="true">
+        <text>Continue...</text>
+        <event load="SC_TERRAN_STARPORT_WRAITH_ATTACK"/>
+    </choice>
+</event>
+
+<event name="SC_TERRAN_STARPORT_WRAITH_ATTACK">
+    <text>The Wraith moves into attack position and powers its weapons.</text>
+    <ship load="SC_TERRAN_STARPORT_WRAITH_SHIP" hostile="true"/>
+</event>
+
+<ship name="SC_TERRAN_STARPORT_WRAITH_SHIP" auto_blueprint="LIST_TERRAN_WRAITH_SHIPS">
+    <destroyed load="SC_DESTROYED_TERRAN"/>
+    <deadCrew load="SC_DEAD_CREW_TERRAN"/>
+</ship>
+
 
 <!--*****************************************************************************************************
   TERRAN FLEET ENCOUNTER

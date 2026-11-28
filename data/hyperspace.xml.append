@@ -2198,6 +2198,7 @@
 	<mod-append:script>data/sc_scripts/sc_weapon_halo_trail.lua</mod-append:script>
 
 	<mod-append:script>data/sc_scripts/sc_weapon_emp.lua</mod-append:script>
+	<mod-append:script>data/sc_scripts/sc_weapon_tooltips.lua</mod-append:script>
 
 	<!-- Targeting -->
 	<mod-append:script>data/sc_scripts/sc_targeting_core.lua</mod-append:script>
