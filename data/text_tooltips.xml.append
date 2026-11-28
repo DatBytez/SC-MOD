@@ -24,4 +24,22 @@
 	<text name="tip_sc_charge">Tip: Additional charges increase the number of shots fired and modify the properties of every shot in the volley.</text>
 	<text name="tip_sc_chainstep">Tip: Chainstep weapons can fire before reaching full charge. Waiting longer changes the weapon's properties with each additional charge step.</text>
 	<text name="tip_sc_chain">Tip: Chain weapons improve or alter their properties with successive volleys. Chain levels reset when the weapon loses power.</text>
+
+	<!-- SC PAIRED WEAPONS -->
+	<text name="stat_sc_paired_group">Pairing Group: \1</text>
+	<text name="stat_sc_paired_group_gemini_lv1">Gemini Mk I</text>
+	<text name="stat_sc_paired_group_gemini_lv2">Gemini Mk II</text>
+	<text name="stat_sc_paired_group_gemini_lv3">Gemini Mk III</text>
+	<text name="stat_sc_paired_secondary">Required Power: 0
+	Missile Cost: 0
+
+	Duplicates the primary weapon's projectiles.
+	Charge time and damage are inherited from the primary weapon.</text>
+
+	<!-- SC PAIRED WEAPON DISPLAY -->
+	<text name="render_sc_paired_primary">Paired: Primary</text>
+	<text name="render_sc_paired_secondary">Paired: Secondary</text>
+
+	<!-- SC PAIRED WEAPON TIPS -->
+	<text name="tip_sc_paired">Tip: Place two compatible weapons next to each other. Power the left weapon and leave the right weapon unpowered to fire both weapons using only the primary weapon's power and ammunition.</text>
 </FTL>

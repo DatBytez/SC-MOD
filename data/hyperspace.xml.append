@@ -1606,28 +1606,22 @@
 
 	<customShip name="TERRAN_SHIP_WRAITH_B">
         <crew>
-            <!-- <terran_civilian room="4"/>  -->
             <terran_civilian room="8"/>
         </crew>
     </customShip>
 	<customShip name="TERRAN_SHIP_WRAITH_C">
         <crew>
             <terran_civilian room="4"/>
-            <!-- <terran_civilian room="8"/> -->
         </crew>
     </customShip>
 	<customShip name="TERRAN_SHIP_WRAITH_D">
         <crew>
 			<terran_civilian room="10"/>
             <terran_civilian room="7"/>
-            <!-- <terran_civilian room="3"/>
-            <terran_civilian room="12"/> -->
-			<!-- <terran_civilian room="8"/> -->
         </crew>
     </customShip>
 	<customShip name="TERRAN_SHIP_VALKYRIE_B">
         <crew>
-            <!-- <terran_civilian room="1"/> -->
             <terran_civilian room="9"/>
         </crew>
     </customShip>

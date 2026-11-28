@@ -1,17 +1,22 @@
 --[[
 DESCRIPTION: Adds custom weapon information to weapon stat boxes
              and live weapon cooldown displays.
-        - Displays Charge and Chainstep mechanics using existing scaling tags.
+        - Displays Charge, Chainstep, and Chain mechanics using existing scaling tags.
         - Calculates stat ranges from blueprint values and scaling modifiers.
         - Groups accuracy, targeting radius, and shots together.
         - Removes redundant native charge and chain information.
+        - Displays pairing compatibility and paired secondary information.
 TAGS: <sc-charge stat="..." value="#"/>
       <sc-chainstep stat="..." value="#"/>
+      <sc-chain stat="..." value="#"/>
+      <sc_paired group="GROUP"/>
 DEPENDENCIES: sc_weapon_scaling.lua, sc_weapon_charge.lua,
-              sc_weapon_chainstep.lua
+              sc_weapon_chainstep.lua, sc_weapon_chain.lua,
+              sc_weapon_paired_core.lua
 ]]
 
 local scaling = mods.sc.scaling
+local paired = mods.sc.paired
 
 local function get_scaling_value(source, weaponName, statName)
     local entry = scaling.get_source_stat_entry(source, weaponName, statName)
@@ -110,6 +115,45 @@ local function get_weapon_scaling(blueprint)
     end
 end
 
+-- PAIRED WEAPON STAT BOX
+
+script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(blueprint, stats)
+    local weaponName = blueprint.name
+
+    if weaponName == paired.GENERIC_SECONDARY_BLUEPRINT then
+        return Defines.Chain.CONTINUE, get_text("stat_sc_paired_secondary")
+    end
+
+    local group = paired.groups[weaponName]
+    if not group then return end
+
+    local groupName = get_text("stat_sc_paired_group_" .. group)
+
+    if groupName == "" or groupName == "stat_sc_paired_group_" .. group then
+        groupName = group
+    end
+
+    local pairingText = get_text("stat_sc_paired_group", groupName)
+
+    local lines = {}
+
+    for line in (stats .. "\n"):gmatch("(.-)\n") do
+        table.insert(lines, line)
+    end
+
+    local insertIndex = find_stat_line(lines, "stat_resources_missiles")
+        or find_stat_line(lines, "ammo_consumption")
+        or find_stat_line(lines, "charge_time")
+
+    if insertIndex then
+        table.insert(lines, insertIndex + 1, pairingText)
+    else
+        table.insert(lines, 1, pairingText)
+    end
+
+    return Defines.Chain.CONTINUE, table.concat(lines, "\n")
+end)
+
 -- WEAPON STAT BOX
 
 script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(blueprint, stats)
@@ -144,29 +188,28 @@ script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(bluepri
             end
         end
 
-        elseif source == "chainstep" then
-            minimumTime = get_scaling_value(source, weaponName, "fireThreshold")
-            maximumTime = blueprint.cooldown
+    elseif source == "chainstep" then
+        minimumTime = get_scaling_value(source, weaponName, "fireThreshold")
+        maximumTime = blueprint.cooldown
 
-            levelText = get_text("stat_sc_chainstep_max", maxLevel)
+        levelText = get_text("stat_sc_chainstep_max", maxLevel)
 
-            if blueprint.boostPower.amount == 0 then
-                remove_stat_line(lines, "redesigned_boost_power_speed_positive")
-                remove_stat_line(lines, "redesigned_boost_power_speed_negative")
-                remove_stat_line(lines, "redesigned_speed_cap")
-            end
-
-                elseif source == "chain" then
-            minimumTime = blueprint.cooldown
-            maximumTime = math.max(0,
-                blueprint.cooldown - maxLevel * blueprint.boostPower.amount)
-
-            levelText = get_text("stat_sc_chain_levels", maxLevel)
-
+        if blueprint.boostPower.amount == 0 then
             remove_stat_line(lines, "redesigned_boost_power_speed_positive")
             remove_stat_line(lines, "redesigned_boost_power_speed_negative")
             remove_stat_line(lines, "redesigned_speed_cap")
         end
+
+    elseif source == "chain" then
+        minimumTime = blueprint.cooldown
+        maximumTime = math.max(0,
+            blueprint.cooldown - maxLevel * blueprint.boostPower.amount)
+
+        levelText = get_text("stat_sc_chain_levels", maxLevel)
+
+        remove_stat_line(lines, "redesigned_boost_power_speed_positive")
+        remove_stat_line(lines, "redesigned_boost_power_speed_negative")
+        remove_stat_line(lines, "redesigned_speed_cap")
     end
 
     local cooldownIndex = find_stat_line(lines, "charge_time")
@@ -285,7 +328,7 @@ script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(bluepri
         end
     end
 
-        -- STUN CHANCE
+    -- STUN CHANCE
 
     local stunBoost = get_scaling_value(source, weaponName, "stunChance")
 
@@ -343,11 +386,33 @@ script.on_internal_event(Defines.InternalEvents.WEAPON_RENDERBOX, function(weapo
             weapon.boostLevel,
             maxLevel,
             string.format("%.0f", weapon.radius))
+
     elseif source == "chain" then
         thirdLine = get_text("render_sc_chain_level_radius",
             weapon.boostLevel,
             maxLevel,
             string.format("%.0f", weapon.radius))
+    end
+
+    -- PAIRED WEAPON DISPLAY
+
+    if blueprint.name == paired.GENERIC_SECONDARY_BLUEPRINT
+        or paired.groups[blueprint.name] then
+
+        local ship = Hyperspace.ships(weapon.iShipId)
+        local slot = paired.get_weapon_slot(weapon)
+
+        if weapon.iShipId == 0 and ship and slot ~= nil then
+            local pairData = paired.build_valid_pair_slots(ship)[slot]
+
+            if pairData then
+                if pairData.primarySlot == slot then
+                    thirdLine = get_text("render_sc_paired_primary")
+                else
+                    thirdLine = get_text("render_sc_paired_secondary")
+                end
+            end
+        end
     end
 
     return Defines.Chain.CONTINUE, firstLine, secondLine, thirdLine

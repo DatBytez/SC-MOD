@@ -511,11 +511,11 @@ END OF SUBSYSTEMS
 <FTL>
 <weaponBlueprint name="TERRAN_BURST_LASER_1"> 
 	<type>LASER</type>
+	<tip>tip_sc_chain</tip>
 	<title id="weapon_TERRAN_BURST_LASER_1_title"/>
 	<short id="weapon_TERRAN_BURST_LASER_1_short"/>
-	<tip>tip_laser</tip>
-	<desc id="weapon_TERRAN_BURST_LASER_1_desc"/>
-	<tooltip id="weapon_TERRAN_BURST_LASER_1_tooltip"/>
+	<desc id="weapon_TERRAN_BURST_LASER_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<damage>1</damage>
 	<persDamage>1</persDamage>
 	<sp>0</sp>
@@ -559,11 +559,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="TERRAN_BURST_LASER_2"> 
 	<type>LASER</type>
+	<tip>tip_sc_chain</tip>
 	<title id="weapon_TERRAN_BURST_LASER_2_title"/>
 	<short id="weapon_TERRAN_BURST_LASER_2_short"/>
-	<tip>tip_laser</tip>
-	<desc id="weapon_TERRAN_BURST_LASER_2_desc"/>
-	<tooltip id="weapon_TERRAN_BURST_LASER_2_tooltip"/>
+	<desc id="weapon_TERRAN_BURST_LASER_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<damage>1</damage>
 	<persDamage>1</persDamage>
 	<sp>0</sp>
@@ -606,11 +606,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="TERRAN_BURST_LASER_3"> 
 	<type>LASER</type>
+	<tip>tip_sc_chain</tip>
 	<title id="weapon_TERRAN_BURST_LASER_3_title"/>
 	<short id="weapon_TERRAN_BURST_LASER_3_short"/>
-	<tip>tip_laser</tip>
-	<desc id="weapon_TERRAN_BURST_LASER_3_desc"/>
-	<tooltip id="weapon_TERRAN_BURST_LASER_3_tooltip"/>
+	<desc id="weapon_TERRAN_BURST_LASER_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<damage>1</damage>
 	<persDamage>1</persDamage>
 	<sp>0</sp>
@@ -654,11 +654,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="TERRAN_BURST_LASER_HEAVY_1"> 
 	<type>LASER</type>
+	<tip>tip_sc_chain</tip>
 	<title id="weapon_TERRAN_BURST_LASER_HEAVY_1_title"/>
 	<short id="weapon_TERRAN_BURST_LASER_HEAVY_1_short"/>
-	<tip>tip_laser</tip>
-	<desc id="weapon_TERRAN_BURST_LASER_HEAVY_1_desc"/>
-	<tooltip id="weapon_TERRAN_BURST_LASER_HEAVY_1_tooltip"/>
+	<desc id="weapon_TERRAN_BURST_LASER_HEAVY_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<damage>1</damage>
 	<hullBust>1</hullBust>
 	<sysDamage>1</sysDamage>
@@ -705,11 +705,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="TERRAN_BURST_LASER_HEAVY_2"> 
 	<type>LASER</type>
+	<tip>tip_sc_chain</tip>
 	<title id="weapon_TERRAN_BURST_LASER_HEAVY_2_title"/>
 	<short id="weapon_TERRAN_BURST_LASER_HEAVY_2_short"/>
-	<tip>tip_laser</tip>
-	<desc id="weapon_TERRAN_BURST_LASER_HEAVY_2_desc"/>
-	<tooltip id="weapon_TERRAN_BURST_LASER_HEAVY_2_tooltip"/>
+	<desc id="weapon_TERRAN_BURST_LASER_HEAVY_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<damage>1</damage>
 	<hullBust>1</hullBust>
 	<sysDamage>1</sysDamage>
@@ -930,8 +930,8 @@ END OF SUBSYSTEMS
 	<tip>tip_sc_chainstep</tip>
 	<title id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_title"/>
 	<short id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_short"/>
-	<desc id="weapon_TERRAN_LASER_BATTERY_HEAVY_2_desc"/>
-	<tooltip id="weapon_TERRAN_LASER_BATTERY_HEAVY_tooltip"/>
+	<desc id="weapon_TERRAN_LASER_BATTERY_HEAVY_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<damage>2</damage>
 	<shots>2</shots>
 	<power>2</power>	
@@ -975,11 +975,11 @@ END OF SUBSYSTEMS
 <FTL>
 <weaponBlueprint name="GEMINI_PAIRED">
 	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
+	<tip>tip_sc_paired</tip>
 	<title id="weapon_GEMINI_MISSILES_PAIRED_title"/>
 	<short id="weapon_GEMINI_MISSILES_PAIRED_short"/>
 	<desc id="weapon_GEMINI_MISSILES_PAIRED_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_PAIRED_tooltip"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<shots>1</shots>
 	<cooldown>200.0</cooldown>
 	<power>0</power>
@@ -993,11 +993,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="GEMINI_BREACH_1">
 	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
+	<tip>tip_sc_paired</tip>
 	<title id="weapon_GEMINI_MISSILES_BREACH_1_title"/>
 	<short id="weapon_GEMINI_MISSILES_BREACH_1_short"/>
-	<desc id="weapon_GEMINI_MISSILES_BREACH_1_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_BREACH_1_tooltip"/>
+	<desc id="weapon_GEMINI_MISSILES_BREACH_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<sc_paired group="gemini_lv1"/>
 	<damage>1</damage>
 	<missiles>1</missiles>
@@ -1032,11 +1032,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="GEMINI_BREACH_2">
 	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
+	<tip>tip_sc_paired</tip>
 	<title id="weapon_GEMINI_MISSILES_BREACH_2_title"/>
 	<short id="weapon_GEMINI_MISSILES_BREACH_2_short"/>
-	<desc id="weapon_GEMINI_MISSILES_BREACH_2_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_BREACH_2_tooltip"/>
+	<desc id="weapon_GEMINI_MISSILES_BREACH_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<sc_paired group="gemini_lv2"/>
 	<damage>1</damage>
 	<missiles>1</missiles>
@@ -1071,11 +1071,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="GEMINI_BREACH_3">
 	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
+	<tip>tip_sc_paired</tip>
 	<title id="weapon_GEMINI_MISSILES_BREACH_3_title"/>
 	<short id="weapon_GEMINI_MISSILES_BREACH_3_short"/>
 	<desc id="weapon_GEMINI_MISSILES_BREACH_3_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_BREACH_3_tooltip"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<sc_paired group="gemini_lv3"/>
 	<damage>3</damage>
 	<hullBust>1</hullBust>
@@ -1111,11 +1111,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="GEMINI_FIRE_1">
 	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
+	<tip>tip_sc_paired</tip>
 	<title id="weapon_GEMINI_MISSILES_FIRE_1_title"/>
 	<short id="weapon_GEMINI_MISSILES_FIRE_1_short"/>
-	<desc id="weapon_GEMINI_MISSILES_FIRE_1_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_FIRE_1_tooltip"/>
+	<desc id="weapon_GEMINI_MISSILES_FIRE_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<sc_paired group="gemini_lv1"/>
 	<damage>1</damage>
 	<missiles>1</missiles>
@@ -1150,11 +1150,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="GEMINI_FIRE_2">
 	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
+	<tip>tip_sc_paired</tip>
 	<title id="weapon_GEMINI_MISSILES_FIRE_2_title"/>
 	<short id="weapon_GEMINI_MISSILES_FIRE_2_short"/>
-	<desc id="weapon_GEMINI_MISSILES_FIRE_2_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_FIRE_2_tooltip"/>
+	<desc id="weapon_GEMINI_MISSILES_FIRE_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<sc_paired group="gemini_lv2"/>
 	<damage>2</damage>
 	<missiles>1</missiles>
@@ -1189,11 +1189,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="GEMINI_FIRE_3">
 	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
+	<tip>tip_sc_paired</tip>
 	<title id="weapon_GEMINI_MISSILES_FIRE_3_title"/>
 	<short id="weapon_GEMINI_MISSILES_FIRE_3_short"/>
 	<desc id="weapon_GEMINI_MISSILES_FIRE_3_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_FIRE_3_tooltip"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<sc_paired group="gemini_lv3"/>
 	<damage>3</damage>
 	<sysDamage>3</sysDamage>
@@ -1228,11 +1228,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="GEMINI_HULL_1">
 	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
+	<tip>tip_sc_paired</tip>
 	<title id="weapon_GEMINI_MISSILES_HULL_1_title"/>
 	<short id="weapon_GEMINI_MISSILES_HULL_1_short"/>
-	<desc id="weapon_GEMINI_MISSILES_HULL_1_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_HULL_1_tooltip"/>
+	<desc id="weapon_GEMINI_MISSILES_HULL_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<sc_paired group="gemini_lv1"/>
 	<damage>1</damage>
 	<hullBust>1</hullBust>
@@ -1266,11 +1266,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="GEMINI_HULL_2">
 	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
+	<tip>tip_sc_paired</tip>
 	<title id="weapon_GEMINI_MISSILES_HULL_2_title"/>
 	<short id="weapon_GEMINI_MISSILES_HULL_2_short"/>
-	<desc id="weapon_GEMINI_MISSILES_HULL_2_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_HULL_2_tooltip"/>
+	<desc id="weapon_GEMINI_MISSILES_HULL_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<sc_paired group="gemini_lv2"/>
 	<damage>2</damage>
 	<hullBust>1</hullBust>
@@ -1304,11 +1304,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="GEMINI_ION_1">
 	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
+	<tip>tip_sc_paired</tip>
 	<title id="weapon_GEMINI_MISSILES_ION_1_title"/>
 	<short id="weapon_GEMINI_MISSILES_ION_1_short"/>
-	<desc id="weapon_GEMINI_MISSILES_ION_1_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_ION_1_tooltip"/>
+	<desc id="weapon_GEMINI_MISSILES_ION_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<sc_paired group="gemini_lv1"/>
 	<damage>1</damage>
 	<aa-shieldSmash>
@@ -1350,11 +1350,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="GEMINI_ION_2">
 	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
+	<tip>tip_sc_paired</tip>
 	<title id="weapon_GEMINI_MISSILES_ION_2_title"/>
 	<short id="weapon_GEMINI_MISSILES_ION_2_short"/>
-	<desc id="weapon_GEMINI_MISSILES_ION_2_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_ION_2_tooltip"/>
+	<desc id="weapon_GEMINI_MISSILES_ION_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<sc_paired group="gemini_lv2"/>
 	<damage>2</damage>
 	<aa-shieldSmash>
@@ -1396,11 +1396,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="GEMINI_ION_3">
 	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
+	<tip>tip_sc_paired</tip>
 	<title id="weapon_GEMINI_MISSILES_ION_3_title"/>
 	<short id="weapon_GEMINI_MISSILES_ION_3_short"/>
-	<desc id="weapon_GEMINI_MISSILES_ION_3_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_ION_3_tooltip"/>
+	<desc id="weapon_GEMINI_MISSILES_ION_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<sc_paired group="gemini_lv3"/>
 	<damage>3</damage>
 	<aa-shieldSmash>
@@ -1442,11 +1442,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="GEMINI_SYS_1">
 	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
+	<tip>tip_sc_paired</tip>
 	<title id="weapon_GEMINI_MISSILES_SYS_1_title"/>
 	<short id="weapon_GEMINI_MISSILES_SYS_1_short"/>
-	<desc id="weapon_GEMINI_MISSILES_SYS_1_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_SYS_1_tooltip"/>
+	<desc id="weapon_GEMINI_MISSILES_SYS_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<sc_paired group="gemini_lv1"/>
 	<damage>1</damage>
 	<sysDamage>1</sysDamage>
@@ -1481,11 +1481,11 @@ END OF SUBSYSTEMS
 
 <weaponBlueprint name="GEMINI_SYS_2">
 	<type>MISSILES</type>
-	<tip>tip_missiles</tip>
+	<tip>tip_sc_paired</tip>
 	<title id="weapon_GEMINI_MISSILES_SYS_2_title"/>
 	<short id="weapon_GEMINI_MISSILES_SYS_2_short"/>
-	<desc id="weapon_GEMINI_MISSILES_SYS_2_desc"/>
-	<tooltip id="weapon_GEMINI_MISSILES_SYS_2_tooltip"/>
+	<desc id="weapon_GEMINI_MISSILES_SYS_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<sc_paired group="gemini_lv2"/>
 	<damage>2</damage>
 	<sysDamage>2</sysDamage>

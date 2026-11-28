@@ -32,19 +32,15 @@
 
 <!-- TERRAN BURST LASER -->
 <text name="weapon_TERRAN_BURST_LASER_desc">Originally designed for strafing ground targets, this 25mm laser cannon trades accuracy and targeting precision for increasing rates and volume of fire with successive volleys.</text>
-
 <text name="weapon_TERRAN_BURST_LASER_1_title">Burst Laser Mk I</text>
 <text name="weapon_TERRAN_BURST_LASER_1_short">Burst Laser I</text>
-
 <text name="weapon_TERRAN_BURST_LASER_2_title">Burst Laser Mk II</text>
 <text name="weapon_TERRAN_BURST_LASER_2_short">Burst Laser II</text>
-
 <text name="weapon_TERRAN_BURST_LASER_3_title">Burst Laser Mk III</text>
 <text name="weapon_TERRAN_BURST_LASER_3_short">Burst Laser III</text>
 
 <!-- TERRAN HEAVY BURST LASER -->
 <text name="weapon_TERRAN_BURST_LASER_HEAVY_desc">A heavy 40mm laser cannon designed to inflict extensive damage to enemy hulls, systems, and crew. Successive volleys increase its rate of fire, volume of fire, and stun chance at the expense of accuracy and targeting precision.</text>
-
 <text name="weapon_TERRAN_BURST_LASER_HEAVY_1_title">Heavy Burst Laser Mk I</text>
 <text name="weapon_TERRAN_BURST_LASER_HEAVY_1_short">Heavy Burst I</text>
 <text name="weapon_TERRAN_BURST_LASER_HEAVY_2_title">Heavy Burst Laser Mk II</text>
@@ -52,7 +48,6 @@
 
 <!-- TERRAN LASER BATTERIES -->
 <text name="weapon_TERRAN_LASER_BATTERY_desc">A coordinated laser barrage designed to concentrate firepower on a single target. Additional charges increase the number of shots, accuracy, targeting precision, and breach chance, but take progressively longer to accumulate.</text>
-
 <text name="weapon_TERRAN_LASER_BATTERY_1_title">Laser Battery Mk I</text>
 <text name="weapon_TERRAN_LASER_BATTERY_1_short">Laser Bat.I</text>
 <text name="weapon_TERRAN_LASER_BATTERY_2_title">Laser Battery Mk II</text>
@@ -60,90 +55,61 @@
 <text name="weapon_TERRAN_LASER_BATTERY_3_title">Laser Battery Mk III</text>
 <text name="weapon_TERRAN_LASER_BATTERY_3_short">Laser Bat.III</text>
 
-<text name="weapon_TERRAN_LASER_BATTERY_HEAVY_2_desc">A heavy laser battery designed to deliver powerful, concentrated strikes against enemy vessels. Extended charging increases accuracy, targeting precision, and breach chance.</text>
-
+<text name="weapon_TERRAN_LASER_BATTERY_HEAVY_desc">A heavy laser battery designed to deliver powerful, concentrated strikes against enemy vessels. Extended charging increases accuracy, targeting precision, and breach chance.</text>
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_1_title">Heavy Laser Battery Mk I</text>
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_1_short">H.Laser Bat.I</text>
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_2_title">Heavy Laser Battery Mk II</text>
 <text name="weapon_TERRAN_LASER_BATTERY_HEAVY_2_short">H.Laser Bat.II</text>
 
-<!-- GEMINI MISSILES -->
- <text name="weapon_GEMINI_MISSILES_PAIRED_title">Gemini Missiles - Paired</text>
-<text name="weapon_GEMINI_MISSILES_PAIRED_short">Gemini Paired I</text>
-<text name="weapon_GEMINI_MISSILES_PAIRED_desc">This missile system is paired to the weapon on it's left.
+<!-- GEMINI PAIRED -->
+<text name="weapon_GEMINI_MISSILES_PAIRED_desc">A secondary missile launcher operating in tandem with an adjacent weapon. Duplicates the primary weapon's projectiles without consuming additional power or ammunition.</text>
+<text name="weapon_GEMINI_MISSILES_PAIRED_title">Gemini Missiles - Paired</text>
+<text name="weapon_GEMINI_MISSILES_PAIRED_short">Gemini Paired</text>
 
-PAIRED: This weapon is paired with a Gemini Missile Mk I weapon and is emulating it's properties. They now fire simultaniously with reduced missile costs and power consumption.</text>
-<text name="weapon_GEMINI_MISSILES_PAIRED_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
-
+<!-- GEMINI BREACH -->
+<text name="weapon_GEMINI_MISSILES_BREACH_desc">A specialized missile system equipped with armor-penetrating warheads. Capable of breaching enemy hulls and pairing with compatible missile systems.</text>
 <text name="weapon_GEMINI_MISSILES_BREACH_1_title">Gemini Missiles Mk I - Breach</text>
 <text name="weapon_GEMINI_MISSILES_BREACH_1_short">Gemini Breach I</text>
-<text name="weapon_GEMINI_MISSILES_BREACH_1_desc">This light missile system has a small breach chance.
-
-PAIRED: When powered, these weapons will pair with other Gemini Missile Mk I weapons to emulate their properties and fire simultaniously at a reduced missile cost and power consumption.</text>
-<text name="weapon_GEMINI_MISSILES_BREACH_1_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
-
 <text name="weapon_GEMINI_MISSILES_BREACH_2_title">Gemini Missiles Mk II - Breach</text>
 <text name="weapon_GEMINI_MISSILES_BREACH_2_short">Gemini Breach II</text>
-<text name="weapon_GEMINI_MISSILES_BREACH_2_desc">This light missile system has a high breach chance and can be paired with other Gemini Missile Mk II weapons.
 
-PAIRED: These weapons bestow their properties on the paired weaponand fire simultaniously at a reduced missile cost and power consumption.</text>
-<text name="weapon_GEMINI_MISSILES_BREACH_2_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
-
-<text name="weapon_GEMINI_MISSILES_FIRE_1_title">Gemini Missiles Mk I - Hellfire</text>
-<text name="weapon_GEMINI_MISSILES_FIRE_1_short">Gemini Fire I</text>
-<text name="weapon_GEMINI_MISSILES_FIRE_1_desc">A light missile system that excels when its versatility is utilized properly.</text>
-<text name="weapon_GEMINI_MISSILES_FIRE_1_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
-
-<text name="weapon_GEMINI_MISSILES_FIRE_2_title">Gemini Missiles Mk II - Hellfire</text>
-<text name="weapon_GEMINI_MISSILES_FIRE_2_short">Gemini Fire II</text>
-<text name="weapon_GEMINI_MISSILES_FIRE_2_desc">A light missile system that excels when its versatility is utilized properly.</text>
-<text name="weapon_GEMINI_MISSILES_FIRE_2_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
-
-<text name="weapon_GEMINI_MISSILES_HULL_1_title">Gemini Missiles Mk I - Anti-Hull</text>
-<text name="weapon_GEMINI_MISSILES_HULL_1_short">Gemini Anti-Hull I</text>
-<text name="weapon_GEMINI_MISSILES_HULL_1_desc">A light missile system that excels when its versatility is utilized properly.</text>
-<text name="weapon_GEMINI_MISSILES_HULL_1_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
-
-<text name="weapon_GEMINI_MISSILES_HULL_2_title">Gemini Missiles Mk II - Anti-Hull</text>
-<text name="weapon_GEMINI_MISSILES_HULL_2_short">Gemini Anti-Hull II</text>
-<text name="weapon_GEMINI_MISSILES_HULL_2_desc">A light missile system that excels when its versatility is utilized properly.</text>
-<text name="weapon_GEMINI_MISSILES_HULL_2_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
-
-<text name="weapon_GEMINI_MISSILES_ION_1_title">Gemini Missiles Mk I - Ion</text>
-<text name="weapon_GEMINI_MISSILES_ION_1_short">Gemini Ion I</text>
-<text name="weapon_GEMINI_MISSILES_ION_1_desc">A light missile system that excels when its versatility is utilized properly.</text>
-<text name="weapon_GEMINI_MISSILES_ION_1_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
-
-<text name="weapon_GEMINI_MISSILES_ION_2_title">Gemini Missiles Mk II - Ion</text>
-<text name="weapon_GEMINI_MISSILES_ION_2_short">Gemini Ion II</text>
-<text name="weapon_GEMINI_MISSILES_ION_2_desc">A light missile system that excels when its versatility is utilized properly.</text>
-<text name="weapon_GEMINI_MISSILES_ION_2_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
-
-<text name="weapon_GEMINI_MISSILES_SYS_1_title">Gemini Missiles Mk I - Anti-System</text>
-<text name="weapon_GEMINI_MISSILES_SYS_1_short">Gemini Anti-Sys I</text>
-<text name="weapon_GEMINI_MISSILES_SYS_1_desc">A light missile system that excels when its versatility is utilized properly.</text>
-<text name="weapon_GEMINI_MISSILES_SYS_1_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
-
-<text name="weapon_GEMINI_MISSILES_SYS_2_title">Gemini Missiles Mk II - Anti-System</text>
-<text name="weapon_GEMINI_MISSILES_SYS_2_short">Gemini Anti-Sys II</text>
-<text name="weapon_GEMINI_MISSILES_SYS_2_desc">A light missile system that excels when its versatility is utilized properly.</text>
-<text name="weapon_GEMINI_MISSILES_SYS_2_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles</text>
-
-<!-- GEMINI MISSILES MK III -->
+<text name="weapon_GEMINI_MISSILES_BREACH_3_desc">A heavy missile system equipped with devastating armor-penetrating warheads. Breaches every tile in the targeted room, deals additional damage to systemless rooms, and can pair with compatible missile systems.</text>
 <text name="weapon_GEMINI_MISSILES_BREACH_3_title">Gemini Missiles Mk III - Breach</text>
 <text name="weapon_GEMINI_MISSILES_BREACH_3_short">Gemini Breach III</text>
-<text name="weapon_GEMINI_MISSILES_BREACH_3_desc">[[GEMINI_BREACH_3 Needs Description]]</text>
-<text name="weapon_GEMINI_MISSILES_BREACH_3_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles.</text>
 
+<!-- GEMINI HELLFIRE -->
+<text name="weapon_GEMINI_MISSILES_FIRE_desc">A specialized missile system equipped with incendiary warheads. Capable of igniting enemy compartments and pairing with compatible missile systems.</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_1_title">Gemini Missiles Mk I - Hellfire</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_1_short">Gemini Fire I</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_2_title">Gemini Missiles Mk II - Hellfire</text>
+<text name="weapon_GEMINI_MISSILES_FIRE_2_short">Gemini Fire II</text>
+
+<text name="weapon_GEMINI_MISSILES_FIRE_3_desc">A heavy missile system equipped with high-yield incendiary warheads. Ignites every tile in the targeted room, deals additional system damage, and can pair with compatible missile systems.</text>
 <text name="weapon_GEMINI_MISSILES_FIRE_3_title">Gemini Missiles Mk III - Hellfire</text>
 <text name="weapon_GEMINI_MISSILES_FIRE_3_short">Gemini Fire III</text>
-<text name="weapon_GEMINI_MISSILES_FIRE_3_desc">[[GEMINI_FIRE_3 Needs Description]]</text>
-<text name="weapon_GEMINI_MISSILES_FIRE_3_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles.</text>
 
+<!-- GEMINI ANTI-HULL -->
+<text name="weapon_GEMINI_MISSILES_HULL_desc">A specialized missile system designed to compromise the structural integrity of enemy vessels. Deals double hull damage to systemless rooms and can pair with compatible missile systems.</text>
+<text name="weapon_GEMINI_MISSILES_HULL_1_title">Gemini Missiles Mk I - Anti-Hull</text>
+<text name="weapon_GEMINI_MISSILES_HULL_1_short">Gemini Anti-Hull I</text>
+<text name="weapon_GEMINI_MISSILES_HULL_2_title">Gemini Missiles Mk II - Anti-Hull</text>
+<text name="weapon_GEMINI_MISSILES_HULL_2_short">Gemini Anti-Hull II</text>
+
+<!-- GEMINI ANTI-SYSTEM -->
+<text name="weapon_GEMINI_MISSILES_SYS_desc">A specialized missile system designed to disable critical ship infrastructure. Deals additional system damage and can pair with compatible missile systems.</text>
+<text name="weapon_GEMINI_MISSILES_SYS_1_title">Gemini Missiles Mk I - Anti-System</text>
+<text name="weapon_GEMINI_MISSILES_SYS_1_short">Gemini Anti-Sys I</text>
+<text name="weapon_GEMINI_MISSILES_SYS_2_title">Gemini Missiles Mk II - Anti-System</text>
+<text name="weapon_GEMINI_MISSILES_SYS_2_short">Gemini Anti-Sys II</text>
+
+<!-- GEMINI ION -->
+<text name="weapon_GEMINI_MISSILES_ION_desc">A specialized missile system equipped with electromagnetic warheads designed to disrupt enemy defenses. Inflicts ion damage, disrupts shields, and can pair with compatible missile systems.</text>
+<text name="weapon_GEMINI_MISSILES_ION_1_title">Gemini Missiles Mk I - Ion</text>
+<text name="weapon_GEMINI_MISSILES_ION_1_short">Gemini Ion I</text>
+<text name="weapon_GEMINI_MISSILES_ION_2_title">Gemini Missiles Mk II - Ion</text>
+<text name="weapon_GEMINI_MISSILES_ION_2_short">Gemini Ion II</text>
 <text name="weapon_GEMINI_MISSILES_ION_3_title">Gemini Missiles Mk III - Ion</text>
 <text name="weapon_GEMINI_MISSILES_ION_3_short">Gemini Ion III</text>
-<text name="weapon_GEMINI_MISSILES_ION_3_desc">[[GEMINI_ION_3 Needs Description]]</text>
-<text name="weapon_GEMINI_MISSILES_ION_3_tooltip">Fires 1 missile; does 1 damage; pierces all shields. Pairs with other Gemini Missiles.</text>
 
 <!-- YAMATO CANNON -->
 <text name="weapon_ARTILLERY_YAMATO_LASER_title">Terran Yamato Cannon</text>
