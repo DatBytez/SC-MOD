@@ -1525,7 +1525,7 @@ END OF SUBSYSTEMS
 	<title id="weapon_ARTILLERY_YAMATO_LASER_title"/>
 	<short id="weapon_ARTILLERY_YAMATO_LASER_short"/>
 	<desc id="weapon_ARTILLERY_YAMATO_LASER_desc"/>
-	<tooltip id="weapon_ARTILLERY_YAMATO_LASER_tooltip"/>
+	<tooltip id="tooltip_sc_unused"/>
     <mv-aoe>
 		<sysDamage>1</sysDamage>
 		<persDamage>1</persDamage>
@@ -1576,7 +1576,7 @@ END OF SUBSYSTEMS
 	<title id="weapon_EMP_MISSILE_title"/>
 	<short id="weapon_EMP_MISSILE_short"/>
 	<desc id="weapon_EMP_MISSILE_desc"/>
-	<tooltip id="weapon_EMP_MISSILE_tooltip"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<mv-aoe>
 		<stunChance>1</stunChance>
 		<ion>1</ion>
@@ -1619,12 +1619,11 @@ END OF SUBSYSTEMS
 <weaponBlueprint name="TERRAN_BEAM_IRRADIATE">
 	<type>BEAM</type>
 	<flavorType>Pinpoint</flavorType>
-	<tip>tip_focus</tip>
+	<tip>tip_sc_chainstep</tip>
 	<title id="weapon_TERRAN_BEAM_IRRADIATE_title"/>
 	<short id="weapon_TERRAN_BEAM_IRRADIATE_short"/>
-	<desc id="NOYB"/>
-	<descriptionOverride id="weapon_TERRAN_BEAM_IRRADIATE_desc"/>
-	<tooltipOverride id="weapon_TERRAN_BEAM_IRRADIATE_tooltip"/>
+	<desc id="weapon_TERRAN_BEAM_IRRADIATE_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<damage>1</damage>
 	<sc-irradiate/>
 	<bio-weapon/>
@@ -1663,12 +1662,11 @@ END OF SUBSYSTEMS
 <weaponBlueprint name="TERRAN_BEAM_IRRADIATE_LITE">
 	<type>BEAM</type>
 	<flavorType>Pinpoint</flavorType>
-	<tip>tip_focus</tip>
+	<tip>tip_sc_chainstep</tip>
 	<title id="weapon_TERRAN_BEAM_IRRADIATE_LITE_title"/>
 	<short id="weapon_TERRAN_BEAM_IRRADIATE_LITE_short"/>
-	<desc id="NOYB"/>
-	<descriptionOverride id="weapon_TERRAN_BEAM_IRRADIATE_LITE_desc"/>
-	<tooltipOverride id="weapon_TERRAN_BEAM_IRRADIATE_LITE_tooltip"/>
+	<desc id="weapon_TERRAN_BEAM_IRRADIATE_desc"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<damage>1</damage>
 	<sc-irradiate/>
 	<bio-weapon/>
@@ -2018,10 +2016,10 @@ END OF SUBSYSTEMS
 	<flavorType>Missile</flavorType>
 	<drone_targetable>1</drone_targetable>
 	<title id="weapon_TERRAN_MISSILE_HALO_title"/>
-	<tip>tip_charge</tip>
+	<tip>tip_sc_chainstep</tip>
 	<short id="weapon_TERRAN_MISSILE_HALO_short"/>
 	<desc id="weapon_TERRAN_MISSILE_HALO_desc"/>
-	<tooltip id="weapon_TERRAN_MISSILE_HALO_tooltip"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<radius>35</radius>
 	<accuracyMod>100</accuracyMod>
 	<missiles>1</missiles>
@@ -2076,7 +2074,7 @@ END OF SUBSYSTEMS
 	<tip>tip_charge</tip>
 	<short id="weapon_TERRAN_MISSILE_LONGBOLT_short"/>
 	<desc id="weapon_TERRAN_MISSILE_LONGBOLT_desc"/>
-	<tooltip id="weapon_TERRAN_MISSILE_LONGBOLT_tooltip"/>
+	<tooltip id="tooltip_sc_unused"/>
 	<radius>5</radius>  <!-- was 34-->
 	<accuracyMod>100</accuracyMod>
 	<missiles>0</missiles>
@@ -2457,7 +2455,7 @@ END OF SUBSYSTEMS
 <crewBlueprint name="terran_scv_1">
 	<title id="drone_TERRAN_SCV_NAME"/>
 	<short id="drone_TERRAN_SCV_SHORT"/>
-	<desc id="drone_TERRAN_SCV_DESC"/>
+	<desc id="drone_TERRAN_SCV_1_DESC"/>
 	<cost>0</cost>
 	<rarity>0</rarity>
 	<powerList>
@@ -2740,10 +2738,10 @@ END OF SUBSYSTEMS
 <droneBlueprint name="TERRAN_DEFENSE_1">						
 	<type>DEFENSE</type>					
 	<target>MISSILE</target>
-	<tip>tip_defense</tip>					
+	<tip>tip_sc_active_shield</tip>					
 	<title id="drone_TERRAN_DEFENSE_1_NAME"/>
 	<short id="drone_TERRAN_DEFENSE_1_SHORT"/>
-	<desc id="drone_TERRAN_DEFENSE_1_DESC"/>
+	<desc id="drone_TERRAN_DEFENSE_DESC"/>
 	<power>2</power>					
 	<cooldown>2500</cooldown><!-- was 1500/2000-->					
 	<dodge>10</dodge>					
@@ -2759,10 +2757,10 @@ END OF SUBSYSTEMS
 <droneBlueprint name="TERRAN_DEFENSE_2">						
 	<type>DEFENSE</type>					
 	<target>MISSILE</target>					
-	<tip>tip_defense</tip>					
+	<tip>tip_sc_active_shield</tip>					
 	<title id="drone_TERRAN_DEFENSE_2_NAME"/>
 	<short id="drone_TERRAN_DEFENSE_2_SHORT"/>
-	<desc id="drone_TERRAN_DEFENSE_2_DESC"/>
+	<desc id="drone_TERRAN_DEFENSE_DESC"/>
 	<power>3</power>
 	<cooldown>2500</cooldown><!-- was 1500 -->
 	<dodge>10</dodge>					
@@ -2778,10 +2776,10 @@ END OF SUBSYSTEMS
 <droneBlueprint name="TERRAN_DEFENSE_3">						
 	<type>DEFENSE</type>					
 	<target>MISSILE</target>					
-	<tip>tip_defense</tip>					
+	<tip>tip_sc_active_shield</tip>					
 	<title id="drone_TERRAN_DEFENSE_3_NAME"/>					
 	<short id="drone_TERRAN_DEFENSE_3_SHORT"/>					
-	<desc id="drone_TERRAN_DEFENSE_3_DESC"/>					
+	<desc id="drone_TERRAN_DEFENSE_DESC"/>					
 	<power>4</power>					
 	<cooldown>2500</cooldown><!-- was 1000 -->					
 	<dodge>10</dodge>					

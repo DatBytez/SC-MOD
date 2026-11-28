@@ -42,4 +42,27 @@
 
 	<!-- SC PAIRED WEAPON TIPS -->
 	<text name="tip_sc_paired">Tip: Place two compatible weapons next to each other. Power the left weapon and leave the right weapon unpowered to fire both weapons using only the primary weapon's power and ammunition.</text>
+
+	<!-- SC EMP WEAPONS -->
+	<text name="stat_sc_emp_duration">Crew Drone Stun: \1 sec</text>
+
+	<!-- SC IRRADIATE WEAPONS -->
+	<text name="stat_sc_irradiate_damage">Radiation Damage: \1 - \2 HP/s per application</text>
+	<text name="stat_sc_irradiate_duration">Radiation Duration: 25 sec</text>
+	<text name="stat_sc_irradiate_erosion">Irradiated crew spread erosion to rooms they occupy.</text>
+
+	<!-- SC ARTILLERY WEAPONS -->
+	<text name="stat_sc_artillery_base_shots">Base Shots: \1</text>
+	<text name="stat_sc_artillery_shot_bonus">Shots per Additional Artillery Level: +1</text>
+	<text name="stat_sc_artillery_cooldown_penalty">Cooldown penalty per Missing Power: +\1 sec</text>
+
+	<!-- SC ARTILLERY TIPS -->
+	<text name="tip_sc_artillery">Tip: Upgrading artillery increases the number of simultaneous projectiles fired. Keep the artillery system fully powered to minimize its charge time.</text>
+
+	<!-- SC DEFENSE MATRIX DRONES -->
+	<text name="stat_sc_active_shield_layers">Shield Layers per Activation: \1</text>
+
+	<!-- SC DRONE TIPS -->
+	<text name="tip_sc_active_shield">Tip: Defense Matrix drones generate temporary super shields in response to incoming projectiles and beams.</text>
+
 </FTL>

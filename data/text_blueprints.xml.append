@@ -112,100 +112,86 @@
 <text name="weapon_GEMINI_MISSILES_ION_3_short">Gemini Ion III</text>
 
 <!-- YAMATO CANNON -->
-<text name="weapon_ARTILLERY_YAMATO_LASER_title">Terran Yamato Cannon</text>
+<text name="weapon_ARTILLERY_YAMATO_LASER_title">Yamato Cannon</text>
 <text name="weapon_ARTILLERY_YAMATO_LASER_short">Yamato Cannon</text>
-<text name="weapon_ARTILLERY_YAMATO_LASER_desc">A powerful weapon that focuses a nuclear explosion into a beam using magnetic fields.</text>
-<text name="weapon_ARTILLERY_YAMATO_LASER_tooltip">Deals hull damage to target room and system damage to all adjacent rooms. Charges slower when not fully powered.</text>
+<text name="weapon_ARTILLERY_YAMATO_LASER_desc">A powerful weapon that focuses a nuclear explosion into a concentrated energy barrage using magnetic fields. Artillery upgrades increase the volume of the blast. Operating below full power increases the weapon's charge time.</text>
 
 <!-- EMP MISSILES -->
-<text name="weapon_EMP_MISSILE_title">Terran EMP Missile</text>
+<text name="weapon_EMP_MISSILE_title">EMP Missile</text>
 <text name="weapon_EMP_MISSILE_short">EMP</text>
-<text name="weapon_EMP_MISSILE_desc">Electromagnetic pulse missile that breaches shields and ionizes systems.</text>
-<text name="weapon_EMP_MISSILE_tooltip">Fires 1 missile; does 2 ion damage to target and 1 to adjacent rooms; pierces all shields.</text>
+<text name="weapon_EMP_MISSILE_desc">A specialized missile equipped with an electromagnetic pulse warhead designed to disable enemy electronics. Ionizes systems and disables crew drones in the targeted room and adjacent compartments.</text>
 
 <!-- TERRAN IRRADIATE -->
-<text name="weapon_TERRAN_BEAM_IRRADIATE_title">Terran Irradiate</text>
+<text name="weapon_TERRAN_BEAM_IRRADIATE_desc">A high-energy stream of radioactive particles developed from nuclear waste disposal technology. Extended charging increases damage and radiation intensity, causing affected crew to suffer prolonged damage and spread erosion to rooms they occupy.</text>
+<text name="weapon_TERRAN_BEAM_IRRADIATE_title">Irradiate</text>
 <text name="weapon_TERRAN_BEAM_IRRADIATE_short">Irradiate</text>
-<text name="weapon_TERRAN_BEAM_IRRADIATE_desc">A high-energy stream of radioactive particles developed from technologies in nuclear waste disposal. Longer charges result in more damage.</text>
-<text name="weapon_TERRAN_BEAM_IRRADIATE_tooltip">Applies erosion to targeted tiles. Crew struck suffer up to 5 HP/s damage for 25 seconds and spread erosion to rooms they occupy.</text>
-
-<!-- TERRAN IRRADIATE LITE -->
-<text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_title">Terran Irradiate Lite</text>
+<text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_title">Irradiate Lite</text>
 <text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_short">Irradiate L.</text>
-<text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_desc">A modified version of the Irradiate weapon with reduced power and damage. Longer charges result in more damage.</text>
-<text name="weapon_TERRAN_BEAM_IRRADIATE_LITE_tooltip">Applies erosion to targeted tiles. Crew struck suffer up to 3 HP/s damage for 25 seconds and spread erosion to rooms they occupy.</text>
 
 <text name="weapon_TERRAN_MISSILE_HALO_title">Halo Missile</text>
 <text name="weapon_TERRAN_MISSILE_HALO_short">Halo</text>
-<text name="weapon_TERRAN_MISSILE_HALO_desc">Fires salvos of High Altitude Long Operating cluster rockets designed to overwhelm enemy defenses. Charging reduces ammunition consumption at the expense of targeting precision.</text>
-<text name="weapon_TERRAN_MISSILE_HALO_tooltip">Fires 4 missiles; Additional charge steps reduce missile consumption and increase projectile spread.</text>
+<text name="weapon_TERRAN_MISSILE_HALO_desc">Fires salvos of High Altitude Long Operating cluster rockets designed to overwhelm enemy defenses. Extended charging reduces ammunition consumption at the expense of targeting precision.</text>
 
-<text name="weapon_TERRAN_MISSILE_LONGBOLT_title">Terran Longbolt Missile</text>
+<text name="weapon_TERRAN_MISSILE_LONGBOLT_title">Longbolt Missile</text>
 <text name="weapon_TERRAN_MISSILE_LONGBOLT_short">Longbolt</text>
 <text name="weapon_TERRAN_MISSILE_LONGBOLT_desc">[[TERRAN_MISSILE_LONGBOLT Needs Description]]</text>
-<text name="weapon_TERRAN_MISSILE_LONGBOLT_tooltip">[[TERRAN_MISSILE_LONGBOLT Needs Tooltip]]</text>
 
 <!-- TERRAN DEFENSE MATRIX -->
-<text name="weapon_TERRAN_DEFENSE_1_title">Terran Defense Matrix I</text>
-<text name="weapon_TERRAN_DEFENSE_2_title">Terran Defense Matrix II</text>
-<text name="weapon_TERRAN_DEFENSE_3_title">Terran Defense Matrix III</text>
-
-<text name="drone_TERRAN_DEFENSE_1_NAME">Terran Defense Matrix Mk I</text>
+ <text name="drone_TERRAN_DEFENSE_DESC">The Defense Matrix generates a temporary deflection field utilizing Terran energy shield technology. Automatically generates protective shield layers in response to incoming attacks, dissipating once the threat has passed.</text>
+<text name="weapon_TERRAN_DEFENSE_1_title">Defense Matrix I</text>
+<text name="weapon_TERRAN_DEFENSE_2_title">Defense Matrix II</text>
+<text name="weapon_TERRAN_DEFENSE_3_title">Defense Matrix III</text>
+<text name="drone_TERRAN_DEFENSE_1_NAME">Defense Matrix Mk I</text>
 <text name="drone_TERRAN_DEFENSE_1_SHORT">Matrix.I</text>
-<text name="drone_TERRAN_DEFENSE_1_DESC">The defensive matrix is a temporary deflection field designed to function as a form of terran energy shield technology.</text>
-
-<text name="drone_TERRAN_DEFENSE_2_NAME">Terran Defense Matrix Mk II</text>
+<text name="drone_TERRAN_DEFENSE_2_NAME">Defense Matrix Mk II</text>
 <text name="drone_TERRAN_DEFENSE_2_SHORT">Matrix.II</text>
-<text name="drone_TERRAN_DEFENSE_2_DESC">The defensive matrix is a temporary deflection field designed to function as a form of terran energy shield technology.</text>
-
-<text name="drone_TERRAN_DEFENSE_3_NAME">Terran Defense Matrix Mk III</text>
+<text name="drone_TERRAN_DEFENSE_3_NAME">Defense Matrix Mk III</text>
 <text name="drone_TERRAN_DEFENSE_3_SHORT">Matrix.III</text>
-<text name="drone_TERRAN_DEFENSE_3_DESC">The defensive matrix is a temporary deflection field designed to function as a form of terran energy shield technology.</text>
 
 <!-- TERRAN SCV -->
 <text name="drone_TERRAN_SCV_NAME">Terran SCV</text>
 <text name="drone_TERRAN_SCV_SHORT">SCV</text>
-<text name="drone_TERRAN_SCV_DESC">The T-280 space construction vehicle (or SCV) is a type of terran general-purpose engineering vehicle.</text>
+<text name="drone_TERRAN_SCV_DESC">The T-280 Space Construction Vehicle (SCV) is a general-purpose engineering vehicle designed for construction and maintenance. Rapidly repairs damaged systems and hull breaches.</text>
+<text name="drone_TERRAN_SCV_1_DESC">The T-280 Space Construction Vehicle (SCV) is a general-purpose engineering vehicle designed for construction and maintenance. Rapidly repairs damaged systems and hull breaches, and can be sacrificed to perform external hull repairs.</text>
 
-<text name="drone_TERRAN_SCV_HULL_NAME">Terran SCV Hull</text>
+<text name="drone_TERRAN_SCV_HULL_NAME">SCV Hull</text>
 <text name="drone_TERRAN_SCV_HULL_SHORT">SCV Hull</text>
 <text name="drone_TERRAN_SCV_HULL_DESC">Automatically repairs 3-5 damage to your hull. SCV is consumed once it finishes.</text>
 
-<text name="drone_TERRAN_GOLIATH_NAME">Terran Goliath</text>
+<text name="drone_TERRAN_GOLIATH_NAME">Goliath</text>
 <text name="drone_TERRAN_GOLIATH_SHORT">Goliath</text>
-<text name="drone_TERRAN_GOLIATH_DESC">The goliath combat walker is a terran one-man all-terrain combat walker primarily used as support to defend against enemy missile and drone attacks.</text>
+<text name="drone_TERRAN_GOLIATH_DESC">The Goliath is a heavily armored Terran all-terrain combat walker designed to provide infantry and anti-air support. Engages hostile boarding parties while its mounted turret intercepts incoming projectiles and enemy drones.</text>
 
 <!-- TERRAN SPIDER MINE -->
-<text name="drone_TERRAN_SPIDER_1_NAME">Terran Spider Mine Qt.1</text>
+<text name="drone_TERRAN_SPIDER_1_NAME">Spider Mine Qt.1</text>
 <text name="drone_TERRAN_SPIDER_1_SHORT">Spider Mine I</text>
 <text name="drone_TERRAN_SPIDER_1_DESC">Deploys a Terran Spider Mine. Mines burrow when set and are not player-controllable unless redeployed.</text>
 
-<text name="drone_TERRAN_SPIDER_2_NAME">Terran Spider Mine Qt.2</text>
+<text name="drone_TERRAN_SPIDER_2_NAME">Spider Mine Qt.2</text>
 <text name="drone_TERRAN_SPIDER_2_SHORT">Spider Mine II</text>
 <text name="drone_TERRAN_SPIDER_2_DESC">Deploys a pair of Terran Spider Mines. Mines burrow when set and are not player-controllable unless redeployed.</text>
 
-<text name="drone_TERRAN_SPIDER_3_NAME">Terran Spider Mine Qt.3</text>
+<text name="drone_TERRAN_SPIDER_3_NAME">Spider Mine Qt.3</text>
 <text name="drone_TERRAN_SPIDER_3_SHORT">Spider Mine III</text>
 <text name="drone_TERRAN_SPIDER_3_DESC">Deploys a set of three Terran Spider Mines. Mines burrow when set and are not player-controllable unless redeployed.</text>
 
-<text name="drone_TERRAN_SPIDER_SET_NAME">Terran Spider Mine</text>
+<text name="drone_TERRAN_SPIDER_SET_NAME">Spider Mine</text>
 <text name="drone_TERRAN_SPIDER_SET_SHORT">Spider Mine</text>
 <text name="drone_TERRAN_SPIDER_SET_DESC">Mines burrow when set and are not player-controllable unless redeployed. Mines will automatically seek out targets and detonate when an enemy is nearby.</text>
 
-<text name="drone_TERRAN_SPIDER_MINE_NAME">Terran Spider Mine</text>
+<text name="drone_TERRAN_SPIDER_MINE_NAME">Spider Mine</text>
 <text name="drone_TERRAN_SPIDER_MINE_SHORT">Spider Mine</text>
 <text name="drone_TERRAN_SPIDER_MINE_DESC">Mines will automatically seek out targets and detonate when an enemy is nearby. Redeploying a mine will make it controllable again.</text>
 
-<text name="drone_TERRAN_COMSAT_NAME">Terran Comsat</text>
+<text name="drone_TERRAN_COMSAT_NAME">Comsat</text>
 <text name="drone_TERRAN_COMSAT_SHORT">Comsat</text>
-<text name="drone_TERRAN_COMSAT_DESC">Terran communications and sensor sweep. While active, it provides Detector-style targeting support based on Sensors power.</text>
+<text name="drone_TERRAN_COMSAT_DESC">Communications and sensor sweep capable of providing advanced targeting data. Temporarily enhances Sensors and improves weapon accuracy and targeting precision based on effective Sensors power.</text>
 
-<text name="drone_TERRAN_POD_NAME">Terran Boarding Pod</text>
+<text name="drone_TERRAN_POD_NAME">Boarding Pod</text>
 <text name="drone_TERRAN_POD_SHORT">Boarding Pod</text>
-<text name="drone_TERRAN_POD_DESC">Transports crew to enemy ships in boarding pods.</text>
-
+<text name="drone_TERRAN_POD_DESC">A transport capsule designed to deliver boarding parties directly to enemy vessels. Launches crew stationed in Drone Control toward enemy compartments.</text>
 <!-- TERRAN CREW -->
-<text name="crew_TERRAN_MARINE_NAME">Terran Marine</text>
+<text name="crew_TERRAN_MARINE_NAME">Marine</text>
 <text name="crew_TERRAN_MARINE_SHORT">Marine</text>
 <text name="crew_TERRAN_MARINE_DESC">Basic soldier equipped with powered armor and a rapid-fire C-14 rifle.  
 
@@ -214,7 +200,7 @@
     Resistant to suffocation
     Reduced movement speed</text>
 
-<text name="crew_TERRAN_MEDIC_NAME">Terran Medic</text>
+<text name="crew_TERRAN_MEDIC_NAME">Medic</text>
 <text name="crew_TERRAN_MEDIC_SHORT">Medic</text>
 <text name="crew_TERRAN_MEDIC_DESC">Field medic trained to supress enemy forces and keep infantry alive in combat zones.
 
@@ -223,7 +209,7 @@
     Resistant to suffocation
     Reduced movement speed</text>
 
-<text name="crew_TERRAN_FIREBAT_NAME">Terran Firebat</text>
+<text name="crew_TERRAN_FIREBAT_NAME">Firebat</text>
 <text name="crew_TERRAN_FIREBAT_SHORT">Firebat</text>
 <text name="crew_TERRAN_FIREBAT_DESC">Flame-wielding shock trooper built for close combat and clearing out enemy infantry.
 
@@ -233,7 +219,7 @@
     Resistant to suffocation
     Reduced movement speed</text>
 
-<text name="crew_TERRAN_GHOST_NAME">Terran Ghost</text>
+<text name="crew_TERRAN_GHOST_NAME">Ghost</text>
 <text name="crew_TERRAN_GHOST_SHORT">Ghost</text>
 <text name="crew_TERRAN_GHOST_DESC">Cloaked specialist skilled in sabotage, psionics, and high-value target elimination.
 
@@ -241,7 +227,7 @@
     Resistant to suffocation
     Increased movement speed</text>
 
-<text name="crew_TERRAN_CIVILIAN_NAME">Terran Civilian</text>
+<text name="crew_TERRAN_CIVILIAN_NAME">Civilian</text>
 <text name="crew_TERRAN_CIVILIAN_SHORT">Civilian</text>
 <text name="crew_TERRAN_CIVILIAN_DESC">Civilian personnel who excel at maintenance and emergency response, but are not equipped for combat.
 
@@ -251,13 +237,13 @@
     Increased fire supression speed
     Increased damage taken</text>
 
-<text name="crew_TERRAN_SPIDER_SET_NAME">Terran Spider Mine</text>
+<text name="crew_TERRAN_SPIDER_SET_NAME">Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_SET_SHORT">Spider Mine</text>
-<text name="crew_TERRAN_SPIDER_SET_DESC">The 52-QDMM spider mine is a type of terran self-propelled, area-denial ordnance.[CREW]</text>
+<text name="crew_TERRAN_SPIDER_SET_DESC">The 52-QDMM spider mine is a type of terran self-propelled, area-denial ordnance.[crew_TERRAN_SPIDER_SET_DESC]</text>
 
-<text name="crew_TERRAN_SPIDER_MINE_NAME">Terran Spider Mine</text>
+<text name="crew_TERRAN_SPIDER_MINE_NAME">Spider Mine</text>
 <text name="crew_TERRAN_SPIDER_MINE_SHORT">Spider Mine</text>
-<text name="crew_TERRAN_SPIDER_MINE_DESC">The 52-QDMM spider mine is a type of terran self-propelled, area-denial ordnance.</text>
+<text name="crew_TERRAN_SPIDER_MINE_DESC">The 52-QDMM spider mine is a type of terran self-propelled, area-denial ordnance.[crew_TERRAN_SPIDER_MINE_DESC]</text>
 
 <!-- TERRAN CREW STATIC ABILITIES -->
  <text name="crew_TERRAN_POWER_HEAL">Ability: Heal

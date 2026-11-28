@@ -6,17 +6,31 @@ DESCRIPTION: Adds custom weapon information to weapon stat boxes
         - Groups accuracy, targeting radius, and shots together.
         - Removes redundant native charge and chain information.
         - Displays pairing compatibility and paired secondary information.
+        - Displays EMP crew drone stun information.
+        - Displays Irradiate damage and erosion information.
+        - Displays Artillery shot and cooldown scaling.
 TAGS: <sc-charge stat="..." value="#"/>
       <sc-chainstep stat="..." value="#"/>
       <sc-chain stat="..." value="#"/>
       <sc_paired group="GROUP"/>
-DEPENDENCIES: sc_weapon_scaling.lua, sc_weapon_charge.lua,
+      <sc-emp value="#"/>
+      <sc-irradiate/>
+      <sc-artillery-level stat="..." value="#"/>
+DEPENDENCIES: sc_tag.lua, sc_weapon_scaling.lua, sc_weapon_charge.lua,
               sc_weapon_chainstep.lua, sc_weapon_chain.lua,
               sc_weapon_paired_core.lua
 ]]
 
 local scaling = mods.sc.scaling
 local paired = mods.sc.paired
+
+local empWeapons = {}
+local irradiateWeapons = {}
+local artilleryWeapons = {}
+
+mods.sc.tag.register("weapon", "sc-emp", empWeapons, "value")
+mods.sc.tag.register("weapon", "sc-irradiate", irradiateWeapons)
+mods.sc.tag.register("weapon", "sc-artillery-level", artilleryWeapons, "stat")
 
 local function get_scaling_value(source, weaponName, statName)
     local entry = scaling.get_source_stat_entry(source, weaponName, statName)
@@ -81,6 +95,14 @@ local function remove_stat_line(lines, textId)
     end
 end
 
+local function replace_stat_line(lines, textId, replacement)
+    local index = find_stat_line(lines, textId)
+
+    if index then
+        lines[index] = replacement
+    end
+end
+
 local function get_total_charge_time(blueprint)
     local cooldown = blueprint.cooldown
     local modifier = get_scaling_value("charge", blueprint.name, "cooldown") or 0
@@ -112,6 +134,17 @@ local function get_weapon_scaling(blueprint)
 
     elseif scaling.get_source_stat_entries("chain", weaponName) then
         return "chain", math.max(0, blueprint.boostPower.count)
+    end
+end
+
+local function get_artillery_stat(weaponName, statName)
+    local entries = artilleryWeapons[weaponName]
+    if not entries then return end
+
+    for _, entry in ipairs(entries) do
+        if entry.stat == statName then
+            return entry.value
+        end
     end
 end
 
@@ -300,6 +333,45 @@ script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(bluepri
         end
     end
 
+    -- NATIVE CHAINSTEP DAMAGE
+
+    if source == "chainstep" and blueprint.boostPower.type == 2 then
+        local damageBoost = blueprint.boostPower.amount
+
+        local damageStats = {
+            {"hull_damage", 1},
+            {"system_damage", 1},
+            {"personnel_damage", 15}
+        }
+
+        for _, damageStat in ipairs(damageStats) do
+            local textId = damageStat[1]
+            local multiplier = damageStat[2]
+            local index = find_stat_line(lines, textId)
+
+            if index then
+                local prefix = get_stat_prefix(textId)
+
+                local baseDamage = tonumber(
+                    lines[index]:sub(#prefix + 1):match("[-+]?%d+")
+                )
+
+                if baseDamage then
+                    local finalDamage =
+                        baseDamage + maxLevel * damageBoost * multiplier
+
+                    lines[index] = get_text(textId,
+                        format_number(baseDamage) .. " - "
+                        .. format_number(finalDamage))
+                end
+            end
+        end
+
+        remove_stat_line(lines, "redesigned_boost_power_damage_positive")
+        remove_stat_line(lines, "redesigned_boost_power_damage_negative")
+        remove_stat_line(lines, "redesigned_damage_cap")
+    end
+
     -- BREACH CHANCE
 
     local breachBoost = get_scaling_value(source, weaponName, "breachChance")
@@ -362,6 +434,92 @@ script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(bluepri
     end
 
     -- REMOVE REDUNDANT LINE BREAKS
+
+    stats = table.concat(lines, "\n")
+    stats = stats:gsub("\n\n\n+", "\n\n")
+
+    return Defines.Chain.CONTINUE, stats
+end)
+
+-- ADDITIONAL WEAPON MECHANICS
+
+script.on_internal_event(Defines.InternalEvents.WEAPON_STATBOX, function(blueprint, stats)
+    local weaponName = blueprint.name
+
+    local empDuration = empWeapons[weaponName]
+    local hasIrradiate = irradiateWeapons[weaponName]
+    local artilleryStats = artilleryWeapons[weaponName]
+
+    if not empDuration and not hasIrradiate and not artilleryStats then
+        return
+    end
+
+    local lines = {}
+
+    for line in (stats .. "\n"):gmatch("(.-)\n") do
+        table.insert(lines, line)
+    end
+
+    -- EMP
+
+    if empDuration then
+        table.insert(lines, "")
+
+        table.insert(lines, get_text("stat_sc_emp_duration",
+            format_number(empDuration)))
+    end
+
+    -- IRRADIATE
+
+    if hasIrradiate then
+        local maxSteps = get_chainstep_max(blueprint) or 0
+
+        local baseDamage = blueprint.damage.iDamage
+        local finalDamage = baseDamage
+            + maxSteps * blueprint.boostPower.amount
+
+        local baseRadiation = math.max(0, math.min(5, baseDamage))
+        local finalRadiation = math.max(0, math.min(5, finalDamage))
+
+        table.insert(lines, "")
+
+        table.insert(lines, get_text("stat_sc_irradiate_damage",
+            format_number(baseRadiation),
+            format_number(finalRadiation)))
+
+        table.insert(lines, get_text("stat_sc_irradiate_duration"))
+
+        table.insert(lines, get_text("stat_sc_irradiate_erosion"))
+    end
+
+    -- ARTILLERY
+
+    if artilleryStats then
+        local startingShots = get_artillery_stat(weaponName, "shots")
+        local cooldownPenalty = get_artillery_stat(weaponName, "cooldown")
+
+        if startingShots then
+            replace_stat_line(lines, "shots",
+                get_text("stat_sc_artillery_base_shots", startingShots))
+
+            local shotsIndex = find_stat_line(lines,
+                "stat_sc_artillery_base_shots")
+
+            if shotsIndex then
+                table.insert(lines, shotsIndex + 1,
+                    get_text("stat_sc_artillery_shot_bonus"))
+            end
+        end
+
+        if cooldownPenalty then
+            remove_stat_line(lines, "charge_time")
+
+            table.insert(lines, "")
+
+            table.insert(lines, get_text("stat_sc_artillery_cooldown_penalty",
+                format_number(cooldownPenalty)))
+        end
+    end
 
     stats = table.concat(lines, "\n")
     stats = stats:gsub("\n\n\n+", "\n\n")
